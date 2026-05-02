@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "llm-negotiation-coach",
+    "title": "I Watched a 20-Year Negotiation Veteran Collapse",
+    "date": "2026-04-28",
+    "excerpt": "Not because of AI. Because of me + AI. A real-time coaching system that combines LLM reasoning with structured feedback loops.",
+    "readingTime": "8 min",
+    "tags": ["negotiation", "llm", "coaching"]
+  },
+  {
+    "slug": "self-improving-systems",
+    "title": "The Most Boring Automation I've Ever Built",
+    "date": "2026-04-15",
+    "excerpt": "It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful.",
+    "readingTime": "6 min",
+    "tags": ["automation", "ai", "systems"]
+  },
+  {
+    "slug": "memory-architecture",
+    "title": "Every Token Is Rent",
+    "date": "2026-04-01",
+    "excerpt": "Why context windows are a trap and how to build LLM systems that remember what matters without bankrupting you.",
+    "readingTime": "7 min",
+    "tags": ["llm", "memory", "architecture"]
+  },
+  {
+    "slug": "stop-building-agent-soup",
+    "title": "Stop Building Agent Soup",
+    "date": "2026-03-15",
+    "excerpt": "Everyone's throwing agents at problems. Most of them are making things worse. Here's what actually works.",
+    "readingTime": "5 min",
+    "tags": ["agents", "ai-architecture", "best-practices"]
+  },
+  {
+    "slug": "agents-cant-find-each-other",
+    "title": "Agents Can't Find Each Other",
+    "date": "2026-03-01",
+    "excerpt": "The multi-agent discovery problem is the hard part nobody's solving. Here's a protocol-based approach.",
+    "readingTime": "6 min",
+    "tags": ["agents", "protocols", "discovery"]
+  }
+]

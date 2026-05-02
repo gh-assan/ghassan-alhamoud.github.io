@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#1a1b26"/>
+  <rect x="60" y="60" width="1080" height="510" rx="20" fill="#24283b"/>
+  <text x="600" y="280" text-anchor="middle" fill="#a9b1d6" font-family="Inter, -apple-system, sans-serif" font-weight="800" font-size="64">Ghassan Alhamoud</text>
+  <text x="600" y="350" text-anchor="middle" fill="#7aa2f7" font-family="Inter, -apple-system, sans-serif" font-weight="500" font-size="28">AI Architect &amp; Systems Engineer</text>
+  <text x="600" y="420" text-anchor="middle" fill="#565f89" font-family="Inter, -apple-system, sans-serif" font-size="20">I design systems that think. Then I build them.</text>
+</svg>
