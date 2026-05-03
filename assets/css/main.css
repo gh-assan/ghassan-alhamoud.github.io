@@ -1,26 +1,26 @@
 /* ================================================================
    MAIN.CSS — Ghassan Alhamoud Personal Website
-   Tokyo Night Storm Palette | Pure CSS | No Frameworks
+   ThoughtWorks-Inspired Palette | Pure CSS | No Frameworks
    ================================================================ */
 
-/* ----- CSS Variables (Tokyo Night Storm) ----- */
+/* ----- CSS Variables (ThoughtWorks Palette) ----- */
 :root {
-  --bg-primary: #1a1b26;
-  --bg-secondary: #24283b;
-  --bg-tertiary: #414868;
-  --bg-hover: #2f3348;
-  --text-primary: #a9b1d6;
-  --text-secondary: #565f89;
-  --text-muted: #3b4261;
-  --accent: #7aa2f7;
-  --accent-hover: #bb9af7;
-  --accent-glow: rgba(122, 162, 247, 0.15);
-  --accent-glow-strong: rgba(122, 162, 247, 0.25);
-  --success: #9ece6a;
-  --warning: #e0af68;
-  --error: #f7768e;
-  --border: #2f3348;
-  --glass-bg: rgba(26, 27, 38, 0.85);
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #161616;
+  --bg-tertiary: #222222;
+  --bg-hover: #1e1e1e;
+  --text-primary: #f0f0f0;
+  --text-secondary: #8c8c8c;
+  --text-muted: #3d3d3d;
+  --accent: #e4006f;
+  --accent-hover: #ff1a82;
+  --accent-glow: rgba(228, 0, 111, 0.12);
+  --accent-glow-strong: rgba(228, 0, 111, 0.22);
+  --success: #3dd68c;
+  --warning: #f5a623;
+  --error: #ff5c72;
+  --border: #252525;
+  --glass-bg: rgba(13, 13, 13, 0.92);
   --max-width: 1080px;
   --nav-height: 64px;
   --radius-sm: 6px;
@@ -340,7 +340,7 @@ img {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 50%, #89b4fa 100%);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 50%, #ff1a82 100%);
   background-size: 200% 200%;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -394,7 +394,7 @@ img {
 
 @keyframes btn-pulse {
   0%, 100% { box-shadow: 0 4px 20px var(--accent-glow); }
-  50% { box-shadow: 0 4px 20px var(--accent-glow), 0 0 0 8px rgba(122, 162, 247, 0.08); }
+  50% { box-shadow: 0 4px 20px var(--accent-glow), 0 0 0 8px rgba(228, 0, 111, 0.07); }
 }
 
 /* ================================================================
@@ -456,9 +456,9 @@ img {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 900px 600px at 15% 30%, rgba(122, 162, 247, 0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 600px 600px at 85% 70%, rgba(187, 154, 247, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 400px 400px at 50% 90%, rgba(158, 206, 106, 0.04) 0%, transparent 70%);
+    radial-gradient(ellipse 900px 600px at 15% 30%, rgba(228, 0, 111, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 600px at 85% 70%, rgba(228, 0, 111, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 50% 90%, rgba(228, 0, 111, 0.03) 0%, transparent 70%);
   pointer-events: none;
   animation: hero-glow 10s ease-in-out infinite alternate;
 }
@@ -948,7 +948,7 @@ img {
 }
 
 .bento__card:hover {
-  border-color: rgba(122, 162, 247, 0.25);
+  border-color: rgba(228, 0, 111, 0.25);
   transform: translateY(-6px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 0 40px var(--accent-glow);
 }
@@ -1077,7 +1077,7 @@ img {
 }
 
 .carousel__card:hover {
-  border-color: rgba(122, 162, 247, 0.2);
+  border-color: rgba(228, 0, 111, 0.20);
 }
 
 .carousel__quote {
@@ -1255,7 +1255,7 @@ img {
 }
 
 .article-card:hover {
-  border-color: rgba(122, 162, 247, 0.15);
+  border-color: rgba(228, 0, 111, 0.15);
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
@@ -1841,8 +1841,8 @@ img {
   color: var(--success);
   font-weight: 500;
   padding: 8px 16px;
-  background: rgba(158, 206, 106, 0.08);
-  border: 1px solid rgba(158, 206, 106, 0.2);
+  background: rgba(61, 214, 140, 0.08);
+  border: 1px solid rgba(61, 214, 140, 0.2);
   border-radius: 100px;
 }
 
@@ -1856,8 +1856,8 @@ img {
 }
 
 @keyframes availability-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(158, 206, 106, 0.4); }
-  50% { box-shadow: 0 0 0 5px rgba(158, 206, 106, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61, 214, 140, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(61, 214, 140, 0); }
 }
 
 /* Bio column */
@@ -2011,7 +2011,7 @@ img {
 }
 
 .process__step:hover {
-  border-color: rgba(122, 162, 247, 0.25);
+  border-color: rgba(228, 0, 111, 0.25);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
@@ -2173,7 +2173,7 @@ img {
 }
 
 .case-study:hover {
-  border-color: rgba(122, 162, 247, 0.2);
+  border-color: rgba(228, 0, 111, 0.20);
   transform: translateY(-6px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
