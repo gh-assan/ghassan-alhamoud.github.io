@@ -77,7 +77,11 @@
 [data-theme="nature"] [stroke="#3dd68c"] { stroke: var(--success); }
 [data-theme="nature"] [fill="#e4006f"]   { fill:   var(--accent); }
 
-/* Hero adjustments for light nature background:
+/* Hero greeting pill: border is near-invisible at 10% opacity on light bg */
+[data-theme="nature"] .hero__greeting {
+  border-color: var(--border);
+  background: rgba(var(--accent-rgb), 0.07);
+}
    orbs are visible blobs on white — reduce opacity;
    grid border is light sage — boost opacity so it shows */
 [data-theme="nature"] .hero__orb--1,
@@ -146,7 +150,14 @@ img {
 /* ----- Selection ----- */
 ::selection {
   background: var(--accent);
-  color: var(--bg-primary);
+  color: #ffffff;
+}
+
+/* ----- Focus ring (keyboard navigation) ----- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
 /* ================================================================
@@ -920,7 +931,7 @@ img {
   letter-spacing: -0.03em;
   color: var(--text-primary);
   line-height: 1;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--success) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
