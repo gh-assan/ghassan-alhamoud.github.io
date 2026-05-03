@@ -20,8 +20,8 @@
   var w, h;
   var nodes = [];
   var connections = [];
-  var NODE_COUNT = 30;
-  var CONNECTION_DIST = 150;
+  var NODE_COUNT = 16;
+  var CONNECTION_DIST = 120;
   var isRunning = true;
 
   function resize() {
