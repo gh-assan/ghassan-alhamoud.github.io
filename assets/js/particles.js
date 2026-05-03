@@ -24,9 +24,12 @@
   var CONNECTION_DIST = 120;
   var isRunning = true;
 
-  // Read accent color from CSS variable so particles respect the active theme
+  // Read accent color and particle opacity from CSS so both themes work
   var accentRgb = getComputedStyle(document.documentElement)
     .getPropertyValue('--accent-rgb').trim() || '228, 0, 111';
+  var particleAlpha = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--particle-alpha').trim()
+  ) || 0.3;
 
   function resize() {
     var rect = hero.getBoundingClientRect();
@@ -69,7 +72,7 @@
       if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
       if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
 
-      var alpha = 0.3 + Math.sin(n.pulse) * 0.15;
+      var alpha = particleAlpha + Math.sin(n.pulse) * (particleAlpha * 0.5);
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(' + accentRgb + ', ' + alpha + ')';
@@ -93,7 +96,7 @@
         var dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < CONNECTION_DIST) {
-          var alpha = (1 - dist / CONNECTION_DIST) * 0.15;
+          var alpha = (1 - dist / CONNECTION_DIST) * (particleAlpha * 0.5);
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
