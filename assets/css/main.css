@@ -3,7 +3,7 @@
    ThoughtWorks-Inspired Palette | Pure CSS | No Frameworks
    ================================================================ */
 
-/* ----- CSS Variables (ThoughtWorks Palette) ----- */
+/* ----- CSS Variables (ThoughtWorks Dark — default) ----- */
 :root {
   --bg-primary: #0d0d0d;
   --bg-secondary: #161616;
@@ -14,6 +14,7 @@
   --text-muted: #3d3d3d;
   --accent: #e4006f;
   --accent-hover: #ff1a82;
+  --accent-rgb: 228, 0, 111;
   --accent-glow: rgba(228, 0, 111, 0.12);
   --accent-glow-strong: rgba(228, 0, 111, 0.22);
   --success: #3dd68c;
@@ -28,6 +29,47 @@
   --radius-lg: 16px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* ================================================================
+   THEME: NATURE — sage white · forest green · ocean blue
+   Switch by setting data-theme="nature" on <html>.
+   Revert to dark by removing the attribute (or setting "dark").
+   ================================================================ */
+[data-theme="nature"] {
+  /* Backgrounds — barely-tinted sage whites, never pure #fff */
+  --bg-primary:         #f5f7f5;
+  --bg-secondary:       #edf2ed;
+  --bg-tertiary:        #e1eae1;
+  --bg-hover:           #e8ede8;
+
+  /* Typography — deep forest, sage mid-tones */
+  --text-primary:       #1a2e1a;
+  --text-secondary:     #4a6741;
+  --text-muted:         #9ab095;
+
+  /* Primary action — forest emerald (CTAs, links, active states) */
+  --accent:             #1d6f42;
+  --accent-hover:       #155534;
+  --accent-rgb:         29, 111, 66;
+  --accent-glow:        rgba(29, 111, 66, 0.10);
+  --accent-glow-strong: rgba(29, 111, 66, 0.20);
+
+  /* Secondary accent — ocean blue (badges, checkmarks, info) */
+  --success:            #0e7490;
+
+  /* Semantic */
+  --warning:            #b45309;
+  --error:              #b91c1c;
+
+  /* Structure */
+  --border:             #c8d9c8;
+  --glass-bg:           rgba(245, 247, 245, 0.95);
+}
+
+/* Override hardcoded SVG stroke/fill attributes in nature theme */
+[data-theme="nature"] [stroke="#e4006f"] { stroke: var(--accent); }
+[data-theme="nature"] [stroke="#3dd68c"] { stroke: var(--success); }
+[data-theme="nature"] [fill="#e4006f"]   { fill:   var(--accent); }
 
 /* ----- Reset ----- */
 *,

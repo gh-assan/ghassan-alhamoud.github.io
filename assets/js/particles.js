@@ -24,6 +24,10 @@
   var CONNECTION_DIST = 120;
   var isRunning = true;
 
+  // Read accent color from CSS variable so particles respect the active theme
+  var accentRgb = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accent-rgb').trim() || '228, 0, 111';
+
   function resize() {
     var rect = hero.getBoundingClientRect();
     w = canvas.width = rect.width * window.devicePixelRatio;
@@ -68,13 +72,13 @@
       var alpha = 0.3 + Math.sin(n.pulse) * 0.15;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(228, 0, 111, ' + alpha + ')';
+      ctx.fillStyle = 'rgba(' + accentRgb + ', ' + alpha + ')';
       ctx.fill();
 
       // Small glow
       var grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
-      grad.addColorStop(0, 'rgba(228, 0, 111, 0.08)');
-      grad.addColorStop(1, 'rgba(228, 0, 111, 0)');
+      grad.addColorStop(0, 'rgba(' + accentRgb + ', 0.08)');
+      grad.addColorStop(1, 'rgba(' + accentRgb + ', 0)');
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r * 4, 0, Math.PI * 2);
@@ -93,7 +97,7 @@
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = 'rgba(228, 0, 111, ' + alpha + ')';
+          ctx.strokeStyle = 'rgba(' + accentRgb + ', ' + alpha + ')';
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
