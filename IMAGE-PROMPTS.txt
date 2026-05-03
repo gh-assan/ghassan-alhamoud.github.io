@@ -1,0 +1,143 @@
+╔══════════════════════════════════════════════════════════════════╗
+║  IMAGE GENERATION PROMPTS — Ghassan Alhamoud Personal Website   ║
+║  Main site assets only (headshot · OG card · favicon)           ║
+║  Optimised for Midjourney v6 / DALL·E 3 / Flux Pro             ║
+╚══════════════════════════════════════════════════════════════════╝
+
+SITE PALETTE REFERENCE
+  Background: #0d0d0d (true charcoal / near-black)
+  Accent:     #e4006f (ThoughtWorks magenta-pink)
+  Text:       #f0f0f0 (neutral white)
+  Success:    #3dd68c (emerald green)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMAGE 1 — PROFESSIONAL HEADSHOT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Save as: /images/ghassan-alhamoud.jpg
+Format:  JPG, minimum 800×1000px (portrait 4:5 ratio)
+Usage:   About section — left column photo, ~300×375px displayed
+
+NOTE: This must be a real photograph of you, not AI-generated.
+Use the prompt below to brief a photographer, or for style reference
+when selecting which photo to use.
+
+PHOTOGRAPHER BRIEF:
+  Environment: Studio or clean architectural interior (concrete
+    wall, minimal backdrop). No busy backgrounds.
+  Lighting: Broad key light from 45° camera-left, soft fill from
+    right. Small rim light behind to separate subject from dark
+    background. Think editorial / tech exec look, not corporate
+    headshot.
+  Wardrobe: Dark collarless shirt or minimal crew-neck (no tie,
+    no loud patterns). Communicates technical credibility + modern.
+  Expression: Direct eye contact, slight confident half-smile.
+    Not stiff. Not grinning. Thinking-but-approachable.
+  Post-processing: Dark, filmic, slight desaturation.
+    Skin tones warm but not orange. Contrast is high.
+    No heavy retouching — credibility over perfection.
+  Aspect ratio: 4:5 portrait (tight crop above shoulders to
+    mid-chest, centered, with ~20% head room above).
+  If using AI (e.g. for a placeholder): describe as a Middle
+    Eastern man, early 40s, serious tech-exec energy.
+
+MIDJOURNEY PROMPT (placeholder / style reference):
+  "Editorial portrait of a male AI architect and tech consultant,
+  Middle Eastern, early 40s, dark collarless shirt, shot against
+  a near-black charcoal seamless backdrop, broad key light from
+  camera-left creating dramatic shadow, thin rim light separating
+  subject from background, sharp eyes looking directly into lens,
+  composed and confident expression, not smiling, slight cinematic
+  grain, medium format editorial aesthetic, shallow depth of field,
+  Leica Q2 feel, 4:5 portrait crop --ar 4:5 --style raw --v 6"
+
+DALL·E 3 / GPT-4o PROMPT:
+  "A professional editorial headshot photograph of a Middle
+  Eastern man in his early 40s. He wears a dark, minimal
+  collarless shirt. The background is near-black charcoal.
+  Dramatic broad key light from the left casts a sharp shadow
+  on the right side of his face. A thin rim light behind him
+  separates him cleanly from the background. His gaze is direct
+  and confident — composed, not smiling. The image has a filmic,
+  high-contrast editorial quality with subtle grain. Portrait
+  crop, 4:5 ratio, chest-up framing."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMAGE 2 — OG DEFAULT (homepage + fallback for all pages)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Save as: /images/og-default.png
+Format:  PNG, exactly 1200×630px
+Usage:   og:image meta tag — shown as preview card on LinkedIn,
+         Twitter/X, Slack, WhatsApp when someone shares the URL.
+         This is the first impression before anyone clicks.
+
+DESIGN SPEC:
+  - Background: solid #0d0d0d
+  - Left ~60%: large name "Ghassan Alhamoud" in bold white type
+    (~80px), below it "AI Architect & Systems Engineer" in medium
+    weight (#8c8c8c). Below that, a thin 3px accent line in #e4006f
+    spanning ~220px.
+  - Right ~40%: an abstract isometric network diagram rendered in
+    #e4006f lines (30% opacity) — nodes and connections suggesting
+    distributed systems / agent topology.
+  - Bottom-left: ghassanalhamoud.com in small monospaced text (#3d3d3d)
+
+MIDJOURNEY PROMPT (for the visual treatment only — you'll composite):
+  "Abstract isometric network topology diagram, interconnected
+  nodes and directed edges floating in three-dimensional space,
+  rendered in bright magenta pink #e4006f on pure black background,
+  ultra-thin strokes, minimal, technical blueprint aesthetic,
+  no text, no labels, no gradients, flat vector style with subtle
+  depth, 16:9 wide crop --ar 16:9 --style raw --v 6 --no text"
+
+RECOMMENDED TOOLS: Figma (free), Canva Pro, Adobe Express.
+  Design the full 1200×630 card as a graphic, export as PNG.
+  Do not use a photo — this is a branded graphic card.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMAGE 3 — FAVICON (upgrade existing)                   🟡 MEDIUM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Save as:  /favicon.svg  (replace the existing file)
+Format:   SVG, viewBox="0 0 32 32"
+Usage:    Browser tab, bookmarks, PWA home screen icon
+
+OPTION A — Letter mark (recommended):
+  Rounded square fill #e4006f, single "G" in white Inter Bold.
+  Use "G" only — "GA" is illegible at real 16px tab size.
+
+  READY-TO-USE SVG (paste directly into /favicon.svg):
+
+  <svg xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 32 32" width="32" height="32">
+    <rect width="32" height="32" rx="6" fill="#e4006f"/>
+    <text x="16" y="22" text-anchor="middle"
+          fill="#ffffff" font-family="Inter, sans-serif"
+          font-weight="700" font-size="20">G</text>
+  </svg>
+
+OPTION B — Abstract connection mark:
+  Two overlapping circles (Venn diagram) on a dark square.
+  Left circle:  cx=12, cy=16, r=10, fill #e4006f, opacity 0.85
+  Right circle: cx=20, cy=16, r=10, fill #ffffff, opacity 0.6
+  Background:   #0d0d0d rounded square rx=6
+  Reads as "intersection / connection" — apt for an architect.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUICK REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  File                           Size         Priority
+  ─────────────────────────────  ───────────  ──────────────────────────────
+  /images/ghassan-alhamoud.jpg   800×1000px+  CRITICAL — real photo, no AI sub
+  /images/og-default.png         1200×630px   CRITICAL — design in Figma/Canva
+  /favicon.svg                   32×32 SVG    MEDIUM   — use Option A above directly
+
+OPTIMISE BEFORE UPLOADING:
+  JPG headshot:  imageoptim.com (Mac, free)  — target under 200KB
+  PNG OG card:   squoosh.app (browser, free) — target under 400KB
+  SVG favicon:   Already minimal, no optimisation needed
+
+TOOLS:
+  Design OG card:  figma.com (free)  /  canva.com
+  AI generation:   midjourney.com  /  ChatGPT DALL·E 3  /  Flux Pro
+  AI headshots:    aragon.ai  /  photoai.com  /  studioshoot.ai
+  Optimise:        imageoptim.com  /  squoosh.app
