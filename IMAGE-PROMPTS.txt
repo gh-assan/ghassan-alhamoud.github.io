@@ -4,11 +4,18 @@
 ║  Optimised for Midjourney v6 / DALL·E 3 / Flux Pro             ║
 ╚══════════════════════════════════════════════════════════════════╝
 
-SITE PALETTE REFERENCE
-  Background: #0d0d0d (true charcoal / near-black)
-  Accent:     #e4006f (ThoughtWorks magenta-pink)
-  Text:       #f0f0f0 (neutral white)
-  Success:    #3dd68c (emerald green)
+ACTIVE THEME: NATURE  (data-theme="nature" on <html>)
+  To switch back to dark: change data-theme to "dark"
+
+SITE PALETTE REFERENCE — NATURE THEME
+  Background:       #f5f7f5  (sage white, barely tinted)
+  Card surface:     #edf2ed  (slightly deeper sage)
+  Accent / CTA:     #1d6f42  (forest emerald — buttons, links, hover)
+  Text primary:     #1a2e1a  (deep forest)
+  Text secondary:   #4a6741  (sage mid-tone)
+  Text muted:       #6b8268  (footer links, dates)
+  Success / info:   #0e7490  (ocean blue — badges, checkmarks)
+  Border:           #c8d9c8  (light sage divider)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 IMAGE 1 — PROFESSIONAL HEADSHOT
@@ -18,48 +25,52 @@ Format:  JPG, minimum 800×1000px (portrait 4:5 ratio)
 Usage:   About section — left column photo, ~300×375px displayed
 
 NOTE: This must be a real photograph of you, not AI-generated.
-Use the prompt below to brief a photographer, or for style reference
-when selecting which photo to use.
+Use the brief below to direct a photographer or select from existing
+photos. The AI prompts are style references only.
 
 PHOTOGRAPHER BRIEF:
-  Environment: Studio or clean architectural interior (concrete
-    wall, minimal backdrop). No busy backgrounds.
-  Lighting: Broad key light from 45° camera-left, soft fill from
-    right. Small rim light behind to separate subject from dark
-    background. Think editorial / tech exec look, not corporate
-    headshot.
-  Wardrobe: Dark collarless shirt or minimal crew-neck (no tie,
-    no loud patterns). Communicates technical credibility + modern.
-  Expression: Direct eye contact, slight confident half-smile.
-    Not stiff. Not grinning. Thinking-but-approachable.
-  Post-processing: Dark, filmic, slight desaturation.
-    Skin tones warm but not orange. Contrast is high.
-    No heavy retouching — credibility over perfection.
-  Aspect ratio: 4:5 portrait (tight crop above shoulders to
-    mid-chest, centered, with ~20% head room above).
-  If using AI (e.g. for a placeholder): describe as a Middle
-    Eastern man, early 40s, serious tech-exec energy.
+  Environment: Natural or semi-natural setting that reads calm and
+    grounded. Options in order of preference:
+      — Outdoors: dappled light under trees, a garden wall, textured
+        stone or weathered wood in soft focus behind you.
+      — Indoors: large window with diffused daylight, a living wall
+        or bookshelf, warm concrete or raw linen backdrop.
+    Avoid: white studio cyclorama, dark dramatic backgrounds,
+    corporate boardroom, busy street.
+  Lighting: Soft natural light, ideally overcast or north-facing
+    window. No harsh shadows. Slight warmth (golden hour or
+    warm-balanced interior). Think editorial, not corporate.
+  Wardrobe: Clean, understated. Dark navy, forest green, deep
+    charcoal, or natural linen shirt. No patterns, no logos.
+    Collarless or minimal collar. Communicates thoughtful and calm.
+  Expression: Engaged and direct — slight half-smile is fine.
+    Should read as someone you'd trust with a complex problem.
+    Not stiff, not over-casual.
+  Post-processing: Airy, natural. Slight lift in shadows.
+    Preserve skin tones, don’t over-sharpen. Gentle desaturation
+    is fine, but keep warmth. Filmic grain optional.
+  Aspect ratio: 4:5 portrait — shoulders to just above head,
+    ~20% headroom, centered.
 
-MIDJOURNEY PROMPT (placeholder / style reference):
+MIDJOURNEY PROMPT (style reference / placeholder):
   "Editorial portrait of a male AI architect and tech consultant,
-  Middle Eastern, early 40s, dark collarless shirt, shot against
-  a near-black charcoal seamless backdrop, broad key light from
-  camera-left creating dramatic shadow, thin rim light separating
-  subject from background, sharp eyes looking directly into lens,
-  composed and confident expression, not smiling, slight cinematic
-  grain, medium format editorial aesthetic, shallow depth of field,
-  Leica Q2 feel, 4:5 portrait crop --ar 4:5 --style raw --v 6"
+  Middle Eastern, early 40s, wearing a dark forest-green collarless
+  shirt, photographed outdoors in dappled natural light, soft
+  background of blurred foliage and warm stone, broad soft key
+  light from the left, warm and airy colour grade, direct calm
+  gaze into lens, thoughtful expression, slight half-smile,
+  editorial lifestyle aesthetic, medium format feel, shallow
+  depth of field, 4:5 portrait crop --ar 4:5 --style raw --v 6"
 
 DALL·E 3 / GPT-4o PROMPT:
   "A professional editorial headshot photograph of a Middle
-  Eastern man in his early 40s. He wears a dark, minimal
-  collarless shirt. The background is near-black charcoal.
-  Dramatic broad key light from the left casts a sharp shadow
-  on the right side of his face. A thin rim light behind him
-  separates him cleanly from the background. His gaze is direct
-  and confident — composed, not smiling. The image has a filmic,
-  high-contrast editorial quality with subtle grain. Portrait
-  crop, 4:5 ratio, chest-up framing."
+  Eastern man in his early 40s. He wears a dark forest-green
+  minimal collarless shirt. The background is soft, blurred
+  natural foliage and warm stone in dappled light. Lighting is
+  broad and soft, coming from camera-left, warm-toned. His gaze
+  is direct and composed, a slight half-smile. Airy, natural
+  colour grade, not high-contrast. Medium format editorial feel.
+  Portrait crop, 4:5 ratio, chest-up framing."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 IMAGE 2 — OG DEFAULT (homepage + fallback for all pages)
@@ -68,68 +79,78 @@ Save as: /images/og-default.png
 Format:  PNG, exactly 1200×630px
 Usage:   og:image meta tag — shown as preview card on LinkedIn,
          Twitter/X, Slack, WhatsApp when someone shares the URL.
-         This is the first impression before anyone clicks.
+         First impression before anyone clicks. Must look polished.
 
-DESIGN SPEC:
-  - Background: solid #0d0d0d
-  - Left ~60%: large name "Ghassan Alhamoud" in bold white type
-    (~80px), below it "AI Architect & Systems Engineer" in medium
-    weight (#8c8c8c). Below that, a thin 3px accent line in #e4006f
-    spanning ~220px.
-  - Right ~40%: an abstract isometric network diagram rendered in
-    #e4006f lines (30% opacity) — nodes and connections suggesting
-    distributed systems / agent topology.
-  - Bottom-left: ghassanalhamoud.com in small monospaced text (#3d3d3d)
+DESIGN SPEC (nature theme — light background):
+  Background: solid #f5f7f5 (sage white, same as site bg)
+  Left ~60%:
+    — Name: "Ghassan Alhamoud" in bold, #1a2e1a (deep forest),
+      ~72px, letter-spacing tight (-0.03em), Inter or similar
+    — Title: "AI Architect & Systems Engineer" in medium weight,
+      #4a6741 (sage mid-tone), ~26px, below name
+    — Accent bar: 3px tall, ~200px wide, solid #1d6f42 (forest
+      emerald), 24px below the title line
+    — URL: "ghassanalhamoud.github.io" in 14px monospace,
+      #6b8268 (muted sage), near bottom-left corner
+  Right ~40%:
+    An abstract network diagram rendered in #1d6f42 lines
+    (25% opacity) — interconnected nodes and edges suggesting
+    distributed systems / agent topology. Clean, minimal.
+    A second pass of the same diagram offset slightly in
+    #0e7490 (ocean blue, 15% opacity) for depth.
+  Optional: A subtle #c8d9c8 (border color) grid pattern
+    at 8% opacity behind the full card for texture.
 
-MIDJOURNEY PROMPT (for the visual treatment only — you'll composite):
+MIDJOURNEY PROMPT (for the abstract diagram element only):
   "Abstract isometric network topology diagram, interconnected
-  nodes and directed edges floating in three-dimensional space,
-  rendered in bright magenta pink #e4006f on pure black background,
-  ultra-thin strokes, minimal, technical blueprint aesthetic,
-  no text, no labels, no gradients, flat vector style with subtle
-  depth, 16:9 wide crop --ar 16:9 --style raw --v 6 --no text"
+  nodes and directed edges, rendered in forest green #1d6f42 on
+  a pure sage-white #f5f7f5 background, ultra-thin strokes,
+  minimal, calm, technical blueprint aesthetic, no text, no
+  labels, no gradients, flat vector style with subtle depth,
+  nature-inspired tech, 4:3 wide crop --ar 4:3 --style raw
+  --v 6 --no text labels numbers"
 
 RECOMMENDED TOOLS: Figma (free), Canva Pro, Adobe Express.
-  Design the full 1200×630 card as a graphic, export as PNG.
-  Do not use a photo — this is a branded graphic card.
+  Design at 1200×630px, export as PNG. Do not photograph.
+  Target under 400KB (squoosh.app).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-IMAGE 3 — FAVICON (upgrade existing)                   🟡 MEDIUM
+IMAGE 3 — FAVICON                                      ✅ DONE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Save as:  /favicon.svg  (replace the existing file)
-Format:   SVG, viewBox="0 0 32 32"
-Usage:    Browser tab, bookmarks, PWA home screen icon
+File:    /favicon.svg  (already applied, no action needed)
+Format:  SVG, viewBox="0 0 32 32"
+Usage:   Browser tab, bookmarks, mobile home screen
 
-OPTION A — Letter mark (recommended):
-  Rounded square fill #e4006f, single "G" in white Inter Bold.
-  Use "G" only — "GA" is illegible at real 16px tab size.
+Current implementation: Pink rounded square (#e4006f) with white
+"G" lettermark. Deliberately uses the accent color from the dark
+theme — it renders at 16–32px where it becomes a pure icon, and
+a bright pink reads better than forest green at tiny sizes.
 
-  READY-TO-USE SVG (paste directly into /favicon.svg):
+If you want to update it for the nature theme:
+
+  OPTION A — Forest green square (matches nature CTA color):
 
   <svg xmlns="http://www.w3.org/2000/svg"
        viewBox="0 0 32 32" width="32" height="32">
-    <rect width="32" height="32" rx="6" fill="#e4006f"/>
+    <rect width="32" height="32" rx="6" fill="#1d6f42"/>
     <text x="16" y="22" text-anchor="middle"
           fill="#ffffff" font-family="Inter, sans-serif"
           font-weight="700" font-size="20">G</text>
   </svg>
 
-OPTION B — Abstract connection mark:
-  Two overlapping circles (Venn diagram) on a dark square.
-  Left circle:  cx=12, cy=16, r=10, fill #e4006f, opacity 0.85
-  Right circle: cx=20, cy=16, r=10, fill #ffffff, opacity 0.6
-  Background:   #0d0d0d rounded square rx=6
-  Reads as "intersection / connection" — apt for an architect.
+  OPTION B — Keep the pink (recommended):
+  Pink is more distinctive at 16px. Green can disappear on some
+  browser chrome backgrounds. No change needed.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 QUICK REFERENCE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  File                           Size         Priority
-  ─────────────────────────────  ───────────  ──────────────────────────────
-  /images/ghassan-alhamoud.jpg   800×1000px+  CRITICAL — real photo, no AI sub
-  /images/og-default.png         1200×630px   CRITICAL — design in Figma/Canva
-  /favicon.svg                   32×32 SVG    MEDIUM   — use Option A above directly
+  File                           Size         Status
+  ───────────────────────────────  ───────────  ──────────────────────────────
+  /images/ghassan-alhamoud.jpg   800×1000px+  ❌ CRITICAL — real photo required
+  /images/og-default.png         1200×630px   ❌ CRITICAL — design in Figma/Canva
+  /favicon.svg                   32×32 SVG    ✅ DONE — pink G lettermark applied
 
 OPTIMISE BEFORE UPLOADING:
   JPG headshot:  imageoptim.com (Mac, free)  — target under 200KB
@@ -140,4 +161,13 @@ TOOLS:
   Design OG card:  figma.com (free)  /  canva.com
   AI generation:   midjourney.com  /  ChatGPT DALL·E 3  /  Flux Pro
   AI headshots:    aragon.ai  /  photoai.com  /  studioshoot.ai
+    (upload 10–20 selfies in varied lighting, these tools
+    generate realistic professional headshots from your face)
   Optimise:        imageoptim.com  /  squoosh.app
+
+NATURE THEME NOTE:
+  The site is currently running data-theme="nature" (sage white /
+  forest green / ocean blue). Both images above have been briefed
+  to match. If you switch themes, re-read the OG card spec —
+  the dark version spec is no longer in this file. Use git history
+  to retrieve it if needed (commit before the nature theme).
