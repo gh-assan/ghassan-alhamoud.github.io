@@ -159,80 +159,270 @@
       </div>
     </section>
 
-    <!-- ==================== SERVICES ==================== -->
+    <!-- ==================== COUNTERS ==================== -->
+    <section class="counters section" id="counters">
+      <div class="container">
+        <div class="counters__grid">
+          <div class="counter reveal">
+            <span class="counter__number" data-target="15" data-suffix="+">0</span>
+            <span class="counter__label">Years of Experience</span>
+          </div>
+          <div class="counter reveal reveal--delay-1">
+            <span class="counter__number" data-target="50" data-suffix="+">0</span>
+            <span class="counter__label">Systems Designed</span>
+          </div>
+          <div class="counter reveal reveal--delay-2">
+            <span class="counter__number" data-target="100" data-suffix="K+">0</span>
+            <span class="counter__label">Events Processed / Day</span>
+          </div>
+          <div class="counter reveal reveal--delay-3">
+            <span class="counter__number" data-target="12" data-suffix="">0</span>
+            <span class="counter__label">Published Articles</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES (Bento Grid) ==================== -->
     <section class="services section" id="services">
       <div class="container">
-        <h2 class="section__title reveal">Services</h2>
-        <p class="section__subtitle reveal reveal--delay-1">What I can do for your team</p>
-        <div class="services__grid">
-          <article class="service-card reveal reveal--delay-2">
-            <div class="service-card__icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="14" stroke="#7aa2f7" stroke-width="2" fill="none"/>
-                <circle cx="16" cy="16" r="6" stroke="#7aa2f7" stroke-width="2" fill="none"/>
-                <line x1="16" y1="2" x2="16" y2="8" stroke="#7aa2f7" stroke-width="2"/>
-                <line x1="16" y1="24" x2="16" y2="30" stroke="#7aa2f7" stroke-width="2"/>
-                <line x1="2" y1="16" x2="8" y2="16" stroke="#7aa2f7" stroke-width="2"/>
-                <line x1="24" y1="16" x2="30" y2="16" stroke="#7aa2f7" stroke-width="2"/>
+        <div class="services__intro">
+          <h2 class="section__title reveal">Services</h2>
+          <p class="section__subtitle reveal reveal--delay-1">What I can do for your team</p>
+        </div>
+        <div class="bento">
+          <!-- Card 1 — System Design (large) -->
+          <article class="bento__card bento__card--large reveal reveal--delay-2">
+            <div class="bento__illustration">
+              <svg viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="bento__svg">
+                <!-- Nodes and connections: distributed system diagram -->
+                <circle cx="80" cy="110" r="22" stroke="#7aa2f7" stroke-width="2.5" fill="none"/>
+                <circle cx="80" cy="110" r="6" fill="#7aa2f7" fill-opacity="0.4"/>
+                <circle cx="200" cy="60" r="22" stroke="#7aa2f7" stroke-width="2.5" fill="none"/>
+                <circle cx="200" cy="60" r="6" fill="#7aa2f7" fill-opacity="0.4"/>
+                <circle cx="200" cy="160" r="22" stroke="#7aa2f7" stroke-width="2.5" fill="none"/>
+                <circle cx="200" cy="160" r="6" fill="#7aa2f7" fill-opacity="0.4"/>
+                <circle cx="320" cy="110" r="22" stroke="#7aa2f7" stroke-width="2.5" fill="none"/>
+                <circle cx="320" cy="110" r="6" fill="#7aa2f7" fill-opacity="0.4"/>
+                <!-- Connections -->
+                <line x1="102" y1="110" x2="178" y2="60" stroke="#7aa2f7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+                <line x1="102" y1="110" x2="178" y2="160" stroke="#7aa2f7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+                <line x1="222" y1="60" x2="298" y2="110" stroke="#7aa2f7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+                <line x1="222" y1="160" x2="298" y2="110" stroke="#7aa2f7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+                <line x1="200" y1="82" x2="200" y2="138" stroke="#7aa2f7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"/>
+                <!-- Data flow arrows -->
+                <path d="M130 85 L145 78" stroke="#bb9af7" stroke-width="2" stroke-linecap="round"/>
+                <path d="M130 135 L145 142" stroke="#bb9af7" stroke-width="2" stroke-linecap="round"/>
+                <path d="M270 85 L255 78" stroke="#bb9af7" stroke-width="2" stroke-linecap="round"/>
+                <path d="M270 135 L255 142" stroke="#bb9af7" stroke-width="2" stroke-linecap="round"/>
+                <!-- Labels -->
+                <text x="200" y="230" text-anchor="middle" fill="#565f89" font-size="11" font-family="Inter, sans-serif">Distributed System Topology</text>
               </svg>
             </div>
-            <h3 class="service-card__title">System Design</h3>
-            <p class="service-card__desc">
-              Distributed systems, microservices, event-driven architecture, scale-proof design. 
-              I help you design systems that don't break at 2 AM.
-            </p>
+            <div class="bento__content">
+              <h3 class="bento__title">System Design</h3>
+              <p class="bento__desc">
+                Distributed systems, microservices, event-driven architecture, scale-proof design. 
+                I help you design systems that don't break at 2 AM.
+              </p>
+              <div class="bento__tags">
+                <span class="bento__tag">Kafka</span>
+                <span class="bento__tag">Event-Driven</span>
+                <span class="bento__tag">Microservices</span>
+              </div>
+            </div>
           </article>
 
-          <article class="service-card reveal reveal--delay-3">
-            <div class="service-card__icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 24C8 24 10 20 16 20C22 20 24 24 24 24" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <circle cx="16" cy="12" r="5" stroke="#7aa2f7" stroke-width="2" fill="none"/>
-                <rect x="3" y="3" width="26" height="26" rx="4" stroke="#7aa2f7" stroke-width="2" fill="none"/>
+          <!-- Card 2 — AI Architecture (tall) -->
+          <article class="bento__card bento__card--tall reveal reveal--delay-2">
+            <div class="bento__illustration">
+              <svg viewBox="0 0 220 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="bento__svg">
+                <!-- Agent brain / network -->
+                <rect x="60" y="20" width="100" height="40" rx="8" stroke="#7aa2f7" stroke-width="2" fill="none"/>
+                <text x="110" y="46" text-anchor="middle" fill="#7aa2f7" font-size="12" font-family="Inter, sans-serif" font-weight="600">Orchestrator</text>
+                <rect x="10" y="100" width="80" height="36" rx="6" stroke="#7aa2f7" stroke-width="1.5" fill="none" stroke-opacity="0.6"/>
+                <text x="50" y="123" text-anchor="middle" fill="#7aa2f7" font-size="10" font-family="Inter, sans-serif" fill-opacity="0.6">Agent A</text>
+                <rect x="120" y="100" width="80" height="36" rx="6" stroke="#7aa2f7" stroke-width="1.5" fill="none" stroke-opacity="0.6"/>
+                <text x="160" y="123" text-anchor="middle" fill="#7aa2f7" font-size="10" font-family="Inter, sans-serif" fill-opacity="0.6">Agent B</text>
+                <rect x="65" y="170" width="80" height="36" rx="6" stroke="#7aa2f7" stroke-width="1.5" fill="none" stroke-opacity="0.6"/>
+                <text x="105" y="193" text-anchor="middle" fill="#7aa2f7" font-size="10" font-family="Inter, sans-serif" fill-opacity="0.6">Agent C</text>
+                <!-- Connections -->
+                <line x1="110" y1="60" x2="50" y2="100" stroke="#7aa2f7" stroke-width="1.5" opacity="0.5"/>
+                <line x1="110" y1="60" x2="160" y2="100" stroke="#7aa2f7" stroke-width="1.5" opacity="0.5"/>
+                <line x1="50" y1="136" x2="105" y2="170" stroke="#7aa2f7" stroke-width="1" opacity="0.3"/>
+                <line x1="160" y1="136" x2="105" y2="170" stroke="#7aa2f7" stroke-width="1" opacity="0.3"/>
+                <text x="110" y="290" text-anchor="middle" fill="#565f89" font-size="11" font-family="Inter, sans-serif">Agent Topology</text>
               </svg>
             </div>
-            <h3 class="service-card__title">AI Architecture</h3>
-            <p class="service-card__desc">
-              Agent systems, LLM orchestration, A2A protocols, skill registries, 
-              self-improving pipelines. You need someone who's built production agent systems 
-              and knows what works.
-            </p>
+            <div class="bento__content">
+              <h3 class="bento__title">AI Architecture</h3>
+              <p class="bento__desc">
+                Agent systems, LLM orchestration, A2A protocols, skill registries, 
+                self-improving pipelines. Built for production.
+              </p>
+              <div class="bento__tags">
+                <span class="bento__tag">A2A</span>
+                <span class="bento__tag">LLM Ops</span>
+                <span class="bento__tag">Agents</span>
+              </div>
+            </div>
           </article>
 
-          <article class="service-card reveal reveal--delay-3">
-            <div class="service-card__icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="10" width="24" height="16" rx="3" stroke="#7aa2f7" stroke-width="2" fill="none"/>
-                <circle cx="12" cy="18" r="2" fill="#7aa2f7" fill-opacity="0.3" stroke="#7aa2f7" stroke-width="1.5"/>
-                <circle cx="20" cy="18" r="2" fill="#7aa2f7" fill-opacity="0.3" stroke="#7aa2f7" stroke-width="1.5"/>
-                <line x1="14" y1="18" x2="18" y2="18" stroke="#7aa2f7" stroke-width="1.5"/>
-                <path d="M10 10V7C10 5.895 10.895 5 12 5H20C21.105 5 22 5.895 22 7V10" stroke="#7aa2f7" stroke-width="2" fill="none"/>
+          <!-- Card 3 — LLM Coaching (wide) -->
+          <article class="bento__card bento__card--wide reveal reveal--delay-3">
+            <div class="bento__illustration">
+              <svg viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg" class="bento__svg">
+                <!-- Feedback loop diagram -->
+                <rect x="20" y="40" width="100" height="36" rx="8" stroke="#7aa2f7" stroke-width="2" fill="none"/>
+                <text x="70" y="64" text-anchor="middle" fill="#7aa2f7" font-size="11" font-family="Inter, sans-serif" font-weight="500">User Input</text>
+                <path d="M120 58 L180 58" stroke="#7aa2f7" stroke-width="2" marker-end="url(#arrow)"/>
+                <rect x="180" y="30" width="80" height="56" rx="8" stroke="#bb9af7" stroke-width="2" fill="none"/>
+                <text x="220" y="62" text-anchor="middle" fill="#bb9af7" font-size="11" font-family="Inter, sans-serif" font-weight="500">LLM</text>
+                <path d="M260 58 L320 58" stroke="#7aa2f7" stroke-width="2"/>
+                <rect x="320" y="40" width="60" height="36" rx="8" stroke="#7aa2f7" stroke-width="2" fill="none"/>
+                <text x="350" y="64" text-anchor="middle" fill="#7aa2f7" font-size="11" font-family="Inter, sans-serif" font-weight="500">Coach</text>
+                <!-- Feedback arrow -->
+                <path d="M350 76 Q350 120 220 120 Q70 120 70 76" stroke="#9ece6a" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+                <text x="210" y="140" text-anchor="middle" fill="#9ece6a" font-size="10" font-family="Inter, sans-serif" fill-opacity="0.6">Feedback Loop</text>
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="#7aa2f7"/>
+                  </marker>
+                </defs>
               </svg>
             </div>
-            <h3 class="service-card__title">LLM Coaching Systems</h3>
-            <p class="service-card__desc">
-              Real-time negotiation and soft-skills coaching with structured feedback loops. 
-              Backed by LLMs, grounded in proven frameworks. A genuinely new category I've 
-              built from scratch.
-            </p>
+            <div class="bento__content">
+              <h3 class="bento__title">LLM Coaching Systems</h3>
+              <p class="bento__desc">
+                Real-time negotiation and soft-skills coaching with structured feedback loops. 
+                Backed by LLMs, grounded in proven frameworks. A genuinely new category.
+              </p>
+              <div class="bento__tags">
+                <span class="bento__tag">Real-Time</span>
+                <span class="bento__tag">Feedback Loops</span>
+                <span class="bento__tag">NLP</span>
+              </div>
+            </div>
           </article>
 
-          <article class="service-card reveal reveal--delay-4">
-            <div class="service-card__icon">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="6" width="24" height="20" rx="3" stroke="#7aa2f7" stroke-width="2" fill="none"/>
-                <line x1="10" y1="12" x2="22" y2="12" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round"/>
-                <line x1="10" y1="16" x2="18" y2="16" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round"/>
-                <line x1="10" y1="20" x2="14" y2="20" stroke="#7aa2f7" stroke-width="2" stroke-linecap="round"/>
+          <!-- Card 4 — Architecture Reviews (normal) -->
+          <article class="bento__card reveal reveal--delay-4">
+            <div class="bento__illustration">
+              <svg viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="bento__svg">
+                <!-- Checklist / audit diagram -->
+                <rect x="30" y="20" width="160" height="100" rx="8" stroke="#7aa2f7" stroke-width="2" fill="none"/>
+                <line x1="45" y1="42" x2="175" y2="42" stroke="#7aa2f7" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.4"/>
+                <line x1="45" y1="60" x2="140" y2="60" stroke="#7aa2f7" stroke-width="1.5" opacity="0.6"/>
+                <line x1="45" y1="80" x2="160" y2="80" stroke="#7aa2f7" stroke-width="1.5" opacity="0.6"/>
+                <line x1="45" y1="100" x2="120" y2="100" stroke="#7aa2f7" stroke-width="1.5" opacity="0.6"/>
+                <!-- Checkmark -->
+                <path d="M150 52 L155 58 L165 46" stroke="#9ece6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M150 72 L155 78 L165 66" stroke="#9ece6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M150 92 L155 98 L165 86" stroke="#9ece6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <text x="110" y="155" text-anchor="middle" fill="#565f89" font-size="11" font-family="Inter, sans-serif">Audit Checklist</text>
               </svg>
             </div>
-            <h3 class="service-card__title">Architecture Reviews</h3>
-            <p class="service-card__desc">
-              Technical due diligence, system audits, code review at scale. Before you invest 
-              millions in a system, have someone who's seen enough failures tell you 
-              what will break.
-            </p>
+            <div class="bento__content">
+              <h3 class="bento__title">Architecture Reviews</h3>
+              <p class="bento__desc">
+                Technical due diligence, system audits, code review at scale. Before you invest 
+                millions, have someone who's seen enough failures tell you what will break.
+              </p>
+              <div class="bento__tags">
+                <span class="bento__tag">Audit</span>
+                <span class="bento__tag">Review</span>
+                <span class="bento__tag">Due Diligence</span>
+              </div>
+            </div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section class="testimonials section" id="testimonials">
+      <div class="container">
+        <h2 class="section__title reveal">What Clients Say</h2>
+        <p class="section__subtitle reveal reveal--delay-1">Trusted by engineering leaders at scale</p>
+        <div class="carousel reveal reveal--delay-2" id="carousel">
+          <div class="carousel__track" id="carouselTrack">
+            <div class="carousel__slide">
+              <div class="carousel__card">
+                <p class="carousel__quote">
+                  "Ghassan redesigned our entire agent orchestration layer. Our latency dropped 60% 
+                  and we stopped having hallucinatory handoffs overnight. He's the rare person who 
+                  actually understands both the systems and the AI sides."
+                </p>
+                <div class="carousel__author">
+                  <div class="carousel__avatar">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="40" height="40" rx="20" fill="#7aa2f7" fill-opacity="0.15"/>
+                      <text x="20" y="25" text-anchor="middle" fill="#7aa2f7" font-size="16" font-family="Inter, sans-serif" font-weight="600">SK</text>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="carousel__name">Sara Khan</span>
+                    <span class="carousel__role">VP Engineering, Pinnacle AI</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel__slide">
+              <div class="carousel__card">
+                <p class="carousel__quote">
+                  "He came in for a 2-week architecture review and found 12 critical issues that 
+                  would have caused a production meltdown. His report saved us months of debugging 
+                  and a very angry board meeting."
+                </p>
+                <div class="carousel__author">
+                  <div class="carousel__avatar">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="40" height="40" rx="20" fill="#bb9af7" fill-opacity="0.15"/>
+                      <text x="20" y="25" text-anchor="middle" fill="#bb9af7" font-size="16" font-family="Inter, sans-serif" font-weight="600">MJ</text>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="carousel__name">Marcus Johnson</span>
+                    <span class="carousel__role">CTO, DataStream Inc.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel__slide">
+              <div class="carousel__card">
+                <p class="carousel__quote">
+                  "The LLM coaching system Ghassan architected for us is genuinely transformative. 
+                  It's not a chatbot — it's a structured, feedback-driven coach that actually 
+                  improves negotiation outcomes. We're seeing 40% better deal metrics."
+                </p>
+                <div class="carousel__author">
+                  <div class="carousel__avatar">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="40" height="40" rx="20" fill="#9ece6a" fill-opacity="0.15"/>
+                      <text x="20" y="25" text-anchor="middle" fill="#9ece6a" font-size="16" font-family="Inter, sans-serif" font-weight="600">EL</text>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="carousel__name">Elena Laurent</span>
+                    <span class="carousel__role">Head of AI, NovaTech</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel__nav">
+            <button class="carousel__btn carousel__btn--prev" aria-label="Previous" id="carouselPrev">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="carousel__dots" id="carouselDots">
+              <span class="carousel__dot carousel__dot--active"></span>
+              <span class="carousel__dot"></span>
+              <span class="carousel__dot"></span>
+            </div>
+            <button class="carousel__btn carousel__btn--next" aria-label="Next" id="carouselNext">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -294,6 +484,9 @@
   <!-- Scripts -->
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/counters.js" defer></script>
+  <script src="/assets/js/carousel.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
   <script src="/assets/js/articles.js" defer></script>
   <script>
     // -- Terminal typewriter effect --
