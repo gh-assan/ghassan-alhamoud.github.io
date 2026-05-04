@@ -1,42 +1,285 @@
 [
   {
-    "slug": "llm-negotiation-coach",
-    "title": "I Watched a 20-Year Negotiation Veteran Collapse",
-    "date": "2026-04-28",
-    "excerpt": "Not because of AI. Because of me + AI. A real-time coaching system that combines LLM reasoning with structured feedback loops.",
-    "readingTime": "8 min",
-    "tags": ["negotiation", "llm", "coaching"]
+    "slug": "stop-building-agent-soup-compilers",
+    "title": "Stop Building \"Agent Soup.\" Start Building Compilers.",
+    "date": "2026-03-10",
+    "excerpt": "Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone.",
+    "readingTime": "6 min",
+    "tags": [
+      "AI Agents",
+      "Architecture",
+      "Engineering"
+    ]
   },
   {
-    "slug": "self-improving-systems",
-    "title": "The Most Boring Automation I've Ever Built",
+    "slug": "a2a-negotiation-outreach",
+    "title": "A2A Negotiation Experiment: The Outreach That Worked",
+    "date": "2026-04-12",
+    "excerpt": "I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach.",
+    "readingTime": "4 min",
+    "tags": [
+      "AI Agents",
+      "Negotiation",
+      "A2A Protocol"
+    ]
+  },
+  {
+    "slug": "automation-pattern-6-industries",
+    "title": "The Automation Pattern That Kept Repeating Across 6 Industries",
+    "date": "2026-05-02",
+    "excerpt": "I spent a day running a structured automation discovery engine across six completely different industries. The exact same automation gap showed up in every single domain.",
+    "readingTime": "7 min",
+    "tags": [
+      "Automation",
+      "Discovery",
+      "Architecture",
+      "Pattern"
+    ]
+  },
+  {
+    "slug": "ai-found-42-automation-opportunities",
+    "title": "I Asked an AI to Find Automation Opportunities. It Found 42 in One Day.",
+    "date": "2026-05-02",
+    "excerpt": "42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries.",
+    "readingTime": "8 min",
+    "tags": [
+      "Automation",
+      "Discovery",
+      "Breakthrough",
+      "Potential"
+    ]
+  },
+  {
+    "slug": "stress-test-self-healing-250-target",
+    "title": "I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.",
+    "date": "2026-05-03",
+    "excerpt": "You know that feeling when you deploy an agent, walk away, come back, and something's wrong? That was us. Except our target was 250.",
+    "readingTime": "7 min",
+    "tags": [
+      "Self-Healing",
+      "AI Systems",
+      "Infrastructure",
+      "Failure"
+    ]
+  },
+  {
+    "slug": "issue-management-system-property",
+    "title": "Issue Management as a System Property",
+    "date": "2026-05-04",
+    "excerpt": "I believed good monitoring was enough. Dashboards. Alerts. Runbooks. And we fixed the same problems three times. Here's what I built instead.",
+    "readingTime": "7 min",
+    "tags": [
+      "Self-Healing",
+      "Reliability",
+      "Infrastructure",
+      "Monitoring"
+    ]
+  },
+  {
+    "slug": "self-healing-architecture-feedback-loop",
+    "title": "Three Layers Is Not Enough - You Need a Feedback Loop That Closes",
+    "date": "2026-05-05",
+    "excerpt": "The difference between a system that learns from failure and one that merely records it is a single architectural decision.",
+    "readingTime": "9 min",
+    "tags": [
+      "Self-Healing",
+      "Architecture",
+      "Feedback Loops"
+    ]
+  },
+  {
+    "slug": "workspace-indexing-3ms",
+    "title": "Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms",
+    "date": "2026-05-06",
+    "excerpt": "Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.",
+    "readingTime": "7 min",
+    "tags": [
+      "Architecture",
+      "Performance",
+      "Workspace Indexing"
+    ]
+  },
+  {
+    "slug": "5-failures-building-agent-3-months",
+    "title": "I Spent 3 Months Building My Agent. Here Are the 5 Failures That Almost Killed It.",
+    "date": "2026-05-04",
+    "excerpt": "I went all-in on building a personal AI agent. I spent 3 months, went through 5 architectures, killed 2 email accounts. Here's exactly what failed.",
+    "readingTime": "9 min",
+    "tags": [
+      "AI Agents",
+      "Infrastructure",
+      "Failure",
+      "Architecture"
+    ]
+  },
+  {
+    "slug": "5-infrastructure-layers-broke-agent",
+    "title": "The 5 Infrastructure Layers That Broke My Agent",
+    "date": "2026-05-04",
+    "excerpt": "Everyone talks about building agents. No one talks about what breaks them. Here's the structural post-mortem of 5 separate infrastructure layers that failed.",
+    "readingTime": "9 min",
+    "tags": [
+      "AI Agents",
+      "Infrastructure",
+      "Architecture",
+      "Post-Mortem"
+    ]
+  },
+  {
+    "slug": "agent-reasoning-discovery-fallacy",
+    "title": "The Agent Reasoning Fallacy",
+    "date": "2026-03-08",
+    "excerpt": "Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.",
+    "readingTime": "5 min",
+    "tags": [
+      "AI Agents",
+      "Discovery",
+      "Distributed Systems"
+    ]
+  },
+  {
+    "slug": "agent-black-box-skill-ledger",
+    "title": "The Agent Black Box Problem",
+    "date": "2026-03-12",
+    "excerpt": "If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger.",
+    "readingTime": "5 min",
+    "tags": [
+      "AI Agents",
+      "Security",
+      "Trust"
+    ]
+  },
+  {
+    "slug": "startup-intelligence-entity-graph",
+    "title": "Stop Buying Startup Data. Start Owning It.",
+    "date": "2026-03-18",
+    "excerpt": "Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph.",
+    "readingTime": "5 min",
+    "tags": [
+      "Startup Intelligence",
+      "Data",
+      "Architecture"
+    ]
+  },
+  {
+    "slug": "systematic-ideation-engine",
+    "title": "Stop Waiting for Lightning: Build an Ideation Engine",
+    "date": "2026-03-20",
+    "excerpt": "I spent years waiting for the big idea. Then I realized I was treating ideation like a creative act. I should have been treating it like an engineering problem.",
+    "readingTime": "4 min",
+    "tags": [
+      "Ideation",
+      "Product Development",
+      "Systems"
+    ]
+  },
+  {
+    "slug": "agent-reliability-sla-infrastructure",
+    "title": "Intelligence Is Trivial. Reliability Is the New Frontier.",
+    "date": "2026-03-22",
+    "excerpt": "I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke.",
+    "readingTime": "4 min",
+    "tags": [
+      "AI Agents",
+      "Reliability",
+      "Infrastructure"
+    ]
+  },
+  {
+    "slug": "compliance-as-code-eu-ai-act",
+    "title": "Compliance-as-Code: The Bottleneck Nobody's Automating",
+    "date": "2026-03-25",
+    "excerpt": "Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken.",
+    "readingTime": "5 min",
+    "tags": [
+      "Compliance",
+      "AI",
+      "Automation"
+    ]
+  },
+  {
+    "slug": "agent-execution-attestation",
+    "title": "Stop Obsessing Over Alignment. Start Building Auditability.",
+    "date": "2026-03-28",
+    "excerpt": "You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.",
+    "readingTime": "5 min",
+    "tags": [
+      "AI Agents",
+      "Security",
+      "Trust",
+      "Architecture"
+    ]
+  },
+  {
+    "slug": "startupgraph-insights-engine",
+    "title": "Get Off the Crunchbase Treadmill",
+    "date": "2026-03-30",
+    "excerpt": "Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer.",
+    "readingTime": "5 min",
+    "tags": [
+      "Startup Intelligence",
+      "Data",
+      "Real-time"
+    ]
+  },
+  {
+    "slug": "echoweave-on-device-narrative-os",
+    "title": "EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.",
+    "date": "2026-04-05",
+    "excerpt": "Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS.",
+    "readingTime": "5 min",
+    "tags": [
+      "Privacy",
+      "On-Device AI",
+      "Personal OS"
+    ]
+  },
+  {
+    "slug": "dreamforge-automation-pipeline",
+    "title": "I Automated 90% of Shipping. Here's What I Learned.",
+    "date": "2026-04-08",
+    "excerpt": "I used to think my value as a founder was shipping. I built an autonomous pipeline that takes an idea from chat to code without me touching the keyboard.",
+    "readingTime": "6 min",
+    "tags": [
+      "Automation",
+      "Product Development",
+      "AI Agents"
+    ]
+  },
+  {
+    "slug": "negotiation-veteran-collapse-llm-coach",
+    "title": "I Watched a 20-Year Negotiation Veteran Collapse. Not Because of AI. Because of Me + AI.",
+    "date": "2026-04-10",
+    "excerpt": "I sat across from someone who's been negotiating since before I started my career. I didn't out-negotiate them. I out-prepared them with an LLM coach.",
+    "readingTime": "5 min",
+    "tags": [
+      "Negotiation",
+      "LLM",
+      "Coaching"
+    ]
+  },
+  {
+    "slug": "every-token-is-rent-memory-architecture",
+    "title": "Every Token Is Rent: Building an Agent That Doesn't Forget",
+    "date": "2026-04-01",
+    "excerpt": "I watched my agent re-read the same project files for the third time that morning. Every session, a complete hard reset. Here's the memory architecture that fixed it.",
+    "readingTime": "8 min",
+    "tags": [
+      "Memory Architecture",
+      "LLM",
+      "System Design"
+    ]
+  },
+  {
+    "slug": "most-boring-automation-self-improving",
+    "title": "The Most Boring Automation I've Ever Built - And Why It's the Only One That Works",
     "date": "2026-04-15",
     "excerpt": "It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful.",
     "readingTime": "6 min",
-    "tags": ["automation", "ai", "systems"]
-  },
-  {
-    "slug": "memory-architecture",
-    "title": "Every Token Is Rent",
-    "date": "2026-04-01",
-    "excerpt": "Why context windows are a trap and how to build LLM systems that remember what matters without bankrupting you.",
-    "readingTime": "7 min",
-    "tags": ["llm", "memory", "architecture"]
-  },
-  {
-    "slug": "stop-building-agent-soup",
-    "title": "Stop Building Agent Soup",
-    "date": "2026-03-15",
-    "excerpt": "Everyone's throwing agents at problems. Most of them are making things worse. Here's what actually works.",
-    "readingTime": "5 min",
-    "tags": ["agents", "ai-architecture", "best-practices"]
-  },
-  {
-    "slug": "agents-cant-find-each-other",
-    "title": "Agents Can't Find Each Other",
-    "date": "2026-03-01",
-    "excerpt": "The multi-agent discovery problem is the hard part nobody's solving. Here's a protocol-based approach.",
-    "readingTime": "6 min",
-    "tags": ["agents", "protocols", "discovery"]
+    "tags": [
+      "Feedback Loops",
+      "AI Systems",
+      "Monitoring"
+    ]
   }
 ]

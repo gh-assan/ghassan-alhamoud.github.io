@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms — Ghassan Alhamoud</title>
+  <meta name="description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
+  <meta name="author" content="Ghassan Alhamoud" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/workspace-indexing-3ms.html" />
+  <meta property="og:title" content="Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms" />
+  <meta property="og:description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
+  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART-022.webp" />
+  <meta property="article:published_time" content="2026-05-06" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/workspace-indexing-3ms.html" />
+  <meta property="twitter:title" content="Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms" />
+  <meta property="twitter:description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
+  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART-022.webp" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://calendly.com" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Services</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-05-06">May 06, 2026</time>
+            <span class="article-card__dot"></span>
+            <span>7 min</span>
+          </div>
+          <h1 class="article-single__title">Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms</h1>
+          <div class="article-single__tags"><span class="article-single__tag">Architecture</span>
+          <span class="article-single__tag">Performance</span>
+          <span class="article-single__tag">Workspace Indexing</span></div>
+        </header>
+
+        <div class="article-single__body">
+          <p>Every time your agent needs to find a file, it does one of three things:</p>
+<ol>
+<li><strong>Scans</strong> the entire directory tree — one <code>find</code> per look-up, O(n) disk traversal</li>
+<li><strong>Greps</strong> MEMORY.md — 19KB text file parsed for keywords, high false-positive rate</li>
+<li><strong>Asks you</strong> — "Where's that file about X again?"</li>
+</ol>
+<p>All three are wrong. They treat the file system as a database without an index, and the agent's context window as a cache that gets evicted every session.</p>
+<p>Here's the architecture for a solution that reads the entire workspace in 3ms and costs ~400 tokens to load.</p>
+<hr />
+<h2>Why Directory Scans Fail at Scale</h2>
+<p>The naive approach is <code>find</code> at startup. It works for 50 files. It becomes slow at 200. At 1,224 files — which is where this workspace sits — a full directory scan costs 50–200ms of wall time and an unpredictable number of context tokens depending on how deep the agent walks.</p>
+<p>More importantly: <code>find</code> returns paths, not semantics. It tells you a file exists. It does not tell you whether that file is an article, an idea, a project, or a resolved postmortem. The agent must then open each candidate file to answer that question.</p>
+<p>The alternative — grepping MEMORY.md — is equally flawed. MEMORY.md is a curated memory store at 19KB. It was never designed to be a file system index. Every grep into it is a trade-off: either you build a mental model of the file tree by reading it end-to-end (expensive), or you search for specific terms and hope the term matches a file path (fragile).</p>
+<p>The correct architecture is a <strong>pre-computed compact index</strong> that is loaded once per session and queried in-memory.</p>
+<hr />
+<h2>The Three Constraints</h2>
+<p>The design had three hard constraints:</p>
+<p><strong>1. Load time under 10ms.</strong> The index must be loaded at session start alongside the system prompt. If it cannot load faster than a <code>find</code>, it provides no benefit. Target: sub-5ms.</p>
+<p><strong>2. Token cost under 500 tokens.</strong> The index is part of the agent's context window for the entire session. Every kilobyte of index is a kilobyte not available for reasoning. Target: ~400 tokens.</p>
+<p><strong>3. Zero dependencies.</strong> The index generator must be a single Python file with only stdlib imports. No YAML parsers, no database clients, nothing that can break. Output is a single JSON file.</p>
+<hr />
+<h2>The Architecture</h2>
+<p>The system has two components: a generator and a compact serialization format.</p>
+<h3>Generator</h3>
+<p>The generator (<code>workspace-indexer.py</code>) scans every section of the workspace once per day. For each directory group — ideas, skills, articles, issues, products, research, automation mining, projects — it walks the relevant subdirectory, reads YAML frontmatter from each file, and extracts structured data: ID, title, status, priority, tags, and cross-references.</p>
+<p>The scan is O(n) where n is the total file count (1,224). It runs in ~300ms and produces a ~12KB JSON file. This is acceptable for a daily cron job. The index is regenerated every 24 hours or on demand.</p>
+<h3>Compact Serialization</h3>
+<p>The JSON index uses single-character field keys. "title" becomes "t", "file" becomes "f", "status" becomes "s". This is not optional cosmetic compression — it is the difference between a 12KB file and a ~3KB compact payload. At this size, the index can be loaded as a one-liner:</p>
+<pre><code>import json; REGISTRY = json.load(open("Registry/index.json"))</code></pre>
+<p>This is the entire setup. There is no caching layer, no daemon, no database connection. The file is on disk. <code>json.load</code> reads it in ~3ms.</p>
+<h3>Query Pattern</h3>
+<p>Once loaded, queries are in-memory dictionary lookups:</p>
+<ul>
+<li>"Find idea IS-001": <code>O(1)</code> — look up in the ideas directory entries by ID</li>
+<li>"Find all files tagged 'automation'": hash join on the tags reverse index, <code>O(k)</code> where k is the number of matching entries</li>
+<li>"Trace IS-001 to its product and article": look up two dictionary entries on the cross-reference map</li>
+</ul>
+<p>Every query is sub-millisecond. The agent never touches disk for navigation again.</p>
+<hr />
+<h2>What Gets Indexed</h2>
+<p>The index tracks eight directory groups. The key design decision: each group has a <strong>distinct prefix</strong> and a <strong>single file read pattern</strong>.</p>
+<p>| Group | Prefix | Source | Entries |</p>
+<p>|-------|--------|--------|---------|</p>
+<p>| Skills | (none) | <code>skills/*/SKILL.md</code> | 17 |</p>
+<p>| Ideas | IS- | Frontmatter in <code>obsidian/ideas/active/</code> | 40 |</p>
+<p>| Issues | ISU- | Frontmatter in <code>obsidian/issues/</code> + <code>obsidian/issue-management/</code> | 15 |</p>
+<p>| Articles | ART- | Frontmatter in <code>obsidian/articles/</code> | 11 |</p>
+<p>| Products | PP- | Frontmatter in <code>obsidian/product/</code> | 8 |</p>
+<p>| Automation | AM- | Frontmatter in <code>obsidian/automation-mining/opps/*/</code> | 252 |</p>
+<p>| Projects | (named) | <code>obsidian/projects/*.md</code> | 9 |</p>
+<p>| Research | RS- | Directories in <code>obsidian/research/active/</code> | 1 |</p>
+<p>Cross-references connect ideas to their derived products and articles. The tags index maps each tag to a comma-separated list of entry IDs (only for tags with >= 2 entries, to avoid noise).</p>
+<hr />
+<h2>The 5 Bugs That Made This Real</h2>
+<p>The indexer did not work correctly on the first day. Five bugs were discovered and fixed:</p>
+<p><strong>1. Phantom idea entries (42 → 40).</strong> Files with the name <code>IS-001-ideation-synthesis.md</code> but no <code>idea-id</code> in frontmatter were indexed as separate ideas. Fix: require frontmatter field for ideas; sub-files without it are silently excluded.</p>
+<p><strong>2. Article sidecar pollution (17 → 11).</strong> Image prompt files (<code>ART-018-image-prompt.md</code>) and brief files (<code>ART-019-issue-management-brief.md</code>) were indexed as separate articles alongside the main article file. Fix: explicit exclusion rules for <code>-image-prompt</code> suffix and deduplication for briefs when a parent article exists.</p>
+<p><strong>3. Issue directory fragmentation.</strong> Issues were stored across two directories — <code>obsidian/issues/</code> (old-style, 9 entries) and <code>obsidian/issue-management/active|archive/</code> (new-style, 12 entries). The indexer only scanned the first. Fix: scan both, deduplicate by ID, prefer the later state.</p>
+<p><strong>4. Issue file name collision.</strong> Old-style files were named <code>issue-001-diagnostic-failure.md</code> (no ISU prefix), new-style files are <code>ISU-011-thunderbird-mcp-down.md</code>. Both formats needed regex extraction to determine the canonical ID. Fallback: frontmatter → regex → filename stem.</p>
+<p><strong>5. Subdirectory project files.</strong> Projects are stored as <code>obsidian/projects/{name}/README.md</code> (subdirectory), not <code>obsidian/projects/{name}.md</code> (flat file). The indexer only scanned flat files. Fix: scan both, with subdirectory files taking priority.</p>
+<p>These bugs are not edge cases. They are the natural result of a workspace evolving over time without a centralized schema enforcement layer. Each fix required changing the indexer, not the file system — because the indexer is the only component that must be schema-aware. The files themselves are free to use any naming convention.</p>
+<hr />
+<h2>The 3ms Query</h2>
+<p>Here is the actual query time for a cold start — loading the index from disk and finding one entry:</p>
+<pre><code>import json, time
+t0 = time.perf_counter_ns()
+r = json.load(open("Registry/index.json"))
+t1 = time.perf_counter_ns()
+# Find IS-001
+entry = [e for d in r["d"] if d["n"] == "Ideas"][0]["e"]
+entry = [e for e in entry if e["i"] == "IS-001"][0]
+t2 = time.perf_counter_ns()
+print(f"Load: {(t1-t0)/1e6:.2f}ms, Query: {(t2-t1)/1e6:.2f}ms")</code></pre>
+<p>Results: <strong>Load: 2.8ms, Query: 0.05ms.</strong> Total: 2.85ms.</p>
+<p>Compare to <code>find . -name "<em>IS-001</em>"</code>: ~45ms including shell startup. Or grepping MEMORY.md: ~120ms for a 19KB file.</p>
+<p>This is the difference between an architecture designed for an agent and one that happened to work for a human.</p>
+<hr />
+<h2>When This Pattern Breaks</h2>
+<p>The compact index architecture works up to approximately 5,000 entries. Beyond that, <code>json.load</code> on a file larger than ~50KB starts to compete with directory scan times, and the single-authority generator becomes a maintenance burden.</p>
+<p>At scale, the correct evolution is:</p>
+<ul>
+<li><strong>10K–50K entries</strong>: Partition the index by group into separate files (<code>index.skills.json</code>, <code>index.ideas.json</code>). Load only the partitions you need.</li>
+<li><strong>50K+ entries</strong>: Replace the JSON file with a local SQLite database. The load pattern changes from <code>json.load</code> to <code>sqlite3.connect</code>, but the query pattern remains sub-millisecond.</li>
+</ul>
+<p>For a single-developer workspace at 1,224 files, the JSON file with a daily cron generator is the right architecture. It is simple, debuggable, and zero-dependency. Replacing it with a database would be premature optimization.</p>
+<hr />
+<h2>What You Could Build</h2>
+<p>The registry pattern is general. Any structured workspace — a documentation site, a codebase with multiple modules, a research vault — benefits from a pre-computed index that separates navigation from content.</p>
+<p>The pattern:</p>
+<ol>
+<li>A generator script that reads your workspace structure once daily</li>
+<li>A compact output format that loads in under 10ms and <1KB overhead</li>
+<li>In-memory queries that never touch disk</li>
+</ol>
+<p>This is not architecture. It is hygiene. The only question is why most systems don't do it — and the answer is that most systems never measured how much time they spend finding files.</p>
+<hr />
+<p>"A horizontal cross-section of a file system tree being compressed through a narrow funnel into a single compact JSON block. The tree has folder icons labeled Ideas, Articles, Issues, Projects. The compressed output is a small QR-code-like grid with highlighted query paths through it. Clean data-architecture illustration style, dark background with cyan and amber accents. 1200×627."</p>
+
+        </div>
+
+        <div class="article-cta">
+          <p class="article-cta__text">
+            Working on a similar problem? Let's talk about how I can help your team.
+          </p>
+          <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Services</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/articles.js" defer></script>
+</body>
+</html>

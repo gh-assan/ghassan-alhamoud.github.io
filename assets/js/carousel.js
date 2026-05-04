@@ -82,6 +82,16 @@
     isDragging = false;
   }, { passive: true });
 
+  // Keyboard support
+  carousel.setAttribute('tabindex', '0');
+  carousel.setAttribute('role', 'region');
+  carousel.setAttribute('aria-label', 'Testimonials');
+
+  carousel.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { prev(); startAuto(); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { next(); startAuto(); e.preventDefault(); }
+  });
+
   // Initialize
   goTo(0);
   startAuto();
