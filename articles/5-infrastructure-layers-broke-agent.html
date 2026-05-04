@@ -69,18 +69,25 @@
           <span class="article-single__tag">Post-Mortem</span></div>
         </header>
 
+                <img src="/images/articles/ART-024.webp" alt="" class="article-single__image" loading="eager" />
+
         <div class="article-single__body">
           <p>Everyone talks about building agents. No one talks about what breaks them.</p>
 <p>I've been building an autonomous orchestrator — an agent that manages pipelines, reads emails, coordinates sub-agents, and improves itself. On paper, the architecture is elegant. In practice, 5 separate infrastructure layers failed over 3 months. Not "needed tuning." Spectacularly, account-deleting, model-hallucinating, IDE-fighting failures.</p>
 <p>Here's the structural post-mortem. Each layer broke in a specific, predictable way — and each one demanded a counter-architecture that the industry is only starting to build.</p>
 <hr />
-<p>| Layer | Failure | Lost | Fix |</p>
-<p>|-------|---------|------|-----|</p>
-<p>| Transport (Email) | Google terminated my account | 3 weeks | GMX + Thunderbird MCP proxy |</p>
-<p>| Presentation (Diagrams) | LLMs can't critique layout | 1 week | Vision-verified two-stage pipeline |</p>
-<p>| Control (Self-deploy) | Dependency chain broke every step | 4 days | Human-managed DevOps, agent only monitors |</p>
-<p>| Coordination (IDE) | Agent fought Copilot for file control | 2 weeks | Serialized mutex over IDE operations |</p>
-<p>| Model (LLM choice) | Gemini hallucinated entire scripts | 1 week | Multi-model router per task class |</p>
+<table>
+<thead>
+<tr><th>Layer</th><th>Failure</th><th>Lost</th><th>Fix</th></tr>
+</thead>
+<tbody>
+<tr><td>Transport (Email)</td><td>Google terminated my account</td><td>3 weeks</td><td>GMX + Thunderbird MCP proxy</td></tr>
+<tr><td>Presentation (Diagrams)</td><td>LLMs can't critique layout</td><td>1 week</td><td>Vision-verified two-stage pipeline</td></tr>
+<tr><td>Control (Self-deploy)</td><td>Dependency chain broke every step</td><td>4 days</td><td>Human-managed DevOps, agent only monitors</td></tr>
+<tr><td>Coordination (IDE)</td><td>Agent fought Copilot for file control</td><td>2 weeks</td><td>Serialized mutex over IDE operations</td></tr>
+<tr><td>Model (LLM choice)</td><td>Gemini hallucinated entire scripts</td><td>1 week</td><td>Multi-model router per task class</td></tr>
+</tbody>
+</table>
 <p>Total: 6 weeks of work that a better upfront architecture could have saved.</p>
 <hr />
 <h2>Layer 1: Transport — Why Google Killed My Agent's Account</h2>
@@ -118,12 +125,17 @@
 <p>Not a one-time bug — a pattern. Every correction made it worse because the model couldn't hold both the instruction and the constraint in its limited reasoning window. "Only use tools" became "I'll just guess." "Never write files" became a full write operation. The model wasn't failing — it was succeeding at being a fast, cheap model with no depth.</p>
 <p>I switched to DeepSeek. It follows instructions. It doesn't infer a better instruction. It does exactly what it's told. That's the minimum bar for an autonomous system.</p>
 <p><strong>The fix:</strong> Model selection isn't a stack choice — it's a routing problem.</p>
-<p>| Task Class | Model | Why |</p>
-<p>|------------|-------|-----|</p>
-<p>| Classification & routing | DeepSeek Chat | Fast, cheap, follows instructions |</p>
-<p>| Complex reasoning | DeepSeek | Best architectural understanding |</p>
-<p>| Code generation | Claude | Lowest hallucination rate for code |</p>
-<p>| Trivial parsing | Local Ollama | Free, private, good enough |</p>
+<table>
+<thead>
+<tr><th>Task Class</th><th>Model</th><th>Why</th></tr>
+</thead>
+<tbody>
+<tr><td>Classification &amp; routing</td><td>DeepSeek Chat</td><td>Fast, cheap, follows instructions</td></tr>
+<tr><td>Complex reasoning</td><td>DeepSeek</td><td>Best architectural understanding</td></tr>
+<tr><td>Code generation</td><td>Claude</td><td>Lowest hallucination rate for code</td></tr>
+<tr><td>Trivial parsing</td><td>Local Ollama</td><td>Free, private, good enough</td></tr>
+</tbody>
+</table>
 <p>I ran the numbers: my Gemini Flash "savings" were an illusion. Every $1 I saved on inference cost me $4 in debugging time, regenerated outputs, and trust in my own system. Cheap models aren't cheap — they're expensive in a currency no billing dashboard shows.</p>
 <p><strong>Architecture principle:</strong> One model per task, not one model per system. The routing layer classifies each request (a low-dimensional decision) and dispatches it. The routing cost is negligible — the savings from matching model capability to task complexity compound immediately.</p>
 <hr />

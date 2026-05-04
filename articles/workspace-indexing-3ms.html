@@ -68,6 +68,8 @@
           <span class="article-single__tag">Workspace Indexing</span></div>
         </header>
 
+                <img src="/images/articles/ART-022.webp" alt="" class="article-single__image" loading="eager" />
+
         <div class="article-single__body">
           <p>Every time your agent needs to find a file, it does one of three things:</p>
 <ol>
@@ -110,16 +112,21 @@
 <hr />
 <h2>What Gets Indexed</h2>
 <p>The index tracks eight directory groups. The key design decision: each group has a <strong>distinct prefix</strong> and a <strong>single file read pattern</strong>.</p>
-<p>| Group | Prefix | Source | Entries |</p>
-<p>|-------|--------|--------|---------|</p>
-<p>| Skills | (none) | <code>skills/*/SKILL.md</code> | 17 |</p>
-<p>| Ideas | IS- | Frontmatter in <code>obsidian/ideas/active/</code> | 40 |</p>
-<p>| Issues | ISU- | Frontmatter in <code>obsidian/issues/</code> + <code>obsidian/issue-management/</code> | 15 |</p>
-<p>| Articles | ART- | Frontmatter in <code>obsidian/articles/</code> | 11 |</p>
-<p>| Products | PP- | Frontmatter in <code>obsidian/product/</code> | 8 |</p>
-<p>| Automation | AM- | Frontmatter in <code>obsidian/automation-mining/opps/*/</code> | 252 |</p>
-<p>| Projects | (named) | <code>obsidian/projects/*.md</code> | 9 |</p>
-<p>| Research | RS- | Directories in <code>obsidian/research/active/</code> | 1 |</p>
+<table>
+<thead>
+<tr><th>Group</th><th>Prefix</th><th>Source</th><th>Entries</th></tr>
+</thead>
+<tbody>
+<tr><td>Skills</td><td>(none)</td><td><code>skills/*/SKILL.md</code></td><td>17</td></tr>
+<tr><td>Ideas</td><td>IS-</td><td>Frontmatter in <code>obsidian/ideas/active/</code></td><td>40</td></tr>
+<tr><td>Issues</td><td>ISU-</td><td>Frontmatter in <code>obsidian/issues/</code> + <code>obsidian/issue-management/</code></td><td>15</td></tr>
+<tr><td>Articles</td><td>ART-</td><td>Frontmatter in <code>obsidian/articles/</code></td><td>11</td></tr>
+<tr><td>Products</td><td>PP-</td><td>Frontmatter in <code>obsidian/product/</code></td><td>8</td></tr>
+<tr><td>Automation</td><td>AM-</td><td>Frontmatter in <code>obsidian/automation-mining/opps/*/</code></td><td>252</td></tr>
+<tr><td>Projects</td><td>(named)</td><td><code>obsidian/projects/*.md</code></td><td>9</td></tr>
+<tr><td>Research</td><td>RS-</td><td>Directories in <code>obsidian/research/active/</code></td><td>1</td></tr>
+</tbody>
+</table>
 <p>Cross-references connect ideas to their derived products and articles. The tags index maps each tag to a comma-separated list of entry IDs (only for tags with >= 2 entries, to avoid noise).</p>
 <hr />
 <h2>The 5 Bugs That Made This Real</h2>
@@ -165,8 +172,6 @@ print(f"Load: {(t1-t0)/1e6:.2f}ms, Query: {(t2-t1)/1e6:.2f}ms")</code></pre>
 </ol>
 <p>This is not architecture. It is hygiene. The only question is why most systems don't do it — and the answer is that most systems never measured how much time they spend finding files.</p>
 <hr />
-<p>"A horizontal cross-section of a file system tree being compressed through a narrow funnel into a single compact JSON block. The tree has folder icons labeled Ideas, Articles, Issues, Projects. The compressed output is a small QR-code-like grid with highlighted query paths through it. Clean data-architecture illustration style, dark background with cyan and amber accents. 1200×627."</p>
-
         </div>
 
         <div class="article-cta">

@@ -1516,6 +1516,17 @@ img {
   padding-bottom: 80px;
 }
 
+.article-single__image {
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  border-radius: var(--radius-lg);
+  margin-bottom: 32px;
+  aspect-ratio: 1200 / 630;
+  object-fit: cover;
+  display: block;
+}
+
 .article-single__header {
   margin-bottom: 40px;
   max-width: 720px;
@@ -1645,6 +1656,40 @@ img {
   border: none;
   border-top: 1px solid var(--border);
   margin: 48px 0;
+}
+
+.article-single__body table {
+  width: 100%;
+  max-width: 720px;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.article-single__body th,
+.article-single__body td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-single__body th {
+  background: var(--bg-secondary);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.article-single__body td {
+  color: var(--text-secondary);
+}
+
+.article-single__body tr:nth-child(even) td {
+  background: var(--bg-secondary);
 }
 
 /* Article CTA at bottom */
