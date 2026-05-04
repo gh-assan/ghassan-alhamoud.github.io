@@ -2,7 +2,7 @@
 <!-- THEME: swap data-theme value to switch palettes
      "nature" = sage white · forest green · ocean blue (active)
      "dark"   = ThoughtWorks black · hot pink -->
-<html lang="en" data-theme="nature">
+<html lang="en" data-theme="nature" id="htmlTheme">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,6 +34,7 @@
 
   <!-- Preload font -->
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://calendly.com" crossorigin />
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/main.css" />
@@ -62,7 +63,7 @@
   <header class="header" id="header">
     <nav class="nav container">
       <a href="/" class="nav__logo" aria-label="Home">
-        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
           <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
         </svg>
@@ -99,7 +100,7 @@
         </h1>
         <p class="hero__subtitle">I help engineering teams build AI systems that survive production — not just demos.</p>
         <p class="hero__tagline" id="tagline">
-          15+ years of distributed systems. Now applied to AI.<span class="hero__tagline-cursor"></span>
+          15+ years of distributed systems. Now applied to AI.
         </p>
         <div class="hero__cta">
           <!-- Update this URL with your Calendly link -->
@@ -249,19 +250,23 @@
       <div class="container">
         <div class="counters__grid">
           <div class="counter reveal">
-            <span class="counter__number" data-target="15" data-suffix="+">0</span>
+            <span class="counter__number" data-target="15" data-suffix="+" aria-hidden="true">0</span>
+            <span class="sr-only">15+ Years of Experience</span>
             <span class="counter__label">Years of Experience</span>
           </div>
           <div class="counter reveal reveal--delay-1">
-            <span class="counter__number" data-target="50" data-suffix="+">0</span>
+            <span class="counter__number" data-target="50" data-suffix="+" aria-hidden="true">0</span>
+            <span class="sr-only">50+ Systems Designed</span>
             <span class="counter__label">Systems Designed</span>
           </div>
           <div class="counter reveal reveal--delay-2">
-            <span class="counter__number" data-target="100" data-suffix="K+">0</span>
+            <span class="counter__number" data-target="100" data-suffix="K+" aria-hidden="true">0</span>
+            <span class="sr-only">100K+ Events Processed per Day</span>
             <span class="counter__label">Events Processed / Day</span>
           </div>
           <div class="counter reveal reveal--delay-3">
-            <span class="counter__number" data-target="5" data-suffix="+">0</span>
+            <span class="counter__number" data-target="5" data-suffix="+" aria-hidden="true">0</span>
+            <span class="sr-only">5+ Published Articles</span>
             <span class="counter__label">Published Articles</span>
           </div>
         </div>
@@ -685,6 +690,14 @@
   </footer>
 
   <!-- Scripts -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/counters.js" defer></script>
