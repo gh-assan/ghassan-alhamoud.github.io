@@ -1,3 +1,6 @@
 .DS_Store
 *.docx
 articles/md/
+
+# Planning docs (not part of the site)
+doc/
