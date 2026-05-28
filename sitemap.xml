@@ -15,6 +15,19 @@
   </url>
   <!-- Article Pages -->
   <url>
+    <loc>https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>

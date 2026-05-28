@@ -1,5 +1,31 @@
 [
   {
+    "slug": "entity-database-zero-ui-agents",
+    "title": "We Built an Entity Database With Zero UI — Here's How Agents Talk to It",
+    "date": "2026-05-28",
+    "excerpt": "Give me 10 Munich startups with less than $2M revenue. My agent answered in 8 seconds. From a database in my basement that no human has ever logged into. No web app. No login screen. Here's how we built an entity database with zero UI through an orchestrated team of models — all communicating via structured handoffs and MCP protocol.",
+    "readingTime": "8 min",
+    "tags": [
+      "AI Agents",
+      "Architecture",
+      "Data",
+      "OpenClaw"
+    ]
+  },
+  {
+    "slug": "orchestrator-qwen-acp-handoff",
+    "title": "How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work",
+    "date": "2026-05-28",
+    "excerpt": "I needed a database in my basement. I didn't write it. My orchestrator didn't write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.",
+    "readingTime": "8 min",
+    "tags": [
+      "AI Agents",
+      "Architecture",
+      "Protocol",
+      "OpenClaw"
+    ]
+  },
+  {
     "slug": "stop-building-agent-soup-compilers",
     "title": "Stop Building \"Agent Soup.\" Start Building Compilers.",
     "date": "2026-03-10",

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work — Ghassan Alhamoud</title>
+  <meta name="description" content="I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions." />
+  <meta name="author" content="Ghassan Alhamoud" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/orchestrator-qwen-acp-handoff.html" />
+  <meta property="og:title" content="How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work" />
+  <meta property="og:description" content="I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions." />
+  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART-026.webp" />
+  <meta property="article:published_time" content="2026-05-28" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/orchestrator-qwen-acp-handoff.html" />
+  <meta property="twitter:title" content="How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work" />
+  <meta property="twitter:description" content="I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions." />
+  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART-026.webp" />
+
+  <!-- JSON-LD Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work",
+    "description": "I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.",
+    "image": "https://ghassan-alhamoud.com/images/articles/ART-026.webp",
+    "author": {
+      "@type": "Person",
+      "name": "Ghassan Alhamoud",
+      "url": "https://ghassan-alhamoud.com/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ghassan Alhamoud",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ghassan-alhamoud.com/favicon.svg"
+      }
+    },
+    "datePublished": "2026-05-28",
+    "dateModified": "2026-05-28",
+    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html",
+    "proficiencyLevel": "Expert",
+    "dependencies": "AI Agents, ACP Protocol, Agent Coordination, MCP, Qwen Code, OpenClaw",
+    "articleSection": "AI Architecture"
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://calendly.com" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Services</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-05-28">May 28, 2026</time>
+            <span class="article-card__dot"></span>
+            <span>8 min</span>
+          </div>
+          <h1 class="article-single__title">How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work</h1>
+          <div class="article-single__tags"><span class="article-single__tag">AI Agents</span>
+          <span class="article-single__tag">Architecture</span>
+          <span class="article-single__tag">Protocol</span>
+          <span class="article-single__tag">OpenClaw</span></div>
+        </header>
+
+        <img src="/images/articles/ART-026.webp" alt="" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+          <p>I needed a database in my basement. No UI. No login screen. No human would ever touch it.</p>
+<p>I didn't write it. My orchestrator didn't write it either. A coding agent — Qwen Code on a different machine — built it in one session.</p>
+<p>The orchestrator knew what I needed. Qwen Code knew how to build it. The only thing between them was a three-message protocol.</p>
+<p>Here's how it works.</p>
+<hr />
+<h3>The Problem With Single-Agent Systems</h3>
+<p>When you start building with AI, the instinct is obvious: one agent, all the tools, let it figure everything out.</p>
+<p>It works. Until it doesn't.</p>
+<p>The breaking point hits when a task spans skill domains. Discovery, planning, implementation, testing — each needs different reasoning. Your general-purpose orchestrator is terrible at writing DuckDB schemas. It's burning context on code when it should be thinking about product. You try running it on a different machine and everything falls apart.</p>
+<p>I hit all four at once on EntityScope. My orchestrator excelled at discovery and product thinking. It was awful at implementation. The fix wasn't better tools. It was to stop asking it to code.</p>
+<hr />
+<h3>What Is ACP?</h3>
+<p>ACP is a structured handoff protocol between agents. Not a library — a pattern. I call it <strong>Agent Coordination Protocol</strong>. This one is lightweight: typed proposals, explicit decisions, no free-form chat.</p>
+<pre><code>┌────────────────┐
+│  Orchestrator   │  Has the big picture. Knows what needs to happen.
+│  (General LLM)  │  Does NOT write code.
+└────────┬───────┘
+         │ 1. ACP Proposal: &quot;Here's what needs built, here's the brief&quot;
+         ▼
+┌────────────────┐
+│  Coding Agent   │  Receives a structured brief. Implements autonomously.
+│  (Qwen Code)    │  Returns: &quot;Done. Here's the output. Here's the status.&quot;
+└────────┬───────┘
+         │ 2. ACP Decision: &quot;Approved. Deploy it.&quot;
+         ▼
+┌────────────────┐
+│  Orchestrator   │  Verifies. Deploys. Reports back to me.
+└────────────────┘
+</code></pre>
+<p>The orchestrator doesn't execute. It directs.</p>
+<hr />
+<h3>The ACP Handoff Structure</h3>
+<p>Every handoff follows three stages. No improvisation.</p>
+<p><strong>The Proposal (Orchestrator → Specialist):</strong></p>
+<ol>
+<li><strong>Objective</strong> — One sentence. What are we building?</li>
+<li><strong>Constraints</strong> — Non-negotiables: language, framework, deployment target, performance requirements</li>
+<li><strong>Input</strong> — Where to find the data, schemas, or context</li>
+<li><strong>Success criteria</strong> — Measurable. Testable.</li>
+<li><strong>Kill gates</strong> — Code-level conditions that stop work and escalate back</li>
+</ol>
+<p><strong>The Response (Specialist → Orchestrator):</strong></p>
+<ol>
+<li><strong>Plan</strong> — What they'll build, in what order</li>
+<li><strong>Risk assessment</strong> — What might go wrong</li>
+<li><strong>Estimated effort</strong> — How long it'll take</li>
+<li><strong>Dependencies</strong> — What they need from the orchestrator or infrastructure</li>
+</ol>
+<p><strong>The Decision (Orchestrator):</strong></p>
+<ol>
+<li><strong>Approve</strong> — Go ahead</li>
+<li><strong>Revise</strong> — Change these things, resubmit</li>
+<li><strong>Escalate</strong> — I need to ask the human</li>
+<li><strong>Kill</strong> — Stop. The project is cancelled.</li>
+</ol>
+<p>That's it. What makes this powerful isn't complexity — both sides agree to the same structure every time.</p>
+<hr />
+<h3>Why Not Just Chat?</h3>
+<p>The obvious alternative: let them talk. "Hey, can you build the DuckDB thing?" — "Sure, let me look at it."</p>
+<p>I tried this. It fails predictably.</p>
+<p><strong>Ambiguity compounds every turn.</strong> "Build the database" on turn 1 becomes "which database?" on turn 3, "oh, you meant schema-first?" on turn 5, "wait, was this Postgres?" on turn 8. Every sentence plays telephone with the last. I've watched agents spend twenty messages clarifying what "load the data" means while the actual problem sat untouched.</p>
+<p><strong>Role drift erodes the architecture.</strong> The coder starts asking strategic questions. The orchestrator suggests implementation details. Within twenty turns they've swapped roles — the coder makes product decisions and the orchestrator debugs imports. Two agents, blurred lines, zero accountability. You end up with a database schema designed by someone who can't write SQL and deployment scripts written by someone who doesn't know the product.</p>
+<p><strong>Context is inseparable from noise.</strong> A fifty-turn conversation about EntityScope's data model tangles deployment concerns, casual remarks, and half-remembered assumptions from three sessions ago. Every handoff to a fresh agent requires reconstructing the thread from a wall of dialogue. The critical constraint you mentioned in message 12? Buried under seventeen irrelevant follow-ups.</p>
+<p><strong>There's no kill switch.</strong> Without explicit kill gates, agents iterate endlessly. I've watched one spend 45 minutes on a problem a human could solve in 30 seconds — because nothing told it to stop. No circuit breaker. No "this isn't working, escalate." Just polite, persistent, expensive failure.</p>
+<p>Structured handoffs solve all of this:</p>
+<ul>
+<li>The proposal is a document, not a chat history. Every fact the specialist needs is in one place, on arrival.</li>
+<li>The decision is a boolean or revision list, not a paragraph to interpret.</li>
+<li>Kill gates are code — executable conditions checked on every status update. If condition X is met, the agent escalates. No heuristics.</li>
+</ul>
+<p>Natural-language delegation versus ACP is a verbal agreement versus a contract with exit clauses. Both communicate intent. Only one survives contact with reality.</p>
+<hr />
+<h3>The Infrastructure: SSH + MCP + the Orchestrator Instance</h3>
+<p>The protocol is the contract. Here's the transport stack:</p>
+<img src="/images/articles/ART-026-diagram.webp" alt="Orchestrator, Orch Instance, and Qwen Code communication diagram showing SSH, MCP, and ACP layers" loading="lazy" />
+<p>The orchestrator lives on my workstation. The coding agent runs on a separate machine at <strong>192.X.X.X</strong>. They communicate via three layers:</p>
+<ul>
+<li><strong>SSH</strong> for transport — file transfer and command execution</li>
+<li><strong>MCP</strong> (Model Context Protocol) for tool access — the coding agent exposes MCP tools the orchestrator can invoke</li>
+<li><strong>ACP</strong> for task handoffs — structured proposals and decisions ride over SSH/MCP</li>
+</ul>
+<p>The coding agent needs no internet access. Just SSH to the project machine and a clear brief.</p>
+<p>This separation is deliberate:</p>
+<ul>
+<li><strong>Security</strong>: The coding agent touches only what's on the orch instance — zero access to my workstation</li>
+<li><strong>Resource isolation</strong>: Heavy coding workloads don't compete with the orchestrator's reasoning context</li>
+<li><strong>Session independence</strong>: The coding agent runs for hours. The orchestrator checks in, reviews, disconnects</li>
+</ul>
+<hr />
+<h3>The EntityScope Example: ACP in Action</h3>
+<p>Here's what the EntityScope handoff looked like:</p>
+<p><strong>Proposal (Orchestrator → Qwen Code):</strong></p>
+<pre><code>OBJECTIVE: Build DuckDB spine + MCP server for entity data
+CONSTRAINTS: Python 3.11+, DuckDB, MCP SDK via pip
+INPUT: Berlin Business Dataset CSV at ~/data/berlin_businesses.csv
+         Provisional schema at PP-003/03-discovery.md
+SUCCESS: 1. entityscope_query returns results from DuckDB
+          2. entityscope_health returns green
+          3. All 4 MCP tools register and respond
+KILL:    &gt;2 hours of wall time without a working health check
+         Dataset has &lt;50K usable records after dedup
+</code></pre>
+<p><strong>Response (Qwen Code → Orchestrator):</strong></p>
+<pre><code>PLAN: 1. Define schema and load CSV
+      2. Build MCP server with 4 tools
+      3. Test each tool
+RISK: CSV encoding issues (resolved: forced UTF-8)
+       MCP SDK version mismatch (resolved: pinned to 0.4.1)
+EFFORT: ~45 minutes
+DEPS: Nothing — all data is local
+</code></pre>
+<p><strong>Decision (Orchestrator):</strong></p>
+<pre><code>APPROVED — proceed
+</code></pre>
+<p>Three structured exchanges. The coding agent built EntityScope's entire spine — DuckDB schema, MCP server with four tools, data ingestion — in one session.</p>
+<p>The same pattern works for any coding task. The orchestrator doesn't need DuckDB internals. It defines the problem, sets constraints, and knows when to escalate.</p>
+<hr />
+<h3>Why This Setup Wins</h3>
+<p><strong>1. Each model plays to its strengths.</strong></p>
+<p>The orchestrator handles: discovery, product thinking, risk assessment, context management, human communication. The coding agent handles: implementation, debugging, testing, deployment. Neither tries to do the other's job.</p>
+<p><strong>2. Swap models without swapping architecture.</strong></p>
+<p>Today it's Qwen Code. Tomorrow it could be Claude Code or GPT-5 Codex. The ACP proposal stays the same. The infrastructure stays the same. Only the agent changes.</p>
+<p><strong>3. Long-running tasks don't block the orchestrator.</strong></p>
+<p>The orchestrator submits a proposal, gets approval, and returns to other work. It checks in periodically. Database schema context stays free for higher-level thinking.</p>
+<p><strong>4. One document, everything the coding agent needs.</strong></p>
+<p>The proposal is a complete brief. No hunting through conversation history. Every dependency in the first message. This dramatically reduces context-missing errors.</p>
+<p><strong>5. Kill gates are code, checked on every status update.</strong></p>
+<p>The hard limit is two hours: if the coding agent can't produce a working health check, it escalates. This isn't a guideline — it's an executable condition, evaluated like an assertion on every status check. No infinite loops. No burning $50 on a lost cause. Kill gates are the difference between a system you trust unsupervised and one you babysit.</p>
+<hr />
+<h3>How to Build This Yourself</h3>
+<p>Five steps:</p>
+<p><strong>1. Get a dedicated coding machine.</strong></p>
+<p>A cheap VPS. A home server. A spare laptop. If it runs Python and accepts SSH, you're set.</p>
+<p><strong>2. Install an MCP server.</strong></p>
+<p>Use <code>mcp-python-sdk</code> to expose tools: <code>deploy_task</code>, <code>read_file</code>, <code>write_file</code>, <code>run_command</code>. The coding agent gets an MCP server that lets it read, write, and execute on the remote machine.</p>
+<p><strong>3. Define your handoff protocol.</strong></p>
+<p>Start simple. JSON schema. Three fields per stage. Clarity beats completeness — add fields as you find gaps.</p>
+<p><strong>4. Wire SSH key-based auth.</strong></p>
+<p>No passwords. The orchestrator should <code>ssh user@host "ls"</code> in one step. Fix this first. Everything else depends on it.</p>
+<p><strong>5. Start with one specialist.</strong></p>
+<p>Pick one task — coding, data analysis, research — and set up the ACP handoff for just that. Prove it works. Then expand.</p>
+<p>You could have step 1 done tonight.</p>
+<hr />
+<h3>The Result</h3>
+<p>EntityScope was built by two agents on two machines, communicating through a structured protocol I designed in a single afternoon.</p>
+<p>The orchestrator never wrote SQL. Qwen Code never made a product decision. The handoff was three messages. The database has been running for weeks, serving answers in eight seconds, with zero human intervention.</p>
+<p>This is the architecture that works:</p>
+<ul>
+<li><strong>One orchestrator</strong> that understands the big picture but doesn't implement</li>
+<li><strong>Specialist agents</strong> that implement without needing the big picture</li>
+<li><strong>A structured protocol</strong> that makes the handoff unambiguous</li>
+<li><strong>Separate infrastructure</strong> that isolates risk and frees up resources</li>
+</ul>
+<p>The hardest lesson in building agent systems: don't make one agent do everything. The easiest fix is a protocol.</p>
+<hr />
+<p>If you're building multi-agent systems and struggling with handoff quality, I'd love to hear what patterns you've tried. The protocol space is wide open. Every real deployment teaches us something new.</p>
+<p><em>I'm documenting my architecture openly. Follow for patterns on ACP, MCP infrastructure, and agent-native systems.</em></p>
+        </div>
+
+        <div class="article-cta">
+          <p class="article-cta__text">
+            Working on a similar problem? Let's talk about how I can help your team.
+          </p>
+          <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Services</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/articles.js" defer></script>
+</body>
+</html>
