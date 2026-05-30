@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://ghassan-alhamoud.com/sitemap.xml
+Sitemap: https://ghassan-alhamoud.com/rss.xml

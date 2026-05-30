@@ -1,0 +1,307 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Ghassan Alhamoud — AI Architecture &amp; Automation</title>
+    <link>https://ghassan-alhamoud.com</link>
+    <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 30 May 2026 14:56:59 GMT</lastBuildDate>
+    <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>We Built an Entity Database With Zero UI — Here's How Agents Talk to It</title>
+      <link>https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</guid>
+      <pubDate>Wed, 27 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Give me 10 Munich startups with less than $2M revenue. My agent answered in 8 seconds. From a database in my basement that no human has ever logged into. No web app. No login screen. Here's how we built an entity database with zero UI through an orchestrated team of models — all communicating via structured handoffs and MCP protocol.]]></description>
+      <category>AI Agents</category>
+      <category>Architecture</category>
+      <category>Data</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work</title>
+      <link>https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</guid>
+      <pubDate>Wed, 27 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I needed a database in my basement. I didn't write it. My orchestrator didn't write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.]]></description>
+      <category>AI Agents</category>
+      <category>Architecture</category>
+      <category>Protocol</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms</title>
+      <link>https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html</guid>
+      <pubDate>Tue, 05 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.]]></description>
+      <category>Architecture</category>
+      <category>Performance</category>
+      <category>Workspace Indexing</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Three Layers Is Not Enough - You Need a Feedback Loop That Closes</title>
+      <link>https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html</guid>
+      <pubDate>Mon, 04 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[The difference between a system that learns from failure and one that merely records it is a single architectural decision.]]></description>
+      <category>Self-Healing</category>
+      <category>Architecture</category>
+      <category>Feedback Loops</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Issue Management as a System Property</title>
+      <link>https://ghassan-alhamoud.com/articles/issue-management-system-property.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/issue-management-system-property.html</guid>
+      <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I believed good monitoring was enough. Dashboards. Alerts. Runbooks. And we fixed the same problems three times. Here's what I built instead.]]></description>
+      <category>Self-Healing</category>
+      <category>Reliability</category>
+      <category>Infrastructure</category>
+      <category>Monitoring</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>I Spent 3 Months Building My Agent. Here Are the 5 Failures That Almost Killed It.</title>
+      <link>https://ghassan-alhamoud.com/articles/5-failures-building-agent-3-months.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/5-failures-building-agent-3-months.html</guid>
+      <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I went all-in on building a personal AI agent. I spent 3 months, went through 5 architectures, killed 2 email accounts. Here's exactly what failed.]]></description>
+      <category>AI Agents</category>
+      <category>Infrastructure</category>
+      <category>Failure</category>
+      <category>Architecture</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>The 5 Infrastructure Layers That Broke My Agent</title>
+      <link>https://ghassan-alhamoud.com/articles/5-infrastructure-layers-broke-agent.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/5-infrastructure-layers-broke-agent.html</guid>
+      <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Everyone talks about building agents. No one talks about what breaks them. Here's the structural post-mortem of 5 separate infrastructure layers that failed.]]></description>
+      <category>AI Agents</category>
+      <category>Infrastructure</category>
+      <category>Architecture</category>
+      <category>Post-Mortem</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.</title>
+      <link>https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html</guid>
+      <pubDate>Sat, 02 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[You know that feeling when you deploy an agent, walk away, come back, and something's wrong? That was us. Except our target was 250.]]></description>
+      <category>Self-Healing</category>
+      <category>AI Systems</category>
+      <category>Infrastructure</category>
+      <category>Failure</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>The Automation Pattern That Kept Repeating Across 6 Industries</title>
+      <link>https://ghassan-alhamoud.com/articles/automation-pattern-6-industries.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/automation-pattern-6-industries.html</guid>
+      <pubDate>Fri, 01 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I spent a day running a structured automation discovery engine across six completely different industries. The exact same automation gap showed up in every single domain.]]></description>
+      <category>Automation</category>
+      <category>Discovery</category>
+      <category>Architecture</category>
+      <category>Pattern</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>I Asked an AI to Find Automation Opportunities. It Found 42 in One Day.</title>
+      <link>https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html</guid>
+      <pubDate>Fri, 01 May 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries.]]></description>
+      <category>Automation</category>
+      <category>Discovery</category>
+      <category>Breakthrough</category>
+      <category>Potential</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>The Most Boring Automation I've Ever Built - And Why It's the Only One That Works</title>
+      <link>https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html</guid>
+      <pubDate>Tue, 14 Apr 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful.]]></description>
+      <category>Feedback Loops</category>
+      <category>AI Systems</category>
+      <category>Monitoring</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>A2A Negotiation Experiment: The Outreach That Worked</title>
+      <link>https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html</guid>
+      <pubDate>Sat, 11 Apr 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach.]]></description>
+      <category>AI Agents</category>
+      <category>Negotiation</category>
+      <category>A2A Protocol</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>I Watched a 20-Year Negotiation Veteran Collapse. Not Because of AI. Because of Me + AI.</title>
+      <link>https://ghassan-alhamoud.com/articles/negotiation-veteran-collapse-llm-coach.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/negotiation-veteran-collapse-llm-coach.html</guid>
+      <pubDate>Thu, 09 Apr 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I sat across from someone who's been negotiating since before I started my career. I didn't out-negotiate them. I out-prepared them with an LLM coach.]]></description>
+      <category>Negotiation</category>
+      <category>LLM</category>
+      <category>Coaching</category>
+      <category>AI</category>
+    </item>
+    <item>
+      <title>I Automated 90% of Shipping. Here's What I Learned.</title>
+      <link>https://ghassan-alhamoud.com/articles/dreamforge-automation-pipeline.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/dreamforge-automation-pipeline.html</guid>
+      <pubDate>Tue, 07 Apr 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I used to think my value as a founder was shipping. I built an autonomous pipeline that takes an idea from chat to code without me touching the keyboard.]]></description>
+      <category>Automation</category>
+      <category>Product Development</category>
+      <category>AI Agents</category>
+      <category>AI</category>
+    </item>
+    <item>
+      <title>EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.</title>
+      <link>https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html</guid>
+      <pubDate>Sat, 04 Apr 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS.]]></description>
+      <category>Privacy</category>
+      <category>On-Device AI</category>
+      <category>Personal OS</category>
+      <category>AI</category>
+    </item>
+    <item>
+      <title>Every Token Is Rent: Building an Agent That Doesn't Forget</title>
+      <link>https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html</guid>
+      <pubDate>Tue, 31 Mar 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I watched my agent re-read the same project files for the third time that morning. Every session, a complete hard reset. Here's the memory architecture that fixed it.]]></description>
+      <category>Memory Architecture</category>
+      <category>LLM</category>
+      <category>System Design</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Get Off the Crunchbase Treadmill</title>
+      <link>https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html</guid>
+      <pubDate>Sun, 29 Mar 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer.]]></description>
+      <category>Startup Intelligence</category>
+      <category>Data</category>
+      <category>Real-time</category>
+      <category>AI</category>
+    </item>
+    <item>
+      <title>Stop Obsessing Over Alignment. Start Building Auditability.</title>
+      <link>https://ghassan-alhamoud.com/articles/agent-execution-attestation.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-execution-attestation.html</guid>
+      <pubDate>Fri, 27 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.]]></description>
+      <category>AI Agents</category>
+      <category>Security</category>
+      <category>Trust</category>
+      <category>Architecture</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Compliance-as-Code: The Bottleneck Nobody's Automating</title>
+      <link>https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html</guid>
+      <pubDate>Tue, 24 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken.]]></description>
+      <category>Compliance</category>
+      <category>AI</category>
+      <category>Automation</category>
+      <category>AI Agents</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Intelligence Is Trivial. Reliability Is the New Frontier.</title>
+      <link>https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html</guid>
+      <pubDate>Sat, 21 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke.]]></description>
+      <category>AI Agents</category>
+      <category>Reliability</category>
+      <category>Infrastructure</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Stop Waiting for Lightning: Build an Ideation Engine</title>
+      <link>https://ghassan-alhamoud.com/articles/systematic-ideation-engine.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/systematic-ideation-engine.html</guid>
+      <pubDate>Thu, 19 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[I spent years waiting for the big idea. Then I realized I was treating ideation like a creative act. I should have been treating it like an engineering problem.]]></description>
+      <category>Ideation</category>
+      <category>Product Development</category>
+      <category>Systems</category>
+      <category>AI</category>
+    </item>
+    <item>
+      <title>Stop Buying Startup Data. Start Owning It.</title>
+      <link>https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html</guid>
+      <pubDate>Tue, 17 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph.]]></description>
+      <category>Startup Intelligence</category>
+      <category>Data</category>
+      <category>Architecture</category>
+      <category>AI</category>
+    </item>
+    <item>
+      <title>The Agent Black Box Problem</title>
+      <link>https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html</guid>
+      <pubDate>Wed, 11 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger.]]></description>
+      <category>AI Agents</category>
+      <category>Security</category>
+      <category>Trust</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>Stop Building "Agent Soup." Start Building Compilers.</title>
+      <link>https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</guid>
+      <pubDate>Mon, 09 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone.]]></description>
+      <category>AI Agents</category>
+      <category>Architecture</category>
+      <category>Engineering</category>
+      <category>OpenClaw</category>
+    </item>
+    <item>
+      <title>The Agent Reasoning Fallacy</title>
+      <link>https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html</guid>
+      <pubDate>Sat, 07 Mar 2026 23:00:00 GMT</pubDate>
+      <description><![CDATA[Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.]]></description>
+      <category>AI Agents</category>
+      <category>Discovery</category>
+      <category>Distributed Systems</category>
+      <category>AI</category>
+      <category>OpenClaw</category>
+    </item>
+  </channel>
+</rss>
