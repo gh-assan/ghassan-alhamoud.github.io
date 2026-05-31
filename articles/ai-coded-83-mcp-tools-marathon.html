@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>83 MCP Tools in 3 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop" — Ghassan Alhamoud</title>
-  <meta name="description" content="83 new MCP tools in 3 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
+  <title>83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop" — Ghassan Alhamoud</title>
+  <meta name="description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
   <meta name="author" content="Ghassan Alhamoud" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/ai-coded-83-mcp-tools-marathon.html" />
-  <meta property="og:title" content="83 MCP Tools in 3 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"" />
-  <meta property="og:description" content="83 new MCP tools in 3 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
+  <meta property="og:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"" />
+  <meta property="og:description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
   <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/art-028-header.webp" />
   <meta property="article:published_time" content="2026-05-31" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/ai-coded-83-mcp-tools-marathon.html" />
-  <meta property="twitter:title" content="83 MCP Tools in 3 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"" />
-  <meta property="twitter:description" content="83 new MCP tools in 3 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
+  <meta property="twitter:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"" />
+  <meta property="twitter:description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
   <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/art-028-header.webp" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -63,16 +63,16 @@
             <span class="article-card__dot"></span>
             <span>9 min</span>
           </div>
-          <h1 class="article-single__title">83 MCP Tools in 3 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"</h1>
+          <h1 class="article-single__title">83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"</h1>
           <div class="article-single__tags"><a href="/articles/?tag=AI+Agents" class="article-card__tag">AI Agents</a><a href="/articles/?tag=Go" class="article-card__tag">Go</a><a href="/articles/?tag=Architecture" class="article-card__tag">Architecture</a><a href="/articles/?tag=MCP" class="article-card__tag">MCP</a><a href="/articles/?tag=Automation" class="article-card__tag">Automation</a><a href="/articles/?tag=Code+Generation" class="article-card__tag">Code Generation</a><a href="/articles/?tag=Engineering" class="article-card__tag">Engineering</a></div>
         </header>
 
         <img src="/images/articles/art-028-header.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I spent three hours in a marathon code-generation session. One model. One Go project. One instruction: keep going.</p>
+          <p>I spent twelve hours in a marathon code-generation session. One model. One Go project. One instruction: keep going.</p>
 
-<p>The result: 83 new MCP tools, 30+ new Go packages, 199 total tools, and a pile of hard-won lessons about what works — and what breaks — when you push AI code generation past a few hours.</p>
+<p>The result: 83 new MCP tools, 30+ new Go packages, 199 total tools, and a pile of hard-won lessons about what works — and what breaks — when you push AI code generation past a dozen hours.</p>
 
 <hr />
 
@@ -137,7 +137,7 @@ QUALITY: build + test + self-certification</code></pre>
 
     <tr><td><strong>Context per task</strong></td><td>Fresh isolated session (no conversation history)</td></tr>
 
-    <tr><td><strong>Session count</strong></td><td>~35 ACP sessions, each ~5 minutes</td></tr>
+    <tr><td><strong>Session count</strong></td><td>~35 ACP sessions, each ~20 minutes</td></tr>
 
     <tr><td><strong>Temperature</strong></td><td>Default (provider-controlled, not overridden)</td></tr>
 
@@ -375,11 +375,11 @@ QUALITY: build + test + self-certification</code></pre>
 
 </table>
 
-<p><strong>Total Qwen runtime:</strong> ~165 minutes</p>
+<p><strong>Total Qwen runtime:</strong> ~685 minutes</p>
 
-<p><strong>Wall clock time:</strong> ~180 minutes</p>
+<p><strong>Wall clock time:</strong> ~720 minutes</p>
 
-<p><strong>Overhead (spec-writing, review, fix, push):</strong> ~15 minutes</p>
+<p><strong>Overhead (spec-writing, review, fix, push):</strong> ~35 minutes</p>
 
 <p>The overhead is low because spec-writing and review happened <em>during</em> Qwen's runtime, not sequentially after it. The assembly line pattern hides the overhead behind the model's compute time.</p>
 
@@ -451,7 +451,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <p>- <strong>One developer</strong> — operator skill level affects spec quality, error detection, and overall throughput.</p>
 
-<p>- <strong>3-hour window</strong> — the flywheel/debt tension hasn't been tested over longer periods. The 97-parameter constructor suggests deceleration is coming.</p>
+<p>- <strong>12-hour window</strong> — the flywheel/debt tension hasn't been tested over longer periods. The 97-parameter constructor suggests deceleration is coming.</p>
 
 <hr />
 
@@ -467,7 +467,7 @@ QUALITY: build + test + self-certification</code></pre>
 
   <tbody>
 
-    <tr><td>Session duration</td><td>~3 hours</td></tr>
+    <tr><td>Session duration</td><td>~12 hours</td></tr>
 
     <tr><td>P# tasks completed</td><td>32 (P82 → P113)</td></tr>
 
@@ -493,7 +493,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <h2>What's Next</h2>
 
-<p>The marathon proved the model works — 83 tools in 3 hours. The open questions:</p>
+<p>The marathon proved the model works — 83 tools in 12 hours. The open questions:</p>
 
 <ol>
   <li><strong>Can we sustain this to 250?</strong> The constructor is at 97 parameters. The options pattern refactor must happen before P120.</li>
@@ -501,7 +501,7 @@ QUALITY: build + test + self-certification</code></pre>
   <li><strong>Can we generalize to other languages?</strong> The compile-time safety thesis needs testing in Rust, TypeScript, and at least one interpreted language.</li>
 </ol>
 
-<p>The assembly line isn't Go-specific. The pattern — pre-written spec → AI implementation → compile-time validation — should transfer to any language with strong static typing. But that's a hypothesis. The only thing I can prove is that it works for one Go project, with one model, over one three-hour session.</p>
+<p>The assembly line isn't Go-specific. The pattern — pre-written spec → AI implementation → compile-time validation — should transfer to any language with strong static typing. But that's a hypothesis. The only thing I can prove is that it works for one Go project, with one model, over one twelve-hour session.</p>
 
 <p>Sometimes that's enough to change how you work.</p>
 

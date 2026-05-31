@@ -8,11 +8,11 @@
     <lastBuildDate>Sun, 31 May 2026 09:15:45 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title><![CDATA[83 MCP Tools in 3 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"]]></title>
+      <title><![CDATA[83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"]]></title>
       <link>https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html</guid>
       <pubDate>Sat, 30 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[83 new MCP tools in 3 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.]]></description>
+      <description><![CDATA[83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.]]></description>
       <category>AI Agents</category>
       <category>Go</category>
       <category>Architecture</category>

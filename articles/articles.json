@@ -1,9 +1,9 @@
 [
   {
     "slug": "ai-coded-83-mcp-tools-marathon",
-    "title": "83 MCP Tools in 3 Hours \u2014 What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
+    "title": "83 MCP Tools in 12 Hours \u2014 What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
     "date": "2026-05-31",
-    "excerpt": "83 new MCP tools in 3 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
+    "excerpt": "83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
     "readingTime": "9 min",
     "tags": [
       "AI Agents",
