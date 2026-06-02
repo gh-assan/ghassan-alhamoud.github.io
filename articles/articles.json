@@ -360,5 +360,20 @@
       "AI",
       "OpenClaw"
     ]
+  },
+  {
+    "slug": "film-pipeline-postmortem",
+    "title": "The Film Pipeline We Didn't Want But Needed",
+    "date": "2026-06-02",
+    "excerpt": "Two days. That's how long it took to go from 'we need a better way to generate film clips' to a full 8-phase production protocol. We didn't plan it. The problems forced us.",
+    "readingTime": "7 min",
+    "tags": [
+      "AI Film",
+      "Pipeline",
+      "Postmortem",
+      "Seedance",
+      "Veo",
+      "Engineering"
+    ]
   }
 ]
