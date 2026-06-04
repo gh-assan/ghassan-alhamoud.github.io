@@ -165,4 +165,11 @@
     <ns0:changefreq>monthly</ns0:changefreq>
     <ns0:priority>0.8</ns0:priority>
   </ns0:url>
-<ns0:url><ns0:loc>https://ghassanalhamoud.github.io/articles/film-pipeline-postmortem.html</ns0:loc><ns0:lastmod>2026-06-02</ns0:lastmod><ns0:changefreq>monthly</ns0:changefreq></ns0:url></ns0:urlset>
+<ns0:url><ns0:loc>https://ghassanalhamoud.github.io/articles/film-pipeline-postmortem.html</ns0:loc><ns0:lastmod>2026-06-02</ns0:lastmod><ns0:changefreq>monthly</ns0:changefreq></ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/articles/quality-vs-speed-agent-era.html</ns0:loc>
+    <ns0:lastmod>2026-06-04</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+</ns0:urlset>

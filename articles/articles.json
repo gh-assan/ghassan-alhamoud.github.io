@@ -375,5 +375,18 @@
       "Veo",
       "Engineering"
     ]
+  },
+  {
+    "slug": "quality-vs-speed-agent-era",
+    "title": "Quality vs Speed in the Agent Era",
+    "date": "2026-06-04",
+    "excerpt": "I run three agent instances plus my phone. I generate ideas, build products, make films, publish articles. And I'm not satisfied with the quality. Not even close.",
+    "readingTime": "6 min",
+    "tags": [
+      "AI Agents",
+      "Productivity",
+      "Engineering",
+      "Lessons Learned"
+    ]
   }
 ]
