@@ -69,15 +69,23 @@
       articles.slice(0, 5).forEach(function (article) {
         articleList.appendChild(createArticleCard(article));
       });
+      articleList.classList.add('reveal--visible');
     }
 
     // --- Articles listing page: all ---
     var articlesPageList = document.getElementById('articlesPageList');
     if (articlesPageList) {
-      articlesPageList.innerHTML = '';
+      // Preserve existing article cards if already rendered (defensive)
+      if (articlesPageList.children.length === 1 && articlesPageList.children[0].classList.contains('articles-preview__loading')) {
+        articlesPageList.innerHTML = '';
+      }
       articles.forEach(function (article) {
         articlesPageList.appendChild(createArticleCard(article));
       });
+      // Ensure visibility: reveal.js IntersectionObserver may have already
+      // fired+unobserved before async fetch completed, leaving the container
+      // at opacity:0. Force the reveal class here after content is injected.
+      articlesPageList.classList.add('reveal--visible');
     }
 
     // --- Article sidebar: latest 5 ---
@@ -87,6 +95,7 @@
       articles.slice(0, 5).forEach(function (article) {
         sidebarList.appendChild(createSidebarItem(article));
       });
+      sidebarList.classList.add('reveal--visible');
 
       // Highlight current article in sidebar
       var currentPath = window.location.pathname;
