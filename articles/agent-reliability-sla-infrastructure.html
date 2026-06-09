@@ -7,49 +7,50 @@
   <title>Intelligence Is Trivial. Reliability Is the New Frontier. — Ghassan Alhamoud</title>
   <meta name="description" content="I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke." />
   <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/agent-reliability-sla-infrastructure.html" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html" />
   <meta property="og:title" content="Intelligence Is Trivial. Reliability Is the New Frontier." />
   <meta property="og:description" content="I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke." />
-  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART006.webp" />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART006.webp" />
   <meta property="article:published_time" content="2026-03-22" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/agent-reliability-sla-infrastructure.html" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html" />
   <meta property="twitter:title" content="Intelligence Is Trivial. Reliability Is the New Frontier." />
   <meta property="twitter:description" content="I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke." />
-  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART006.webp" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART006.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Intelligence Is Trivial. Reliability Is the New Frontier.",
-    "description": "I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke.",
-    "image": "https://ghassan-alhamoud.com/images/articles/ART006.webp",
-    "author": {
-      "@type": "Person",
-      "name": "Ghassan Alhamoud",
-      "url": "https://ghassan-alhamoud.com/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Ghassan Alhamoud",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://ghassan-alhamoud.com/favicon.svg"
-      }
-    },
-    "datePublished": "2026-03-22",
-    "dateModified": "2026-03-22",
-    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html",
-    "proficiencyLevel": "Expert",
-    "dependencies": "Agent Architecture, SLA, Infrastructure, LLM",
-    "articleSection": "AI Architecture"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Intelligence Is Trivial. Reliability Is the New Frontier.",
+  "description": "I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART006.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-03-22",
+  "dateModified": "2026-06-09",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html",
+  "proficiencyLevel": "Intermediate",
+  "dependencies": "AI Agents, Reliability, Infrastructure, AI, OpenClaw",
+  "articleSection": "AI Systems"
+}
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -88,37 +89,65 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <time datetime="2026-03-22">Mar 22, 2026</time>
+            <time datetime="2026-03-22">Mar 22 2026</time>
             <span class="article-card__dot"></span>
             <span>4 min</span>
           </div>
           <h1 class="article-single__title">Intelligence Is Trivial. Reliability Is the New Frontier.</h1>
-          <div class="article-single__tags"><span class="article-single__tag">AI Agents</span>
+          <div class="article-single__tags">
+          <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Reliability</span>
           <span class="article-single__tag">Infrastructure</span>
           <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span></div>
+          <span class="article-single__tag">OpenClaw</span>
+          </div>
         </header>
 
                 <img src="/images/articles/ART006.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I spent 6 months building our first agentic workflow the wrong way.</p>
-<p>We focused exclusively on intelligence. We optimized the inference latency. We fine-tuned the prompts. We got the RAG precision to 98%.</p>
-<p>We were "smart." We were fast.</p>
-<p>Then we went to production.</p>
-<p>At 3:00 AM, one of the sub-agents in our chain started returning garbage data. It didn't crash. It didn't time out. It just drifted into a subtle logical error that corrupted our database for 4 hours.</p>
-<p>We had zero alerts. We had no SLA. We had zero visibility into the failure.</p>
-<p>I learned the hardest lesson of my career: In agentic systems, "intelligence" is trivial. Reliability is the new, unsolved frontier.</p>
-<p>When I talk to CTOs today, they’re still obsessed with the same metrics we were. "How do we make it smarter?"</p>
-<p>They aren't asking: "How do we make it fail gracefully?"</p>
-<p>We need an infrastructure layer for agents that mimics the reliability engineering we built for SaaS. We need SLA Registries. We need automated fault resolution.</p>
-<p>We need to treat agent reliability as an engineering constraint, not a bug fix.</p>
-<p>If you’re building production agents, you need to stop focusing on the model's intelligence and start focusing on the infrastructure that makes it production-ready.</p>
-<p>Reliability is the only moat that actually scales.</p>
-<p>What’s the most frustrating agent failure you’ve had to debug lately?</p>
-<p>#AgenticAI #CTO #Engineering #Reliability #AgentInfrastructure</p>
-
+          <p>For a while, I thought the hard part of agent systems was getting them to think well enough.</p>
+<p>Better prompts. Better model choice. Better retrieval. Better planning. If the intelligence layer improved, the rest would follow.</p>
+<p>That belief lasted right up until production.</p>
+<hr />
+<h2>The Failure That Changes Your Priorities</h2>
+<p>What finally resets your thinking is rarely a dramatic crash. It is the quieter kind of failure: the system keeps running, but one part drifts just enough to start doing damage.</p>
+<p>That is much worse than a hard stop because it creates false confidence. The workflow looks alive. The data keeps moving. Nobody notices immediately that the output quality has degraded or that something downstream is being corrupted.</p>
+<p>That is when you realize intelligence is only one property of the system. Reliability is the property that decides whether the intelligence is safe to use.</p>
+<hr />
+<h2>Why Reliability Is Different Here</h2>
+<p>Traditional software reliability already taught us useful lessons: observability, error budgets, retries, fallbacks, incident response, service ownership.</p>
+<p>Agent systems need all of that, but with one extra complication: the failure mode is often semantic before it is technical.</p>
+<p>The service may still return a result. The model may still answer quickly. The workflow may still complete. And yet the outcome can be wrong in a way that looks superficially plausible.</p>
+<p>That means "it stayed up" is nowhere near a sufficient reliability measure.</p>
+<hr />
+<h2>The Question Most Teams Still Skip</h2>
+<p>When people evaluate agent systems, they often ask how capable the model is.</p>
+<p>A better question is: <strong>how does this system fail, and how quickly will we know?</strong></p>
+<p>If the answer is vague, then the architecture is not ready, no matter how strong the demo looked.</p>
+<p>That is why I think reliability has become the real frontier. Not because intelligence stopped mattering, but because intelligence without operational discipline does not survive contact with real workflows.</p>
+<hr />
+<h2>What the Infrastructure Needs</h2>
+<p>At minimum, production agent systems need the equivalent of what good SaaS systems already expect:</p>
+<ol>
+<li>clear service expectations for each component</li>
+<li>health signals that go beyond uptime</li>
+<li>fallback paths when outputs become questionable</li>
+<li>ownership over failure classes, not just generic alerting</li>
+<li>feedback loops that improve detection after incidents</li>
+</ol>
+<p>In other words, reliability has to be designed in as a first-class layer. It cannot be an afterthought added once the model appears to work.</p>
+<hr />
+<h2>Why This Becomes a Moat</h2>
+<p>Anyone can wire together a capable demo now. That bar keeps dropping.</p>
+<p>The harder thing is building an agent system that behaves predictably enough for real teams to trust it under load, over time, and across edge cases. That is slower work. Less flashy work. But it is the part that compounds.</p>
+<p>Once a team gets this right, they stop thinking about the agent as a novelty and start treating it like infrastructure. That is where adoption actually becomes durable.</p>
+<hr />
+<h2>The Shift I Think Matters</h2>
+<p>If you are building for production, the center of gravity has to move.</p>
+<p>From "how smart is it?" toward "how observable, bounded, and recoverable is it?"</p>
+<p>That shift does not make the work less ambitious. It makes it more serious.</p>
+<p>And I suspect the teams that internalize this early will have a very real advantage over the ones still optimizing only for benchmark-level intelligence.</p>
         </div>
 
         <div class="article-cta">

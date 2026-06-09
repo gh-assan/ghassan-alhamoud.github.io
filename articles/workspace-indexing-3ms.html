@@ -7,49 +7,50 @@
   <title>Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms — Ghassan Alhamoud</title>
   <meta name="description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
   <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/workspace-indexing-3ms.html" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
   <meta property="og:title" content="Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms" />
   <meta property="og:description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
-  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART-022.webp" />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-022.webp" />
   <meta property="article:published_time" content="2026-05-06" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/workspace-indexing-3ms.html" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
   <meta property="twitter:title" content="Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms" />
   <meta property="twitter:description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
-  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART-022.webp" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-022.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms",
-    "description": "Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.",
-    "image": "https://ghassan-alhamoud.com/images/articles/ART-022.webp",
-    "author": {
-      "@type": "Person",
-      "name": "Ghassan Alhamoud",
-      "url": "https://ghassan-alhamoud.com/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Ghassan Alhamoud",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://ghassan-alhamoud.com/favicon.svg"
-      }
-    },
-    "datePublished": "2026-05-06",
-    "dateModified": "2026-05-06",
-    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html",
-    "proficiencyLevel": "Expert",
-    "dependencies": "Workspace Indexing, JSON Serialization, Performance Optimization",
-    "articleSection": "Software Architecture"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms",
+  "description": "Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-022.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-05-06",
+  "dateModified": "2026-06-09",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "Architecture, Performance, Workspace Indexing, AI, OpenClaw",
+  "articleSection": "AI Architecture"
+}
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -88,122 +89,70 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <time datetime="2026-05-06">May 06, 2026</time>
+            <time datetime="2026-05-06">May 06 2026</time>
             <span class="article-card__dot"></span>
             <span>7 min</span>
           </div>
           <h1 class="article-single__title">Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms</h1>
-          <div class="article-single__tags"><span class="article-single__tag">Architecture</span>
+          <div class="article-single__tags">
+          <span class="article-single__tag">Architecture</span>
           <span class="article-single__tag">Performance</span>
           <span class="article-single__tag">Workspace Indexing</span>
           <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span></div>
+          <span class="article-single__tag">OpenClaw</span>
+          </div>
         </header>
 
                 <img src="/images/articles/ART-022.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>Every time your agent needs to find a file, it does one of three things:</p>
+          <p>One of the least glamorous bottlenecks in an agent system is file lookup.</p>
+<p>It sounds small until you watch the same agent spend real time rediscovering the workspace over and over again. Scan the tree. Grep a memory file. Ask a human where something lives. Repeat next session.</p>
+<p>That is fine when the workspace is tiny. It becomes wasteful fast once the system is expected to work repeatedly and at speed.</p>
+<p>The fix I ended up with was simple: stop treating the filesystem like a mystery and give the agent an index.</p>
+<hr />
+<h2>The Real Problem Wasn't Just Speed</h2>
+<p>Yes, the raw timing mattered. Cutting file lookup from tens or hundreds of milliseconds down to a few milliseconds is useful.</p>
+<p>But the bigger problem was semantic. A directory scan tells you that files exist. It does not tell the agent what those files mean. Is this an active idea, an archived issue, a product note, an article brief, or a sidecar file that should be ignored?</p>
+<p>Without structure, the agent has to keep doing interpretive work after every lookup. That is the hidden tax.</p>
+<hr />
+<h2>Why a Compact Index Worked Better</h2>
+<p>The answer was to precompute meaning once and load it cheaply at session start.</p>
+<p>Instead of making the agent walk the workspace every time, I built a generator that scans the workspace out of band, extracts the fields that matter, and writes them into a compact registry. The agent loads that registry once and then queries it in memory.</p>
+<p>That changes the interaction model completely. Navigation becomes lookup, not discovery.</p>
+<p>Once I had that shift, the numbers followed naturally: a few milliseconds to load, near-zero time to query, and much lower context overhead than asking the agent to rebuild its map from scratch.</p>
+<hr />
+<h2>The Constraints Were Practical</h2>
+<p>I did not want a little infrastructure empire just to solve file lookup.</p>
+<p>The design constraints were straightforward:</p>
 <ol>
-<li><strong>Scans</strong> the entire directory tree — one <code>find</code> per look-up, O(n) disk traversal</li>
-<li><strong>Greps</strong> MEMORY.md — 19KB text file parsed for keywords, high false-positive rate</li>
-<li><strong>Asks you</strong> — "Where's that file about X again?"</li>
+<li>load fast enough that startup actually improves</li>
+<li>stay compact enough not to waste context</li>
+<li>avoid a dependency chain that turns indexing into its own maintenance problem</li>
 </ol>
-<p>All three are wrong. They treat the file system as a database without an index, and the agent's context window as a cache that gets evicted every session.</p>
-<p>Here's the architecture for a solution that reads the entire workspace in 3ms and costs ~400 tokens to load.</p>
+<p>That is why the solution stayed boring: a generator, a compact JSON representation, and in-memory queries. No daemon, no service, no premature database for a workspace that did not need one yet.</p>
 <hr />
-<h2>Why Directory Scans Fail at Scale</h2>
-<p>The naive approach is <code>find</code> at startup. It works for 50 files. It becomes slow at 200. At 1,224 files — which is where this workspace sits — a full directory scan costs 50–200ms of wall time and an unpredictable number of context tokens depending on how deep the agent walks.</p>
-<p>More importantly: <code>find</code> returns paths, not semantics. It tells you a file exists. It does not tell you whether that file is an article, an idea, a project, or a resolved postmortem. The agent must then open each candidate file to answer that question.</p>
-<p>The alternative — grepping MEMORY.md — is equally flawed. MEMORY.md is a curated memory store at 19KB. It was never designed to be a file system index. Every grep into it is a trade-off: either you build a mental model of the file tree by reading it end-to-end (expensive), or you search for specific terms and hope the term matches a file path (fragile).</p>
-<p>The correct architecture is a <strong>pre-computed compact index</strong> that is loaded once per session and queried in-memory.</p>
+<h2>What Made It Useful</h2>
+<p>The registry did more than store paths. It stored identity and relationships.</p>
+<p>Ideas, issues, products, articles, research, and project notes all had distinct patterns. Once those patterns were encoded, the agent no longer had to guess whether a file was primary, derivative, archived, or noisy. It could query the right object class directly.</p>
+<p>That turned a filesystem problem into a data-model problem, which is exactly where it belonged.</p>
 <hr />
-<h2>The Three Constraints</h2>
-<p>The design had three hard constraints:</p>
-<p><strong>1. Load time under 10ms.</strong> The index must be loaded at session start alongside the system prompt. If it cannot load faster than a <code>find</code>, it provides no benefit. Target: sub-5ms.</p>
-<p><strong>2. Token cost under 500 tokens.</strong> The index is part of the agent's context window for the entire session. Every kilobyte of index is a kilobyte not available for reasoning. Target: ~400 tokens.</p>
-<p><strong>3. Zero dependencies.</strong> The index generator must be a single Python file with only stdlib imports. No YAML parsers, no database clients, nothing that can break. Output is a single JSON file.</p>
+<h2>The Bugs Were the Best Part</h2>
+<p>The first version of the indexer got things wrong in exactly the ways a real evolving workspace tends to go wrong.</p>
+<p>Sidecar files looked like primary content. Legacy issue naming collided with newer conventions. Nested project files were missed. Duplicate article-related artifacts polluted the registry. In other words: reality showed up.</p>
+<p>That was useful, because it proved the actual value of the indexer was not just speed. It was schema enforcement at the boundary. The workspace itself could remain messy and human. The registry was the place where ambiguity had to be resolved once.</p>
+<p>That is a much healthier arrangement than forcing every downstream agent query to rediscover the mess independently.</p>
 <hr />
-<h2>The Architecture</h2>
-<p>The system has two components: a generator and a compact serialization format.</p>
-<h3>Generator</h3>
-<p>The generator (<code>workspace-indexer.py</code>) scans every section of the workspace once per day. For each directory group — ideas, skills, articles, issues, products, research, automation mining, projects — it walks the relevant subdirectory, reads YAML frontmatter from each file, and extracts structured data: ID, title, status, priority, tags, and cross-references.</p>
-<p>The scan is O(n) where n is the total file count (1,224). It runs in ~300ms and produces a ~12KB JSON file. This is acceptable for a daily cron job. The index is regenerated every 24 hours or on demand.</p>
-<h3>Compact Serialization</h3>
-<p>The JSON index uses single-character field keys. "title" becomes "t", "file" becomes "f", "status" becomes "s". This is not optional cosmetic compression — it is the difference between a 12KB file and a ~3KB compact payload. At this size, the index can be loaded as a one-liner:</p>
-<pre><code>import json; REGISTRY = json.load(open("Registry/index.json"))</code></pre>
-<p>This is the entire setup. There is no caching layer, no daemon, no database connection. The file is on disk. <code>json.load</code> reads it in ~3ms.</p>
-<h3>Query Pattern</h3>
-<p>Once loaded, queries are in-memory dictionary lookups:</p>
-<ul>
-<li>"Find idea IS-001": <code>O(1)</code> — look up in the ideas directory entries by ID</li>
-<li>"Find all files tagged 'automation'": hash join on the tags reverse index, <code>O(k)</code> where k is the number of matching entries</li>
-<li>"Trace IS-001 to its product and article": look up two dictionary entries on the cross-reference map</li>
-</ul>
-<p>Every query is sub-millisecond. The agent never touches disk for navigation again.</p>
+<h2>Why This Matters for Agent Systems</h2>
+<p>Agents are unusually sensitive to navigation friction because they pay for it twice: once in time and once in context.</p>
+<p>A human can scan a file tree quickly and carry a rough mental model for the rest of the session. An agent usually cannot. Every rediscovery step burns tokens, introduces ambiguity, and increases the chance of opening the wrong thing.</p>
+<p>That is why a compact registry feels like such a large win relative to how simple it is. It removes a class of repetitive uncertainty from the system.</p>
 <hr />
-<h2>What Gets Indexed</h2>
-<p>The index tracks eight directory groups. The key design decision: each group has a <strong>distinct prefix</strong> and a <strong>single file read pattern</strong>.</p>
-<table>
-<thead>
-<tr><th>Group</th><th>Prefix</th><th>Source</th><th>Entries</th></tr>
-</thead>
-<tbody>
-<tr><td>Skills</td><td>(none)</td><td><code>skills/*/SKILL.md</code></td><td>17</td></tr>
-<tr><td>Ideas</td><td>IS-</td><td>Frontmatter in <code>obsidian/ideas/active/</code></td><td>40</td></tr>
-<tr><td>Issues</td><td>ISU-</td><td>Frontmatter in <code>obsidian/issues/</code> + <code>obsidian/issue-management/</code></td><td>15</td></tr>
-<tr><td>Articles</td><td>ART-</td><td>Frontmatter in <code>obsidian/articles/</code></td><td>11</td></tr>
-<tr><td>Products</td><td>PP-</td><td>Frontmatter in <code>obsidian/product/</code></td><td>8</td></tr>
-<tr><td>Automation</td><td>AM-</td><td>Frontmatter in <code>obsidian/automation-mining/opps/*/</code></td><td>252</td></tr>
-<tr><td>Projects</td><td>(named)</td><td><code>obsidian/projects/*.md</code></td><td>9</td></tr>
-<tr><td>Research</td><td>RS-</td><td>Directories in <code>obsidian/research/active/</code></td><td>1</td></tr>
-</tbody>
-</table>
-<p>Cross-references connect ideas to their derived products and articles. The tags index maps each tag to a comma-separated list of entry IDs (only for tags with >= 2 entries, to avoid noise).</p>
-<hr />
-<h2>The 5 Bugs That Made This Real</h2>
-<p>The indexer did not work correctly on the first day. Five bugs were discovered and fixed:</p>
-<p><strong>1. Phantom idea entries (42 → 40).</strong> Files with the name <code>IS-001-ideation-synthesis.md</code> but no <code>idea-id</code> in frontmatter were indexed as separate ideas. Fix: require frontmatter field for ideas; sub-files without it are silently excluded.</p>
-<p><strong>2. Article sidecar pollution (17 → 11).</strong> Image prompt files (<code>ART-018-image-prompt.md</code>) and brief files (<code>ART-019-issue-management-brief.md</code>) were indexed as separate articles alongside the main article file. Fix: explicit exclusion rules for <code>-image-prompt</code> suffix and deduplication for briefs when a parent article exists.</p>
-<p><strong>3. Issue directory fragmentation.</strong> Issues were stored across two directories — <code>obsidian/issues/</code> (old-style, 9 entries) and <code>obsidian/issue-management/active|archive/</code> (new-style, 12 entries). The indexer only scanned the first. Fix: scan both, deduplicate by ID, prefer the later state.</p>
-<p><strong>4. Issue file name collision.</strong> Old-style files were named <code>issue-001-diagnostic-failure.md</code> (no ISU prefix), new-style files are <code>ISU-011-thunderbird-mcp-down.md</code>. Both formats needed regex extraction to determine the canonical ID. Fallback: frontmatter → regex → filename stem.</p>
-<p><strong>5. Subdirectory project files.</strong> Projects are stored as <code>obsidian/projects/{name}/README.md</code> (subdirectory), not <code>obsidian/projects/{name}.md</code> (flat file). The indexer only scanned flat files. Fix: scan both, with subdirectory files taking priority.</p>
-<p>These bugs are not edge cases. They are the natural result of a workspace evolving over time without a centralized schema enforcement layer. Each fix required changing the indexer, not the file system — because the indexer is the only component that must be schema-aware. The files themselves are free to use any naming convention.</p>
-<hr />
-<h2>The 3ms Query</h2>
-<p>Here is the actual query time for a cold start — loading the index from disk and finding one entry:</p>
-<pre><code>import json, time
-t0 = time.perf_counter_ns()
-r = json.load(open("Registry/index.json"))
-t1 = time.perf_counter_ns()
-# Find IS-001
-entry = [e for d in r["d"] if d["n"] == "Ideas"][0]["e"]
-entry = [e for e in entry if e["i"] == "IS-001"][0]
-t2 = time.perf_counter_ns()
-print(f"Load: {(t1-t0)/1e6:.2f}ms, Query: {(t2-t1)/1e6:.2f}ms")</code></pre>
-<p>Results: <strong>Load: 2.8ms, Query: 0.05ms.</strong> Total: 2.85ms.</p>
-<p>Compare to <code>find . -name "<em>IS-001</em>"</code>: ~45ms including shell startup. Or grepping MEMORY.md: ~120ms for a 19KB file.</p>
-<p>This is the difference between an architecture designed for an agent and one that happened to work for a human.</p>
-<hr />
-<h2>When This Pattern Breaks</h2>
-<p>The compact index architecture works up to approximately 5,000 entries. Beyond that, <code>json.load</code> on a file larger than ~50KB starts to compete with directory scan times, and the single-authority generator becomes a maintenance burden.</p>
-<p>At scale, the correct evolution is:</p>
-<ul>
-<li><strong>10K–50K entries</strong>: Partition the index by group into separate files (<code>index.skills.json</code>, <code>index.ideas.json</code>). Load only the partitions you need.</li>
-<li><strong>50K+ entries</strong>: Replace the JSON file with a local SQLite database. The load pattern changes from <code>json.load</code> to <code>sqlite3.connect</code>, but the query pattern remains sub-millisecond.</li>
-</ul>
-<p>For a single-developer workspace at 1,224 files, the JSON file with a daily cron generator is the right architecture. It is simple, debuggable, and zero-dependency. Replacing it with a database would be premature optimization.</p>
-<hr />
-<h2>What You Could Build</h2>
-<p>The registry pattern is general. Any structured workspace — a documentation site, a codebase with multiple modules, a research vault — benefits from a pre-computed index that separates navigation from content.</p>
-<p>The pattern:</p>
-<ol>
-<li>A generator script that reads your workspace structure once daily</li>
-<li>A compact output format that loads in under 10ms and <1KB overhead</li>
-<li>In-memory queries that never touch disk</li>
-</ol>
-<p>This is not architecture. It is hygiene. The only question is why most systems don't do it — and the answer is that most systems never measured how much time they spend finding files.</p>
-<hr />
+<h2>What I'd Generalize From It</h2>
+<p>If your agent works over any structured workspace, whether that is a codebase, a note system, a documentation vault, or a mixed operating repository, you probably want some form of precomputed registry.</p>
+<p>Not because it is fancy. Because it is basic hygiene once the workspace stops being trivial.</p>
+<p>The moment I stopped asking the agent to "figure out the workspace" and started handing it a compact map, the whole system felt more deliberate. Faster, yes. But more importantly: less confused.</p>
+<p>That is usually the real sign that an infrastructure change was worth making.</p>
         </div>
 
         <div class="article-cta">

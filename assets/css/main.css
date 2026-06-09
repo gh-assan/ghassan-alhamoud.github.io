@@ -1646,6 +1646,18 @@ img {
   color: var(--text-primary);
 }
 
+.article-single__body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 24px 0;
+}
+
+.article-single__body pre code {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
 .article-single__body a {
   color: var(--accent);
   text-decoration: underline;

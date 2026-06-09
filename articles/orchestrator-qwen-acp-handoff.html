@@ -5,57 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work — Ghassan Alhamoud</title>
-  <meta name="description" content="I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions." />
+  <meta name="description" content="Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable." />
   <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/orchestrator-qwen-acp-handoff.html" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
   <meta property="og:title" content="How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work" />
-  <meta property="og:description" content="I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions." />
-  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART-026.webp" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:description" content="Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-026.webp" />
   <meta property="article:published_time" content="2026-05-28" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/orchestrator-qwen-acp-handoff.html" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
   <meta property="twitter:title" content="How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work" />
-  <meta property="twitter:description" content="I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions." />
-  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART-026.webp" />
+  <meta property="twitter:description" content="Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-026.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work",
-    "description": "I needed a database in my basement. I didn’t write it. My orchestrator didn’t write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.",
-    "image": "https://ghassan-alhamoud.com/images/articles/ART-026.webp",
-    "author": {
-      "@type": "Person",
-      "name": "Ghassan Alhamoud",
-      "url": "https://ghassan-alhamoud.com/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Ghassan Alhamoud",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://ghassan-alhamoud.com/favicon.svg"
-      }
-    },
-    "datePublished": "2026-05-28",
-    "dateModified": "2026-05-28",
-    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html",
-    "proficiencyLevel": "Expert",
-    "dependencies": "AI Agents, ACP Protocol, Agent Coordination, MCP, Qwen Code, OpenClaw",
-    "articleSection": "AI Architecture"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work",
+  "description": "Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-026.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-05-28",
+  "dateModified": "2026-06-09",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "AI Agents, Architecture, Protocol, OpenClaw",
+  "articleSection": "AI Architecture"
+}
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
@@ -90,93 +88,64 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <time datetime="2026-05-28">May 28, 2026</time>
+            <time datetime="2026-05-28">May 28 2026</time>
             <span class="article-card__dot"></span>
             <span>8 min</span>
           </div>
           <h1 class="article-single__title">How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work</h1>
-          <div class="article-single__tags"><span class="article-single__tag">AI Agents</span>
+          <div class="article-single__tags">
+          <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Architecture</span>
           <span class="article-single__tag">Protocol</span>
-          <span class="article-single__tag">OpenClaw</span></div>
+          <span class="article-single__tag">OpenClaw</span>
+          </div>
         </header>
 
         <img src="/images/articles/ART-026.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I needed a database in my basement. No UI. No login screen. No human would ever touch it.</p>
-<p>I didn't write it. My orchestrator didn't write it either. A coding agent — Qwen Code on a different machine — built it in one session.</p>
-<p>The orchestrator knew what I needed. Qwen Code knew how to build it. The only thing between them was a three-message protocol.</p>
-<p>Here's how it works.</p>
+          <p>One of the clearest lessons from building multi-agent systems is that specialization helps only if the handoff is disciplined.</p>
+<p>It is not enough to have one model that is good at orchestration and another that is good at implementation. If the interaction between them is vague, you mostly just move confusion from one context window to another.</p>
+<p>That is why I ended up caring so much about the handoff protocol itself.</p>
 <hr />
-<h3>The Problem With Single-Agent Systems</h3>
-<p>When you start building with AI, the instinct is obvious: one agent, all the tools, let it figure everything out.</p>
-<p>It works. Until it doesn't.</p>
-<p>The breaking point hits when a task spans skill domains. Discovery, planning, implementation, testing — each needs different reasoning. Your general-purpose orchestrator is terrible at writing DuckDB schemas. It's burning context on code when it should be thinking about product. You try running it on a different machine and everything falls apart.</p>
-<p>I hit all four at once on EntityScope. My orchestrator excelled at discovery and product thinking. It was awful at implementation. The fix wasn't better tools. It was to stop asking it to code.</p>
+<h2>Why a Single Agent Was the Wrong Shape</h2>
+<p>At first, the tempting design is obvious: give one powerful agent all the tools and let it handle the full path from idea to implementation.</p>
+<p>Sometimes that works. But once the work spans product framing, architecture choices, implementation detail, and deployment, the tradeoffs get worse quickly. The same context window is trying to hold strategic intent and low-level coding concerns at once. The result is usually muddier than it looks.</p>
+<p>In my case, the orchestrator was good at framing the problem and setting constraints. It was not the right component to write the implementation. Pushing it to do both made the system worse, not smarter.</p>
 <hr />
-<h3>What Is ACP?</h3>
-<p>ACP is a structured handoff protocol between agents. Not a library — a pattern. I call it <strong>Agent Coordination Protocol</strong>. This one is lightweight: typed proposals, explicit decisions, no free-form chat.</p>
-<pre><code>┌────────────────┐
-│  Orchestrator   │  Has the big picture. Knows what needs to happen.
-│  (General LLM)  │  Does NOT write code.
-└────────┬───────┘
-         │ 1. ACP Proposal: &quot;Here's what needs built, here's the brief&quot;
-         ▼
-┌────────────────┐
-│  Coding Agent   │  Receives a structured brief. Implements autonomously.
-│  (Qwen Code)    │  Returns: &quot;Done. Here's the output. Here's the status.&quot;
-└────────┬───────┘
-         │ 2. ACP Decision: &quot;Approved. Deploy it.&quot;
-         ▼
-┌────────────────┐
-│  Orchestrator   │  Verifies. Deploys. Reports back to me.
-└────────────────┘
-</code></pre>
-<p>The orchestrator doesn't execute. It directs.</p>
+<h2>What ACP Solves</h2>
+<p>The useful move was to separate roles and make the handoff explicit.</p>
+<p>ACP, or Agent Coordination Protocol, is the pattern I used for that. The idea is simple: stop treating delegation as casual chat and start treating it as a structured contract between agents.</p>
+<p>The orchestrator defines the objective, constraints, inputs, success conditions, and kill gates. The specialist responds with a plan, effort estimate, dependencies, and risk. The orchestrator then approves, revises, escalates, or kills the task.</p>
+<p>That sounds almost boring, which is part of the point. It removes a lot of ambiguity before the expensive work begins.</p>
 <hr />
-<h3>The ACP Handoff Structure</h3>
-<p>Every handoff follows three stages. No improvisation.</p>
-<p><strong>The Proposal (Orchestrator → Specialist):</strong></p>
+<h2>Why Free-Form Chat Breaks Down</h2>
+<p>I do not think free-form agent conversation is useless. I do think it becomes fragile fast when the work has real execution consequences.</p>
+<p>Three failure modes show up again and again:</p>
 <ol>
-<li><strong>Objective</strong> — One sentence. What are we building?</li>
-<li><strong>Constraints</strong> — Non-negotiables: language, framework, deployment target, performance requirements</li>
-<li><strong>Input</strong> — Where to find the data, schemas, or context</li>
-<li><strong>Success criteria</strong> — Measurable. Testable.</li>
-<li><strong>Kill gates</strong> — Code-level conditions that stop work and escalate back</li>
+<li><strong>ambiguity compounds</strong> because the requirements keep being reinterpreted instead of restated cleanly</li>
+<li><strong>roles blur</strong> because the specialist starts making product decisions and the orchestrator starts micromanaging implementation</li>
+<li><strong>stopping conditions disappear</strong> because nobody defined when to escalate or abort</li>
 </ol>
-<p><strong>The Response (Specialist → Orchestrator):</strong></p>
-<ol>
-<li><strong>Plan</strong> — What they'll build, in what order</li>
-<li><strong>Risk assessment</strong> — What might go wrong</li>
-<li><strong>Estimated effort</strong> — How long it'll take</li>
-<li><strong>Dependencies</strong> — What they need from the orchestrator or infrastructure</li>
-</ol>
-<p><strong>The Decision (Orchestrator):</strong></p>
-<ol>
-<li><strong>Approve</strong> — Go ahead</li>
-<li><strong>Revise</strong> — Change these things, resubmit</li>
-<li><strong>Escalate</strong> — I need to ask the human</li>
-<li><strong>Kill</strong> — Stop. The project is cancelled.</li>
-</ol>
-<p>That's it. What makes this powerful isn't complexity — both sides agree to the same structure every time.</p>
+<p>That is expensive in exactly the same way bad human process is expensive. The agent may continue producing tokens, but the system is no longer operating with clean accountability.</p>
 <hr />
-<h3>Why Not Just Chat?</h3>
-<p>The obvious alternative: let them talk. "Hey, can you build the DuckDB thing?" — "Sure, let me look at it."</p>
-<p>I tried this. It fails predictably.</p>
-<p><strong>Ambiguity compounds every turn.</strong> "Build the database" on turn 1 becomes "which database?" on turn 3, "oh, you meant schema-first?" on turn 5, "wait, was this Postgres?" on turn 8. Every sentence plays telephone with the last. I've watched agents spend twenty messages clarifying what "load the data" means while the actual problem sat untouched.</p>
-<p><strong>Role drift erodes the architecture.</strong> The coder starts asking strategic questions. The orchestrator suggests implementation details. Within twenty turns they've swapped roles — the coder makes product decisions and the orchestrator debugs imports. Two agents, blurred lines, zero accountability. You end up with a database schema designed by someone who can't write SQL and deployment scripts written by someone who doesn't know the product.</p>
-<p><strong>Context is inseparable from noise.</strong> A fifty-turn conversation about EntityScope's data model tangles deployment concerns, casual remarks, and half-remembered assumptions from three sessions ago. Every handoff to a fresh agent requires reconstructing the thread from a wall of dialogue. The critical constraint you mentioned in message 12? Buried under seventeen irrelevant follow-ups.</p>
-<p><strong>There's no kill switch.</strong> Without explicit kill gates, agents iterate endlessly. I've watched one spend 45 minutes on a problem a human could solve in 30 seconds — because nothing told it to stop. No circuit breaker. No "this isn't working, escalate." Just polite, persistent, expensive failure.</p>
-<p>Structured handoffs solve all of this:</p>
-<ul>
-<li>The proposal is a document, not a chat history. Every fact the specialist needs is in one place, on arrival.</li>
-<li>The decision is a boolean or revision list, not a paragraph to interpret.</li>
-<li>Kill gates are code — executable conditions checked on every status update. If condition X is met, the agent escalates. No heuristics.</li>
-</ul>
-<p>Natural-language delegation versus ACP is a verbal agreement versus a contract with exit clauses. Both communicate intent. Only one survives contact with reality.</p>
+<h2>What a Good Handoff Needs</h2>
+<p>In practice, the handoff became much stronger once it answered a few non-negotiable questions up front:</p>
+<ol>
+<li>What are we trying to build?</li>
+<li>What constraints are fixed?</li>
+<li>What counts as success?</li>
+<li>What conditions should stop the work and push it back up?</li>
+</ol>
+<p>Those questions matter more than any one model choice because they define whether the specialist can execute with confidence instead of improvising around missing assumptions.</p>
 <hr />
-<h3>The Infrastructure: SSH + MCP + the Orchestrator Instance</h3>
+<h2>Why This Matters Architecturally</h2>
+<p>The protocol is not just a communication convenience. It is an architecture boundary.</p>
+<p>Once the orchestrator is responsible for framing and governance, and the coding agent is responsible for implementation, each layer can improve at its own job without constantly stepping on the other.</p>
+<p>That also makes the overall system easier to audit. You can inspect what was requested, what was proposed, what was approved, and under which conditions the execution happened.</p>
+<p>That is much closer to how serious engineering organizations already want work to move.</p>
+<hr />
+<h2>The Operational Layer Matters Too</h2>
 <p>The protocol is the contract. Here's the transport stack:</p>
 <img src="/images/articles/ART-026-diagram.webp" alt="Orchestrator, Orch Instance, and Qwen Code communication diagram showing SSH, MCP, and ACP layers" loading="lazy" />
 <p>The orchestrator lives on my workstation. The coding agent runs on a separate machine at <strong>192.X.X.X</strong>. They communicate via three layers:</p>
@@ -193,16 +162,18 @@
 <li><strong>Session independence</strong>: The coding agent runs for hours. The orchestrator checks in, reviews, disconnects</li>
 </ul>
 <hr />
-<h3>The EntityScope Example: ACP in Action</h3>
-<p>Here's what the EntityScope handoff looked like:</p>
+<h2>The EntityScope Example</h2>
+<p>EntityScope was the moment this became more than theory.</p>
+<p>The orchestrator had enough context to define the target system clearly. The coding agent had enough implementation focus to build it. ACP made the boundary usable.</p>
+<p>Here is what that handoff looked like:</p>
 <p><strong>Proposal (Orchestrator → Qwen Code):</strong></p>
 <pre><code>OBJECTIVE: Build DuckDB spine + MCP server for entity data
 CONSTRAINTS: Python 3.11+, DuckDB, MCP SDK via pip
 INPUT: Berlin Business Dataset CSV at ~/data/berlin_businesses.csv
          Provisional schema at PP-003/03-discovery.md
 SUCCESS: 1. entityscope_query returns results from DuckDB
-          2. entityscope_health returns green
-          3. All 4 MCP tools register and respond
+         2. entityscope_health returns green
+         3. All 4 MCP tools register and respond
 KILL:    &gt;2 hours of wall time without a working health check
          Dataset has &lt;50K usable records after dedup
 </code></pre>
@@ -211,56 +182,25 @@ KILL:    &gt;2 hours of wall time without a working health check
       2. Build MCP server with 4 tools
       3. Test each tool
 RISK: CSV encoding issues (resolved: forced UTF-8)
-       MCP SDK version mismatch (resolved: pinned to 0.4.1)
+      MCP SDK version mismatch (resolved: pinned to 0.4.1)
 EFFORT: ~45 minutes
 DEPS: Nothing — all data is local
 </code></pre>
 <p><strong>Decision (Orchestrator):</strong></p>
 <pre><code>APPROVED — proceed
 </code></pre>
-<p>Three structured exchanges. The coding agent built EntityScope's entire spine — DuckDB schema, MCP server with four tools, data ingestion — in one session.</p>
-<p>The same pattern works for any coding task. The orchestrator doesn't need DuckDB internals. It defines the problem, sets constraints, and knows when to escalate.</p>
+<p>That structure did two valuable things at once: it reduced misinterpretation, and it made it obvious when the task was not ready for execution yet.</p>
 <hr />
-<h3>Why This Setup Wins</h3>
-<p><strong>1. Each model plays to its strengths.</strong></p>
-<p>The orchestrator handles: discovery, product thinking, risk assessment, context management, human communication. The coding agent handles: implementation, debugging, testing, deployment. Neither tries to do the other's job.</p>
-<p><strong>2. Swap models without swapping architecture.</strong></p>
-<p>Today it's Qwen Code. Tomorrow it could be Claude Code or GPT-5 Codex. The ACP proposal stays the same. The infrastructure stays the same. Only the agent changes.</p>
-<p><strong>3. Long-running tasks don't block the orchestrator.</strong></p>
-<p>The orchestrator submits a proposal, gets approval, and returns to other work. It checks in periodically. Database schema context stays free for higher-level thinking.</p>
-<p><strong>4. One document, everything the coding agent needs.</strong></p>
-<p>The proposal is a complete brief. No hunting through conversation history. Every dependency in the first message. This dramatically reduces context-missing errors.</p>
-<p><strong>5. Kill gates are code, checked on every status update.</strong></p>
-<p>The hard limit is two hours: if the coding agent can't produce a working health check, it escalates. This isn't a guideline — it's an executable condition, evaluated like an assertion on every status check. No infinite loops. No burning $50 on a lost cause. Kill gates are the difference between a system you trust unsupervised and one you babysit.</p>
+<h2>Why Consulting Buyers Should Care</h2>
+<p>If you are leading an engineering team, this is not really about whether one agent talked to another in a clever way.</p>
+<p>It is about whether your AI workflow has explicit contracts, governance points, and role boundaries. Those are the same qualities that make other distributed systems easier to trust.</p>
+<p>Without them, multi-agent design often turns into an expensive blur of partial autonomy. With them, it starts looking much more like controllable infrastructure.</p>
 <hr />
-<h3>How to Build This Yourself</h3>
-<p>Five steps:</p>
-<p><strong>1. Get a dedicated coding machine.</strong></p>
-<p>A cheap VPS. A home server. A spare laptop. If it runs Python and accepts SSH, you're set.</p>
-<p><strong>2. Install an MCP server.</strong></p>
-<p>Use <code>mcp-python-sdk</code> to expose tools: <code>deploy_task</code>, <code>read_file</code>, <code>write_file</code>, <code>run_command</code>. The coding agent gets an MCP server that lets it read, write, and execute on the remote machine.</p>
-<p><strong>3. Define your handoff protocol.</strong></p>
-<p>Start simple. JSON schema. Three fields per stage. Clarity beats completeness — add fields as you find gaps.</p>
-<p><strong>4. Wire SSH key-based auth.</strong></p>
-<p>No passwords. The orchestrator should <code>ssh user@host "ls"</code> in one step. Fix this first. Everything else depends on it.</p>
-<p><strong>5. Start with one specialist.</strong></p>
-<p>Pick one task — coding, data analysis, research — and set up the ACP handoff for just that. Prove it works. Then expand.</p>
-<p>You could have step 1 done tonight.</p>
-<hr />
-<h3>The Result</h3>
-<p>EntityScope was built by two agents on two machines, communicating through a structured protocol I designed in a single afternoon.</p>
-<p>The orchestrator never wrote SQL. Qwen Code never made a product decision. The handoff was three messages. The database has been running for weeks, serving answers in eight seconds, with zero human intervention.</p>
-<p>This is the architecture that works:</p>
-<ul>
-<li><strong>One orchestrator</strong> that understands the big picture but doesn't implement</li>
-<li><strong>Specialist agents</strong> that implement without needing the big picture</li>
-<li><strong>A structured protocol</strong> that makes the handoff unambiguous</li>
-<li><strong>Separate infrastructure</strong> that isolates risk and frees up resources</li>
-</ul>
-<p>The hardest lesson in building agent systems: don't make one agent do everything. The easiest fix is a protocol.</p>
-<hr />
-<p>If you're building multi-agent systems and struggling with handoff quality, I'd love to hear what patterns you've tried. The protocol space is wide open. Every real deployment teaches us something new.</p>
-<p><em>I'm documenting my architecture openly. Follow for patterns on ACP, MCP infrastructure, and agent-native systems.</em></p>
+<h2>The Broader Lesson</h2>
+<p>My takeaway is not that ACP is the only protocol shape that works.</p>
+<p>It is that serious multi-agent systems need something stricter than vibes.</p>
+<p>Once handoffs become structured, you get cleaner delegation, better auditability, clearer failure boundaries, and less wasted context. That is usually where the system stops feeling like a demo and starts feeling like engineering.</p>
+
         </div>
 
         <div class="article-cta">

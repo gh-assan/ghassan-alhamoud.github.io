@@ -7,49 +7,50 @@
   <title>The Agent Reasoning Fallacy — Ghassan Alhamoud</title>
   <meta name="description" content="Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery." />
   <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/agent-reasoning-discovery-fallacy.html" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html" />
   <meta property="og:title" content="The Agent Reasoning Fallacy" />
   <meta property="og:description" content="Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery." />
-  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART002.webp" />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART002.webp" />
   <meta property="article:published_time" content="2026-03-08" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/agent-reasoning-discovery-fallacy.html" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html" />
   <meta property="twitter:title" content="The Agent Reasoning Fallacy" />
   <meta property="twitter:description" content="Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery." />
-  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART002.webp" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART002.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "The Agent Reasoning Fallacy",
-    "description": "Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.",
-    "image": "https://ghassan-alhamoud.com/images/articles/ART002.webp",
-    "author": {
-      "@type": "Person",
-      "name": "Ghassan Alhamoud",
-      "url": "https://ghassan-alhamoud.com/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Ghassan Alhamoud",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://ghassan-alhamoud.com/favicon.svg"
-      }
-    },
-    "datePublished": "2026-03-08",
-    "dateModified": "2026-03-08",
-    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html",
-    "proficiencyLevel": "Expert",
-    "dependencies": "A2A Protocol, Agent Architecture, Distributed Systems, Service Discovery",
-    "articleSection": "AI Architecture"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "The Agent Reasoning Fallacy",
+  "description": "Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART002.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-03-08",
+  "dateModified": "2026-06-09",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html",
+  "proficiencyLevel": "Intermediate",
+  "dependencies": "AI Agents, Discovery, Distributed Systems, AI, OpenClaw",
+  "articleSection": "AI Architecture"
+}
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -88,40 +89,66 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <time datetime="2026-03-08">Mar 08, 2026</time>
+            <time datetime="2026-03-08">Mar 08 2026</time>
             <span class="article-card__dot"></span>
             <span>5 min</span>
           </div>
           <h1 class="article-single__title">The Agent Reasoning Fallacy</h1>
-          <div class="article-single__tags"><span class="article-single__tag">AI Agents</span>
+          <div class="article-single__tags">
+          <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Discovery</span>
           <span class="article-single__tag">Distributed Systems</span>
           <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span></div>
+          <span class="article-single__tag">OpenClaw</span>
+          </div>
         </header>
 
                 <img src="/images/articles/ART002.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>Everyone is obsessed with agent reasoning. The latest benchmarks. The newest fine-tuning tricks. The deeper chains-of-thought.</p>
-<p>We're chasing "smarter" agents.</p>
-<p>But here’s the hard truth: <strong>A brilliant, isolated agent is just a glorified chatbot.</strong></p>
-<p>The real bottleneck to the agent economy isn't reasoning. It's discovery.</p>
-<p>I spent last week auditing an agent architecture for a mid-sized firm. Their agents were incredibly smart, but they were stuck in a silo. When they needed a specialized service, they hit a wall. They couldn't search the B2B landscape. They couldn't autonomously find a partner. They couldn't negotiate.</p>
-<p>It was manual, brittle, and unscalable.</p>
-<p>We are building an "Agent Internet" using 1990s sales infrastructure. We're relying on cold emails and human-browsed API marketplaces. This is fundamentally incompatible with an agent-first world.</p>
-<p>What we need is an Agent-to-Agent (A2A) Service Discovery Network.</p>
-<p>Think of it as the "Yellow Pages" for B2B agentic services.</p>
-<p>With a standardized A2A protocol (like Google's A2A), agents could:</p>
+          <p>A lot of the current conversation around agents still revolves around one question: how smart can we make them?</p>
+<p>Better reasoning. Better benchmarks. Better planning. Better internal loops.</p>
+<p>That work matters. But I think it is hiding a bigger bottleneck.</p>
+<p>An extremely smart agent that cannot find the right external capability is still trapped. It just fails more intelligently.</p>
+<hr />
+<h2>The Wrong Center of Gravity</h2>
+<p>We keep treating the agent as if its main challenge is thinking harder inside its own boundary.</p>
+<p>In reality, a lot of useful work depends less on deeper internal reasoning and more on external discovery: finding the right service, the right tool, the right provider, the right counterpart, the right source of truth.</p>
+<p>If that discovery layer is weak, the whole system becomes brittle. The agent can reason beautifully about the options it already sees and still fail because it never found the option that actually mattered.</p>
+<hr />
+<h2>Why This Feels Familiar</h2>
+<p>I have seen architectures where the agent itself was impressive but the operating model around it was primitive. It could classify, summarize, and route within a closed environment, but the moment it had to discover a specialized external capability, the process collapsed back into manual work.</p>
+<p>A human had to search. A human had to evaluate. A human had to broker the next step.</p>
+<p>That is not a reasoning ceiling. That is a discovery ceiling.</p>
+<hr />
+<h2>The Real Gap</h2>
+<p>We are still trying to build an agent-native economy on top of very human discovery infrastructure.</p>
+<p>Directories are built for people. Marketplaces are browsed by people. Outreach is written for people. Evaluation metadata is often too loose or too incomplete for an agent to make reliable decisions from it.</p>
+<p>That mismatch is why so many agent demos look self-sufficient until they hit the edge of their local toolset.</p>
+<p>At that point, intelligence is not enough. The system needs a way to discover what else exists, verify whether it can be trusted, and decide how to interact with it.</p>
+<hr />
+<h2>What Discovery Should Actually Mean</h2>
+<p>For an agent ecosystem to scale, discovery needs to be more than search.</p>
+<p>An agent should be able to:</p>
 <ol>
-<li><strong>Discover</strong> services based on intent.</li>
-<li><strong>Verify</strong> capability via metadata.</li>
-<li><strong>Negotiate</strong> terms autonomously.</li>
+<li>find relevant capabilities based on intent, not only exact names</li>
+<li>inspect enough structured metadata to judge fit and constraints</li>
+<li>understand trust, reliability, and interface expectations before acting</li>
+<li>negotiate or coordinate in a protocol-friendly way when needed</li>
 </ol>
-<p><strong>Reasoning is the brain, but discovery is the nervous system.</strong></p>
-<p>If we want the agent economy to scale, we need to stop thinking about agents as individual performers and start thinking about them as nodes in a network.</p>
-<p>Is anyone else working on the A2A infrastructure layer? Or are we all still too busy chasing benchmarks?</p>
-
+<p>That is a much richer layer than what most current tool registries or service directories offer.</p>
+<hr />
+<h2>Why This Matters More Than It Sounds</h2>
+<p>Reasoning improvements compound inside the agent. Discovery improvements compound across the network.</p>
+<p>That is why I think the industry focus is slightly off-center right now. We keep asking how to make single agents better at thinking, but a lot of the real economic value will come from making agent systems better at finding and coordinating with each other.</p>
+<p>The smarter the individual nodes become, the more obvious the network limitation gets.</p>
+<hr />
+<h2>The Better Mental Model</h2>
+<p>I do not think of this as reasoning versus discovery. I think of it as brain versus nervous system.</p>
+<p>The brain matters. But without the rest of the network, it has very little reach.</p>
+<p>That is why I keep coming back to service discovery, agent-to-agent protocols, and structured capability metadata as foundational infrastructure. Not glamorous, maybe. But foundational.</p>
+<p>If we want agent systems to move beyond isolated performers, we need to build the conditions under which they can actually find and work with the rest of the ecosystem.</p>
+<p>Otherwise we will keep building smarter silos.</p>
         </div>
 
         <div class="article-cta">

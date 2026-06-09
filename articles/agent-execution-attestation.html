@@ -7,49 +7,50 @@
   <title>Stop Obsessing Over Alignment. Start Building Auditability. — Ghassan Alhamoud</title>
   <meta name="description" content="You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability." />
   <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-execution-attestation.html" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/agent-execution-attestation.html" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-execution-attestation.html" />
   <meta property="og:title" content="Stop Obsessing Over Alignment. Start Building Auditability." />
   <meta property="og:description" content="You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability." />
-  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/ART008.webp" />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART008.webp" />
   <meta property="article:published_time" content="2026-03-28" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/agent-execution-attestation.html" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-execution-attestation.html" />
   <meta property="twitter:title" content="Stop Obsessing Over Alignment. Start Building Auditability." />
   <meta property="twitter:description" content="You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability." />
-  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/ART008.webp" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART008.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Stop Obsessing Over Alignment. Start Building Auditability.",
-    "description": "You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.",
-    "image": "https://ghassan-alhamoud.com/images/articles/ART008.webp",
-    "author": {
-      "@type": "Person",
-      "name": "Ghassan Alhamoud",
-      "url": "https://ghassan-alhamoud.com/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Ghassan Alhamoud",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://ghassan-alhamoud.com/favicon.svg"
-      }
-    },
-    "datePublished": "2026-03-28",
-    "dateModified": "2026-03-28",
-    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-execution-attestation.html",
-    "proficiencyLevel": "Expert",
-    "dependencies": "TEE, ZK-Proofs, Agent Infrastructure",
-    "articleSection": "AI Systems"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Stop Obsessing Over Alignment. Start Building Auditability.",
+  "description": "You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART008.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-03-28",
+  "dateModified": "2026-06-09",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-execution-attestation.html",
+  "proficiencyLevel": "Intermediate",
+  "dependencies": "AI Agents, Security, Trust, Architecture, OpenClaw",
+  "articleSection": "AI Architecture"
+}
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -88,44 +89,61 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <time datetime="2026-03-28">Mar 28, 2026</time>
+            <time datetime="2026-03-28">Mar 28 2026</time>
             <span class="article-card__dot"></span>
             <span>5 min</span>
           </div>
           <h1 class="article-single__title">Stop Obsessing Over Alignment. Start Building Auditability.</h1>
-          <div class="article-single__tags"><span class="article-single__tag">AI Agents</span>
+          <div class="article-single__tags">
+          <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Security</span>
           <span class="article-single__tag">Trust</span>
           <span class="article-single__tag">Architecture</span>
-          <span class="article-single__tag">OpenClaw</span></div>
+          <span class="article-single__tag">OpenClaw</span>
+          </div>
         </header>
 
                 <img src="/images/articles/ART008.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>Everyone is talking about <strong>AI Alignment</strong>.</p>
-<p>They’re debating how to stop superintelligence from "doing the wrong thing." It’s an essential philosophical problem for the long term.</p>
-<p>But in the real world of 2026, enterprise AI adoption isn't stalling because of alignment. <strong>It’s stalling because of auditability.</strong></p>
-<p>You cannot trust what you cannot verify.</p>
-<p>Every time a team connects an AI agent to an API, they’re taking a leap of faith. The agent acts. It calls a tool. It hits a database.</p>
-<p><strong>And then?</strong></p>
-<p>Nothing. No trace. No proof.</p>
-<p>If you’re a CTO, you’re not losing sleep over Skynet. You’re worried about:</p>
-<ul>
-<li><strong>Policy Compliance:</strong> Did the agent follow the rules?</li>
-<li><strong>Security:</strong> Did it hit the correct API endpoint?</li>
-<li><strong>Accountability:</strong> Who is responsible when it breaks?</li>
-</ul>
-<p>We don't need another alignment paper. We need an <strong>Agent Execution Attestation Layer.</strong></p>
-<p>Trust must be <strong>cryptographic</strong>, not implicit. We need this architecture:</p>
-<p>1️⃣ <strong>Hardware-Anchored Identity (TEE):</strong> Bind agent identity directly to the hardware.</p>
-<p>2️⃣ <strong>Zero-Knowledge Proofs (ZK):</strong> Generate verifiable proofs for each action, without revealing proprietary logic.</p>
-<p>3️⃣ <strong>Transparency Logs:</strong> Commit proofs to an immutable, queryable audit trail.</p>
-<p>This is the Agent-to-Agent trust layer we've been missing.</p>
-<p>If you’re building agent infrastructure, <strong>stop obsessing over alignment.</strong></p>
-<p><strong>Start building auditability.</strong> That is how you ship to production.</p>
-<p>#AI #AgenticWorkflows #TechArchitecture #Trust</p>
-
+          <p>A lot of AI safety discussion still happens at the level of intentions: how do we make sure the system wants the right things, follows the right principles, and does not go off the rails?</p>
+<p>That is an important long-term discussion.</p>
+<p>But most enterprise hesitation I see right now is much more immediate. Teams are not blocked because they are afraid of superintelligence. They are blocked because they cannot prove what their systems actually did.</p>
+<hr />
+<h2>The Trust Gap Is Operational</h2>
+<p>Once an agent is connected to tools, APIs, internal data, and execution paths, trust stops being a philosophical preference. It becomes an operational requirement.</p>
+<p>Did the agent call the right endpoint? Did it follow the expected sequence? Did it act under the right identity? Did it violate a policy boundary? Could you reconstruct the action later if you had to explain it to security, audit, or leadership?</p>
+<p>If the answer to those questions is weak, adoption slows down for very rational reasons.</p>
+<hr />
+<h2>Why Auditability Matters More Than Hype</h2>
+<p>Teams can tolerate some uncertainty in model behavior if the surrounding execution layer is transparent enough. What they struggle to tolerate is blind action.</p>
+<p>An agent that is somewhat imperfect but well-instrumented is easier to govern than an agent that feels clever but leaves behind no meaningful evidence of how it operated.</p>
+<p>That is why I think auditability is the more urgent engineering problem. Not because alignment does not matter, but because governance in the real world starts with traceability.</p>
+<hr />
+<h2>What an Attestation Layer Would Change</h2>
+<p>The idea of an execution attestation layer is really about turning trust from a feeling into a verifiable property.</p>
+<p>At a high level, that means three things:</p>
+<ol>
+<li>the system can prove which identity executed an action</li>
+<li>the action can be tied to a trustworthy record of what happened</li>
+<li>the record can be inspected without relying on a hand-written narrative after the fact</li>
+</ol>
+<p>Whether the implementation uses hardware-bound identity, transparency logs, cryptographic proofs, or a more incremental internal equivalent, the direction is the same: execution needs evidence.</p>
+<hr />
+<h2>Why This Becomes a Productive Constraint</h2>
+<p>Once you design for attestation, a lot of architectural choices sharpen naturally.</p>
+<p>You become more explicit about boundaries. You care more about which actions are sensitive. You distinguish between planning and execution. You stop assuming that "the logs probably exist somewhere" is good enough.</p>
+<p>In other words, auditability is not only a trust feature. It is a forcing function for cleaner system design.</p>
+<hr />
+<h2>The Real Production Question</h2>
+<p>The practical question is not whether your agent is aligned in the abstract.</p>
+<p>It is whether, after a meaningful action, you can answer: who did what, under which conditions, through which interface, with what evidence left behind?</p>
+<p>If you cannot answer that cleanly, then the system may still be useful in experimentation, but it will keep meeting resistance the moment the stakes go up.</p>
+<hr />
+<h2>Where I Think This Is Going</h2>
+<p>I expect the next serious wave of agent infrastructure to spend much more time on execution trust: identity, attestable actions, transparent logs, and policy-aware evidence trails.</p>
+<p>That work is less fashionable than big alignment narratives, but it is far closer to what real organizations need in order to move from "interesting demo" to "approved operating system."</p>
+<p>If the industry wants broader adoption, this is one of the places it has to get more mature.</p>
         </div>
 
         <div class="article-cta">

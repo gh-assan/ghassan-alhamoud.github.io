@@ -4,58 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop" — Ghassan Alhamoud</title>
+  <title>83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say &quot;Don't Stop&quot; — Ghassan Alhamoud</title>
   <meta name="description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
   <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassanalhamoud.github.io/articles/ai-coded-83-mcp-tools-marathon.html" />
-  <meta property="og:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
+  <meta property="og:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say &quot;Don't Stop&quot;" />
   <meta property="og:description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
-  <meta property="og:image" content="https://ghassanalhamoud.github.io/images/articles/art-028-header.webp" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/art-028-header.webp" />
   <meta property="article:published_time" content="2026-05-31" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassanalhamoud.github.io/articles/ai-coded-83-mcp-tools-marathon.html" />
-  <meta property="twitter:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
+  <meta property="twitter:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say &quot;Don't Stop&quot;" />
   <meta property="twitter:description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
-  <meta property="twitter:image" content="https://ghassanalhamoud.github.io/images/articles/art-028-header.webp" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/art-028-header.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
-    "description": "83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
-    "image": "https://ghassanalhamoud.github.io/images/articles/art-028-header.webp",
-    "author": {
-      "@type": "Person",
-      "name": "Ghassan Alhamoud",
-      "url": "https://ghassan-alhamoud.com/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Ghassan Alhamoud",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://ghassan-alhamoud.com/favicon.svg"
-      }
-    },
-    "datePublished": "2026-05-31",
-    "dateModified": "2026-05-31",
-    "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html",
-    "proficiencyLevel": "Expert",
-    "dependencies": "AI Agents, Go, Architecture, MCP, Automation, Code Generation, Engineering",
-    "articleSection": "Engineering"
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
+  "description": "83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
+  "image": "https://ghassan-alhamoud.com/images/articles/art-028-header.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-05-31",
+  "dateModified": "2026-05-31",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "AI Agents, Go, Architecture, MCP, Automation, Code Generation, Engineering",
+  "articleSection": "Automation"
+}
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
@@ -91,19 +89,19 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <time datetime="2026-05-31">May 31, 2026</time>
+            <time datetime="2026-05-31">May 31 2026</time>
             <span class="article-card__dot"></span>
             <span>9 min</span>
           </div>
           <h1 class="article-single__title">83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"</h1>
           <div class="article-single__tags">
-            <span class="article-single__tag">AI Agents</span>
-            <span class="article-single__tag">Go</span>
-            <span class="article-single__tag">Architecture</span>
-            <span class="article-single__tag">MCP</span>
-            <span class="article-single__tag">Automation</span>
-            <span class="article-single__tag">Code Generation</span>
-            <span class="article-single__tag">Engineering</span>
+          <span class="article-single__tag">AI Agents</span>
+          <span class="article-single__tag">Go</span>
+          <span class="article-single__tag">Architecture</span>
+          <span class="article-single__tag">MCP</span>
+          <span class="article-single__tag">Automation</span>
+          <span class="article-single__tag">Code Generation</span>
+          <span class="article-single__tag">Engineering</span>
           </div>
         </header>
 
