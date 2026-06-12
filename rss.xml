@@ -5,10 +5,49 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 31 May 2026 09:15:45 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 07:24:48 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title><![CDATA[83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"]]></title>
+      <title>ALMS 0.1.0: A Shared Brain for Autonomous Agents</title>
+      <link>https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</guid>
+      <pubDate>Wed, 10 Jun 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet.]]></description>
+      <category>Open Source</category>
+      <category>Agents</category>
+      <category>MCP</category>
+      <category>Go</category>
+      <category>PostgreSQL</category>
+      <category>Multi-Agent</category>
+      <category>Learning</category>
+      <category>Infrastructure</category>
+    </item>
+    <item>
+      <title>Quality vs Speed in the Agent Era</title>
+      <link>https://ghassan-alhamoud.com/articles/quality-vs-speed-agent-era.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/quality-vs-speed-agent-era.html</guid>
+      <pubDate>Wed, 03 Jun 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I run three agent instances plus my phone. I generate ideas, build products, make films, publish articles. And I'm not satisfied with the quality. Not even close.]]></description>
+      <category>AI Agents</category>
+      <category>Productivity</category>
+      <category>Engineering</category>
+      <category>Lessons Learned</category>
+    </item>
+    <item>
+      <title>The Film Pipeline We Didn't Want But Needed</title>
+      <link>https://ghassan-alhamoud.com/articles/film-pipeline-postmortem.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/film-pipeline-postmortem.html</guid>
+      <pubDate>Mon, 01 Jun 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Two days. That's how long it took to go from 'we need a better way to generate film clips' to a full 8-phase production protocol. We didn't plan it. The problems forced us.]]></description>
+      <category>AI Film</category>
+      <category>Pipeline</category>
+      <category>Postmortem</category>
+      <category>Seedance</category>
+      <category>Veo</category>
+      <category>Engineering</category>
+    </item>
+    <item>
+      <title>83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"</title>
       <link>https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html</guid>
       <pubDate>Sat, 30 May 2026 22:00:00 GMT</pubDate>

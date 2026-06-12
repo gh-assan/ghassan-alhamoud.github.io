@@ -1,7 +1,24 @@
 [
   {
+    "slug": "alms-open-source-shared-agent-memory",
+    "title": "ALMS 0.1.0: A Shared Brain for Autonomous Agents",
+    "date": "2026-06-11",
+    "excerpt": "ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet.",
+    "readingTime": "4 min",
+    "tags": [
+      "Open Source",
+      "Agents",
+      "MCP",
+      "Go",
+      "PostgreSQL",
+      "Multi-Agent",
+      "Learning",
+      "Infrastructure"
+    ]
+  },
+  {
     "slug": "ai-coded-83-mcp-tools-marathon",
-    "title": "83 MCP Tools in 12 Hours \u2014 What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
+    "title": "83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
     "date": "2026-05-31",
     "excerpt": "83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
     "readingTime": "9 min",
@@ -17,9 +34,9 @@
   },
   {
     "slug": "entity-database-zero-ui-agents",
-    "title": "We Built an Entity Database With Zero UI \u2014 Here's How Agents Talk to It",
+    "title": "We Built an Entity Database With Zero UI — Here's How Agents Talk to It",
     "date": "2026-05-28",
-    "excerpt": "Give me 10 Munich startups with less than $2M revenue. My agent answered in 8 seconds. From a database in my basement that no human has ever logged into. No web app. No login screen. Here's how we built an entity database with zero UI through an orchestrated team of models \u2014 all communicating via structured handoffs and MCP protocol.",
+    "excerpt": "Give me 10 Munich startups with less than $2M revenue. My agent answered in 8 seconds. From a database in my basement that no human has ever logged into. No web app. No login screen. Here's how we built an entity database with zero UI through an orchestrated team of models — all communicating via structured handoffs and MCP protocol.",
     "readingTime": "8 min",
     "tags": [
       "AI Agents",
@@ -30,9 +47,9 @@
   },
   {
     "slug": "orchestrator-qwen-acp-handoff",
-    "title": "How My Orchestrator Hands Off Coding Tasks to Qwen \u2014 The Agent Coordination Protocol That Makes It Work",
+    "title": "How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work",
     "date": "2026-05-28",
-    "excerpt": "I needed a database in my basement. I didn't write it. My orchestrator didn't write it either. Qwen Code on a separate machine built it in one session \u2014 communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.",
+    "excerpt": "I needed a database in my basement. I didn't write it. My orchestrator didn't write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.",
     "readingTime": "8 min",
     "tags": [
       "AI Agents",
