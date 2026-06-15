@@ -5,8 +5,23 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Fri, 12 Jun 2026 07:24:48 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 22:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SkillLedger 0.1.0: A Verified Marketplace for Agent Skills</title>
+      <link>https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html</guid>
+      <pubDate>Sun, 14 Jun 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, verification gate, purchase ledger, MCP endpoint, MIT license.]]></description>
+      <category>Open Source</category>
+      <category>Agents</category>
+      <category>MCP</category>
+      <category>Ruby on Rails</category>
+      <category>Marketplace</category>
+      <category>API</category>
+      <category>Infrastructure</category>
+      <category>Agent Skills</category>
+    </item>
     <item>
       <title>ALMS 0.1.0: A Shared Brain for Autonomous Agents</title>
       <link>https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</link>

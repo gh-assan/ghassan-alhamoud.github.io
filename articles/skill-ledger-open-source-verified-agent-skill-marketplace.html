@@ -174,38 +174,38 @@
 
         <div class="article-single__body">
 
-    <p><strong><a href="https://github.com/ghassan-ai-projects/skill-ledger">github.com/ghassan-ai-projects/skill-ledger</a></strong> — MIT license, shipping today.</p>
+    <p><strong><a href="https://github.com/ghassan-ai-projects/skill-ledger">github.com/ghassan-ai-projects/skill-ledger</a></strong> - MIT license, shipping today.</p>
 
     <hr>
 
-    <p>Agent marketplaces have a discovery problem. You can browse listings, read descriptions, maybe see some reviews. What you can't do is buy a verified skill, trust that it's been checked, and get an artifact you can run locally. The entire transaction sits on a handshake and hope.</p>
+    <p>Last week I watched an agent hire another agent to scrape a site. The first agent paid five credits. The second one took the money and returned garbage. Malformed JSON, missing fields, no error handling. The first agent had no way to verify what it was buying, no recourse, no receipt. Just a failed pipeline and a drained balance.</p>
 
-    <p>I've been building agent infrastructure for a while. The thing that kept nagging at me: agents are starting to hire each other, but there's no contract, no verification, no receipt. An agent publishes a "web scraping" skill. Another agent finds it, integrates it, and hopes it does what it says. If it breaks, there's no recourse — just a cascading failure in the pipeline.</p>
+    <p>That is the state of the agent economy right now. Agents are starting to hire each other, but there is no contract, no verification, no receipt. A web scraping skill gets published. Another agent finds it, integrates it, and hopes it does what it says. If it breaks, there is no accountability. Just a cascading failure up the chain.</p>
 
     <p>That gap is what SkillLedger fills.</p>
 
-    <p>SkillLedger is a <strong>marketplace and entitlement layer for agent skills</strong>. Authors publish skills as priced listings, attach versioned artifacts, and have those artifacts verified by a verification service. Buyers discover skills, purchase a verified version, and acquire the packaged artifact for local execution. Every transaction creates a ledger entry and an entitlement token.</p>
+    <p>SkillLedger is a <strong>marketplace and entitlement layer for agent skills</strong>. Authors publish skills as priced listings, attach versioned artifacts with a manifest, and those artifacts get verified by a verification service before they go live. Buyers discover skills, purchase a verified version, and acquire the packaged artifact for local execution. Every transaction creates a ledger entry and an entitlement token. Everyone knows who bought what, from whom, and when.</p>
 
-    <p>It's a Rails 8.1 API-only application, exposes both REST and MCP endpoints, and is open source today under MIT.</p>
+    <p>It is a Rails 8.1 API-only application that exposes both REST and MCP endpoints. Open source today under MIT.</p>
 
     <hr>
 
-    <h2>What SkillLedger Is (And Isn't)</h2>
+    <h2>What SkillLedger Is (And Is Not)</h2>
 
     <p>SkillLedger does four things:</p>
 
     <ol>
-      <li><strong>Stores agent accounts</strong> — each agent identity has a balance and API key</li>
-      <li><strong>Manages skill listings</strong> — authors create, version, and publish skills with manifest-based artifacts</li>
-      <li><strong>Verifies artifacts</strong> — a verification service checks manifest structure, required fields, runtime constraints, and checksum integrity before marking a version as verified</li>
-      <li><strong>Records purchases in a ledger</strong> — every paid acquisition creates an accounting entry and a stable entitlement token</li>
+      <li><strong>Stores agent accounts</strong> - each agent identity has a balance and an API key</li>
+      <li><strong>Manages skill listings</strong> - authors create, version, and publish skills with manifest-based artifacts</li>
+      <li><strong>Verifies artifacts</strong> - a verification service checks manifest structure, required fields, runtime constraints, and checksum integrity before marking a version as verified</li>
+      <li><strong>Records purchases in a ledger</strong> - every paid acquisition creates an accounting entry and a stable entitlement token</li>
     </ol>
 
-    <p>What SkillLedger does <em>not</em> do: execute third-party skills, sandbox untrusted code, scan artifacts for malware, or manage real-money settlement rails. The artifact is acquired for local execution — SkillLedger is the storefront, not the runtime.</p>
+    <p>What SkillLedger does <em>not</em> do: execute third-party skills, sandbox untrusted code, scan artifacts for malware, or manage real-money settlement rails. The artifact is acquired for local execution. SkillLedger is the storefront, not the runtime.</p>
 
     <h3>Why not just an API marketplace?</h3>
 
-    <p>Most marketplace APIs stop at listing and discovery. SkillLedger adds the verification gate and the purchase ledger as core primitives, not afterthoughts. An author can't list a skill until at least one version has passed verification. A buyer can't acquire a skill without a recorded purchase and an entitlement token. The verification model is explicit and inspectable — not a review score, but a deterministic check against a manifest contract.</p>
+    <p>Most marketplace APIs stop at listing and discovery. You browse, you pick, you hope it works. SkillLedger adds the verification gate and the purchase ledger as core primitives, not bolt-on features. An author cannot list a skill until at least one version has passed verification. A buyer cannot acquire a skill without a recorded purchase and an entitlement token. The verification model is explicit and inspectable. It is not a review score or a star rating. It is a deterministic check against a manifest contract. You can read exactly what was verified and how.</p>
 
     <hr>
 
@@ -213,38 +213,40 @@
 
     <h3>The Author Side</h3>
 
-    <p>An agent developer creates a draft skill listing with a name, description, and price. They publish a version containing an artifact manifest — a structured payload that describes the skill's entrypoint, runtime, input/output schemas, and optionally bundled files. The verification service runs through checkpoints:</p>
+    <p>Say you built a solid web scraping skill. You create a draft listing in SkillLedger. Name, description, price. Then you publish a version with an artifact manifest: a structured payload that describes the entrypoint, the runtime it needs, the input and output schemas, and optionally some bundled files.</p>
+
+    <p>The verification service runs through a series of checks:</p>
 
     <ul>
-      <li>Artifact exists and type is supported</li>
-      <li>Manifest is a well-formed hash with required fields</li>
-      <li><code>runtime</code> is set to <code>client</code> (no hosted execution)</li>
-      <li>Manifest version matches the SkillLedger version record</li>
-      <li>Bundled files, if any, include <code>path</code>, <code>content</code>, and <code>media_type</code></li>
-      <li>Checksum matches the canonicalized manifest</li>
+      <li>Does the artifact exist and is the type supported?</li>
+      <li>Is the manifest a well-formed hash with all required fields?</li>
+      <li>Is <code>runtime</code> set to <code>client</code>? (No hosted execution. You run it locally.)</li>
+      <li>Does the manifest version match the SkillLedger version record?</li>
+      <li>If there are bundled files, do they include <code>path</code>, <code>content</code>, and <code>media_type</code>?</li>
+      <li>Does the checksum match the canonicalized manifest?</li>
     </ul>
 
-    <p>If all checks pass, the version is marked <code>verified</code>. The author can then set the listing status to <code>listed</code>. Until then, it stays in draft — invisible to buyers.</p>
+    <p>All six pass? The version gets marked <code>verified</code>. Now you can flip the listing status to <code>listed</code>. Until you do, it stays in draft, invisible to buyers. No shortcuts.</p>
 
     <h3>The Buyer Side</h3>
 
-    <p>An agent builder browses listed skills via REST or MCP. They find a skill, inspect a specific verified version, and purchase it. The system records the purchase, deducts from the buyer's balance, credits the author, and issues an entitlement token. The buyer can then acquire the artifact payload for local use.</p>
+    <p>An agent builder browses listed skills via REST or MCP, finds your scraping skill, inspects a specific verified version. They hit purchase. The system records the transaction, deducts from the buyer balance, credits your author account, and issues an entitlement token. The buyer can then acquire the artifact payload and run it locally. No strings attached to your infrastructure.</p>
 
-    <p>The library endpoint gives the authenticated account three grouped views: favorites, purchased skills, and authored skills. Each purchased entry includes version and acquisition metadata so the client knows whether they've retrieved the artifact or just paid for access.</p>
+    <p>The library endpoint gives each account three grouped views: favorites, purchased skills, and authored skills. Each purchased entry includes version and acquisition metadata, so the client knows whether they already downloaded the artifact or just paid for access.</p>
 
     <h3>The MCP Surface</h3>
 
-    <p>SkillLedger exposes a JSON-RPC endpoint at <code>POST /api/v1/mcp</code> that mirrors the key authoring and buyer flows:</p>
+    <p>SkillLedger exposes a JSON-RPC endpoint at <code>POST /api/v1/mcp</code> that mirrors the same authoring and buyer flows. If your agents speak MCP, they can interact directly:</p>
 
-    <pre><code>skills/create          — Create a draft skill listing
-skills/mine.list       — List my authored skills
-skills/version.publish — Publish a version with artifact
-skills/version.get     — Inspect a specific version
-skills/listing.set_status — Toggle draft/listed/suspended
-skills/list            — Browse all listed skills
-skills/get             — Inspect a skill
-skills/purchase        — Purchase a verified version
-skills/acquire         — Download the artifact</code></pre>
+    <pre><code>skills/create          - Create a draft skill listing
+skills/mine.list       - List my authored skills
+skills/version.publish - Publish a version with artifact
+skills/version.get     - Inspect a specific version
+skills/listing.set_status - Toggle draft/listed/suspended
+skills/list            - Browse all listed skills
+skills/get             - Inspect a skill
+skills/purchase        - Purchase a verified version
+skills/acquire         - Download the artifact</code></pre>
 
     <p>The same operations are available through REST, so agents can choose whichever transport they speak.</p>
 
@@ -252,21 +254,21 @@ skills/acquire         — Download the artifact</code></pre>
 
     <h2>What Ships in 0.1.0</h2>
 
-    <p>This is the initial public release. The core publishing and acquisition path is coherent and tested.</p>
+    <p>This is the initial public release. The core publishing and acquisition path is tested and ready to run.</p>
 
     <ul>
       <li>Rails 8.1 API-only application (Ruby 3.3.11)</li>
       <li>SQLite-backed local development, Docker Compose with PostgreSQL for production-style use</li>
       <li>API key authentication via <code>X-API-Key</code> header</li>
       <li>REST endpoints for skills, versions, favorites, library, ledger, reports, and analytics</li>
-      <li>MCP-compatible JSON-RPC endpoint for agent-facing flows</li>
-      <li>Verification service: deterministic checks on artifact manifests</li>
+      <li>MCP-compatible JSON-RPC endpoint so agents can interact directly</li>
+      <li>Verification service with deterministic checks on artifact manifests</li>
       <li>Purchase ledger with entitlement tokens and author payouts</li>
-      <li>Seeded demo data so you can test immediately</li>
+      <li>Seeded demo data so you can start testing immediately</li>
       <li>OpenAPI description (<code>openapi.yaml</code>)</li>
       <li>Minitest coverage across controllers, services, models, and E2E flows</li>
       <li>Dockerfile, Dockerfile.dev, docker-compose.yml for containerized workflows</li>
-      <li>Full documentation set under <code>documentation/</code> (12 docs covering product, getting started, how-it-works, REST API, MCP API, security, operations, development)</li>
+      <li>Full docs under <code>documentation/</code>. 12 guides covering product, getting started, architecture, REST API, MCP API, security, operations, development</li>
       <li>CI via GitHub Actions (test, RuboCop, Brakeman, bundle-audit)</li>
     </ul>
 
@@ -293,41 +295,41 @@ bin/rails server</code></pre>
     <pre><code>curl -s http://127.0.0.1:3000/api/v1/skills \
   -H "X-API-Key: ***"</code></pre>
 
-    <p>The seed creates two listed skills, a verified version, a demo purchase, and favorites — enough data to exercise all flows immediately.</p>
+    <p>The seed creates two listed skills, a verified version, a demo purchase, and favorites. Enough data to exercise all flows immediately.</p>
 
     <hr>
 
     <h2>The Vision Behind It</h2>
 
-    <p>The agent ecosystem is growing fast. Agents talk to each other, coordinate, share data. What they don't do yet is buy and sell capabilities with confidence. Most of the conversation around agent marketplaces is about discovery — finding the right skill. SkillLedger addresses the next layer: once you find it, how do you trust it, pay for it, and prove you own it?</p>
+    <p>The agent ecosystem is growing fast. Agents talk to each other, coordinate, share data, and increasingly, trade capabilities. What they do not do yet is buy and sell with confidence. Most of the conversation around agent marketplaces is about discovery. Finding the right skill. That is solved. The next question is harder: once you find it, how do you trust it, pay for it, and prove you own it?</p>
 
-    <p>This release is intentionally grounded. No blockchain, no ZK proofs, no bonded stake. Those are valid directions, but the first step is simpler: a deterministic verification model, a clear purchase flow, and a ledger that proves the transaction happened. If the ecosystem needs more sophisticated trust mechanisms later, the architecture is designed to absorb them.</p>
+    <p>This release is intentionally grounded. No blockchain, no ZK proofs, no bonded stake. Those conversations are interesting, but the agent economy does not need cryptographic complexity on day one. It needs a deterministic verification model, a clean purchase flow, and a ledger that proves the transaction happened. If the ecosystem needs more sophisticated trust mechanisms later, the architecture is designed to absorb them without a rewrite.</p>
 
-    <p>SkillLedger is the storefront for verified agent capabilities. Start with verification and a ledger. Add reputation, bonding, and dispute resolution as the community shapes them.</p>
+    <p>SkillLedger is the storefront for verified agent capabilities. Start with verification and a ledger. Let the community figure out what comes next.</p>
 
     <hr>
 
     <h2>What's Next</h2>
 
-    <p>0.1.0 covers the core path. The things I want to harden next:</p>
+    <p>0.1.0 covers the core path end-to-end. Here is what I want to harden next:</p>
 
     <ul>
-      <li><strong>Artifact packaging conventions</strong> — the manifest format works but needs community input to stabilize</li>
-      <li><strong>Verification strictness</strong> — more checkpoints, clearer rejection messages, pluggable verifiers</li>
-      <li><strong>Release/versioning policy</strong> — semantic versioning conventions for skills, deprecation flows</li>
-      <li><strong>Operational maturity</strong> — rate limiting, audit logging, multi-tenant isolation for broader production use</li>
-      <li><strong>Real-money settlement</strong> — not yet, but the ledger model is designed for eventual integration with payment rails</li>
+      <li><strong>Artifact packaging conventions</strong> - the manifest format works, but it needs community input to stabilize. If you build agent skills, I want to hear what your packaging looks like</li>
+      <li><strong>Verification strictness</strong> - more checkpoints, clearer rejection messages, pluggable verifiers for different artifact types</li>
+      <li><strong>Release/versioning policy</strong> - SemVer for skills, deprecation flows, migration paths</li>
+      <li><strong>Operational maturity</strong> - rate limiting, audit logging, multi-tenant isolation for production use at scale</li>
+      <li><strong>Real-money settlement</strong> - not yet, but the ledger model is designed for it. When the time comes, we will add Stripe or whatever makes sense</li>
     </ul>
 
-    <p>If this resonates: clone it, run the seed, make your first purchase. If the manifest format doesn't fit your use case, open an issue. If you want to contribute a verifier or a new artifact type, PRs are open.</p>
+    <p>Clone it. Run the seed. Make your first purchase. If the manifest format does not fit your use case, open an issue. If you want to contribute a verifier or a new artifact type, PRs are open.</p>
 
-    <p>The agent economy needs a storefront that doesn't run on hope. Let's build it.</p>
+    <p>The agent economy needs a storefront that does not run on hope. Let us build it.</p>
 
     <hr>
 
     <p><strong>Repository:</strong> <a href="https://github.com/ghassan-ai-projects/skill-ledger">github.com/ghassan-ai-projects/skill-ledger</a><br />
     <strong>License:</strong> MIT<br />
-    <strong>Release:</strong> 0.1.0 — June 15, 2026<br />
+    <strong>Release:</strong> 0.1.0 - June 15, 2026<br />
     <strong>Docs:</strong> <a href="https://github.com/ghassan-ai-projects/skill-ledger/tree/main/documentation"><code>documentation/</code></a> in the repo</p>
 
         </div>
@@ -405,8 +407,11 @@ bin/rails server</code></pre>
         document.documentElement.setAttribute("data-theme", saved);
       }
     })();
-    document.getElementById("navToggle").addEventListener("click",function(){document.getElementById("navMenu").classList.toggle("nav__menu--open");this.setAttribute("aria-expanded",this.getAttribute("aria-expanded")==="false"?"true":"false");});
   </script>
-  <script src="/assets/js/posts.js" defer></script>
+  <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>
