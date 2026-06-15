@@ -405,5 +405,22 @@
       "Engineering",
       "Lessons Learned"
     ]
+  },
+  {
+    "slug": "skill-ledger-open-source-verified-agent-skill-marketplace",
+    "title": "SkillLedger 0.1.0: A Verified Marketplace for Agent Skills",
+    "date": "2026-06-15",
+    "excerpt": "SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, verification gate, purchase ledger, MCP endpoint, MIT license.",
+    "readingTime": "6 min",
+    "tags": [
+      "Open Source",
+      "Agents",
+      "MCP",
+      "Ruby on Rails",
+      "Marketplace",
+      "API",
+      "Infrastructure",
+      "Agent Skills"
+    ]
   }
 ]

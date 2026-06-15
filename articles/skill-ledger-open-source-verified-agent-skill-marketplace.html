@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SkillLedger 0.1.0: A Verified Marketplace for Agent Skills — Ghassan Alhamoud</title>
+  <meta name="description" content="SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html" />
+  <meta property="og:title" content="SkillLedger 0.1.0: A Verified Marketplace for Agent Skills" />
+  <meta property="og:description" content="SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-033.webp" />
+  <meta property="article:published_time" content="2026-06-15" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html" />
+  <meta property="twitter:title" content="SkillLedger 0.1.0: A Verified Marketplace for Agent Skills" />
+  <meta property="twitter:description" content="SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-033.webp" />
+
+  <!-- JSON-LD Article Schema -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "SkillLedger 0.1.0: A Verified Marketplace for Agent Skills",
+  "description": "SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-033.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-06-15",
+  "dateModified": "2026-06-15",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "open-source, agents, Ruby on Rails, MCP, skill-marketplace, AI, infrastructure",
+  "articleSection": "Software Architecture"
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <style>
+    .article-single__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .article-single__body th, .article-single__body td {
+      border: 1px solid var(--border, #e5e7eb);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    .article-single__body th {
+      background: var(--dark, #1A1A2E);
+      color: white;
+      font-weight: 600;
+    }
+    .article-single__body td {
+      background: var(--card, #ffffff);
+    }
+    .article-single__body tr:nth-child(even) td {
+      background: #f9fafb;
+    }
+    .article-single__body blockquote {
+      border-left: 3px solid var(--primary, #D4A574);
+      padding: 0.75rem 1rem;
+      margin: 1.5rem 0;
+      background: #fefcf8;
+      font-style: italic;
+    }
+    .article-single__body code {
+      background: #f3f4f6;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .article-single__body pre {
+      background: #1a1a2e;
+      color: #e8e8e8;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85em;
+      margin: 1.5rem 0;
+    }
+    .article-single__body pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    .article-single__body ol {
+      margin: 0 0 1rem 1.5rem;
+    }
+    .article-single__body ol li {
+      margin-bottom: 0.3rem;
+    }
+    .article-single__body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Services</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-06-15">Jun 15 2026</time>
+            <span class="article-card__dot"></span>
+            <span>6 min</span>
+          </div>
+          <h1 class="article-single__title">SkillLedger 0.1.0: A Verified Marketplace for Agent Skills</h1>
+          <div class="article-single__tags">
+          <span class="article-single__tag">Open Source</span>
+          <span class="article-single__tag">Agents</span>
+          <span class="article-single__tag">MCP</span>
+          <span class="article-single__tag">Ruby on Rails</span>
+          <span class="article-single__tag">Marketplace</span>
+          <span class="article-single__tag">API</span>
+          <span class="article-single__tag">Infrastructure</span>
+          <span class="article-single__tag">Agent Skills</span>
+          </div>
+        </header>
+
+        <img src="/images/articles/ART-033.webp" alt="Digital marketplace interface showing verified agent skill packages flowing between autonomous AI agents with a central glowing ledger book" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+
+    <p><strong><a href="https://github.com/ghassan-ai-projects/skill-ledger">github.com/ghassan-ai-projects/skill-ledger</a></strong> — MIT license, shipping today.</p>
+
+    <hr>
+
+    <p>Agent marketplaces have a discovery problem. You can browse listings, read descriptions, maybe see some reviews. What you can't do is buy a verified skill, trust that it's been checked, and get an artifact you can run locally. The entire transaction sits on a handshake and hope.</p>
+
+    <p>I've been building agent infrastructure for a while. The thing that kept nagging at me: agents are starting to hire each other, but there's no contract, no verification, no receipt. An agent publishes a "web scraping" skill. Another agent finds it, integrates it, and hopes it does what it says. If it breaks, there's no recourse — just a cascading failure in the pipeline.</p>
+
+    <p>That gap is what SkillLedger fills.</p>
+
+    <p>SkillLedger is a <strong>marketplace and entitlement layer for agent skills</strong>. Authors publish skills as priced listings, attach versioned artifacts, and have those artifacts verified by a verification service. Buyers discover skills, purchase a verified version, and acquire the packaged artifact for local execution. Every transaction creates a ledger entry and an entitlement token.</p>
+
+    <p>It's a Rails 8.1 API-only application, exposes both REST and MCP endpoints, and is open source today under MIT.</p>
+
+    <hr>
+
+    <h2>What SkillLedger Is (And Isn't)</h2>
+
+    <p>SkillLedger does four things:</p>
+
+    <ol>
+      <li><strong>Stores agent accounts</strong> — each agent identity has a balance and API key</li>
+      <li><strong>Manages skill listings</strong> — authors create, version, and publish skills with manifest-based artifacts</li>
+      <li><strong>Verifies artifacts</strong> — a verification service checks manifest structure, required fields, runtime constraints, and checksum integrity before marking a version as verified</li>
+      <li><strong>Records purchases in a ledger</strong> — every paid acquisition creates an accounting entry and a stable entitlement token</li>
+    </ol>
+
+    <p>What SkillLedger does <em>not</em> do: execute third-party skills, sandbox untrusted code, scan artifacts for malware, or manage real-money settlement rails. The artifact is acquired for local execution — SkillLedger is the storefront, not the runtime.</p>
+
+    <h3>Why not just an API marketplace?</h3>
+
+    <p>Most marketplace APIs stop at listing and discovery. SkillLedger adds the verification gate and the purchase ledger as core primitives, not afterthoughts. An author can't list a skill until at least one version has passed verification. A buyer can't acquire a skill without a recorded purchase and an entitlement token. The verification model is explicit and inspectable — not a review score, but a deterministic check against a manifest contract.</p>
+
+    <hr>
+
+    <h2>How It Works</h2>
+
+    <h3>The Author Side</h3>
+
+    <p>An agent developer creates a draft skill listing with a name, description, and price. They publish a version containing an artifact manifest — a structured payload that describes the skill's entrypoint, runtime, input/output schemas, and optionally bundled files. The verification service runs through checkpoints:</p>
+
+    <ul>
+      <li>Artifact exists and type is supported</li>
+      <li>Manifest is a well-formed hash with required fields</li>
+      <li><code>runtime</code> is set to <code>client</code> (no hosted execution)</li>
+      <li>Manifest version matches the SkillLedger version record</li>
+      <li>Bundled files, if any, include <code>path</code>, <code>content</code>, and <code>media_type</code></li>
+      <li>Checksum matches the canonicalized manifest</li>
+    </ul>
+
+    <p>If all checks pass, the version is marked <code>verified</code>. The author can then set the listing status to <code>listed</code>. Until then, it stays in draft — invisible to buyers.</p>
+
+    <h3>The Buyer Side</h3>
+
+    <p>An agent builder browses listed skills via REST or MCP. They find a skill, inspect a specific verified version, and purchase it. The system records the purchase, deducts from the buyer's balance, credits the author, and issues an entitlement token. The buyer can then acquire the artifact payload for local use.</p>
+
+    <p>The library endpoint gives the authenticated account three grouped views: favorites, purchased skills, and authored skills. Each purchased entry includes version and acquisition metadata so the client knows whether they've retrieved the artifact or just paid for access.</p>
+
+    <h3>The MCP Surface</h3>
+
+    <p>SkillLedger exposes a JSON-RPC endpoint at <code>POST /api/v1/mcp</code> that mirrors the key authoring and buyer flows:</p>
+
+    <pre><code>skills/create          — Create a draft skill listing
+skills/mine.list       — List my authored skills
+skills/version.publish — Publish a version with artifact
+skills/version.get     — Inspect a specific version
+skills/listing.set_status — Toggle draft/listed/suspended
+skills/list            — Browse all listed skills
+skills/get             — Inspect a skill
+skills/purchase        — Purchase a verified version
+skills/acquire         — Download the artifact</code></pre>
+
+    <p>The same operations are available through REST, so agents can choose whichever transport they speak.</p>
+
+    <hr>
+
+    <h2>What Ships in 0.1.0</h2>
+
+    <p>This is the initial public release. The core publishing and acquisition path is coherent and tested.</p>
+
+    <ul>
+      <li>Rails 8.1 API-only application (Ruby 3.3.11)</li>
+      <li>SQLite-backed local development, Docker Compose with PostgreSQL for production-style use</li>
+      <li>API key authentication via <code>X-API-Key</code> header</li>
+      <li>REST endpoints for skills, versions, favorites, library, ledger, reports, and analytics</li>
+      <li>MCP-compatible JSON-RPC endpoint for agent-facing flows</li>
+      <li>Verification service: deterministic checks on artifact manifests</li>
+      <li>Purchase ledger with entitlement tokens and author payouts</li>
+      <li>Seeded demo data so you can test immediately</li>
+      <li>OpenAPI description (<code>openapi.yaml</code>)</li>
+      <li>Minitest coverage across controllers, services, models, and E2E flows</li>
+      <li>Dockerfile, Dockerfile.dev, docker-compose.yml for containerized workflows</li>
+      <li>Full documentation set under <code>documentation/</code> (12 docs covering product, getting started, how-it-works, REST API, MCP API, security, operations, development)</li>
+      <li>CI via GitHub Actions (test, RuboCop, Brakeman, bundle-audit)</li>
+    </ul>
+
+    <hr>
+
+    <h2>Quick Start</h2>
+
+    <pre><code>git clone https://github.com/ghassan-ai-projects/skill-ledger
+cd skill-ledger
+gem install bundler:4.0.12
+bundle install
+bin/rails db:prepare
+bin/rails db:seed
+bin/rails server</code></pre>
+
+    <p>The API starts on <code>http://127.0.0.1:3000</code>.</p>
+
+    <p>With Docker Compose (PostgreSQL):</p>
+
+    <pre><code>docker compose up --build</code></pre>
+
+    <p>Verify with:</p>
+
+    <pre><code>curl -s http://127.0.0.1:3000/api/v1/skills \
+  -H "X-API-Key: ***"</code></pre>
+
+    <p>The seed creates two listed skills, a verified version, a demo purchase, and favorites — enough data to exercise all flows immediately.</p>
+
+    <hr>
+
+    <h2>The Vision Behind It</h2>
+
+    <p>The agent ecosystem is growing fast. Agents talk to each other, coordinate, share data. What they don't do yet is buy and sell capabilities with confidence. Most of the conversation around agent marketplaces is about discovery — finding the right skill. SkillLedger addresses the next layer: once you find it, how do you trust it, pay for it, and prove you own it?</p>
+
+    <p>This release is intentionally grounded. No blockchain, no ZK proofs, no bonded stake. Those are valid directions, but the first step is simpler: a deterministic verification model, a clear purchase flow, and a ledger that proves the transaction happened. If the ecosystem needs more sophisticated trust mechanisms later, the architecture is designed to absorb them.</p>
+
+    <p>SkillLedger is the storefront for verified agent capabilities. Start with verification and a ledger. Add reputation, bonding, and dispute resolution as the community shapes them.</p>
+
+    <hr>
+
+    <h2>What's Next</h2>
+
+    <p>0.1.0 covers the core path. The things I want to harden next:</p>
+
+    <ul>
+      <li><strong>Artifact packaging conventions</strong> — the manifest format works but needs community input to stabilize</li>
+      <li><strong>Verification strictness</strong> — more checkpoints, clearer rejection messages, pluggable verifiers</li>
+      <li><strong>Release/versioning policy</strong> — semantic versioning conventions for skills, deprecation flows</li>
+      <li><strong>Operational maturity</strong> — rate limiting, audit logging, multi-tenant isolation for broader production use</li>
+      <li><strong>Real-money settlement</strong> — not yet, but the ledger model is designed for eventual integration with payment rails</li>
+    </ul>
+
+    <p>If this resonates: clone it, run the seed, make your first purchase. If the manifest format doesn't fit your use case, open an issue. If you want to contribute a verifier or a new artifact type, PRs are open.</p>
+
+    <p>The agent economy needs a storefront that doesn't run on hope. Let's build it.</p>
+
+    <hr>
+
+    <p><strong>Repository:</strong> <a href="https://github.com/ghassan-ai-projects/skill-ledger">github.com/ghassan-ai-projects/skill-ledger</a><br />
+    <strong>License:</strong> MIT<br />
+    <strong>Release:</strong> 0.1.0 — June 15, 2026<br />
+    <strong>Docs:</strong> <a href="https://github.com/ghassan-ai-projects/skill-ledger/tree/main/documentation"><code>documentation/</code></a> in the repo</p>
+
+        </div>
+
+        <div class="article-cta">
+          <p class="article-cta__text">
+            Working on agent infrastructure? Let's talk about how I can help your team.
+          </p>
+          <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Services</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+    document.getElementById("navToggle").addEventListener("click",function(){document.getElementById("navMenu").classList.toggle("nav__menu--open");this.setAttribute("aria-expanded",this.getAttribute("aria-expanded")==="false"?"true":"false");});
+  </script>
+  <script src="/assets/js/posts.js" defer></script>
+</body>
+</html>
