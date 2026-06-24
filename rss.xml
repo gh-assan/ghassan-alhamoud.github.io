@@ -5,8 +5,22 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 14 Jun 2026 22:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 22:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
+        <item>
+      <title>When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement</title>
+      <link>https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html</guid>
+      <pubDate>Tue, 23 Jun 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[I asked GPT-5.5/Codex to build a TUI for my film pipeline. It produced a brilliant 5,000-line design analysis and then delivered a input()/print() REPL. This is the story of the training data blind spot and why you can't trust analysis quality as a signal for delivery quality.]]></description>
+      <category>AI Agents</category>
+      <category>Code Generation</category>
+      <category>Engineering</category>
+      <category>UX</category>
+      <category>LLM Limitations</category>
+      <category>TUI</category>
+      <category>Terminal</category>
+    </item>
     <item>
       <title>SkillLedger 0.1.0: A Verified Marketplace for Agent Skills</title>
       <link>https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html</link>
