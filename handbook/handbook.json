@@ -1,0 +1,91 @@
+{
+  "handbook": {
+    "title": "The AI-Native Engineering Handbook",
+    "subtitle": "Production-tested patterns for building autonomous agents",
+    "version": "1.0.0",
+    "baseUrl": "https://ghassan-alhamoud.com/handbook/",
+    "author": {
+      "name": "Ghassan Alhamoud",
+      "url": "https://ghassan-alhamoud.com/",
+      "jobTitle": "Senior Software Engineer — AI Agent Enablement"
+    },
+    "chapters": [
+      {
+        "id": 0,
+        "slug": "agentic-landscape",
+        "title": "The Agentic Landscape",
+        "subtitle": "Autonomy, tools, and the patterns that make agents work",
+        "description": "A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know.",
+        "primaryKeyword": "agentic landscape",
+        "keywords": ["AI agents", "agent architecture", "autonomous agents", "LLM tool use"],
+        "status": "published",
+        "difficulty": "beginner",
+        "readingTime": "10 min",
+        "file": "chapter-00-agentic-landscape.md",
+        "diagram": "00-diagram.png",
+        "ogImage": "/images/handbook/HDBK-000-agentic-landscape.webp",
+        "prerequisites": [],
+        "relatedPatterns": ["react-pattern", "plan-and-execute"],
+        "publishedAt": null,
+        "lastModified": null
+      },
+      {
+        "id": 1,
+        "slug": "react-pattern",
+        "title": "The ReAct Pattern",
+        "subtitle": "Reasoning and Acting in the Agent Era",
+        "description": "Learn the ReAct pattern: how LLMs interleave reasoning (Thought), tool calls (Action), and feedback (Observation) to solve complex tasks.",
+        "primaryKeyword": "ReAct pattern LLM",
+        "keywords": ["ReAct agent", "thought action observation", "LLM reasoning loop", "agent tool use"],
+        "status": "published",
+        "difficulty": "beginner",
+        "readingTime": "8 min",
+        "file": "chapter-01-react-pattern.md",
+        "diagram": "01-diagram.png",
+        "ogImage": "/images/handbook/HDBK-001-react-pattern.webp",
+        "prerequisites": ["agentic-landscape"],
+        "relatedPatterns": ["plan-and-execute", "reflection"],
+        "publishedAt": "2026-06-28",
+        "lastModified": "2026-06-28"
+      },
+      {
+        "id": 2,
+        "slug": "plan-and-execute",
+        "title": "The Plan-and-Execute Pattern",
+        "subtitle": "Orchestrating Complex Tasks",
+        "description": "Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner.",
+        "primaryKeyword": "plan and execute agent",
+        "keywords": ["agent planning pattern", "DAG task execution", "planner executor replanner", "agent orchestration"],
+        "status": "published",
+        "difficulty": "intermediate",
+        "readingTime": "12 min",
+        "file": "chapter-02-plan-and-execute.md",
+        "diagram": "02-diagram.png",
+        "ogImage": "/images/handbook/HDBK-002-plan-and-execute.webp",
+        "prerequisites": ["agentic-landscape", "react-pattern"],
+        "relatedPatterns": ["react-pattern", "reflection"],
+        "publishedAt": "2026-06-28",
+        "lastModified": "2026-06-28"
+      },
+      {
+        "id": 3,
+        "slug": "reflection",
+        "title": "The Reflection Pattern",
+        "subtitle": "Self-Correction and Quality Control",
+        "description": "Learn the Reflection pattern: how a Generator-Critic loop with a structured rubric reduces hallucinations and improves output quality.",
+        "primaryKeyword": "reflection pattern AI",
+        "keywords": ["generator critic pattern", "AI self correction", "LLM reflection loop", "agent quality control"],
+        "status": "published",
+        "difficulty": "intermediate",
+        "readingTime": "8 min",
+        "file": "chapter-03-reflection.md",
+        "diagram": "03-diagram.png",
+        "ogImage": "/images/handbook/HDBK-003-reflection.webp",
+        "prerequisites": ["agentic-landscape", "react-pattern", "plan-and-execute"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute"],
+        "publishedAt": "2026-06-28",
+        "lastModified": "2026-06-28"
+      }
+    ]
+  }
+}

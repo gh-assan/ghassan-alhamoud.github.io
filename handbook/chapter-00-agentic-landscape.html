@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 0: The Agentic Landscape — AI-Native Engineering Handbook</title>
+  <meta name="description" content="A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html" />
+  <meta property="og:title" content="Chapter 0: The Agentic Landscape — Autonomy, tools, and the patterns that make agents work" />
+  <meta property="og:description" content="A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-000-agentic-landscape.webp" />
+  <meta property="article:published_time" content="None" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html" />
+  <meta property="twitter:title" content="Chapter 0: The Agentic Landscape — Autonomy, tools, and the patterns that make agents work" />
+  <meta property="twitter:description" content="A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-000-agentic-landscape.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "The Agentic Landscape \u2014 Autonomy, tools, and the patterns that make agents work",
+  "description": "A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The AI-Native Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/handbook/"
+  },
+  "datePublished": "2026-06-29",
+  "dateModified": "2026-06-29",
+  "image": "https://ghassan-alhamoud.com/images/handbook/HDBK-000-agentic-landscape.webp",
+  "learningResourceType": "Chapter",
+  "position": 0,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Handbook",
+      "item": "https://ghassan-alhamoud.com/handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "The Agentic Landscape",
+      "item": "https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is every LLM application an agent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A chatbot that only answers questions is not an agent. An application becomes an agent when it uses tools and makes decisions over multiple turns to pursue a goal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do agents need to be autonomous?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not fully. Many production agents are human-in-the-loop systems where the agent proposes actions and a human approves them. Autonomy should match the risk and cost of mistakes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an agent and a workflow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A workflow has a fixed control flow. An agent discovers the control flow through reasoning and observation. Workflows are more predictable; agents are more flexible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which pattern should I start with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with ReAct (Chapter 1). It is the simplest pattern that demonstrates the core idea of interleaving reasoning and action."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need special infrastructure to run agents?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can run simple agents in a single Python script. As you add planning, reflection, multi-agent collaboration, and observability, you will want persistent state, logging, and evaluation infrastructure."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Services</a></li>
+        <li><a href="/#work" class="nav__link">Work</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">HDBK-000</span>
+          <h1 class="handbook-hero__title">The Agentic Landscape</h1>
+          <p class="handbook-hero__subtitle">Autonomy, tools, and the patterns that make agents work</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 0</span>
+            <span class="handbook-hero__dot">•</span><span>10 min</span>
+            <span class="handbook-hero__dot">•</span><span>Beginner</span>
+            
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><p class="prerequisites-box__text">None. This is a foundational chapter.</p></div>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Reading time:</strong> 10 min | <strong>Last revised:</strong> 2026-06-28 | <strong>Version:</strong> 1.0</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>An <strong>AI agent</strong> is a system that uses a language model to reason, makes decisions, and takes actions through tools to pursue a goal over multiple turns. The patterns in this handbook are reusable answers to the question: <em>how do you coordinate reasoning and action so the system stays useful outside a demo?</em></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Basic familiarity with Large Language Models (LLMs) and prompt engineering.</li>
+<li>(Optional) Experience calling an LLM API such as OpenAI, Anthropic, or a local model.</li>
+</ul>
+<hr />
+<p>If you have used a chatbot, you have used an LLM. If you have used a system that <em>plans</em>, <em>calls tools</em>, and <em>keeps working until a job is done</em>, you have used an agent.</p>
+<p>The gap between the two is what this handbook is about.</p>
+<h2 id="1-what-is-an-ai-agent">1. What Is an AI Agent?</h2>
+<p>An <strong>AI agent</strong> is a loop, not a prompt. It has three defining properties:</p>
+<ol>
+<li><strong>Goal-directedness</strong>: It is given an objective, not just a question.</li>
+<li><strong>Tool use</strong>: It can interact with external systems (search, APIs, databases, code execution, browsers).</li>
+<li><strong>Autonomy</strong>: It decides what to do next, when to stop, and how to recover from errors.</li>
+</ol>
+<p>A single-turn LLM call answers a question. An agent keeps running until the <em>world state</em> matches the goal.</p>
+<h3 id="agent-vs-application">Agent vs. Application</h3>
+<p>A traditional application encodes a fixed workflow: <code>if A then B then C</code>. An agent encodes a <em>strategy</em> for discovering the workflow. That makes agents more flexible, but also harder to debug, test, and operate.</p>
+<h2 id="2-levels-of-autonomy">2. Levels of Autonomy</h2>
+<p>Not every agent is fully autonomous. Most production systems sit somewhere on a spectrum:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><strong>Tool Assistant</strong></td>
+<td>Model suggests actions; human approves every step.</td>
+<td>Copilot-style suggestions</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>Tool User</strong></td>
+<td>Model calls tools within a fixed workflow.</td>
+<td>RAG with a single retrieval</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Loop Agent</strong></td>
+<td>Model reasons, acts, observes, and repeats.</td>
+<td>ReAct agent with a search tool</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Planner</strong></td>
+<td>Model builds a multi-step plan and executes it.</td>
+<td>Plan-and-Execute research agent</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Collaborative System</strong></td>
+<td>Multiple specialized agents coordinate.</td>
+<td>Multi-agent coding platform</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Autonomous Operator</strong></td>
+<td>Long-running, self-improving, minimal human oversight.</td>
+<td>(Mostly experimental)</td>
+</tr>
+</tbody>
+</table>
+<p>Most teams should aim for <strong>Level 2 or 3</strong> first. Higher autonomy increases capability, but it also increases failure modes, cost, and observability demands.</p>
+<h2 id="3-tool-use-is-the-superpower">3. Tool Use Is the Superpower</h2>
+<p>The reason agents feel different from chatbots is <strong>tool use</strong>. A model without tools can only remix its training data. A model with tools can:</p>
+<ul>
+<li>retrieve current information,</li>
+<li>perform calculations,</li>
+<li>execute code,</li>
+<li>read and write databases,</li>
+<li>call other APIs,</li>
+<li>and, recursively, call other agents.</li>
+</ul>
+<p>Tool use turns a text generator into an actor in the world.</p>
+<h3 id="the-tool-contract">The Tool Contract</h3>
+<p>Every tool needs:
+- a <strong>name</strong> the model can reference,
+- a <strong>description</strong> the model can read,
+- a <strong>schema</strong> for arguments,
+- and a <strong>return format</strong> the model can consume.</p>
+<p>If any of these are vague, the agent will misuse the tool.</p>
+<h2 id="4-the-pattern-catalog">4. The Pattern Catalog</h2>
+<p>This handbook is organized around patterns—reusable architectural solutions to common agentic problems. Here is the map:</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Solves</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ReAct</strong></td>
+<td>How an agent reasons and acts in a single loop.</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Plan-and-Execute</strong></td>
+<td>How an agent handles multi-step, dependent tasks.</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Reflection</strong></td>
+<td>How an agent reviews and improves its own output.</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Multi-Agent Collaboration</strong></td>
+<td>How specialized agents divide work and hand off results.</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Tool Use &amp; Skill Registry</strong></td>
+<td>How agents discover and manage tools.</td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>Memory &amp; Context Management</strong></td>
+<td>How agents retain and retrieve relevant context.</td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>Human-in-the-Loop</strong></td>
+<td>When and how to bring a human back into the loop.</td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>Observability &amp; Evaluation</strong></td>
+<td>How to measure and debug agent behavior.</td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>Safety &amp; Guardrails</strong></td>
+<td>How to constrain agent behavior.</td>
+<td>9</td>
+</tr>
+<tr>
+<td><strong>Agent Platform</strong></td>
+<td>How to build the infrastructure that hosts many agents.</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>You do not need all of them. Start with ReAct, add Plan-and-Execute when tasks grow, and add Reflection when quality becomes critical.</p>
+<h2 id="5-how-to-read-this-handbook">5. How to Read This Handbook</h2>
+<p>Each chapter follows the same structure:</p>
+<ul>
+<li><strong>If You Only Read One Section</strong>: the one-paragraph takeaway.</li>
+<li><strong>Prerequisites</strong>: what you should know first.</li>
+<li><strong>Conceptual explanation</strong>: how the pattern works and why.</li>
+<li><strong>Diagram</strong>: a visual map of the pattern.</li>
+<li><strong>Implementation</strong>: pseudocode and prompt patterns.</li>
+<li><strong>When to use / avoid</strong>: decision guidance.</li>
+<li><strong>Example</strong>: a concrete scenario.</li>
+<li><strong>Pitfalls</strong>: how the pattern breaks in production.</li>
+<li><strong>FAQ</strong>: common questions.</li>
+<li><strong>Glossary</strong>: terms introduced.</li>
+</ul>
+<p>Treat the chapters as modular but sequential. Later patterns build on earlier ones.</p>
+<h2 id="6-the-hardest-part-is-not-the-pattern">6. The Hardest Part Is Not the Pattern</h2>
+<p>The patterns are teachable. The hard part is usually:</p>
+<ul>
+<li><strong>Observability</strong>: Can you see what the agent is doing and why?</li>
+<li><strong>Evaluation</strong>: How do you know it is getting better or worse?</li>
+<li><strong>Failure handling</strong>: What happens when a tool times out, returns garbage, or the user changes their mind?</li>
+<li><strong>Cost control</strong>: How many LLM calls is this problem worth?</li>
+</ul>
+<p>Keep those questions in mind as you read the rest of the handbook. The patterns solve the <em>shape</em> of the problem; you still have to solve the <em>operational</em> reality.</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li>An <strong>AI agent</strong> is a goal-directed, tool-using, autonomous loop.</li>
+<li><strong>Autonomy</strong> is a spectrum; most production systems sit at Level 2–3.</li>
+<li><strong>Tool use</strong> is what separates agents from chatbots.</li>
+<li>The handbook patterns are reusable solutions to coordination, planning, quality, scaling, and governance problems.</li>
+</ul>
+<h2 id="whats-next">What's Next?</h2>
+<p>In <strong>Chapter 1: The ReAct Pattern</strong>, we start with the simplest complete agent loop: reasoning, acting, and observing.</p>
+<h2 id="related-chapters">Related Chapters</h2>
+<ul>
+<li><strong>Chapter 1: The ReAct Pattern</strong></li>
+<li><strong>Chapter 2: Plan-and-Execute</strong></li>
+<li><strong>Chapter 3: Reflection</strong></li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Is every LLM application an agent?</strong>
+No. A chatbot that only answers questions is not an agent. An application becomes an agent when it uses tools and makes decisions over multiple turns to pursue a goal.</p>
+<p><strong>Q: Do agents need to be autonomous?</strong>
+Not fully. Many production agents are human-in-the-loop systems where the agent proposes actions and a human approves them. Autonomy should match the risk and cost of mistakes.</p>
+<p><strong>Q: What is the difference between an agent and a workflow?</strong>
+A workflow has a fixed control flow. An agent discovers the control flow through reasoning and observation. Workflows are more predictable; agents are more flexible.</p>
+<p><strong>Q: Which pattern should I start with?</strong>
+Start with <strong>ReAct</strong> (Chapter 1). It is the simplest pattern that demonstrates the core idea of interleaving reasoning and action.</p>
+<p><strong>Q: Do I need special infrastructure to run agents?</strong>
+You can run simple agents in a single Python script. As you add planning, reflection, multi-agent collaboration, and observability, you will want persistent state, logging, and evaluation infrastructure.</p>
+<!-- CTA -->
+
+<h2 id="glossary-terms-introduced">Glossary Terms Introduced</h2>
+<ul>
+<li><strong>AI Agent</strong>: A system that uses an LLM to reason, use tools, and act autonomously toward a goal.</li>
+<li><strong>Tool Use</strong>: The ability of an agent to call external functions or APIs.</li>
+<li><strong>Autonomy</strong>: The degree to which an agent can act without human approval.</li>
+<li><strong>ReAct</strong>: A pattern that interleaves reasoning and acting in a single loop.</li>
+<li><strong>Plan-and-Execute</strong>: A pattern that separates strategy from execution via a structured plan.</li>
+<li><strong>Reflection</strong>: A pattern that adds a quality-review loop to agent outputs.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.0</td>
+<td>2026-06-28</td>
+<td>Initial draft.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<div class="chapter-nav__link chapter-nav__link--prev chapter-nav__link--disabled"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">—</div></div>
+<a href="/handbook/chapter-01-react-pattern.html" class="chapter-nav__link chapter-nav__link--next"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">The ReAct Pattern</div></a>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Building agent systems? Let's talk about how I can help your team.</p>
+  <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#chapter-0-the-agentic-landscape-autonomy-tools-and-the-patterns-that-make-agents-work">Chapter 0: The Agentic Landscape — Autonomy, Tools, and the Patterns That Make Agents Work</a><ul>
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites">Prerequisites</a></li>
+<li><a class="handbook-toc__link" href="#1-what-is-an-ai-agent">1. What Is an AI Agent?</a><ul>
+<li><a class="handbook-toc__link" href="#agent-vs-application">Agent vs. Application</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#2-levels-of-autonomy">2. Levels of Autonomy</a></li>
+<li><a class="handbook-toc__link" href="#3-tool-use-is-the-superpower">3. Tool Use Is the Superpower</a><ul>
+<li><a class="handbook-toc__link" href="#the-tool-contract">The Tool Contract</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#4-the-pattern-catalog">4. The Pattern Catalog</a></li>
+<li><a class="handbook-toc__link" href="#5-how-to-read-this-handbook">5. How to Read This Handbook</a></li>
+<li><a class="handbook-toc__link" href="#6-the-hardest-part-is-not-the-pattern">6. The Hardest Part Is Not the Pattern</a></li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#whats-next">What's Next?</a></li>
+<li><a class="handbook-toc__link" href="#related-chapters">Related Chapters</a></li>
+<li><a class="handbook-toc__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a class="handbook-toc__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Services</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>

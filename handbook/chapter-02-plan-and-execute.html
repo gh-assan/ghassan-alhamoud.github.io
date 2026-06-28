@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 2: The Plan-and-Execute Pattern — AI-Native Engineering Handbook</title>
+  <meta name="description" content="Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html" />
+  <meta property="og:title" content="Chapter 2: The Plan-and-Execute Pattern — Orchestrating Complex Tasks" />
+  <meta property="og:description" content="Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-002-plan-and-execute.webp" />
+  <meta property="article:published_time" content="2026-06-28" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html" />
+  <meta property="twitter:title" content="Chapter 2: The Plan-and-Execute Pattern — Orchestrating Complex Tasks" />
+  <meta property="twitter:description" content="Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-002-plan-and-execute.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "The Plan-and-Execute Pattern \u2014 Orchestrating Complex Tasks",
+  "description": "Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The AI-Native Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/handbook/"
+  },
+  "datePublished": "2026-06-28",
+  "dateModified": "2026-06-28",
+  "image": "https://ghassan-alhamoud.com/images/handbook/HDBK-002-plan-and-execute.webp",
+  "learningResourceType": "Chapter",
+  "position": 2,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Handbook",
+      "item": "https://ghassan-alhamoud.com/handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "The Plan-and-Execute Pattern",
+      "item": "https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does Plan-and-Execute replace ReAct?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. In most implementations, the Executor uses a ReAct loop to carry out each individual task. Plan-and-Execute adds the planning layer above it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes a plan \"good enough\"?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A good plan has clear, verifiable tasks; explicit dependencies; and a failure mode for each task. It does not need to predict every detail upfront."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I detect a deadlock?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If no tasks are in_progress, no tasks are ready to start, and incomplete work remains (todo or blocked), the plan has a structural problem that requires replanning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should the Re-Planner be the same model as the Planner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can be, but using a different model or prompt persona for the Re-Planner reduces bias toward the original plan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can tasks run in parallel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The get_ready_tasks function returns all tasks whose dependencies are satisfied. You can execute them sequentially or in parallel, depending on your infrastructure."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Services</a></li>
+        <li><a href="/#work" class="nav__link">Work</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">HDBK-002</span>
+          <h1 class="handbook-hero__title">The Plan-and-Execute Pattern</h1>
+          <p class="handbook-hero__subtitle">Orchestrating Complex Tasks</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 2</span>
+            <span class="handbook-hero__dot">•</span><span>12 min</span>
+            <span class="handbook-hero__dot">•</span><span>Intermediate</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-06-28</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><ul><li><a href="/handbook/chapter-00-agentic-landscape.html">The Agentic Landscape</a></li><li><a href="/handbook/chapter-01-react-pattern.html">The ReAct Pattern</a></li></ul></div>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Reading time:</strong> 12 min | <strong>Last revised:</strong> 2026-06-28 | <strong>Version:</strong> 1.3</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p><strong>Plan-and-Execute</strong> decouples high-level strategy from low-level action. By creating an explicit <strong>Plan</strong> (a structured task list) before execution, agents avoid "myopia." Use this for multi-step, non-linear projects requiring high reliability.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Chapter 1: The ReAct Pattern — understanding iterative execution.</li>
+</ul>
+<hr />
+<h2 id="1-the-data-model-json-schema-the-dag">1. The Data Model: JSON Schema &amp; The DAG</h2>
+<p>A plan must be machine-readable and validatable. In this pattern, we treat the task list as a <strong>Directed Acyclic Graph (DAG)</strong>, where tasks can only be executed once their dependencies are resolved.</p>
+<h3 id="react-lives-inside-the-executor">ReAct Lives Inside the Executor</h3>
+<p>Plan-and-Execute does not replace ReAct; it wraps it. Each individual task in the plan is usually executed through an iterative loop—often a <strong>ReAct loop</strong> (Chapter 1). The Planner decides <em>what</em> to do, the Executor decides <em>how</em> to do it step-by-step, and the Re-Planner adapts when reality diverges from the plan.</p>
+<figure class="diagram-panel"><img src="/images/handbook/HDBK-002-plan-and-execute.webp" alt="HDBK-002 Plan-and-Execute Architecture" loading="lazy" /><figcaption>Figure 1: Plan-and-Execute architecture — Goal feeds the Planner; the Executor runs each task (often via an internal ReAct loop); the Re-Planner adapts the plan based on results.</figcaption></figure>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [&quot;goal&quot;, &quot;tasks&quot;],
+  &quot;properties&quot;: {
+    &quot;goal&quot;: { &quot;type&quot;: &quot;string&quot; },
+    &quot;tasks&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;items&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;required&quot;: [&quot;id&quot;, &quot;task&quot;, &quot;deps&quot;, &quot;status&quot;],
+        &quot;properties&quot;: {
+          &quot;id&quot;: { &quot;type&quot;: &quot;integer&quot; },
+          &quot;task&quot;: { &quot;type&quot;: &quot;string&quot; },
+          &quot;deps&quot;: { &quot;type&quot;: &quot;array&quot;, &quot;items&quot;: { &quot;type&quot;: &quot;integer&quot; }, &quot;description&quot;: &quot;IDs of tasks that must be 'done' first.&quot; },
+          &quot;status&quot;: { &quot;enum&quot;: [&quot;todo&quot;, &quot;in_progress&quot;, &quot;done&quot;, &quot;failed&quot;, &quot;blocked&quot;] },
+          &quot;result&quot;: { &quot;type&quot;: &quot;string&quot; }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<h2 id="2-the-re-planner-the-brain-of-the-system">2. The Re-Planner: The Brain of the System</h2>
+<p>The <strong>Re-Planner</strong> is an LLM call triggered after each execution. Its job is to handle the "Reality Check": given the result of the last task, should we continue, retry, or rewrite the future?</p>
+<h3 id="re-planner-logic-retry-vs-skip-vs-abort">Re-Planner Logic: Retry vs. Skip vs. Abort</h3>
+<ul>
+<li><strong>Retry</strong>: If the error is transient (e.g., rate limit), stay on the current task.</li>
+<li><strong>Skip/Modify</strong>: If the error revealed the goal is impossible as planned, rewire future <code>deps</code> or inject a "Discovery" task.</li>
+<li><strong>Abort</strong>: If a critical dependency failed and no alternative exists, transition the Plan status to <code>terminal_failure</code>.</li>
+</ul>
+<h2 id="3-robust-implementation-pseudocode">3. Robust Implementation (Pseudocode)</h2>
+<pre><code class="language-python">def get_ready_tasks(plan: Plan) -&gt; List[Task]:
+    # Returns tasks where status == &quot;todo&quot; AND all dependencies are &quot;done&quot;
+    return [t for t in plan.tasks if t.status == &quot;todo&quot; and 
+            all(plan.find(d).status == &quot;done&quot; for d in t.deps)]
+
+def plan_and_execute(goal, tools):
+    plan = planner.generate_initial_plan(goal)
+    max_replans = 3
+    replan_count = 0
+
+    while plan.has_incomplete_tasks():
+        ready_tasks = get_ready_tasks(plan)
+
+        # Check for deadlock: nothing is running, nothing is ready, but work remains
+        if (not ready_tasks and
+            not any(t.status == &quot;in_progress&quot; for t in plan.tasks) and
+            any(t.status in (&quot;todo&quot;, &quot;blocked&quot;) for t in plan.tasks)):
+            plan = planner.replan(goal, plan, reason=&quot;deadlock_detected&quot;)
+            continue
+
+        for task in ready_tasks:
+            try:
+                task.status = &quot;in_progress&quot;
+                task.result = executor.execute(task.task, tools)
+                task.status = &quot;done&quot;
+            except Exception as e:
+                task.status = &quot;failed&quot;
+                task.error = str(e)
+
+        # Re-Planning Gate: Triggered by failure or new information
+        if any(t.status == &quot;failed&quot; for t in ready_tasks) or planner.needs_update(plan):
+            if replan_count &gt;= max_replans:
+                return &quot;Goal aborted: Max replans exceeded.&quot;
+            plan = planner.replan(goal, plan)
+            replan_count += 1
+
+    return summarize_results(plan)
+</code></pre>
+<h2 id="4-decision-matrix-react-vs-plan-and-execute">4. Decision Matrix: ReAct vs. Plan-and-Execute</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>ReAct</th>
+<th>Plan-and-Execute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Best For</strong></td>
+<td>Reactive, few-step tasks.</td>
+<td>Strategic, multi-step projects.</td>
+</tr>
+<tr>
+<td><strong>State</strong></td>
+<td>Implicit (Context).</td>
+<td>Explicit (External JSON/DB).</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>1.0x (Direct).</td>
+<td>1.5x - 3.0x (Planner calls + Re-planning).</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>Drifts in long contexts.</td>
+<td>High (Goal-oriented stabilization).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-when-to-use-plan-and-execute">5. When to Use Plan-and-Execute</h2>
+<p>Use Plan-and-Execute when:
+- The goal requires <strong>5 or more dependent steps</strong> that must be tracked.
+- Some steps can run <strong>in parallel</strong> while others must wait.
+- <strong>Reliability matters more than latency</strong> (planning adds overhead).
+- The workflow is <strong>repeatable</strong> enough to justify a structured plan format.</p>
+<p>Avoid it when:
+- The task is <strong>short and exploratory</strong> (ReAct is cheaper).
+- You cannot define a reasonable success criterion for each task.
+- The environment changes so fast that any plan becomes stale in seconds.</p>
+<h2 id="6-example-due-diligence-report-on-a-startup">6. Example: Due-Diligence Report on a Startup</h2>
+<p>User request: <em>"Prepare a 2-page investment memo on Acme Robotics. Cover team, market, product, traction, and risks."</em></p>
+<p>The Planner generates an initial task list:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Task</th>
+<th>Dependencies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Search founder backgrounds</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Estimate market size</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Analyze product / technology</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Find traction signals (funding, customers)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Identify risks (competition, regulatory)</td>
+<td>2, 3, 4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Write the memo</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>The Executor works through ready tasks. Suppose Task 4 fails because the funding database is down. The Re-Planner sees the failure, checks <code>MAX_REPLANS</code>, and either:
+- retries Task 4 after a delay,
+- replaces Task 4 with "Search company blog and press releases for traction signals," or
+- aborts if traction data is a hard requirement.</p>
+<p>Once all dependencies for Task 6 are satisfied, the Executor synthesizes the final memo.</p>
+<h2 id="7-common-pitfalls-prescriptive-mitigations">7. Common Pitfalls &amp; Prescriptive Mitigations</h2>
+<ul>
+<li><strong>Over-Planning</strong>: Planner generates 20+ steps. </li>
+<li><em>Mitigation</em>: Use a "Sliding Window" plan. Limit initial plans to 5-7 steps; the final step should be "Assess remaining goal."</li>
+<li><strong>Plan Oscillation</strong>: Re-Planner loops between two failing approaches.</li>
+<li><em>Mitigation</em>: Implement a global <code>MAX_REPLANS</code> counter. If reached, escalate to human approval or fail safely.</li>
+<li><strong>Dependency Deadlock</strong>: Task A depends on B, and B depends on A (circular).</li>
+<li><em>Mitigation</em>: Validate the JSON Plan against a Directed Acyclic Graph (DAG) check before starting execution.</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Plan-and-Execute</strong> separates strategy from action via a structured Task List.</li>
+<li><strong>Explicit State Management</strong> using JSON/DAGs is required for long-running reliability.</li>
+<li>The <strong>Re-Planner</strong> provides the critical self-correction gate.</li>
+</ul>
+<h2 id="whats-next">What's Next?</h2>
+<p>In <strong>Chapter 3: Reflection</strong>, we'll explore how to add a "Critic" agent that reviews work <em>before</em> it moves to the next step of the plan.</p>
+<h2 id="related-chapters">Related Chapters</h2>
+<ul>
+<li><strong>Chapter 1: The ReAct Pattern</strong></li>
+<li><strong>Chapter 3: The Reflection Pattern</strong></li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Does Plan-and-Execute replace ReAct?</strong>
+No. In most implementations, the Executor uses a ReAct loop to carry out each individual task. Plan-and-Execute adds the planning layer above it.</p>
+<p><strong>Q: What makes a plan "good enough"?</strong>
+A good plan has clear, verifiable tasks; explicit dependencies; and a failure mode for each task. It does not need to predict every detail upfront.</p>
+<p><strong>Q: How do I detect a deadlock?</strong>
+If no tasks are <code>in_progress</code>, no tasks are ready to start, and incomplete work remains (<code>todo</code> or <code>blocked</code>), the plan has a structural problem that requires replanning.</p>
+<p><strong>Q: Should the Re-Planner be the same model as the Planner?</strong>
+It can be, but using a different model or prompt persona for the Re-Planner reduces bias toward the original plan.</p>
+<p><strong>Q: Can tasks run in parallel?</strong>
+Yes. The <code>get_ready_tasks</code> function returns all tasks whose dependencies are satisfied. You can execute them sequentially or in parallel, depending on your infrastructure.</p>
+<!-- CTA -->
+
+<h2 id="glossary-terms-introduced">Glossary Terms Introduced</h2>
+<ul>
+<li><strong>DAG (Directed Acyclic Graph)</strong>: A directed graph with no cycles, used here to order dependent tasks.</li>
+<li><strong>Re-Planner</strong>: The component responsible for updating a plan based on execution results.</li>
+<li><strong>Deadlock</strong>: A state where no task can proceed because they all wait on incomplete dependencies.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.3</td>
+<td>2026-06-28</td>
+<td>Major Revision: Added DAG logic, deadlock handling, and retry/skip/abort semantics.</td>
+</tr>
+<tr>
+<td>v1.2</td>
+<td>2026-06-28</td>
+<td>Added formal JSON Schema and prescriptive mitigations.</td>
+</tr>
+<tr>
+<td>v1.0</td>
+<td>2026-06-28</td>
+<td>Initial draft.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<a href="/handbook/chapter-01-react-pattern.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">The ReAct Pattern</div></a>
+<a href="/handbook/chapter-03-reflection.html" class="chapter-nav__link chapter-nav__link--next"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">The Reflection Pattern</div></a>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Building agent systems? Let's talk about how I can help your team.</p>
+  <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#chapter-2-the-plan-and-execute-pattern-orchestrating-complex-tasks">Chapter 2: The Plan-and-Execute Pattern — Orchestrating Complex Tasks</a><ul>
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites">Prerequisites</a></li>
+<li><a class="handbook-toc__link" href="#1-the-data-model-json-schema-the-dag">1. The Data Model: JSON Schema &amp; The DAG</a><ul>
+<li><a class="handbook-toc__link" href="#react-lives-inside-the-executor">ReAct Lives Inside the Executor</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#2-the-re-planner-the-brain-of-the-system">2. The Re-Planner: The Brain of the System</a><ul>
+<li><a class="handbook-toc__link" href="#re-planner-logic-retry-vs-skip-vs-abort">Re-Planner Logic: Retry vs. Skip vs. Abort</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#3-robust-implementation-pseudocode">3. Robust Implementation (Pseudocode)</a></li>
+<li><a class="handbook-toc__link" href="#4-decision-matrix-react-vs-plan-and-execute">4. Decision Matrix: ReAct vs. Plan-and-Execute</a></li>
+<li><a class="handbook-toc__link" href="#5-when-to-use-plan-and-execute">5. When to Use Plan-and-Execute</a></li>
+<li><a class="handbook-toc__link" href="#6-example-due-diligence-report-on-a-startup">6. Example: Due-Diligence Report on a Startup</a></li>
+<li><a class="handbook-toc__link" href="#7-common-pitfalls-prescriptive-mitigations">7. Common Pitfalls &amp; Prescriptive Mitigations</a></li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#whats-next">What's Next?</a></li>
+<li><a class="handbook-toc__link" href="#related-chapters">Related Chapters</a></li>
+<li><a class="handbook-toc__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a class="handbook-toc__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Services</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>
