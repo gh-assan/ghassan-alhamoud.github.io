@@ -211,7 +211,6 @@ img {
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 100%;
 }
 
@@ -312,7 +311,7 @@ img {
   transform: translateX(0);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1000px) {
   .nav__toggle {
     display: none;
   }
@@ -324,16 +323,16 @@ img {
     height: auto;
     background: none;
     padding: 0;
-    gap: 4px;
+    gap: 0;
     border: none;
   }
 }
 
 .nav__link {
   display: block;
-  padding: 10px 16px;
+  padding: 10px 12px;
   color: var(--text-secondary);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   border-radius: var(--radius-sm);
   transition: color 0.2s ease, background 0.2s ease;
@@ -345,8 +344,8 @@ img {
   content: '';
   position: absolute;
   bottom: 2px;
-  left: 16px;
-  right: 16px;
+  left: 12px;
+  right: 12px;
   height: 2px;
   background: var(--accent);
   transform: scaleX(0) translateY(2px);

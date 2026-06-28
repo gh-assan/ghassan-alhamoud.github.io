@@ -4,59 +4,109 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Get Off the Crunchbase Treadmill — Ghassan Alhamoud</title>
-  <meta name="description" content="Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer." />
+  <title>The AI-Native Engineering Handbook — Production-tested agent patterns</title>
+  <meta name="description" content="A production-tested reference for AI-native engineering patterns: ReAct, Plan-and-Execute, Reflection, multi-agent systems, and more." />
   <meta name="author" content="Ghassan Alhamoud" />
-  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/handbook/" />
 
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html" />
-  <meta property="og:title" content="Get Off the Crunchbase Treadmill" />
-  <meta property="og:description" content="Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer." />
-  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART009.webp" />
-  <meta property="article:published_time" content="2026-03-30" />
-  <meta property="article:author" content="Ghassan Alhamoud" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/handbook/" />
+  <meta property="og:title" content="The AI-Native Engineering Handbook — Production-tested agent patterns" />
+  <meta property="og:description" content="A production-tested reference for AI-native engineering patterns: ReAct, Plan-and-Execute, Reflection, multi-agent systems, and more." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html" />
-  <meta property="twitter:title" content="Get Off the Crunchbase Treadmill" />
-  <meta property="twitter:description" content="Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer." />
-  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART009.webp" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/handbook/" />
+  <meta property="twitter:title" content="The AI-Native Engineering Handbook — Production-tested agent patterns" />
+  <meta property="twitter:description" content="A production-tested reference for AI-native engineering patterns: ReAct, Plan-and-Execute, Reflection, multi-agent systems, and more." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
 
-  <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Get Off the Crunchbase Treadmill",
-  "description": "Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer.",
-  "image": "https://ghassan-alhamoud.com/images/articles/ART009.webp",
+  "@type": "Course",
+  "name": "The AI-Native Engineering Handbook",
+  "description": "A production-tested reference for AI-native engineering patterns: ReAct, Plan-and-Execute, Reflection, multi-agent systems, and more.",
+  "url": "https://ghassan-alhamoud.com/handbook/",
   "author": {
     "@type": "Person",
     "name": "Ghassan Alhamoud",
     "url": "https://ghassan-alhamoud.com/"
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Ghassan Alhamoud",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://ghassan-alhamoud.com/favicon.svg"
+  "courseCode": "HDBK",
+  "educationalLevel": "Advanced",
+  "hasCourseInstance": [
+    {
+      "@type": "CourseInstance",
+      "courseMode": "online",
+      "courseWorkload": "PT8M",
+      "instructor": {
+        "@type": "Person",
+        "name": "Ghassan Alhamoud"
+      }
     }
-  },
-  "datePublished": "2026-03-30",
-  "dateModified": "2026-03-30",
-  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html",
-  "proficiencyLevel": "Intermediate",
-  "dependencies": "Startup Intelligence, Data, Real-time, AI",
-  "articleSection": "Data Systems"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "The Agentic Landscape",
+      "url": "https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "The ReAct Pattern",
+      "url": "https://ghassan-alhamoud.com/handbook/chapter-01-react-pattern.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "The Plan-and-Execute Pattern",
+      "url": "https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "The Reflection Pattern",
+      "url": "https://ghassan-alhamoud.com/handbook/chapter-03-reflection.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Handbook",
+      "item": "https://ghassan-alhamoud.com/handbook/"
+    }
+  ]
 }
   </script>
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
 </head>
 <body>
   <header class="header" id="header">
@@ -77,67 +127,38 @@
 
       <ul class="nav__menu" id="navMenu" role="navigation">
         <li><a href="/#services" class="nav__link">Services</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
-        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#work" class="nav__link">Work</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
         <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="article-single">
-    <div class="container article-layout">
-      <article>
-        <header class="article-single__header">
-          <div class="article-single__meta">
-            <time datetime="2026-03-30">Mar 30 2026</time>
-            <span class="article-card__dot"></span>
-            <span>5 min</span>
-          </div>
-          <h1 class="article-single__title">Get Off the Crunchbase Treadmill</h1>
-          <div class="article-single__tags">
-          <span class="article-single__tag">Startup Intelligence</span>
-          <span class="article-single__tag">Data</span>
-          <span class="article-single__tag">Real-time</span>
-          <span class="article-single__tag">AI</span>
-          </div>
-        </header>
+  <main class="handbook-index">
+    <div class="container">
+      <div class="handbook-index__hero">
+        <span class="handbook-hero__badge">HDBK</span>
+        <h1 class="section__title">The AI-Native Engineering Handbook</h1>
+        <p class="section__subtitle">Production-tested patterns for building autonomous agents</p>
+        <p class="handbook-index__intro">
+          A structured, production-tested guide to the patterns that make autonomous agents reliable.
+          Each chapter includes diagrams, pseudocode, decision frameworks, and the failure modes you will hit in production.
+        </p>
+      </div>
 
-                <img src="/images/articles/ART009.webp" alt="" class="article-single__image" loading="eager" />
+      <div class="handbook-index__grid">
+<a href="/handbook/chapter-00-agentic-landscape.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-000</span><h3 class="handbook-index__card-title">The Agentic Landscape</h3><p class="handbook-index__card-desc">A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know.</p><span class="handbook-index__card-meta">10 min • Beginner</span></a>
+<a href="/handbook/chapter-01-react-pattern.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-001</span><h3 class="handbook-index__card-title">The ReAct Pattern</h3><p class="handbook-index__card-desc">Learn the ReAct pattern: how LLMs interleave reasoning (Thought), tool calls (Action), and feedback (Observation) to solve complex tasks.</p><span class="handbook-index__card-meta">8 min • Beginner</span></a>
+<a href="/handbook/chapter-02-plan-and-execute.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-002</span><h3 class="handbook-index__card-title">The Plan-and-Execute Pattern</h3><p class="handbook-index__card-desc">Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner.</p><span class="handbook-index__card-meta">12 min • Intermediate</span></a>
+<a href="/handbook/chapter-03-reflection.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-003</span><h3 class="handbook-index__card-title">The Reflection Pattern</h3><p class="handbook-index__card-desc">Learn the Reflection pattern: how a Generator-Critic loop with a structured rubric reduces hallucinations and improves output quality.</p><span class="handbook-index__card-meta">8 min • Intermediate</span></a>
+      </div>
 
-        <div class="article-single__body">
-          <p>Everyone thinks Crunchbase is the gold standard for startup intelligence.</p>
-<p>If you’re a founder or investor, you’re stuck on the <strong>Crunchbase treadmill</strong>:</p>
-<p>Wait for the alert → See the news → Research the company → Decide.</p>
-<p>Here’s the catch: <strong>By the time it hits Crunchbase, the outreach window is closed.</strong></p>
-<p>The real signal doesn’t appear in a funding alert. It’s buried in the patterns of hiring velocity, product velocity, and tech-stack changes.</p>
-<p>Startup intelligence is currently broken. It’s backward-looking, siloed, and expensive.</p>
-<p>We don't need another database. We need an <strong>intelligence layer.</strong></p>
-<p>We need modular, self-hosted engines that convert noise into real-time signal:</p>
-<p>🚀 <strong>Funding Pattern Matcher:</strong> Finds companies nearing their next milestone — not the ones that already closed.</p>
-<p>📈 <strong>Hiring Heatmap:</strong> Detects scaling inflection points (like the first engineering manager hire) months in advance.</p>
-<p>⚡ <strong>Momentum Radar:</strong> Correlates product launches, office moves, and executive changes to spot peak-change windows.</p>
-<p>This is how you spot opportunity <strong>before</strong> it hits the news.</p>
-<p>Stop staring at the rearview mirror. Build an intelligence stack that sees around corners.</p>
-<p><strong>Get off the treadmill.</strong></p>
-<p>#StartupIntelligence #GrowthHacking #LeadGen #Founders</p>
-
-        </div>
-
-        <div class="article-cta">
-          <p class="article-cta__text">
-            Working on a similar problem? Let's talk about how I can help your team.
-          </p>
-          <a href="/#contact" class="btn btn--primary">Get in Touch</a>
-        </div>
-      </article>
-
-      <aside class="article-sidebar">
-        <h3 class="article-sidebar__title">More Articles</h3>
-        <div class="article-sidebar__list" id="articleSidebarList">
-          <p class="articles-preview__loading">Loading...</p>
-        </div>
-      </aside>
+      <div class="article-cta handbook-index__cta">
+        <p class="article-cta__text">Need help applying these patterns to your system? Let's talk.</p>
+        <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+      </div>
     </div>
   </main>
 
@@ -199,9 +220,7 @@
       }
     })();
   </script>
-  <script src="/assets/js/articles.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/transitions.js" defer></script>
   <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

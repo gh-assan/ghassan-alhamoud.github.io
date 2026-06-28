@@ -1,0 +1,371 @@
+/* ================================================================
+   HANDBOOK.CSS — AI-Native Engineering Handbook styles
+   Extends main.css with book-style navigation, TOC, diagrams, and CTAs.
+   ================================================================ */
+
+/* ----- Handbook index page ----- */
+.handbook-index {
+  padding-top: calc(var(--nav-height) + 64px);
+  padding-bottom: 120px;
+}
+
+.handbook-index__hero {
+  max-width: 760px;
+  margin-bottom: 64px;
+}
+
+.handbook-index__hero .section__title {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+.handbook-index__hero .section__subtitle {
+  margin-bottom: 24px;
+}
+
+.handbook-index__intro {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 680px;
+}
+
+.handbook-index__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+@media (min-width: 640px) {
+  .handbook-index__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.handbook-index__card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all 0.35s var(--ease-out);
+}
+
+.handbook-index__card:hover {
+  border-color: rgba(var(--accent-rgb), 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(var(--accent-rgb), 0.08);
+}
+
+.handbook-index__card-number {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.handbook-index__card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.handbook-index__card-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.handbook-index__card-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.handbook-index__cta {
+  margin-top: 0;
+}
+
+/* ----- Chapter hero ----- */
+.handbook-page {
+  padding-top: calc(var(--nav-height) + 48px);
+}
+
+.handbook-hero {
+  margin-bottom: 32px;
+}
+
+.handbook-hero__badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.handbook-hero__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.handbook-hero__subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.handbook-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.handbook-hero__dot {
+  opacity: 0.4;
+}
+
+/* ----- Prerequisites box ----- */
+.prerequisites-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  max-width: 720px;
+}
+
+.prerequisites-box__title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.prerequisites-box ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-secondary);
+}
+
+.prerequisites-box li {
+  margin-bottom: 4px;
+}
+
+.prerequisites-box a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.prerequisites-box a:hover {
+  text-decoration: underline;
+}
+
+/* ----- TL;DR override (first blockquote in body) ----- */
+.handbook-body > blockquote:first-of-type {
+  border-left: 4px solid var(--accent);
+  background: var(--bg-secondary);
+  padding: 24px;
+  margin: 0 0 40px 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-style: normal;
+  color: var(--text-primary);
+}
+
+.handbook-body > blockquote:first-of-type p:last-child {
+  margin-bottom: 0;
+}
+
+/* ----- Diagram panel (dark background for dark diagrams on light theme) ----- */
+.diagram-panel {
+  background: #0a1628;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin: 32px 0;
+  text-align: center;
+  border: 1px solid #1e3a5f;
+}
+
+.diagram-panel img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  margin: 0 auto;
+}
+
+.diagram-panel figcaption {
+  color: #8fa3bf;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* ----- FAQ styling ----- */
+.handbook-body h2:has(+ p strong) ~ p strong,
+.handbook-body p:has(> strong) {
+  /* No special rule needed; keep default */
+}
+
+/* ----- Chapter navigation ----- */
+.chapter-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  max-width: 720px;
+}
+
+@media (max-width: 600px) {
+  .chapter-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chapter-nav__link {
+  display: block;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.chapter-nav__link:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.08);
+}
+
+.chapter-nav__link--next {
+  text-align: right;
+}
+
+.chapter-nav__link--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chapter-nav__link--disabled:hover {
+  border-color: var(--border);
+  transform: none;
+  box-shadow: none;
+}
+
+.chapter-nav__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.chapter-nav__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* ----- Sidebar / TOC ----- */
+.handbook-sidebar {
+  position: sticky;
+  top: calc(var(--nav-height) + 32px);
+  align-self: start;
+}
+
+.handbook-toc {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.handbook-toc__title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.handbook-toc__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.handbook-toc__list ul {
+  list-style: none;
+  padding-left: 12px;
+  margin: 0;
+}
+
+.handbook-toc__list li {
+  margin: 0;
+}
+
+.handbook-toc__link {
+  display: block;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.handbook-toc__link:hover {
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+/* ----- Glossary terms ----- */
+.handbook-body h2#frequently-asked-questions + p,
+.handbook-body h2#frequently-asked-questions ~ p {
+  margin-bottom: 16px;
+}
+
+.handbook-body h2#frequently-asked-questions ~ p strong {
+  color: var(--text-primary);
+}
+
+/* ----- Responsive: hide sidebar on small screens ----- */
+@media (max-width: 900px) {
+  .handbook-sidebar {
+    display: none;
+  }
+}
