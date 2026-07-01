@@ -75,6 +75,15 @@
    * letting the embed script load.
    */
   function onReady() {
+    var calLinks = document.querySelectorAll('[data-cal-link]');
+    var hasVisibleCalLink = Array.prototype.some.call(calLinks, function (link) {
+      return link.offsetParent !== null;
+    });
+
+    if (!hasVisibleCalLink) {
+      return;
+    }
+
     // Inject the Cal.com embed script IIFE (idempotent)
     (function (C, A, L) {
       var p = function (a, ar) { a.q.push(ar); };
@@ -127,4 +136,3 @@
   };
 
 })();
-
