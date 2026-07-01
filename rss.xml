@@ -5,9 +5,22 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Tue, 23 Jun 2026 22:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 23:53:13 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
-        <item>
+    <item>
+      <title>ALMS and OKF: Turning Agent Experience Into Portable Knowledge</title>
+      <link>https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html</guid>
+      <pubDate>Wed, 01 Jul 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge.]]></description>
+      <category>AI Agents</category>
+      <category>OKF</category>
+      <category>ALMS</category>
+      <category>Knowledge Management</category>
+      <category>MCP</category>
+      <category>Agent Memory</category>
+    </item>
+    <item>
       <title>When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement</title>
       <link>https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html</guid>

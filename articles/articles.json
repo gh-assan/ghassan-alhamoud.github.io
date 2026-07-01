@@ -1,5 +1,20 @@
 [
   {
+    "slug": "alms-okf-integration-bridge",
+    "title": "ALMS and OKF: Turning Agent Experience Into Portable Knowledge",
+    "date": "2026-07-02",
+    "excerpt": "ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge.",
+    "readingTime": "7 min",
+    "tags": [
+      "AI Agents",
+      "OKF",
+      "ALMS",
+      "Knowledge Management",
+      "MCP",
+      "Agent Memory"
+    ]
+  },
+  {
     "slug": "smart-models-go-stupid",
     "title": "When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement",
     "date": "2026-06-24",
