@@ -2574,3 +2574,18 @@ img {
 .hero__orb--2 {
   opacity: 0.06;
 }
+
+/* ================================================================
+   PORTFOLIO MODE — hide consulting CTAs and availability signals
+   ================================================================ */
+
+.nav__link--cta[href$="#contact"],
+.footer__nav-link[href$="#contact"],
+a[data-cal-link],
+a[href*="calendly.com"],
+.article-cta,
+.about__availability,
+.contact__availability,
+#contact {
+  display: none !important;
+}
