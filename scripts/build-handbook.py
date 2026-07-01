@@ -28,8 +28,8 @@ JSON_PATH = HANDBOOK_DIR / "handbook.json"
 BASE_URL = "https://ghassan-alhamoud.com"
 
 CTA_HTML = """<div class="article-cta">
-  <p class="article-cta__text">Building agent systems? Let's talk about how I can help your team.</p>
-  <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
 </div>"""
 
 
@@ -373,8 +373,8 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
       </button>
 
       <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Services</a></li>
-        <li><a href="/#work" class="nav__link">Work</a></li>
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
         <li><a href="/articles/" class="nav__link">Articles</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
@@ -424,7 +424,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -436,7 +436,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Services</span>
+          <span class="footer__nav-heading">Expertise</span>
           <a href="/#services" class="footer__nav-link">System Design</a>
           <a href="/#services" class="footer__nav-link">AI Architecture</a>
           <a href="/#services" class="footer__nav-link">LLM Coaching</a>
@@ -608,8 +608,8 @@ def render_index(handbook: dict, chapters: list) -> str:
       </button>
 
       <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Services</a></li>
-        <li><a href="/#work" class="nav__link">Work</a></li>
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
         <li><a href="/articles/" class="nav__link">Articles</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
@@ -635,8 +635,8 @@ def render_index(handbook: dict, chapters: list) -> str:
       </div>
 
       <div class="article-cta handbook-index__cta">
-        <p class="article-cta__text">Need help applying these patterns to your system? Let's talk.</p>
-        <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+        <p class="article-cta__text">Continue exploring the handbook chapters and production patterns.</p>
+        <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
       </div>
     </div>
   </main>
@@ -650,7 +650,7 @@ def render_index(handbook: dict, chapters: list) -> str:
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">AI Architecture Consulting — Worldwide</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -662,7 +662,7 @@ def render_index(handbook: dict, chapters: list) -> str:
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Services</span>
+          <span class="footer__nav-heading">Expertise</span>
           <a href="/#services" class="footer__nav-link">System Design</a>
           <a href="/#services" class="footer__nav-link">AI Architecture</a>
           <a href="/#services" class="footer__nav-link">LLM Coaching</a>
