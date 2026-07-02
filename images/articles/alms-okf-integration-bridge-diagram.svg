@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">ALMS to OKF bridge architecture</title>
+  <desc id="desc">A diagram showing ALMS learning records flowing through the okf.export filter into an OKF bundle, then into review and publication.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f8fb; }
+      .panel { fill: #ffffff; stroke: #d9dee8; stroke-width: 2; }
+      .panel-soft { fill: #fbfcff; stroke: #d9dee8; stroke-width: 2; }
+      .title { fill: #111827; font: 700 44px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .subtitle { fill: #4b5563; font: 400 22px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .section { fill: #111827; font: 700 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .label { fill: #111827; font: 700 20px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .body { fill: #374151; font: 400 17px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #4b5563; font: 400 15px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .mono { fill: #111827; font: 600 18px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .pill-text { fill: #111827; font: 700 16px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #6b7280; font: 400 14px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #2563eb; stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead); }
+      .arrow-muted { stroke: #9ca3af; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead-muted); }
+      .divider { stroke: #d1d5db; stroke-width: 2; stroke-dasharray: 8 9; }
+    </style>
+    <marker id="arrowhead" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-muted" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#9ca3af"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+
+  <text class="title" x="90" y="86">ALMS to OKF: the promotion path</text>
+  <text class="subtitle" x="92" y="124">Operational lessons stay in ALMS until selected, filtered, and exported as portable OKF files.</text>
+
+  <line class="divider" x1="895" y1="164" x2="895" y2="780"/>
+  <text class="muted" x="666" y="158">Experience layer</text>
+  <text class="muted" x="930" y="158">Portable knowledge layer</text>
+
+  <rect class="panel" x="90" y="190" width="310" height="520" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="122" y="235">ALMS learning store</text>
+  <text class="body" x="122" y="274">Agent-generated experience</text>
+  <text class="body" x="122" y="302">captured during real work.</text>
+
+  <rect x="122" y="348" width="246" height="58" rx="12" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text class="pill-text" x="148" y="384">failure</text>
+  <rect x="122" y="424" width="246" height="58" rx="12" fill="#ecfdf5" stroke="#bbf7d0"/>
+  <text class="pill-text" x="148" y="460">pattern</text>
+  <rect x="122" y="500" width="246" height="58" rx="12" fill="#fff7ed" stroke="#fed7aa"/>
+  <text class="pill-text" x="148" y="536">edge_case</text>
+  <rect x="122" y="576" width="246" height="58" rx="12" fill="#f0f9ff" stroke="#bae6fd"/>
+  <text class="pill-text" x="148" y="612">config</text>
+
+  <text class="small" x="122" y="670">Fields include title, body, type,</text>
+  <text class="small" x="122" y="694">tags, status, score, provenance.</text>
+
+  <path class="arrow" d="M415 450 C465 450, 485 450, 535 450"/>
+
+  <rect class="panel" x="535" y="230" width="300" height="440" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="568" y="276">okf.export</text>
+  <text class="body" x="568" y="314">Read-only MCP tool.</text>
+  <text class="body" x="568" y="342">Filters selected learnings.</text>
+
+  <rect x="568" y="390" width="234" height="44" rx="22" fill="#dbeafe"/>
+  <text class="pill-text" x="604" y="418">status = accepted</text>
+
+  <rect x="568" y="448" width="234" height="44" rx="22" fill="#dcfce7"/>
+  <text class="pill-text" x="615" y="476">score &gt;= 4.0</text>
+
+  <rect x="568" y="506" width="234" height="44" rx="22" fill="#fef3c7"/>
+  <text class="pill-text" x="604" y="534">query optional</text>
+
+  <rect x="568" y="564" width="234" height="44" rx="22" fill="#fce7f3"/>
+  <text class="pill-text" x="607" y="592">tags / type optional</text>
+
+  <text class="small" x="568" y="640">Does not write files.</text>
+
+  <path class="arrow" d="M850 450 C900 450, 920 450, 970 450"/>
+
+  <rect class="panel" x="970" y="210" width="280" height="480" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="1004" y="255">OKF bundle</text>
+  <text class="body" x="1004" y="293">JSON payload containing</text>
+  <text class="body" x="1004" y="321">file paths and contents.</text>
+
+  <rect x="1004" y="370" width="212" height="60" rx="10" fill="#f9fafb" stroke="#d1d5db"/>
+  <text class="mono" x="1028" y="407">index.md</text>
+
+  <rect x="1004" y="452" width="212" height="86" rx="10" fill="#f9fafb" stroke="#d1d5db"/>
+  <text class="mono" x="1028" y="489">learnings/</text>
+  <text class="mono" x="1028" y="518">{type}/{slug}.md</text>
+
+  <rect x="1004" y="560" width="212" height="60" rx="10" fill="#f9fafb" stroke="#d1d5db"/>
+  <text class="mono" x="1028" y="597">summary</text>
+
+  <text class="small" x="1004" y="657">OKF v0.1-style Markdown</text>
+  <text class="small" x="1004" y="681">with YAML frontmatter.</text>
+
+  <path class="arrow-muted" d="M1265 450 C1300 450, 1315 450, 1350 450"/>
+
+  <rect class="panel-soft" x="1350" y="260" width="180" height="380" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="1384" y="305">Review</text>
+  <text class="body" x="1384" y="344">Caller owns</text>
+  <text class="body" x="1384" y="372">publication.</text>
+
+  <rect x="1384" y="420" width="112" height="46" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text class="pill-text" x="1418" y="450">Git</text>
+
+  <rect x="1384" y="486" width="112" height="46" rx="10" fill="#ecfdf5" stroke="#bbf7d0"/>
+  <text class="pill-text" x="1405" y="516">Docs</text>
+
+  <rect x="1384" y="552" width="112" height="46" rx="10" fill="#fff7ed" stroke="#fed7aa"/>
+  <text class="pill-text" x="1400" y="582">Agents</text>
+
+  <rect x="90" y="760" width="1440" height="76" rx="18" fill="#111827"/>
+  <text x="122" y="806" fill="#ffffff" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" font-weight="700">Key boundary:</text>
+  <text x="305" y="806" fill="#e5e7eb" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24">ALMS captures experience. OKF carries selected lessons. Publication remains a review workflow.</text>
+</svg>

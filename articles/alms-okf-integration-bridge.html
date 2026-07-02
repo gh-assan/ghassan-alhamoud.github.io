@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ALMS and OKF: Turning Agent Experience Into Portable Knowledge — Ghassan Alhamoud</title>
+  <meta name="description" content="ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html" />
+  <meta property="og:title" content="ALMS and OKF: Turning Agent Experience Into Portable Knowledge" />
+  <meta property="og:description" content="ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/alms-okf-integration-bridge.webp" />
+  <meta property="article:published_time" content="2026-07-02" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html" />
+  <meta property="twitter:title" content="ALMS and OKF: Turning Agent Experience Into Portable Knowledge" />
+  <meta property="twitter:description" content="ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/alms-okf-integration-bridge.webp" />
+
+  <!-- JSON-LD Article Schema -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "ALMS and OKF: Turning Agent Experience Into Portable Knowledge",
+  "description": "ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge.",
+  "image": "https://ghassan-alhamoud.com/images/articles/alms-okf-integration-bridge.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-07-02",
+  "dateModified": "2026-07-02",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "AI agents, OKF, ALMS, knowledge management, MCP, agent memory",
+  "articleSection": "Software Architecture"
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <style>
+    .article-single__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .article-single__body th, .article-single__body td {
+      border: 1px solid var(--border, #e5e7eb);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    .article-single__body th {
+      background: var(--dark, #1A1A2E);
+      color: white;
+      font-weight: 600;
+    }
+    .article-single__body td {
+      background: var(--card, #ffffff);
+    }
+    .article-single__body tr:nth-child(even) td {
+      background: #f9fafb;
+    }
+    .article-single__body blockquote {
+      border-left: 3px solid var(--primary, #D4A574);
+      padding: 0.75rem 1rem;
+      margin: 1.5rem 0;
+      background: #fefcf8;
+      font-style: italic;
+    }
+    .article-single__body code {
+      background: #f3f4f6;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .article-single__body pre {
+      background: #1a1a2e;
+      color: #e8e8e8;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85em;
+      margin: 1.5rem 0;
+    }
+    .article-single__body pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    .article-single__body ol {
+      margin: 0 0 1rem 1.5rem;
+    }
+    .article-single__body ol li {
+      margin-bottom: 0.3rem;
+    }
+    .article-single__body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-07-02">Jul 2 2026</time>
+            <span class="article-card__dot"></span>
+            <span>7 min</span>
+          </div>
+          <h1 class="article-single__title">ALMS and OKF: Turning Agent Experience Into Portable Knowledge</h1>
+          <div class="article-single__tags">
+          <span class="article-single__tag">AI Agents</span>
+          <span class="article-single__tag">OKF</span>
+          <span class="article-single__tag">ALMS</span>
+          <span class="article-single__tag">Knowledge Management</span>
+          <span class="article-single__tag">MCP</span>
+          <span class="article-single__tag">Agent Memory</span>
+          </div>
+        </header>
+
+        <img src="/images/articles/alms-okf-integration-bridge.webp" alt="ALMS learning records flowing through okf.export into an OKF bundle and review workflow" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+
+    <p>Agents do not only need better access to documentation.</p>
+
+    <p>They need a way to turn repeated experience into durable knowledge.</p>
+
+    <p>That is the gap I wanted ALMS to address with OKF. Not by replacing documentation. Not by becoming a wiki. Not by pretending every agent observation is truth.</p>
+
+    <p>The useful idea is narrower:</p>
+
+    <blockquote>
+      <p>ALMS should capture operational experience. OKF should carry curated knowledge. The bridge should export selected ALMS lessons into OKF when they are mature enough to share.</p>
+    </blockquote>
+
+    <p>That distinction matters. Without it, an agent memory system becomes a pile of anecdotes, and a knowledge format becomes another dumping ground.</p>
+
+    <h2>The Problem: Experience Has No Promotion Path</h2>
+
+    <p>Most agent systems already have access to knowledge.</p>
+
+    <p>They can read README files, API docs, runbooks, tickets, code comments, architecture notes, and vector indexes. The problem is not that context does not exist.</p>
+
+    <p>The problem is that agents also learn things while working:</p>
+
+    <ul>
+      <li>a retry strategy that worked for a flaky endpoint</li>
+      <li>a migration command that fails unless an environment variable is set</li>
+      <li>a deployment order that avoids a known race</li>
+      <li>a confusing error message that maps to one real root cause</li>
+      <li>a prompt pattern that consistently improves a recurring task</li>
+    </ul>
+
+    <p>That information usually stays trapped in one of three places:</p>
+
+    <ul>
+      <li>the agent's short-term context</li>
+      <li>an unstructured log</li>
+      <li>a proprietary memory store</li>
+    </ul>
+
+    <p>Even when the lesson is useful, it often has no promotion path into the organization's shared knowledge base.</p>
+
+    <p>So another agent repeats the same mistake later.</p>
+
+    <p>That is the expensive part.</p>
+
+    <h2>OKF and ALMS Solve Different Problems</h2>
+
+    <p>OKF, the Open Knowledge Format introduced by Google Cloud, is intentionally simple: Markdown files with YAML metadata. That makes knowledge human-readable, agent-readable, and Git-friendly.</p>
+
+    <p>It is a good fit for curated knowledge:</p>
+
+    <ul>
+      <li>services</li>
+      <li>APIs</li>
+      <li>datasets</li>
+      <li>policies</li>
+      <li>runbooks</li>
+      <li>business terms</li>
+      <li>architecture decisions</li>
+    </ul>
+
+    <p>ALMS has a different job. It is a shared learning layer for agents. It stores operational lessons such as failures, patterns, edge cases, configuration findings, and protocol-related learning.</p>
+
+    <p>The clean separation is:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Primary Source</th>
+          <th>Main Value</th>
+          <th>Typical Shape</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>OKF</td>
+          <td>Human-curated knowledge</td>
+          <td>Shared context and documentation</td>
+          <td>Markdown + YAML metadata</td>
+        </tr>
+        <tr>
+          <td>ALMS</td>
+          <td>Agent-generated experience</td>
+          <td>Reuse of lessons learned during work</td>
+          <td>Learning records with type, body, tags, status, score</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>These systems should not collapse into each other.</p>
+
+    <p>OKF should not become a raw event log.</p>
+
+    <p>ALMS should not become a documentation authoring system.</p>
+
+    <p>The bridge exists for the narrow moment when an operational lesson is useful enough to become portable knowledge.</p>
+
+    <h2>The Design Rule</h2>
+
+    <p>The rule I used for the implementation is simple:</p>
+
+    <blockquote>
+      <p>Export only selected ALMS learnings. Do not export the whole memory store.</p>
+    </blockquote>
+
+    <p>That is why the bridge is read-only and filter-driven.</p>
+
+    <p>The current <code>okf.export</code> tool does not write files to disk. It does not commit to Git. It does not mutate ALMS records. It returns an OKF bundle payload that a caller can write, review, commit, or publish through its own workflow.</p>
+
+    <p>That keeps the boundary clean:</p>
+
+    <ul>
+      <li>ALMS decides which lessons are candidates.</li>
+      <li>OKF carries the exported knowledge.</li>
+      <li>Git or another repository remains the publication layer.</li>
+      <li>Human review can still exist outside ALMS.</li>
+    </ul>
+
+    <p>This is intentionally less ambitious than an automatic documentation generator. That is the point.</p>
+
+    <figure>
+      <img src="/images/articles/alms-okf-integration-bridge-diagram.svg" alt="ALMS learning records flowing through okf.export into an OKF bundle and review workflow" loading="lazy" />
+    </figure>
+
+    <h2>What <code>okf.export</code> Actually Does</h2>
+
+    <p>The implementation is small.</p>
+
+    <p><code>okf.export</code> searches or filters ALMS learning records and returns a file-oriented OKF bundle.</p>
+
+    <p>The default selection is conservative:</p>
+
+    <ul>
+      <li><code>status</code>: <code>accepted</code></li>
+      <li><code>min_score</code>: <code>4.0</code></li>
+      <li><code>limit</code>: <code>50</code></li>
+      <li><code>query</code>: optional</li>
+      <li><code>type</code>: optional</li>
+      <li><code>tags</code>: optional</li>
+      <li><code>include_rejected</code>: false by default</li>
+    </ul>
+
+    <p>That means callers can export a targeted bundle:</p>
+
+    <pre><code>{
+  "query": "retry malformed JSON",
+  "status": "accepted",
+  "min_score": 4.0,
+  "tags": ["api"],
+  "limit": 50
+}</code></pre>
+
+    <p>Or they can export by maturity and taxonomy alone:</p>
+
+    <pre><code>{
+  "type": "pattern",
+  "tags": ["deployment"],
+  "status": "accepted",
+  "min_score": 4.0
+}</code></pre>
+
+    <p>The response is not a tarball or a directory write. It is a JSON payload with file paths and file contents:</p>
+
+    <pre><code>{
+  "format": "okf_bundle",
+  "okf_version": "0.1",
+  "generated_at": "2026-07-02T09:30:00Z",
+  "files": [
+    {
+      "path": "index.md",
+      "content": "..."
+    },
+    {
+      "path": "learnings/pattern/retry-malformed-json-responses-lrn-123.md",
+      "content": "..."
+    }
+  ],
+  "summary": {
+    "status": "accepted",
+    "min_score": 4.0,
+    "matched": 12,
+    "exported": 8,
+    "skipped_low_score": 4
+  }
+}</code></pre>
+
+    <p>The caller decides what happens next.</p>
+
+    <p>That is important. An MCP server should not silently publish organizational knowledge just because a lesson exists. Exporting and publishing are different steps.</p>
+
+    <h2>What an Exported Lesson Looks Like</h2>
+
+    <p>An exported learning becomes a Markdown document with YAML frontmatter.</p>
+
+    <p>The generated metadata includes OKF-facing fields:</p>
+
+    <pre><code>---
+type: ALMS Pattern
+title: Retry malformed JSON responses
+description: Some upstream responses include a trailing comma.
+resource: alms://learnings/lrn-123
+tags:
+  - api
+  - json
+timestamp: "2026-07-02T09:20:00Z"
+alms_learning_id: lrn-123
+alms_learning_type: pattern
+alms_score: 4.7
+alms_resolution: open
+alms_status: accepted
+ai_generated: false
+---</code></pre>
+
+    <p>The body keeps the actual lesson readable:</p>
+
+    <pre><code># Lesson
+
+Some upstream responses include a trailing comma. Strip the trailing comma before decoding, then retry the parse once.
+
+# ALMS Provenance
+
+- Learning ID: `lrn-123`
+- Learning type: `pattern`
+- Score: `4.70`
+- Resolution: `open`
+- Enrichment status: `accepted`</code></pre>
+
+    <p>This is not trying to claim more certainty than ALMS has.</p>
+
+    <p>It says: this was an ALMS learning, it passed the selected filters, here is its score and status, and here is the portable document.</p>
+
+    <h2>Why Not Just Use Search?</h2>
+
+    <p>Search helps an agent find relevant memory while it is working.</p>
+
+    <p>Export solves a different problem.</p>
+
+    <p>Search answers:</p>
+
+    <blockquote>
+      <p>What should this agent know right now?</p>
+    </blockquote>
+
+    <p>Export answers:</p>
+
+    <blockquote>
+      <p>Which lessons are mature enough to leave ALMS and become portable organizational knowledge?</p>
+    </blockquote>
+
+    <p>That difference is subtle but important. A memory can be useful to query before it is ready to publish. A raw observation can help a debugging agent without belonging in a shared OKF repository.</p>
+
+    <p>The bridge creates a promotion path:</p>
+
+    <ol>
+      <li>An agent stores a learning in ALMS.</li>
+      <li>The learning is enriched, reviewed, or scored by whatever workflow the team uses.</li>
+      <li>Mature lessons are marked <code>accepted</code> and given a useful score.</li>
+      <li><code>okf.export</code> emits selected lessons as OKF bundle files.</li>
+      <li>A caller writes those files to a repository, opens a review, or distributes them to other agents.</li>
+    </ol>
+
+    <p>ALMS remains the operational memory layer.</p>
+
+    <p>OKF remains the portable knowledge layer.</p>
+
+    <h2>What This Does Not Do Yet</h2>
+
+    <p>This part matters because it is easy to overstate the architecture.</p>
+
+    <p>The current bridge does not implement a full confidence engine. ALMS records have scores and enrichment metadata, and <code>okf.export</code> uses those fields. If a team wants a weighted confidence model, human approval gate, or automated evaluator, that belongs in the enrichment workflow around ALMS.</p>
+
+    <p>The current bridge does not synthesize new "wisdom" from many lessons. It exports existing accepted lessons. Synthesis is a higher-level capability.</p>
+
+    <p>The current bridge does not write to Git. That is deliberate. File publication needs review, ownership, and repository policy. ALMS should provide the bundle, not bypass the publication process.</p>
+
+    <p>The current bridge does not make OKF a runtime dependency for ALMS. ALMS can still operate as a learning store without exporting anything.</p>
+
+    <p>These constraints make the feature smaller, but they also make it safer.</p>
+
+    <h2>The Useful Architecture</h2>
+
+    <p>The architecture I think is worth pursuing has three layers:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Role</th>
+          <th>Current ALMS Relationship</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Knowledge</td>
+          <td>Curated docs, APIs, runbooks, policies</td>
+          <td>OKF is a good exchange format</td>
+        </tr>
+        <tr>
+          <td>Experience</td>
+          <td>Agent-discovered lessons from real work</td>
+          <td>ALMS stores and syncs this natively</td>
+        </tr>
+        <tr>
+          <td>Wisdom</td>
+          <td>Patterns synthesized across many lessons</td>
+          <td>Roadmap, not the current bridge</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The first bridge is from experience to knowledge.</p>
+
+    <p>Not all experience should cross that bridge.</p>
+
+    <p>The value is in being selective. Exporting everything would recreate the same problem in a different format. The useful path is to export lessons that are accepted, scored high enough, and scoped by query, type, or tags.</p>
+
+    <h2>Why This Matters</h2>
+
+    <p>Multi-agent systems fail quietly when learning stays local.</p>
+
+    <p>One agent discovers a workaround. Another agent repeats the original failure. A third agent writes a slightly different workaround. Eventually the organization has three partial memories and no shared knowledge.</p>
+
+    <p>The ALMS-OKF bridge gives that learning a path out:</p>
+
+    <ul>
+      <li>ALMS captures the operational lesson.</li>
+      <li>The enrichment workflow decides whether it is mature.</li>
+      <li><code>okf.export</code> turns it into portable files.</li>
+      <li>OKF-compatible consumers can read it without sharing the ALMS database.</li>
+    </ul>
+
+    <p>That is the real value.</p>
+
+    <p>Not smarter memory for one agent.</p>
+
+    <p>Shared learning across agents, tools, and teams.</p>
+
+    <h2>Closing Thought</h2>
+
+    <p>The mistake is treating documentation and memory as competitors.</p>
+
+    <p>They are different stages of the same lifecycle.</p>
+
+    <p>Experience starts messy. Some of it becomes reliable. A smaller subset deserves to become shared knowledge.</p>
+
+    <p>ALMS is useful at the messy, operational end.</p>
+
+    <p>OKF is useful at the portable, curated end.</p>
+
+    <p>The bridge is the promotion path between them.</p>
+
+    <hr>
+
+    <h3>References</h3>
+
+    <ol>
+      <li>Open Knowledge Format - Google Cloud / GitHub</li>
+      <li>Model Context Protocol - Specification</li>
+      <li>ALMS Open Source Repository - <a href="https://github.com/ghassan-ai-projects/alms">github.com/ghassan-ai-projects/alms</a></li>
+    </ol>
+
+        </div>
+
+        <div class="article-cta">
+          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
+          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>
