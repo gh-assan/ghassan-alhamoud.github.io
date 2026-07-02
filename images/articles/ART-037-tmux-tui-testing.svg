@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Testing TUIs with tmux</title>
+  <desc id="desc">A technical diagram showing an automation script using tmux send-keys and capture-pane to drive and verify a terminal UI through a pseudo-terminal.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f8fb; }
+      .panel { fill: #ffffff; stroke: #d7deea; stroke-width: 2; }
+      .panel-soft { fill: #fbfcff; stroke: #d7deea; stroke-width: 2; }
+      .title { fill: #111827; font: 700 44px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .subtitle { fill: #4b5563; font: 400 22px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .section { fill: #111827; font: 700 24px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .label { fill: #111827; font: 700 20px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .body { fill: #374151; font: 400 17px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .small { fill: #4b5563; font: 400 15px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .mono { fill: #111827; font: 600 17px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .pill { fill: #eef2ff; stroke: #c7d2fe; }
+      .pill-green { fill: #ecfdf5; stroke: #bbf7d0; }
+      .pill-amber { fill: #fff7ed; stroke: #fed7aa; }
+      .pill-sky { fill: #f0f9ff; stroke: #bae6fd; }
+      .pill-text { fill: #111827; font: 700 16px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #6b7280; font: 400 14px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { stroke: #2563eb; stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead); }
+      .arrow-muted { stroke: #9ca3af; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowhead-muted); }
+      .divider { stroke: #d1d5db; stroke-width: 2; stroke-dasharray: 8 9; }
+    </style>
+    <marker id="arrowhead" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-muted" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#9ca3af"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect class="bg" width="1600" height="900"/>
+
+  <text class="title" x="90" y="86">Testing TUIs with tmux</text>
+  <text class="subtitle" x="92" y="124">A terminal UI needs a real pseudo-terminal. tmux gives the app one, and gives the test script a way to type and observe deterministically.</text>
+
+  <rect class="panel" x="90" y="190" width="305" height="470" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="122" y="235">Automation script</text>
+  <text class="body" x="122" y="274">Bash, CI job, or agent shell</text>
+  <text class="body" x="122" y="302">controls the session from outside.</text>
+
+  <rect x="122" y="350" width="240" height="54" rx="12" class="pill"/>
+  <text class="pill-text" x="150" y="383">tmux new-session</text>
+  <rect x="122" y="424" width="240" height="54" rx="12" class="pill-green"/>
+  <text class="pill-text" x="157" y="457">tmux send-keys</text>
+  <rect x="122" y="498" width="240" height="54" rx="12" class="pill-sky"/>
+  <text class="pill-text" x="141" y="531">tmux capture-pane</text>
+  <rect x="122" y="572" width="240" height="54" rx="12" class="pill-amber"/>
+  <text class="pill-text" x="153" y="605">wait_for marker</text>
+
+  <text class="small" x="122" y="654">Poll for state, not timing.</text>
+
+  <path class="arrow" d="M410 425 C455 425, 485 425, 530 425"/>
+  <path class="arrow-muted" d="M530 520 C485 520, 455 520, 410 520"/>
+
+  <rect class="panel" x="530" y="210" width="310" height="430" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="563" y="255">tmux session</text>
+  <text class="body" x="563" y="294">Provides the PTY boundary.</text>
+  <text class="body" x="563" y="322">Known terminal size, key injection,</text>
+  <text class="body" x="563" y="350">screen capture, lifecycle control.</text>
+
+  <rect x="563" y="396" width="244" height="46" rx="22" class="pill"/>
+  <text class="pill-text" x="620" y="425">200x50 PTY</text>
+  <rect x="563" y="458" width="244" height="46" rx="22" class="pill-green"/>
+  <text class="pill-text" x="611" y="487">raw key events</text>
+  <rect x="563" y="520" width="244" height="46" rx="22" class="pill-sky"/>
+  <text class="pill-text" x="620" y="549">rendered snapshot</text>
+
+  <text class="small" x="563" y="607">The app thinks a human is driving it.</text>
+
+  <path class="arrow" d="M855 425 C900 425, 930 425, 975 425"/>
+  <path class="arrow-muted" d="M975 520 C930 520, 900 520, 855 520"/>
+
+  <rect class="panel" x="975" y="190" width="360" height="470" rx="18" filter="url(#shadow)"/>
+  <text class="section" x="1008" y="235">Terminal UI application</text>
+  <text class="body" x="1008" y="274">Textual, Bubble Tea, curses, ratatui.</text>
+  <text class="body" x="1008" y="302">Runs against a real terminal surface.</text>
+
+  <rect x="1008" y="350" width="292" height="58" rx="12" class="pill"/>
+  <text class="pill-text" x="1040" y="384">focus can move between widgets</text>
+  <rect x="1008" y="428" width="292" height="58" rx="12" class="pill-green"/>
+  <text class="pill-text" x="1050" y="462">redraws screen in place</text>
+  <rect x="1008" y="506" width="292" height="58" rx="12" class="pill-amber"/>
+  <text class="pill-text" x="1034" y="540">poll markers expose state</text>
+
+  <text class="mono" x="1008" y="620">phase 2/11 | failed | Error</text>
+
+  <line class="divider" x1="1380" y1="165" x2="1380" y2="760"/>
+  <text class="muted" x="1410" y="190">Common failures</text>
+  <text class="small" x="1410" y="232">blind sleeps</text>
+  <text class="small" x="1410" y="264">wrong focus target</text>
+  <text class="small" x="1410" y="296">80x24 truncation</text>
+  <text class="small" x="1410" y="328">no PTY at all</text>
+
+  <rect class="panel-soft" x="90" y="720" width="1245" height="92" rx="18" filter="url(#shadow)"/>
+  <text x="122" y="774" fill="#111827" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" font-weight="700">Golden rule:</text>
+  <text x="280" y="774" fill="#4b5563" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24">drive the PTY, capture the rendered pane, and wait for visible state markers instead of guessing with fixed sleeps.</text>
+</svg>

@@ -1,5 +1,20 @@
 [
   {
+    "slug": "testing-tuis-with-tmux",
+    "title": "The Ghost in the Terminal: Testing TUIs with tmux",
+    "date": "2026-07-02",
+    "excerpt": "Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify.",
+    "readingTime": "8 min",
+    "tags": [
+      "TUI",
+      "Testing",
+      "tmux",
+      "Python",
+      "Automation",
+      "DevOps"
+    ]
+  },
+  {
     "slug": "alms-okf-integration-bridge",
     "title": "ALMS and OKF: Turning Agent Experience Into Portable Knowledge",
     "date": "2026-07-02",
