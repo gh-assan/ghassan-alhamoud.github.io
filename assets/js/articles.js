@@ -75,7 +75,10 @@
     // --- Articles listing page: all ---
     var articlesPageList = document.getElementById('articlesPageList');
     if (articlesPageList) {
-      articlesPageList.innerHTML = '';
+      // Preserve existing article cards if already rendered (defensive)
+      if (articlesPageList.children.length === 1 && articlesPageList.children[0].classList.contains('articles-preview__loading')) {
+        articlesPageList.innerHTML = '';
+      }
       articles.forEach(function (article) {
         articlesPageList.appendChild(createArticleCard(article));
       });
@@ -106,7 +109,7 @@
   }
 
   function fetchAndCache() {
-    fetch(ARTICLES_URL, { cache: 'no-store' })
+    fetch(ARTICLES_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to fetch articles');
         return res.json();
@@ -123,15 +126,6 @@
       })
       .catch(function (err) {
         console.error('Articles.js: Could not load articles', err);
-        try {
-          var cached = localStorage.getItem('articles-cache');
-          if (cached) {
-            renderArticles(JSON.parse(cached));
-            return;
-          }
-        } catch (e) {
-          // localStorage unavailable or cache malformed, show the fallback message.
-        }
         var containers = [
           document.getElementById('articleList'),
           document.getElementById('articlesPageList'),
@@ -146,6 +140,22 @@
   }
 
   function init() {
+    // Try localStorage cache first
+    var ONE_HOUR = 60 * 60 * 1000;
+    try {
+      var cached = localStorage.getItem('articles-cache');
+      var cacheTime = localStorage.getItem('articles-cache-time');
+      if (cached && cacheTime && (Date.now() - cacheTime < ONE_HOUR)) {
+        renderArticles(JSON.parse(cached));
+        // Still fetch in background to refresh cache (stale-while-revalidate)
+        fetchAndCache();
+        return;
+      }
+    } catch (e) {
+      // localStorage unavailable, fall through to fetch
+    }
+
+    // No valid cache, fetch fresh
     fetchAndCache();
   }
 
