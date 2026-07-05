@@ -116,6 +116,7 @@
       <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
         <li><a href="#services" class="nav__link">Expertise</a></li>
         <li><a href="#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/projects/" class="nav__link">Projects</a></li>
         <li><a href="/articles/" class="nav__link">Articles</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="#about" class="nav__link">About</a></li>
@@ -538,6 +539,20 @@
       </div>
     </section>
 
+    <!-- ==================== OPEN SOURCE PROJECTS ==================== -->
+    <section class="projects-preview section" id="projects">
+      <div class="container">
+        <h2 class="section__title reveal">Open Source Projects</h2>
+        <p class="section__subtitle reveal reveal--delay-1">Open-source systems for agent infrastructure, workflow automation, and local-first intelligence.</p>
+        <div class="projects-preview__list reveal reveal--delay-2" id="featuredProjectList">
+          <p class="articles-preview__loading">Loading projects...</p>
+        </div>
+        <div class="projects-preview__footer">
+          <a href="/projects/" class="btn btn--secondary">View All Projects</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== TESTIMONIALS ==================== -->
     <section class="testimonials section" id="testimonials">
       <div class="container">
@@ -711,6 +726,7 @@
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
           <a href="#work" class="footer__nav-link">Case Studies</a>
+          <a href="/projects/" class="footer__nav-link">Projects</a>
           <a href="/articles/" class="footer__nav-link">Articles</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="#about" class="footer__nav-link">About</a>
@@ -741,6 +757,7 @@
       }
     })();
   </script>
+  <script src="/assets/js/projects.js" defer></script>
   <script src="/assets/js/articles.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>

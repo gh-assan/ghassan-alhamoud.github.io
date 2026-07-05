@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Intelligence — Open Source Project — Ghassan Alhamoud</title>
+  <meta name="description" content="A local-first email intelligence platform that turns Maildir into an enriched SQLite knowledge base for MCP agents." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/email-intelligence-platform.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/email-intelligence-platform.html" />
+  <meta property="og:title" content="Email Intelligence — Local-First Email Knowledge Base" />
+  <meta property="og:description" content="Maildir, SQLite, semantic search, facts, action items, drafts, write-back, and MCP tools for agents." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Email Intelligence Platform",
+    "description": "Local-first email knowledge base for MCP agents.",
+    "programmingLanguage": "Python",
+    "codeRepository": "https://github.com/ghassan-ai-projects/email-intelligence-platform",
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home"><svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg><span class="nav__name">Ghassan Alhamoud</span></a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/projects/" class="nav__link nav__link--active">Projects</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Python / SQLite / MCP</span></div>
+          <h1 class="article-single__title">Email Intelligence: local-first knowledge for agent workflows</h1>
+          <div class="article-single__tags"><span class="article-single__tag">Email</span><span class="article-single__tag">Local First</span><span class="article-single__tag">Security</span></div>
+          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/email-intelligence-platform" target="_blank" rel="noopener noreferrer">View Repository</a>
+        </header>
+
+        <div class="project-facts">
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Raw IMAP gives agents messages, but not durable knowledge or safe action state.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">Maildir source of truth, SQLite knowledge store, MCP tool surface.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">In active development with tests, CI checks, and security guardrails.</span></div>
+        </div>
+
+        <div class="article-single__body project-single__body">
+          <p>Email Intelligence turns local mail into a continuously enriched knowledge base. Maildir stays the immutable source of truth. SQLite stores metadata, full-text search, embeddings, action items, facts, drafts, and append-only events. Agents query it through MCP.</p>
+          <p>The important distinction is level of abstraction. Agents should not only search messages. They should find decisions, waiting replies, open tasks, sender context, related threads, and safe draft workflows.</p>
+
+          <h2>Why I built it</h2>
+          <p>Email is full of operational knowledge, but most automation treats it as a mailbox API. That forces every agent to rediscover context from raw messages. The platform makes email state queryable, enriched, and writable without sending private data to a hosted inbox product.</p>
+
+          <h2>What to inspect</h2>
+          <ul>
+            <li>Maildir ingestion into SQLite with FTS5 and vector search.</li>
+            <li>LLM enrichment for summaries, facts, entities, decisions, and action items.</li>
+            <li>Append-only event feed for reactive agents.</li>
+            <li>Draft-first outgoing mail and allowlist-guarded sending.</li>
+            <li>Prompt-injection and untrusted-content guardrails.</li>
+          </ul>
+
+          <h2>Why it belongs here</h2>
+          <p>This is a practical example of agent infrastructure that respects local control, auditability, and security. It combines retrieval, enrichment, write-back, and operational safety in one inspectable system.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/projects/" class="footer__nav-link">Projects</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>

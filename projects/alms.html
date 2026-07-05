@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALMS — Open Source Project — Ghassan Alhamoud</title>
+  <meta name="description" content="ALMS is a self-hosted MCP server for shared agent learning, agent registry, knowledge sync, and operational protocol distribution." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/alms.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/alms.html" />
+  <meta property="og:title" content="ALMS — Agent Learning Management System" />
+  <meta property="og:description" content="A self-hosted MCP server that gives autonomous agents shared operational memory without becoming an orchestration framework." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "ALMS",
+    "description": "A self-hosted MCP server for shared agent learning.",
+    "programmingLanguage": "Go",
+    "codeRepository": "https://github.com/ghassan-ai-projects/alms",
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/projects/" class="nav__link nav__link--active">Projects</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <span>Open Source</span>
+            <span class="article-card__dot"></span>
+            <span>Go / PostgreSQL / MCP</span>
+          </div>
+          <h1 class="article-single__title">ALMS: shared memory for autonomous agents</h1>
+          <div class="article-single__tags">
+            <span class="article-single__tag">Agent Memory</span>
+            <span class="article-single__tag">MCP</span>
+            <span class="article-single__tag">Infrastructure</span>
+          </div>
+          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/alms" target="_blank" rel="noopener noreferrer">View Repository</a>
+        </header>
+
+        <div class="project-facts">
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Agents learn useful operational lessons, but other agents never receive them.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">Single Go MCP server with PostgreSQL persistence and HTTP transport.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public 0.1.0 release under MIT.</span></div>
+        </div>
+
+        <div class="article-single__body project-single__body">
+          <p>ALMS is the Agent Learning Management System. It is a small control plane for agent fleets: register agents, store reusable learnings, sync knowledge safely, and distribute operator protocols by tag.</p>
+          <p>The design choice that matters is what ALMS refuses to become. It is not an agent runtime, a queue, a scheduler, or an orchestration framework. Agents keep their own execution model. ALMS gives them a shared operational memory they can query and update.</p>
+
+          <h2>Why I built it</h2>
+          <p>The root failure is repeated rediscovery. One agent hits a vendor API edge case, adapts, and moves on. A second agent hits the same edge case later and fails because the learning never left the first run. That is not an intelligence problem. It is a systems problem.</p>
+
+          <h2>What to inspect</h2>
+          <ul>
+            <li>Gap-safe learning sync with acknowledgement.</li>
+            <li>Agent registry and heartbeat flow.</li>
+            <li>Tag-based operational protocol distribution.</li>
+            <li>OKF export for mature, accepted learnings.</li>
+            <li>Deployment assets for self-hosted environments.</li>
+          </ul>
+
+          <h2>Why it belongs here</h2>
+          <p>ALMS is a good representation of my engineering taste: narrow scope, explicit contracts, boring persistence, and production behavior over demo behavior. It turns agent learning from chat history into infrastructure.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/projects/" class="footer__nav-link">Projects</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>

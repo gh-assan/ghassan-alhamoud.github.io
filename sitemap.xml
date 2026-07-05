@@ -20,6 +20,36 @@
     <ns0:priority>0.9</ns0:priority>
   </ns0:url>
   <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/projects/</ns0:loc>
+    <ns0:lastmod>2026-07-05</ns0:lastmod>
+    <ns0:changefreq>weekly</ns0:changefreq>
+    <ns0:priority>0.9</ns0:priority>
+  </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/projects/alms.html</ns0:loc>
+    <ns0:lastmod>2026-07-05</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/projects/skill-ledger.html</ns0:loc>
+    <ns0:lastmod>2026-07-05</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html</ns0:loc>
+    <ns0:lastmod>2026-07-05</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/projects/email-intelligence-platform.html</ns0:loc>
+    <ns0:lastmod>2026-07-05</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
+  <ns0:url>
     <ns0:loc>https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html</ns0:loc>
     <ns0:lastmod>2026-06-28</ns0:lastmod>
     <ns0:changefreq>monthly</ns0:changefreq>

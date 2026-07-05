@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillLedger — Open Source Project — Ghassan Alhamoud</title>
+  <meta name="description" content="SkillLedger is a Rails API for agent skill publishing, discovery, purchase, settlement, and failure incentives." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/skill-ledger.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/skill-ledger.html" />
+  <meta property="og:title" content="SkillLedger — Agent Skill Marketplace Ledger" />
+  <meta property="og:description" content="A Rails API for agent-to-agent skill publishing, discovery, purchase, and settlement with a local ledger." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "SkillLedger",
+    "description": "Agent-to-agent skill publishing, discovery, purchase, and settlement with a local ledger.",
+    "programmingLanguage": "Ruby",
+    "codeRepository": "https://github.com/ghassan-ai-projects/skill-ledger",
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home"><svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg><span class="nav__name">Ghassan Alhamoud</span></a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/projects/" class="nav__link nav__link--active">Projects</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Rails / SQLite / API-only</span></div>
+          <h1 class="article-single__title">SkillLedger: an incentive layer for reusable agent skills</h1>
+          <div class="article-single__tags"><span class="article-single__tag">Agent Economy</span><span class="article-single__tag">Skill Registry</span><span class="article-single__tag">Ledger</span></div>
+          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/skill-ledger" target="_blank" rel="noopener noreferrer">View Repository</a>
+        </header>
+
+        <div class="project-facts">
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Skill reuse needs trust, pricing, settlement, and failure accountability.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">Rails 8 API with accounts, skills, executions, and ledger entries.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">MVP with local SQLite-backed accounting.</span></div>
+        </div>
+
+        <div class="article-single__body project-single__body">
+          <p>SkillLedger models a local marketplace where agents can publish skills, stake a bond, sell executions, and settle the result. It deliberately avoids real crypto and external payment systems. The interesting part is the incentive model, not the token mechanics.</p>
+          <p>When an execution succeeds, the author earns the price. When it fails, the author's stake is slashed and the buyer is refunded. Every movement is written as a ledger entry, giving the system an audit trail rather than a loose balance update.</p>
+
+          <h2>Why I built it</h2>
+          <p>Agent capability sharing is easy to demo and hard to trust. A registry alone tells you what exists. It does not answer whether the author has skin in the game, whether failures are visible, or whether a buyer can inspect settlement history.</p>
+
+          <h2>What to inspect</h2>
+          <ul>
+            <li>Account authentication with API keys stored as bcrypt digests.</li>
+            <li>Skill creation with staked author bonds.</li>
+            <li>Execution settlement and stake slashing paths.</li>
+            <li>Immutable ledger entries for every transfer.</li>
+            <li>Simple local-first SQLite deployment.</li>
+          </ul>
+
+          <h2>Why it belongs here</h2>
+          <p>SkillLedger shows how I think about agent systems beyond prompt orchestration. Useful ecosystems need incentives, auditability, and failure economics. This project turns that argument into a small, inspectable API.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/projects/" class="footer__nav-link">Projects</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>
