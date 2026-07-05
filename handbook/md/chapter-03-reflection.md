@@ -124,6 +124,7 @@ In **Chapter 4: Multi-Agent Collaboration**, we will see how to scale this into 
 ## Related Chapters
 - Chapter 1: The ReAct Pattern
 - Chapter 2: Plan-and-Execute
+- Chapter 4: Multi-Agent Collaboration
 
 ## Frequently Asked Questions
 

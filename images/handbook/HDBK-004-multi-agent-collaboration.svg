@@ -1,0 +1,99 @@
+<svg width="1728" height="910" viewBox="0 0 1728 910" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">HDBK-004 Multi-Agent Collaboration</title>
+  <desc id="desc">A multi-agent collaboration architecture showing a user goal flowing into an orchestrator, specialized workers, a debate gate, and a final answer.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1728" y2="910" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#091526"/>
+      <stop offset="0.52" stop-color="#0d1f37"/>
+      <stop offset="1" stop-color="#081321"/>
+    </linearGradient>
+    <linearGradient id="orchestrator" x1="600" y1="145" x2="1128" y2="345" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1c4f88"/>
+      <stop offset="1" stop-color="#17385f"/>
+    </linearGradient>
+    <linearGradient id="worker" x1="0" y1="0" x2="0" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#132b48"/>
+      <stop offset="1" stop-color="#0e2139"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L14 8L2 14V2Z" fill="#60a5fa"/>
+    </marker>
+    <style>
+      .label { font-family: Inter, Arial, sans-serif; fill: #dbeafe; font-weight: 700; letter-spacing: 0; }
+      .small { font-family: Inter, Arial, sans-serif; fill: #9fb7d5; font-weight: 500; letter-spacing: 0; }
+      .tiny { font-family: Inter, Arial, sans-serif; fill: #80a0c5; font-weight: 500; letter-spacing: 0; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; fill: #b7cff0; }
+      .box { stroke: #294d78; stroke-width: 2; }
+      .accent { stroke: #60a5fa; stroke-width: 4; marker-end: url(#arrow); }
+      .thin { stroke: #365c88; stroke-width: 2; stroke-dasharray: 8 10; }
+    </style>
+  </defs>
+
+  <rect width="1728" height="910" rx="36" fill="url(#bg)"/>
+  <rect x="48" y="48" width="1632" height="814" rx="28" fill="#0a1628" stroke="#1e3a5f" stroke-width="2"/>
+
+  <text x="96" y="112" class="tiny" font-size="24">HDBK-004</text>
+  <text x="96" y="162" class="label" font-size="46">Multi-Agent Collaboration</text>
+  <text x="96" y="203" class="small" font-size="24">Specialized agents coordinated by explicit handoffs, validation, and synthesis.</text>
+
+  <rect x="704" y="86" width="320" height="72" rx="14" fill="#10243e" stroke="#2b5687" stroke-width="2"/>
+  <text x="864" y="130" text-anchor="middle" class="label" font-size="26">User Goal</text>
+
+  <path d="M864 158V210" class="accent"/>
+
+  <g filter="url(#shadow)">
+    <rect x="600" y="220" width="528" height="180" rx="20" fill="url(#orchestrator)" class="box"/>
+    <text x="864" y="282" text-anchor="middle" class="label" font-size="34">Orchestrator</text>
+    <text x="864" y="323" text-anchor="middle" class="small" font-size="23">Plan -> Route -> Validate -> Synthesize</text>
+    <rect x="708" y="348" width="312" height="32" rx="16" fill="#0b1c32" stroke="#4b7fbd" stroke-width="1"/>
+    <text x="864" y="371" text-anchor="middle" class="code" font-size="18">Plan-and-Execute engine</text>
+  </g>
+
+  <path d="M864 400V455" class="accent"/>
+  <path d="M864 455H384V505" class="accent"/>
+  <path d="M864 455V505" class="accent"/>
+  <path d="M864 455H1344V505" class="accent"/>
+
+  <g filter="url(#shadow)">
+    <rect x="168" y="505" width="432" height="178" rx="18" fill="url(#worker)" class="box"/>
+    <text x="384" y="559" text-anchor="middle" class="label" font-size="28">Worker A</text>
+    <text x="384" y="599" text-anchor="middle" class="small" font-size="21">Security review</text>
+    <text x="384" y="635" text-anchor="middle" class="code" font-size="18">ReAct loop + tools</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="648" y="505" width="432" height="178" rx="18" fill="url(#worker)" class="box"/>
+    <text x="864" y="559" text-anchor="middle" class="label" font-size="28">Worker B</text>
+    <text x="864" y="599" text-anchor="middle" class="small" font-size="21">Dependency audit</text>
+    <text x="864" y="635" text-anchor="middle" class="code" font-size="18">Structured result object</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1128" y="505" width="432" height="178" rx="18" fill="url(#worker)" class="box"/>
+    <text x="1344" y="559" text-anchor="middle" class="label" font-size="28">Worker C</text>
+    <text x="1344" y="599" text-anchor="middle" class="small" font-size="21">Threat model</text>
+    <text x="1344" y="635" text-anchor="middle" class="code" font-size="18">Confidence + evidence</text>
+  </g>
+
+  <path d="M384 683V742H744" class="thin"/>
+  <path d="M864 683V742" class="thin"/>
+  <path d="M1344 683V742H984" class="thin"/>
+
+  <g filter="url(#shadow)">
+    <rect x="744" y="716" width="240" height="92" rx="18" fill="#15233c" stroke="#7c5cff" stroke-width="2"/>
+    <text x="864" y="755" text-anchor="middle" class="label" font-size="24">Debate Gate</text>
+    <text x="864" y="786" text-anchor="middle" class="small" font-size="18">critical outputs only</text>
+  </g>
+
+  <path d="M984 762H1238" class="accent"/>
+  <rect x="1238" y="718" width="294" height="88" rx="18" fill="#0f2d28" stroke="#2dd4bf" stroke-width="2"/>
+  <text x="1385" y="756" text-anchor="middle" class="label" font-size="24">Final Answer</text>
+  <text x="1385" y="787" text-anchor="middle" class="small" font-size="18">ranked, synthesized, traced</text>
+
+  <rect x="112" y="742" width="480" height="78" rx="16" fill="#0e2037" stroke="#294d78" stroke-width="2"/>
+  <text x="352" y="774" text-anchor="middle" class="small" font-size="19">Handoff contract</text>
+  <text x="352" y="803" text-anchor="middle" class="code" font-size="17">task + context + expected_output + trace_id</text>
+</svg>
