@@ -13,27 +13,27 @@
 
   function createProjectCard(project) {
     var card = document.createElement('a');
-    card.className = 'project-card';
+    card.className = 'article-card project-card';
     card.href = '/projects/' + project.slug + '.html';
 
     var tagsHtml = '';
     if (project.tags && project.tags.length > 0) {
-      tagsHtml = '<div class="project-card__tags">' +
+      tagsHtml = '<div class="article-card__tags project-card__tags">' +
         project.tags.map(function (tag) {
-          return '<span class="project-card__tag">' + tag + '</span>';
+          return '<span class="article-card__tag project-card__tag">' + tag + '</span>';
         }).join('') +
         '</div>';
     }
 
     card.innerHTML =
-      '<div class="project-card__meta">' +
-        '<span class="project-card__status">' + project.status + '</span>' +
+      '<div class="article-card__meta project-card__meta">' +
+        '<span class="article-card__date project-card__status">' + project.status + '</span>' +
         '<span class="article-card__dot"></span>' +
-        '<span class="project-card__stack">' + project.stack.slice(0, 3).join(' / ') + '</span>' +
+        '<span class="article-card__reading-time project-card__stack">' + project.stack.slice(0, 3).join(' / ') + '</span>' +
       '</div>' +
-      '<h3 class="project-card__title">' + project.title + '</h3>' +
-      '<p class="project-card__summary">' + project.summary + '</p>' +
-      '<div class="project-card__outcome"><strong>Outcome:</strong> ' + project.outcome + '</div>' +
+      '<div class="article-card__title project-card__title">' + project.title + '</div>' +
+      '<div class="article-card__excerpt project-card__summary">' + project.summary + '</div>' +
+      '<div class="article-card__excerpt project-card__outcome"><strong>Outcome:</strong> ' + project.outcome + '</div>' +
       tagsHtml;
 
     return card;
