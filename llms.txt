@@ -34,6 +34,14 @@ Core themes:
 - [The Ghost in the Terminal: Testing TUIs with tmux](https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html): Practical article on testing terminal UIs with PTYs and tmux.
 - [Stop Building Agent Soup. Start Building Compilers.](https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html): Argument for structured agent orchestration and stronger system boundaries.
 
+## AI Agent Architecture Handbook
+
+- [The Agentic Landscape](https://ghassan-alhamoud.com/handbook/chapter-00-agentic-landscape.html): Map of autonomy levels, tool use, and core agent patterns.
+- [The ReAct Pattern](https://ghassan-alhamoud.com/handbook/chapter-01-react-pattern.html): Reasoning and acting through Thought, Action, and Observation loops.
+- [The Plan-and-Execute Pattern](https://ghassan-alhamoud.com/handbook/chapter-02-plan-and-execute.html): Planning, task DAGs, execution, and replanning.
+- [The Reflection Pattern](https://ghassan-alhamoud.com/handbook/chapter-03-reflection.html): Generator-critic loops, rubrics, and quality gates.
+- [Multi-Agent Collaboration](https://ghassan-alhamoud.com/handbook/chapter-04-multi-agent-collaboration.html): Orchestrators, worker handoffs, debate, topology choices, and production failure modes.
+
 ## External Profiles
 
 - [GitHub](https://github.com/gh-assan): Personal GitHub profile.

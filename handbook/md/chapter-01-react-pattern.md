@@ -7,7 +7,7 @@ The **ReAct** (Reasoning + Acting) pattern is an iterative loop where an agent g
 
 ## Prerequisites
 - Knowledge of basic LLM "Tool Calling" or "Function Calling" mechanisms.
-- (Recommended) Chapter 0: The Agentic Landscape (Coming Soon)
+- (Recommended) Chapter 0: The Agentic Landscape.
 
 ---
 

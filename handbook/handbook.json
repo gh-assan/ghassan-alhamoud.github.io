@@ -26,8 +26,8 @@
         "ogImage": "/images/handbook/HDBK-000-agentic-landscape.webp",
         "prerequisites": [],
         "relatedPatterns": ["react-pattern", "plan-and-execute"],
-        "publishedAt": null,
-        "lastModified": null
+        "publishedAt": "2026-07-01",
+        "lastModified": "2026-07-01"
       },
       {
         "id": 1,
@@ -85,6 +85,25 @@
         "relatedPatterns": ["react-pattern", "plan-and-execute"],
         "publishedAt": "2026-06-28",
         "lastModified": "2026-06-28"
+      },
+      {
+        "id": 4,
+        "slug": "multi-agent-collaboration",
+        "title": "Multi-Agent Collaboration",
+        "subtitle": "Teams, topologies, and debate",
+        "description": "Learn when multi-agent collaboration is worth the cost: orchestrators, worker handoffs, debate, topology choices, observability, and production failure modes.",
+        "primaryKeyword": "multi-agent collaboration",
+        "keywords": ["multi-agent systems", "agent orchestration", "AI agent debate", "agent handoff protocol", "agent topology"],
+        "status": "published",
+        "difficulty": "advanced",
+        "readingTime": "12 min",
+        "file": "chapter-04-multi-agent-collaboration.md",
+        "diagram": "04-diagram.svg",
+        "ogImage": "/images/handbook/HDBK-004-multi-agent-collaboration.svg",
+        "prerequisites": ["react-pattern", "plan-and-execute", "reflection"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection"],
+        "publishedAt": "2026-07-05",
+        "lastModified": "2026-07-05"
       }
     ]
   }
