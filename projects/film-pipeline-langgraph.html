@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Film Pipeline — Open Source Project — Ghassan Alhamoud</title>
+  <meta name="description" content="A LangGraph-based film creation pipeline for structured pre-production, generation planning, QC evidence, and validated handoff state." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html" />
+  <meta property="og:title" content="Film Pipeline — LangGraph Film Creation Pipeline" />
+  <meta property="og:description" content="A film creation pipeline with typed state, human gates, versioned artifacts, QC validation, and git-backed checkpoints." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Film Pipeline",
+    "description": "LangGraph-based film creation pipeline.",
+    "programmingLanguage": "Python",
+    "codeRepository": "https://github.com/ghassan-ai-projects/film-pipeline-langgraph",
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home"><svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg><span class="nav__name">Ghassan Alhamoud</span></a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/projects/" class="nav__link nav__link--active">Projects</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Python / LangGraph / Textual</span></div>
+          <h1 class="article-single__title">Film Pipeline: structured state for AI-assisted film creation</h1>
+          <div class="article-single__tags"><span class="article-single__tag">Film Creation</span><span class="article-single__tag">LangGraph</span><span class="article-single__tag">QC</span></div>
+          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph" target="_blank" rel="noopener noreferrer">View Repository</a>
+        </header>
+
+        <div class="project-facts">
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Creative agent workflows lose state, approvals, dependencies, and validation evidence.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">LangGraph pipeline with human gates, typed state, artifacts, and a TUI.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">In active development with CI and product gates.</span></div>
+        </div>
+
+        <div class="article-single__body project-single__body">
+          <p>The Film Pipeline takes an idea through structured pre-production, generation planning, QC evidence, and validated handoff state. It is not trying to be final editing software. It is the orchestration and evidence layer before downstream generation and finishing.</p>
+          <p>The project treats creative work as stateful production, not a sequence of disconnected prompts. Artifacts are versioned. Approvals are explicit. Repairs preserve dependency history. Validators produce evidence that can be inspected.</p>
+
+          <h2>Why I built it</h2>
+          <p>AI film workflows often fail because the process is invisible. Chat history becomes the production system. That does not scale when a scene, matrix, guide, asset plan, or QC issue needs to survive revisions and handoffs.</p>
+
+          <h2>What to inspect</h2>
+          <ul>
+            <li>Typed LangGraph state contract with append-only reducers.</li>
+            <li>Human approval gates using real graph interrupts.</li>
+            <li>Versioned artifacts with dependency tracking.</li>
+            <li>Parallel QC validators using LangGraph fan-out.</li>
+            <li>Terminal operator console for project control.</li>
+          </ul>
+
+          <h2>Why it belongs here</h2>
+          <p>This project shows the same architecture discipline in a creative domain: state contracts, checkpoints, validation, rollback, and inspectability. The medium is film creation, but the engineering problem is reliable agent workflow design.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/projects/" class="footer__nav-link">Projects</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>

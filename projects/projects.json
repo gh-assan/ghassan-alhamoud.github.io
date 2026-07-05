@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "alms",
+    "title": "ALMS",
+    "name": "Agent Learning Management System",
+    "status": "Public release",
+    "featured": true,
+    "repo": "https://github.com/ghassan-ai-projects/alms",
+    "summary": "A self-hosted MCP server that gives autonomous agents shared operational memory without turning into an orchestration framework.",
+    "problem": "Agent fleets repeatedly rediscover the same failure modes because useful learnings stay trapped inside individual runs.",
+    "outcome": "Agents can register, publish learnings, sync new knowledge, and pull operational protocols by tag while continuing to work if ALMS is offline.",
+    "stack": ["Go", "PostgreSQL", "MCP", "Streamable HTTP", "systemd"],
+    "tags": ["Agent Memory", "MCP", "Open Source", "Infrastructure"]
+  },
+  {
+    "slug": "skill-ledger",
+    "title": "SkillLedger",
+    "name": "Agent Skill Marketplace Ledger",
+    "status": "MVP",
+    "featured": true,
+    "repo": "https://github.com/ghassan-ai-projects/skill-ledger",
+    "summary": "A Rails API for agent-to-agent skill publishing, discovery, purchase, and settlement with a local database-backed ledger.",
+    "problem": "Agent skills need quality incentives and an auditable execution economy before they can be reused safely across independent agents.",
+    "outcome": "Authors stake credits, buyers purchase executions, failures slash the author stake, and every transfer is recorded as immutable ledger entries.",
+    "stack": ["Ruby on Rails", "SQLite", "API-only", "bcrypt"],
+    "tags": ["Agent Economy", "Rails", "Ledger", "Skill Registry"]
+  },
+  {
+    "slug": "film-pipeline-langgraph",
+    "title": "Film Pipeline",
+    "name": "LangGraph Film Creation Pipeline",
+    "status": "In active development",
+    "featured": true,
+    "repo": "https://github.com/ghassan-ai-projects/film-pipeline-langgraph",
+    "summary": "A LangGraph-based film creation pipeline that moves an idea through structured pre-production, generation planning, QC evidence, and validated handoff state.",
+    "problem": "Generative film workflows collapse when creative artifacts, approvals, revisions, and QC evidence are handled as loose files and chat history.",
+    "outcome": "The pipeline uses typed state, human gates, versioned artifacts, parallel validators, and git-backed checkpoints to keep production state inspectable.",
+    "stack": ["Python", "LangGraph", "Textual", "MCP", "pytest"],
+    "tags": ["Film Creation", "LangGraph", "Human Gates", "QC"]
+  },
+  {
+    "slug": "email-intelligence-platform",
+    "title": "Email Intelligence",
+    "name": "Local-First Email Knowledge Base",
+    "status": "In active development",
+    "featured": true,
+    "repo": "https://github.com/ghassan-ai-projects/email-intelligence-platform",
+    "summary": "A local-first email intelligence platform that turns Maildir into a continuously enriched SQLite knowledge base for MCP agents.",
+    "problem": "Raw IMAP access gives agents messages, but not durable knowledge, action state, semantic search, or safe write-back.",
+    "outcome": "Agents query summaries, facts, decisions, threads, semantic matches, daily digests, drafts, and an append-only event feed from one local store.",
+    "stack": ["Python", "SQLite", "FTS5", "sqlite-vec", "MCP", "uv"],
+    "tags": ["Email", "Knowledge Base", "Local First", "Security"]
+  }
+]
