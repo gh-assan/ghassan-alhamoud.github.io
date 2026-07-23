@@ -113,7 +113,7 @@ Before routing can work, workers must declare what they can do. Each worker publ
 }
 ```
 
-The Orchestrator matches task requirements against these manifests. A capability registry can start as a static JSON file and evolve into a dynamic service. A later chapter on tool use and skill registries will cover how to scale this beyond a local catalog.
+The Orchestrator matches task requirements against these manifests. A capability registry can start as a static JSON file and evolve into a dynamic service. [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) covers how to scale this beyond a local catalog.
 
 ### The Routing Decision
 
@@ -354,12 +354,13 @@ Do not treat a model's self-reported confidence as a calibrated probability. Pre
 - [Anthropic: How We Built Our Multi-Agent Research System](https://www.anthropic.com/engineering/multi-agent-research-system) — a production account of orchestrator-worker research, parallelism, evaluation, and coordination failures.
 
 ## What's Next?
-In the next chapter, we will move from agent teams to the interface between agents and the outside world: how to design tools that agents can use reliably, and how to build a skill registry that scales.
+In [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html), we move from agent teams to the interface between agents and the outside world: reliable tool contracts, discovery, permissions, execution, and governance.
 
 ## Related Chapters
 - [Chapter 1: The ReAct Pattern](/handbook/chapter-01-react-pattern.html) — the fundamental loop every Worker can run.
 - [Chapter 2: Plan-and-Execute](/handbook/chapter-02-plan-and-execute.html) — the Orchestrator's internal engine.
 - [Chapter 3: The Reflection Pattern](/handbook/chapter-03-reflection.html) — the foundation of the Debate pattern.
+- [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) — the capability control plane used by the Orchestrator and Workers.
 
 ## Frequently Asked Questions
 

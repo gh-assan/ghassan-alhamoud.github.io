@@ -101,8 +101,27 @@
         "diagram": "04-diagram.svg",
         "ogImage": "/images/handbook/HDBK-004-multi-agent-collaboration.svg",
         "prerequisites": ["react-pattern", "plan-and-execute", "reflection"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "tool-use-skill-registry"],
         "publishedAt": "2026-07-05",
+        "lastModified": "2026-07-23"
+      },
+      {
+        "id": 5,
+        "slug": "tool-use-skill-registry",
+        "title": "Tool Use and Skill Registries",
+        "subtitle": "The agent's interface to the world",
+        "description": "Design reliable agent tools and a governed skill registry with schemas, permissions, discovery, idempotency, approvals, observability, and failure controls.",
+        "primaryKeyword": "AI agent skill registry",
+        "keywords": ["LLM tool use", "agent tool calling", "skill registry", "function calling", "tool governance"],
+        "status": "published",
+        "difficulty": "advanced",
+        "readingTime": "16 min",
+        "file": "chapter-05-tool-use-skill-registry.md",
+        "diagram": "05-diagram.webp",
+        "ogImage": "/images/handbook/HDBK-005-tool-use-skill-registry.webp",
+        "prerequisites": ["react-pattern", "plan-and-execute", "multi-agent-collaboration"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration"],
+        "publishedAt": "2026-07-23",
         "lastModified": "2026-07-23"
       }
     ]
