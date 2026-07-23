@@ -1,24 +1,24 @@
 # Chapter 4: Multi-Agent Collaboration — Teams, Topologies, and Debate
 
-**Reading time:** 12 min | **Last revised:** 2026-07-05 | **Version:** 1.2
+**Reading time:** 13 min | **Last revised:** 2026-07-23 | **Version:** 1.3
 
 ## If You Only Read One Section
-**Multi-agent collaboration** is what you reach for when a single agent loop is not enough. Instead of one agent doing everything, you split the work across specialized agents that delegate, debate, and hand off tasks. The three patterns you already know — ReAct, Plan-and-Execute, and Reflection — compose here: each sub-agent runs a ReAct loop, an Orchestrator uses Plan-and-Execute to decompose work, and Debate is multi-party Reflection. But multi-agent systems multiply cost, latency, and failure modes. The first rule is: *do not use them unless a single agent demonstrably fails.*
+**Multi-agent collaboration** is what you reach for when one agent cannot meet a measured quality, latency, or context requirement. Instead of one agent doing everything, you split the work across specialized agents that delegate, debate, and hand off tasks. The three patterns you already know — ReAct, Plan-and-Execute, and Reflection — compose here: each Worker can run a ReAct loop, an Orchestrator uses Plan-and-Execute to decompose work, and Debate is multi-party Reflection. But every extra agent adds coordination, cost, latency, and new failure modes. Start with one agent. Add a team only when evaluation shows why the simpler design fails.
 
 ## Prerequisites
-- Chapter 1: The ReAct Pattern — every sub-agent in a multi-agent system runs some form of the TAO loop.
-- Chapter 2: Plan-and-Execute — the Orchestrator's internal engine is a planner-executor-replanner.
-- Chapter 3: The Reflection Pattern — debate is Reflection with multiple independent critics.
+- [Chapter 1: The ReAct Pattern](/handbook/chapter-01-react-pattern.html) — every Worker can run some form of the TAO loop.
+- [Chapter 2: Plan-and-Execute](/handbook/chapter-02-plan-and-execute.html) — the Orchestrator's internal engine is a planner-executor-replanner.
+- [Chapter 3: The Reflection Pattern](/handbook/chapter-03-reflection.html) — debate is Reflection with multiple independent critics.
 
 ---
 
-A single agent running ReAct can handle many tasks. But when tasks grow in scope, diversity, or risk, one agent hits three walls:
+A single agent running ReAct can handle many tasks. Multi-agent architecture becomes useful when the workload hits one of three measured constraints:
 
-1. **Context saturation**: The prompt accumulates so much history that the agent loses focus.
-2. **Skill breadth**: No single system prompt can make one model an expert in code review, legal analysis, and creative writing simultaneously.
-3. **Accountability**: A single agent has no internal checks — it can drift without anyone noticing.
+1. **Context isolation**: Independent workstreams need large, focused contexts that should not compete in one prompt.
+2. **Parallelism**: Independent sub-tasks dominate wall-clock time and can safely execute concurrently.
+3. **Separation of concerns**: Different steps need distinct tools, permissions, data boundaries, or acceptance criteria.
 
-Multi-agent systems solve these by distributing work across specialized agents that each have a narrow scope, a tight system prompt, and a clear interface.
+Multi-agent systems address these constraints by distributing work across narrowly scoped agents with explicit interfaces. They do not create expertise or accountability automatically; those still come from tools, evidence, evaluation, and human ownership.
 
 ## 1. The Orchestrator Pattern: One Brain, Many Hands
 
@@ -29,7 +29,7 @@ The most common multi-agent topology is a **hierarchical tree**: one Orchestrato
 
 ### Worked Example: Security Audit Report
 
-Let's trace a real task through the Orchestrator pattern: *"Generate a security audit report for our Python web application."*
+Let's trace a representative task through the Orchestrator pattern: *"Generate a security audit report for our Python web application."*
 
 **Step 1 — Plan:** The Orchestrator decomposes the goal into three sub-tasks:
 
@@ -54,12 +54,14 @@ This example shows the Orchestrator doing real work: decomposition, capability m
 
 ```python
 class Orchestrator:
-    def __init__(self, workers: dict[str, Agent], router: LLM):
+    def __init__(self, workers: dict[str, Agent], router: LLM, validator: Validator):
         self.workers = workers
         self.router = router
-        self.trace_id = generate_trace_id()  # For observability across agents
+        self.validator = validator
 
-    def execute(self, goal: str) -> str:
+    async def execute(self, goal: str) -> str:
+        trace_id = generate_trace_id()  # One trace per user goal
+
         # Step 1: Plan — what sub-tasks are needed?
         plan = self.router.plan(goal, available_skills=list(self.workers.keys()))
         
@@ -74,17 +76,21 @@ class Orchestrator:
                 # Step 3: Delegate — worker runs its own ReAct loop
                 handoff = Handoff(
                     task=task,
-                    trace_id=self.trace_id,
+                    trace_id=trace_id,
                     context={"goal": goal, "previous_results": results},
                     acceptance_criteria=task.acceptance_criteria
                 )
                 assignments.append((task, worker_name, worker.run_async(handoff)))
 
             # Independent tasks can run in parallel; dependent batches wait.
-            for task, worker_name, result in await_all(assignments):
-                if not result.meets_contract or result.confidence < 0.7:
-                    log.warning(f"Low quality result from {worker_name}")
-                    # Option: re-delegate to a different worker or escalate to human
+            for task, worker_name, result in await await_all(assignments):
+                validation = self.validator.check(task, result)
+                if not validation.passed:
+                    raise WorkerResultRejected(
+                        worker=worker_name,
+                        task_id=task.id,
+                        reasons=validation.failures
+                    )
 
                 results[task.id] = result
         
@@ -107,7 +113,7 @@ Before routing can work, workers must declare what they can do. Each worker publ
 }
 ```
 
-The Orchestrator matches task requirements against these manifests. A capability registry can start as a static JSON file and evolve into a dynamic service. A later chapter on tool use and skill registries will cover how to scale this beyond a local catalog.
+The Orchestrator matches task requirements against these manifests. A capability registry can start as a static JSON file and evolve into a dynamic service. [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) covers how to scale this beyond a local catalog.
 
 ### The Routing Decision
 
@@ -115,8 +121,9 @@ The Orchestrator's router must answer: *which agent gets this sub-task?* Three c
 
 | Routing Strategy | How It Works | Best For |
 |-----------------|-------------|----------|
-| **Keyword-based** | Map task descriptions to worker names via regex or embeddings. | Simple, predictable workflows. |
-| **LLM-based** | The router model reads the task and selects the best worker from a catalog. | Dynamic tasks where skill matching is non-obvious. |
+| **Rule-based** | Map explicit task types, tenants, or data classes to approved workers. | Predictable workflows and strict policy boundaries. |
+| **Semantic** | Rank capability descriptions against the task, then apply permission filters. | Larger catalogs with well-defined capability metadata. |
+| **Model-based** | A routing model selects from an allowlisted catalog and explains its choice. | Dynamic tasks where matching requires semantic judgment. |
 | **Capability registry** | Each worker advertises a capability manifest; router matches by capability intersection. | Large agent fleets with evolving skills. |
 
 ### The "Handoff" Protocol: What Passes Between Agents
@@ -136,13 +143,14 @@ Agents should not rely on implicit shared memory. They should exchange a **struc
   },
   "acceptance_criteria": [
     "Findings include severity, evidence, and remediation",
-    "False positives are marked with confidence below 0.7"
+    "Every finding cites a file and line range",
+    "Unverified findings are marked for human review"
   ],
   "expected_output": "List of vulnerabilities with severity and fix suggestions"
 }
 ```
 
-Without a structured handoff, sub-agents hallucinate missing context. With it, they operate like microservices: contract in, result out.
+Without a structured handoff, Workers must infer missing context and can silently diverge from the goal. With one, they behave more like services: contract in, result out, validation at the boundary.
 
 ## 2. The Debate Pattern: Multi-Party Reflection
 
@@ -154,8 +162,8 @@ Chapter 3 showed how a single Critic reviews a Generator's output. **Debate** sc
 |----------|--------------|-------------------|
 | Code review | Good enough | Overkill — one thorough critic suffices. |
 | Architecture decision | Risk of blind spots | **High value** — multiple perspectives catch trade-offs. |
-| Content moderation | Reasonable | **Stronger** — reduces individual bias. |
-| Scientific analysis | Prone to confirmation bias | **Essential** — adversarial review catches errors. |
+| Content moderation | Often sufficient with a clear policy | Useful only when independent policies or escalation paths exist. |
+| Scientific analysis | Can miss alternative explanations | Useful for generating challenges; evidence still decides correctness. |
 
 ### Consensus Mechanism
 
@@ -202,13 +210,16 @@ def debate(proposal: str, agents: list[Agent], max_rounds: int = 3) -> str:
 
 **Why not edit distance?** Textual similarity measures whether two strings look alike — not whether the agents agree. Two agents can produce nearly identical text while holding opposite conclusions, or wildly different text that reaches the same verdict. Explicit voting (`vote_accept`) measures agreement directly: each agent is asked *"Do you accept this version as correct?"* and responds yes/no with reasoning.
 
+Consensus is a stopping signal, not proof of correctness. Agents can agree on the same wrong premise. High-stakes debates still need source checks, deterministic validation, or human review.
+
 ### Preventing Echo Chambers
 
 Multi-agent debates can devolve into agreement spirals — especially if all agents share the same base model. Mitigations:
 
-- **Diverse model assignment**: Route different agents to different model families or system prompts so their failure modes are less correlated.
-- **Adversarial role assignment**: Explicitly assign one agent the role of "Devil's Advocate" with the instruction: *"Your job is to find the weakest point in every proposal, even if you partially agree."*
-- **Structured dissent logging**: Record every disagreement, not just the final consensus. This creates an audit trail for human review.
+- **Independent evidence collection**: Let agents gather evidence before they see one another's conclusions.
+- **Diverse failure modes**: Vary model families, tools, data sources, or review methods where the risk justifies it. Different role prompts alone are weak diversity.
+- **Evidence-bound challenge**: Require the challenger to cite a violated constraint, missing source, failed test, or counterexample.
+- **Structured dissent logging**: Record every material disagreement, not just the final consensus. This creates an audit trail for human review.
 
 ## 3. Multi-Agent Topologies: Choosing the Right Shape
 
@@ -252,23 +263,28 @@ class Blackboard:
 
 ## 4. The Cost Problem: When Multi-Agent Is a Mistake
 
-Every sub-agent is an LLM call. Every debate round multiplies that cost:
+Every Worker adds model turns, tool calls, context transfer, and coordination. A useful cost envelope is:
 
-| System | Calls per Task | Cost Factor |
-|--------|---------------|-------------|
-| Single ReAct agent | 3–10 calls | 1× |
-| Plan-and-Execute | 5–15 calls | 1.5–3× |
-| Orchestrator + 3 Workers | 10–40 calls | 3–8× |
-| 4-Agent Debate (3 rounds) | 12+ calls | 4–10× |
+`total cost = orchestration + Σ(worker runs) + validation + retries + synthesis`
+
+| Design | What Adds Cost | What Can Reduce Wall-Clock Time |
+|--------|----------------|---------------------------------|
+| Single agent | One growing context and its tool calls | Parallel tool calls can help, but the decision loop stays mostly serial. |
+| Parallel fan-out | One Worker run per independent branch, plus synthesis | Concurrent execution of independent branches. |
+| Hierarchical orchestration | Routing and synthesis at every level | Parallelism within each ready task batch. |
+| Debate | Every participant, round, critique, and vote | Little; later rounds depend on earlier rounds. |
+
+Parallelism can reduce latency without reducing token or tool spend. Measure both.
 
 ### The Single-Agent-Suffice Rule
 
 Before building a multi-agent system, prove that a single agent fails.
 
-**Test:** Give the task to one well-prompted agent with access to the same tools. If it succeeds more than 80% of the time, you probably do not need multi-agent. The remaining failures can often be handled by:
-- Adding a Reflection pass (Chapter 3).
+**Test:** Build a representative evaluation set and run one well-prompted agent with the same tools and permissions. If it meets the product's acceptance criteria, stop. If it fails, classify the cause before changing the architecture. Common fixes are:
+- Adding a [Reflection pass](/handbook/chapter-03-reflection.html).
 - Expanding the agent's tools.
 - Improving the system prompt.
+- Reducing irrelevant context.
 
 Multi-agent is for when the *architecture of the problem* requires parallel expertise, not when you're trying to fix a weak prompt.
 
@@ -276,12 +292,12 @@ Multi-agent is for when the *architecture of the problem* requires parallel expe
 
 | Failure Mode | What Happens | Mitigation |
 |-------------|-------------|------------|
-| **Delegation Loop** | Orchestrator delegates to Worker A, which delegates back to Orchestrator, which delegates to Worker A... | Max delegation depth (2–3 levels). Track call chain. |
-| **Echo Chamber** | All agents agree because they share the same model and biases. | Diverse model assignment. Mandatory Devil's Advocate role. |
-| **Context Leak** | Worker A's internal reasoning bleeds into Worker B's prompt, confusing it. | Structured handoffs only. Never pass raw agent transcripts. |
-| **Orchestrator Bottleneck** | Orchestrator becomes the single point of failure and latency. | Parallel fan-out where possible. Timeout per sub-agent. |
-| **Cost Explosion** | A debate that should take 2 rounds takes 8 because convergence threshold is too tight. | Hard cap on debate rounds (3–5). Cost budget per task. |
-| **Silent Failure** | A worker returns a plausible but wrong result. Orchestrator doesn't detect it. | Every worker result gets a confidence score. Low-confidence results trigger re-delegation or human escalation. |
+| **Delegation Loop** | Orchestrator delegates to Worker A, which delegates back to the Orchestrator. | Track the call chain. Enforce depth, turn, and cost budgets. |
+| **Echo Chamber** | Agents agree because their evidence and failure modes are correlated. | Collect evidence independently. Require counterexamples and source-backed dissent. |
+| **Context Leak** | Irrelevant or sensitive history reaches a Worker that does not need it. | Use typed, least-privilege handoffs. Filter transcripts and secrets by default. |
+| **Orchestrator Bottleneck** | The Orchestrator becomes a single point of failure and latency. | Run ready tasks concurrently. Persist the plan and make retries idempotent. |
+| **Cost Explosion** | Workers or debate rounds continue without improving the result. | Enforce per-run budgets and stop when marginal quality gain disappears. |
+| **Silent Failure** | A Worker returns a plausible but wrong result and synthesis hides it. | Validate evidence and acceptance criteria before synthesis; escalate unresolved failures. |
 
 ## 6. Decision Framework: Should You Go Multi-Agent?
 
@@ -316,18 +332,11 @@ Is the task decomposable into independent sub-tasks?
 Multi-agent systems are distributed systems. Debugging them without observability is slow and unreliable. Every agent call should emit:
 
 - **Trace ID**: A single ID that follows the entire orchestration from user goal to final output.
-- **Span attributes**: Agent name, role, model, input tokens, output tokens, latency, cost.
-- **Confidence score**: Every worker result gets a score. The Orchestrator's pseudocode in §1 already includes this check.
+- **Span attributes**: Agent name, role, model, parent task, input tokens, output tokens, latency, tool calls, retries, and cost.
+- **Handoff metadata**: Sender, receiver, schema version, context references, and acceptance criteria.
+- **Validation outcome**: Checks run, evidence inspected, pass/fail result, and escalation reason.
 
-**Getting confidence scores from LLMs:** There is no universal standard, but three approaches work in practice:
-
-| Method | How | Accuracy |
-|--------|-----|----------|
-| **Explicit prompt** | Add to system prompt: *"End every response with `Confidence: [0-10]` and a one-sentence justification."* | Moderate — models tend toward 7-8 by default. |
-| **Log-probability** | Average token log-probabilities over the output. Low average = uncertain generation. | Good for factual answers, poor for creative ones. |
-| **Verifier agent** | A separate lightweight agent reads the result and scores it against a rubric. | Best — but adds a call. Use for high-stakes sub-tasks only. |
-
-Start with explicit prompting. Add verifier agents only for sub-tasks where a wrong answer has real consequences.
+Do not treat a model's self-reported confidence as a calibrated probability. Prefer deterministic checks where possible. For semantic work, use a rubric-based evaluator and calibrate its score against labeled examples before it controls routing or escalation.
 
 ---
 
@@ -337,15 +346,21 @@ Start with explicit prompting. Add verifier agents only for sub-tasks where a wr
 - The **Debate Pattern** is multi-party Reflection: agents argue from different perspectives until consensus.
 - Choose your **topology** based on task structure: sequential for pipelines, parallel for independence, debate for high-stakes decisions.
 - **The first rule of multi-agent is: do not.** Prove a single agent fails before adding complexity.
-- **Structured handoffs** between agents prevent context leaks and hallucination.
+- **Structured handoffs** reduce context leakage and make missing inputs visible at the boundary.
+
+## Further Reading
+- [OpenAI Agents SDK: Agent Orchestration](https://openai.github.io/openai-agents-python/multi_agent/) — manager-style orchestration, agents-as-tools, and handoffs.
+- [OpenAI Agents SDK: Tracing](https://openai.github.io/openai-agents-python/tracing/) — end-to-end traces for generations, tools, handoffs, and guardrails.
+- [Anthropic: How We Built Our Multi-Agent Research System](https://www.anthropic.com/engineering/multi-agent-research-system) — a production account of orchestrator-worker research, parallelism, evaluation, and coordination failures.
 
 ## What's Next?
-In the next chapter, we will move from agent teams to the interface between agents and the outside world: how to design tools that agents can use reliably, and how to build a skill registry that scales.
+In [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html), we move from agent teams to the interface between agents and the outside world: reliable tool contracts, discovery, permissions, execution, and governance.
 
 ## Related Chapters
-- Chapter 1: The ReAct Pattern — the fundamental loop every sub-agent runs.
-- Chapter 2: Plan-and-Execute — the Orchestrator's internal engine.
-- Chapter 3: The Reflection Pattern — the foundation of the Debate pattern.
+- [Chapter 1: The ReAct Pattern](/handbook/chapter-01-react-pattern.html) — the fundamental loop every Worker can run.
+- [Chapter 2: Plan-and-Execute](/handbook/chapter-02-plan-and-execute.html) — the Orchestrator's internal engine.
+- [Chapter 3: The Reflection Pattern](/handbook/chapter-03-reflection.html) — the foundation of the Debate pattern.
+- [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) — the capability control plane used by the Orchestrator and Workers.
 
 ## Frequently Asked Questions
 
@@ -362,7 +377,7 @@ Use structured handoffs and shared external state. Do not pass raw transcripts b
 Use debate when the cost of a wrong answer is higher than the cost of extra latency: architecture decisions, security findings, policy judgments, high-impact content, and ambiguous trade-offs.
 
 **Q: What is the first production control I should add?**
-Add trace IDs across all agent calls. Without end-to-end traces, a multi-agent workflow becomes hard to debug as soon as one worker produces a plausible but wrong result.
+Add trace IDs and explicit acceptance criteria across all agent calls. Traces show where the workflow failed; acceptance criteria let the Orchestrator reject a plausible but unusable result.
 
 <!-- CTA -->
 
@@ -377,6 +392,7 @@ Add trace IDs across all agent calls. Without end-to-end traces, a multi-agent w
 ## Revision History
 | Version | Date | Changes |
 |---------|------|---------|
+| v1.3 | 2026-07-23 | Replaced unsupported thresholds and self-reported confidence with evaluation and evidence-based controls; corrected async orchestration, cost modeling, routing, observability, and chapter links; added primary references. |
 | v1.2 | 2026-07-05 | Editorial pass: aligned pseudocode with parallel delegation, added handoff acceptance criteria, and tightened production tone. |
 | v1.1 | 2026-07-05 | Website integration: added diagram asset, FAQ schema support, stable model references, and safer forward references. |
 | v1.0 | 2026-07-05 | Initial publication. Post peer review: added worked example, fixed consensus mechanism (edit distance → explicit voting), expanded decision framework with latency and HITL branches, and added observability guidance and confidence scoring methods. |

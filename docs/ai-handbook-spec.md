@@ -59,7 +59,7 @@ Examples:
 
 **Phase 2 — Scaling Patterns**
 - `chapter-04-multi-agent-collaboration.html`
-- `chapter-05-tool-use-and-skill-registry.html`
+- `chapter-05-tool-use-skill-registry.html`
 - `chapter-06-memory-and-context-management.html`
 - `chapter-07-human-in-the-loop.html`
 

@@ -8,6 +8,9 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).parent.parent
 HANDBOOK_DIR = ROOT / "handbook"
+HANDBOOK_JSON = HANDBOOK_DIR / "handbook.json"
+SITEMAP = ROOT / "sitemap.xml"
+LLMS_TXT = ROOT / "llms.txt"
 
 
 def is_internal(url: str) -> bool:
@@ -84,6 +87,77 @@ def validate_file(path: Path) -> list[str]:
     return errors
 
 
+def validate_catalog() -> list[str]:
+    """Validate metadata and discovery surfaces for every published chapter."""
+    errors = []
+
+    try:
+        data = json.loads(HANDBOOK_JSON.read_text(encoding="utf-8"))["handbook"]
+    except (OSError, KeyError, json.JSONDecodeError) as error:
+        return [f"cannot load handbook.json: {error}"]
+
+    chapters = data.get("chapters", [])
+    ids = [chapter.get("id") for chapter in chapters]
+    slugs = [chapter.get("slug") for chapter in chapters]
+
+    if len(ids) != len(set(ids)):
+        errors.append("chapter ids must be unique")
+    if len(slugs) != len(set(slugs)):
+        errors.append("chapter slugs must be unique")
+
+    by_slug = {chapter.get("slug"): chapter for chapter in chapters}
+    sitemap = SITEMAP.read_text(encoding="utf-8") if SITEMAP.exists() else ""
+    llms_txt = LLMS_TXT.read_text(encoding="utf-8") if LLMS_TXT.exists() else ""
+
+    for chapter in chapters:
+        if chapter.get("status") != "published":
+            continue
+
+        chapter_id = chapter.get("id")
+        slug = chapter.get("slug")
+        if not isinstance(chapter_id, int) or not isinstance(slug, str) or not slug:
+            errors.append(f"published chapter has invalid id or slug: {chapter!r}")
+            continue
+
+        label = f"chapter {chapter_id} ({slug})"
+
+        source_name = chapter.get("file")
+        if not isinstance(source_name, str) or not source_name:
+            errors.append(f"{label}: markdown source is not set")
+        else:
+            source = HANDBOOK_DIR / "md" / source_name
+            if not source.is_file():
+                errors.append(f"{label}: missing markdown source {source.relative_to(ROOT)}")
+
+        output_name = f"chapter-{chapter_id:02d}-{slug}.html"
+        output = HANDBOOK_DIR / output_name
+        if not output.is_file():
+            errors.append(f"{label}: missing generated page handbook/{output_name}")
+
+        og_image = chapter.get("ogImage", "")
+        if not og_image or not local_path(og_image).is_file():
+            errors.append(f"{label}: missing OG image {og_image or '(not set)'}")
+
+        canonical = f"https://ghassan-alhamoud.com/handbook/{output_name}"
+        if canonical not in sitemap:
+            errors.append(f"{label}: missing sitemap entry")
+        if canonical not in llms_txt:
+            errors.append(f"{label}: missing llms.txt entry")
+
+        for prerequisite in chapter.get("prerequisites", []):
+            target = by_slug.get(prerequisite)
+            if not target:
+                errors.append(f"{label}: unknown prerequisite {prerequisite}")
+            elif target.get("status") != "published":
+                errors.append(f"{label}: prerequisite {prerequisite} is not published")
+
+        for related in chapter.get("relatedPatterns", []):
+            if related not in by_slug:
+                errors.append(f"{label}: unknown related pattern {related}")
+
+    return errors
+
+
 def main():
     files = sorted(HANDBOOK_DIR.glob("chapter-*.html")) + [HANDBOOK_DIR / "index.html"]
 
@@ -97,6 +171,15 @@ def main():
                 print(f"    - {e}")
         else:
             print(f"✓ {path.name}")
+
+    catalog_errors = validate_catalog()
+    if catalog_errors:
+        all_ok = False
+        print("✗ handbook catalog")
+        for error in catalog_errors:
+            print(f"    - {error}")
+    else:
+        print("✓ handbook catalog")
 
     if all_ok:
         print("\nAll handbook pages validated successfully.")
