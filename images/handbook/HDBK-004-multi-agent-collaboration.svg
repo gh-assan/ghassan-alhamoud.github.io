@@ -75,7 +75,7 @@
     <rect x="1128" y="505" width="432" height="178" rx="18" fill="url(#worker)" class="box"/>
     <text x="1344" y="559" text-anchor="middle" class="label" font-size="28">Worker C</text>
     <text x="1344" y="599" text-anchor="middle" class="small" font-size="21">Threat model</text>
-    <text x="1344" y="635" text-anchor="middle" class="code" font-size="18">Confidence + evidence</text>
+    <text x="1344" y="635" text-anchor="middle" class="code" font-size="18">Validation + evidence</text>
   </g>
 
   <path d="M384 683V742H744" class="thin"/>

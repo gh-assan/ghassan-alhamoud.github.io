@@ -96,14 +96,14 @@
         "keywords": ["multi-agent systems", "agent orchestration", "AI agent debate", "agent handoff protocol", "agent topology"],
         "status": "published",
         "difficulty": "advanced",
-        "readingTime": "12 min",
+        "readingTime": "13 min",
         "file": "chapter-04-multi-agent-collaboration.md",
         "diagram": "04-diagram.svg",
         "ogImage": "/images/handbook/HDBK-004-multi-agent-collaboration.svg",
         "prerequisites": ["react-pattern", "plan-and-execute", "reflection"],
         "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection"],
         "publishedAt": "2026-07-05",
-        "lastModified": "2026-07-05"
+        "lastModified": "2026-07-23"
       }
     ]
   }
