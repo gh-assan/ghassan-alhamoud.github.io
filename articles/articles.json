@@ -1,5 +1,20 @@
 [
   {
+    "slug": "email-intelligence-protocol",
+    "title": "Your Agent Does Not Need Inbox Access. It Needs Email Intelligence.",
+    "date": "2026-07-24",
+    "excerpt": "Raw mailbox access gave my agents messages, not understanding — and exposed them to untrusted content. So I built an open-source, local-first email intelligence layer.",
+    "readingTime": "6 min",
+    "tags": [
+      "Open Source",
+      "AI Agents",
+      "MCP",
+      "Email",
+      "Security",
+      "Local First"
+    ]
+  },
+  {
     "slug": "testing-tuis-with-tmux",
     "title": "The Ghost in the Terminal: Testing TUIs with tmux",
     "date": "2026-07-02",

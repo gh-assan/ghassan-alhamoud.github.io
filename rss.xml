@@ -5,8 +5,21 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Thu, 02 Jul 2026 12:31:25 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 14:40:04 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Your Agent Does Not Need Inbox Access. It Needs Email Intelligence.</title>
+      <link>https://ghassan-alhamoud.com/articles/email-intelligence-protocol.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/email-intelligence-protocol.html</guid>
+      <pubDate>Thu, 23 Jul 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[Raw mailbox access gave my agents messages, not understanding — and exposed them to untrusted content. So I built an open-source, local-first email intelligence layer.]]></description>
+      <category>Open Source</category>
+      <category>AI Agents</category>
+      <category>MCP</category>
+      <category>Email</category>
+      <category>Security</category>
+      <category>Local First</category>
+    </item>
     <item>
       <title>The Ghost in the Terminal: Testing TUIs with tmux</title>
       <link>https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html</link>
