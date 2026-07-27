@@ -1,5 +1,20 @@
 [
   {
+    "slug": "automation-miner-open-source",
+    "title": "I Stopped Guessing What to Automate. So I Built an Open-Source Miner.",
+    "date": "2026-07-27",
+    "excerpt": "Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating.",
+    "readingTime": "8 min",
+    "tags": [
+      "Open Source",
+      "Automation",
+      "AI Agents",
+      "LangGraph",
+      "MCP",
+      "Python"
+    ]
+  },
+  {
     "slug": "email-intelligence-protocol",
     "title": "Your Agent Does Not Need Inbox Access. It Needs Email Intelligence.",
     "date": "2026-07-24",
