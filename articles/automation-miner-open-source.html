@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>I Stopped Guessing What to Automate. So I Built an Open-Source Miner. — Ghassan Alhamoud</title>
+  <meta name="description" content="Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/automation-miner-open-source.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/automation-miner-open-source.html" />
+  <meta property="og:title" content="I Stopped Guessing What to Automate. So I Built an Open-Source Miner." />
+  <meta property="og:description" content="Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-039.webp" />
+  <meta property="article:published_time" content="2026-07-27" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/automation-miner-open-source.html" />
+  <meta property="twitter:title" content="I Stopped Guessing What to Automate. So I Built an Open-Source Miner." />
+  <meta property="twitter:description" content="Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-039.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "I Stopped Guessing What to Automate. So I Built an Open-Source Miner.",
+  "description": "Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-039.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-07-27",
+  "dateModified": "2026-07-27",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/automation-miner-open-source.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "open source, automation discovery, AI agents, LangGraph, MCP, Python, ICE scoring",
+  "articleSection": "AI Infrastructure"
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <style>
+    .article-single__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .article-single__body th, .article-single__body td {
+      border: 1px solid var(--border, #e5e7eb);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .article-single__body th {
+      background: var(--dark, #1A1A2E);
+      color: white;
+      font-weight: 600;
+    }
+    .article-single__body td {
+      background: var(--card, #ffffff);
+    }
+    .article-single__body tr:nth-child(even) td {
+      background: #f9fafb;
+    }
+    .article-single__body blockquote {
+      border-left: 3px solid var(--primary, #D4A574);
+      padding: 0.75rem 1rem;
+      margin: 1.5rem 0;
+      background: #fefcf8;
+      font-style: italic;
+    }
+    .article-single__body code {
+      background: #f3f4f6;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .article-single__body pre {
+      background: #1a1a2e;
+      color: #e8e8e8;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85em;
+      margin: 1.5rem 0;
+    }
+    .article-single__body pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    .article-single__body ol {
+      margin: 0 0 1rem 1.5rem;
+    }
+    .article-single__body ol li {
+      margin-bottom: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-07-27">Jul 27 2026</time>
+            <span class="article-card__dot"></span>
+            <span>8 min</span>
+          </div>
+          <h1 class="article-single__title">I Stopped Guessing What to Automate. So I Built an Open-Source Miner.</h1>
+          <div class="article-single__tags">
+            <span class="article-single__tag">Open Source</span>
+            <span class="article-single__tag">Automation</span>
+            <span class="article-single__tag">AI Agents</span>
+            <span class="article-single__tag">LangGraph</span>
+            <span class="article-single__tag">MCP</span>
+            <span class="article-single__tag">Python</span>
+          </div>
+        </header>
+
+        <img src="/images/articles/ART-039.webp" alt="Organizational documents and process data flowing through five analysis paths into a ranked portfolio of automation opportunities" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+
+          <p><strong><a href="https://github.com/ghassan-ai-projects/automation-miner">github.com/ghassan-ai-projects/automation-miner</a></strong> — Python, LangGraph, MCP, MIT licensed.</p>
+
+          <hr>
+
+          <p>A few months ago, I asked an AI system to search six industries for automation opportunities.</p>
+
+          <p>It returned forty-two ideas in a day.</p>
+
+          <p>The number made a good headline. It did not make a reliable system.</p>
+
+          <p>The prototype could generate plausible opportunities, but the hard questions arrived immediately. Which claims came from evidence? Which scores were internally consistent? What happened when the input was a roadmap instead of an operational log? Where did rejected ideas go? Could another agent use the results without reading a pile of prose?</p>
+
+          <p>Those were not output-format problems. They were architecture problems.</p>
+
+          <p>So I rebuilt the experiment as <strong>Automation Miner</strong>: an open-source discovery engine that turns a domain description, one file, or a knowledge-base folder into a citable, scored portfolio of automation opportunities.</p>
+
+          <p>It does not decide what a company should build. It makes the discovery process inspectable enough for people to make that decision with better evidence.</p>
+
+          <hr>
+
+          <h2>The Discovery Gap Comes Before the Agent</h2>
+
+          <p>Most AI projects begin too far downstream.</p>
+
+          <p>A team picks a chatbot, an agent framework, or a model. Then it searches for a workflow that justifies the choice. The result may be technically impressive and economically irrelevant.</p>
+
+          <p>The root cause is simple: solution design is easier to see than discovery quality. You can demo an agent. You cannot easily demo the opportunities you failed to consider, the weak assumptions you accepted, or the better project you never found.</p>
+
+          <p>Traditional process mining helps when an organization has clean event logs with stable case IDs and activities. Many automation questions start earlier, inside process documents, spreadsheets, emails, roadmaps, and partial descriptions. The evidence is useful, but it does not arrive as one perfect event stream.</p>
+
+          <p>Automation Miner is built for that earlier stage. Its output is not a deployment plan or an ROI guarantee. It is a structured backlog of hypotheses, each carrying its evidence, assumptions, risks, score rationale, and next validation questions.</p>
+
+          <hr>
+
+          <h2>The Pipeline Is a Funnel, Not One Prompt</h2>
+
+          <p>The first version tried to do too much in one model call. The current system separates discovery into stages with explicit artifacts between them:</p>
+
+          <pre><code>ingest → assess input → map domain
+       → analyze five layers in parallel
+       → plan a diverse portfolio
+       → draft candidates in parallel
+       → critique ⇄ refine
+       → validate scores in code
+       → apply constraints → publish</code></pre>
+
+          <p>The five analysis layers look at the same evidence through different questions:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>What it looks for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Communication</td>
+                <td>Handoffs, status chasing, routing, escalation, and repeated coordination</td>
+              </tr>
+              <tr>
+                <td>Decision</td>
+                <td>Approvals, classifications, policy checks, exceptions, and judgment queues</td>
+              </tr>
+              <tr>
+                <td>Document</td>
+                <td>Extraction, reconciliation, form filling, report creation, and template work</td>
+              </tr>
+              <tr>
+                <td>Knowledge</td>
+                <td>Tribal knowledge, repeated questions, onboarding gaps, and missing procedures</td>
+              </tr>
+              <tr>
+                <td>Monitoring</td>
+                <td>Manual checks, thresholds, anomalies, SLA tracking, and delayed response loops</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>The point is not to pretend these are the only dimensions of automation. Security, human oversight, reliability, cost, and organizational readiness cut across all five. The layers exist to reduce blind spots during candidate generation; the later stages test whether a candidate survives real constraints.</p>
+
+          <hr>
+
+          <h2>Evidence Has to Survive the Pipeline</h2>
+
+          <p>Giving a model two hundred files does not create grounding. It creates a very large prompt.</p>
+
+          <p>Automation Miner turns every input into numbered chunks with a source and locator, such as <code>[S12] claims.pdf p.4</code>. Each stage receives only the slice relevant to its question. Selection uses deterministic BM25 before the model sees anything.</p>
+
+          <p>Large inputs are digested toward configurable budgets while preserving attribution. If the system still has to drop evidence, it drops whole attributed chunks instead of cutting sentences in half. Files that cannot be read are recorded with a reason rather than disappearing silently.</p>
+
+          <p>This is not a promise of zero hallucinations. A citation can exist and still be misinterpreted. Grounding makes a claim auditable; it does not make it true automatically.</p>
+
+          <p>That distinction changed the design. The critic checks unsupported claims and can force another refinement round. A hard grounding violation blocks publication. But the final brief still exposes assumptions and validation questions because discovery is uncertain by definition.</p>
+
+          <hr>
+
+          <h2>The LLM Proposes. Code Enforces.</h2>
+
+          <p>ICE scoring looks objective because it ends in a number:</p>
+
+          <pre><code>ICE = Impact × Confidence × Ease
+each factor: 1–5
+total range: 1–125</code></pre>
+
+          <p>But the inputs are judgments. Calling the whole score deterministic would hide the most important boundary in the system.</p>
+
+          <p>The model proposes Impact, Confidence, and Ease separately, with a rationale for each. Then code validates the proposal against the brief. High effort cannot also receive Ease 5. Low estimated impact cannot receive Impact 5. A candidate with no evidence cannot claim high confidence. Corrections can only lower a score, and every adjustment is recorded.</p>
+
+          <p>The multiplication, tiering, coherence rules, tie-breaking, and constraint policy are deterministic. The initial assessment is not.</p>
+
+          <p>That split gives the model room to interpret messy evidence without giving it final authority over the ranking rules.</p>
+
+          <hr>
+
+          <h2>Constraints Are Part of the Run Contract</h2>
+
+          <p>A high-scoring opportunity can still be the wrong opportunity.</p>
+
+          <p>A low-budget team should not receive a portfolio dominated by expensive integrations. A compliance-heavy environment should not quietly promote an unresolved high-risk workflow. A three-person team cannot act on the same portfolio as a global platform organization.</p>
+
+          <p>Automation Miner passes constraints through planning, drafting, criticism, refinement, and scoring. Code applies the final policy after scoring. For example, low-budget runs require high Ease, compliance-heavy runs exclude unresolved high-risk items, and tight timelines favor the easiest candidates.</p>
+
+          <p>Excluded opportunities remain in the artifacts with their exclusion reason. Nothing vanishes just because it failed a filter. That matters because an idea rejected today may become viable after a policy, budget, or infrastructure change.</p>
+
+          <hr>
+
+          <h2>Operational Evidence and Strategy Evidence Are Not the Same</h2>
+
+          <p>One subtle failure in the prototype was treating every input as a description of current reality.</p>
+
+          <p>A roadmap says what a team wants to do. A market report says what might be happening. Neither proves that a current workflow has a specific volume, duration, or error rate.</p>
+
+          <p>The Miner now has two modes. <strong>Operational mode</strong> expects evidence about owners, systems, handoffs, volumes, errors, and controls. <strong>Strategy mode</strong> produces hypotheses with explicit assumptions and validation questions. An evidence preflight can choose the mode automatically, or the operator can set it.</p>
+
+          <p>This sounds like a small classification step. It prevents a large category of false confidence: turning a proposal into a measured process simply because both appeared in the same document.</p>
+
+          <hr>
+
+          <h2>The Output Is Built for Humans and Agents</h2>
+
+          <p>Every run writes its intermediate state as JSON. The run manifest, context index, domain map, five layer analyses, portfolio plan, every draft and critique version, validated scores, ranked portfolio, exclusions, token usage, and final report all remain available.</p>
+
+          <p>The human-facing output is a set of self-contained <code>AM-XXX</code> briefs. The agent-facing output is a compact summary and registry. The MCP server exposes tools to mine a domain, inspect runs, query the registry, retrieve one opportunity, and rebuild the index. The CLI provides the same core workflow.</p>
+
+          <p>There is no UI. That is deliberate. The Miner is a discovery component, not another dashboard that becomes the place where findings go to die.</p>
+
+          <p>A basic run looks like this:</p>
+
+          <pre><code>git clone https://github.com/ghassan-ai-projects/automation-miner.git
+cd automation-miner
+uv sync
+
+# Zero-cost end-to-end run with the deterministic mock model
+uv run automation-miner mine "German healthcare back office" --dry-run
+
+# Mine a real knowledge base with binding constraints
+uv run automation-miner mine --kb ./process-evidence/ \
+  --mode operational \
+  --constraints "budget:low, compliance:heavy"</code></pre>
+
+          <hr>
+
+          <h2>What It Does Not Solve</h2>
+
+          <p>Automation Miner can improve discovery. It cannot repair missing evidence, political resistance, unclear ownership, or a process nobody understands.</p>
+
+          <p>Its ranking is a decision aid, not a business case. Before building anything, a team still has to validate volumes, failure costs, integration access, security boundaries, human oversight, adoption, and who owns the automation after launch.</p>
+
+          <p>The current release is <code>0.1.0</code> and alpha. Artifact schemas may change. Failed runs leave durable diagnostic artifacts, but the public resume command and checkpoint compatibility policy are not implemented yet. Scanned PDFs need OCR before ingestion. Model quality and evidence quality still shape the result.</p>
+
+          <p>I am stating those limits because discovery tools are especially easy to oversell. A polished opportunity brief can create more confidence than the underlying evidence deserves. The architecture should make that gap visible, not decorate it.</p>
+
+          <hr>
+
+          <h2>Why I Open-Sourced It</h2>
+
+          <p>The interesting part of Automation Miner is not a private list of ideas. It is the machinery that makes discovery inspectable: reader plugins, evidence budgets, structured schemas, critic loops, scoring boundaries, constraint policy, durable artifacts, and MCP tools.</p>
+
+          <p>Those mechanisms get better when engineers can challenge them.</p>
+
+          <p>The project is MIT licensed and ships with an offline mock model, tests, extension points for document readers, provider routing, contribution guidance, a security policy, and the same commands used in CI.</p>
+
+          <p>I started with a system that could produce forty-two plausible ideas.</p>
+
+          <p>I ended with a system designed to show why any one of them deserves another hour of investigation.</p>
+
+          <p><strong>Discovery should not be a whiteboard contest. It should be an evidence trail you can inspect, challenge, and improve.</strong></p>
+
+          <p>That is what Automation Miner is for.</p>
+
+          <p><strong><a href="https://github.com/ghassan-ai-projects/automation-miner">github.com/ghassan-ai-projects/automation-miner</a></strong></p>
+
+        </div>
+
+        <div class="article-cta">
+          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
+          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>
