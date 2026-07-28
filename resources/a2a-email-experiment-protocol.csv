@@ -1,0 +1,13 @@
+field,definition,unit_or_values,collection_method,success_threshold,stop_condition
+participant_count,Agents that completed onboarding,count,Roster audit,At least 3 for dry run and 25 only after dry-run gates pass,Any agent lacks operator consent
+delivery_rate,Messages delivered divided by messages sent,percent,Transport event log,At least 99 percent in dry run,Below 95 percent in any round
+median_delivery_latency,Median time from send event to receive event,seconds,Transport timestamps,Reported not assumed,Latency prevents round completion
+deal_rate,Negotiations ending inside both agents reservation bounds,percent,Outcome evaluator,Pre-register after baseline simulation,Undefined reservation bounds
+normalized_joint_utility,Realized joint utility divided by maximum feasible joint utility,0 to 1,Deterministic scenario evaluator,Compare strategies with confidence intervals,Evaluator mismatch or invalid scenario
+rounds_to_outcome,Completed message rounds before agreement or walk-away,count,Conversation event log,Report distribution,Exceeds configured maximum rounds
+deadlock_rate,Sessions reaching maximum rounds with no agreement or explicit walk-away,percent,State-machine terminal event,Report by strategy pair,Repeated uncontrolled loops
+protocol_violation_rate,Messages rejected for schema safety or mandate violations,percent,Guardrail and schema logs,Zero high-severity violations,Prompt injection secret request or mandate escape
+human_interventions,Operator actions after a session begins,count,Approval and kill-switch log,Zero in synthetic low-risk dry run,Any unplanned real-world action
+cost_per_session,Model and infrastructure spend for one completed session,currency,Token and service ledger,Stay within pre-approved budget,Budget cap exceeded
+strategy_diversity,Behavioral difference between assigned strategy profiles,effect size,Pre-registered feature extraction,Statistically and practically distinguishable,Metric defined after observing outcomes
+recruitment_conversion,Consenting onboarded operators divided by delivered invitations,percent,Invitation and consent log,Report denominator and confidence interval,Missing invitation denominator

@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>A2A Negotiation Experiment: The Outreach That Worked — Ghassan Alhamoud</title>
-  <meta name="description" content="I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach." />
+  <title>Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol — Ghassan Alhamoud</title>
+  <meta name="description" content="An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html" />
-  <meta property="og:title" content="A2A Negotiation Experiment: The Outreach That Worked" />
-  <meta property="og:description" content="I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach." />
+  <meta property="og:title" content="Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol" />
+  <meta property="og:description" content="An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-013.webp" />
   <meta property="article:published_time" content="2026-04-12" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html" />
-  <meta property="twitter:title" content="A2A Negotiation Experiment: The Outreach That Worked" />
-  <meta property="twitter:description" content="I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach." />
+  <meta property="twitter:title" content="Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol" />
+  <meta property="twitter:description" content="An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-013.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "A2A Negotiation Experiment: The Outreach That Worked",
-  "description": "I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach.",
+  "headline": "Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol",
+  "description": "An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-013.webp",
   "author": {
     "@type": "Person",
@@ -45,11 +45,11 @@
     }
   },
   "datePublished": "2026-04-12",
-  "dateModified": "2026-04-12",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "AI Agents, Negotiation, A2A Protocol, AI, OpenClaw",
-  "articleSection": "Software Architecture"
+  "dependencies": "AI Agents, Negotiation, Experimental Design, Email",
+  "articleSection": "AI Research"
 }
   </script>
 
@@ -92,54 +92,213 @@
           <div class="article-single__meta">
             <time datetime="2026-04-12">Apr 12 2026</time>
             <span class="article-card__dot"></span>
-            <span>4 min</span>
+            <span>10 min</span>
           </div>
-          <h1 class="article-single__title">A2A Negotiation Experiment: The Outreach That Worked</h1>
+          <h1 class="article-single__title">Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Negotiation</span>
-          <span class="article-single__tag">A2A Protocol</span>
-          <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Experimental Design</span>
+          <span class="article-single__tag">Email</span>
           </div>
         </header>
 
-                <img src="/images/articles/ART-013.webp" alt="" class="article-single__image" loading="eager" />
+        <img src="/images/articles/ART-013.webp" alt="AI agents exchanging structured negotiation messages over email" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Getting the initial outreach right took five iterations across three different models. Here's exactly how I refined it — and what each model brought to the process.</p>
-<hr />
-<h2>Refinement v1 (DeepSeek — Structure)</h2>
-<p>"Hi [Name],</p>
-<p>I'm currently running a closed-loop research experiment on agent-to-agent (A2A) autonomy. I'm building a network of 25 agents communicating exclusively via email to study negotiation behavior without human intervention.</p>
-<p>I'm looking for a few partners to bring their agents into the loop. If you don't have an agent ready, I'm providing a service to handle the configuration. Would you be open to participating in this experiment?"</p>
-<h2>Refinement v2 (Gemini — Engagement)</h2>
-<p>"Hi [Name],</p>
-<p>I am exploring the mechanics of A2A value exchange. I'm setting up a closed-loop experiment with 25 agents negotiating via email to document emergent protocols.</p>
-<p>I'm seeking collaborators to stress-test your negotiation logic. I can assist with agent setup if needed. Are you interested in stress-testing your agent in this multi-agent environment?"</p>
-<h2>Refinement v3 (Kimi — Narrative Flow)</h2>
-<p>"Hi [Name],</p>
-<p>I have built a 25-agent closed-loop email network where autonomous agents negotiate with each other without human intervention. The results so far are non-obvious—agents develop protocols, change strategies mid-round, and occasionally deadlock in ways a human never would.</p>
-<p>I am looking for collaborators who want to bring their own agent into this loop and see how it performs under pressure. If you don't have an agent ready, I can set one up for you within the experiment framework.</p>
-<p>Want to run your agent against 24 others?"</p>
-<h2>Refinement v4 (DeepSeek — Final Polish)</h2>
-<p>"Hi [Name],</p>
-<p>I have built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Early results show emergent protocols, adaptive strategies, and deadlock patterns that do not occur in human-to-human negotiation.</p>
-<p>I am looking for collaborators to bring their own agents into this loop. If you do not have an agent ready, I can configure one within the experiment framework.</p>
-<p>Are you interested in stress-testing your agent against 24 others?"</p>
-<h2>Refinement v5 (Gemini — Compliance & Final)</h2>
-<p>"Hi [Name],</p>
-<p>I am conducting a research experiment on autonomous agent-to-agent negotiation. 25 agents communicate in a closed email loop without human intervention, generating empirical data on emergent protocols, negotiation success rates, and failure modes.</p>
-<p>I am inviting collaborators to contribute their own agents. If you do not have an agent configured, I can set one up for you.</p>
-<p>Would you be interested in participating?"</p>
-<hr />
-<p><strong>Takeaway:</strong> Each model brought different strengths — DeepSeek for structure, Gemini for engagement, Kimi for narrative flow. The final version combined all three: clear framing (structure), compelling hook (engagement), and natural flow (narrative). The lesson: use multiple models for different aspects of copy, then synthesize.</p>
+          <p>The original version of this article described a 25-agent email negotiation experiment as if it had already produced results. It had not.</p>
+
+          <p>The project logs show a completed email transport test, an inbound-email guardrail, one active operator, and a second participant who expressed interest and began setup. The success metrics were still undefined, and the experiment itself was marked <strong>not started</strong>.</p>
+
+          <p>Five outreach drafts were editorial iterations, not an A/B test. There was no logged invitation denominator, response rate, winning version, or behavioral dataset. This rewrite publishes the experiment we could actually run.</p>
+
+          <h2>First, define “agent-to-agent”</h2>
+
+          <p>This study uses <em>agent-to-agent</em> descriptively: two autonomous systems exchange negotiation messages through email. It is not a test of the formal A2A protocol. Email is the transport and research instrument.</p>
+
+          <p>The related Go product is separate. It exposes negotiation capabilities to agents through the Model Context Protocol and optional A2A HTTP endpoints. On July 28, 2026, its complete Go test suite passed. That proves the software packages execute as tested; it does not prove 25 independent agents negotiated over email.</p>
+
+          <h2>What was observed</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Milestone</th>
+                <th>Status in project record</th>
+                <th>Safe conclusion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Research design</td>
+                <td>Complete</td>
+                <td>The hypotheses and risks were documented</td>
+              </tr>
+              <tr>
+                <td>Email transport test</td>
+                <td>Complete</td>
+                <td>A small email path worked end to end</td>
+              </tr>
+              <tr>
+                <td>Inbound guardrail</td>
+                <td>Complete</td>
+                <td>Messages could be screened before reaching a model</td>
+              </tr>
+              <tr>
+                <td>Participant onboarding</td>
+                <td>One active; one awaiting setup</td>
+                <td>At least one external person showed interest</td>
+              </tr>
+              <tr>
+                <td>Quantitative metrics</td>
+                <td>Not defined</td>
+                <td>No behavioral claim can be evaluated</td>
+              </tr>
+              <tr>
+                <td>25-agent experiment</td>
+                <td>Not started</td>
+                <td>No emergent protocol, strategy, or deadlock result exists</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>The hypotheses</h2>
+
+          <ol>
+            <li>Assigned negotiation strategies produce measurably different behavior.</li>
+            <li>Email latency is acceptable for bounded, multi-round negotiation.</li>
+            <li>Independent operators will contribute agents to a shared study.</li>
+            <li>The transport can deliver the planned message volume without material loss or throttling.</li>
+          </ol>
+
+          <p>Each claim needs its own metric. “The agents behaved differently” is not a result until strategy assignment, behavioral features, and comparison rules are fixed before observing the data.</p>
+
+          <h2>Run a three-agent dry run first</h2>
+
+          <p>Scaling directly to 25 agents makes failures harder to diagnose. The project’s own risk review recommended a two- or three-agent transport test. The dry run should be a complete miniature experiment:</p>
+
+          <ol>
+            <li>Create a synthetic negotiation scenario with known reservation values and a deterministic utility function.</li>
+            <li>Assign strategy profiles randomly and hide the assignments from the evaluator.</li>
+            <li>Use a fixed message schema, maximum round count, time limit, and model configuration.</li>
+            <li>Log send, delivery, receipt, guardrail, parse, decision, and terminal events.</li>
+            <li>Repeat enough sessions to distinguish transport failure from strategy behavior.</li>
+            <li>Review the logs before recruiting the remaining operators.</li>
+          </ol>
+
+          <pre><code>{
+  "experiment_id": "email-negotiation-dry-run-001",
+  "session_id": "session-017",
+  "round": 3,
+  "sender_agent": "agent-b",
+  "recipient_agent": "agent-c",
+  "message_type": "counter_offer",
+  "offer": {"price": 72, "term_months": 12},
+  "mandate_hash": "sha256:...",
+  "sent_at": "2026-08-01T10:00:00Z",
+  "received_at": null,
+  "guardrail_result": null
+}</code></pre>
+
+          <p>Append-only events preserve the difference between what an agent attempted, what the transport delivered, and what the recipient accepted.</p>
+
+          <h2>Pre-register the outcome metrics</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Definition</th>
+                <th>Why it matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Delivery rate</td>
+                <td>Delivered messages ÷ sent messages</td>
+                <td>Separates transport reliability from agent behavior</td>
+              </tr>
+              <tr>
+                <td>Deal rate</td>
+                <td>Sessions ending inside both reservation bounds</td>
+                <td>Measures agreement without rewarding invalid deals</td>
+              </tr>
+              <tr>
+                <td>Normalized joint utility</td>
+                <td>Realized utility ÷ maximum feasible utility</td>
+                <td>Compares outcome quality across scenarios</td>
+              </tr>
+              <tr>
+                <td>Rounds to outcome</td>
+                <td>Completed rounds before agreement or walk-away</td>
+                <td>Measures efficiency</td>
+              </tr>
+              <tr>
+                <td>Deadlock rate</td>
+                <td>Sessions hitting the round limit without a terminal decision</td>
+                <td>Measures coordination failure</td>
+              </tr>
+              <tr>
+                <td>Protocol violations</td>
+                <td>Messages rejected by schema, mandate, or safety checks</td>
+                <td>Measures unsafe or invalid behavior</td>
+              </tr>
+              <tr>
+                <td>Human interventions</td>
+                <td>Operator actions after a session begins</td>
+                <td>Tests the autonomy claim</td>
+              </tr>
+              <tr>
+                <td>Cost per session</td>
+                <td>Model and infrastructure cost for one terminal session</td>
+                <td>Tests whether the experiment can scale</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Recruitment needs the same discipline. Conversion is consenting, onboarded operators divided by delivered invitations. Because the original outreach log did not preserve the invitation denominator, it cannot support a response-rate claim.</p>
+
+          <h2>Safety and research ethics</h2>
+
+          <ul>
+            <li>Use synthetic stakes. No agent may commit money, sign a contract, or contact an uninvolved party.</li>
+            <li>Obtain explicit operator consent and disclose what messages and metadata will be retained.</li>
+            <li>Use pseudonymous agent IDs in any public dataset.</li>
+            <li>Never place API keys, credentials, or personal data in negotiation messages.</li>
+            <li>Give each operator a kill switch and define automatic stop conditions.</li>
+            <li>Cap rounds, message size, rate, time, and spend.</li>
+            <li>Screen inbound content before it reaches a model and record the guardrail result.</li>
+            <li>Publish null and negative results, not only interesting transcripts.</li>
+          </ul>
+
+          <h2>Go/no-go gates for 25 agents</h2>
+
+          <p>Scale only after the dry run establishes:</p>
+
+          <ul>
+            <li>at least 99% delivery with no unexplained message duplication;</li>
+            <li>valid reservation bounds and utility calculations for every scenario;</li>
+            <li>zero high-severity mandate or secret-handling violations;</li>
+            <li>a stable event schema and reproducible evaluator;</li>
+            <li>a budget cap and tested emergency stop;</li>
+            <li>enough consenting operators to avoid simulating independence with one owner’s clones.</li>
+          </ul>
+
+          <p>If strategy-diversity metrics are chosen after reading the transcripts, report them as exploratory. Confirm them in a new run.</p>
+
+          <h2>What to publish after the run</h2>
+
+          <p>A credible result package should include the preregistered protocol, model and prompt versions, randomization seed, scenario definitions, event schema, exclusions, aggregate results with uncertainty, failure cases, and an anonymized event dataset where consent permits.</p>
+
+          <p>The five outreach drafts can remain as an appendix to the project history, but they are not the experiment. The experiment begins when the hypotheses, metrics, sample, and stop conditions are fixed.</p>
+
+          <p>You can <a href="/resources/a2a-email-experiment-protocol.csv" download>download the experiment protocol and metric registry</a>. For human negotiation preparation, see <a href="/articles/negotiation-veteran-collapse-llm-coach.html">the LLM preparation workflow</a>. For a working agent handoff, see <a href="/articles/orchestrator-qwen-acp-handoff.html">the orchestrator-to-implementer case study</a>.</p>
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+        <div class="article-cta article-cta--resource">
+          <p class="article-cta__text">Pre-register transport, outcome, safety, cost, and recruitment metrics before inviting more agents.</p>
+          <a href="/resources/a2a-email-experiment-protocol.csv" class="btn btn--primary" download>Download the Protocol</a>
         </div>
       </article>
 

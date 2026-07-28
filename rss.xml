@@ -278,16 +278,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>A2A Negotiation Experiment: The Outreach That Worked</title>
+      <title>Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol</title>
       <link>https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html</guid>
       <pubDate>Sat, 11 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach.]]></description>
+      <description><![CDATA[An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol.]]></description>
       <category>AI Agents</category>
       <category>Negotiation</category>
-      <category>A2A Protocol</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <category>Experimental Design</category>
+      <category>Email</category>
     </item>
     <item>
       <title>I Watched a 20-Year Negotiation Veteran Collapse. Not Because of AI. Because of Me + AI.</title>

@@ -149,16 +149,15 @@
   },
   {
     "slug": "a2a-negotiation-outreach",
-    "title": "A2A Negotiation Experiment: The Outreach That Worked",
+    "title": "Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol",
     "date": "2026-04-12",
-    "excerpt": "I built a 25-agent closed-loop email network where autonomous agents negotiate without human intervention. Here's how I refined the outreach.",
-    "readingTime": "4 min",
+    "excerpt": "An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol.",
+    "readingTime": "10 min",
     "tags": [
       "AI Agents",
       "Negotiation",
-      "A2A Protocol",
-      "AI",
-      "OpenClaw"
+      "Experimental Design",
+      "Email"
     ]
   },
   {
