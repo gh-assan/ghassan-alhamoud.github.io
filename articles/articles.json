@@ -361,16 +361,16 @@
   },
   {
     "slug": "agent-execution-attestation",
-    "title": "Stop Obsessing Over Alignment. Start Building Auditability.",
+    "title": "AI Agent Execution Attestation: A Verifiable Audit Trail",
     "date": "2026-03-28",
-    "excerpt": "You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.",
-    "readingTime": "5 min",
+    "excerpt": "A vendor-neutral execution-attestation design for AI agents: envelope schema, threat model, signing and verification flow, effect receipts, and a cryptographically verifiable example.",
+    "readingTime": "13 min",
     "tags": [
       "AI Agents",
+      "Attestation",
+      "Auditability",
       "Security",
-      "Trust",
-      "Architecture",
-      "OpenClaw"
+      "Cryptography"
     ]
   },
   {

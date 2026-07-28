@@ -344,16 +344,16 @@
       <category>Data Engineering</category>
     </item>
     <item>
-      <title>Stop Obsessing Over Alignment. Start Building Auditability.</title>
+      <title>AI Agent Execution Attestation: A Verifiable Audit Trail</title>
       <link>https://ghassan-alhamoud.com/articles/agent-execution-attestation.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-execution-attestation.html</guid>
       <pubDate>Fri, 27 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.]]></description>
+      <description><![CDATA[A vendor-neutral execution-attestation design for AI agents: envelope schema, threat model, signing and verification flow, effect receipts, and a cryptographically verifiable example.]]></description>
       <category>AI Agents</category>
+      <category>Attestation</category>
+      <category>Auditability</category>
       <category>Security</category>
-      <category>Trust</category>
-      <category>Architecture</category>
-      <category>OpenClaw</category>
+      <category>Cryptography</category>
     </item>
     <item>
       <title>Compliance as Code for the EU AI Act: An Engineering Framework</title>

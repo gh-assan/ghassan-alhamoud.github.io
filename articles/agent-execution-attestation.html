@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Stop Obsessing Over Alignment. Start Building Auditability. — Ghassan Alhamoud</title>
-  <meta name="description" content="You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability." />
+  <title>AI Agent Execution Attestation: A Verifiable Audit Trail — Ghassan Alhamoud</title>
+  <meta name="description" content="A vendor-neutral execution-attestation design for AI agents: envelope schema, threat model, signing and verification flow, effect receipts, and a cryptographically verifiable example." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-execution-attestation.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-execution-attestation.html" />
-  <meta property="og:title" content="Stop Obsessing Over Alignment. Start Building Auditability." />
-  <meta property="og:description" content="You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability." />
+  <meta property="og:title" content="AI Agent Execution Attestation: A Verifiable Audit Trail" />
+  <meta property="og:description" content="What an attestation must contain, what a signature proves, and how a verifier should reject incomplete or untrusted agent evidence." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART008.webp" />
   <meta property="article:published_time" content="2026-03-28" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-execution-attestation.html" />
-  <meta property="twitter:title" content="Stop Obsessing Over Alignment. Start Building Auditability." />
-  <meta property="twitter:description" content="You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability." />
+  <meta property="twitter:title" content="AI Agent Execution Attestation: A Verifiable Audit Trail" />
+  <meta property="twitter:description" content="What an attestation must contain, what a signature proves, and how a verifier should reject incomplete or untrusted agent evidence." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART008.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Stop Obsessing Over Alignment. Start Building Auditability.",
-  "description": "You cannot trust what you cannot verify. Enterprise AI adoption isn't stalling because of alignment. It's stalling because of auditability.",
+  "headline": "AI Agent Execution Attestation: A Verifiable Audit Trail",
+  "description": "A vendor-neutral execution-attestation design for AI agents: envelope schema, threat model, signing and verification flow, effect receipts, and a cryptographically verifiable example.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART008.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-03-28",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-execution-attestation.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "AI Agents, Security, Trust, Architecture, OpenClaw",
+  "dependencies": "AI Agents, Attestation, Auditability, Security, Cryptography",
   "articleSection": "AI Architecture"
 }
   </script>
@@ -92,64 +92,164 @@
           <div class="article-single__meta">
             <time datetime="2026-03-28">Mar 28 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>13 min</span>
           </div>
-          <h1 class="article-single__title">Stop Obsessing Over Alignment. Start Building Auditability.</h1>
+          <h1 class="article-single__title">AI Agent Execution Attestation: A Verifiable Audit Trail</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
+          <span class="article-single__tag">Attestation</span>
+          <span class="article-single__tag">Auditability</span>
           <span class="article-single__tag">Security</span>
-          <span class="article-single__tag">Trust</span>
-          <span class="article-single__tag">Architecture</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Cryptography</span>
           </div>
         </header>
 
                 <img src="/images/articles/ART008.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>A lot of AI safety discussion still happens at the level of intentions: how do we make sure the system wants the right things, follows the right principles, and does not go off the rails?</p>
-<p>That is an important long-term discussion.</p>
-<p>But most enterprise hesitation I see right now is much more immediate. Teams are not blocked because they are afraid of superintelligence. They are blocked because they cannot prove what their systems actually did.</p>
-<hr />
-<h2>The Trust Gap Is Operational</h2>
-<p>Once an agent is connected to tools, APIs, internal data, and execution paths, trust stops being a philosophical preference. It becomes an operational requirement.</p>
-<p>Did the agent call the right endpoint? Did it follow the expected sequence? Did it act under the right identity? Did it violate a policy boundary? Could you reconstruct the action later if you had to explain it to security, audit, or leadership?</p>
-<p>If the answer to those questions is weak, adoption slows down for very rational reasons.</p>
-<hr />
-<h2>Why Auditability Matters More Than Hype</h2>
-<p>Teams can tolerate some uncertainty in model behavior if the surrounding execution layer is transparent enough. What they struggle to tolerate is blind action.</p>
-<p>An agent that is somewhat imperfect but well-instrumented is easier to govern than an agent that feels clever but leaves behind no meaningful evidence of how it operated.</p>
-<p>That is why I think auditability is the more urgent engineering problem. Not because alignment does not matter, but because governance in the real world starts with traceability.</p>
-<hr />
-<h2>What an Attestation Layer Would Change</h2>
-<p>The idea of an execution attestation layer is really about turning trust from a feeling into a verifiable property.</p>
-<p>At a high level, that means three things:</p>
-<ol>
-<li>the system can prove which identity executed an action</li>
-<li>the action can be tied to a trustworthy record of what happened</li>
-<li>the record can be inspected without relying on a hand-written narrative after the fact</li>
-</ol>
-<p>Whether the implementation uses hardware-bound identity, transparency logs, cryptographic proofs, or a more incremental internal equivalent, the direction is the same: execution needs evidence.</p>
-<hr />
-<h2>Why This Becomes a Productive Constraint</h2>
-<p>Once you design for attestation, a lot of architectural choices sharpen naturally.</p>
-<p>You become more explicit about boundaries. You care more about which actions are sensitive. You distinguish between planning and execution. You stop assuming that "the logs probably exist somewhere" is good enough.</p>
-<p>In other words, auditability is not only a trust feature. It is a forcing function for cleaner system design.</p>
-<hr />
-<h2>The Real Production Question</h2>
-<p>The practical question is not whether your agent is aligned in the abstract.</p>
-<p>It is whether, after a meaningful action, you can answer: who did what, under which conditions, through which interface, with what evidence left behind?</p>
-<p>If you cannot answer that cleanly, then the system may still be useful in experimentation, but it will keep meeting resistance the moment the stakes go up.</p>
-<hr />
-<h2>Where I Think This Is Going</h2>
-<p>I expect the next serious wave of agent infrastructure to spend much more time on execution trust: identity, attestable actions, transparent logs, and policy-aware evidence trails.</p>
-<p>That work is less fashionable than big alignment narratives, but it is far closer to what real organizations need in order to move from "interesting demo" to "approved operating system."</p>
-<p>If the industry wants broader adoption, this is one of the places it has to get more mature.</p>
+          <p><strong>An execution attestation is a signed statement about an agent run. It can prove that a particular key signed particular bytes. It cannot, by itself, prove those bytes describe reality.</strong></p>
+          <p>That distinction separates useful audit infrastructure from cryptographic theatre. The attestation must bind identity, authorised intent, runtime configuration, inputs, tool effects, checks, and outcomes—and the verifier must trust how each field was measured.</p>
+
+          <h2>Logs, audit records, and attestations</h2>
+          <table>
+            <thead>
+              <tr><th>Artifact</th><th>Purpose</th><th>Integrity property</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Operational log</td><td>Debug and observe detailed events</td><td>Often mutable and access-controlled</td></tr>
+              <tr><td>Audit record</td><td>Reconstruct accountable decisions and effects</td><td>Append-only policy and retention expected</td></tr>
+              <tr><td>Execution attestation</td><td>Bind a compact claim set to an issuer and subject</td><td>Signature plus verifiable artifact digests</td></tr>
+            </tbody>
+          </table>
+          <p>Do not put every prompt and document into the attestation. Store sensitive evidence in its authorised system and reference it by digest and evidence ID.</p>
+
+          <h2>The envelope</h2>
+          <pre><code>{
+  schemaVersion,
+  attestationId,
+  emittedAt,
+  issuer: {id, keyId, collector},
+  subject: {type, id, artifactDigest},
+  run: {traceId, parentTraceId, startedAt, endedAt},
+  actor: {principal, agentId, delegationDigest},
+  intent: {requestDigest, policyDigest, approvalDigest},
+  runtime: {orchestrator, model, promptDigest, environmentDigest},
+  inputs: [{name, digest, classification, evidenceRef}],
+  tools: [{name, version, inputDigest, outputDigest,
+           effectClass, effectReceipt}],
+  checks: [{id, version, result, evidenceDigest}],
+  outcome: {status, outputDigests, errorClass},
+  sequence: {previousAttestationDigest, nonce}
+}</code></pre>
+          <p>The downloadable JSON Schema makes these fields concrete. It deliberately keeps the detached signature outside the payload so the signed bytes are unambiguous.</p>
+
+          <h2>Identity and delegated authority</h2>
+          <p>The issuer is the component that measured and signed the claim. The actor is the human or service principal plus the agent operating under delegated authority. They are not necessarily the same.</p>
+          <p>For a consequential effect, bind:</p>
+          <ul>
+            <li>the authenticated principal;</li>
+            <li>the agent and orchestrator instance;</li>
+            <li>the exact policy version and granted scope;</li>
+            <li>the approved action hash and expiry;</li>
+            <li>the tool identity and external effect receipt.</li>
+          </ul>
+          <p>A signature from “the agent” is weak if the agent held the key and could invent its own authority. Prefer a separate execution gateway or trusted collector that observes policy decisions and tool calls.</p>
+
+          <h2>Bind configuration, not raw secrets</h2>
+          <p>Model behavior depends on more than a model name. Record immutable identifiers or digests for:</p>
+          <ul>
+            <li>model provider, model identifier, and revision where the provider exposes one;</li>
+            <li>system prompt, policy bundle, tool definitions, and route;</li>
+            <li>orchestrator and connector builds;</li>
+            <li>execution environment, sandbox policy, and dependency lock;</li>
+            <li>evaluation and verifier versions.</li>
+          </ul>
+          <p>A hash proves equality to bytes you already possess. It does not reveal what opaque hosted model weights actually ran. Record provider receipts and be explicit about that assurance gap.</p>
+
+          <h2>External effects need receipts</h2>
+          <p>“Tool call returned success” is not enough. For a payment, deployment, email, or deletion, capture the provider's stable operation ID, idempotency key, accepted payload digest, status, and reconciliation timestamp.</p>
+          <table>
+            <thead>
+              <tr><th>Effect state</th><th>Meaning</th><th>Allowed next step</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Not attempted</td><td>No mutation request was sent</td><td>May execute with valid authority</td></tr>
+              <tr><td>Confirmed</td><td>Provider receipt matches the requested effect</td><td>Continue; never repeat the effect</td></tr>
+              <tr><td>Rejected</td><td>Provider definitively refused it</td><td>Stop or repair under policy</td></tr>
+              <tr><td>Unknown</td><td>Request may have succeeded but acknowledgement is missing</td><td>Reconcile; do not retry blindly</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Verification flow</h2>
+          <pre><code>payload + detached signature + public key
+                    │
+                    ▼
+1. Parse and validate schema
+2. Verify exact-byte signature
+3. Resolve issuer and key status at emittedAt
+4. Apply trust policy for subject/action class
+5. Recompute referenced artifact digests
+6. Check policy, approval, sequence, time, and nonce
+7. Reconcile effect receipts with external systems
+8. Evaluate required checks and unresolved gaps
+                    │
+                    ▼
+verified | rejected | incomplete | untrusted</code></pre>
+          <p>Signature success is step 2, not the final verdict. A revoked key, untrusted collector, expired approval, missing receipt, or inaccessible evidence can still make the attestation unusable.</p>
+
+          <h2>Threat model</h2>
+          <table>
+            <thead>
+              <tr><th>Threat</th><th>Control</th><th>Residual limitation</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Emitter signs a fabricated story</td><td>Independent collection at policy/tool gateway; cross-check receipts</td><td>Collector compromise can still lie</td></tr>
+              <tr><td>Signing key is stolen</td><td>Hardware-backed key, rotation, revocation, short-lived credentials</td><td>Past compromise time may be uncertain</td></tr>
+              <tr><td>Record is replayed</td><td>Unique attestation ID, nonce, subject, time, and sequence checks</td><td>Verifier needs durable replay state</td></tr>
+              <tr><td>Events are removed or reordered</td><td>Previous-digest chain or transparency log</td><td>Private forks require an external checkpoint</td></tr>
+              <tr><td>Secrets leak through evidence</td><td>Digest and reference; classification; access and retention policy</td><td>Digests of low-entropy values may be guessable</td></tr>
+              <tr><td>Opaque provider claims are treated as proof</td><td>Record assurance source and distinguish observed from asserted fields</td><td>Hosted internals may remain unverifiable</td></tr>
+              <tr><td>Approval covers a different action</td><td>Bind approval to canonical action digest and expiry</td><td>Human may still approve without understanding</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Canonicalization and signature profile</h2>
+          <p>Production systems should adopt a defined canonicalization and envelope standard rather than inventing one. The downloadable demonstration avoids canonicalization entirely: the Ed25519 signature covers the exact bytes of <code>agent-execution-attestation.example.json</code>. Any whitespace change invalidates it.</p>
+          <pre><code>openssl base64 -d -A \
+  -in agent-execution-attestation.example.sig.b64 \
+  -out /tmp/agent-attestation.sig
+
+openssl pkeyutl -verify -pubin \
+  -inkey agent-execution-attestation.example.pub.pem \
+  -rawin \
+  -in agent-execution-attestation.example.json \
+  -sigfile /tmp/agent-attestation.sig</code></pre>
+          <p>The private demonstration key is not published and must never be trusted for production. The public key proves only that the included sample and signature match.</p>
+
+          <h2>A practical adoption path</h2>
+          <ol>
+            <li>Choose one irreversible or externally visible action.</li>
+            <li>Define its subject, authority, effect receipt, and minimum checks.</li>
+            <li>Emit the unsigned schema first and verify completeness.</li>
+            <li>Move collection outside the agent process.</li>
+            <li>Add signing, key identity, rotation, and revocation.</li>
+            <li>Verify at the release or action gate—not only during an audit.</li>
+            <li>Add sequence integrity or a transparency log when omission matters.</li>
+          </ol>
+
+          <h2>Download and verify the example</h2>
+          <p><a href="/resources/agent-execution-attestation.schema.json" class="btn btn--primary" download>Download the attestation JSON Schema</a></p>
+          <ul>
+            <li><a href="/resources/agent-execution-attestation.example.json" download>Example signed payload</a></li>
+            <li><a href="/resources/agent-execution-attestation.example.pub.pem" download>Example Ed25519 public key</a></li>
+            <li><a href="/resources/agent-execution-attestation.example.sig.b64" download>Detached signature, base64</a></li>
+          </ul>
+          <p>Connect the envelope to the <a href="/articles/compliance-as-code-eu-ai-act.html">EU AI Act evidence framework</a>, the <a href="/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html">SkillLedger trust model</a>, and the <a href="/articles/agent-reliability-sla-infrastructure.html">agent reliability SLO framework</a>. Attestation provides evidence; those systems decide what evidence is required and what to do with it.</p>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Need a verifiable execution trail for a consequential agent workflow?</p>
+          <a href="/#contact" class="btn btn--primary">Discuss an Attestation Architecture</a>
         </div>
       </article>
 

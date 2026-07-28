@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ghassan-alhamoud.com/resources/agent-execution-attestation.schema.json",
+  "title": "AI Agent Execution Attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "attestationId", "emittedAt", "issuer", "subject", "run", "actor", "intent", "runtime", "inputs", "tools", "checks", "outcome", "sequence"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "attestationId": {"type": "string", "format": "uuid"},
+    "emittedAt": {"type": "string", "format": "date-time"},
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "keyId", "collector"],
+      "properties": {"id": {"type": "string"}, "keyId": {"type": "string"}, "collector": {"type": "string"}}
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id", "artifactDigest"],
+      "properties": {"type": {"type": "string"}, "id": {"type": "string"}, "artifactDigest": {"$ref": "#/$defs/digest"}}
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["traceId", "startedAt", "endedAt"],
+      "properties": {"traceId": {"type": "string"}, "parentTraceId": {"type": ["string", "null"]}, "startedAt": {"type": "string", "format": "date-time"}, "endedAt": {"type": "string", "format": "date-time"}}
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principal", "agentId", "delegationDigest"],
+      "properties": {"principal": {"type": "string"}, "agentId": {"type": "string"}, "delegationDigest": {"$ref": "#/$defs/digest"}}
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requestDigest", "policyDigest", "approvalDigest"],
+      "properties": {"requestDigest": {"$ref": "#/$defs/digest"}, "policyDigest": {"$ref": "#/$defs/digest"}, "approvalDigest": {"$ref": "#/$defs/digest"}}
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["orchestrator", "model", "promptDigest", "environmentDigest"],
+      "properties": {
+        "orchestrator": {"type": "string"},
+        "model": {"type": "object", "additionalProperties": false, "required": ["provider", "id", "revision"], "properties": {"provider": {"type": "string"}, "id": {"type": "string"}, "revision": {"type": "string"}}},
+        "promptDigest": {"$ref": "#/$defs/digest"},
+        "environmentDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "inputs": {"type": "array", "items": {"$ref": "#/$defs/input"}},
+    "tools": {"type": "array", "items": {"$ref": "#/$defs/tool"}},
+    "checks": {"type": "array", "items": {"$ref": "#/$defs/check"}},
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "outputDigests", "errorClass"],
+      "properties": {"status": {"enum": ["succeeded", "failed", "cancelled", "unknown"]}, "outputDigests": {"type": "array", "items": {"$ref": "#/$defs/digest"}}, "errorClass": {"type": ["string", "null"]}}
+    },
+    "sequence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["previousAttestationDigest", "nonce"],
+      "properties": {"previousAttestationDigest": {"anyOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]}, "nonce": {"type": "string", "minLength": 16}}
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "digest", "classification", "evidenceRef"],
+      "properties": {"name": {"type": "string"}, "digest": {"$ref": "#/$defs/digest"}, "classification": {"enum": ["public", "internal", "confidential", "restricted"]}, "evidenceRef": {"type": "string"}}
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "inputDigest", "outputDigest", "effectClass", "effectReceipt"],
+      "properties": {"name": {"type": "string"}, "version": {"type": "string"}, "inputDigest": {"$ref": "#/$defs/digest"}, "outputDigest": {"$ref": "#/$defs/digest"}, "effectClass": {"enum": ["read", "preview", "reversible", "irreversible"]}, "effectReceipt": {"type": ["string", "null"]}}
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "result", "evidenceDigest"],
+      "properties": {"id": {"type": "string"}, "version": {"type": "string"}, "result": {"enum": ["passed", "failed", "skipped"]}, "evidenceDigest": {"$ref": "#/$defs/digest"}}
+    }
+  }
+}
