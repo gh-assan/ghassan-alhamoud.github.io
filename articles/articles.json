@@ -279,10 +279,10 @@
   },
   {
     "slug": "agent-reasoning-discovery-fallacy",
-    "title": "The Agent Reasoning Fallacy",
+    "title": "AI Agent Discovery Is a Bigger Bottleneck Than Reasoning",
     "date": "2026-03-08",
-    "excerpt": "Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.",
-    "readingTime": "5 min",
+    "excerpt": "A five-stage capability-discovery model for AI agents: registry, semantic matching, compatibility, trust qualification, and policy-aware runtime selection.",
+    "readingTime": "12 min",
     "tags": [
       "AI Agents",
       "Discovery",

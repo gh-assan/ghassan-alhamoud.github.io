@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>The Agent Reasoning Fallacy — Ghassan Alhamoud</title>
-  <meta name="description" content="Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery." />
+  <title>AI Agent Discovery Is a Bigger Bottleneck Than Reasoning — Ghassan Alhamoud</title>
+  <meta name="description" content="A five-stage capability-discovery model for AI agents: registry, semantic matching, compatibility, trust qualification, and policy-aware runtime selection." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html" />
-  <meta property="og:title" content="The Agent Reasoning Fallacy" />
-  <meta property="og:description" content="Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery." />
+  <meta property="og:title" content="AI Agent Discovery Is a Bigger Bottleneck Than Reasoning" />
+  <meta property="og:description" content="How agents can find, qualify, and select capabilities without confusing search results with trusted authority." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART002.webp" />
   <meta property="article:published_time" content="2026-03-08" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html" />
-  <meta property="twitter:title" content="The Agent Reasoning Fallacy" />
-  <meta property="twitter:description" content="Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery." />
+  <meta property="twitter:title" content="AI Agent Discovery Is a Bigger Bottleneck Than Reasoning" />
+  <meta property="twitter:description" content="How agents can find, qualify, and select capabilities without confusing search results with trusted authority." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART002.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "The Agent Reasoning Fallacy",
-  "description": "Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.",
+  "headline": "AI Agent Discovery Is a Bigger Bottleneck Than Reasoning",
+  "description": "A five-stage capability-discovery model for AI agents: registry, semantic matching, compatibility, trust qualification, and policy-aware runtime selection.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART002.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-03-08",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html",
   "proficiencyLevel": "Intermediate",
   "dependencies": "AI Agents, Discovery, Distributed Systems, AI, OpenClaw",
@@ -92,9 +92,9 @@
           <div class="article-single__meta">
             <time datetime="2026-03-08">Mar 08 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">The Agent Reasoning Fallacy</h1>
+          <h1 class="article-single__title">AI Agent Discovery Is a Bigger Bottleneck Than Reasoning</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Discovery</span>
@@ -107,54 +107,145 @@
                 <img src="/images/articles/ART002.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>A lot of the current conversation around agents still revolves around one question: how smart can we make them?</p>
-<p>Better reasoning. Better benchmarks. Better planning. Better internal loops.</p>
-<p>That work matters. But I think it is hiding a bigger bottleneck.</p>
-<p>An extremely smart agent that cannot find the right external capability is still trapped. It just fails more intelligently.</p>
-<hr />
-<h2>The Wrong Center of Gravity</h2>
-<p>We keep treating the agent as if its main challenge is thinking harder inside its own boundary.</p>
-<p>In reality, a lot of useful work depends less on deeper internal reasoning and more on external discovery: finding the right service, the right tool, the right provider, the right counterpart, the right source of truth.</p>
-<p>If that discovery layer is weak, the whole system becomes brittle. The agent can reason beautifully about the options it already sees and still fail because it never found the option that actually mattered.</p>
-<hr />
-<h2>Why This Feels Familiar</h2>
-<p>I have seen architectures where the agent itself was impressive but the operating model around it was primitive. It could classify, summarize, and route within a closed environment, but the moment it had to discover a specialized external capability, the process collapsed back into manual work.</p>
-<p>A human had to search. A human had to evaluate. A human had to broker the next step.</p>
-<p>That is not a reasoning ceiling. That is a discovery ceiling.</p>
-<hr />
-<h2>The Real Gap</h2>
-<p>We are still trying to build an agent-native economy on top of very human discovery infrastructure.</p>
-<p>Directories are built for people. Marketplaces are browsed by people. Outreach is written for people. Evaluation metadata is often too loose or too incomplete for an agent to make reliable decisions from it.</p>
-<p>That mismatch is why so many agent demos look self-sufficient until they hit the edge of their local toolset.</p>
-<p>At that point, intelligence is not enough. The system needs a way to discover what else exists, verify whether it can be trusted, and decide how to interact with it.</p>
-<hr />
-<h2>What Discovery Should Actually Mean</h2>
-<p>For an agent ecosystem to scale, discovery needs to be more than search.</p>
-<p>An agent should be able to:</p>
-<ol>
-<li>find relevant capabilities based on intent, not only exact names</li>
-<li>inspect enough structured metadata to judge fit and constraints</li>
-<li>understand trust, reliability, and interface expectations before acting</li>
-<li>negotiate or coordinate in a protocol-friendly way when needed</li>
-</ol>
-<p>That is a much richer layer than what most current tool registries or service directories offer.</p>
-<hr />
-<h2>Why This Matters More Than It Sounds</h2>
-<p>Reasoning improvements compound inside the agent. Discovery improvements compound across the network.</p>
-<p>That is why I think the industry focus is slightly off-center right now. We keep asking how to make single agents better at thinking, but a lot of the real economic value will come from making agent systems better at finding and coordinating with each other.</p>
-<p>The smarter the individual nodes become, the more obvious the network limitation gets.</p>
-<hr />
-<h2>The Better Mental Model</h2>
-<p>I do not think of this as reasoning versus discovery. I think of it as brain versus nervous system.</p>
-<p>The brain matters. But without the rest of the network, it has very little reach.</p>
-<p>That is why I keep coming back to service discovery, agent-to-agent protocols, and structured capability metadata as foundational infrastructure. Not glamorous, maybe. But foundational.</p>
-<p>If we want agent systems to move beyond isolated performers, we need to build the conditions under which they can actually find and work with the rest of the ecosystem.</p>
-<p>Otherwise we will keep building smarter silos.</p>
+          <p><strong>A model can choose only among the capabilities its host exposes. Better reasoning does not help when the right tool is absent, incompatible, stale, untrusted, or forbidden by policy.</strong></p>
+          <p>That makes discovery a systems problem, not a search prompt. A production discovery layer must answer five different questions: what exists, what matches the intent, what can interoperate, what is trustworthy enough, and what should be selected now.</p>
+
+          <h2>Tool calling, service discovery, and capability discovery</h2>
+          <table>
+            <thead>
+              <tr><th>Mechanism</th><th>Question answered</th><th>What it does not prove</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tool calling</td><td>Which already-connected function should the model invoke?</td><td>That the host connected the best or safest function</td></tr>
+              <tr><td>Service discovery</td><td>Where is a named technical endpoint and is it healthy?</td><td>That its capability fits the user's intent</td></tr>
+              <tr><td>Capability discovery</td><td>Which qualified provider can satisfy this typed intent under current constraints?</td><td>That execution will succeed; verification is still required</td></tr>
+            </tbody>
+          </table>
+          <p><a href="https://modelcontextprotocol.io/specification/2025-11-25/server/tools" target="_blank" rel="noopener noreferrer">MCP tool definitions</a> expose names, descriptions, and input/output schemas within a connected server. <a href="https://a2a-protocol.org/latest/specification/" target="_blank" rel="noopener noreferrer">A2A Agent Cards</a> advertise a remote agent's identity, endpoint, authentication, and skills. Those are important protocol primitives. An ecosystem still needs registry, qualification, policy, and selection around them.</p>
+
+          <h2>The five-stage discovery pipeline</h2>
+          <pre><code>Typed intent + constraints
+          │
+          ▼
+1. Registry retrieval ──▶ fresh candidate descriptors
+          │
+          ▼
+2. Semantic matching ──▶ plausible capability set
+          │
+          ▼
+3. Compatibility ──────▶ callable candidates
+          │
+          ▼
+4. Trust qualification ▶ policy-eligible candidates
+          │
+          ▼
+5. Runtime selection ──▶ route + fallback + evidence plan</code></pre>
+          <p>Each stage reduces the set for a different reason. Combining them into one embedding search makes rejection hard to explain and unsafe candidates easy to rank.</p>
+
+          <h2>Stage 1: registry and freshness</h2>
+          <p>A registry is an inventory, not a trust oracle. Each entry needs a stable identity, publisher, versions, status, discovery source, last verification time, and expiry. Dynamic endpoints require health and freshness separate from capability metadata.</p>
+          <p>Registries may be local configuration, an enterprise catalog, a marketplace, DNS-style discovery, or a federated index. The important controls are:</p>
+          <ul>
+            <li>immutable version identifiers rather than “latest”;</li>
+            <li>signed or otherwise authenticated publisher updates;</li>
+            <li>tombstones for revoked versions;</li>
+            <li>bounded cache age and an explicit offline policy;</li>
+            <li>provenance showing how the entry entered the registry.</li>
+          </ul>
+
+          <h2>Stage 2: semantic capability matching</h2>
+          <p>Names are poor discovery keys. A user asking to “remove customer identifiers before analysis” may need data classification, PII detection, redaction, structured-file parsing, and an auditable output—not a tool literally named <code>remove_identifiers</code>.</p>
+          <p>Match against a typed intent:</p>
+          <pre><code>{
+  "objective": "redact direct identifiers from a CSV",
+  "input": {"mediaType": "text/csv", "classification": "confidential"},
+  "output": {"mediaType": "text/csv", "requiredEvidence": ["redaction_report"]},
+  "constraints": {"localOnly": true, "maxLatencyMs": 30000}
+}</code></pre>
+          <p>Semantic retrieval should maximize recall, not make the final choice. Candidate descriptions are publisher claims and may be vague, adversarial, or simply wrong.</p>
+
+          <h2>Stage 3: compatibility filtering</h2>
+          <p>Compatibility is mostly deterministic. Reject candidates that fail any hard requirement:</p>
+          <ul>
+            <li>protocol and revision;</li>
+            <li>input and output schema;</li>
+            <li>authentication method and principal delegation;</li>
+            <li>data residency and network boundary;</li>
+            <li>synchronous versus durable task behavior;</li>
+            <li>maximum payload, timeout, and streaming support;</li>
+            <li>effect type, idempotency, and cancellation semantics.</li>
+          </ul>
+          <p>A semantically perfect service that cannot accept confidential data under the current policy is not a lower-ranked candidate. It is incompatible and must be removed.</p>
+
+          <h2>Stage 4: trust qualification</h2>
+          <p>Trust is contextual. A tool may be acceptable for public web research and unacceptable for payroll data. Qualification should combine independently verifiable evidence:</p>
+          <table>
+            <thead>
+              <tr><th>Evidence</th><th>Question</th><th>Limitation</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Publisher identity</td><td>Who is accountable for this descriptor?</td><td>Identity does not prove behavior</td></tr>
+              <tr><td>Artifact digest/signature</td><td>Is this the reviewed version?</td><td>A signed malicious artifact is still malicious</td></tr>
+              <tr><td>Verification record</td><td>Which checks ran against which digest?</td><td>Coverage and freshness matter</td></tr>
+              <tr><td>Execution attestation</td><td>What actually ran and changed?</td><td>Requires trusted collection and verification</td></tr>
+              <tr><td>Operational history</td><td>How often did comparable calls succeed?</td><td>Past performance is workload-specific</td></tr>
+            </tbody>
+          </table>
+          <p>My <a href="/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html">SkillLedger architecture</a> explores this entitlement and verification layer. The <a href="/articles/agent-black-box-skill-ledger.html">unverified-skill threat model</a> explains why metadata alone is insufficient.</p>
+
+          <h2>Stage 5: policy-aware runtime selection</h2>
+          <p>After hard filters, rank eligible candidates for this request. A simple selector can use:</p>
+          <pre><code>score =
+  0.35 × task-quality evidence
++ 0.25 × reliability for this workload
++ 0.15 × trust-evidence freshness
++ 0.10 × latency fit
++ 0.10 × cost fit
++ 0.05 × locality preference</code></pre>
+          <p>The weights are policy, not universal truth. Record them with the decision. Also record the next eligible fallback and the condition under which failover is permitted. Never silently fall back across a stronger data boundary or weaker approval requirement.</p>
+
+          <h2>Worked example: selecting a redaction capability</h2>
+          <table>
+            <thead>
+              <tr><th>Candidate</th><th>Semantic fit</th><th>Compatibility</th><th>Trust</th><th>Decision</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Cloud text redactor</td><td>High</td><td>Fails local-only constraint</td><td>Not evaluated</td><td>Reject</td></tr>
+              <tr><td>Local regex utility</td><td>Medium</td><td>Compatible</td><td>Reviewed digest</td><td>Fallback for defined identifier types</td></tr>
+              <tr><td>Local structured PII service</td><td>High</td><td>Compatible</td><td>Fresh evaluation and audit report</td><td>Select</td></tr>
+              <tr><td>Unknown marketplace skill</td><td>High claim</td><td>Compatible</td><td>No publisher or verification</td><td>Quarantine</td></tr>
+            </tbody>
+          </table>
+          <p>The selected service still needs output verification: schema validation, a seeded-fixture test, and a redaction report reconciled with the input. Discovery chooses a qualified route; it does not certify the result.</p>
+
+          <h2>Descriptor versus live evidence</h2>
+          <p>Keep relatively static claims in the capability descriptor and volatile measurements in separate evidence records. Otherwise every latency observation forces a signed manifest update, or stale operational claims linger indefinitely.</p>
+          <ul>
+            <li><strong>Descriptor:</strong> identity, version, protocols, schemas, effects, constraints, publisher claims.</li>
+            <li><strong>Evidence:</strong> verification result, benchmark population, success rate, incident history, measured latency, expiry.</li>
+            <li><strong>Policy:</strong> which combinations of descriptor and evidence are eligible for a specific principal and data class.</li>
+          </ul>
+
+          <h2>Failure modes to design explicitly</h2>
+          <ul>
+            <li><strong>Registry poisoning:</strong> authenticate updates and separate untrusted catalogs.</li>
+            <li><strong>Description gaming:</strong> do not rank publisher prose as proof of quality.</li>
+            <li><strong>Version drift:</strong> resolve to immutable artifacts and invalidate changed digests.</li>
+            <li><strong>Stale trust:</strong> attach expiry to checks and operational evidence.</li>
+            <li><strong>Confused deputy:</strong> bind calls to the requesting principal and scoped authority.</li>
+            <li><strong>Unsafe fallback:</strong> preserve policy constraints across every alternate route.</li>
+            <li><strong>Discovery loops:</strong> bound federation depth, candidate count, time, and cost.</li>
+          </ul>
+
+          <h2>Download the descriptor schema</h2>
+          <p>I published a vendor-neutral JSON Schema for the stable half of the model: identity, capabilities, interfaces, constraints, effects, and trust-evidence references.</p>
+          <p><a href="/resources/agent-capability-descriptor.schema.json" class="btn btn--primary" download>Download the capability descriptor schema</a></p>
+          <p>Try it against your stack: can the selector explain why every rejected candidate failed, and can an operator reproduce why the winner was eligible? If not, the system has search—not qualified discovery.</p>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Building a registry, marketplace, or dynamic tool router?</p>
+          <a href="/#contact" class="btn btn--primary">Discuss a Discovery Architecture</a>
         </div>
       </article>
 

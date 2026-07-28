@@ -426,11 +426,11 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>The Agent Reasoning Fallacy</title>
+      <title>AI Agent Discovery Is a Bigger Bottleneck Than Reasoning</title>
       <link>https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html</guid>
       <pubDate>Sat, 07 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[Everyone is obsessed with agent reasoning. But a brilliant, isolated agent is just a glorified chatbot. The real bottleneck isn't reasoning. It's discovery.]]></description>
+      <description><![CDATA[A five-stage capability-discovery model for AI agents: registry, semantic matching, compatibility, trust qualification, and policy-aware runtime selection.]]></description>
       <category>AI Agents</category>
       <category>Discovery</category>
       <category>Distributed Systems</category>
