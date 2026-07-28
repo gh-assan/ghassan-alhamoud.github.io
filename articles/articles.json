@@ -250,10 +250,10 @@
   },
   {
     "slug": "5-failures-building-agent-3-months",
-    "title": "I Spent 3 Months Building My Agent. Here Are the 5 Failures That Almost Killed It.",
+    "title": "Five Failures From Three Months Building a Personal AI Agent",
     "date": "2026-05-04",
-    "excerpt": "I went all-in on building a personal AI agent. I spent 3 months, went through 5 architectures, killed 2 email accounts. Here's exactly what failed.",
-    "readingTime": "9 min",
+    "excerpt": "A documented failure timeline from three months operating a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and unverified fixes.",
+    "readingTime": "11 min",
     "tags": [
       "AI Agents",
       "Infrastructure",
