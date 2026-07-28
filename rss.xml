@@ -176,16 +176,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>Three Layers Is Not Enough - You Need a Feedback Loop That Closes</title>
+      <title>Self-Healing Agent Systems: A Bounded Remediation State Machine</title>
       <link>https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html</guid>
       <pubDate>Mon, 04 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[The difference between a system that learns from failure and one that merely records it is a single architectural decision.]]></description>
+      <description><![CDATA[A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation.]]></description>
       <category>Self-Healing</category>
-      <category>Architecture</category>
-      <category>Feedback Loops</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <category>Reliability</category>
+      <category>State Machines</category>
+      <category>Circuit Breakers</category>
     </item>
     <item>
       <title>Issue Management as a Reliability Control Plane</title>

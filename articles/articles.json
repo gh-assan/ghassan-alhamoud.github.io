@@ -220,16 +220,15 @@
   },
   {
     "slug": "self-healing-architecture-feedback-loop",
-    "title": "Three Layers Is Not Enough - You Need a Feedback Loop That Closes",
+    "title": "Self-Healing Agent Systems: A Bounded Remediation State Machine",
     "date": "2026-05-05",
-    "excerpt": "The difference between a system that learns from failure and one that merely records it is a single architectural decision.",
-    "readingTime": "9 min",
+    "excerpt": "A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation.",
+    "readingTime": "13 min",
     "tags": [
       "Self-Healing",
-      "Architecture",
-      "Feedback Loops",
-      "AI",
-      "OpenClaw"
+      "Reliability",
+      "State Machines",
+      "Circuit Breakers"
     ]
   },
   {

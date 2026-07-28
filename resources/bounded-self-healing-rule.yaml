@@ -1,0 +1,86 @@
+spec_version: "1.0"
+rule:
+  id: stale-edit-recovery
+  version: "1.0.0"
+  owner: agent-platform
+  enabled: false
+  mode: shadow
+
+trigger:
+  tool: file_edit
+  structured_error_code: STALE_PRECONDITION
+  required_context:
+    - target_path
+    - expected_pre_change_digest
+    - intended_patch
+  do_not_match_on:
+    - Free-form model interpretation alone
+
+safety:
+  risk_class: reversible_local_write
+  authorized_paths:
+    - repo://current-worktree/**
+  forbidden_actions:
+    - Replace the entire file
+    - Expand write scope
+    - Delete content outside the intended patch
+  max_attempts: 1
+  max_files_changed: 1
+  max_lines_changed: 100
+  require_clean_or_isolated_worktree: true
+  idempotency_key: "${trace_id}:${tool_call_id}:${rule.version}"
+
+preconditions:
+  - The original action was authorized.
+  - The target is a regular file inside the authorized scope.
+  - The intended change is still semantically valid after rereading.
+  - A fresh digest differs from expected_pre_change_digest.
+  - The new patch can be constructed without replacing the entire file.
+
+remediation:
+  steps:
+    - Read the current target bytes.
+    - Recompute the minimal patch against current content.
+    - Re-run policy and scope checks.
+    - Apply exactly one conditional edit.
+  timeout_seconds: 30
+
+verification:
+  required:
+    - The intended invariant holds.
+    - The file parses or compiles where applicable.
+    - Only the declared file and intended region changed.
+    - The original tool error no longer occurs.
+  evidence:
+    - before_digest
+    - after_digest
+    - diff_uri
+    - verification_command
+    - verification_exit_status
+
+failure:
+  on_precondition_failure: escalate_without_mutation
+  on_remediation_failure: escalate_without_second_retry
+  on_verification_failure: restore_pre_change_bytes_and_escalate
+  on_unknown_effect: reconcile_before_any_retry
+
+circuit_breaker:
+  open_when:
+    - 2 verification failures in 10 minutes
+    - 1 rollback failure
+    - 3 matching failures on the same target in one run
+  cooldown_minutes: 60
+  reset_requires: owner_review
+
+issue_emission:
+  emit_when:
+    - circuit breaker opens
+    - the same fingerprint recurs after a verified recovery
+    - rollback fails
+  include:
+    - rule_id
+    - rule_version
+    - failure_fingerprint
+    - trace_id
+    - attempts
+    - evidence_uris
