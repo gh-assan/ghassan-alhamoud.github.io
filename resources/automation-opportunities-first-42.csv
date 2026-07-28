@@ -1,0 +1,43 @@
+id,title,domain,layer,impact,confidence,ease,ice,status
+AM-001,Billing Code Intelligence Agent,german-healthcare,document,5,4,3,60,identified
+AM-002,Discharge Summary Automator,german-healthcare,document,5,3,1,30,identified
+AM-003,Inter-Institution Referral & Handoff Agent,german-healthcare,communication,4,4,2,32,identified
+AM-004,AU Sickness Certificate Automator,german-healthcare,communication,3,5,5,75,identified
+AM-005,Pre-Authorization Intelligence Agent,german-healthcare,decision,5,4,2,40,identified
+AM-006,DRG Budget Ceiling & Utilization Monitor,german-healthcare,monitoring,4,4,3,48,identified
+AM-007,Medical Guideline & Billing Code Updater Agent,german-healthcare,knowledge,3,4,3,36,identified
+AM-008,Lease Contract & Rental Documentation Generator,real-estate-smart-building,document,3,5,5,75,identified
+AM-009,Energy Performance Certificate Compliance & Intelligence Agent,real-estate-smart-building,document,4,4,3,48,identified
+AM-010,Maintenance Dispatch & Contractor Coordination Agent,real-estate-smart-building,communication,4,4,3,48,identified
+AM-011,Renovation ROI & Lifecycle Decision Agent,real-estate-smart-building,decision,5,3,2,30,identified
+AM-012,Smart Building Anomaly & Predictive Maintenance Agent,real-estate-smart-building,monitoring,5,4,2,40,identified
+AM-013,Compliance & Rent Arrears Radar Agent,real-estate-smart-building,monitoring,4,4,4,64,identified
+AM-014,GEG-Compliance & Smart Building Knowledge Agent,real-estate-smart-building,knowledge,3,4,4,48,identified
+AM-015,Multi-Carrier Label & Manifest Automator,carrier-bidding-eshop,document,4,5,4,80,identified
+AM-016,Return Logistics & RMA Coordinator,carrier-bidding-eshop,communication,4,4,3,48,identified
+AM-017,Intelligent Carrier Router,carrier-bidding-eshop,decision,5,4,3,60,identified
+AM-018,Invoice Reconciliation & Dispute Agent,carrier-bidding-eshop,decision,4,3,2,24,identified
+AM-019,Delivery SLA & Exception Monitor,carrier-bidding-eshop,monitoring,4,4,4,64,identified
+AM-020,Rate Change & Capacity Alert Agent,carrier-bidding-eshop,monitoring,3,3,2,18,identified
+AM-021,Carrier Onboarding & Compliance Knowledge Agent,carrier-bidding-eshop,knowledge,3,4,4,48,identified
+AM-022,Irrigation Scheduling & Water Balance Automator,precision-irrigation,document,5,4,4,80,identified
+AM-023,Regulatory Water Usage Report Generator,precision-irrigation,document,4,4,3,48,identified
+AM-024,Irrigation Event & Frost Alert Communicator,precision-irrigation,communication,4,4,4,64,identified
+AM-025,Zone-Level Irrigation Decision Engine,precision-irrigation,decision,5,3,4,60,identified
+AM-026,Irrigation System Health & Efficiency Monitor,precision-irrigation,monitoring,4,4,3,48,identified
+AM-027,Crop-Water & Compliance Knowledge Agent,precision-irrigation,knowledge,3,4,4,48,identified
+AM-028,Irrigation Equipment Troubleshooting & SOP Guide,precision-irrigation,knowledge,3,3,4,36,identified
+AM-029,Heating Curve & Pipe Temperature Auto-Optimizer,greenhouse-climate,decision,5,4,4,80,identified
+AM-030,Dynamic Screen Deployment & Energy Curtain Optimizer,greenhouse-climate,decision,4,4,3,48,identified
+AM-031,Daily Climate Log & Compliance Reporter,greenhouse-climate,document,4,4,3,48,identified
+AM-032,Multi-Channel Greenhouse Alert & Coordination Agent,greenhouse-climate,communication,4,4,4,64,identified
+AM-033,Dynamic CO₂ Dosing & Ventilation Tradeoff Scheduler,greenhouse-climate,decision,4,3,4,48,identified
+AM-034,VPD & Climate Stress Early Warning Monitor,greenhouse-climate,monitoring,4,4,4,64,identified
+AM-035,Crop Climate Recipe & Disease Prevention Knowledge Agent,greenhouse-climate,knowledge,3,4,4,48,identified
+AM-036,Unified Barrel ID & Digital Cellar Map,wine-cellar-inventory,document,5,5,4,100,identified
+AM-037,Cellar Operations Dispatch & Harvest Coordination Agent,wine-cellar-inventory,communication,4,4,4,64,identified
+AM-038,SO₂ Management & Predictive Dosing Advisor,wine-cellar-inventory,decision,5,4,4,80,identified
+AM-039,Cellar Climate & Stability Sentinel,wine-cellar-inventory,monitoring,4,4,4,64,identified
+AM-040,Cellar Master's Companion — Wine Knowledge & Vintage Archive Agent,wine-cellar-inventory,knowledge,3,4,4,48,identified
+AM-041,Blending Composition & Tasting Yield Optimizer,wine-cellar-inventory,document,4,3,4,48,identified
+AM-042,Regulatory Cellar Book & Export Documentation Automator,wine-cellar-inventory,document,4,4,3,48,identified

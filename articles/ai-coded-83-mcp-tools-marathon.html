@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say &quot;Don't Stop&quot; — Ghassan Alhamoud</title>
-  <meta name="description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
+  <title>Auditing a 12-Hour AI Go Code-Generation Marathon — Ghassan Alhamoud</title>
+  <meta name="description" content="A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, integration failures, and a reusable release gate." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
-  <meta property="og:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say &quot;Don't Stop&quot;" />
-  <meta property="og:description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
+  <meta property="og:title" content="Auditing a 12-Hour AI Go Code-Generation Marathon" />
+  <meta property="og:description" content="A repository-backed audit of 32 AI-assisted Go commits—and the integration debt their throughput created." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/art-028-header.webp" />
   <meta property="article:published_time" content="2026-05-31" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
-  <meta property="twitter:title" content="83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say &quot;Don't Stop&quot;" />
-  <meta property="twitter:description" content="83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load." />
+  <meta property="twitter:title" content="Auditing a 12-Hour AI Go Code-Generation Marathon" />
+  <meta property="twitter:description" content="A repository-backed audit of 32 AI-assisted Go commits—and the integration debt their throughput created." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/art-028-header.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
-  "description": "83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
+  "headline": "Auditing a 12-Hour AI Go Code-Generation Marathon",
+  "description": "A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, integration failures, and a reusable release gate.",
   "image": "https://ghassan-alhamoud.com/images/articles/art-028-header.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-31",
-  "dateModified": "2026-05-31",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html",
   "proficiencyLevel": "Expert",
   "dependencies": "AI Agents, Go, Architecture, MCP, Automation, Code Generation, Engineering",
@@ -92,9 +92,9 @@
           <div class="article-single__meta">
             <time datetime="2026-05-31">May 31 2026</time>
             <span class="article-card__dot"></span>
-            <span>9 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">83 MCP Tools in 12 Hours — What Happens When You Point an AI at Go Code and Say "Don't Stop"</h1>
+          <h1 class="article-single__title">Auditing a 12-Hour AI Go Code-Generation Marathon</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Go</span>
@@ -109,9 +109,21 @@
         <img src="/images/articles/art-028-header.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I spent twelve hours in a marathon code-generation session. One model. One Go project. One instruction: keep going.</p>
+          <p><strong>Evidence note after auditing the repository:</strong> the full operator-observed marathon ran for 12 hours. Within it, the independently reproducible P82–P113 slice contains 32 feature commits between 07:18 and 10:48 on 31 May. Counting literal <code>mcp.NewTool(</code> constructors at those Git boundaries gives 116 before P82 and 185 after P113: a net increase of 69. The 12-hour duration and the 3h30 audited slice describe different boundaries.</p>
 
-<p>The result: 83 new MCP tools, 30+ new Go packages, 199 total tools, and a pile of hard-won lessons about what works — and what breaks — when you push AI code generation past a dozen hours.</p>
+<p>The wider day contained 69 commits and may explain how the working notes arrived at a larger number. But a backlink-worthy engineering case study should publish the count another person can reproduce. This article therefore focuses on the 32-commit window, what the code proves, and what raw throughput concealed.</p>
+
+<table>
+  <thead><tr><th>Repository measurement</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Audited feature range</td><td>P82 → P113</td></tr>
+    <tr><td>Feature commits</td><td>32</td></tr>
+    <tr><td>Commit timestamps</td><td>07:18:32 → 10:48:28 CEST</td></tr>
+    <tr><td>Literal tool constructors</td><td>116 → 185 (+69)</td></tr>
+    <tr><td>Server constructor parameters at P113</td><td>97</td></tr>
+    <tr><td>Recorded repair inside the range</td><td>One explicit variable-name fix commit</td></tr>
+  </tbody>
+</table>
 
 <hr />
 
@@ -131,10 +143,10 @@
 
 <ol>
   <li><strong>Pre-write the spec</strong> — Types, methods, tests, integration instructions. Save as <code>.pXX-spec.md</code>.</li>
-  <li><strong>Fire to Qwen</strong> — Isolated ACP session, ~5 minutes runtime per task.</li>
-  <li><strong>Use those 5 minutes</strong> — Pre-write the next spec, review the previous task's code, or fix bugs caught by parallel verification agents.</li>
+  <li><strong>Fire to Qwen</strong> — Use an isolated ACP session for each bounded task.</li>
+  <li><strong>Use the wait time</strong> — Pre-write the next spec, review the previous task's code, or fix defects caught by parallel verification.</li>
   <li><strong>Validate</strong> — <code>go build ./cmd/server/...</code> (not just <code>go test ./...</code> — we learned that the hard way).</li>
-  <li><strong>Push</strong> — Git commit + push to origin. Update <code>marathon-state.json</code>.</li>
+  <li><strong>Checkpoint</strong> — Commit the bounded change and record the next task outside conversational context.</li>
   <li><strong>Repeat.</strong></li>
 </ol>
 
@@ -146,7 +158,7 @@ TESTS: 3-5 test cases per method
 INTEGRATION: 7-step checklist (import → struct → constructor → registration → handlers → main.go → tests)
 QUALITY: build + test + self-certification</code></pre>
 
-<p>By the tenth task, I could write a full spec in under 60 seconds. By the twentieth, the pattern was so ingrained that errors became instantly visible.</p>
+<p>Operator throughput improved as the template stabilised. That observation was not instrumented, so the Git audit treats it as a retrospective report rather than a measured result.</p>
 
 <hr />
 
@@ -176,7 +188,7 @@ QUALITY: build + test + self-certification</code></pre>
 
     <tr><td><strong>Context per task</strong></td><td>Fresh isolated session (no conversation history)</td></tr>
 
-    <tr><td><strong>Session count</strong></td><td>~35 ACP sessions, each ~20 minutes</td></tr>
+    <tr><td><strong>Audited task count</strong></td><td>32 isolated feature tasks (P82–P113)</td></tr>
 
     <tr><td><strong>Temperature</strong></td><td>Default (provider-controlled, not overridden)</td></tr>
 
@@ -202,9 +214,9 @@ QUALITY: build + test + self-certification</code></pre>
 
 <h3>2. State Persistence Made the Session Crash-Safe</h3>
 
-<p>I built a <code>marathon-state.json</code> that tracked: which P# was last implemented, how many tools were registered, what was in flight, and the last git commit hash. I also wrote <code>resume-marathon.sh</code> — a crash-recovery script that checks git state, build status, test status, and tool count.</p>
+<p>The working method used a state file and resume script to track the last task, tool count, in-flight work, and commit. Neither artifact is present at the audited P113 commit, so their exact behavior cannot be independently reviewed.</p>
 
-<p>Two session crashes happened (a gateway restart and a context timeout). Both times, recovery took under 30 seconds. Zero context lost.</p>
+<p>The operator notes report two session crashes and rapid recovery. The durable Git history supports restartability at commit boundaries, but not the reported recovery latency or “zero context lost” claim.</p>
 
 <h3>3. Go's Type System Caught Nearly Every Mistake</h3>
 
@@ -214,7 +226,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <h3>4. Parallel Verification Agents Used Qwen's Idle Time Productively</h3>
 
-<p>While Qwen ran each ~5 minute task, I dispatched three verification sub-agents in parallel: a code quality reviewer, an issue relevance auditor, and an architecture reviewer. All three ran independently and produced reports as markdown files.</p>
+<p>While Qwen ran each task, I dispatched three verification passes in parallel: code quality, issue relevance, and architecture. This is the right shape, but a review report is evidence only when its findings become enforced gates.</p>
 
 <p>By the time Qwen finished its fifth task, I had deep analysis of the first four tasks' quality. This async pattern — dispatch while waiting — is the only way to keep pace with a model that finishes in minutes.</p>
 
@@ -294,11 +306,11 @@ QUALITY: build + test + self-certification</code></pre>
 
 <h3>2. The Build Cache Time Bomb</h3>
 
-<p>For about eight consecutive tasks, everything looked fine. <code>go test ./...</code> showed all green. <code>go build ./...</code> succeeded. We pushed and moved on.</p>
+<p>The working notes report a period in which package tests stayed green while the executable wiring was broken. The surviving repository proves the relevant mechanism—a package can compile and test without being registered in the server—but does not independently establish the claimed eight-commit duration.</p>
 
 <p>But <code>cmd/server</code> was silently broken for eight commits. Each commit added one more variable with a missing first letter, and the Go test cache happily reported "ok (cached)" because <code>main.go</code> changes don't invalidate the test cache for <code>internal/server/</code>.</p>
 
-<p>The build cache tracks dependencies per package: <code>main</code> imports <code>internal/server</code>, but changes to <code>main.go</code> don't invalidate the <code>internal/server</code> test cache. We were publishing broken binaries for eight consecutive tasks and didn't know it.</p>
+<p>The root issue is broader than caching: package-level success does not prove that the binary builds, boots, enumerates the expected tools, or routes a request through each new handler.</p>
 
 <p><strong>Fix:</strong> <code>go build ./cmd/server/...</code> after every Qwen dispatch. No exceptions. And use <code>go test -count=1 ./...</code> in any review loop — never trust cached results when wiring changes.</p>
 
@@ -320,11 +332,11 @@ QUALITY: build + test + self-certification</code></pre>
 
 <p>Five edits for one new feature. The probability of a mistake approaches certainty as the list grows. This is the single biggest architectural debt, and it's compounding.</p>
 
-<p><strong>Fix:</strong> The functional options pattern. Replace <code>NewNegotiationServer(engine1, ..., engine97)</code> with <code>NewNegotiationServer(opts...)</code>. Adding a new engine becomes a single <code>With<em>()</code> call — no positional ordering, no merge conflicts. An <code>options.go</code> file was built during the marathon with all <code>With</em></code> functions, but the full constructor refactor was deferred.</p>
+<p><strong>Fix:</strong> split registration into cohesive modules and inject a small dependency container per module. A functional-options API can reduce positional ordering mistakes, but simply moving 97 dependencies behind <code>opts...</code> hides rather than removes coupling. No <code>options.go</code> artifact exists at the audited commit.</p>
 
 <h3>4. Qwen Occasionally Skips the Wiring</h3>
 
-<p>About one in five tasks, Qwen would write the entire internal package — types, engine, tests — but skip the 7-step integration into the server. The package compiled in isolation but had no connection to the MCP server.</p>
+<p>The working notes estimate that integration was skipped in roughly one in five tasks. That rate is not reconstructable from Git alone. The failure class is real, however: an unused Go package can compile while adding zero runtime capability.</p>
 
 <p>This happened because Qwen's output window was consumed by the package code, leaving no room for the integration steps. The pass/fail signal (<code>go build ./...</code>) passed because the package compiles even without integration.</p>
 
@@ -332,9 +344,12 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>Per-Task Breakdown</h2>
+<h2>Contemporaneous Task Log</h2>
 
-<p>Here's the actual data from the marathon — 32 tasks, their real runtimes, and the retry count:</p>
+<p>The following table is retained as a contemporaneous operator log. Package names and commit order match the repository. Per-task runtimes and retry counts were not recorded in Git or a durable benchmark artifact, so they should not be treated as independently reproducible measurements.</p>
+
+<details>
+<summary>Show the original 32-task working log</summary>
 
 <table>
 
@@ -414,15 +429,9 @@ QUALITY: build + test + self-certification</code></pre>
 
 </table>
 
-<p><strong>Total Qwen runtime:</strong> ~685 minutes</p>
+</details>
 
-<p><strong>Wall clock time:</strong> ~720 minutes</p>
-
-<p><strong>Overhead (spec-writing, review, fix, push):</strong> ~35 minutes</p>
-
-<p>The overhead is low because spec-writing and review happened <em>during</em> Qwen's runtime, not sequentially after it. The assembly line pattern hides the overhead behind the model's compute time.</p>
-
-<p><strong>Zero retries across all 32 tasks.</strong> Every task compiled and passed tests on the first attempt. This is not because Qwen is perfect — it's because the spec template eliminates ambiguity, and any wiring errors were caught during the same 5-minute window by running build in parallel with the next task's dispatch.</p>
+<p>The defensible elapsed time for the audited Git window is 3 hours 30 minutes between the first and last feature-commit timestamps. Git also contains an explicit repair commit—<code>fix: correct variable name typos in main.go</code>—between P104 and P105. It would therefore be misleading to call the sequence “zero retry” or “first-attempt success.”</p>
 
 <hr />
 
@@ -430,7 +439,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <h3>1. AI Code Generation Reaches Escape Velocity at Task 10</h3>
 
-<p>The first task took 15 minutes (reading patterns, writing spec, reviewing output). Task 10 took 3 minutes. Task 30 took 2 minutes. The bottleneck shifted from "figuring out what to write" to "waiting for Go to compile."</p>
+<p>The commit cadence accelerated once package patterns repeated, but the audit does not isolate model time from specification, review, repair, and commit overhead. Measure those phases separately in the next run.</p>
 
 <p><strong>Caveat:</strong> This is as much about operator learning as model learning. I got faster at writing specs. The model saw no previous tasks (fresh session each time). The flywheel is real but it's partly a human-skill flywheel, not an AI-skill flywheel.</p>
 
@@ -442,15 +451,15 @@ QUALITY: build + test + self-certification</code></pre>
 
 <h3>3. Don't Trust the Test Cache</h3>
 
-<p>The Go test cache hid eight consecutive broken builds. <code>-count=1</code> should be the default in every CI pipeline for AI-generated code.</p>
+<p>Fresh tests are useful, but <code>-count=1</code> is not a substitute for building and exercising the executable. CI should run both.</p>
 
 <h3>4. Pre-Written Specs Beat Real-Time Prompting</h3>
 
-<p>Every task dispatched from a pre-written <code>.pXX-spec.md</code> succeeded on the first try. Every task I improvised mid-session (none in this marathon, but tested separately) needed at least one retry. The act of writing the spec — exact types, exact test cases, exact integration instructions — is where the thinking happens. The Qwen task is just execution.</p>
+<p>Pre-written specs reduced ambiguity, but the repository contains an integration repair inside the audited window. Treat the template as an input control, not proof of correctness. The release gate must still test runtime registration and behavior.</p>
 
 <h3>5. You Need a Crash Plan</h3>
 
-<p>Two session crashes, zero data loss. The marathon state file and resume script turned potential disasters into 30-second recoveries. Every multi-hour AI session needs a checkpoint system.</p>
+<p>The commit sequence made the work restartable even when an agent session ended. For the next run, persist and test the checkpoint artifact in the repository so recovery time and state loss become measurable rather than anecdotal.</p>
 
 <hr />
 
@@ -460,9 +469,9 @@ QUALITY: build + test + self-certification</code></pre>
 
 <p>A <code>PATTERNS.md</code> file in the project root contains five complete code patterns: in-memory engine, SQLite store, tool registration + handler, struct field + constructor param, and table-driven tests. Each pattern includes complete code examples from the codebase. Qwen reads this before every task.</p>
 
-<h3>marathon-state.json — The Checkpoint File</h3>
+<h3>Checkpoint state — make it an auditable artifact</h3>
 
-<p>A JSON file tracking: implemented up to P#, tools count, last commit hash, in-flight tasks. If the session dies, <code>resume-marathon.sh</code> reads this file, checks the actual git state, and tells you what to do next.</p>
+<p>Record the implemented task, expected runtime tool count, last verified commit, in-flight task, and gate results. Commit a schema and test the resume path. A recovery mechanism that exists only in operator notes cannot support a reliability claim.</p>
 
 <h3>The Quality Triad</h3>
 
@@ -474,7 +483,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <p>- <strong>Architecture:</strong> assesses structural health and identifies accumulating debt</p>
 
-<p>These run in parallel with Qwen, using the 5-minute bake time productively.</p>
+<p>These can run in parallel with implementation, provided one authoritative gate reconciles their findings before merge.</p>
 
 <hr />
 
@@ -490,7 +499,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <p>- <strong>One developer</strong> — operator skill level affects spec quality, error detection, and overall throughput.</p>
 
-<p>- <strong>12-hour window</strong> — the flywheel/debt tension hasn't been tested over longer periods. The 97-parameter constructor suggests deceleration is coming.</p>
+<p>- <strong>Short audited window</strong> — the 32-commit slice spans 3 hours 30 minutes. The 97-parameter constructor already shows the throughput/debt tension.</p>
 
 <hr />
 
@@ -506,19 +515,20 @@ QUALITY: build + test + self-certification</code></pre>
 
   <tbody>
 
-    <tr><td>Session duration</td><td>~12 hours</td></tr>
+    <tr><td>Full session duration</td><td>12 hours (operator-confirmed)</td></tr>
+    <tr><td>Audited commit window</td><td>3h 30m (reproducible Git timestamps)</td></tr>
 
     <tr><td>P# tasks completed</td><td>32 (P82 → P113)</td></tr>
 
-    <tr><td>New MCP tools</td><td>83</td></tr>
+    <tr><td>Tool-constructor delta</td><td>+69 (<code>mcp.NewTool(</code> source count)</td></tr>
 
-    <tr><td>Total tools</td><td>199 / 250 (80%)</td></tr>
+    <tr><td>Tool constructors at P113</td><td>185</td></tr>
 
-    <tr><td>New Go packages</td><td>30+</td></tr>
+    <tr><td>Feature commits</td><td>32 (P82–P113)</td></tr>
 
-    <tr><td>Qwen avg runtime</td><td>~5 min per task</td></tr>
+    <tr><td>Runtime per task</td><td>Not reproducibly recorded</td></tr>
 
-    <tr><td>Zero retry rate</td><td>32/32 (100%) — all tasks first-attempt</td></tr>
+    <tr><td>Repairs</td><td>At least one explicit integration repair commit</td></tr>
 
     <tr><td>Architecture debt items</td><td>3 (constructor, tools.go, main.go)</td></tr>
 
@@ -530,26 +540,35 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>What's Next</h2>
-
-<p>The marathon proved the model works — 83 tools in 12 hours. The open questions:</p>
+<h2>The release gate this run needed</h2>
 
 <ol>
-  <li><strong>Can we sustain this to 250?</strong> The constructor is at 97 parameters. The options pattern refactor must happen before P120.</li>
-  <li><strong>Can we parallelize?</strong> With the options pattern, multiple tools can be dispatched simultaneously with no merge conflicts.</li>
-  <li><strong>Can we generalize to other languages?</strong> The compile-time safety thesis needs testing in Rust, TypeScript, and at least one interpreted language.</li>
+  <li>Build the exact production command, not only library packages.</li>
+  <li>Start the MCP server in an isolated process and enumerate its tools.</li>
+  <li>Compare runtime enumeration with the reviewed manifest.</li>
+  <li>Invoke at least one happy path and one invalid-input path per new tool.</li>
+  <li>Run uncached unit, integration, race, and static-analysis checks.</li>
+  <li>Fail when a package exists but has no registration, handler, or contract test.</li>
+  <li>Measure constructor fan-in and block further growth beyond the agreed limit.</li>
+  <li>Retain model, spec, diff, test evidence, repair count, and reviewer decision.</li>
 </ol>
 
-<p>The assembly line isn't Go-specific. The pattern — pre-written spec → AI implementation → compile-time validation — should transfer to any language with strong static typing. But that's a hypothesis. The only thing I can prove is that it works for one Go project, with one model, over one twelve-hour session.</p>
+<p><a href="/resources/ai-codegen-integration-gate.csv" class="btn btn--primary" download>Download the AI code-generation integration gate</a></p>
 
-<p>Sometimes that's enough to change how you work.</p>
+<p>The repository supports a useful conclusion, just not the original headline: structured specs can create extraordinary implementation throughput, while executable-level verification and architecture limits determine whether that throughput becomes a product or a pile of disconnected packages.</p>
+
+<ul>
+  <li><a href="/articles/orchestrator-qwen-acp-handoff.html">Design a verifiable ACP handoff</a></li>
+  <li><a href="/articles/quality-vs-speed-agent-era.html">Select gates by change risk</a></li>
+  <li><a href="/articles/stop-building-agent-soup-compilers.html">Compile workflow specifications into controlled execution</a></li>
+</ul>
 
 <hr />
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Scaling AI-assisted delivery without scaling integration debt?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Delivery Gate</a>
         </div>
       </article>
 

@@ -1,0 +1,87 @@
+{
+  "contractVersion": "1.0",
+  "handoffId": "80cd3291-01c5-4d20-9501-4125ee3eb2a6",
+  "idempotencyKey": "entityscope-mcp-read-surface-v1",
+  "createdAt": "2026-07-28T12:00:00Z",
+  "issuer": {
+    "id": "openclaw-orchestrator",
+    "role": "planner-and-verifier"
+  },
+  "assignee": {
+    "id": "coding-agent",
+    "role": "implementation-specialist"
+  },
+  "objective": "Implement the read-only MCP surface for EntityScope and wire every tool into the runnable server.",
+  "scope": {
+    "include": [
+      "Tool definitions",
+      "Handlers",
+      "Server registration",
+      "Composition-root wiring",
+      "Automated tests"
+    ],
+    "exclude": [
+      "Production deployment",
+      "Write-capable tools",
+      "Schema redesign"
+    ]
+  },
+  "inputs": [
+    {
+      "name": "architecture",
+      "uri": "repo://entityscope/ARCHITECTURE.md"
+    }
+  ],
+  "constraints": [
+    "Python 3.11 or newer",
+    "Use parameterized queries",
+    "Do not expose raw SQL",
+    "Do not add network access to the coding runtime"
+  ],
+  "acceptance": [
+    {
+      "id": "TOOLS_LISTED",
+      "assertion": "All four tools appear in the server tool list.",
+      "verificationCommand": "PYTHONPATH=src pytest tests/test_server.py -q",
+      "evidenceRequired": true
+    },
+    {
+      "id": "END_TO_END",
+      "assertion": "A query reaches the production handler and returns structured data.",
+      "verificationCommand": "PYTHONPATH=src pytest tests/test_query.py -q",
+      "evidenceRequired": true
+    },
+    {
+      "id": "FULL_SUITE",
+      "assertion": "The full repository suite passes without changing unrelated expectations.",
+      "verificationCommand": "PYTHONPATH=src pytest -q",
+      "evidenceRequired": true
+    }
+  ],
+  "permissions": {
+    "read": [
+      "repo://entityscope/**"
+    ],
+    "write": [
+      "repo://entityscope/src/**",
+      "repo://entityscope/tests/**"
+    ],
+    "network": [],
+    "secrets": []
+  },
+  "budget": {
+    "wallClockSeconds": 7200,
+    "maxAttempts": 3
+  },
+  "escalation": {
+    "on": [
+      "Acceptance command fails after the final attempt",
+      "Required dependency is unavailable",
+      "A change outside the write scope is necessary",
+      "The requested behavior conflicts with repository architecture"
+    ],
+    "route": "openclaw-orchestrator"
+  },
+  "state": "proposed",
+  "attempt": 0
+}

@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>The Agent Black Box Problem — Ghassan Alhamoud</title>
-  <meta name="description" content="If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger." />
+  <title>The Security Risks of Unverified AI Agent Skills — Ghassan Alhamoud</title>
+  <meta name="description" content="A practical threat model for third-party AI agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html" />
-  <meta property="og:title" content="The Agent Black Box Problem" />
-  <meta property="og:description" content="If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger." />
+  <meta property="og:title" content="The Security Risks of Unverified AI Agent Skills" />
+  <meta property="og:description" content="A practical threat model for third-party AI agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART003.webp" />
   <meta property="article:published_time" content="2026-03-12" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html" />
-  <meta property="twitter:title" content="The Agent Black Box Problem" />
-  <meta property="twitter:description" content="If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger." />
+  <meta property="twitter:title" content="The Security Risks of Unverified AI Agent Skills" />
+  <meta property="twitter:description" content="A practical threat model for third-party AI agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART003.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "The Agent Black Box Problem",
-  "description": "If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger.",
+  "headline": "The Security Risks of Unverified AI Agent Skills",
+  "description": "A practical threat model for third-party AI agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART003.webp",
   "author": {
     "@type": "Person",
@@ -45,11 +45,11 @@
     }
   },
   "datePublished": "2026-03-12",
-  "dateModified": "2026-03-12",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "AI Agents, Security, Trust, OpenClaw",
-  "articleSection": "Software Architecture"
+  "dependencies": "AI Agents, Agent Skills, Software Supply Chain, Security, Threat Modeling",
+  "articleSection": "AI Security"
 }
   </script>
 
@@ -92,46 +92,159 @@
           <div class="article-single__meta">
             <time datetime="2026-03-12">Mar 12 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>8 min</span>
           </div>
-          <h1 class="article-single__title">The Agent Black Box Problem</h1>
+          <h1 class="article-single__title">The Security Risks of Unverified AI Agent Skills</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
+          <span class="article-single__tag">Agent Skills</span>
           <span class="article-single__tag">Security</span>
-          <span class="article-single__tag">Trust</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Software Supply Chain</span>
+          <span class="article-single__tag">Threat Modeling</span>
           </div>
         </header>
 
-                <img src="/images/articles/ART003.webp" alt="" class="article-single__image" loading="eager" />
+        <img src="/images/articles/ART003.webp" alt="Opaque agent skill packages entering a verification ledger before agents can acquire them" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>If you're building with agents, you have a massive trust problem.</p>
-<p>Two months ago, I watched a team's production agent go down because a "skill" they bought from a third-party marketplace silently degraded. The latency spiked, the output corrupted, and the whole multi-agent pipeline cascaded into failure.</p>
-<p>What did they know about that skill when they integrated it?</p>
-<p><strong>"I hope it works."</strong></p>
-<p>Agent skills have become opaque black boxes. There is no verification, no composability, and no marketplace where I can purchase a proven skill with a trust-minimized guarantee.</p>
-<p>This is the next bottleneck for the agent economy.</p>
-<p>We are trying to build autonomous, multi-agent systems while relying on trust-based, manual contracts for everything outside the core model. It’s brittle. It’s unscalable. It’s a security nightmare.</p>
-<p>The solution isn't another API marketplace. It's a <strong>skill ledger.</strong></p>
-<p>Imagine an on-chain marketplace where skills are tokenized assets. Each skill comes with:</p>
-<ul>
-<li>Standardized API schemas.</li>
-<li>Programmable SLOs (latency, uptime, accuracy).</li>
-<li><strong>Bonded stake</strong> that is slashed if the skill fails.</li>
-</ul>
-<p>When an agent needs a capability, it pulls from a verified ledger. It pays into a trust-minimized escrow. If the skill fails to deliver, the creator's bond is slashed.</p>
-<p>Blockchain skeptics might roll their eyes, but this is the infrastructure the agent economy needs.</p>
-<p>We don't need another directory for humans. <strong>We need an accountability and settlement layer for machines.</strong></p>
-<p>We need SkillLedger.</p>
-<p>If agents are going to run the future of business, they need a way to verify the tools they hire.</p>
-<p>Who else is looking at the infra layer for verifiable agent skills?</p>
+          <p><strong>An agent skill is executable supply-chain input.</strong> Treating it as a prompt file, a marketplace listing, or a five-star review is a category error. The moment an agent can acquire a skill and act through it, that package can affect credentials, data, money, infrastructure, and every downstream agent that trusts its output.</p>
+
+          <p>This article is a threat model for teams consuming third-party skills. It separates five claims that are often collapsed into the word “verified”: identity, integrity, provenance, policy compliance, and safe behavior. They require different controls. None is a substitute for least privilege and isolated execution.</p>
+
+          <p><em>Reviewed July 28, 2026. The implementation examples below were checked against the open-source <a href="https://github.com/ghassan-ai-projects/skill-ledger" target="_blank" rel="noopener noreferrer">SkillLedger repository</a>. The product is an experimental MVP, not a security certification service.</em></p>
+
+          <h2>Why agent skills are a distinct supply-chain risk</h2>
+
+          <p>Traditional package managers resolve code before an application runs. Agent systems can discover and compose capabilities at runtime, based on natural-language intent and incomplete context. That adds three failure multipliers:</p>
+
+          <ul>
+            <li><strong>Dynamic selection:</strong> the model may choose a tool the application developer never reviewed.</li>
+            <li><strong>Delegated authority:</strong> the skill may inherit filesystem, network, mailbox, or payment access from the calling agent.</li>
+            <li><strong>Semantic trust:</strong> a syntactically valid result can still be deceptive, poisoned, or wrong enough to trigger damaging follow-up actions.</li>
+          </ul>
+
+          <p>The <a href="https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/" target="_blank" rel="noopener noreferrer">OWASP Agentic Security Initiative</a> treats tool misuse, cascading failures, and agent supply-chain attacks as connected risks. That connection matters: a compromised skill is rarely the final failure. It is the first untrusted step in a chain of trusted automation.</p>
+
+          <h2>The five claims hidden inside “verified”</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Claim</th>
+                <th>Useful evidence</th>
+                <th>What it does not prove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Identity</strong></td>
+                <td>Publisher account, signing identity, ownership history</td>
+                <td>That the publisher is competent or benign</td>
+              </tr>
+              <tr>
+                <td><strong>Integrity</strong></td>
+                <td>Digest, signature, immutable artifact reference</td>
+                <td>That the signed bytes are safe</td>
+              </tr>
+              <tr>
+                <td><strong>Provenance</strong></td>
+                <td>Source revision, builder identity, build inputs</td>
+                <td>That the source has no vulnerability</td>
+              </tr>
+              <tr>
+                <td><strong>Policy compliance</strong></td>
+                <td>Declared permissions, path and secret checks, human approval</td>
+                <td>Behavior outside the checks performed</td>
+              </tr>
+              <tr>
+                <td><strong>Safe behavior</strong></td>
+                <td>Sandbox tests, runtime controls, monitoring, signed execution records</td>
+                <td>Safety under every input and environment</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>This is the core design rule: <strong>store each claim separately and preserve the evidence behind it.</strong> A single green badge destroys information. A buyer needs to know whether a package merely has a matching checksum or whether it was also signed, reviewed, tested in isolation, and observed in production.</p>
+
+          <h2>A practical threat model</h2>
+
+          <h3>1. Publisher impersonation</h3>
+
+          <p>An attacker publishes a look-alike skill or takes over a legitimate author account. A display name does not establish identity. Require scoped credentials, protect publisher accounts, and bind every released version to a stable publisher identity. For higher-risk packages, add independent maintainers or multi-party approval.</p>
+
+          <h3>2. Artifact substitution</h3>
+
+          <p>The reviewed manifest and the downloaded bytes are not the same artifact. A digest detects accidental or malicious modification only when the consumer recomputes it over the exact acquired payload. A signature adds publisher identity to integrity, while a transparency record makes later substitution harder to hide. <a href="https://docs.sigstore.dev/cosign/verifying/verify/" target="_blank" rel="noopener noreferrer">Sigstore’s verification documentation</a> shows this separation clearly: signature verification, identity checks, and artifact digest checks are distinct operations.</p>
+
+          <h3>3. Misleading manifests</h3>
+
+          <p>A manifest can declare narrow permissions while the code attempts broad access. Schema validation is still valuable—it makes entrypoints, inputs, outputs, runtime, and requested permissions inspectable—but declarations are claims, not enforcement. The runtime must deny undeclared access.</p>
+
+          <h3>4. Malicious or vulnerable code</h3>
+
+          <p>A package can be authentic, unmodified, and dangerous. Static analysis, dependency scanning, review, and sandboxed execution address different parts of this risk. The <a href="https://csrc.nist.gov/projects/ssdf" target="_blank" rel="noopener noreferrer">NIST Secure Software Development Framework</a> is a useful baseline because it treats provenance, secure production, and vulnerability response as lifecycle practices rather than a one-time marketplace check.</p>
+
+          <h3>5. Post-approval drift</h3>
+
+          <p>A new version, mutable dependency, remote endpoint, or changed model can alter behavior after approval. Pin versions and dependencies, make approvals version-specific, and require re-verification after any artifact change. <a href="https://slsa.dev/spec/v1.0/levels" target="_blank" rel="noopener noreferrer">SLSA’s build track</a> is a helpful model: provenance exists at the first level, while higher levels add stronger protection against tampering during and after the build.</p>
+
+          <h3>6. Excess authority at execution time</h3>
+
+          <p>Even a well-reviewed skill becomes dangerous when it inherits unrestricted credentials. Run acquired skills with a minimal capability set, explicit network destinations, resource budgets, timeouts, and a kill switch. High-impact actions should require an independent approval boundary—not another prompt to the same model.</p>
+
+          <h3>7. Untraceable downstream effects</h3>
+
+          <p>When an action fails, you need to reconstruct which skill version ran, who approved it, what inputs it received, which permissions were granted, and what it changed. That is the role of <a href="/articles/agent-execution-attestation.html">execution attestation</a>: it complements package verification with evidence about a specific run.</p>
+
+          <h2>What SkillLedger 0.1.0 actually verifies</h2>
+
+          <p>The current SkillLedger code is deliberately narrower than the original “trust-minimized marketplace” idea. Its automated artifact verifier checks eight conditions: artifact presence, supported type, manifest shape, required fields, client-side runtime, bundled-file metadata, version consistency, and a SHA-256 checksum over canonicalized manifest JSON.</p>
+
+          <p>A separate policy service checks artifact size, file paths, declared permissions, obvious secret patterns, and basic name/description quality. Path traversal, absolute paths, and obvious secrets are hard failures. Other findings remain available for a human administrator. Verification and marketplace approval are separate records, and approval transitions are appended to an event log.</p>
+
+          <p>Those are useful controls, but the repository’s own security model states the boundary precisely: the checks do not prove that code is safe, behaves as described, contains no malicious payload, or runs in an isolated environment. The ledger is database-backed, not a blockchain; its event history relies on the trusted application and database.</p>
+
+          <p>For the complete product flow, implementation status, and limitations, read <a href="/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html">the SkillLedger 0.1.0 architecture article</a>. This page owns the threat model; that page owns the implementation.</p>
+
+          <h2>A minimum acquisition gate</h2>
+
+          <p>Before an agent can acquire or enable a third-party skill, I would require this evidence envelope:</p>
+
+          <pre><code>{
+  "artifact": {
+    "digest": "sha256:…",
+    "version": "1.4.2",
+    "publisher": "did-or-account-id"
+  },
+  "provenance": {
+    "source_revision": "git-sha",
+    "builder": "ci-workflow-identity"
+  },
+  "policy": {
+    "requested_permissions": ["network:api.example.com"],
+    "review_id": "review-…",
+    "decision": "approved"
+  },
+  "runtime": {
+    "sandbox_profile": "network-restricted-v2",
+    "credential_scope": "read-only",
+    "expires_at": "2026-07-28T18:00:00Z"
+  }
+}</code></pre>
+
+          <p>The gate should fail closed if a required field is missing, the digest changes, approval applies to another version, or the requested runtime authority exceeds the approved policy. Discovery should also expose these attributes so an agent can rank compatible, lower-risk capabilities before selection; that is the missing layer described in <a href="/articles/agent-reasoning-discovery-fallacy.html">the agent capability discovery article</a>.</p>
+
+          <h2>The boundary that matters</h2>
+
+          <p>A marketplace can improve identity, integrity, provenance, and review accountability. It cannot make arbitrary third-party code safe. The security boundary must remain at execution: least privilege, isolation, explicit approval for consequential actions, observation, and revocation.</p>
+
+          <p>If your architecture treats “verified” as a binary property, replace the badge with evidence. Then make every consuming agent prove that the evidence satisfies its own risk policy before it runs the skill.</p>
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+        <div class="article-cta article-cta--resource">
+          <p class="article-cta__text">Inspect the implemented checks and trust boundaries in the open-source SkillLedger repository.</p>
+          <a href="https://github.com/ghassan-ai-projects/skill-ledger/blob/main/documentation/security-model.md" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Review the Security Model</a>
         </div>
       </article>
 

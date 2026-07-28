@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-07-24",
-  "dateModified": "2026-07-24",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/email-intelligence-protocol.html",
   "proficiencyLevel": "Expert",
   "dependencies": "open-source, AI agents, MCP, Python, SQLite, email security, local-first",
@@ -325,6 +325,8 @@
 
     <p>The project is MIT licensed because local infrastructure should be easy to inspect, modify, and embed into a larger agent stack. Security code especially benefits from scrutiny. I do not want the trust boundary around my inbox to be a black box.</p>
 
+    <p><strong>Verification snapshot, 28 July 2026:</strong> 117 tests pass with 78.16% measured statement/branch coverage. The scanner module is at 80% coverage; the CLI is currently unmeasured by that suite. These figures verify checked-in paths, not resistance to every prompt-injection technique.</p>
+
     <hr>
 
     <h2>The Lesson</h2>
@@ -341,11 +343,17 @@
 
     <p><strong><a href="https://github.com/ghassan-ai-projects/email-intelligence-platform">github.com/ghassan-ai-projects/email-intelligence-platform</a></strong></p>
 
+    <ul>
+      <li><a href="/articles/every-token-is-rent-memory-architecture.html">Decide what email-derived state deserves memory</a></li>
+      <li><a href="/articles/agent-execution-attestation.html">Record evidence for sensitive agent actions</a></li>
+      <li><a href="/articles/orchestrator-qwen-acp-handoff.html">Bound agent handoffs around untrusted content</a></li>
+    </ul>
+
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Want to inspect the boundary before connecting an agent to email?</p>
+          <a href="https://github.com/ghassan-ai-projects/email-intelligence-platform" class="btn btn--primary">Review the Repository</a>
         </div>
       </article>
 

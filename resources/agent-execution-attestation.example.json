@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0",
+  "attestationId": "4b9ff9ca-1577-47c8-a938-c4db1cf54123",
+  "emittedAt": "2026-07-28T14:05:09Z",
+  "issuer": {
+    "id": "demo-execution-gateway",
+    "keyId": "demo-ed25519-2026-07",
+    "collector": "gateway-observer/1.0.0"
+  },
+  "subject": {
+    "type": "content-release",
+    "id": "article:example-release:17",
+    "artifactDigest": "sha256:69b83d85570c1a63ee6db05ff954ac1e0cd78aa8d62d0df697c0a6e4237c4a24"
+  },
+  "run": {
+    "traceId": "trace-demo-019fa85a",
+    "parentTraceId": null,
+    "startedAt": "2026-07-28T14:04:31Z",
+    "endedAt": "2026-07-28T14:05:08Z"
+  },
+  "actor": {
+    "principal": "user:demo-owner",
+    "agentId": "agent:release-assistant",
+    "delegationDigest": "sha256:107daea4d8b5e7b798641b23fd92c13b854b83f30efcb0b62eb1d718dfc53943"
+  },
+  "intent": {
+    "requestDigest": "sha256:32febc454bf207c346d6b67b76fe55a7b0b267e2b846b0c25c7f1dd4d134486c",
+    "policyDigest": "sha256:255f04175a8ab4a96df40b69ca7900e5ed0694ea44b401f17fef24e90f4e899a",
+    "approvalDigest": "sha256:0d0172ac1a93f69dc5e6a1aecfc695c89b50c9854f079567e4c623099d6a49e7"
+  },
+  "runtime": {
+    "orchestrator": "workflow-gateway/1.4.2",
+    "model": {
+      "provider": "example-provider",
+      "id": "example-model",
+      "revision": "provider-receipt:demo-8842"
+    },
+    "promptDigest": "sha256:89f207296276a50dbb30a83fa82b16b4e8c4a8bcd13b14f55dde5fd24d72b6a4",
+    "environmentDigest": "sha256:f99e1c9c00a74b881f98574af1ec99beabde2d4b25fca8a05ee1e520abeb727d"
+  },
+  "inputs": [
+    {
+      "name": "approved-article",
+      "digest": "sha256:69b83d85570c1a63ee6db05ff954ac1e0cd78aa8d62d0df697c0a6e4237c4a24",
+      "classification": "public",
+      "evidenceRef": "evidence://content/article-17"
+    }
+  ],
+  "tools": [
+    {
+      "name": "site.publish",
+      "version": "2.1.0",
+      "inputDigest": "sha256:fc283c62b664338e5eb82e78b1fc267669b0ca2c42a5077ebea4a422d5a52ae9",
+      "outputDigest": "sha256:b50b449c265d7b5677df58d9878aab951a9a21de0e5cec53d488076fe99e5b62",
+      "effectClass": "reversible",
+      "effectReceipt": "demo-provider:deployment-8842"
+    }
+  ],
+  "checks": [
+    {
+      "id": "content-link-and-schema-validation",
+      "version": "1.2.0",
+      "result": "passed",
+      "evidenceDigest": "sha256:fac63a9d712cbc9d9228043cda8ea3e1c30a082ba1cf479dbfd963a93f26f61c"
+    }
+  ],
+  "outcome": {
+    "status": "succeeded",
+    "outputDigests": [
+      "sha256:b50b449c265d7b5677df58d9878aab951a9a21de0e5cec53d488076fe99e5b62"
+    ],
+    "errorClass": null
+  },
+  "sequence": {
+    "previousAttestationDigest": null,
+    "nonce": "QkOfW4wQbV2Y9v7jgN7ZBZ4x"
+  }
+}

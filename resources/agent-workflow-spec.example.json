@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "workflowId": "refund-review",
+  "intent": {
+    "owner": "support-operations",
+    "objective": "Evaluate and, when authorized, execute one customer refund",
+    "constraints": [
+      "Never trust an order identifier supplied only in message content",
+      "Never exceed the policy limit",
+      "Never repeat a payment effect with the same idempotency key"
+    ]
+  },
+  "inputs": [
+    {"name": "request", "type": "support_message", "classification": "confidential", "source": "authenticated_support_queue"}
+  ],
+  "capabilities": [
+    {"name": "orders.read", "scope": ["request.customer_account"], "approvalRequired": false},
+    {"name": "payments.refund", "scope": ["verified_order"], "approvalRequired": true},
+    {"name": "messages.send", "scope": ["request.reply_channel"], "approvalRequired": false}
+  ],
+  "stages": [
+    {"id": "verify_order", "dependsOn": [], "capability": "orders.read", "output": "verified_order", "timeoutSeconds": 10, "maxAttempts": 2, "effect": "none"},
+    {"id": "preview_refund", "dependsOn": ["verify_order"], "capability": "payments.refund", "output": "refund_preview", "timeoutSeconds": 10, "maxAttempts": 1, "effect": "preview"},
+    {"id": "apply_refund", "dependsOn": ["preview_refund"], "capability": "payments.refund", "output": "provider_receipt", "timeoutSeconds": 20, "maxAttempts": 1, "effect": "irreversible", "idempotencyKey": "refund:{verified_order.id}", "approvalPolicy": "refund-policy-v3"},
+    {"id": "notify_customer", "dependsOn": ["apply_refund"], "capability": "messages.send", "output": "delivery_receipt", "timeoutSeconds": 20, "maxAttempts": 3, "effect": "reversible", "idempotencyKey": "refund-notice:{provider_receipt.id}"}
+  ],
+  "acceptance": [
+    {"id": "order_matches_principal", "kind": "invariant", "target": "verified_order.customer_id", "expected": "request.authenticated_customer_id"},
+    {"id": "refund_within_policy", "kind": "invariant", "target": "refund_preview", "expected": "refund-policy-v3"},
+    {"id": "approval_matches_effect", "kind": "human", "target": "refund_preview.hash", "expected": "approved_action.hash"}
+  ],
+  "failurePolicy": {
+    "invalid_spec": "stop",
+    "policy_denied": "stop",
+    "transient_tool_error": "retry",
+    "verification_failed": "repair",
+    "effect_unknown": "reconcile"
+  },
+  "telemetry": {
+    "traceFields": ["request_id", "policy_version", "plan_version", "stage", "result", "effect_receipt"],
+    "redact": ["message_body", "payment_token", "customer_email"],
+    "maxCost": 2.5
+  }
+}

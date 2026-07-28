@@ -1,0 +1,91 @@
+spec_version: "1.0"
+engine: replace-with-engine-name
+owner: replace-with-team
+default_mode: report_only
+global_limits:
+  max_auto_fixes_per_run: 3
+  max_files_changed_per_run: 5
+  max_lines_changed_per_run: 100
+  cooldown_hours_after_failure: 24
+  require_clean_worktree: true
+
+components:
+  - id: example-skill
+    type: skill
+    owner: agent-platform
+    paths:
+      - skills/example-skill/SKILL.md
+    expected:
+      required_sections:
+        - Self-Improvement
+      review_interval_days: 30
+    checks:
+      - id: improvement-section-present
+        detector: markdown_section
+        arguments:
+          heading: Self-Improvement
+        severity: low
+        evidence:
+          - file_digest
+          - matched_heading
+    remediation:
+      mode: auto
+      risk_class: documentation_only
+      preconditions:
+        - Target file is inside the declared component paths
+        - Worktree is clean
+        - Required section is absent
+        - File digest still matches the scan evidence
+      action: append_reviewed_template
+      verification:
+        - Re-run improvement-section-present
+        - Parse the resulting Markdown
+        - Confirm only one declared file changed
+      rollback:
+        strategy: restore_pre_change_bytes
+        verify:
+          - File digest matches the pre-change digest
+    escalation:
+      when:
+        - Preconditions fail
+        - Verification fails
+        - Rollback fails
+      route: agent-platform-oncall
+
+finding_schema:
+  required:
+    - finding_id
+    - run_id
+    - check_id
+    - component_id
+    - observed_at
+    - severity
+    - evidence
+    - disposition
+  dispositions:
+    - proposed
+    - approved
+    - applied
+    - verified
+    - rejected
+    - failed
+    - rolled_back
+    - escalated
+
+run_reconciliation:
+  invariants:
+    - applied_count equals findings with disposition in [applied, verified]
+    - verified_count never exceeds applied_count
+    - every failed application has rollback or escalation evidence
+    - summary counters equal the append-only findings ledger
+  emit:
+    - manifest_digest
+    - engine_version
+    - started_at
+    - completed_at
+    - scan_count
+    - proposed_count
+    - applied_count
+    - verified_count
+    - rolled_back_count
+    - failed_count

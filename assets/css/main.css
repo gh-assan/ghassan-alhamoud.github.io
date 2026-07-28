@@ -1904,6 +1904,24 @@ img {
   background: var(--bg-secondary);
 }
 
+@media (max-width: 600px) {
+  .article-single__body {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .article-single__body table {
+    table-layout: fixed;
+    font-size: 13px;
+  }
+
+  .article-single__body th,
+  .article-single__body td {
+    padding: 8px 6px;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* Article CTA at bottom */
 .article-cta {
   max-width: 720px;
@@ -2784,7 +2802,7 @@ img {
 .footer__nav-link[href$="#contact"],
 a[data-cal-link],
 a[href*="calendly.com"],
-.article-cta,
+.article-cta:not(.article-cta--resource),
 .about__availability,
 .contact__availability,
 #contact {

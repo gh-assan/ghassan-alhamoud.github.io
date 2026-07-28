@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms — Ghassan Alhamoud</title>
-  <meta name="description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
+  <title>How I Built a 3 ms Workspace Index for AI Agents — Ghassan Alhamoud</title>
+  <meta name="description" content="A reproducible workspace-index benchmark: 2,408 files, a 302 KB semantic registry, 2.142 ms median JSON parse, 0.0153 ms warm ID scan, schema, update strategy, tradeoffs, and code." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
-  <meta property="og:title" content="Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms" />
-  <meta property="og:description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
+  <meta property="og:title" content="How I Built a 3 ms Workspace Index for AI Agents" />
+  <meta property="og:description" content="A reproducible benchmark, compact schema, update strategy, and honest comparison with filesystem search and vector retrieval." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-022.webp" />
   <meta property="article:published_time" content="2026-05-06" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
-  <meta property="twitter:title" content="Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms" />
-  <meta property="twitter:description" content="Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms." />
+  <meta property="twitter:title" content="How I Built a 3 ms Workspace Index for AI Agents" />
+  <meta property="twitter:description" content="A reproducible benchmark, compact schema, update strategy, and honest comparison with filesystem search and vector retrieval." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-022.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms",
-  "description": "Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.",
+  "headline": "How I Built a 3 ms Workspace Index for AI Agents",
+  "description": "A reproducible workspace-index benchmark: 2,408 files, a 302 KB semantic registry, 2.142 ms median JSON parse, 0.0153 ms warm ID scan, schema, update strategy, tradeoffs, and code.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-022.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-06",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html",
   "proficiencyLevel": "Expert",
   "dependencies": "Architecture, Performance, Workspace Indexing, AI, OpenClaw",
@@ -92,9 +92,9 @@
           <div class="article-single__meta">
             <time datetime="2026-05-06">May 06 2026</time>
             <span class="article-card__dot"></span>
-            <span>7 min</span>
+            <span>10 min</span>
           </div>
-          <h1 class="article-single__title">Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms</h1>
+          <h1 class="article-single__title">How I Built a 3 ms Workspace Index for AI Agents</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Architecture</span>
           <span class="article-single__tag">Performance</span>
@@ -107,58 +107,75 @@
                 <img src="/images/articles/ART-022.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>One of the least glamorous bottlenecks in an agent system is file lookup.</p>
-<p>It sounds small until you watch the same agent spend real time rediscovering the workspace over and over again. Scan the tree. Grep a memory file. Ask a human where something lives. Repeat next session.</p>
-<p>That is fine when the workspace is tiny. It becomes wasteful fast once the system is expected to work repeatedly and at speed.</p>
-<p>The fix I ended up with was simple: stop treating the filesystem like a mystery and give the agent an index.</p>
-<hr />
-<h2>The Real Problem Wasn't Just Speed</h2>
-<p>Yes, the raw timing mattered. Cutting file lookup from tens or hundreds of milliseconds down to a few milliseconds is useful.</p>
-<p>But the bigger problem was semantic. A directory scan tells you that files exist. It does not tell the agent what those files mean. Is this an active idea, an archived issue, a product note, an article brief, or a sidecar file that should be ignored?</p>
-<p>Without structure, the agent has to keep doing interpretive work after every lookup. That is the hidden tax.</p>
-<hr />
-<h2>Why a Compact Index Worked Better</h2>
-<p>The answer was to precompute meaning once and load it cheaply at session start.</p>
-<p>Instead of making the agent walk the workspace every time, I built a generator that scans the workspace out of band, extracts the fields that matter, and writes them into a compact registry. The agent loads that registry once and then queries it in memory.</p>
-<p>That changes the interaction model completely. Navigation becomes lookup, not discovery.</p>
-<p>Once I had that shift, the numbers followed naturally: a few milliseconds to load, near-zero time to query, and much lower context overhead than asking the agent to rebuild its map from scratch.</p>
-<hr />
-<h2>The Constraints Were Practical</h2>
-<p>I did not want a little infrastructure empire just to solve file lookup.</p>
-<p>The design constraints were straightforward:</p>
-<ol>
-<li>load fast enough that startup actually improves</li>
-<li>stay compact enough not to waste context</li>
-<li>avoid a dependency chain that turns indexing into its own maintenance problem</li>
-</ol>
-<p>That is why the solution stayed boring: a generator, a compact JSON representation, and in-memory queries. No daemon, no service, no premature database for a workspace that did not need one yet.</p>
-<hr />
-<h2>What Made It Useful</h2>
-<p>The registry did more than store paths. It stored identity and relationships.</p>
-<p>Ideas, issues, products, articles, research, and project notes all had distinct patterns. Once those patterns were encoded, the agent no longer had to guess whether a file was primary, derivative, archived, or noisy. It could query the right object class directly.</p>
-<p>That turned a filesystem problem into a data-model problem, which is exactly where it belonged.</p>
-<hr />
-<h2>The Bugs Were the Best Part</h2>
-<p>The first version of the indexer got things wrong in exactly the ways a real evolving workspace tends to go wrong.</p>
-<p>Sidecar files looked like primary content. Legacy issue naming collided with newer conventions. Nested project files were missed. Duplicate article-related artifacts polluted the registry. In other words: reality showed up.</p>
-<p>That was useful, because it proved the actual value of the indexer was not just speed. It was schema enforcement at the boundary. The workspace itself could remain messy and human. The registry was the place where ambiguity had to be resolved once.</p>
-<p>That is a much healthier arrangement than forcing every downstream agent query to rediscover the mess independently.</p>
-<hr />
-<h2>Why This Matters for Agent Systems</h2>
-<p>Agents are unusually sensitive to navigation friction because they pay for it twice: once in time and once in context.</p>
-<p>A human can scan a file tree quickly and carry a rough mental model for the rest of the session. An agent usually cannot. Every rediscovery step burns tokens, introduces ambiguity, and increases the chance of opening the wrong thing.</p>
-<p>That is why a compact registry feels like such a large win relative to how simple it is. It removes a class of repetitive uncertainty from the system.</p>
-<hr />
-<h2>What I'd Generalize From It</h2>
-<p>If your agent works over any structured workspace, whether that is a codebase, a note system, a documentation vault, or a mixed operating repository, you probably want some form of precomputed registry.</p>
-<p>Not because it is fancy. Because it is basic hygiene once the workspace stops being trivial.</p>
-<p>The moment I stopped asking the agent to "figure out the workspace" and started handing it a compact map, the whole system felt more deliberate. Faster, yes. But more importantly: less confused.</p>
-<p>That is usually the real sign that an infrastructure change was worth making.</p>
+          <p>The original headline compared “30 seconds” with “3 ms” without publishing a protocol. I could reproduce the index side, not the 30-second baseline. On the current main-machine workspace, loading the complete semantic registry takes a median 2.142 ms over 500 runs; p95 is 2.545 ms and max is 5.8 ms.</p>
+
+<table>
+  <thead><tr><th>Benchmark input</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Machine</td><td>Intel Core i5-2410M @ 2.30 GHz, Linux 6.12</td></tr>
+    <tr><td>Workspace files observed by indexer</td><td>2,408</td></tr>
+    <tr><td>Registry size</td><td>302,261 bytes</td></tr>
+    <tr><td>JSON parse, median / p95 / max</td><td>2.142 / 2.545 / 5.8 ms (500 runs)</td></tr>
+    <tr><td>Warm linear ID scan, median / p95 / max</td><td>0.0153 / 0.0263 / 0.0717 ms (5,000 runs)</td></tr>
+  </tbody>
+</table>
+<p>This is a microbenchmark of local bytes and in-memory lookup—not end-to-end agent startup, filesystem discovery, or semantic answer quality.</p>
+
+<h2>The data model</h2>
+<p>A standard file tree tells an agent where bytes live. The registry says which files represent skills, ideas, issues, articles, products, research, automation opportunities, and projects. Each compact entry retains a stable ID, title, path, lifecycle state, and type-specific fields.</p>
+<pre><code>{
+  "v": 2,
+  "s": {"files": 2408, "sk": 22, "id": 40, "is": 19, "am": 386},
+  "d": [
+    {"n": "Articles", "x": "ART", "c": 30, "e": [...]},
+    {"n": "Automation Mining", "x": "AM", "c": 386, "e": [...]}
+  ],
+  "x": {"idea_to_product": {...}, "idea_to_article": {...}},
+  "t": {"agent": "ART-...,IS-..."}
+}</code></pre>
+<p>Short keys reduce bytes, but they also reduce readability. Version the schema and keep the generator as the source of truth.</p>
+
+<h2>Build path versus query path</h2>
+<pre><code>cold rebuild: walk files → parse frontmatter → classify → deduplicate → write JSON
+warm query:   read JSON → parse once → query in memory</code></pre>
+<p>The 3 ms result measures the second path. Rebuild time was not captured in this audit and should not be implied by the headline.</p>
+
+<h2>Update strategy</h2>
+<p>The current implementation performs a full rebuild and overwrites <code>Registry/index.json</code>. At 2,408 files, simplicity is a reasonable tradeoff. Run it after workspace-changing workflows and before long agent sessions. Write to a temporary file, validate counts and references, then atomically replace the last good index; the current script writes the destination directly, so interruption can leave a partial file.</p>
+
+<h2>Bugs the schema had to absorb</h2>
+<ul>
+  <li>idea sidecars shared an ID-shaped filename but lacked primary frontmatter;</li>
+  <li>article image prompts and briefs appeared as duplicate articles;</li>
+  <li>issues moved between legacy and current directory layouts;</li>
+  <li>nested project directories were invisible to a top-level glob;</li>
+  <li>the same logical article existed in draft, ready, and published states.</li>
+</ul>
+<p>The indexer encodes precedence and filtering once so every agent does not rediscover those rules.</p>
+
+<h2>When to use each retrieval tool</h2>
+<table>
+  <thead><tr><th>Tool</th><th>Use it for</th><th>Do not use it for</th></tr></thead>
+  <tbody>
+    <tr><td>Registry</td><td>Known IDs, types, lifecycle, relationships</td><td>Searching arbitrary file contents</td></tr>
+    <tr><td><code>rg</code></td><td>Exact strings, symbols, filenames, source text</td><td>Conceptual similarity without matching terms</td></tr>
+    <tr><td>Vector search</td><td>Fuzzy semantic recall over content</td><td>Authoritative identity or lifecycle state</td></tr>
+  </tbody>
+</table>
+<p>These approaches complement one another. A compact registry narrows the search space; exact or semantic retrieval opens the relevant content.</p>
+
+<h2>Reproduce the measurement</h2>
+<p><a href="/resources/workspace-index-benchmark-protocol.md" class="btn btn--primary" download>Download the benchmark protocol</a></p>
+<ul>
+  <li><a href="/articles/orchestrator-qwen-acp-handoff.html">Use indexed state in controlled handoffs</a></li>
+  <li><a href="/articles/testing-tuis-with-tmux.html">Test agent-facing tools through a real terminal</a></li>
+  <li><a href="/articles/entity-database-zero-ui-agents.html">Compare a registry with an agent-first database</a></li>
+</ul>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Need a semantic map without building a search platform?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Index Boundary</a>
         </div>
       </article>
 

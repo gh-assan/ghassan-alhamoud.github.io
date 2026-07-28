@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Three Layers Is Not Enough - You Need a Feedback Loop That Closes — Ghassan Alhamoud</title>
-  <meta name="description" content="The difference between a system that learns from failure and one that merely records it is a single architectural decision." />
+  <title>Self-Healing Agent Systems: A Bounded Remediation State Machine — Ghassan Alhamoud</title>
+  <meta name="description" content="A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html" />
-  <meta property="og:title" content="Three Layers Is Not Enough - You Need a Feedback Loop That Closes" />
-  <meta property="og:description" content="The difference between a system that learns from failure and one that merely records it is a single architectural decision." />
+  <meta property="og:title" content="Self-Healing Agent Systems: A Bounded Remediation State Machine" />
+  <meta property="og:description" content="A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-021.webp" />
   <meta property="article:published_time" content="2026-05-05" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html" />
-  <meta property="twitter:title" content="Three Layers Is Not Enough - You Need a Feedback Loop That Closes" />
-  <meta property="twitter:description" content="The difference between a system that learns from failure and one that merely records it is a single architectural decision." />
+  <meta property="twitter:title" content="Self-Healing Agent Systems: A Bounded Remediation State Machine" />
+  <meta property="twitter:description" content="A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-021.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Three Layers Is Not Enough - You Need a Feedback Loop That Closes",
-  "description": "The difference between a system that learns from failure and one that merely records it is a single architectural decision.",
+  "headline": "Self-Healing Agent Systems: A Bounded Remediation State Machine",
+  "description": "A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-021.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-05-05",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html",
   "proficiencyLevel": "Expert",
-  "dependencies": "Self-Healing, Architecture, Feedback Loops, AI, OpenClaw",
+  "dependencies": "Self-Healing, Reliability, State Machines, Verification, Circuit Breakers",
   "articleSection": "AI Systems"
 }
   </script>
@@ -92,65 +92,160 @@
           <div class="article-single__meta">
             <time datetime="2026-05-05">May 05 2026</time>
             <span class="article-card__dot"></span>
-            <span>9 min</span>
+            <span>13 min</span>
           </div>
-          <h1 class="article-single__title">Three Layers Is Not Enough - You Need a Feedback Loop That Closes</h1>
+          <h1 class="article-single__title">Self-Healing Agent Systems: A Bounded Remediation State Machine</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Self-Healing</span>
-          <span class="article-single__tag">Architecture</span>
-          <span class="article-single__tag">Feedback Loops</span>
-          <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Reliability</span>
+          <span class="article-single__tag">State Machines</span>
+          <span class="article-single__tag">Circuit Breakers</span>
           </div>
         </header>
 
                 <img src="/images/articles/ART-021.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>Most incident pipelines look mature right up until the same failure happens again.</p>
-<p>Something breaks. An alert fires. Someone triages it. A fix goes in. A postmortem gets written. Then everybody moves on and quietly leaves the detection logic exactly as it was before.</p>
-<p>That is not a learning system. It is a record-keeping system.</p>
-<p>The shift that changed my thinking was simple: if the system learns anything during resolution, that learning has to flow backward into detection. Otherwise the next failure starts from zero.</p>
-<hr />
-<h2>The Missing Edge</h2>
-<p>Linear pipelines are easy to reason about. Detect, investigate, resolve, archive. The problem is that they only move in one direction.</p>
-<p>A real self-healing architecture needs one extra edge in the graph: the outcome of the fix has to influence what the system watches for next time.</p>
-<p>That sounds obvious when stated plainly, but most systems do not actually do it. They write better postmortems, maybe add a dashboard, maybe tighten an alert manually. What they do not do is turn the resolution into a reusable detection rule.</p>
-<p>That is why the same class of issue keeps returning in slightly different clothing.</p>
-<hr />
-<h2>From Failures to Patterns</h2>
-<p>Individual failures are noisy. Patterns are what matter.</p>
-<p>The system I ended up building treats tool responses as signals, not just outputs. Every retry, mismatch, stale state, or recurring error is part of a stream that can be measured. Once enough of the same signal accumulates, the system stops treating it as bad luck and starts treating it as structure.</p>
-<p>That is the key transition. You are no longer waiting for a human to notice that something keeps going wrong. The architecture itself starts classifying repeated failure as a problem worth escalating.</p>
-<hr />
-<h2>Why the Feedback Loop Matters</h2>
-<p>Postmortems are useful, but they are passive by default. They explain what happened. They do not automatically change the future behavior of the system.</p>
-<p>A feedback loop does something stronger. It asks: now that we understand this failure better, what should the system detect earlier next time?</p>
-<p>That can mean a lower threshold, a different health signal, a new classification rule, or a new validation step. The specific mechanism matters less than the direction of flow. Knowledge from resolution has to re-enter the pipeline as operational logic.</p>
-<hr />
-<h2>The Edit-Staleness Example</h2>
-<p>One of the clearest examples came from repeated edit failures.</p>
-<p>The agent would read a file, another action would change the file, and then the agent would try to patch against stale text. The tool would fail, the agent would retry, and the same pattern would repeat. Over and over.</p>
-<p>If you look at each failure in isolation, it feels minor. Just a retry problem. If you look at the pattern, it is obviously architectural. The system had no built-in awareness of inter-step state drift.</p>
-<p>Once that became clear, the fix was not just "handle this case better." The more important fix was changing the detection logic so this kind of stale-edit pattern would be caught earlier everywhere, not only in the one place it was first observed.</p>
-<p>That is the difference between repair and learning.</p>
-<hr />
-<h2>Why Teams Rarely Build This</h2>
-<p>The barrier is usually not raw implementation difficulty. It is framing.</p>
-<p>Most teams think of logs, tool responses, and retries as operational debris. Something to inspect after the fact if you need to. Once you start thinking of them as sensor data, the architecture changes.</p>
-<p>Now every response is not only a result. It is also a measurement of system health. And if you have measurements, you can detect patterns. If you can detect patterns, you can update heuristics. If you can update heuristics, the system can genuinely improve.</p>
-<p>That is the real foundation of self-healing. Not magic repair logic. Better loops.</p>
-<hr />
-<h2>Where to Start</h2>
-<p>You do not need a giant platform to begin.</p>
-<p>Start with one recurring failure class that your team already knows too well. Add one rule that promotes repetition into a structured issue. Then, when you resolve it, force one question: what should detection learn from this?</p>
-<p>If the answer is "nothing," you probably solved a local symptom. If the answer becomes a reusable rule, threshold, or guardrail, you just made the system better for next time.</p>
-<p>That is the habit worth building. Not better archives. Better feedback.</p>
+          <p><strong>Self-healing is not “catch an error and try something else.”</strong> It is a bounded state machine that detects a known condition, proves preconditions, executes one authorised remediation, verifies the invariant, compensates if needed, and escalates before uncertainty spreads.</p>
+          <p>The live OpenClaw workspace has three documented rules—stale edit, missing path, and directory read. Auditing them shows why rule documentation alone is not yet safe runtime automation.</p>
+
+          <h2>The rule audit</h2>
+          <table>
+            <thead>
+              <tr><th>Rule</th><th>Documented recovery</th><th>Safety gap</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Stale edit</td><td>Re-read, retry, then replace the whole file</td><td>Whole-file replacement expands the mutation and may overwrite concurrent work</td></tr>
+              <tr><td>Missing path</td><td>Create parents and an empty file, then retry</td><td>A failed read does not imply authority or intent to create data</td></tr>
+              <tr><td>Directory read</td><td>List files instead</td><td>A directory listing is not semantically equivalent to requested file content</td></tr>
+            </tbody>
+          </table>
+          <p>All three are marked auto-recoverable, but their verification checklists are incomplete. One stale-edit rule records 37 occurrences against a threshold of five while <code>auto-filed</code> remains false. The documents capture valuable patterns; they do not prove the wrapper, reporting, recovery, or learning path is wired end to end.</p>
+
+          <h2>The remediation state machine</h2>
+          <pre><code>observed
+   │
+   ▼
+classified ──unknown──▶ escalated
+   │
+ known + confident
+   ▼
+preflight ──fail──────▶ escalated
+   │
+   ▼
+remediating ──timeout──▶ uncertain ──reconcile──▶ escalated
+   │
+   ▼
+verifying ──pass──────▶ recovered
+   │
+   └──fail──▶ compensating ──success──▶ escalated
+                         └──failure──▶ circuit_open</code></pre>
+          <p>Every transition records rule version, trace ID, attempt, actor, timestamps, and evidence. <code>recovered</code> is terminal only for that attempt; a recurrence may open a systemic issue.</p>
+
+          <h2>Prefer typed errors over regex stories</h2>
+          <p>Match a structured tool error code plus context:</p>
+          <pre><code>{
+  "code": "STALE_PRECONDITION",
+  "tool": "file_edit",
+  "target": "repo://project/file.py",
+  "expectedDigest": "sha256:…",
+  "actualDigest": "sha256:…",
+  "effectState": "not_attempted"
+}</code></pre>
+          <p>Free-form error text changes across versions and may contain untrusted content. Regex can support legacy adapters, but the classifier should emit a versioned internal failure type and confidence. Low confidence routes to observation or escalation, not mutation.</p>
+
+          <h2>Preconditions carry the safety argument</h2>
+          <p>Before remediation, verify:</p>
+          <ul>
+            <li>the original action was authorised;</li>
+            <li>the current target and environment match the rule scope;</li>
+            <li>the external effect state is known;</li>
+            <li>the intended action remains valid after refreshing state;</li>
+            <li>the remediation stays within file, line, cost, and time limits;</li>
+            <li>compensation is defined for any mutation.</li>
+          </ul>
+          <p>For ENOENT, preflight must distinguish “expected existing file is missing” from “caller intends to create a new file.” The safe default for a read is to report missing—not to manufacture an empty success.</p>
+
+          <h2>Design idempotency around the intended effect</h2>
+          <p>Use a stable key such as:</p>
+          <pre><code>trace_id + original_tool_call_id + rule_version</code></pre>
+          <p>Persist attempts and terminal effect state. If a timeout occurs after an external mutation, move to <code>uncertain</code> and reconcile before retrying. This prevents duplicate messages, deployments, payments, or writes.</p>
+
+          <h2>Bound the remediation</h2>
+          <table>
+            <thead>
+              <tr><th>Boundary</th><th>Example control</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Attempts</td><td>One retry after refreshed state</td></tr>
+              <tr><td>Scope</td><td>One declared file or provider operation</td></tr>
+              <tr><td>Magnitude</td><td>Maximum changed lines, bytes, records, or cost</td></tr>
+              <tr><td>Time</td><td>Per-step and total deadline</td></tr>
+              <tr><td>Authority</td><td>No new tools, secrets, destinations, or permissions</td></tr>
+              <tr><td>Fallback</td><td>Escalate; never substitute a more destructive action</td></tr>
+            </tbody>
+          </table>
+          <p>For stale edits, re-read and recompute the minimal patch. If intent no longer maps cleanly, stop. Replacing the entire file because an exact patch failed is not a fallback; it is a larger operation with a different risk profile.</p>
+
+          <h2>Verification must test the invariant</h2>
+          <p>A successful tool response is insufficient. Verify:</p>
+          <ul>
+            <li>the intended invariant now holds;</li>
+            <li>the artifact parses, compiles, or passes the targeted check;</li>
+            <li>only authorised state changed;</li>
+            <li>the original failure no longer reproduces;</li>
+            <li>no external effect was duplicated;</li>
+            <li>evidence is retained for the issue control plane.</li>
+          </ul>
+          <p>For directory reads, the invariant may be “caller receives a typed path-kind mismatch,” not “some output was returned.” Listing a directory can be offered as a separate next action.</p>
+
+          <h2>Compensation is not always rollback</h2>
+          <p>Local file bytes can often be restored. An email cannot be unsent and a payment cannot be unmade. Classify effects:</p>
+          <table>
+            <thead>
+              <tr><th>Effect</th><th>Failure response</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Reversible local state</td><td>Restore captured pre-change state and verify</td></tr>
+              <tr><td>Provider supports cancellation</td><td>Cancel with receipt, then reconcile</td></tr>
+              <tr><td>Compensatable business effect</td><td>Execute a separately authorised compensating action</td></tr>
+              <tr><td>Irreversible effect</td><td>Contain, notify, preserve evidence; never claim rollback</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Circuit breakers stop recursive harm</h2>
+          <p>Open the rule's circuit when:</p>
+          <ul>
+            <li>verification fails twice in a short window;</li>
+            <li>one compensation or rollback fails;</li>
+            <li>the same target recurs three times in one run;</li>
+            <li>failure rate or cost exceeds its budget;</li>
+            <li>classifier confidence drifts below threshold.</li>
+          </ul>
+          <p>An open circuit disables remediation, continues safe observation where possible, and creates an owned issue. Reset requires evidence and owner review—not merely elapsed time.</p>
+
+          <h2>Promote rules safely</h2>
+          <ol>
+            <li><strong>Replay:</strong> evaluate the detector against historical failures and normal traffic.</li>
+            <li><strong>Shadow:</strong> propose remediations without executing them.</li>
+            <li><strong>Canary:</strong> enable for a narrow scope with immediate evidence.</li>
+            <li><strong>Active:</strong> expand only after precision, recovery, and no-harm thresholds pass.</li>
+            <li><strong>Retire:</strong> disable rules whose underlying failure class was eliminated.</li>
+          </ol>
+          <p>Track detector precision, precondition rejection, verified recovery, compensation, circuit-open, recurrence, and change-induced incident rates by rule version.</p>
+
+          <h2>Download the bounded rule</h2>
+          <p><a href="/resources/bounded-self-healing-rule.yaml" class="btn btn--primary" download>Download the bounded self-healing rule</a></p>
+          <ul>
+            <li><a href="/articles/issue-management-system-property.html">Use the reliability issue control plane</a></li>
+            <li><a href="/articles/most-boring-automation-self-improving.html">Govern slower improvement automation</a></li>
+            <li><a href="/articles/stress-test-self-healing-250-target.html">Build a fault-injection validation harness</a></li>
+          </ul>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Designing remediation that can act without turning one failure into a larger one?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Healing Boundary</a>
         </div>
       </article>
 

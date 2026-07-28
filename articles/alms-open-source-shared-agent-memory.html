@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>ALMS 0.1.0: A Shared Brain for Autonomous Agents — Ghassan Alhamoud</title>
-  <meta name="description" content="ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet." />
+  <title>ALMS: Shared Operational Memory for Autonomous Agents via MCP — Ghassan Alhamoud</title>
+  <meta name="description" content="Inside ALMS 0.1.0: an open-source Go/PostgreSQL MCP control plane for agent registry, shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html" />
-  <meta property="og:title" content="ALMS 0.1.0: A Shared Brain for Autonomous Agents" />
-  <meta property="og:description" content="ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet." />
+  <meta property="og:title" content="ALMS: Shared Operational Memory for Autonomous Agents via MCP" />
+  <meta property="og:description" content="A Go/PostgreSQL MCP control plane for shared operational learnings, sync, protocols, OKF export, and explicit limits." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-032.webp" />
   <meta property="article:published_time" content="2026-06-11" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html" />
-  <meta property="twitter:title" content="ALMS 0.1.0: A Shared Brain for Autonomous Agents" />
-  <meta property="twitter:description" content="ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet." />
+  <meta property="twitter:title" content="ALMS: Shared Operational Memory for Autonomous Agents via MCP" />
+  <meta property="twitter:description" content="A Go/PostgreSQL MCP control plane for shared operational learnings, sync, protocols, OKF export, and explicit limits." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-032.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "ALMS 0.1.0: A Shared Brain for Autonomous Agents",
-  "description": "ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet.",
+  "headline": "ALMS: Shared Operational Memory for Autonomous Agents via MCP",
+  "description": "Inside ALMS 0.1.0: an open-source Go/PostgreSQL MCP control plane for agent registry, shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-032.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-06-11",
-  "dateModified": "2026-06-11",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html",
   "proficiencyLevel": "Expert",
   "dependencies": "open-source, agents, MCP, Go, PostgreSQL, multi-agent, learning, infrastructure",
@@ -156,9 +156,9 @@
           <div class="article-single__meta">
             <time datetime="2026-06-11">Jun 11 2026</time>
             <span class="article-card__dot"></span>
-            <span>4 min</span>
+            <span>9 min</span>
           </div>
-          <h1 class="article-single__title">ALMS 0.1.0: A Shared Brain for Autonomous Agents</h1>
+          <h1 class="article-single__title">ALMS: Shared Operational Memory for Autonomous Agents via MCP</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Open Source</span>
           <span class="article-single__tag">Agents</span>
@@ -185,6 +185,8 @@
 
     <p>ALMS — the <strong>Agent Learning Management System</strong> — is a self-hosted Model Context Protocol (MCP) server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet, and distribute operator protocols by tag. It's a single Go binary backed by PostgreSQL, and it's open source today under MIT.</p>
 
+    <p><strong>Verification snapshot, 28 July 2026:</strong> the complete short test suite passes with the race detector, uncached and shuffled, across config, models, server, service, and store packages. PostgreSQL integration and load tests require a configured database and were not part of this local snapshot.</p>
+
     <hr>
 
     <h2>What ALMS Is (And Isn't)</h2>
@@ -204,6 +206,16 @@
     <p>You could store agent learnings in a shared Postgres table. What you'd be missing: MCP-native transport (your agents already speak it), gap-safe sync with acknowledgement (no missed records), tag-based protocol distribution (operators can target subsets of the fleet), and the learning lifecycle management (soft-delete, enrichment, garbage collection). ALMS packages these as a purpose-built MCP tool surface so agents integrate in minutes, not days.</p>
 
     <p>It stays out of the hot path. If ALMS is unreachable, your agents keep working and queue learnings locally. When it comes back, they resync. Offline-first isn't a feature — it's a design constraint.</p>
+
+    <table>
+      <thead><tr><th>Option</th><th>Good at</th><th>What ALMS adds</th></tr></thead>
+      <tbody>
+        <tr><td>Shared database</td><td>Durable rows and queries</td><td>Agent contracts, sync acknowledgement, lifecycle, protocols</td></tr>
+        <tr><td>Vector store</td><td>Similarity retrieval</td><td>Typed records, status, provenance, exact lifecycle</td></tr>
+        <tr><td>Framework memory</td><td>One runtime's context</td><td>Runtime-neutral MCP access across heterogeneous agents</td></tr>
+        <tr><td>Message bus</td><td>Transient event delivery</td><td>Searchable durable learning and later resynchronisation</td></tr>
+      </tbody>
+    </table>
 
     <hr>
 
@@ -228,7 +240,7 @@ protocol.push/pull    — operator → agents by tag</code></pre>
 
     <h2>What Ships in 0.1.0</h2>
 
-    <p>This is the initial public release. It's tested and running on my fleet of 8 agents across 2 machines.</p>
+    <p>This is the initial public release. It is operator-reported as running on a fleet of eight agents across two machines; that deployment claim is not a published availability benchmark.</p>
 
     <ul>
       <li>Single-binary Go server (Go 1.22+)</li>
@@ -244,6 +256,10 @@ protocol.push/pull    — operator → agents by tag</code></pre>
     </ul>
 
     <p>The codebase is layered: <code>server → service → store → models</code>. Business logic is testable through store interfaces. pgx native pools, no ORM. Test coverage targets are enforced per layer (90% on models, 80% on service).</p>
+
+    <h3>Known scoring defect in 0.1.0</h3>
+
+    <p>The current TTL decay implementation derives elapsed intervals from <code>created_at</code>, then subtracts that cumulative amount from the record's already-decayed score. Repeated sweeps can therefore over-decay old records. A production fix should retain a decay checkpoint or compute from an immutable base; until then, do not schedule repeated decay sweeps without compensating controls. Pinned learnings skip decay.</p>
 
     <hr>
 
@@ -300,16 +316,23 @@ make build
 
     <hr>
 
-    <p><strong>Repository:</strong> <a href="https://github.com/ghassan-ai-projects/alms">github.com/gh-assan/alms</a><br />
+    <p><strong>Repository:</strong> <a href="https://github.com/ghassan-ai-projects/alms">github.com/ghassan-ai-projects/alms</a><br />
     <strong>License:</strong> MIT<br />
     <strong>Release:</strong> 0.1.0 — June 9, 2026<br />
     <strong>Docs:</strong> <a href="https://github.com/ghassan-ai-projects/alms/tree/main/documentation"><code>documentation/</code></a> in the repo</p>
 
+    <p><a href="/resources/alms-learning-record.example.json" class="btn btn--primary" download>Download an ALMS learning record</a></p>
+    <ul>
+      <li><a href="/articles/alms-okf-integration-bridge.html">Promote accepted learnings into portable knowledge</a></li>
+      <li><a href="/articles/every-token-is-rent-memory-architecture.html">Place ALMS in the wider memory lifecycle</a></li>
+      <li><a href="/articles/agent-reliability-sla-infrastructure.html">Define availability outside the hot path</a></li>
+    </ul>
+
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Want to inspect or challenge the shared-learning contract?</p>
+          <a href="https://github.com/ghassan-ai-projects/alms" class="btn btn--primary">Review ALMS</a>
         </div>
       </article>
 

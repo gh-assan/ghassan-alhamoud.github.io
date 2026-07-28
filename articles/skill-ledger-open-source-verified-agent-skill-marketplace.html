@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>SkillLedger 0.1.0: A Verified Marketplace for Agent Skills — Ghassan Alhamoud</title>
-  <meta name="description" content="SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license." />
+  <title>SkillLedger: A Verification and Entitlement Layer for Agent Skills — Ghassan Alhamoud</title>
+  <meta name="description" content="Inside SkillLedger's MVP trust model: versioned manifests, deterministic integrity checks, separate marketplace approval, entitlements, ledger entries, threat limits, and current-versus-future scope." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html" />
-  <meta property="og:title" content="SkillLedger 0.1.0: A Verified Marketplace for Agent Skills" />
-  <meta property="og:description" content="SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license." />
+  <meta property="og:title" content="SkillLedger: A Verification and Entitlement Layer for Agent Skills" />
+  <meta property="og:description" content="Versioned manifests, deterministic integrity checks, separate approval, entitlements, ledger entries, and explicit threat limits." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-033.webp" />
   <meta property="article:published_time" content="2026-06-15" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html" />
-  <meta property="twitter:title" content="SkillLedger 0.1.0: A Verified Marketplace for Agent Skills" />
-  <meta property="twitter:description" content="SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license." />
+  <meta property="twitter:title" content="SkillLedger: A Verification and Entitlement Layer for Agent Skills" />
+  <meta property="twitter:description" content="Versioned manifests, deterministic integrity checks, separate approval, entitlements, ledger entries, and explicit threat limits." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-033.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "SkillLedger 0.1.0: A Verified Marketplace for Agent Skills",
-  "description": "SkillLedger — a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, ledger, MCP endpoint, MIT license.",
+  "headline": "SkillLedger: A Verification and Entitlement Layer for Agent Skills",
+  "description": "Inside SkillLedger's MVP trust model: versioned manifests, deterministic integrity checks, separate marketplace approval, entitlements, ledger entries, threat limits, and current-versus-future scope.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-033.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-06-15",
-  "dateModified": "2026-06-15",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html",
   "proficiencyLevel": "Expert",
   "dependencies": "open-source, agents, Ruby on Rails, MCP, skill-marketplace, AI, infrastructure",
@@ -156,9 +156,9 @@
           <div class="article-single__meta">
             <time datetime="2026-06-15">Jun 15 2026</time>
             <span class="article-card__dot"></span>
-            <span>6 min</span>
+            <span>11 min</span>
           </div>
-          <h1 class="article-single__title">SkillLedger 0.1.0: A Verified Marketplace for Agent Skills</h1>
+          <h1 class="article-single__title">SkillLedger: A Verification and Entitlement Layer for Agent Skills</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Open Source</span>
           <span class="article-single__tag">Agents</span>
@@ -189,6 +189,8 @@
 
     <p>It is a Rails 8.1 API-only application that exposes both REST and MCP endpoints. Open source today under MIT.</p>
 
+    <p><strong>Verification note, 28 July 2026:</strong> repository inspection confirms separate artifact-verification and marketplace-review records, append-only review events, API-key digests, entitlements, and policy checks. The local test command could not run on this machine because the host provides Ruby 2.6 while the project requires Ruby 3.3.11 and Bundler 4.0.12. This article therefore does not claim a fresh local test pass.</p>
+
     <hr>
 
     <h2>What SkillLedger Is (And Is Not)</h2>
@@ -203,6 +205,17 @@
     </ol>
 
     <p>What SkillLedger does <em>not</em> do: execute third-party skills, sandbox untrusted code, scan artifacts for malware, or manage real-money settlement rails. The artifact is acquired for local execution. SkillLedger is the storefront, not the runtime.</p>
+
+    <table>
+      <thead><tr><th>Trust question</th><th>MVP control</th><th>What it does not prove</th></tr></thead>
+      <tbody>
+        <tr><td>Is the package intact?</td><td>Canonical manifest SHA-256 and bundled-file checks</td><td>That the code is safe or correct</td></tr>
+        <tr><td>May it be listed?</td><td>Separate review with approve, reject, revoke, and event history</td><td>Universal quality or legal fitness</td></tr>
+        <tr><td>May this buyer acquire it?</td><td>Purchase-bound version entitlement token</td><td>Secure execution on the buyer's machine</td></tr>
+        <tr><td>Did value move?</td><td>Local database ledger entries</td><td>Real-money settlement or cryptographic finality</td></tr>
+        <tr><td>Who called the API?</td><td>Per-account bcrypt-digested API key</td><td>Strong workload identity or multi-tenant isolation</td></tr>
+      </tbody>
+    </table>
 
     <h3>Why not just an API marketplace?</h3>
 
@@ -250,6 +263,18 @@ skills/purchase        - Purchase a verified version
 skills/acquire         - Download the artifact</code></pre>
 
     <p>The same operations are available through REST, so agents can choose whichever transport they speak.</p>
+
+    <h3>Implemented versus future</h3>
+    <table>
+      <thead><tr><th>Implemented in the MVP</th><th>Not implemented</th></tr></thead>
+      <tbody>
+        <tr><td>Manifest integrity and basic policy checks</td><td>Malware analysis, sandboxing, behavioural verification</td></tr>
+        <tr><td>Admin approval and revocation</td><td>Federated reviewers, reputation, appeals</td></tr>
+        <tr><td>Local credits, purchases, entitlements</td><td>Payments, refunds, chargebacks, tax handling</td></tr>
+        <tr><td>REST and MCP-style JSON-RPC endpoint</td><td>Hosted skill execution or runtime isolation</td></tr>
+        <tr><td>SQLite and PostgreSQL paths</td><td>Proven production-scale multi-tenancy</td></tr>
+      </tbody>
+    </table>
 
     <hr>
 
@@ -333,11 +358,18 @@ bin/rails server</code></pre>
     <strong>Release:</strong> 0.1.0 - June 15, 2026<br />
     <strong>Docs:</strong> <a href="https://github.com/ghassan-ai-projects/skill-ledger/tree/main/documentation"><code>documentation/</code></a> in the repo</p>
 
+    <p><a href="/resources/skill-ledger-manifest.example.json" class="btn btn--primary" download>Download the sample skill manifest</a></p>
+    <ul>
+      <li><a href="/articles/agent-black-box-skill-ledger.html">Read the threat model for unverified skills</a></li>
+      <li><a href="/articles/agent-execution-attestation.html">Add execution evidence beyond package integrity</a></li>
+      <li><a href="/articles/agent-reasoning-discovery-fallacy.html">Separate discovery metadata from authority</a></li>
+    </ul>
+
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Want to challenge the manifest or verifier boundary?</p>
+          <a href="https://github.com/ghassan-ai-projects/skill-ledger" class="btn btn--primary">Inspect SkillLedger</a>
         </div>
       </article>
 

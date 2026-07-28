@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>When Smart Models Go Stupid — Ghassan Alhamoud</title>
-  <meta name="description" content="I asked GPT-5.5/Codex to build a TUI for my film pipeline. It produced a brilliant 5,000-line design analysis and then delivered a input()/print() REPL. This is the story of the training data blind spot." />
+  <title>Why a Strong Coding Agent Failed a TUI Task: A Case Study — Ghassan Alhamoud</title>
+  <meta name="description" content="A repository-backed case study: 6,142 lines of TUI design became a 280-line input/print REPL. Here is the acceptance gap, the evidence, and the workflow that later produced the real application." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html" />
-  <meta property="og:title" content="When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement" />
-  <meta property="og:description" content="I asked GPT-5.5/Codex to build a TUI for my film pipeline. It produced a brilliant 5,000-line design analysis and then delivered a input()/print() REPL. This is the story of the training data blind spot." />
+  <meta property="og:title" content="Why a Strong Coding Agent Failed a TUI Task: A Case Study" />
+  <meta property="og:description" content="The repository evidence, acceptance gap, and incremental workflow that turned a failed TUI delivery into a tested application." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-036.webp" />
   <meta property="article:published_time" content="2026-06-24" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html" />
-  <meta property="twitter:title" content="When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement" />
-  <meta property="twitter:description" content="I asked GPT-5.5/Codex to build a TUI for my film pipeline. It produced a brilliant 5,000-line design analysis and then delivered a input()/print() REPL. This is the story of the training data blind spot." />
+  <meta property="twitter:title" content="Why a Strong Coding Agent Failed a TUI Task: A Case Study" />
+  <meta property="twitter:description" content="The repository evidence, acceptance gap, and incremental workflow that turned a failed TUI delivery into a tested application." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-036.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement",
-  "description": "I asked GPT-5.5/Codex to build a TUI for my film pipeline. It produced a brilliant 5,000-line design analysis and then delivered a input()/print() REPL. This is the story of the training data blind spot.",
+  "headline": "Why a Strong Coding Agent Failed a TUI Task: A Case Study",
+  "description": "A repository-backed case study: 6,142 lines of TUI design became a 280-line input/print REPL. Here is the acceptance gap, the evidence, and the workflow that later produced the real application.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-036.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-06-24",
-  "dateModified": "2026-06-24",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html",
   "proficiencyLevel": "Expert",
   "dependencies": "AI Agents, Code Generation, Engineering, UX, LLM Limitations, TUI, Terminal",
@@ -142,9 +142,9 @@
           <div class="article-single__meta">
             <time datetime="2026-06-24">Jun 24 2026</time>
             <span class="article-card__dot"></span>
-            <span>9 min</span>
+            <span>11 min</span>
           </div>
-          <h1 class="article-single__title">When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a <code>print()</code> Statement</h1>
+          <h1 class="article-single__title">Why a Strong Coding Agent Failed a TUI Task: A Detailed Case Study</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Code Generation</span>
@@ -160,80 +160,27 @@
 
         <div class="article-single__body">
 
-    <p>I asked GPT-5.5 / Codex to build a TUI for my film pipeline project.</p>
+    <p>I asked a coding agent to design and build an operator TUI for <a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph">film-pipeline-langgraph</a>. The first result looked impressive in review and failed the actual product requirement.</p>
 
-    <p>The analysis was breathtaking. The delivery was a joke.</p>
+    <p>This article is a single case study, not a benchmark of models. The claims below are tied to two repository commits: <a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph/commit/d10fdb6">the design commit</a> and <a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph/commit/2be05f9">the first implementation commit</a>.</p>
 
-    <p>Here is a story about a model that nails the well-trodden path and falls apart on the novel one. Not making universal claims. Just one data point and what I think it means.</p>
+    <h2>The task and the acceptance gap</h2>
 
-    <hr>
+    <p>The system already exposed projects, review gates, checkpoints, provider health, artifacts, and audit history. The task was to make those capabilities operable for a person spending hours in the terminal: persistent layout, keyboard navigation, drill-down, background work, and clear state.</p>
 
-    <h2>The Ask</h2>
-
-    <p>My project, <a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph">film-pipeline-langgraph</a>, is a LangGraph-based studio operating system. It orchestrates dozens of expert agents through a film production pipeline: intake, script development, visual development, generation, delivery. It has typed state, MCP contracts, review gates, checkpoints, provider health, and audit trails.</p>
-
-    <p>I had been controlling it through raw MCP tool calls and JSON. It worked, but it was not <em>operable</em>. I needed a terminal UI. Something an operator could sit at for hours, drill into scenes, approve phases, check provider health, roll back checkpoints.</p>
-
-    <p>I fired up Codex, pointed it at the codebase, and said: <em>design and build a TUI operator console.</em> One prompt, all at once. In hindsight, that was my first mistake.</p>
-
-    <h2>The Analysis: Genuinely Excellent</h2>
-
-    <p>Codex went to work. It produced <strong>17 documents, roughly 5,000 lines</strong>, in <code>docs/tui-operator-console/</code>:</p>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Document</th>
-          <th>Content</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td><code>00-product-intent.md</code></td><td>Problem statement, 5 whys, design principles, success definition</td></tr>
-        <tr><td><code>01-operator-jobs-and-personas.md</code></td><td>Three personas (Studio Operator, Creative Director, Technical Operator), JTBD framework</td></tr>
-        <tr><td><code>02-ux-information-architecture.md</code></td><td>Screen hierarchy, navigation model, information priority</td></tr>
-        <tr><td><code>04-technical-architecture.md</code></td><td>377 lines on layers, event model, async strategy</td></tr>
-        <tr><td><code>05-mcp-surface-and-view-models.md</code></td><td>Typed view models, gateway contracts</td></tr>
-        <tr><td><code>09-wireframes.md</code></td><td>ASCII wireframes: 3-panel shell with project sidebar, main workspace, context drawer</td></tr>
-        <tr><td><code>11-use-cases.md</code></td><td>1,285 lines of detailed use cases</td></tr>
-        <tr><td><code>13-e2e-user-flows.md</code></td><td>589 lines of end-to-end flows</td></tr>
-        <tr><td><code>pages/*</code></td><td>12 page specs: dashboard, review, scenes, assets, validation, checkpoints, providers, audit, settings</td></tr>
-      </tbody>
-    </table>
-
-    <p>The analysis was genuinely good. It found the real bottleneck (operator throughput), defined clear personas, made wireframes I could actually use as specs, and laid out a sensible phased plan.</p>
-
-    <p>It even did a careful framework analysis, considering toad vs Textual vs Rich, and made a good case for Textual given the complexity.</p>
-
-    <p>Here is what it said about toad, directly from the chat:</p>
-
-    <blockquote>
-      <p>"If by toad you mean the Python TUI library, I would not choose it for this project. Reason: this TUI is no longer a small terminal app. It needs multiple first-class pages, panes, drill-down navigation, background refresh, draft handling, and complex stateful workflows. It also needs room for scene/asset/structure workspaces, not just forms and lists. For that shape, Textual is a better fit."</p>
-    </blockquote>
-
-    <p>Then it shipped.</p>
-
-    <h2>The Delivery: A <code>print()</code> REPL</h2>
-
-    <p>Here is what Codex actually built, in its entirety:</p>
+    <p>The design commit added 31 documents and 6,142 lines. It specified personas, navigation, view models, a three-panel shell, page-level wireframes, async behavior, and end-to-end flows. The next commit added 1,255 lines across services, MCP tools, tests, and the console—but the UI itself was a 280-line numbered REPL built around <code>input()</code> and <code>print()</code>.</p>
 
 <pre><code>def run(self) -> int:
     self._output(title("LangGraph Film Studio"))
-    self._output("Operator console. Choose an action number, or q to quit.")
     while True:
         self._output(self._menu())
-        choice = self._input("> ").strip().lower()
+        choice = self._input("&gt; ").strip().lower()
         if choice in {"q", "quit", "exit"}:
             return 0
         self._dispatch(choice)
 </code></pre>
 
-    <p>A <code>while True</code> loop with <code>input()</code> and <code>print()</code>.</p>
-
-    <p>13 numbered options. No keyboard navigation. No panes. No async refresh. No drill-down. No context drawer. No wireframe layout. No Textual. Nothing the 5,000-word analysis called for.</p>
-
-    <p>The full implementation across four files is about <strong>300 lines</strong> of thin pass-through code. Screens render as ASCII tables from <code>json.dumps</code>. The "dashboard" is a single-row table printed to the terminal. The "validation workspace" prettifies a dict.</p>
-
-    <p>Compare what the wireframes showed — a 3-panel shell with project sidebar, context drawer, command palette, live refresh — with what actually rendered on screen: a numbered menu in a terminal.</p>
+    <p>The implementation was not worthless: it introduced a service boundary, gateway, typed request models, MCP exposure, and unit tests. But those were supporting components. Calling the result the requested TUI confused architectural progress with product acceptance.</p>
 
     <table>
       <thead>
@@ -252,120 +199,60 @@
         <tr><td>Provider health</td><td>Color-coded status, inline warnings</td><td>Plain text table</td></tr>
         <tr><td>Checkpoints</td><td>Diffs, rollback preview</td><td>Listed by ID</td></tr>
         <tr><td>Framework</td><td>Textual (async, widgets, CSS layouts)</td><td><code>input()</code> / <code>print()</code></td></tr>
-        <tr><td>Project sidebar</td><td>Filter, status indicators, phase labels</td><td>"Active project: none"</td></tr>
+        <tr><td>Project sidebar</td><td>Filter, status indicators, phase labels</td><td><code>Active project: none</code></td></tr>
       </tbody>
     </table>
 
-    <h2>The Framework Wars Irony</h2>
-
-    <p>The ironic part? Codex spent serious effort arguing against the simpler path. It acted like the architect who knew better than to reach for a lightweight solution:</p>
-
-    <blockquote>
-      <p>"toad could be fine if you wanted: a lightweight CLI/TUI, simple forms, simple menus, low complexity interaction"</p>
-    </blockquote>
-
-    <p>Then delivered something <em>less functional than a toad example would have been</em>.</p>
-
-    <p>It turned down the pragmatic choice because the bar was supposedly too high, then failed to clear even the low bar.</p>
-
-    <h2>Why This Happens</h2>
-
-    <p>The training data blind spot is part of the story. But I think there are three other things going on.</p>
-
-    <h3>1. The Context Budget Trap</h3>
-
-    <p>At the time of the request, the model had already generated about 5,000 lines of analysis. That output sat in its context window. When it switched from analysis to code generation, it was already deep in its own prose, reasoning tokens spent, attention spread thin. What looked like "a model that can't build a TUI" might have been "a model that spent its best reasoning on architecture and had scraps left for code."</p>
-
-    <p>This is a known failure mode: LLM code quality degrades as generation gets long, especially when early output eats the model's best reasoning. The fix is obvious in hindsight: don't ask for both analysis and implementation in one shot.</p>
-
-    <h3>2. The Debugging Blindness</h3>
-
-    <p>Autoregressive models generate code in a single pass. They don't compile. They don't run. They don't see the error message, fix the import, try again. Building a working TUI with Textual requires iterative trial and error, something no current LLM can do without external tooling.</p>
-
-    <p>The model was not producing a bad TUI because it does not know TUIs. It was producing a bad TUI because it could not iterate toward a working one.</p>
-
-    <h3>3. The Training Data Blind Spot</h3>
-
-    <p>That said, the blind spot is real. Domain-specific TUIs for LangGraph film pipelines do not exist in training data. Analysis of such systems does exist, like architecture docs, UX articles, and design patterns. The model can generate plausible prose about something it has never seen built. But generating working code for it? That requires knowing which boilerplate works, which imports resolve, which callbacks fire in which order. That knowledge only comes from doing, not from reading.</p>
-
-    <p><strong>The model wrote the architecture doc of a TUI it had never built. It then built the TUI of someone who had only read architecture docs.</strong></p>
-
-    <p>In the analysis phase, this does not matter. Analysis is predictive completion: "what would a good TUI for this project look like given the requirements?" It draws on architecture patterns, UX heuristics, and design documents that are well-represented in training data.</p>
-
-    <p>In the implementation phase, the model has to execute. And execution requires bridging from abstract design to concrete code, wiring state management, handling terminal resize events, implementing async callbacks, managing widget lifecycle, handling edge cases. These are the things training data does not teach you because training data is mostly finished code and textbook patterns, not the messy process of making something work.</p>
-
-    <h2>The Confidence Problem</h2>
-
-    <p>The most dangerous part: the model was completely confident throughout.</p>
-
-    <p>It never said "I am not sure I can deliver this well." It never flagged the risk that the implementation quality would fall short of the design. It projected the same authoritative tone for the wireframes and the execution.</p>
-
-    <p>Part of this is my fault. I did not ask for confidence estimates, did not prompt for uncertainty, did not run validation checks during generation. With temperature set to zero and no explicit instruction to express doubt, no model would. The confidence problem is a two-way street. The model produces plausible text, and the user assumes plausible equals capable.</p>
-
-    <p>But there is a deeper issue. Research on LLM calibration shows models are consistently overconfident on novel or difficult tasks. They generate authoritative text about capabilities they do not have, and we have to build our own radar for when to trust and when to verify.</p>
-
-    <hr>
-
-    <p><em>A note on scope: this is one case study with one model on one task. I have not tested whether this gap reproduces across models, prompts, or domains. If you have seen the same pattern, I would love to hear about it. If you have seen models close the gap, I would love to hear about that too.</em></p>
-
-    <h2>What I Did Next: The Analysis Won</h2>
-
-    <p>After Codex failed delivery, I had a choice: keep fighting the model or use the analysis myself.</p>
-
-    <p>So far, I have chosen the latter. The 5,000-line design document was genuinely good. It had the right architecture, the right personas, the right wireframes. What it needed was a human executing the implementation, but that human still has not found the time.</p>
-
-    <p>The truth is, the TUI has not been built. Not by the model, not by me. The design document sits on disk, referenced occasionally, waiting. The analysis was supposed to accelerate the build. Instead, it became a monument to what could be, a detailed blueprint with no contractor.</p>
-
-    <p>This is the real lesson: <strong>the analysis was the deliverable.</strong> I should have seen it that way from the start. I paid for architecture consulting and got it. The code was a bonus that happened to be worthless. And the risk I did not account for? That once I had the perfect plan, the urgency to build evaporated. A bad prototype would have forced iteration. A beautiful design doc let me feel like I had made progress without actually making any.</p>
-
-    <h2>What This Means for Practitioners</h2>
-
-    <p><strong>1. Treat analysis and delivery as separate purchases.</strong></p>
-
-    <p>I got $50 worth of brilliant architecture consulting, then $5 worth of code. If I had separated the phases (pay for analysis, review, then ask for implementation), I would have spotted the gap before wasting the execution budget.</p>
-
-    <p><strong>2. Be most skeptical where training data is thinnest.</strong></p>
-
-    <p>The model is best at: web UIs, REST APIs, CRUD, data processing, known frameworks.
-    The model is worst at: domain-specific UIs, novel combinations of existing tools, systems with complex state and real-time requirements, anything requiring deep understanding of your specific architecture's constraints.</p>
-
-    <p><strong>3. Demand prototypes, not plans.</strong></p>
-
-    <p>A five-page design doc is cheap for a model. A working prototype costs real reasoning tokens. If you want to validate implementation capability, ask for a working 50-line proof of concept before accepting the 5,000-line design doc.</p>
-
-    <p><strong>4. Iterate, do not request.</strong></p>
-
-    <p>This is the big one I missed. Instead of one prompt asking for everything, I should have broken it into 5 rounds:</p>
+    <h2>Five whys: why did review accept the wrong thing?</h2>
 
     <ol>
-      <li>"Write wireframe specs" then review</li>
-      <li>"Build the shell layout" then review (would have caught the failure immediately at minimal cost)</li>
-      <li>"Wire up the dashboard page" then review</li>
-      <li>"Add event polling" then review</li>
-      <li>"Add remaining pages" then review</li>
+      <li><strong>Why was the UI incomplete?</strong> The implementation optimized for exposing operations, not reproducing the specified interaction model.</li>
+      <li><strong>Why could that pass?</strong> The task did not have an executable acceptance rubric tied to the wireframes.</li>
+      <li><strong>Why was there no rubric?</strong> Analysis and full implementation were requested as one large delivery.</li>
+      <li><strong>Why did the large delivery feel complete?</strong> Document volume and clean supporting architecture acted as proxies for working UX.</li>
+      <li><strong>Why were proxies enough?</strong> I reviewed artifacts, not a recorded human workflow through a real terminal.</li>
     </ol>
 
-    <p>At step 2, the model's delivery failure would have been obvious. Instead, I paid for the full failure up front.</p>
+    <p>The root cause I can support with evidence is an acceptance-system failure. Context exhaustion, training distribution, or model confidence may have contributed, but this one case cannot distinguish among them.</p>
 
-    <p><strong>5. Watch for the framework argument heuristic.</strong></p>
+    <h2>What happened next</h2>
 
-    <p>When the model argues you need a complex framework because your use case is too sophisticated for a simple one, be suspicious. This is often a fluency heuristic. It sounds right because it mirrors countless Stack Overflow answers and engineering blogs. But the model might be arguing for Textual because it is trained on more Textual content, not because Textual is actually the right call for your project.</p>
+    <p>The original article said the TUI had never been built. That is no longer true. The repository now contains a Textual application with screens, widgets, view models, in-process and MCP gateways, framework-harness tests, real-provider tests, and a tmux-driven smoke workflow.</p>
 
-    <h2>The Bottom Line</h2>
+    <p>It did not arrive in one corrective leap. The history shows separate commits for the Textual cockpit, approval confirmation, project creation, persistence, redesign, readable review output, MCP parity, asset behavior, real-mode intake, and simplification. That incremental sequence is the useful result: narrow changes made the UI reviewable and testable.</p>
 
-    <p>Models are incredibly smart within their training distribution. Give them a well-covered problem and they outperform most humans on both analysis and delivery.</p>
+    <h2>A better delivery contract</h2>
 
-    <p>Give them a novel problem, something that requires bridging from abstract design to concrete execution in a domain with sparse training data, and the analysis-delivery gap can be enormous. The model will write beautiful architecture documents and then hand you a <code>while True</code> loop with <code>print()</code>.</p>
+    <ol>
+      <li><strong>Freeze acceptance criteria.</strong> Convert each required interaction into an observable pass/fail check.</li>
+      <li><strong>Build one vertical slice.</strong> Launch, create a project, show durable state, and approve one phase.</li>
+      <li><strong>Run the code.</strong> Require framework-native tests during implementation, not after prose review.</li>
+      <li><strong>Test the terminal boundary.</strong> Drive the packaged app through a PTY and capture the rendered state.</li>
+      <li><strong>Expand only after evidence.</strong> Add pages and workflows once the skeleton clears its gate.</li>
+    </ol>
 
-    <p>The confidence is the trap. A model that said "I can design this well but my implementation quality is uncertain" would be safer. Instead, we get flawless confidence across the board, and we have to build our own radar for when to trust and when to verify.</p>
+    <p><a href="/resources/tui-agent-evaluation-checklist.md" class="btn btn--primary" download>Download the TUI evaluation checklist</a></p>
 
-    <p>I still use Codex daily. But I no longer confuse impressive analysis with capable delivery. They are different skills. For now, only one of them belongs to the model.</p>
+    <h2>What this case does—and does not—show</h2>
+
+    <p>It shows that a strong design artifact can coexist with a delivery that misses the primary interface requirement. It also shows that agent-produced code can contribute useful service boundaries even when the surface fails acceptance.</p>
+
+    <p>It does not show that coding agents cannot build TUIs, that one framework is universally better, or that document length caused the failure. Those hypotheses need controlled comparisons across prompts, models, and tasks.</p>
+
+    <p>The practical lesson is smaller and stronger: never infer implementation quality from analysis quality. Define the user-visible evidence first, then make every coding iteration earn the next one.</p>
+
+    <h3>Related evidence</h3>
+    <ul>
+      <li><a href="/articles/testing-tuis-with-tmux.html">Testing Terminal UIs with tmux</a></li>
+      <li><a href="/articles/quality-vs-speed-agent-era.html">Quality gates for agent-generated systems</a></li>
+      <li><a href="/articles/stop-building-agent-soup-compilers.html">Why explicit execution models beat agent soup</a></li>
+    </ul>
 
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Turn an impressive agent demo into an evidence-backed delivery.</p>
+          <a href="/#contact" class="btn btn--primary">Review the Acceptance System</a>
         </div>
       </article>
 

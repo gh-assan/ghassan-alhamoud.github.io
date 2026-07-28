@@ -1,0 +1,155 @@
+spec_version: "1.0"
+memory_system: replace-with-name
+owner: replace-with-team
+
+classes:
+  working:
+    purpose: Current-turn inputs and intermediate reasoning artifacts.
+    default_ttl: session
+    retrieval: injected only for the active task
+  episodic:
+    purpose: What happened in a specific run, incident, or decision.
+    default_ttl_days: 30
+    retrieval: filtered by project, actor, and time
+  semantic:
+    purpose: Reusable facts, decisions, patterns, and constraints.
+    default_ttl_days: 180
+    retrieval: hybrid lexical and semantic search
+  procedural:
+    purpose: Versioned instructions, policies, and tested workflows.
+    default_ttl_days: 90
+    retrieval: exact scope and version match
+
+lifecycle:
+  states:
+    - candidate
+    - active
+    - consolidated
+    - superseded
+    - quarantined
+    - deleted
+  transitions:
+    - from: candidate
+      to: active
+      requires:
+        - provenance
+        - scope
+        - classification
+        - owner
+        - expiry_or_review_at
+    - from: active
+      to: consolidated
+      requires:
+        - duplicate_resolution
+        - contradiction_check
+        - stable_summary
+    - from: active
+      to: superseded
+      requires:
+        - replacement_memory_id
+        - reason
+    - from: active
+      to: quarantined
+      requires:
+        - reason
+        - reviewer
+    - from: [active, consolidated, superseded, quarantined]
+      to: deleted
+      requires:
+        - deletion_reason
+        - deletion_receipt
+
+admission:
+  required_fields:
+    - memory_id
+    - class
+    - statement
+    - source_uri
+    - source_observed_at
+    - created_at
+    - owner
+    - scope
+    - confidence
+    - sensitivity
+    - review_at
+  reject_when:
+    - Unverified speculation is phrased as fact
+    - The record duplicates an active memory without adding evidence
+    - The record contains a secret or disallowed personal data
+    - No future decision or action can use the record
+
+retrieval:
+  candidate_filters:
+    - authorization_scope
+    - project_or_tenant
+    - memory_class
+    - active_state
+    - not_expired
+  ranking_features:
+    - lexical_relevance
+    - semantic_relevance
+    - source_quality
+    - recency
+    - successful_use_count
+    - contradiction_penalty
+  output_requirements:
+    - memory_id
+    - statement
+    - provenance
+    - confidence
+    - observed_at
+    - state
+
+forgetting:
+  rule: >
+    Recompute priority from a stable base score and last-evaluated checkpoint;
+    never repeatedly subtract lifetime decay from the already-decayed score.
+  actions:
+    - lower_retrieval_priority
+    - require_reverification
+    - supersede
+    - quarantine
+    - soft_delete
+    - hard_delete_after_retention
+  pinned_memory:
+    allowed_for:
+      - Safety policy
+      - Legal or contractual constraint
+      - Human-approved durable decision
+    review_required: true
+
+evaluation:
+  offline:
+    - precision_at_k
+    - helpful_recall_at_k
+    - contradiction_rate
+    - stale_recall_rate
+    - sensitive_recall_rate
+  online:
+    - retrieval_token_overhead
+    - accepted_memory_rate
+    - successful_use_rate
+    - task_success_delta
+    - correction_latency
+    - deletion_propagation_latency
+  experiment:
+    compare:
+      - no_memory
+      - retrieval_only
+      - retrieval_plus_consolidation
+    segment_by:
+      - workflow
+      - risk_class
+      - memory_class
+
+economics:
+  avoided_cost_formula: >
+    successful_reuses * (reconstruction_cost - retrieval_cost)
+    + avoided_human_reconstruction_time
+  total_costs:
+    - extraction_and_admission
+    - storage_and_indexing
+    - retrieval_tokens
+    - evaluation_and_review
+    - correction_and_deletion
+    - damage_from_wrong_or_stale_recall

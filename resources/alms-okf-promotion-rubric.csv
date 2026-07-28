@@ -1,0 +1,10 @@
+gate,minimum_evidence,blocker,review_owner
+status,ALMS enrichment status accepted,Pending rejected or superseded,Learning curator
+quality,Score at or above 4.0 with rationale,Missing score or unexplained model-only score,Domain reviewer
+provenance,Source agent source record and creation context retained,Untraceable assertion,Knowledge owner
+verification,Independent reproduction or source confirmation,Only self-reported success,Domain reviewer
+conflict,No unresolved accepted contradiction,Competing current guidance,Knowledge owner
+freshness,Dependency and policy review inside declared window,Expired or unknown validity,Artifact owner
+sensitivity,Field-level classification and redaction completed,Secret personal tenant or restricted content,Security reviewer
+compatibility,Declared OKF version validates against target profile,Exporter version differs from target without mapping,Platform owner
+publication,Destination allowlisted diff reviewed and audit retained,Direct unreviewed write or merge,Repository maintainer

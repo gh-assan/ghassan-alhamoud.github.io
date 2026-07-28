@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Every Token Is Rent: Building an Agent That Doesn't Forget — Ghassan Alhamoud</title>
-  <meta name="description" content="Stateless agents keep paying to relearn the same environment. Here's the layered memory architecture I use to turn repeated context rebuild into durable system knowledge." />
+  <title>Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting — Ghassan Alhamoud</title>
+  <meta name="description" content="A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html" />
-  <meta property="og:title" content="Every Token Is Rent: Building an Agent That Doesn't Forget" />
-  <meta property="og:description" content="Stateless agents keep paying to relearn the same environment. Here's the layered memory architecture I use to turn repeated context rebuild into durable system knowledge." />
+  <meta property="og:title" content="Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting" />
+  <meta property="og:description" content="A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART014.webp" />
   <meta property="article:published_time" content="2026-04-01" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html" />
-  <meta property="twitter:title" content="Every Token Is Rent: Building an Agent That Doesn't Forget" />
-  <meta property="twitter:description" content="Stateless agents keep paying to relearn the same environment. Here's the layered memory architecture I use to turn repeated context rebuild into durable system knowledge." />
+  <meta property="twitter:title" content="Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting" />
+  <meta property="twitter:description" content="A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART014.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Every Token Is Rent: Building an Agent That Doesn't Forget",
-  "description": "Stateless agents keep paying to relearn the same environment. Here's the layered memory architecture I use to turn repeated context rebuild into durable system knowledge.",
+  "headline": "Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting",
+  "description": "A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART014.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-04-01",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html",
   "proficiencyLevel": "Expert",
-  "dependencies": "Memory Architecture, LLM, System Design, AI, OpenClaw",
+  "dependencies": "Agent Memory, Retrieval, Knowledge Management, Evaluation, Privacy",
   "articleSection": "AI Architecture"
 }
   </script>
@@ -92,87 +92,160 @@
           <div class="article-single__meta">
             <time datetime="2026-04-01">Apr 01 2026</time>
             <span class="article-card__dot"></span>
-            <span>8 min</span>
+            <span>14 min</span>
           </div>
-          <h1 class="article-single__title">Every Token Is Rent: Building an Agent That Doesn't Forget</h1>
+          <h1 class="article-single__title">Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting</h1>
           <div class="article-single__tags">
-          <span class="article-single__tag">Memory Architecture</span>
-          <span class="article-single__tag">LLM</span>
-          <span class="article-single__tag">System Design</span>
-          <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Agent Memory</span>
+          <span class="article-single__tag">Retrieval</span>
+          <span class="article-single__tag">Knowledge Systems</span>
+          <span class="article-single__tag">Evaluation</span>
           </div>
         </header>
 
                 <img src="/images/articles/ART014.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>The easiest way to waste money on LLM systems is to make them relearn the same reality over and over again.</p>
-<p>I do not just mean token cost, although that matters. I mean the more expensive cost: repetition, context rebuild, duplicated analysis, and workflows that never really accumulate understanding.</p>
-<p>That is what I mean when I say every token is rent. If your agent has to keep re-reading the same environment to become useful, you are paying again for knowledge the system should already have.</p>
-<hr />
-<h2>The Real Problem With Stateless Agents</h2>
-<p>Modern models are capable enough that people sometimes underestimate how fragile the surrounding workflow still is.</p>
-<p>A session can look impressive in the moment and still leave behind almost no durable intelligence. Close the loop, lose the context window, start a new run, and the agent is effectively back at the beginning.</p>
-<p>That is acceptable for lightweight chat use cases. It is a serious limitation for systems that need continuity across projects, incidents, codebases, or multi-step research.</p>
-<p>If you want an agent to behave more like a collaborator than a vending machine, memory architecture stops being optional.</p>
-<hr />
-<h2>The Three Layers That Made This Work</h2>
-<p>The model that worked best for me was not one giant memory bucket. It was a layered system with different responsibilities.</p>
-<p><strong>L1: working context.</strong> This is what the model sees right now. It should stay small, curated, and expensive by design.</p>
-<p><strong>L2: active state.</strong> This is the scratchpad for the current run: objective, progress, touched files, intermediate decisions, operational state.</p>
-<p><strong>L3: durable knowledge.</strong> This is where decisions, lessons, patterns, and reusable knowledge get promoted once they are worth keeping.</p>
-<p>That separation matters because not everything deserves to live forever, and not everything that should live forever belongs in the prompt.</p>
-<hr />
-<h2>Why Most Memory Systems Get Bloated</h2>
-<p>A common mistake is to confuse storage with memory.</p>
-<p>Logging everything feels safe, but it quickly creates a second problem: the system has too much to sift through and no clear notion of what deserves priority. At that point you have built a pile, not a memory system.</p>
-<p>Useful memory is selective. It keeps what supports future work and lets the rest decay, archive, or stay retrievable without clogging the active loop.</p>
-<p>That is why retention rules matter as much as capture rules.</p>
-<hr />
-<h2>What Selective Retention Changes</h2>
-<p>Once retention is treated as a first-class design choice, the system becomes calmer.</p>
-<p>Important architecture decisions stay visible. Repeated failure lessons remain easy to recover. Active project context survives session boundaries. But stale noise stops competing for attention every time the agent wakes up.</p>
-<p>That is the real productivity gain. Not some abstract promise of "long-term memory," but a workflow where the model spends less time reconstructing and more time progressing.</p>
-<hr />
-<h2>What the Automation Needs to Handle</h2>
-<p>The memory layer only works if the tedious parts are automated.</p>
-<p>At minimum, I want the system to do three things reliably:</p>
-<ol>
-<li>update active state after meaningful work</li>
-<li>promote durable lessons into a structured knowledge layer</li>
-<li>archive or evict low-value material before it pollutes future sessions</li>
-</ol>
-<p>If people have to remember to do all of that manually, the memory system becomes another neglected process. It needs to behave like infrastructure, not ceremony.</p>
-<hr />
-<h2>Why This Matters for Consulting Buyers</h2>
-<p>For engineering leaders, this is not just an AI design question. It is a cost and reliability question.</p>
-<p>How much senior time is being spent re-explaining the environment to the system? How much model spend goes into rebuilding context that should already exist? How much inconsistency comes from workflows that forget yesterday's decisions?</p>
-<p>Teams often chase better reasoning before they solve continuity. In a lot of real environments, continuity is the higher-leverage fix.</p>
-<hr />
-<h2>The Better Mental Model</h2>
-<p>I do not think of memory architecture as giving an agent a magical brain.</p>
-<p>I think of it as giving the system a disciplined relationship with time.</p>
-<p>What should remain local to this run? What should survive to the next one? What deserves to become reusable organizational knowledge? What should quietly disappear?</p>
-<p>Once those questions are answered clearly, the agent stops feeling like a clever intern with daily amnesia and starts feeling more like a persistent system.</p>
-<hr />
-<h2>Where I Would Start</h2>
-<p>If I were helping a team improve this today, I would start very practically:</p>
-<ol>
-<li>define a minimal active-state layer</li>
-<li>create a durable place for decisions and lessons learned</li>
-<li>set explicit promotion and archival rules</li>
-<li>measure whether repeat context-loading begins to fall</li>
-</ol>
-<p>You do not need a grand theory first. You need a workflow that stops paying rent on the same knowledge every session.</p>
-<p>That is usually the point where the system begins to feel economically and operationally serious.</p>
+          <p><strong>Agent memory is not “put the chat in a vector database.”</strong> It is a governed lifecycle that decides what may be remembered, how it is represented, when it is retrieved, how contradictions are resolved, and when it must disappear.</p>
+          <p>Without those decisions, memory can make an agent worse: stale instructions outrank current policy, private facts cross tenants, summaries lose provenance, and irrelevant retrieval consumes the context it was meant to save.</p>
+
+          <h2>Four memory classes, four jobs</h2>
+          <table>
+            <thead>
+              <tr><th>Class</th><th>Question answered</th><th>Typical lifetime</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Working</td><td>What does this turn need right now?</td><td>One task or session</td></tr>
+              <tr><td>Episodic</td><td>What happened in this run, incident, or decision?</td><td>Days to months</td></tr>
+              <tr><td>Semantic</td><td>What reusable fact, constraint, or pattern is believed?</td><td>Until review, supersession, or deletion</td></tr>
+              <tr><td>Procedural</td><td>How should a scoped workflow be performed?</td><td>Versioned policy lifetime</td></tr>
+            </tbody>
+          </table>
+          <p>Do not search every class with one ranking function. Working memory is injected by task state. Episodes need actor, project, and time filters. Semantic memory benefits from hybrid retrieval. Procedures require exact scope and version compatibility.</p>
+
+          <h2>The lifecycle is the architecture</h2>
+          <pre><code>observation
+    │
+    ▼
+candidate ──admit──▶ active ──merge──▶ consolidated
+    │                  │  │                 │
+ reject                │  ├──replace──────▶ superseded
+                       │  └──doubt────────▶ quarantined
+                       │
+                       └──expire / erase──▶ deleted</code></pre>
+          <p>Each transition should be explicit and auditable. A record is not durable merely because it was written. It becomes active only after admission. Consolidation creates a stable synthesis while preserving source links. Supersession keeps history without allowing old instructions to compete. Quarantine removes doubtful material from retrieval. Deletion produces a receipt and propagates to indexes and caches.</p>
+
+          <h2>Admission: remember less, but remember it well</h2>
+          <p>A candidate memory needs:</p>
+          <ul>
+            <li>a future decision or action it can improve;</li>
+            <li>source URI and observation time;</li>
+            <li>owner, tenant or project scope, and sensitivity;</li>
+            <li>confidence and whether the statement is observed, inferred, or prescribed;</li>
+            <li>review or expiry time;</li>
+            <li>deduplication and contradiction checks.</li>
+          </ul>
+          <p>Reject raw speculation phrased as fact, secrets, disallowed personal data, and “notes to self” with no reusable value. Store the evidence separately when it is large; keep a digest and resolvable reference in the memory record.</p>
+
+          <h2>Retrieval is an authorization decision</h2>
+          <p>Filter before ranking:</p>
+          <pre><code>authorized scope
+∩ project or tenant
+∩ compatible memory class
+∩ active state
+∩ not expired
+         │
+         ▼
+hybrid candidate retrieval
+         │
+         ▼
+rank by relevance + source quality + recency
+       + successful use − contradiction penalty</code></pre>
+          <p>Every returned item should carry its memory ID, provenance, confidence, observation time, and state. The model needs to know whether it is seeing a current policy, an old episode, or an uncertain inference.</p>
+          <p>Cap the memory token budget independently from the task-input budget. A retrieval system that always fills the context window turns “available memory” into mandatory noise.</p>
+
+          <h2>Consolidation must preserve disagreement</h2>
+          <p>When several episodes support one lesson, consolidation can reduce duplication. But do not flatten conflicts into a confident average. Keep:</p>
+          <ul>
+            <li>the consolidated statement;</li>
+            <li>supporting and contradicting source IDs;</li>
+            <li>scope and exceptions;</li>
+            <li>the consolidator version;</li>
+            <li>human approval where the memory becomes policy.</li>
+          </ul>
+          <p>If two memories prescribe incompatible actions under the same scope, quarantine or surface the conflict. Ranking one slightly higher is not conflict resolution.</p>
+
+          <h2>Forgetting is a feature</h2>
+          <p>Decay should lower retrieval priority or trigger reverification; it should not silently rewrite historical evidence. Use a stable base score and a <code>last_evaluated_at</code> checkpoint.</p>
+          <pre><code>priority_now =
+  base_quality
+  × freshness_factor(time since last verification)
+  × use_factor(successful uses, corrections)
+  × source_factor
+  − contradiction_penalty</code></pre>
+          <p>This avoids a subtle failure I found in the local ALMS implementation: its decay function derives lifetime decay from creation time, then subtracts that amount from the already-decayed current score. Repeated sweeps can therefore punish the same elapsed time more than once. The safe alternatives are to recompute from an immutable base or apply only the delta since the last checkpoint.</p>
+          <p>Pinning should be rare and reviewed. Safety policy, contractual constraints, and human-approved durable decisions may justify it. “This was useful once” does not.</p>
+
+          <h2>Deletion needs propagation and proof</h2>
+          <p>Soft deletion is helpful for audit and recovery, but it is not the end of erasure. A deletion workflow should cover:</p>
+          <ol>
+            <li>primary record state;</li>
+            <li>vector and lexical indexes;</li>
+            <li>materialized summaries and consolidated memories;</li>
+            <li>agent-local caches and sync queues;</li>
+            <li>backups under the retention policy;</li>
+            <li>a receipt recording what was removed, when, and by which authority.</li>
+          </ol>
+          <p>Measure deletion-propagation latency. “Deleted from the database” is incomplete if the record remains retrievable from an embedding index.</p>
+
+          <h2>Evaluate memory as a treatment</h2>
+          <p>Run the same task set under three conditions: no memory, retrieval only, and retrieval plus consolidation. Segment by workflow and memory class.</p>
+          <table>
+            <thead>
+              <tr><th>Metric</th><th>What it detects</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Precision@k</td><td>Retrieved items that were actually relevant</td></tr>
+              <tr><td>Helpful recall@k</td><td>Known useful memories that were retrieved</td></tr>
+              <tr><td>Task-success delta</td><td>Whether memory improves the outcome</td></tr>
+              <tr><td>Contradiction rate</td><td>Mutually incompatible items shown together</td></tr>
+              <tr><td>Stale-recall rate</td><td>Expired or superseded memories reaching context</td></tr>
+              <tr><td>Sensitive-recall rate</td><td>Unauthorized records crossing the boundary</td></tr>
+              <tr><td>Retrieval token overhead</td><td>Context spent to obtain the benefit</td></tr>
+              <tr><td>Correction latency</td><td>Time from reported error to retrieval-safe repair</td></tr>
+            </tbody>
+          </table>
+          <p>Do not optimise retrieval relevance alone. A highly relevant false memory can do more damage than an irrelevant one because the model is more likely to act on it.</p>
+
+          <h2>The economics of “token rent”</h2>
+          <pre><code>avoided cost =
+  successful reuses × (reconstruction cost − retrieval cost)
+  + avoided human reconstruction time
+
+net memory value =
+  avoided cost
+  − extraction, storage, indexing, retrieval, evaluation,
+    correction, deletion, and wrong-recall damage</code></pre>
+          <p>Use provider bills and measured human time, not generic token prices. A memory system can reduce prompt tokens while increasing total cost through extraction models, embeddings, review, and incident cleanup.</p>
+          <p>The decisive metric is not “memories stored.” It is successful, attributable reuse without unacceptable stale, contradictory, or sensitive recall.</p>
+
+          <h2>What the ALMS implementation contributes</h2>
+          <p>The local Agent Learning Management System already implements several sound primitives: shared learning records, sync plus acknowledgement, pinning, scoring, TTL, soft deletion, protocol distribution, and an architecture that stays out of the agent's hot path. The next maturity step is to make admission state, provenance-aware retrieval, contradiction handling, and decay checkpoints equally explicit.</p>
+
+          <h2>Download the lifecycle template</h2>
+          <p><a href="/resources/agent-memory-lifecycle-template.yaml" class="btn btn--primary" download>Download the agent memory lifecycle template</a></p>
+          <ul>
+            <li><a href="/articles/alms-open-source-shared-agent-memory.html">Read the ALMS implementation case study</a></li>
+            <li><a href="/articles/alms-okf-integration-bridge.html">See the portable knowledge exchange layer</a></li>
+            <li><a href="/articles/agent-execution-attestation.html">Attach provenance to agent execution</a></li>
+          </ul>
 
 
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Designing agent memory that must remain useful, private, and correct over time?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Memory Architecture</a>
         </div>
       </article>
 

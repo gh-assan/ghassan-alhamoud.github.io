@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>ALMS and OKF: Turning Agent Experience Into Portable Knowledge — Ghassan Alhamoud</title>
-  <meta name="description" content="ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge." />
+  <title>From Agent Experience to Portable Knowledge: Integrating ALMS and OKF — Ghassan Alhamoud</title>
+  <meta name="description" content="A governed promotion path from ALMS operational learnings to portable OKF bundles: thresholds, lifecycle, provenance, conflicts, security boundaries, version compatibility, and runnable export." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html" />
-  <meta property="og:title" content="ALMS and OKF: Turning Agent Experience Into Portable Knowledge" />
-  <meta property="og:description" content="ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge." />
+  <meta property="og:title" content="From Agent Experience to Portable Knowledge: Integrating ALMS and OKF" />
+  <meta property="og:description" content="A governed promotion path with thresholds, lifecycle, provenance, conflicts, security boundaries, and version compatibility." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/alms-okf-integration-bridge.webp" />
   <meta property="article:published_time" content="2026-07-02" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html" />
-  <meta property="twitter:title" content="ALMS and OKF: Turning Agent Experience Into Portable Knowledge" />
-  <meta property="twitter:description" content="ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge." />
+  <meta property="twitter:title" content="From Agent Experience to Portable Knowledge: Integrating ALMS and OKF" />
+  <meta property="twitter:description" content="A governed promotion path with thresholds, lifecycle, provenance, conflicts, security boundaries, and version compatibility." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/alms-okf-integration-bridge.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "ALMS and OKF: Turning Agent Experience Into Portable Knowledge",
-  "description": "ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge.",
+  "headline": "From Agent Experience to Portable Knowledge: Integrating ALMS and OKF",
+  "description": "A governed promotion path from ALMS operational learnings to portable OKF bundles: thresholds, lifecycle, provenance, conflicts, security boundaries, version compatibility, and runnable export.",
   "image": "https://ghassan-alhamoud.com/images/articles/alms-okf-integration-bridge.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-07-02",
-  "dateModified": "2026-07-02",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html",
   "proficiencyLevel": "Expert",
   "dependencies": "AI agents, OKF, ALMS, knowledge management, MCP, agent memory",
@@ -156,9 +156,9 @@
           <div class="article-single__meta">
             <time datetime="2026-07-02">Jul 2 2026</time>
             <span class="article-card__dot"></span>
-            <span>7 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">ALMS and OKF: Turning Agent Experience Into Portable Knowledge</h1>
+          <h1 class="article-single__title">From Agent Experience to Portable Knowledge: Integrating ALMS and OKF</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">OKF</span>
@@ -186,6 +186,8 @@
     </blockquote>
 
     <p>That distinction matters. Without it, an agent memory system becomes a pile of anecdotes, and a knowledge format becomes another dumping ground.</p>
+
+    <p><strong>Version note, 28 July 2026:</strong> ALMS currently emits an OKF <code>0.1</code> bundle. The upstream OKF specification is now <code>0.2</code>, which adds first-class provenance, trust, freshness, lifecycle, and attestation fields. The existing exporter remains a useful v0.1 bridge, but it should not claim v0.2 conformance until those mappings and compatibility tests are implemented.</p>
 
     <h2>The Problem: Experience Has No Promotion Path</h2>
 
@@ -292,6 +294,19 @@
     </ul>
 
     <p>This is intentionally less ambitious than an automatic documentation generator. That is the point.</p>
+
+    <h3>Promotion criteria</h3>
+    <table>
+      <thead><tr><th>Gate</th><th>Minimum for export</th><th>Blocks promotion</th></tr></thead>
+      <tbody>
+        <tr><td>Status</td><td><code>accepted</code></td><td>Pending, rejected, or superseded learning</td></tr>
+        <tr><td>Score</td><td>4.0 by current default</td><td>Missing or lower score</td></tr>
+        <tr><td>Evidence</td><td>Source agent and retained operational context</td><td>Untraceable assertion</td></tr>
+        <tr><td>Conflict</td><td>No unresolved accepted lesson contradicts it</td><td>Competing current guidance</td></tr>
+        <tr><td>Freshness</td><td>Owner-defined review window remains valid</td><td>Expired dependency or policy</td></tr>
+        <tr><td>Sensitivity</td><td>Export scope permits every field</td><td>Secret, personal, tenant, or restricted data</td></tr>
+      </tbody>
+    </table>
 
     <figure>
       <img src="/images/articles/alms-okf-integration-bridge-diagram.svg" alt="ALMS learning records flowing through okf.export into an OKF bundle and review workflow" loading="lazy" />
@@ -452,6 +467,12 @@ Some upstream responses include a trailing comma. Strip the trailing comma befor
 
     <p>These constraints make the feature smaller, but they also make it safer.</p>
 
+    <h3>Conflict and version handling</h3>
+    <p>Do not overwrite a portable lesson in place when a new ALMS record disagrees. Export a stable source identity, mark the older concept superseded only after review, and preserve both revisions in Git history. Until ALMS models explicit conflict sets and review timestamps, the caller must perform that reconciliation before publication.</p>
+
+    <h3>Security boundary</h3>
+    <p><code>okf.export</code> is read-only with respect to ALMS and does not write Git, which is a good start. The publication worker still needs field-level redaction, destination allowlists, size limits, content scanning, an authorised reviewer, and an audit record. An “accepted” learning is not automatically safe to disclose.</p>
+
     <h2>The Useful Architecture</h2>
 
     <p>The architecture I think is worth pursuing has three layers:</p>
@@ -529,16 +550,24 @@ Some upstream responses include a trailing comma. Strip the trailing comma befor
     <h3>References</h3>
 
     <ol>
-      <li>Open Knowledge Format - Google Cloud / GitHub</li>
+      <li><a href="https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md">Open Knowledge Format specification</a></li>
+      <li><a href="https://cloud.google.com/blog/products/data-analytics/okf-v0-2-adds-trust-signals/">OKF v0.2 trust-signals announcement</a></li>
       <li>Model Context Protocol - Specification</li>
       <li>ALMS Open Source Repository - <a href="https://github.com/ghassan-ai-projects/alms">github.com/ghassan-ai-projects/alms</a></li>
     </ol>
 
+    <p><a href="/resources/alms-okf-promotion-rubric.csv" class="btn btn--primary" download>Download the promotion rubric</a></p>
+    <ul>
+      <li><a href="/articles/alms-open-source-shared-agent-memory.html">Inspect the source memory control plane</a></li>
+      <li><a href="/articles/every-token-is-rent-memory-architecture.html">Place promotion in the memory lifecycle</a></li>
+      <li><a href="/articles/agent-execution-attestation.html">Attach verifiable evidence to promoted knowledge</a></li>
+    </ul>
+
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Designing a promotion path that cannot silently publish agent anecdotes?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Knowledge Gate</a>
         </div>
       </article>
 

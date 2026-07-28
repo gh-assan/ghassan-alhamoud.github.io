@@ -1,0 +1,30 @@
+{
+  "name": "deterministic-pricing-review",
+  "description": "Review a pricing proposal against declared deterministic rules.",
+  "version": "1.0.0",
+  "runtime": "client",
+  "entrypoint": "pricing_review.execute",
+  "permissions": ["read:proposal"],
+  "input_schema": {
+    "type": "object",
+    "required": ["proposal"],
+    "properties": {
+      "proposal": {"type": "object"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["decision", "evidence"],
+    "properties": {
+      "decision": {"type": "string", "enum": ["pass", "fail"]},
+      "evidence": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "files": [
+    {
+      "path": "skill/SKILL.md",
+      "media_type": "text/markdown",
+      "content": "# Deterministic Pricing Review\n\nEvaluate only the declared rules and return evidence."
+    }
+  ]
+}

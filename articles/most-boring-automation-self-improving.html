@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>The Most Boring Automation I've Ever Built - And Why It's the Only One That Works — Ghassan Alhamoud</title>
-  <meta name="description" content="It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful." />
+  <title>Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back — Ghassan Alhamoud</title>
+  <meta name="description" content="A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html" />
-  <meta property="og:title" content="The Most Boring Automation I've Ever Built - And Why It's the Only One That Works" />
-  <meta property="og:description" content="It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful." />
+  <meta property="og:title" content="Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back" />
+  <meta property="og:description" content="A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART015.webp" />
   <meta property="article:published_time" content="2026-04-15" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html" />
-  <meta property="twitter:title" content="The Most Boring Automation I've Ever Built - And Why It's the Only One That Works" />
-  <meta property="twitter:description" content="It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful." />
+  <meta property="twitter:title" content="Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back" />
+  <meta property="twitter:description" content="A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART015.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "The Most Boring Automation I've Ever Built - And Why It's the Only One That Works",
-  "description": "It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful.",
+  "headline": "Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back",
+  "description": "A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART015.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-04-15",
-  "dateModified": "2026-04-15",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html",
-  "proficiencyLevel": "Intermediate",
-  "dependencies": "Feedback Loops, AI Systems, Monitoring, AI, OpenClaw",
+  "proficiencyLevel": "Expert",
+  "dependencies": "Automation, Feedback Loops, Verification, Rollback, Observability",
   "articleSection": "AI Systems"
 }
   </script>
@@ -92,82 +92,163 @@
           <div class="article-single__meta">
             <time datetime="2026-04-15">Apr 15 2026</time>
             <span class="article-card__dot"></span>
-            <span>6 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">The Most Boring Automation I've Ever Built - And Why It's the Only One That Works</h1>
+          <h1 class="article-single__title">Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back</h1>
           <div class="article-single__tags">
+          <span class="article-single__tag">Automation</span>
           <span class="article-single__tag">Feedback Loops</span>
-          <span class="article-single__tag">AI Systems</span>
-          <span class="article-single__tag">Monitoring</span>
-          <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Verification</span>
+          <span class="article-single__tag">Rollback</span>
           </div>
         </header>
 
                 <img src="/images/articles/ART015.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I built a script that runs every morning and does nothing flashy.</p>
-<p>It reads a manifest of every component in my system. It checks for missing parts, stale files, thresholds nobody remembers setting. If the fix is simple enough, it applies it. If not, it flags it.</p>
-<p>That's it. No neural networks. No fancy architecture. A Python script and a cron job.</p>
-<p>It found twelve things I'd missed on day one.</p>
-<h2>Day One: The Inventory Clearance</h2>
-<p>The scan took two seconds. What it found stopped me cold:</p>
-<p>The orchestrator SOP — the file that defines how the entire system runs — had no section about making itself better. It described every component, every protocol, every edge case. Never mentioned that any of it should improve over time.</p>
-<p>I had written it myself. Never noticed.</p>
-<p>The heartbeat checklist — which I'd filled out dozens of times — was missing the self-improvement check.</p>
-<p>The mermaid diagramming skill — rebuilt twice — had no improvement tracking.</p>
-<p>The email guardrail threshold was set to 60. I don't remember why. Maybe I was rushed. Maybe I guessed. The engine didn't know if 60 was right. But it knew <em>I</em> didn't know.</p>
-<p>Twelve things found in one run. Eleven fixed automatically. One flagged for review.</p>
-<hr />
-<h2>What It Does on Day 30</h2>
-<p>After the first week, the firehose becomes a trickle. The inventory clearance is done. Now it's maintenance:</p>
-<ul>
-<li><strong>Verification</strong> — Next run checks that last week's fixes survived any overwrites</li>
-<li><strong>Error burden tracking</strong> — If self-healing counters spike, the engine knows</li>
-<li><strong>Stale issue detection</strong> — Anything untouched >48h gets flagged</li>
-<li><strong>Wider scope</strong> — SOP docs, scripts, projects — all enrolled, all tracked</li>
-</ul>
-<p>Thirteen skills today, all with improvement sections. Fourteen SOP documents. Ten scripts. Five projects. Six improvement logs.</p>
-<p>The engine doesn't fix hard problems. That's not its job. Its job is to show me what I'm not seeing. Quietly. Every morning. So I have no excuse.</p>
-<hr />
-<h2>The Architecture (It's Embarrassingly Simple)</h2>
-<ul>
-<li>A JSON registry that knows every component and its last review date</li>
-<li>A scanner that checks for missing sections, stale files, untuned thresholds</li>
-<li>An auto-applicator for safe patterns: known section templates get appended, missing hooks get added</li>
-<li>A verification loop that re-checks previous suggestions on the next run</li>
-<li>Error handling for every path — corrupted files, missing dirs, git failures — none of them fatal</li>
-</ul>
-<p>The whole thing is one script. A few hundred lines of Python. A five-line cron entry.</p>
-<p>The expensive part is a brief LLM critique on the 2-3 most worn components, costing pennies per day.</p>
-<hr />
-<h2>The Side Effect</h2>
-<p>Two weeks in, I was adding a new skill to the system. Wrote the code. Tested it. Was about to push.</p>
-<p>And I stopped. Because I realized I hadn't registered it yet.</p>
-<p>I had never done that before. In six months, I'd never paused before shipping to ask: how will this be maintained? What does drift look like here? Where will its improvements come from?</p>
-<p>One script, and I had become a more deliberate engineer. Not because it made me smarter. Because having a simple, boring daily routine changed the way I think about building things.</p>
-<p>Every new component now gets a registry entry and an improvement section before it ships. That's not automation. It's a habit. Created by automation.</p>
-<hr />
-<h2>If You Build One Thing This Year</h2>
-<p>Don't build a better agent. Build one that gets better.</p>
-<ol>
-<li>List every component in your system in a <code>registry.json</code></li>
-<li>Write one scanner check: "has this changed in 30 days?"</li>
-<li>Set a cron job. Wait a week.</li>
-</ol>
-<p>The first run will embarrass you. That's the point.</p>
-<p>The engine isn't smart. It's persistent. And persistence outruns intelligence when the problem is forgetfulness.</p>
-<p>You don't need better AI. You just need something that shows up every morning, looks at what's broken, fixes one thing, and doesn't ask for credit.</p>
-<p>I do this for a living.</p>
-<hr />
-<p><em>Architecting systems that improve themselves — without becoming more complex. I help teams build infrastructure that catches drift before it catches them. Message me if this resonates.</em></p>
+          <p><strong>The safest self-improvement engine is mostly a linter.</strong> It inventories components, detects drift with deterministic checks, proposes bounded repairs, verifies the result, and rolls back when proof fails. It does not give an agent open-ended permission to “make the system better.”</p>
+          <p>I run such an engine around an OpenClaw workspace. Its operational state is useful precisely because it is imperfect: the scanner finds real drift, while its own counters reveal why the improvement loop needs stronger reconciliation.</p>
+
+          <h2>What the live system says today</h2>
+          <p>I inspected the main-machine registry and append-only log on 28 July 2026:</p>
+          <table>
+            <thead>
+              <tr><th>Signal</th><th>Observed value</th><th>Interpretation</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Registered skills</td><td>22</td><td>Inventory grew beyond the original 13-skill launch snapshot</td></tr>
+              <tr><td>Missing improvement section</td><td>1</td><td>The detector still finds current drift</td></tr>
+              <tr><td>Total runs</td><td>18</td><td>The registry records repeated execution</td></tr>
+              <tr><td>Total suggestions</td><td>150</td><td>The scanner has produced substantial review load</td></tr>
+              <tr><td>Current summary</td><td>0 applied; 8 flagged</td><td>This run was report-only or found no auto-fixable items</td></tr>
+              <tr><td>Lifetime applied counter</td><td>0</td><td>Contradicts the log, which records many successful applications</td></tr>
+            </tbody>
+          </table>
+          <p>The last line matters. A self-improvement system that cannot reconcile its registry with its findings ledger cannot accurately report success rate, rollback rate, or change burden. Detection value remains; improvement claims do not.</p>
+
+          <h2>The control loop</h2>
+          <pre><code>manifest ──▶ scan ──▶ finding ──▶ risk classification
+                                      │
+                        ┌─────────────┴─────────────┐
+                        ▼                           ▼
+                     propose                  bounded auto-fix
+                        │                           │
+                        ▼                           ▼
+                   human review               verify change
+                                                    │
+                                      ┌─────────────┴─────────────┐
+                                      ▼                           ▼
+                                   commit                      rollback
+                                      │                           │
+                                      └────────▶ reconcile ◀──────┘</code></pre>
+          <p>Every arrow needs durable evidence. The next scan should verify persistence, but immediate verification belongs in the same run. Waiting until tomorrow leaves a bad mutation active for a day.</p>
+
+          <h2>Make the inventory declarative</h2>
+          <p>For each component, record:</p>
+          <ul>
+            <li>stable ID, type, owner, and paths;</li>
+            <li>expected sections, files, registrations, and review interval;</li>
+            <li>checks with severity and evidence requirements;</li>
+            <li>allowed remediation class;</li>
+            <li>verification and rollback procedure;</li>
+            <li>escalation route.</li>
+          </ul>
+          <p>Discovery can suggest new entries, but it should not silently enroll arbitrary files. A reviewed manifest defines scope; filesystem traversal only observes it.</p>
+
+          <h2>Findings need identity and evidence</h2>
+          <p>A finding is not a log line. Give it a stable ID and lifecycle:</p>
+          <pre><code>proposed → approved → applied → verified
+    │          │          │
+    ├─rejected └─expired   ├─failed → rolled_back
+    │                      └─failed → escalated
+    └─superseded</code></pre>
+          <p>Store run ID, check version, component ID, file digest, observed value, expected value, severity, and disposition. This makes duplicate findings idempotent and lets the engine measure whether flags lead to useful action.</p>
+
+          <h2>Classify auto-fixes by blast radius</h2>
+          <table>
+            <thead>
+              <tr><th>Risk class</th><th>Example</th><th>Default action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Documentation-only</td><td>Append a reviewed section to one declared Markdown file</td><td>Auto-fix under strict preconditions</td></tr>
+              <tr><td>Reversible configuration</td><td>Add a missing non-secret registry entry</td><td>Propose or canary; verify parser and behavior</td></tr>
+              <tr><td>Behavioral code</td><td>Change retry or threshold logic</td><td>Human review and tests</td></tr>
+              <tr><td>External effect</td><td>Edit cron, deploy, message, delete, rotate credentials</td><td>Explicit approval and receipt</td></tr>
+              <tr><td>Unknown</td><td>LLM-generated refactor</td><td>Report only</td></tr>
+            </tbody>
+          </table>
+          <p>The existing engine correctly refuses to auto-tune an email threshold that was initially set to 60 without outcome data. “The value looks arbitrary” is evidence for an experiment, not evidence for a replacement value.</p>
+
+          <h2>Preconditions prevent stale-write damage</h2>
+          <p>Before an automatic edit:</p>
+          <ol>
+            <li>confirm the target remains inside the manifest scope;</li>
+            <li>require a clean worktree or isolate the change;</li>
+            <li>recompute the file digest captured during scanning;</li>
+            <li>confirm the defect still exists;</li>
+            <li>enforce per-run file and line limits;</li>
+            <li>capture exact pre-change bytes for rollback.</li>
+          </ol>
+          <p>This closes the time-of-check/time-of-use gap. If a human edits the file after the scan, the engine must rescan rather than append against stale assumptions.</p>
+
+          <h2>Verification must prove behavior</h2>
+          <p>Verification should match the repair:</p>
+          <ul>
+            <li>re-run the original detector;</li>
+            <li>parse or compile the edited artifact;</li>
+            <li>run targeted tests;</li>
+            <li>confirm only declared files changed;</li>
+            <li>run an integration check for wiring changes;</li>
+            <li>record commands, exit codes, and evidence URIs.</li>
+          </ul>
+          <p>“The text is present” verifies a documentation section. It does not verify that a heartbeat, tool, or guardrail is actually wired into the runtime.</p>
+
+          <h2>Rollback is part of the action</h2>
+          <p>Define rollback before applying the fix. For a single-file documentation edit, restoring captured bytes may be enough. For configuration, use a versioned previous value. For a deployment, require the platform's rollback handle.</p>
+          <p>If verification and rollback both fail, stop the run and escalate. Continuing to “improve” other components after losing control of one mutation multiplies uncertainty.</p>
+
+          <h2>Reconcile the engine's own books</h2>
+          <p>At run end, derive counters from the append-only findings ledger:</p>
+          <pre><code>applied_count  = count(disposition in [applied, verified])
+verified_count = count(disposition == verified)
+failed_count   = count(disposition == failed)
+rollback_count = count(disposition == rolled_back)
+
+assert verified_count &lt;= applied_count
+assert every failed application has rollback or escalation evidence
+assert summary counters equal ledger counts</code></pre>
+          <p>This directly addresses the current registry/log contradiction. A mutable lifetime counter should be a cache, never the source of truth.</p>
+
+          <h2>Metrics that resist vanity</h2>
+          <table>
+            <thead>
+              <tr><th>Metric</th><th>Question answered</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Finding precision</td><td>How many reviewed findings were real?</td></tr>
+              <tr><td>Action rate</td><td>How many findings led to an approved change?</td></tr>
+              <tr><td>Verification success</td><td>How many applied changes proved their intended effect?</td></tr>
+              <tr><td>Rollback rate</td><td>How often did the engine need to recover?</td></tr>
+              <tr><td>Recurrence rate</td><td>Did the same defect return?</td></tr>
+              <tr><td>Time to disposition</td><td>Are flags becoming an ignored backlog?</td></tr>
+              <tr><td>Change-induced incidents</td><td>Did the improvement engine cause harm?</td></tr>
+            </tbody>
+          </table>
+          <p>“Suggestions generated” measures output volume, not improvement.</p>
+
+          <h2>Download the safe manifest</h2>
+          <p><a href="/resources/safe-improvement-manifest.yaml" class="btn btn--primary" download>Download the safe improvement manifest</a></p>
+          <ul>
+            <li><a href="/articles/self-healing-architecture-feedback-loop.html">Design the wider feedback loop</a></li>
+            <li><a href="/articles/issue-management-system-property.html">Turn repeated findings into owned system issues</a></li>
+            <li><a href="/articles/agent-execution-attestation.html">Attest each repair and verification result</a></li>
+          </ul>
 
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Building automation that may change its own operating environment?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Safety Boundary</a>
         </div>
       </article>
 

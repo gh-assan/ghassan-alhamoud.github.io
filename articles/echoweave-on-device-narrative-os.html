@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller. — Ghassan Alhamoud</title>
-  <meta name="description" content="Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS." />
+  <title>Designing an On-Device Personal Memory System — Ghassan Alhamoud</title>
+  <meta name="description" content="EchoWeave is an unbuilt design proposal for private personal memory: an on-device architecture, consent and deletion model, threat analysis, resource constraints, and validation plan." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html" />
-  <meta property="og:title" content="EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller." />
-  <meta property="og:description" content="Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS." />
+  <meta property="og:title" content="Designing an On-Device Personal Memory System" />
+  <meta property="og:description" content="An honest architecture proposal for EchoWeave: local data boundaries, consent, deletion, threat cases, device budgets, and validation gates." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART010.webp" />
   <meta property="article:published_time" content="2026-04-05" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html" />
-  <meta property="twitter:title" content="EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller." />
-  <meta property="twitter:description" content="Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS." />
+  <meta property="twitter:title" content="Designing an On-Device Personal Memory System" />
+  <meta property="twitter:description" content="An honest architecture proposal for EchoWeave: local data boundaries, consent, deletion, threat cases, device budgets, and validation gates." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART010.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.",
-  "description": "Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS.",
+  "headline": "Designing an On-Device Personal Memory System",
+  "description": "EchoWeave is an unbuilt design proposal for private personal memory: an on-device architecture, consent and deletion model, threat analysis, resource constraints, and validation plan.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART010.webp",
   "author": {
     "@type": "Person",
@@ -45,11 +45,11 @@
     }
   },
   "datePublished": "2026-04-05",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "Privacy, On-Device AI, Personal OS, AI",
-  "articleSection": "Software Architecture"
+  "dependencies": "Privacy, On-Device AI, Personal Memory, Threat Modeling",
+  "articleSection": "AI Architecture"
 }
   </script>
 
@@ -91,69 +91,152 @@
           <div class="article-single__meta">
             <time datetime="2026-04-05">Apr 05 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.</h1>
+          <h1 class="article-single__title">Designing an On-Device Personal Memory System</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Privacy</span>
           <span class="article-single__tag">On-Device AI</span>
-          <span class="article-single__tag">Personal OS</span>
-          <span class="article-single__tag">AI</span>
+          <span class="article-single__tag">Personal Memory</span>
+          <span class="article-single__tag">Threat Modeling</span>
           </div>
         </header>
 
         <img src="/images/articles/ART010.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-<p>Your phone probably knows more about your life than you do.</p>
-<p>Where you went. Who you talk to. What you bookmarked. What you meant to read. Which screenshots you saved because they felt important in the moment. Which voice notes you recorded and never listened to again.</p>
-<p>The strange part is not that the data exists. The strange part is how dead it is.</p>
-<hr />
-<h2>The Problem Isn't Lack of Data</h2>
-<p>Most personal technology is built around storage and retrieval. Save the photo. Archive the note. Search the message. Back up the file.</p>
-<p>That works if you already know what you are looking for.</p>
-<p>It fails when what you need is narrative: what happened, what changed, what keeps repeating, what matters now, what you have been avoiding, what part of your own history you forgot was useful.</p>
-<p>Phones are incredible memory devices and terrible meaning devices.</p>
-<hr />
-<h2>What EchoWeave Is Trying to Be</h2>
-<p>EchoWeave is my attempt at a different model: an on-device narrative operating system.</p>
-<p>Not another assistant that waits for commands. Not a cloud service that hoovers up your life and turns it into a dashboard. Something quieter and more personal.</p>
-<p>The idea is simple: your device should be able to notice patterns across your own artifacts and help you understand your life with more continuity.</p>
-<p>Not by replacing memory, but by stitching fragments together.</p>
-<hr />
-<h2>Why On-Device Matters</h2>
-<p>This only makes sense if privacy is part of the architecture.</p>
-<p>The moment your journals, messages, screenshots, and personal context become training fuel for some external system, the product changes character. It stops being an intimate tool and starts being another extraction layer.</p>
-<p>That is why the on-device constraint is not a nice feature. It is the core design principle.</p>
-<p>If a system is meant to work with the most personal raw material in your life, it should earn trust by limiting exposure, not by asking for more permission.</p>
-<hr />
-<h2>What Makes This Hard</h2>
-<p>The challenge is not just indexing files or running a model locally. The challenge is deciding what kind of synthesis is actually useful.</p>
-<p>People do not need one more place where their data goes to sit. They need a system that can say things like:</p>
-<ol>
-<li>You've been circling the same idea for three months.</li>
-<li>This note connects directly to that conversation you forgot about.</li>
-<li>The pattern in your calendar and your messages suggests a tradeoff you keep making.</li>
-<li>These scattered fragments are part of the same unfinished story.</li>
-</ol>
-<p>That is a much higher bar than search.</p>
-<hr />
-<h2>Why I Think This Category Matters</h2>
-<p>We built operating systems for files, apps, and notifications. We never really built one for personal continuity.</p>
-<p>That gap matters more now because modern life creates too many fragments. Screenshots replace memory. Notes replace reflection. Messaging replaces narrative. We accumulate traces of ourselves faster than we can integrate them.</p>
-<p>An on-device narrative system would not magically solve that, but it could do something more realistic: help people recover context without giving it away.</p>
-<hr />
-<h2>The Bigger Idea</h2>
-<p>I think personal AI gets more interesting the moment it moves away from "do this task for me" and toward "help me make sense of what already exists."</p>
-<p>That is where memory, privacy, identity, and interface design start to collide in a useful way.</p>
-<p>EchoWeave sits in that space. It is less about productivity theater and more about continuity. Less about commands and more about reflection. Less about a chatbot, more about a system that can notice the shape of a life without exporting it somewhere else.</p>
-<p>That is still a hard product problem. Maybe harder than the infrastructure itself.</p>
-<p>But it feels like a category worth building carefully.</p>
+          <p><strong>EchoWeave is a design proposal, not a shipped product or working prototype.</strong> It was created as a sample planner output for the DreamForge delivery concept and remains a P2 idea awaiting technical and market validation.</p>
+          <p>The useful question is therefore not “what does EchoWeave do?” It is: what architecture and evidence would be required before a product could responsibly synthesize health, calendar, messages, photos, and location into personal narratives?</p>
+
+          <h2>Product thesis and explicit non-goals</h2>
+          <p>The thesis is that a person may recover useful context from fragmented personal data without sending the raw corpus to a cloud inference service. The first narrow use case would be a private weekly review that cites its sources and asks for correction.</p>
+          <p>The first version should <strong>not</strong> diagnose health conditions, infer another person's private traits, automate consequential decisions, monitor family members, or claim an objective account of a life. A generated narrative is a fallible summary, not memory and not truth.</p>
+
+          <h2>The proposed single-device architecture</h2>
+          <pre><code>OS-approved data connectors
+        │
+        ▼
+Consent &amp; purpose gate ──deny──▶ no ingest
+        │
+        ▼
+Normalizer + provenance ledger
+        │
+        ├──▶ encrypted event store
+        ├──▶ local search index
+        └──▶ derived entities/links
+                    │
+                    ▼
+          bounded retrieval query
+                    │
+                    ▼
+          on-device narrative model
+                    │
+                    ▼
+        citation + safety verifier
+                    │
+                    ▼
+          private review interface</code></pre>
+          <p>Start on one device. Encrypted peer-to-peer sync and a home node appeared in the original concept, but they multiply identity, conflict, deletion, backup, and key-recovery risks. They should not enter the MVP until the single-device boundary is demonstrably useful.</p>
+
+          <h2>Data model: events first, narratives last</h2>
+          <p>Every ingested item becomes an immutable source event with:</p>
+          <ul>
+            <li>connector and source identifier;</li>
+            <li>event time and ingest time;</li>
+            <li>data classification and permitted purposes;</li>
+            <li>content hash and local encrypted reference;</li>
+            <li>people or entities only when the user permits extraction;</li>
+            <li>derivation links to embeddings, graph edges, summaries, and narratives.</li>
+          </ul>
+          <p>The derivation graph is essential. Without it, deleting a message removes the source while leaving its embedding, extracted facts, and narrative claims behind.</p>
+
+          <h2>Consent must be granular and reversible</h2>
+          <table>
+            <thead>
+              <tr><th>Decision</th><th>User control</th><th>System evidence</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Connector access</td><td>Select account, data categories, and time range</td><td>OS grant plus local consent record</td></tr>
+              <tr><td>Purpose</td><td>Search, weekly review, or pattern suggestions separately</td><td>Purpose checked on every retrieval</td></tr>
+              <tr><td>Sensitive categories</td><td>Exclude health, precise location, or named people</td><td>Policy filter before indexing and generation</td></tr>
+              <tr><td>Retention</td><td>Keep source and derived data for different periods</td><td>Scheduled deletion report</td></tr>
+              <tr><td>Action</td><td>Reflection only by default; automation separately enabled</td><td>Action-specific approval receipt</td></tr>
+            </tbody>
+          </table>
+          <p>Revoking a connector stops future ingest. Deletion is a separate operation: remove the source, traverse the derivation graph, delete or recompute affected artifacts, clear caches, and record completion without retaining the deleted content.</p>
+
+          <h2>The privacy boundary is larger than the model</h2>
+          <p>“The model runs locally” does not mean “the product is private.” Exposure can occur through:</p>
+          <ul>
+            <li>mobile backups and diagnostic logs;</li>
+            <li>lock-screen notification previews;</li>
+            <li>keyboard, accessibility, screenshot, and screen-recording services;</li>
+            <li>model or connector updates;</li>
+            <li>shared-device access and weak local authentication;</li>
+            <li>peer sync, crash reporting, and analytics;</li>
+            <li>prompt injection embedded in messages, documents, or calendar text.</li>
+          </ul>
+          <p>The design should use per-device encryption keys protected by the OS keystore, minimal logs, no raw-content analytics, authenticated updates, explicit export, and a local network deny rule for the inference process. A privacy claim is a tested system property, not a model placement diagram.</p>
+
+          <h2>Narrative integrity: the overlooked risk</h2>
+          <p>A personal memory system can be harmful without leaking data. It can create false coherence, overemphasize what is digitally visible, misattribute another person's words, or turn a model's inference into a remembered fact.</p>
+          <p>Every narrative should therefore:</p>
+          <ol>
+            <li>link each factual sentence to visible source events;</li>
+            <li>label inference and uncertainty separately;</li>
+            <li>offer “wrong,” “not useful,” and “do not use this source” controls;</li>
+            <li>avoid claims about third parties unless explicitly supported and permitted;</li>
+            <li>never silently write generated statements back as source memories.</li>
+          </ol>
+          <p>The product should optimize for correction, not persuasion.</p>
+
+          <h2>Resource budgets are product requirements</h2>
+          <p>On-device processing competes with battery, heat, storage, and foreground responsiveness. The MVP needs measured budgets rather than a vague promise that quantized models “run on phones.”</p>
+          <table>
+            <thead>
+              <tr><th>Resource</th><th>Design strategy</th><th>Release gate</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Battery</td><td>Incremental ingest; heavy synthesis while charging</td><td>Daily background workload stays within a pre-registered battery budget</td></tr>
+              <tr><td>Thermal</td><td>Bounded generation and OS-aware scheduling</td><td>No sustained thermal throttling in the device matrix</td></tr>
+              <tr><td>Storage</td><td>Deduplication, retention tiers, visible quota</td><td>Quota enforcement and deletion reclaim verified</td></tr>
+              <tr><td>Latency</td><td>Small retrieval set; model sized per device</td><td>Interactive search and weekly summary meet separate targets</td></tr>
+              <tr><td>Memory</td><td>Stream ingest; load model only for scheduled work</td><td>No OS termination across supported devices</td></tr>
+            </tbody>
+          </table>
+          <p>Targets should be set after a prototype baseline, not invented in an article.</p>
+
+          <h2>One bounded user journey</h2>
+          <ol>
+            <li>The user enables calendar and selected photos for “weekly review,” excluding location and messages.</li>
+            <li>The device imports the last seven days, records provenance, and builds a local index.</li>
+            <li>While charging, the model retrieves a bounded set and drafts three observations.</li>
+            <li>The verifier removes uncited factual claims and marks interpretations.</li>
+            <li>The user opens the app, reviews sources, corrects one claim, and hides a photo category.</li>
+            <li>The correction updates the local policy; it does not train a remote model.</li>
+            <li>The user deletes the week. Source and derived artifacts are removed and a deletion report is shown.</li>
+          </ol>
+
+          <h2>Validation sequence and kill criteria</h2>
+          <p>EchoWeave should advance only through evidence gates:</p>
+          <ol>
+            <li><strong>Problem interview:</strong> do privacy-conscious users want a cited weekly synthesis, or only better search?</li>
+            <li><strong>Static prototype:</strong> can users understand sources, inference labels, consent, and deletion?</li>
+            <li><strong>Single-connector technical spike:</strong> can one device complete the workflow inside measured resource budgets?</li>
+            <li><strong>Red-team test:</strong> can hostile content, shared-device access, backup, or logs cross the boundary?</li>
+            <li><strong>Small local pilot:</strong> do users correct, retain, and voluntarily return to the review?</li>
+          </ol>
+          <p>Kill or redesign the concept if cited summaries are not more valuable than search, deletion cannot cover derived data, device budgets make use unreliable, or people feel monitored rather than supported.</p>
+
+          <h2>Download the threat model</h2>
+          <p>The threat-model CSV includes assets, trust boundaries, threat scenarios, controls, verification evidence, residual risk, and release gates.</p>
+          <p><a href="/resources/echoweave-privacy-threat-model.csv" class="btn btn--primary" download>Download the EchoWeave privacy threat model</a></p>
+          <p>For storage and forgetting policy, continue with <a href="/articles/every-token-is-rent-memory-architecture.html">AI agent memory architecture</a>. For the delivery system EchoWeave was intended to test, see the honest <a href="/articles/dreamforge-automation-pipeline.html">DreamForge automation-boundary case study</a>.</p>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Reviewing a privacy-sensitive on-device AI concept?</p>
+          <a href="/#contact" class="btn btn--primary">Discuss a Privacy Architecture Review</a>
         </div>
       </article>
 

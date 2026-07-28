@@ -1,0 +1,108 @@
+spec_version: "1.0"
+service: replace-with-agent-workflow-name
+owner: replace-with-team
+review_cadence: monthly
+window:
+  type: rolling
+  days: 30
+
+journey:
+  name: complete-one-authorized-task
+  eligible_event: >
+    An accepted request with valid authority, supported intent, and all required
+    inputs available at the start of execution.
+  good_event: >
+    The requested outcome is verified, no forbidden effect occurs, every
+    external effect is reconciled, and required evidence is retained.
+  exclusions:
+    - Requests rejected before acceptance as unsupported
+    - User cancellations before the first external effect
+  minimum_sample_size: 100
+
+slos:
+  - id: verified_task_success
+    description: Eligible journeys that satisfy every acceptance check.
+    sli:
+      numerator: eligible journeys with verifier_status == passed
+      denominator: all eligible journeys
+    target: 0.99
+
+  - id: forbidden_effect_avoidance
+    description: Journeys without an effect outside policy or delegated scope.
+    sli:
+      numerator: eligible journeys with forbidden_effect_count == 0
+      denominator: all eligible journeys
+    target: 1.0
+    note: Treat any miss as a safety incident; do not use budget to excuse harm.
+
+  - id: duplicate_effect_avoidance
+    description: Effectful journeys without a duplicated external mutation.
+    sli:
+      numerator: effectful journeys with duplicate_effect_count == 0
+      denominator: all effectful journeys
+    target: 0.999
+
+  - id: evidence_completeness
+    description: Completed journeys with all required evidence references.
+    sli:
+      numerator: completed journeys with evidence_status == complete
+      denominator: all completed journeys
+    target: 0.995
+
+  - id: recovery_time
+    description: Failed journeys restored or safely terminated within the RTO.
+    sli:
+      numerator: failed journeys with recovery_seconds <= 900
+      denominator: all failed journeys
+    target: 0.95
+
+  - id: decision_latency
+    description: Eligible journeys verified within the user-facing threshold.
+    sli:
+      numerator: eligible journeys with verified_at - accepted_at <= 120 seconds
+      denominator: all eligible journeys
+    target: 0.95
+
+error_budget_policy:
+  formula: allowed_bad_ratio = 1 - target
+  burn_rate_formula: observed_bad_ratio / allowed_bad_ratio
+  actions:
+    - condition: rolling_30d_budget_remaining <= 0
+      action: Freeze risky releases; prioritize reliability work and incident review.
+    - condition: burn_rate_1h >= 14.4 and burn_rate_5m >= 14.4
+      action: Page the service owner.
+    - condition: burn_rate_6h >= 6 and burn_rate_30m >= 6
+      action: Page the service owner.
+    - condition: burn_rate_3d >= 1
+      action: Create an owned reliability ticket.
+
+instrumentation:
+  required_dimensions:
+    - workflow_version
+    - model_provider
+    - model_id
+    - prompt_digest
+    - toolset_digest
+    - policy_digest
+    - tenant_or_risk_class
+    - verifier_version
+  required_timestamps:
+    - accepted_at
+    - started_at
+    - first_effect_at
+    - completed_at
+    - verified_at
+  required_outcomes:
+    - terminal_state
+    - verifier_status
+    - forbidden_effect_count
+    - duplicate_effect_count
+    - evidence_status
+    - recovery_seconds
+
+quality_controls:
+  - Keep the evaluator versioned and blind to the treatment where possible.
+  - Audit an independent sample with humans.
+  - Report confidence intervals and raw event counts for low-volume journeys.
+  - Segment by risk class; do not average away a dangerous cohort.
+  - Reclassify exclusions through code review because denominator changes move the SLI.

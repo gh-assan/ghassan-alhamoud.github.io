@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Compliance-as-Code: The Bottleneck Nobody's Automating — Ghassan Alhamoud</title>
-  <meta name="description" content="Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken." />
+  <title>Compliance as Code for the EU AI Act: An Engineering Framework — Ghassan Alhamoud</title>
+  <meta name="description" content="A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages. Updated 28 July 2026." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html" />
-  <meta property="og:title" content="Compliance-as-Code: The Bottleneck Nobody's Automating" />
-  <meta property="og:description" content="Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken." />
+  <meta property="og:title" content="Compliance as Code for the EU AI Act: An Engineering Framework" />
+  <meta property="og:description" content="Map legal obligations to evidence-producing engineering controls without pretending code can make the legal determination." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART007.webp" />
   <meta property="article:published_time" content="2026-03-25" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html" />
-  <meta property="twitter:title" content="Compliance-as-Code: The Bottleneck Nobody's Automating" />
-  <meta property="twitter:description" content="Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken." />
+  <meta property="twitter:title" content="Compliance as Code for the EU AI Act: An Engineering Framework" />
+  <meta property="twitter:description" content="Map legal obligations to evidence-producing engineering controls without pretending code can make the legal determination." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART007.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Compliance-as-Code: The Bottleneck Nobody's Automating",
-  "description": "Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken.",
+  "headline": "Compliance as Code for the EU AI Act: An Engineering Framework",
+  "description": "A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages. Updated 28 July 2026.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART007.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-03-25",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "Compliance, AI, Automation, AI Agents, OpenClaw",
+  "dependencies": "EU AI Act, Compliance Engineering, AI Governance, Auditability",
   "articleSection": "AI Compliance"
 }
   </script>
@@ -92,75 +92,152 @@
           <div class="article-single__meta">
             <time datetime="2026-03-25">Mar 25 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>14 min</span>
           </div>
-          <h1 class="article-single__title">Compliance-as-Code: The Bottleneck Nobody's Automating</h1>
+          <h1 class="article-single__title">Compliance as Code for the EU AI Act: An Engineering Framework</h1>
           <div class="article-single__tags">
-          <span class="article-single__tag">Compliance</span>
-          <span class="article-single__tag">AI</span>
-          <span class="article-single__tag">Automation</span>
-          <span class="article-single__tag">AI Agents</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">EU AI Act</span>
+          <span class="article-single__tag">Compliance Engineering</span>
+          <span class="article-single__tag">AI Governance</span>
+          <span class="article-single__tag">Auditability</span>
           </div>
         </header>
 
                 <img src="/images/articles/ART007.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-<p>I recently spoke with a compliance leader who looked exhausted before the conversation even started.</p>
-<p>Her team had a familiar rhythm. Engineering shipped a model update. Compliance reopened the same documents. Someone updated the model card. Someone else adjusted the risk notes. Then legal wanted another pass. By the time the paperwork was ready, the system had already moved on.</p>
-<p>That is not compliance. That is a race you are guaranteed to lose.</p>
-<hr />
-<h2>The Problem Is Structural</h2>
-<p>Most organizations still treat AI compliance like a documentation exercise. Build the system first, then describe it well enough for governance, audit, or regulators afterward.</p>
-<p>That model breaks the moment your AI stack becomes dynamic.</p>
-<p>If prompts change, if routing changes, if fallback logic changes, if a model version changes, then the actual behavior of the system has changed. A spreadsheet updated every few weeks is not a control mechanism. It is a delayed snapshot of a moving target.</p>
-<p>That is why teams end up feeling trapped between two bad options:</p>
-<ol>
-<li>Move fast and accept weak governance.</li>
-<li>Slow delivery down so much that the compliance process becomes the bottleneck.</li>
-</ol>
-<p>Neither is sustainable, especially for teams operating in Europe.</p>
-<hr />
-<h2>What Compliance-as-Code Actually Means</h2>
-<p>Compliance-as-Code does not mean turning lawyers into programmers. It means turning governance requirements into system behavior.</p>
-<p>Instead of relying on manual memory, you define checks, signals, logs, and decision points directly in the architecture. The system generates evidence while it runs.</p>
-<p>That changes the whole dynamic.</p>
-<p>Now when a team asks, "Which model handled this workflow?" or "What changed between this version and the last one?" or "Where are humans still in the loop?" the answer does not live in somebody's inbox. It lives in the operating system around the AI.</p>
-<hr />
-<h2>Why This Matters in Germany and the EU</h2>
-<p>For teams building in Germany or selling into regulated European environments, this is not optional polish. It is risk management.</p>
-<p>The moment AI touches sensitive workflows, customer-facing decisions, regulated domains, or internal high-impact operations, governance stops being a side document. It becomes part of the architecture.</p>
-<p>The companies that handle this well will not be the ones with the prettiest policy PDFs. They will be the ones whose systems can explain themselves: what changed, who approved it, what data was used, which controls were active, and where the evidence lives.</p>
-<p>That is the real advantage of compliance-aware engineering. It lets teams move without pretending that governance can be bolted on later.</p>
-<hr />
-<h2>What a Better Setup Looks Like</h2>
-<p>In practice, a healthier pattern usually includes:</p>
-<ol>
-<li><strong>Versioned decision logs.</strong> Model choices, routing logic, thresholds, and human overrides are recorded as part of delivery.</li>
-<li><strong>Structured operational traces.</strong> The system leaves behind audit-friendly evidence instead of narrative guesswork.</li>
-<li><strong>Explicit control points.</strong> High-risk actions have approval, fallback, or review gates built in.</li>
-<li><strong>Live compliance signals.</strong> Teams can see drift, exceptions, or policy violations as they happen, not weeks later.</li>
-</ol>
-<p>None of that is glamorous. It is infrastructure. But that is exactly the point. Real governance should feel more like observability and less like a quarterly panic attack.</p>
-<hr />
-<h2>The Bigger Mistake</h2>
-<p>The biggest mistake I see is treating compliance and engineering as two separate timelines.</p>
-<p>Engineering builds the thing. Compliance catches up. Legal reviews the fallout. Then everyone wonders why AI delivery feels slow and tense.</p>
-<p>That structure guarantees friction.</p>
-<p>The stronger model is to design systems where controls, evidence, and operating logic are part of the same delivery flow. Then compliance is not "after the fact." It is one of the properties of the system you are building.</p>
-<hr />
-<h2>What Teams Should Ask Themselves</h2>
-<p>If your AI team had to explain a production decision from six weeks ago, could they do it without manually reconstructing the story?</p>
-<p>If the answer is no, your system is moving faster than your governance can follow.</p>
-<p>That gap is where risk accumulates.</p>
-<p>Compliance-as-Code is really about closing that gap before it becomes expensive. Not with more bureaucracy. With better architecture.</p>
-<p>That is the shift I expect serious teams in Germany and across Europe to make over the next few years. The ones who do it early will move faster precisely because they stopped treating compliance as an external drag on engineering.</p>
+          <p><strong>Compliance as code does not decide whether the EU AI Act applies. Legal and compliance owners make that determination. Engineering turns the resulting obligations into versioned controls and reproducible evidence.</strong></p>
+          <p>This article is engineering guidance, not legal advice. It was checked on <strong>28 July 2026</strong>, one day after the EU AI Omnibus entered into force. Re-check the official sources and obtain qualified advice for your role, system, sector, and Member State.</p>
+
+          <h2>Current application timeline</h2>
+          <p>The European Commission's <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener noreferrer">implementation timeline</a> and <a href="https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" target="_blank" rel="noopener noreferrer">27 July 2026 Omnibus notice</a> now describe these key dates:</p>
+          <table>
+            <thead>
+              <tr><th>Date</th><th>What applies</th><th>Engineering implication</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>2 Feb 2025</td><td>Prohibited-practice rules began applying; the Omnibus later simplified the company-side AI-literacy requirement and strengthened the role of the Commission and Member States</td><td>Maintain prohibited-use gates and competence evidence required by your governance program</td></tr>
+              <tr><td>2 Aug 2025</td><td>Governance rules and obligations for general-purpose AI models began applying</td><td>GPAI providers need role-specific documentation and downstream information flows</td></tr>
+              <tr><td>2 Aug 2026</td><td>Most remaining provisions apply, including Article 50 transparency duties; Commission GPAI enforcement powers begin</td><td>Interaction notices, content marking, and deployer disclosures need tested release controls where applicable</td></tr>
+              <tr><td>2 Dec 2027</td><td>Rules for Annex III high-risk use areas apply under the Omnibus timeline</td><td>Providers and deployers need evidence programs ready before the date, not started on it</td></tr>
+              <tr><td>2 Aug 2028</td><td>Rules for AI embedded in regulated physical products apply</td><td>Integrate AI evidence with the applicable product-conformity process</td></tr>
+            </tbody>
+          </table>
+          <p>The official <a href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act" target="_blank" rel="noopener noreferrer">Article 50 FAQ</a> confirms the 2 August 2026 transparency start and describes a limited transition for certain marking obligations on systems already on the market. Do not copy this table into policy and forget it; store source, retrieval date, legal owner, and review trigger.</p>
+
+          <h2>Step 1: make applicability an owned decision</h2>
+          <p>Before implementing a control matrix, record:</p>
+          <ul>
+            <li>system and intended purpose;</li>
+            <li>territorial and sector scope;</li>
+            <li>your role: provider, deployer, importer, distributor, authorised representative, product manufacturer, or GPAI provider;</li>
+            <li>classification: prohibited, high-risk, transparency case, GPAI, or another category;</li>
+            <li>affected people, data, and fundamental-rights context;</li>
+            <li>legal interpretation, source provisions, decision owner, date, and next review trigger.</li>
+          </ul>
+          <p>Code may detect that a use case resembles an Annex III category. It should open a review; it should not make the binding classification. Intended purpose, contractual role, substantial modification, exceptions, and sector law require accountable interpretation.</p>
+
+          <h2>Step 2: map obligations to controls and evidence</h2>
+          <p>For a high-risk provider, the original Regulation's requirements include risk management (Article 9), data and data governance (Article 10), technical documentation (Article 11), record keeping (Article 12), information to deployers (Article 13), human oversight (Article 14), and accuracy, robustness, and cybersecurity (Article 15). Provider duties and the quality-management system sit in Articles 16 and 17. The current legal text and Omnibus amendments—not this summary—control.</p>
+          <table>
+            <thead>
+              <tr><th>Obligation area</th><th>Engineering control</th><th>Evidence artifact</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Risk management</td><td>Versioned hazard register linked to tests and post-market signals</td><td>Risk decision, test result, residual-risk approval</td></tr>
+              <tr><td>Data governance</td><td>Dataset lineage, permitted use, quality checks, bias evaluation, change approval</td><td>Dataset manifest and evaluation report</td></tr>
+              <tr><td>Technical documentation</td><td>Build documentation from versioned system, model, data, and control manifests</td><td>Release-specific technical file</td></tr>
+              <tr><td>Record keeping</td><td>Structured event logs with retention, access, integrity, and clock controls</td><td>Trace samples plus retention and integrity proof</td></tr>
+              <tr><td>Transparency to deployers</td><td>Versioned instructions, limitations, metrics, input assumptions, oversight interface</td><td>Published information bundle tied to release</td></tr>
+              <tr><td>Human oversight</td><td>Named authority, review UI, escalation, stop/override, competence requirements</td><td>Approval and override tests; training/role record</td></tr>
+              <tr><td>Accuracy, robustness, cybersecurity</td><td>Pre-registered metrics, adversarial tests, monitoring, incident response</td><td>Evaluation report and unresolved-gap register</td></tr>
+            </tbody>
+          </table>
+          <p>The downloadable matrix includes source links and additional deployer, transparency, conformity, and post-market rows.</p>
+
+          <h2>The evidence architecture</h2>
+          <pre><code>Legal applicability decision
+          │
+          ▼
+Versioned obligation-control matrix
+          │
+          ├──▶ CI change-impact analysis
+          ├──▶ release gates and approvals
+          ├──▶ runtime policy enforcement
+          └──▶ telemetry and incident intake
+                        │
+                        ▼
+             immutable evidence index
+                        │
+                        ▼
+          release-specific audit package</code></pre>
+          <p>The evidence index should reference artifacts rather than copy sensitive inputs into a compliance warehouse. Each record needs the system release, model and data versions, control version, owner, timestamp, result, source artifact digest, retention, and access class.</p>
+
+          <h2>Step 3: treat every material change as an impact question</h2>
+          <p>A model version is not the only change that matters. Trigger analysis when any of these change:</p>
+          <ul>
+            <li>intended purpose, users, geography, or affected population;</li>
+            <li>model, prompt, system policy, retrieval corpus, tool, or fallback;</li>
+            <li>training, fine-tuning, or evaluation data;</li>
+            <li>decision threshold, ranking logic, or human-oversight workflow;</li>
+            <li>interface, disclosure, content marking, logging, or retention;</li>
+            <li>supplier terms, declared limitations, or security posture;</li>
+            <li>incident, drift signal, complaint, or new legal guidance.</li>
+          </ul>
+          <p>The pipeline should calculate affected controls and block release until required evidence is refreshed. It should not declare “compliant.” A useful output is: “controls C-09, C-14, and C-15 require new evidence; legal applicability decision A-17 requires review.”</p>
+
+          <h2>Step 4: bind evidence to the exact release</h2>
+          <p>A model card in a wiki can drift away from production. Bind the release manifest to:</p>
+          <ul>
+            <li>source and build digest;</li>
+            <li>model/provider identifier and immutable version where available;</li>
+            <li>prompt and policy hashes;</li>
+            <li>dataset and evaluation-set versions;</li>
+            <li>tool and supplier versions;</li>
+            <li>test and review results;</li>
+            <li>approved intended purpose and limitations;</li>
+            <li>deployment environment and rollback target.</li>
+          </ul>
+          <p>The runtime should emit a verifiable execution record that points back to that manifest. My <a href="/articles/agent-execution-attestation.html">execution-attestation design</a> specifies a vendor-neutral envelope for this connection.</p>
+
+          <h2>Step 5: make runtime controls observable</h2>
+          <p>Written human oversight is not enough. Test whether the designated person can understand the decision context, stop or override the system, and see when the system is outside its operating boundary. Record overrides and do not punish operators for using them.</p>
+          <p>Likewise, transparency is a user-interface and content-pipeline property. For applicable Article 50 cases, test that notices appear at the correct time, machine-readable marks survive supported transformations, deployer disclosures render, and exceptions are owned—not inferred by a prompt.</p>
+
+          <h2>Step 6: generate an audit package, not an evidence dump</h2>
+          <p>A release package should answer:</p>
+          <ol>
+            <li>What system and release is this?</li>
+            <li>What is its intended purpose, scope, role, and current legal classification?</li>
+            <li>Which obligations and internal policies were mapped?</li>
+            <li>Which controls operated, with what results and exceptions?</li>
+            <li>What changed from the prior release?</li>
+            <li>Which risks remain and who accepted them?</li>
+            <li>How is deployed performance monitored and incidents escalated?</li>
+            <li>Can every artifact be verified against its digest and retention rule?</li>
+          </ol>
+          <p>Generate this view from the evidence index, but preserve signed human judgments. Automation should eliminate transcription, not accountability.</p>
+
+          <h2>What must remain human-owned</h2>
+          <ul>
+            <li>legal scope, role, classification, and interpretation;</li>
+            <li>intended purpose and acceptable residual risk;</li>
+            <li>fundamental-rights and sector-specific judgment;</li>
+            <li>whether evidence is sufficient for the actual context;</li>
+            <li>approval of exceptions, conformity decisions, and regulatory communication;</li>
+            <li>response to conflicting obligations or unclear guidance.</li>
+          </ul>
+          <p>A compliance bot that auto-approves its own evidence is a control failure.</p>
+
+          <h2>Download the engineering control matrix</h2>
+          <p>The CSV maps selected AI Act provisions to roles, controls, evidence, triggers, owners, status, official sources, and review dates. It is a starting template, not a complete legal analysis.</p>
+          <p><a href="/resources/eu-ai-act-engineering-control-matrix.csv" class="btn btn--primary" download>Download the EU AI Act engineering control matrix</a></p>
+          <p>Use the <a href="/articles/quality-vs-speed-agent-era.html">risk-based quality-gate framework</a> to route releases and the <a href="/articles/agent-reliability-sla-infrastructure.html">agent reliability SLO framework</a> to connect operational signals with governance.</p>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Need to translate an accountable AI governance decision into evidence-producing architecture?</p>
+          <a href="/#contact" class="btn btn--primary">Discuss a Compliance Architecture Review</a>
         </div>
       </article>
 

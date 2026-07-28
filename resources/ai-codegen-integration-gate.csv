@@ -1,0 +1,10 @@
+gate,required_evidence,failure_condition
+scope,"Reviewed task spec with exact files interfaces and acceptance criteria","Implementation exceeds declared scope or leaves ambiguous behavior"
+build,"Fresh production-binary build log at reviewed commit","Only a library package or cached target was built"
+registration,"Runtime tool enumeration matched to an approved manifest","New package has no registered runtime capability"
+contract,"Happy-path and invalid-input invocation for every added tool","Handler exists without executable contract coverage"
+tests,"Uncached unit and integration results plus race/static checks where applicable","A required suite is skipped cached or failing"
+effects,"Idempotency and authorization evidence for state-changing tools","Retry can duplicate effects or expand authority"
+architecture,"Constructor fan-in file size and coupling thresholds","Change worsens a blocked architecture threshold"
+provenance,"Model spec diff repair count reviewers and final decision retained","Claimed throughput cannot be reconstructed"
+release,"One authoritative gate reconciles all parallel review findings","Feature merges while any required finding remains unresolved"
