@@ -321,16 +321,15 @@
       <category>Threat Modeling</category>
     </item>
     <item>
-      <title>Every Token Is Rent: Building an Agent That Doesn't Forget</title>
+      <title>Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting</title>
       <link>https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html</guid>
       <pubDate>Tue, 31 Mar 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[I watched my agent re-read the same project files for the third time that morning. Every session, a complete hard reset. Here's the memory architecture that fixed it.]]></description>
-      <category>Memory Architecture</category>
-      <category>LLM</category>
-      <category>System Design</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <description><![CDATA[A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting.]]></description>
+      <category>Agent Memory</category>
+      <category>Retrieval</category>
+      <category>Knowledge Systems</category>
+      <category>Evaluation</category>
     </item>
     <item>
       <title>StartupGraph in Production: A Self-Hosted Startup Intelligence System</title>

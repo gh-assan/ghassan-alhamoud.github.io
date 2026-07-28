@@ -427,16 +427,15 @@
   },
   {
     "slug": "every-token-is-rent-memory-architecture",
-    "title": "Every Token Is Rent: Building an Agent That Doesn't Forget",
+    "title": "Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting",
     "date": "2026-04-01",
-    "excerpt": "I watched my agent re-read the same project files for the third time that morning. Every session, a complete hard reset. Here's the memory architecture that fixed it.",
-    "readingTime": "8 min",
+    "excerpt": "A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting.",
+    "readingTime": "14 min",
     "tags": [
-      "Memory Architecture",
-      "LLM",
-      "System Design",
-      "AI",
-      "OpenClaw"
+      "Agent Memory",
+      "Retrieval",
+      "Knowledge Systems",
+      "Evaluation"
     ]
   },
   {
