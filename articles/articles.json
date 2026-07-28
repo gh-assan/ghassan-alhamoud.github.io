@@ -295,15 +295,16 @@
   },
   {
     "slug": "agent-black-box-skill-ledger",
-    "title": "The Agent Black Box Problem",
+    "title": "The Security Risks of Unverified AI Agent Skills",
     "date": "2026-03-12",
-    "excerpt": "If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger.",
-    "readingTime": "5 min",
+    "excerpt": "A practical threat model for third-party agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove.",
+    "readingTime": "8 min",
     "tags": [
       "AI Agents",
+      "Agent Skills",
       "Security",
-      "Trust",
-      "OpenClaw"
+      "Software Supply Chain",
+      "Threat Modeling"
     ]
   },
   {

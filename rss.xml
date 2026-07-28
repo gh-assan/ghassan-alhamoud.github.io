@@ -404,15 +404,16 @@
       <category>AI</category>
     </item>
     <item>
-      <title>The Agent Black Box Problem</title>
+      <title>The Security Risks of Unverified AI Agent Skills</title>
       <link>https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html</guid>
       <pubDate>Wed, 11 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[If you're building with agents, you have a massive trust problem. Agent skills have become opaque black boxes. Here's how to fix it with a skill ledger.]]></description>
+      <description><![CDATA[A practical threat model for third-party agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove.]]></description>
       <category>AI Agents</category>
+      <category>Agent Skills</category>
       <category>Security</category>
-      <category>Trust</category>
-      <category>OpenClaw</category>
+      <category>Software Supply Chain</category>
+      <category>Threat Modeling</category>
     </item>
     <item>
       <title>Stop Building "Agent Soup." Start Building Compilers.</title>
