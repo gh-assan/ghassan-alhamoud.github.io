@@ -115,11 +115,11 @@
       <category>Risk Management</category>
     </item>
     <item>
-      <title>The Film Pipeline We Didn't Want But Needed</title>
+      <title>Building an AI Film Pipeline: Architecture, Failures, and Current Evidence</title>
       <link>https://ghassan-alhamoud.com/articles/film-pipeline-postmortem.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/film-pipeline-postmortem.html</guid>
       <pubDate>Mon, 01 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Two days. That's how long it took to go from 'we need a better way to generate film clips' to a full 8-phase production protocol. We didn't plan it. The problems forced us.]]></description>
+      <description><![CDATA[An evidence-backed postmortem covering historical production failures, eight-phase architecture, current scope, and a 1,840-test verification snapshot.]]></description>
       <category>AI Film</category>
       <category>Pipeline</category>
       <category>Postmortem</category>

@@ -449,10 +449,10 @@
   },
   {
     "slug": "film-pipeline-postmortem",
-    "title": "The Film Pipeline We Didn't Want But Needed",
+    "title": "Building an AI Film Pipeline: Architecture, Failures, and Current Evidence",
     "date": "2026-06-02",
-    "excerpt": "Two days. That's how long it took to go from 'we need a better way to generate film clips' to a full 8-phase production protocol. We didn't plan it. The problems forced us.",
-    "readingTime": "7 min",
+    "excerpt": "An evidence-backed postmortem covering historical production failures, eight-phase architecture, current scope, and a 1,840-test verification snapshot.",
+    "readingTime": "14 min",
     "tags": [
       "AI Film",
       "Pipeline",
