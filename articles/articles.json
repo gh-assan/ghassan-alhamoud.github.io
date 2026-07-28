@@ -477,10 +477,10 @@
   },
   {
     "slug": "skill-ledger-open-source-verified-agent-skill-marketplace",
-    "title": "SkillLedger 0.1.0: A Verified Marketplace for Agent Skills",
+    "title": "SkillLedger: A Verification and Entitlement Layer for Agent Skills",
     "date": "2026-06-15",
-    "excerpt": "SkillLedger \u2014 a Rails API that lets agent authors publish verified skills, and agent builders purchase and acquire them for local execution. Marketplace, verification gate, purchase ledger, MCP endpoint, MIT license.",
-    "readingTime": "6 min",
+    "excerpt": "Inside SkillLedger's MVP trust model: versioned manifests, deterministic integrity checks, separate approval, entitlements, ledger entries, and explicit limits.",
+    "readingTime": "11 min",
     "tags": [
       "Open Source",
       "Agents",
