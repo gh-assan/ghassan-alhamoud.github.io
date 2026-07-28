@@ -265,17 +265,16 @@
   },
   {
     "slug": "5-infrastructure-layers-broke-agent",
-    "title": "The 5 Infrastructure Layers That Broke My Agent",
+    "title": "Five Infrastructure Layers Every Production AI Agent Needs",
     "date": "2026-05-04",
-    "excerpt": "Everyone talks about building agents. No one talks about what breaks them. Here's the structural post-mortem of 5 separate infrastructure layers that failed.",
-    "readingTime": "9 min",
+    "excerpt": "A production AI agent reference architecture covering transport, policy, orchestration, verification and recovery, and observability—with interfaces, failure modes, and readiness gates.",
+    "readingTime": "13 min",
     "tags": [
       "AI Agents",
       "Infrastructure",
       "Architecture",
-      "Post-Mortem",
-      "AI",
-      "OpenClaw"
+      "Reliability",
+      "Security"
     ]
   },
   {

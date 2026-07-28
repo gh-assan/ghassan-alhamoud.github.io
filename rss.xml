@@ -214,17 +214,16 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>The 5 Infrastructure Layers That Broke My Agent</title>
+      <title>Five Infrastructure Layers Every Production AI Agent Needs</title>
       <link>https://ghassan-alhamoud.com/articles/5-infrastructure-layers-broke-agent.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/5-infrastructure-layers-broke-agent.html</guid>
       <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Everyone talks about building agents. No one talks about what breaks them. Here's the structural post-mortem of 5 separate infrastructure layers that failed.]]></description>
+      <description><![CDATA[A production AI agent reference architecture covering transport, policy, orchestration, verification and recovery, and observability—with interfaces, failure modes, and readiness gates.]]></description>
       <category>AI Agents</category>
       <category>Infrastructure</category>
       <category>Architecture</category>
-      <category>Post-Mortem</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <category>Reliability</category>
+      <category>Security</category>
     </item>
     <item>
       <title>I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.</title>
