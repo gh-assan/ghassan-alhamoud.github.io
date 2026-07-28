@@ -192,16 +192,15 @@
   },
   {
     "slug": "stress-test-self-healing-250-target",
-    "title": "I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.",
+    "title": "What a 250-Item Agent Run Actually Proved",
     "date": "2026-05-03",
-    "excerpt": "You know that feeling when you deploy an agent, walk away, come back, and something's wrong? That was us. Except our target was 250.",
-    "readingTime": "7 min",
+    "excerpt": "An evidence-backed postmortem of a 252-item workflow, plus a reproducible 250-case protocol that tests recovery without confusing throughput with self-healing.",
+    "readingTime": "11 min",
     "tags": [
-      "Self-Healing",
-      "AI Systems",
-      "Infrastructure",
-      "Failure",
-      "AI",
+      "Reliability",
+      "Evaluation",
+      "Fault Injection",
+      "AI Agents",
       "OpenClaw"
     ]
   },

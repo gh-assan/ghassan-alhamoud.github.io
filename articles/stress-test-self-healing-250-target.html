@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself. — Ghassan Alhamoud</title>
-  <meta name="description" content="Our first 250-opportunity AI run did not crash. It drifted. Here's what that failure exposed about memory, state, and feedback loops in long-running AI systems." />
+  <title>What a 250-Item Agent Run Actually Proved — Ghassan Alhamoud</title>
+  <meta name="description" content="An evidence-backed postmortem of a 252-item agent workflow—and a reproducible 250-case fault-injection protocol for testing recovery without confusing throughput with self-healing." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html" />
-  <meta property="og:title" content="I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself." />
-  <meta property="og:description" content="Our first 250-opportunity AI run did not crash. It drifted. Here's what that failure exposed about memory, state, and feedback loops in long-running AI systems." />
+  <meta property="og:title" content="What a 250-Item Agent Run Actually Proved" />
+  <meta property="og:description" content="An evidence-backed postmortem and a reproducible 250-case fault-injection protocol for agent recovery." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-018.webp" />
   <meta property="article:published_time" content="2026-05-03" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html" />
-  <meta property="twitter:title" content="I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself." />
-  <meta property="twitter:description" content="Our first 250-opportunity AI run did not crash. It drifted. Here's what that failure exposed about memory, state, and feedback loops in long-running AI systems." />
+  <meta property="twitter:title" content="What a 250-Item Agent Run Actually Proved" />
+  <meta property="twitter:description" content="An evidence-backed postmortem and a reproducible 250-case fault-injection protocol for agent recovery." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-018.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.",
-  "description": "Our first 250-opportunity AI run did not crash. It drifted. Here's what that failure exposed about memory, state, and feedback loops in long-running AI systems.",
+  "headline": "What a 250-Item Agent Run Actually Proved",
+  "description": "An evidence-backed postmortem of a 252-item agent workflow—and a reproducible 250-case fault-injection protocol for testing recovery without confusing throughput with self-healing.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-018.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-05-03",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html",
   "proficiencyLevel": "Expert",
-  "dependencies": "Self-Healing, AI Systems, Infrastructure, Failure, AI, OpenClaw",
+  "dependencies": "Reliability, Evaluation, Fault Injection, AI Agents, OpenClaw",
   "articleSection": "AI Systems"
 }
   </script>
@@ -92,15 +92,14 @@
           <div class="article-single__meta">
             <time datetime="2026-05-03">May 03 2026</time>
             <span class="article-card__dot"></span>
-            <span>7 min</span>
+            <span>11 min</span>
           </div>
-          <h1 class="article-single__title">I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.</h1>
+          <h1 class="article-single__title">What a 250-Item Agent Run Actually Proved</h1>
           <div class="article-single__tags">
-          <span class="article-single__tag">Self-Healing</span>
-          <span class="article-single__tag">AI Systems</span>
-          <span class="article-single__tag">Infrastructure</span>
-          <span class="article-single__tag">Failure</span>
-          <span class="article-single__tag">AI</span>
+          <span class="article-single__tag">Reliability</span>
+          <span class="article-single__tag">Evaluation</span>
+          <span class="article-single__tag">Fault Injection</span>
+          <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">OpenClaw</span>
           </div>
         </header>
@@ -108,77 +107,107 @@
                 <img src="/images/articles/ART-018.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>The first run did not fail in a dramatic way.</p>
-<p>That would have been easier.</p>
-<p>Instead, it drifted. The system kept producing output, but the quality started thinning out after a handful of domains. Ideas repeated. Patterns blurred together. The run was technically alive and practically useless.</p>
-<p>That is one of the most important failure modes in AI systems: not a crash, but a quiet loss of signal.</p>
-<hr />
-<h2>The Test Was Simple</h2>
-<p>The target was to generate 250 automation opportunities across multiple industries in one sustained run.</p>
-<p>No human babysitting. No manual reset between domains. No carefully curated one-off prompt. The point of the exercise was not to impress a demo audience. It was to see whether the system could keep producing distinct, useful output over time.</p>
-<p>It could not.</p>
-<p>The first pass stalled around 42 opportunities and degraded well before that point.</p>
-<hr />
-<h2>What Actually Broke</h2>
-<p>The model was not the main problem. The architecture around it was.</p>
-<p>Once we looked at the run honestly, four gaps were obvious:</p>
-<ol>
-<li>no durable memory of what had already been explored</li>
-<li>no structured progress tracking across industries</li>
-<li>no mechanism to detect repetition or shallow output</li>
-<li>no feedback loop that could tighten the process mid-run</li>
-</ol>
-<p>In other words, the system had reasoning but no operational discipline.</p>
-<p>That is why I keep saying production AI is mostly a systems problem. A good model inside a weak loop will still disappoint you once the task gets long, messy, or repetitive.</p>
-<hr />
-<h2>The Useful Part of the Failure</h2>
-<p>What I liked about this test is that the failure was diagnostic.</p>
-<p>The logs made it obvious that the system was not running out of intelligence. It was running out of structure. Context was decaying. Prior output was not being managed properly. The workflow had no way to tell that it was circling familiar ground.</p>
-<p>That gave us a better next move than "try a smarter prompt."</p>
-<hr />
-<h2>What We Changed</h2>
-<p>We rebuilt the run as an actual system instead of a long prompt chain.</p>
-<p><strong>First, memory.</strong> Each industry and each opportunity needed a durable record so the run always knew what had already been covered.</p>
-<p><strong>Second, state.</strong> The workflow needed a machine-readable view of progress, not just a blob of previous text in the context window.</p>
-<p><strong>Third, self-checking.</strong> We added a review step that could spot repeated patterns, shallow entries, and scoring drift before the whole run collapsed into noise.</p>
-<p><strong>Fourth, continuity.</strong> The system had to carry learning forward instead of starting every segment half-amnesiac.</p>
-<p>None of that made the underlying model more magical. It made the workflow more governable.</p>
-<hr />
-<h2>The Second Run Was the Real Result</h2>
-<p>Once that infrastructure existed, the behavior changed completely.</p>
-<p>The system completed 252 opportunities across 18 industries without human intervention. More importantly, the output stayed distinct enough to be worth reviewing.</p>
-<p>That matters more to me than the number itself. A long autonomous run only has business value if the quality holds up well enough that a team can trust the pipeline.</p>
-<p>The comparison was blunt:</p>
-<p><strong>run one:</strong> interesting concept, weak architecture</p>
-<p><strong>run two:</strong> same concept, stronger system, dramatically better outcome</p>
-<hr />
-<h2>Why Engineering Leaders Should Care</h2>
-<p>If you are evaluating AI workflows, this is the question I would keep asking: what happens after the tenth task, not the first?</p>
-<p>Most teams can get one good answer from a modern model. That is not the hard part anymore.</p>
-<p>The hard part is whether the workflow remains coherent over time, under load, across changing contexts, with enough internal structure to notice when quality begins slipping.</p>
-<p>That is where architecture starts to matter more than demo polish.</p>
-<hr />
-<h2>The Broader Lesson</h2>
-<p>I do not think the right takeaway is "make your prompts better."</p>
-<p>The right takeaway is that long-running AI systems need the same seriousness we already expect from other production systems: state management, feedback loops, observability, and explicit failure handling.</p>
-<p>The model is only one component. If the surrounding loop is weak, the whole thing will eventually leak quality.</p>
-<p>That is what this test made very clear.</p>
-<hr />
-<h2>What I Would Recommend</h2>
-<p>If a team wants to stress-test an AI workflow honestly, I would push them to do three things:</p>
-<ol>
-<li>extend the run long enough for drift to appear</li>
-<li>measure repetition and output decay, not just completion</li>
-<li>treat the first failure as an architecture review, not a prompt-editing exercise</li>
-</ol>
-<p>That is usually where the real learning starts.</p>
+          <p><strong>Correction after auditing the source records:</strong> this was not one agent failing and autonomously repairing itself in a single uninterrupted run. The durable evidence shows a two-day, 36-batch production effort that reached 252 opportunity briefs after the storage and indexing design changed. That is still useful—but it proves workflow recovery, not autonomous self-healing.</p>
+
+          <p>This postmortem separates what the records establish from what the original story inferred. It then turns the lesson into a fault-injection protocol another team can reproduce.</p>
+
+          <h2>What the run ledger establishes</h2>
+          <table>
+            <thead>
+              <tr><th>Claim</th><th>Evidence in the project records</th><th>Conclusion</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>The early corpus reached 42 items</td><td>AM-001 through AM-042, six domain batches dated 2 May</td><td>Supported</td></tr>
+              <tr><td>The project crossed 250</td><td>AM-246 through AM-252 in batch 36, dated 3 May</td><td>Supported: 252 identified briefs</td></tr>
+              <tr><td>It happened in one sustained run</td><td>The ledger records 36 batches over two dates</td><td>Not supported</td></tr>
+              <tr><td>The agent fixed itself</td><td>Architecture notes describe a human-designed v2 partition and registry migration</td><td>Not demonstrated</td></tr>
+              <tr><td>The ideas were production-ready</td><td>The snapshot establishes identification, not market validation or deployment</td><td>Not supported</td></tr>
+            </tbody>
+          </table>
+          <p>The distinction matters. Throughput is not quality, a resumed workflow is not a self-healing workflow, and an identified opportunity is not a validated product.</p>
+
+          <h2>The failure was a data-model warning</h2>
+          <p>At 42 briefs, a flat directory and a growing markdown index were already becoming awkward to query and maintain. The proposed v2 design partitioned briefs by domain and added a machine-readable registry with indices for process layer, score range, status, and domain.</p>
+          <p>The improvement was architectural:</p>
+          <pre><code>request
+  → seven-item domain batch
+  → self-contained briefs
+  → run ledger
+  → registry rebuild
+  → invariant checks
+  → next batch</code></pre>
+          <p>Batching bounded context. Durable identifiers made restart possible. The registry separated discovery from storage. Those controls explain why the workflow could continue; they do not prove that the system diagnosed and repaired its own defect.</p>
+
+          <h2>Five whys behind the 42-item ceiling</h2>
+          <ol>
+            <li><strong>Why did the original approach stop scaling?</strong> State and output accumulated faster than the workflow could reliably navigate them.</li>
+            <li><strong>Why was navigation unreliable?</strong> The corpus depended on a flat directory and a human-oriented index.</li>
+            <li><strong>Why did that matter?</strong> Every new batch increased duplicate detection, lookup, and context costs.</li>
+            <li><strong>Why was degradation hard to detect?</strong> Completion was visible, but novelty, evidence quality, and registry consistency were not release gates.</li>
+            <li><strong>Why did “self-healing” sound plausible?</strong> The system resumed after redesign, but the records did not attribute diagnosis, authorisation, implementation, and verification to an autonomous control loop.</li>
+          </ol>
+          <p>The root cause was not simply “the model forgot.” The workflow lacked explicit state invariants and evaluation gates.</p>
+
+          <h2>What a real self-healing claim requires</h2>
+          <p>A defensible recovery record should contain, for each injected or organic failure:</p>
+          <ul>
+            <li>a typed failure and immutable trace ID;</li>
+            <li>the detector version and confidence;</li>
+            <li>the authorised remediation rule and preconditions;</li>
+            <li>before-and-after state digests;</li>
+            <li>an idempotency key and attempt count;</li>
+            <li>a verification result tied to the original invariant;</li>
+            <li>any compensation, circuit break, or human escalation.</li>
+          </ul>
+          <p>Without that chain, the strongest honest statement is “the workflow recovered after intervention.”</p>
+
+          <h2>A reproducible 250-case fault-injection design</h2>
+          <p>Use ten failure classes across five lifecycle stages, repeated with five deterministic seeds:</p>
+          <pre><code>10 failure classes × 5 stages × 5 seeds = 250 cases</code></pre>
+          <p>The stages are ingest, plan, execute, verify, and persist. The classes cover stale state, missing input, wrong target type, timeout with unknown effect, duplicate delivery, malformed output, policy denial, exhausted budget, verifier failure, and corrupted checkpoint.</p>
+          <p>Do not let the agent choose both the remediation and the pass criterion. The harness owns the injection, expected invariant, allowed effects, deadline, and oracle. The agent receives only the fault context and the authority granted by the rule under test.</p>
+
+          <h2>Metrics that resist a vanity result</h2>
+          <table>
+            <thead>
+              <tr><th>Metric</th><th>Definition</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Detection precision</td><td>Correctly classified faults / all classified faults</td><td>Prevents broad rules from “healing” healthy work</td></tr>
+              <tr><td>Verified recovery rate</td><td>Invariant-restoring cases / injected cases</td><td>Measures outcome, not retry success</td></tr>
+              <tr><td>Unsafe-action rate</td><td>Out-of-policy mutations / injected cases</td><td>Must be zero for promotion</td></tr>
+              <tr><td>Duplicate-effect rate</td><td>Repeated external effects / uncertain-effect cases</td><td>Tests idempotency and reconciliation</td></tr>
+              <tr><td>Escalation precision</td><td>Correct escalations / all escalations</td><td>Exposes both silent failure and alert fatigue</td></tr>
+              <tr><td>Recovery latency</td><td>Detection to verified terminal state</td><td>Shows tail behavior; report p50 and p95</td></tr>
+            </tbody>
+          </table>
+          <p>Publish the denominator and every terminal state: recovered, escalated, circuit-open, compensated, and unresolved. A headline such as “242 of 250 recovered” is incomplete unless the other eight outcomes and all safety violations are visible.</p>
+
+          <h2>Promotion gates</h2>
+          <ol>
+            <li><strong>Replay:</strong> run the detector over labelled historical traces.</li>
+            <li><strong>Shadow:</strong> generate remediation proposals without mutation.</li>
+            <li><strong>Fault injection:</strong> execute all 250 deterministic cases in an isolated environment.</li>
+            <li><strong>Canary:</strong> enable one rule for a narrow target class and budget.</li>
+            <li><strong>Active:</strong> expand only when safety, recovery, and recurrence thresholds hold.</li>
+          </ol>
+          <p>A failed verification or compensation opens the circuit. A pass requires the intended invariant, not merely a zero exit code or a plausible agent explanation.</p>
+
+          <h2>Download the test matrix</h2>
+          <p>The CSV defines the ten failure classes, injection points, expected invariants, permitted actions, and forbidden shortcuts. Expand each row across the five lifecycle stages and five seeds to produce the 250-case suite.</p>
+          <p><a href="/resources/agent-self-healing-fault-matrix.csv" class="btn btn--primary" download>Download the fault-injection matrix</a></p>
+          <ul>
+            <li><a href="/articles/self-healing-architecture-feedback-loop.html">Design the bounded remediation state machine</a></li>
+            <li><a href="/articles/issue-management-system-property.html">Retain failures in a reliability control plane</a></li>
+            <li><a href="/articles/agent-reliability-sla-infrastructure.html">Define SLOs and error budgets for the workflow</a></li>
+          </ul>
 
 
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Testing a recovery loop before it receives production authority?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Test Boundary</a>
         </div>
       </article>
 

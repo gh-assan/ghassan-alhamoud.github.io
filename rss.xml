@@ -223,16 +223,15 @@
       <category>Security</category>
     </item>
     <item>
-      <title>I Gave My AI a 250-Item Target. It Failed. Then It Fixed Itself.</title>
+      <title>What a 250-Item Agent Run Actually Proved</title>
       <link>https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html</guid>
       <pubDate>Sat, 02 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[You know that feeling when you deploy an agent, walk away, come back, and something's wrong? That was us. Except our target was 250.]]></description>
-      <category>Self-Healing</category>
-      <category>AI Systems</category>
-      <category>Infrastructure</category>
-      <category>Failure</category>
-      <category>AI</category>
+      <description><![CDATA[An evidence-backed postmortem of a 252-item workflow, plus a reproducible 250-case protocol that tests recovery without confusing throughput with self-healing.]]></description>
+      <category>Reliability</category>
+      <category>Evaluation</category>
+      <category>Fault Injection</category>
+      <category>AI Agents</category>
       <category>OpenClaw</category>
     </item>
     <item>
