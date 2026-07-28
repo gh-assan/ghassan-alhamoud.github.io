@@ -162,10 +162,10 @@
   },
   {
     "slug": "automation-pattern-6-industries",
-    "title": "The Automation Pattern That Kept Repeating Across 6 Industries",
+    "title": "The Same Automation Pattern Across Six Industries: A Comparative Study",
     "date": "2026-05-02",
-    "excerpt": "I spent a day running a structured automation discovery engine across six completely different industries. The exact same automation gap showed up in every single domain.",
-    "readingTime": "7 min",
+    "excerpt": "A six-domain comparison of top-scoring automation candidates: triggers, bottlenecks, available data, risks, expected value, confidence, and selection bias.",
+    "readingTime": "10 min",
     "tags": [
       "Automation",
       "Discovery",
