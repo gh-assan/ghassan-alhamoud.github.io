@@ -265,16 +265,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>The Most Boring Automation I've Ever Built - And Why It's the Only One That Works</title>
+      <title>Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back</title>
       <link>https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html</guid>
       <pubDate>Tue, 14 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful.]]></description>
+      <description><![CDATA[A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics.]]></description>
+      <category>Automation</category>
       <category>Feedback Loops</category>
-      <category>AI Systems</category>
-      <category>Monitoring</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <category>Verification</category>
+      <category>Rollback</category>
     </item>
     <item>
       <title>Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol</title>

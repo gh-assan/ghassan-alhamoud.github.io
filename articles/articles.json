@@ -440,16 +440,15 @@
   },
   {
     "slug": "most-boring-automation-self-improving",
-    "title": "The Most Boring Automation I've Ever Built - And Why It's the Only One That Works",
+    "title": "Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back",
     "date": "2026-04-15",
-    "excerpt": "It doesn't generate poetry. It doesn't write code. It just never stops finding ways to be more useful.",
-    "readingTime": "6 min",
+    "excerpt": "A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics.",
+    "readingTime": "12 min",
     "tags": [
+      "Automation",
       "Feedback Loops",
-      "AI Systems",
-      "Monitoring",
-      "AI",
-      "OpenClaw"
+      "Verification",
+      "Rollback"
     ]
   },
   {
