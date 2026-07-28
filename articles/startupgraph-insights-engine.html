@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Get Off the Crunchbase Treadmill — Ghassan Alhamoud</title>
-  <meta name="description" content="Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer." />
+  <title>StartupGraph in Production: A Self-Hosted Startup Intelligence System — Ghassan Alhamoud</title>
+  <meta name="description" content="A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html" />
-  <meta property="og:title" content="Get Off the Crunchbase Treadmill" />
-  <meta property="og:description" content="Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer." />
+  <meta property="og:title" content="StartupGraph in Production: A Self-Hosted Startup Intelligence System" />
+  <meta property="og:description" content="A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART009.webp" />
   <meta property="article:published_time" content="2026-03-30" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html" />
-  <meta property="twitter:title" content="Get Off the Crunchbase Treadmill" />
-  <meta property="twitter:description" content="Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer." />
+  <meta property="twitter:title" content="StartupGraph in Production: A Self-Hosted Startup Intelligence System" />
+  <meta property="twitter:description" content="A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART009.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Get Off the Crunchbase Treadmill",
-  "description": "Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer.",
+  "headline": "StartupGraph in Production: A Self-Hosted Startup Intelligence System",
+  "description": "A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART009.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-03-30",
-  "dateModified": "2026-03-30",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "Startup Intelligence, Data, Real-time, AI",
+  "dependencies": "Startup Intelligence, MCP, DuckDB, Data Engineering",
   "articleSection": "Data Systems"
 }
   </script>
@@ -92,41 +92,223 @@
           <div class="article-single__meta">
             <time datetime="2026-03-30">Mar 30 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>10 min</span>
           </div>
-          <h1 class="article-single__title">Get Off the Crunchbase Treadmill</h1>
+          <h1 class="article-single__title">StartupGraph in Production: A Self-Hosted Startup Intelligence System</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Startup Intelligence</span>
-          <span class="article-single__tag">Data</span>
-          <span class="article-single__tag">Real-time</span>
-          <span class="article-single__tag">AI</span>
+          <span class="article-single__tag">MCP</span>
+          <span class="article-single__tag">DuckDB</span>
+          <span class="article-single__tag">Data Engineering</span>
           </div>
         </header>
 
-                <img src="/images/articles/ART009.webp" alt="" class="article-single__image" loading="eager" />
+        <img src="/images/articles/ART009.webp" alt="StartupGraph intelligence engines connected to a shared entity graph" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>Everyone thinks Crunchbase is the gold standard for startup intelligence.</p>
-<p>If you’re a founder or investor, you’re stuck on the <strong>Crunchbase treadmill</strong>:</p>
-<p>Wait for the alert → See the news → Research the company → Decide.</p>
-<p>Here’s the catch: <strong>By the time it hits Crunchbase, the outreach window is closed.</strong></p>
-<p>The real signal doesn’t appear in a funding alert. It’s buried in the patterns of hiring velocity, product velocity, and tech-stack changes.</p>
-<p>Startup intelligence is currently broken. It’s backward-looking, siloed, and expensive.</p>
-<p>We don't need another database. We need an <strong>intelligence layer.</strong></p>
-<p>We need modular, self-hosted engines that convert noise into real-time signal:</p>
-<p>🚀 <strong>Funding Pattern Matcher:</strong> Finds companies nearing their next milestone — not the ones that already closed.</p>
-<p>📈 <strong>Hiring Heatmap:</strong> Detects scaling inflection points (like the first engineering manager hire) months in advance.</p>
-<p>⚡ <strong>Momentum Radar:</strong> Correlates product launches, office moves, and executive changes to spot peak-change windows.</p>
-<p>This is how you spot opportunity <strong>before</strong> it hits the news.</p>
-<p>Stop staring at the rearview mirror. Build an intelligence stack that sees around corners.</p>
-<p><strong>Get off the treadmill.</strong></p>
-<p>#StartupIntelligence #GrowthHacking #LeadGen #Founders</p>
+          <p><strong>StartupGraph is a working product.</strong> Its current implementation is called EntityScope: a self-hosted startup knowledge system that gives agents structured, sourced answers without requiring a dashboard.</p>
+
+          <p>The useful lesson is not that a small database can “replace Crunchbase.” It cannot. The lesson is that a focused intelligence product can replace a specific workflow: opening several sources, copying facts into notes, and losing track of where each value came from.</p>
+
+          <p>This is a case study of the system that exists today—code, database, query tools, tests, and limitations—not a description of a hypothetical prediction engine.</p>
+
+          <h2>What “working” means</h2>
+
+          <p>A product is more than an architecture diagram. StartupGraph has an embedded database, repeatable ingestion, field-level provenance, deterministic query filters, an agent-facing MCP server, freshness checks, and a write-back path to research notes.</p>
+
+          <p>On July 28, 2026, I inspected the local product snapshot in read-only mode:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Dataset</th>
+                <th>Rows</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Legal entities</td>
+                <td>1,010</td>
+                <td>Canonical company spine</td>
+              </tr>
+              <tr>
+                <td>Field provenance</td>
+                <td>8,018</td>
+                <td>Source, confidence, and verification time</td>
+              </tr>
+              <tr>
+                <td>Prospect profiles</td>
+                <td>479</td>
+                <td>Funding, stage, team, location, and tags</td>
+              </tr>
+              <tr>
+                <td>Outreach records</td>
+                <td>394</td>
+                <td>Curated company and contact research</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Those are snapshot counts, not marketing totals. The database changes as sources are refreshed and research is added.</p>
+
+          <h2>The problem: synthesis, not storage</h2>
+
+          <p>The original workflow needed five tabs to answer one question. A registry could confirm a legal entity. Research notes held funding and team context. Wikidata contributed a small set of public facts. CORDIS could add EU-funded research projects. GitHub could expose public engineering activity. None used the same identifiers or freshness model.</p>
+
+          <p>Five Whys led to the actual product requirement:</p>
+
+          <ol>
+            <li>Why was startup research slow? Each answer required manual source switching.</li>
+            <li>Why did source switching persist? Every source used a different schema.</li>
+            <li>Why could the schemas not simply be joined? Names drift, entities share names, and many records lack a stable cross-source identifier.</li>
+            <li>Why were merged answers hard to trust? Earlier notes stored values without field-level provenance.</li>
+            <li>Why build StartupGraph? Agents needed one query surface that preserved the evidence behind every answer.</li>
+          </ol>
+
+          <p>The enemy was never a particular vendor. It was the copy-and-paste research loop.</p>
+
+          <h2>The architecture that survived contact with reality</h2>
+
+          <pre><code>Research sources
+  ├── Berlin business data
+  ├── curated prospect profiles
+  ├── Wikidata
+  ├── CORDIS integration
+  └── GitHub integration
+          │
+          ▼
+ingest → resolve entity → store value + provenance
+          │
+          ▼
+DuckDB: entities / entity_sources / prospects
+          │
+          ▼
+structured filters → parameterized SQL → sourced result
+          │
+          ▼
+MCP tools used by the research agent</code></pre>
+
+          <p><a href="https://duckdb.org/library/duckdb/" target="_blank" rel="noopener noreferrer">DuckDB</a> fits this workload because it runs analytical SQL inside the application process. There is no separate database service to operate for a single-user research system.</p>
+
+          <p>The agent boundary uses the <a href="https://modelcontextprotocol.io/specification/2025-06-18/architecture" target="_blank" rel="noopener noreferrer">Model Context Protocol</a>. The product exposes four narrow tools:</p>
+
+          <ul>
+            <li><code>entityscope_query</code> translates a natural-language request into validated filters.</li>
+            <li><code>entityscope_get_entity</code> returns a complete profile by stable ID or slug.</li>
+            <li><code>entityscope_list_sources</code> reports available sources and freshness.</li>
+            <li><code>entityscope_health</code> reports counts and staleness.</li>
+          </ul>
+
+          <p>The LLM never writes SQL. It may translate a request into a typed filter object; the application then builds parameterized SQL. Common phrases are handled by a deterministic parser first, so “small software companies in Berlin” does not require an API call.</p>
+
+          <h2>Provenance is the product</h2>
+
+          <p>A master company record is convenient. A master record with no evidence is a confident-looking liability.</p>
+
+          <p>StartupGraph stores provenance at field level:</p>
+
+          <pre><code>{
+  "entity_id": "HRB-123456",
+  "field": "employee_count",
+  "value": 42,
+  "source": "berlin_dataset",
+  "confidence": 0.9,
+  "last_verified": "2026-05-27T18:04:54Z"
+}</code></pre>
+
+          <p>This makes conflicts visible. A manually reviewed value can outrank a bulk source without erasing it. An agent can reject a stale field or route a low-confidence answer for review. The rule is conservative: missing a match is cheaper than silently merging two different companies.</p>
+
+          <h2>What the current snapshot can—and cannot—claim</h2>
+
+          <p>The codebase includes ingestion modules for public GitHub data and <a href="https://cordis.europa.eu/about/services" target="_blank" rel="noopener noreferrer">CORDIS open data</a>, plus Wikidata enrichment using its documented <a href="https://www.wikidata.org/wiki/Help%3AData_access" target="_blank" rel="noopener noreferrer">data-access interfaces</a>. Implemented integration code is not the same as populated production data.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>Status in inspected snapshot</th>
+                <th>Safe claim</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Berlin entity spine</td>
+                <td>8,000 provenance rows</td>
+                <td>Populated</td>
+              </tr>
+              <tr>
+                <td>Wikidata enrichment</td>
+                <td>16 provenance rows</td>
+                <td>Populated, limited coverage</td>
+              </tr>
+              <tr>
+                <td>Web/Wikipedia research</td>
+                <td>2 provenance rows</td>
+                <td>Populated, limited coverage</td>
+              </tr>
+              <tr>
+                <td>CORDIS and GitHub modules</td>
+                <td>Code and tests exist; no provenance rows in this snapshot</td>
+                <td>Implemented, not yet populated here</td>
+              </tr>
+              <tr>
+                <td>Predictive funding or momentum scores</td>
+                <td>No validated model in this snapshot</td>
+                <td>Do not claim prediction</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>This distinction matters. Hiring, grant, funding, and engineering activity can become useful signals, but a signal is not a forecast until it is tested against point-in-time data and a negative cohort. StartupGraph is working intelligence infrastructure; it is not a machine that sees the future.</p>
+
+          <h2>A query contract agents can depend on</h2>
+
+          <p>The query layer accepts dimensions such as city, industry, employee range, funding stage, funding range, founding year, tags, and company name. It caps result size and validates LLM output before execution.</p>
+
+          <pre><code>Question:
+"Show small Berlin software companies founded since 2020"
+
+Validated filters:
+{
+  "city": "Berlin",
+  "industry_label": "Computer",
+  "employees_on_site_min": 1,
+  "employees_on_site_max": 10,
+  "founding_year_min": 2020,
+  "limit": 20
+}</code></pre>
+
+          <p>The important artifact is the filter object. It creates a reviewable boundary between ambiguous language and deterministic data access. When a result looks wrong, the operator can inspect the interpretation before blaming the database.</p>
+
+          <h2>Production evidence includes failed assertions</h2>
+
+          <p>During this review, 130 tests passed and one integration test failed. The failing test hard-coded an old expectation of 100 prospect files; the current directory contains 479. That is not a data-engine failure, but it is real maintenance debt: corpus-size tests should verify invariants, not freeze a growing dataset at an obsolete count.</p>
+
+          <p>This is worth publishing because “working” should not mean “perfect.” It should mean the product is executable, observable, testable, and honest about known gaps.</p>
+
+          <h2>Lessons from operating a small intelligence product</h2>
+
+          <ol>
+            <li><strong>Start with a decision, not a universe.</strong> Define the research question the graph must answer before adding another source.</li>
+            <li><strong>Track evidence per field.</strong> Record-level source labels are too coarse when one profile mixes registry, manual, and public-web facts.</li>
+            <li><strong>Separate ingestion from interpretation.</strong> Raw facts, derived signals, and business decisions need different tables and review rules.</li>
+            <li><strong>Prefer deterministic filters.</strong> Natural language is an interface; parameterized queries remain the execution contract.</li>
+            <li><strong>Measure freshness explicitly.</strong> A weekly check treats data age as an operational condition instead of a footnote.</li>
+            <li><strong>Do not confuse adapters with coverage.</strong> A source connector is not valuable until it produces verified rows.</li>
+          </ol>
+
+          <h2>Should you build one?</h2>
+
+          <p>Build a focused graph when your questions repeatedly cross sources, your research produces proprietary annotations, and you need an agent to return evidence—not merely an answer. Buy access to a commercial dataset when broad coverage, analyst verification, and continuous updates matter more than workflow control.</p>
+
+          <p>Most teams should use a hybrid: buy broad reference data, preserve proprietary research and provenance locally, and expose only the narrow query contract their agents need. I cover that decision separately in <a href="/articles/startup-intelligence-entity-graph.html">the build-vs-buy guide</a>; the lower-level schema and MCP design are documented in <a href="/articles/entity-database-zero-ui-agents.html">the agent-first entity database article</a>.</p>
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+        <div class="article-cta article-cta--resource">
+          <p class="article-cta__text">Use the evidence checklist before choosing a commercial dataset or building your own startup graph.</p>
+          <a href="/articles/startup-intelligence-entity-graph.html" class="btn btn--primary">Compare Build vs Buy</a>
         </div>
       </article>
 

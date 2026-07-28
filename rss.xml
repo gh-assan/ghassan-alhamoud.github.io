@@ -335,15 +335,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>Get Off the Crunchbase Treadmill</title>
+      <title>StartupGraph in Production: A Self-Hosted Startup Intelligence System</title>
       <link>https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html</guid>
       <pubDate>Sun, 29 Mar 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer.]]></description>
+      <description><![CDATA[A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system.]]></description>
       <category>Startup Intelligence</category>
-      <category>Data</category>
-      <category>Real-time</category>
-      <category>AI</category>
+      <category>MCP</category>
+      <category>DuckDB</category>
+      <category>Data Engineering</category>
     </item>
     <item>
       <title>Stop Obsessing Over Alignment. Start Building Auditability.</title>

@@ -378,15 +378,15 @@
   },
   {
     "slug": "startupgraph-insights-engine",
-    "title": "Get Off the Crunchbase Treadmill",
+    "title": "StartupGraph in Production: A Self-Hosted Startup Intelligence System",
     "date": "2026-03-30",
-    "excerpt": "Everyone thinks Crunchbase is the gold standard for startup intelligence. By the time it hits Crunchbase, the outreach window is closed. Build a real intelligence layer.",
-    "readingTime": "5 min",
+    "excerpt": "A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system.",
+    "readingTime": "10 min",
     "tags": [
       "Startup Intelligence",
-      "Data",
-      "Real-time",
-      "AI"
+      "MCP",
+      "DuckDB",
+      "Data Engineering"
     ]
   },
   {
