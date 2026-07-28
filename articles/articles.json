@@ -77,10 +77,10 @@
   },
   {
     "slug": "alms-open-source-shared-agent-memory",
-    "title": "ALMS 0.1.0: A Shared Brain for Autonomous Agents",
+    "title": "ALMS: Shared Operational Memory for Autonomous Agents via MCP",
     "date": "2026-06-11",
-    "excerpt": "ALMS \u2014 the Agent Learning Management System \u2014 is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet.",
-    "readingTime": "4 min",
+    "excerpt": "Inside ALMS 0.1.0: a Go/PostgreSQL MCP control plane for shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits.",
+    "readingTime": "9 min",
     "tags": [
       "Open Source",
       "Agents",

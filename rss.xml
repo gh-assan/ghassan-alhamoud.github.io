@@ -89,11 +89,11 @@
       <category>Agent Skills</category>
     </item>
     <item>
-      <title>ALMS 0.1.0: A Shared Brain for Autonomous Agents</title>
+      <title>ALMS: Shared Operational Memory for Autonomous Agents via MCP</title>
       <link>https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</guid>
       <pubDate>Wed, 10 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[ALMS — the Agent Learning Management System — is a self-hosted MCP server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet.]]></description>
+      <description><![CDATA[Inside ALMS 0.1.0: a Go/PostgreSQL MCP control plane for shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits.]]></description>
       <category>Open Source</category>
       <category>Agents</category>
       <category>MCP</category>
