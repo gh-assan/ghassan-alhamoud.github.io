@@ -389,15 +389,15 @@
   },
   {
     "slug": "echoweave-on-device-narrative-os",
-    "title": "EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.",
+    "title": "Designing an On-Device Personal Memory System",
     "date": "2026-04-05",
-    "excerpt": "Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS.",
-    "readingTime": "5 min",
+    "excerpt": "EchoWeave is an unbuilt design proposal for private personal memory: an on-device architecture, consent and deletion model, threat analysis, resource constraints, and validation plan.",
+    "readingTime": "12 min",
     "tags": [
       "Privacy",
       "On-Device AI",
-      "Personal OS",
-      "AI"
+      "Personal Memory",
+      "Threat Modeling"
     ]
   },
   {

@@ -310,15 +310,15 @@
       <category>Human-in-the-Loop</category>
     </item>
     <item>
-      <title>EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.</title>
+      <title>Designing an On-Device Personal Memory System</title>
       <link>https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html</guid>
       <pubDate>Sat, 04 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Your phone knows everything about you. But all that data is siloed and dead. Enter EchoWeave: an on-device personal narrative OS.]]></description>
+      <description><![CDATA[EchoWeave is an unbuilt design proposal for private personal memory: an on-device architecture, consent and deletion model, threat analysis, resource constraints, and validation plan.]]></description>
       <category>Privacy</category>
       <category>On-Device AI</category>
-      <category>Personal OS</category>
-      <category>AI</category>
+      <category>Personal Memory</category>
+      <category>Threat Modeling</category>
     </item>
     <item>
       <title>Every Token Is Rent: Building an Agent That Doesn't Forget</title>
