@@ -142,15 +142,15 @@
       <category>Engineering</category>
     </item>
     <item>
-      <title>We Built an Entity Database With Zero UI — Here's How Agents Talk to It</title>
+      <title>Agent-First Entity Database: Schema, MCP Contract, and Benchmarks</title>
       <link>https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</guid>
       <pubDate>Wed, 27 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Give me 10 Munich startups with less than $2M revenue. My agent answered in 8 seconds. From a database in my basement that no human has ever logged into. No web app. No login screen. Here's how we built an entity database with zero UI through an orchestrated team of models — all communicating via structured handoffs and MCP protocol.]]></description>
+      <description><![CDATA[Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts.]]></description>
       <category>AI Agents</category>
-      <category>Architecture</category>
-      <category>Data</category>
-      <category>OpenClaw</category>
+      <category>MCP</category>
+      <category>DuckDB</category>
+      <category>Data Architecture</category>
     </item>
     <item>
       <title>How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work</title>

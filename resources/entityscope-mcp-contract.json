@@ -1,0 +1,84 @@
+{
+  "contractVersion": "1.0",
+  "service": "entityscope",
+  "principles": [
+    "Agents submit structured intent, never SQL.",
+    "Every returned fact can carry source, confidence, and freshness metadata.",
+    "Unknown and stale are explicit states, not empty strings.",
+    "Query limits are enforced by the service."
+  ],
+  "tools": [
+    {
+      "name": "entityscope_query",
+      "description": "Find entities using a natural-language query translated into allow-listed filters.",
+      "input": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        }
+      },
+      "outputEnvelope": {
+        "required": ["query", "translation", "entities", "resultCount"],
+        "translationStates": [
+          "deterministic",
+          "model-assisted",
+          "unsupported"
+        ],
+        "entityFactShape": {
+          "value": "JSON value or null",
+          "source": "Stable source identifier",
+          "confidence": "Number from 0 to 1",
+          "lastVerified": "RFC 3339 timestamp or null",
+          "status": "verified | stale | conflicting | unknown"
+        }
+      }
+    },
+    {
+      "name": "entityscope_get_entity",
+      "description": "Return one entity and field-level provenance by stable identifier or slug.",
+      "input": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["identifier"],
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      }
+    },
+    {
+      "name": "entityscope_list_sources",
+      "description": "List sources, field counts, and verification timestamps.",
+      "input": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    },
+    {
+      "name": "entityscope_health",
+      "description": "Return row counts, enrichment progress, and staleness state.",
+      "input": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    }
+  ],
+  "safety": {
+    "queryGeneration": "Translate only to allow-listed filter keys, then bind values as parameters.",
+    "defaultLimit": 20,
+    "maximumLimit": 100,
+    "writeTools": "None in the read contract.",
+    "recommendedAuthentication": "Require authenticated transport and per-tool authorization outside a trusted host."
+  }
+}

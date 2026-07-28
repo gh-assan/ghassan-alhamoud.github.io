@@ -110,15 +110,15 @@
   },
   {
     "slug": "entity-database-zero-ui-agents",
-    "title": "We Built an Entity Database With Zero UI \u2014 Here's How Agents Talk to It",
+    "title": "Agent-First Entity Database: Schema, MCP Contract, and Benchmarks",
     "date": "2026-05-28",
-    "excerpt": "Give me 10 Munich startups with less than $2M revenue. My agent answered in 8 seconds. From a database in my basement that no human has ever logged into. No web app. No login screen. Here's how we built an entity database with zero UI through an orchestrated team of models \u2014 all communicating via structured handoffs and MCP protocol.",
-    "readingTime": "8 min",
+    "excerpt": "Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts.",
+    "readingTime": "12 min",
     "tags": [
       "AI Agents",
-      "Architecture",
-      "Data",
-      "OpenClaw"
+      "MCP",
+      "DuckDB",
+      "Data Architecture"
     ]
   },
   {
