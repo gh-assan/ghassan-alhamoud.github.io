@@ -232,10 +232,10 @@
   },
   {
     "slug": "workspace-indexing-3ms",
-    "title": "Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms",
+    "title": "How I Built a 3 ms Workspace Index for AI Agents",
     "date": "2026-05-06",
-    "excerpt": "Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.",
-    "readingTime": "7 min",
+    "excerpt": "A reproducible benchmark of a 302 KB semantic registry over 2,408 files, plus its schema, update strategy, correctness gates, and retrieval tradeoffs.",
+    "readingTime": "10 min",
     "tags": [
       "Architecture",
       "Performance",

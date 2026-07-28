@@ -164,11 +164,11 @@
       <category>Reliability</category>
     </item>
     <item>
-      <title>Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms</title>
+      <title>How I Built a 3 ms Workspace Index for AI Agents</title>
       <link>https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html</guid>
       <pubDate>Tue, 05 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Every time your agent needs to find a file, it scans the entire directory tree. Here's the architecture for a solution that reads the entire workspace in 3ms.]]></description>
+      <description><![CDATA[A reproducible benchmark of a 302 KB semantic registry over 2,408 files, plus its schema, update strategy, correctness gates, and retrieval tradeoffs.]]></description>
       <category>Architecture</category>
       <category>Performance</category>
       <category>Workspace Indexing</category>
