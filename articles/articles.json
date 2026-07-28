@@ -61,10 +61,10 @@
   },
   {
     "slug": "smart-models-go-stupid",
-    "title": "When Smart Models Go Stupid: 5,000 Lines of Perfect Analysis, Then a print() Statement",
+    "title": "Why a Strong Coding Agent Failed a TUI Task: A Detailed Case Study",
     "date": "2026-06-24",
-    "excerpt": "I asked GPT-5.5/Codex to build a TUI for my film pipeline. It produced a brilliant 5,000-line design analysis and then delivered a input()/print() REPL. This is the story of the training data blind spot and why you can't trust analysis quality as a signal for delivery quality.",
-    "readingTime": "9 min",
+    "excerpt": "A repository-backed case study: 6,142 lines of TUI design became a 280-line input/print REPL. Here is the acceptance gap and the workflow that later produced the real application.",
+    "readingTime": "11 min",
     "tags": [
       "AI Agents",
       "Code Generation",
