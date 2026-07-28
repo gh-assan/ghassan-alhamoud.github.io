@@ -4,31 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>The Ghost in the Terminal: Testing TUIs with tmux — Ghassan Alhamoud</title>
-  <meta name="description" content="Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify." />
+  <title>Testing Terminal UIs with tmux: A Deterministic PTY Workflow — Ghassan Alhamoud</title>
+  <meta name="description" content="A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html" />
-  <meta property="og:title" content="The Ghost in the Terminal: Testing TUIs with tmux" />
-  <meta property="og:description" content="Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify." />
+  <meta property="og:title" content="Testing Terminal UIs with tmux: A Deterministic PTY Workflow" />
+  <meta property="og:description" content="A copyable black-box test pattern using a real PTY, state polling, explicit dimensions, and isolated tmux sessions." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-037-tmux-tui-testing.svg" />
   <meta property="article:published_time" content="2026-07-02" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html" />
-  <meta property="twitter:title" content="The Ghost in the Terminal: Testing TUIs with tmux" />
-  <meta property="twitter:description" content="Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify." />
+  <meta property="twitter:title" content="Testing Terminal UIs with tmux: A Deterministic PTY Workflow" />
+  <meta property="twitter:description" content="A copyable black-box test pattern using a real PTY, state polling, explicit dimensions, and isolated tmux sessions." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-037-tmux-tui-testing.svg" />
 
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "The Ghost in the Terminal: Testing TUIs with tmux",
-  "description": "Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify.",
+  "headline": "Testing Terminal UIs with tmux: A Deterministic PTY Workflow",
+  "description": "A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-037-tmux-tui-testing.svg",
   "author": {
     "@type": "Person",
@@ -44,7 +44,7 @@
     }
   },
   "datePublished": "2026-07-02",
-  "dateModified": "2026-07-02",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html",
   "proficiencyLevel": "Expert",
   "dependencies": "TUI, Testing, tmux, Python, Automation, DevOps, Textual, Terminal",
@@ -155,9 +155,9 @@
           <div class="article-single__meta">
             <time datetime="2026-07-02">Jul 2 2026</time>
             <span class="article-card__dot"></span>
-            <span>8 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">The Ghost in the Terminal: Testing TUIs with <code>tmux</code></h1>
+          <h1 class="article-single__title">Testing Terminal UIs with <code>tmux</code>: A Deterministic PTY Workflow</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">TUI</span>
           <span class="article-single__tag">Testing</span>
@@ -172,19 +172,27 @@
 
         <div class="article-single__body">
 
-    <p>Terminal UIs are back.</p>
-
-    <p><code>Textual</code>, <code>Bubble Tea</code>, <code>ratatui</code>, curses wrappers, internal operator consoles: we are finally building command-line tools that behave like real applications instead of polite streams of text.</p>
-
-    <p>The testing story, though, is where many teams and many LLMs fall apart.</p>
-
-    <p>A TUI is not a normal CLI. You cannot treat it like a program that reads stdin and prints stable stdout. It wants a real terminal, switches into raw mode, redraws the screen in place, and often depends on viewport size. That is why naive automation fails and why so many generated answers on this topic are wrong.</p>
+    <p>A terminal UI is a stateful screen attached to a terminal device. Piping text into stdin does not reproduce key events, focus, dimensions, raw mode, or in-place rendering.</p>
 
     <blockquote>
       <p>Testing a TUI is not a stdin/stdout problem. It is a PTY problem.</p>
     </blockquote>
 
-    <p>The practical solution is <code>tmux</code>. It gives your app a real pseudo-terminal and gives your script a clean API to type into that terminal and read the rendered screen back out.</p>
+    <p>For a black-box smoke test, <code>tmux</code> supplies both sides of the boundary: a pseudo-terminal for the app and commands for the test to send keys, resize the viewport, and capture visible state.</p>
+
+    <h2>Quick recipe</h2>
+
+<pre><code>session="tui-smoke-$$"
+socket="tui-smoke-$$"
+tmux -L "$socket" new-session -d -s "$session" -x 120 -y 36 \
+  'export TERM=screen-256color; python -m myapp.tui'
+tmux -L "$socket" capture-pane -t "$session":0.0 -p
+tmux -L "$socket" send-keys -t "$session":0.0 n
+tmux -L "$socket" kill-server</code></pre>
+
+    <p>Use a unique socket, set dimensions, wait for visible state instead of guessing a delay, and always clean up. The complete fixture below packages those rules.</p>
+
+    <p><a href="/resources/tmux-tui-smoke-test.sh" class="btn btn--primary" download>Download the tmux smoke-test fixture</a></p>
 
     <h2>The Black Box Problem</h2>
 
@@ -231,26 +239,26 @@
 
     <p><code>tmux</code> is usually described as a terminal multiplexer for humans. For testing, it is more useful to think of it as a PTY broker with a CLI control surface.</p>
 
-    <p>The entire testing API collapses to four commands:</p>
+    <p>The core testing API collapses to four operations:</p>
 
     <pre><code># 1. Start the app detached with a known terminal size
-tmux new-session -d -s app -x 200 -y 50 'uv run film-pipeline-tui'
+tmux -L tui-test new-session -d -s app -x 120 -y 36 'uv run film-pipeline-tui'
 
 # 2. Type into it
-tmux send-keys -t app 'n'
-tmux send-keys -t app Tab Enter
+tmux -L tui-test send-keys -t app 'n'
+tmux -L tui-test send-keys -t app Tab Enter
 
 # 3. Read the rendered screen
-tmux capture-pane -t app -p
+tmux -L tui-test capture-pane -t app -p
 
 # 4. Clean up
-tmux kill-session -t app</code></pre>
+tmux -L tui-test kill-server</code></pre>
 
     <p>That is the core loop. Everything else is about making those four calls reliable.</p>
 
     <h2>Start with a Real Terminal, Not the Default One</h2>
 
-    <p>The first trap is detached-session size. If you do not set <code>-x</code> and <code>-y</code>, you get a tiny 80x24 terminal. Modern TUIs truncate panels, collapse sections, and hide labels at that size.</p>
+    <p>The first trap is detached-session size. Do not let environment-specific defaults decide the viewport. Modern TUIs truncate panels, collapse sections, and hide labels as dimensions shrink.</p>
 
     <pre><code>tmux new-session -d -s app -x 200 -y 50 'uv run film-pipeline-tui'</code></pre>
 
@@ -310,45 +318,31 @@ tmux kill-session -t app</code></pre>
 
     <p>That last point is worth stressing. If a keybinding is being swallowed by an input, <code>capture-pane</code> often shows the stray characters sitting inside the field. The failure is visible. That is what makes this test strategy debuggable.</p>
 
-    <h2>A Real Workflow, Not a Toy Example</h2>
+    <h2>A fixture you can release with the application</h2>
 
-    <p>The pattern became concrete while driving a real <code>Textual</code> operator console for my film pipeline project end to end: create a project, move through multiple review gates, trigger generation, and verify the resulting assets.</p>
+    <p>The downloadable fixture uses <code>set -euo pipefail</code>, an isolated tmux socket, an exact pane target, cleanup traps, configurable dimensions, and state-based polling. Configure it without editing the script:</p>
 
-    <p>This is the trimmed shape of that run:</p>
+<pre><code>APP_COMMAND='uv run film-pipeline-tui' \
+READY_PATTERN='LANGGRAPH FILM STUDIO' \
+NEXT_KEY='n' \
+NEXT_PATTERN='New project' \
+WIDTH=120 HEIGHT=36 \
+./tmux-tui-smoke-test.sh</code></pre>
 
-    <pre><code>#!/usr/bin/env bash
-set -euo pipefail
-S=filmtui
+    <p>The project-specific version can continue from there: fill one form, complete one phase, restart the app, and verify durable state. Keep that journey short. A smoke test should protect operability, not duplicate the application’s full functional suite.</p>
 
-tmux kill-session -t $S 2&gt;/dev/null || true
-trap 'tmux kill-session -t '$S' 2&gt;/dev/null || true' EXIT
+    <h2>Test a terminal-size matrix</h2>
 
-tmux new-session -d -s $S -x 200 -y 50 'uv run film-pipeline-tui'
-wait_for "No active project" 20
+    <table>
+      <thead><tr><th>Viewport</th><th>Purpose</th><th>Suggested assertion</th></tr></thead>
+      <tbody>
+        <tr><td>80 × 24</td><td>Minimum supported terminal</td><td>No crash; primary action remains reachable</td></tr>
+        <tr><td>120 × 36</td><td>Normal laptop terminal</td><td>Core labels and navigation are visible</td></tr>
+        <tr><td>200 × 50</td><td>Wide operator layout</td><td>Secondary panes use available space</td></tr>
+      </tbody>
+    </table>
 
-tmux send-keys -t $S 'n'; sleep 1.5
-tmux send-keys -t $S 'whale-song'
-tmux send-keys -t $S Tab
-tmux send-keys -t $S 'Whale Song'
-tmux send-keys -t $S Tab
-tmux send-keys -t $S 'A lighthouse keeper befriends a whale that sings sea shanties.'
-tmux send-keys -t $S Tab Tab Tab
-tmux send-keys -t $S Enter
-wait_for "phase 1/11: intake" 60
-
-for phase in 2 3 4 5 6 7 8; do
-  tmux send-keys -t $S 'a'; sleep 0.7
-  tmux send-keys -t $S 'y'
-  wait_for "phase $phase/11|failed" 120
-done
-
-tmux send-keys -t $S 'G'
-wait_for "Generation complete|failures" 300
-
-tmux send-keys -t $S '5'; sleep 1
-tmux capture-pane -t $S -p | grep -q "generated_clip"</code></pre>
-
-    <p>This is where tmux testing earns its keep. It is not proving a helper function returns the right value. It is proving that a human-shaped workflow is still operable through the actual terminal surface.</p>
+    <p>These are test cases, not universal support requirements. Publish your own minimum viewport and assert behavior at the boundary. Use <code>tmux resize-window -x … -y …</code> when resize handling itself is part of the contract.</p>
 
     <h2>Failure Modes Worth Memorizing</h2>
 
@@ -394,7 +388,7 @@ tmux capture-pane -t $S -p | grep -q "generated_clip"</code></pre>
       </tbody>
     </table>
 
-    <h2>Where <code>tmux</code> Fits in a Real Test Strategy</h2>
+    <h2>Where <code>tmux</code> fits in the test pyramid</h2>
 
     <p>You should not build your entire test pyramid around tmux. It is slower, rendering-coupled, and intentionally black-box.</p>
 
@@ -409,7 +403,32 @@ tmux capture-pane -t $S -p | grep -q "generated_clip"</code></pre>
       <li>UI thread blocking under real interaction timing</li>
     </ul>
 
-    <p>If your framework exposes an in-process harness, use it too. In the Python world, <code>Textual</code>'s test harness is excellent for inspecting widget state directly. That belongs in CI. The tmux layer belongs on the workflow that absolutely must remain operable from the real terminal.</p>
+    <table>
+      <thead><tr><th>Layer</th><th>What it proves</th><th>Typical frequency</th></tr></thead>
+      <tbody>
+        <tr><td>Unit</td><td>Reducers, formatting, view-model logic</td><td>Every change</td></tr>
+        <tr><td>Framework harness</td><td>Widget state, messages, bindings, async behavior</td><td>Every change</td></tr>
+        <tr><td>tmux PTY smoke</td><td>Packaging, terminal boundary, focus, visible workflow</td><td>Pull request or release</td></tr>
+        <tr><td>Live-provider E2E</td><td>External integrations and real latency</td><td>Manual or scheduled</td></tr>
+      </tbody>
+    </table>
+
+    <p>Textual’s official test harness runs an app through <code>run_test()</code> and exposes a pilot for key presses and widget assertions. It is faster and more semantic than scraping a pane. Use it broadly; reserve tmux for the real-terminal contract that an in-process harness intentionally abstracts away.</p>
+
+    <h3>Minimal CI job</h3>
+
+<pre><code>tui-smoke:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v4
+    - run: sudo apt-get update &amp;&amp; sudo apt-get install -y tmux
+    - run: ./scripts/install-project.sh
+    - run: |
+        APP_COMMAND='my-tui --test-mode' \
+        READY_PATTERN='Dashboard' \
+        ./resources/tmux-tui-smoke-test.sh</code></pre>
+
+    <p>Use deterministic local or mock data in pull-request CI. Keep credentials and paid providers in a separate gated job.</p>
 
     <blockquote>
       <p>Unit and harness tests prove your internals are coherent. A tmux script proves the terminal experience still works.</p>
@@ -417,27 +436,25 @@ tmux capture-pane -t $S -p | grep -q "generated_clip"</code></pre>
 
     <h2>Why This Matters for Agents</h2>
 
-    <p>This is also one of those rare engineering topics where LLM advice is consistently weak.</p>
-
-    <p>Models often recommend piping input to a TUI, scraping stdout, or adding bigger sleeps until the script "works." That misses the shape of the problem. A TUI is a stateful screen attached to a terminal device, not a linear text stream. Once you model it correctly, the solution becomes obvious: give it a PTY, then automate the PTY.</p>
-
-    <p>If you are building operator consoles, AI-assisted developer tools, or any terminal-first workflow that agents need to drive, this distinction is not academic. It is the difference between a reliable system and a fake demo.</p>
+    <p>Agents can generate and operate terminal-first tools, but the same acceptance rule applies: do not accept a transcript that bypasses the real interface. Give the app a PTY, drive the published bindings, and retain the pane capture on failure.</p>
 
     <hr>
 
     <h3>References</h3>
 
     <ol>
-      <li><a href="https://github.com/tmux/tmux/wiki">tmux documentation</a></li>
-      <li><a href="https://textual.textualize.io/">Textual documentation</a></li>
+      <li><a href="https://man.openbsd.org/tmux.1">tmux manual</a></li>
+      <li><a href="https://textual.textualize.io/guide/testing/">Textual testing guide</a></li>
       <li><a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph">film-pipeline-langgraph</a></li>
+      <li><a href="/articles/smart-models-go-stupid.html">The TUI delivery case study</a></li>
+      <li><a href="/articles/workspace-indexing-3ms.html">A reproducible agent-workspace benchmark</a></li>
     </ol>
 
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Protect the terminal boundary before the next release.</p>
+          <a href="/resources/tmux-tui-smoke-test.sh" class="btn btn--primary" download>Get the Test Fixture</a>
         </div>
       </article>
 

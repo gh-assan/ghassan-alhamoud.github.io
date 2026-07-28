@@ -34,11 +34,11 @@
       <category>Local First</category>
     </item>
     <item>
-      <title>The Ghost in the Terminal: Testing TUIs with tmux</title>
+      <title>Testing Terminal UIs with tmux: A Deterministic PTY Workflow</title>
       <link>https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html</guid>
       <pubDate>Wed, 01 Jul 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify.]]></description>
+      <description><![CDATA[A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script.]]></description>
       <category>TUI</category>
       <category>Testing</category>
       <category>tmux</category>

@@ -31,10 +31,10 @@
   },
   {
     "slug": "testing-tuis-with-tmux",
-    "title": "The Ghost in the Terminal: Testing TUIs with tmux",
+    "title": "Testing Terminal UIs with tmux: A Deterministic PTY Workflow",
     "date": "2026-07-02",
-    "excerpt": "Testing terminal UIs is not a stdin/stdout problem. It is a PTY problem. Here is the tmux-driven pattern that made a real Textual app deterministic to drive, inspect, and verify.",
-    "readingTime": "8 min",
+    "excerpt": "A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script.",
+    "readingTime": "12 min",
     "tags": [
       "TUI",
       "Testing",
