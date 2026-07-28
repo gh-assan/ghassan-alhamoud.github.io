@@ -404,15 +404,15 @@
   },
   {
     "slug": "dreamforge-automation-pipeline",
-    "title": "I Automated 90% of Shipping. Here's What I Learned.",
+    "title": "Designing a 90% Automated Product Pipeline—What Must Stay Human",
     "date": "2026-04-08",
-    "excerpt": "I used to think my value as a founder was shipping. I built an autonomous pipeline that takes an idea from chat to code without me touching the keyboard.",
-    "readingTime": "6 min",
+    "excerpt": "An honest architecture case study of DreamForge: what agents can own from idea to pull request, where human approval remains essential, and how to validate automation safely.",
+    "readingTime": "11 min",
     "tags": [
       "Automation",
-      "Product Development",
+      "Product Delivery",
       "AI Agents",
-      "AI"
+      "Human-in-the-Loop"
     ]
   },
   {

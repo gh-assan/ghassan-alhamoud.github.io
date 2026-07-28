@@ -301,15 +301,15 @@
       <category>AI</category>
     </item>
     <item>
-      <title>I Automated 90% of Shipping. Here's What I Learned.</title>
+      <title>Designing a 90% Automated Product Pipeline—What Must Stay Human</title>
       <link>https://ghassan-alhamoud.com/articles/dreamforge-automation-pipeline.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/dreamforge-automation-pipeline.html</guid>
       <pubDate>Tue, 07 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[I used to think my value as a founder was shipping. I built an autonomous pipeline that takes an idea from chat to code without me touching the keyboard.]]></description>
+      <description><![CDATA[An honest architecture case study of DreamForge: what agents can own from idea to pull request, where human approval remains essential, and how to validate automation safely.]]></description>
       <category>Automation</category>
-      <category>Product Development</category>
+      <category>Product Delivery</category>
       <category>AI Agents</category>
-      <category>AI</category>
+      <category>Human-in-the-Loop</category>
     </item>
     <item>
       <title>EchoWeave: Your Phone Is a Graveyard. Let's Make It a Storyteller.</title>
