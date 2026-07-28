@@ -356,16 +356,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>Compliance-as-Code: The Bottleneck Nobody's Automating</title>
+      <title>Compliance as Code for the EU AI Act: An Engineering Framework</title>
       <link>https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html</guid>
       <pubDate>Tue, 24 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken.]]></description>
-      <category>Compliance</category>
-      <category>AI</category>
-      <category>Automation</category>
-      <category>AI Agents</category>
-      <category>OpenClaw</category>
+      <description><![CDATA[A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages.]]></description>
+      <category>EU AI Act</category>
+      <category>Compliance Engineering</category>
+      <category>AI Governance</category>
+      <category>Auditability</category>
     </item>
     <item>
       <title>Intelligence Is Trivial. Reliability Is the New Frontier.</title>

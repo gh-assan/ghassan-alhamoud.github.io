@@ -348,16 +348,15 @@
   },
   {
     "slug": "compliance-as-code-eu-ai-act",
-    "title": "Compliance-as-Code: The Bottleneck Nobody's Automating",
+    "title": "Compliance as Code for the EU AI Act: An Engineering Framework",
     "date": "2026-03-25",
-    "excerpt": "Every two weeks, the engineering team releases a new model iteration. And every two weeks, compliance has to manually update conformity assessments. That's broken.",
-    "readingTime": "5 min",
+    "excerpt": "A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages.",
+    "readingTime": "14 min",
     "tags": [
-      "Compliance",
-      "AI",
-      "Automation",
-      "AI Agents",
-      "OpenClaw"
+      "EU AI Act",
+      "Compliance Engineering",
+      "AI Governance",
+      "Auditability"
     ]
   },
   {
