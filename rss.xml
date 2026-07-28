@@ -382,15 +382,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>Stop Waiting for Lightning: Build an Ideation Engine</title>
+      <title>Build an Ideation Engine: A Repeatable Product Discovery System</title>
       <link>https://ghassan-alhamoud.com/articles/systematic-ideation-engine.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/systematic-ideation-engine.html</guid>
       <pubDate>Thu, 19 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[I spent years waiting for the big idea. Then I realized I was treating ideation like a creative act. I should have been treating it like an engineering problem.]]></description>
+      <description><![CDATA[A practical product ideation system with three analytical lenses, hard quality gates, deduplication, a weighted scorecard, rejected ideas, and a copyable validation workflow.]]></description>
       <category>Ideation</category>
-      <category>Product Development</category>
-      <category>Systems</category>
-      <category>AI</category>
+      <category>Product Discovery</category>
+      <category>Validation</category>
+      <category>AI Systems</category>
     </item>
     <item>
       <title>Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph</title>

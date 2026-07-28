@@ -323,15 +323,15 @@
   },
   {
     "slug": "systematic-ideation-engine",
-    "title": "Stop Waiting for Lightning: Build an Ideation Engine",
+    "title": "Build an Ideation Engine: A Repeatable Product Discovery System",
     "date": "2026-03-20",
-    "excerpt": "I spent years waiting for the big idea. Then I realized I was treating ideation like a creative act. I should have been treating it like an engineering problem.",
-    "readingTime": "4 min",
+    "excerpt": "A practical product ideation system with three analytical lenses, hard quality gates, deduplication, a weighted scorecard, rejected ideas, and a copyable validation workflow.",
+    "readingTime": "12 min",
     "tags": [
       "Ideation",
-      "Product Development",
-      "Systems",
-      "AI"
+      "Product Discovery",
+      "Validation",
+      "AI Systems"
     ]
   },
   {
