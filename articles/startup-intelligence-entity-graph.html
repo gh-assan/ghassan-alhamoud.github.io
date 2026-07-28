@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Stop Buying Startup Data. Start Owning It. — Ghassan Alhamoud</title>
-  <meta name="description" content="Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph." />
+  <title>Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph — Ghassan Alhamoud</title>
+  <meta name="description" content="A practical build-vs-buy framework for startup intelligence, grounded in a self-hosted DuckDB entity graph with field-level provenance, agent queries, and measured limitations." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html" />
-  <meta property="og:title" content="Stop Buying Startup Data. Start Owning It." />
-  <meta property="og:description" content="Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph." />
+  <meta property="og:title" content="Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph" />
+  <meta property="og:description" content="A practical build-vs-buy framework for startup intelligence, grounded in a self-hosted DuckDB entity graph with field-level provenance, agent queries, and measured limitations." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART004.webp" />
   <meta property="article:published_time" content="2026-03-18" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html" />
-  <meta property="twitter:title" content="Stop Buying Startup Data. Start Owning It." />
-  <meta property="twitter:description" content="Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph." />
+  <meta property="twitter:title" content="Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph" />
+  <meta property="twitter:description" content="A practical build-vs-buy framework for startup intelligence, grounded in a self-hosted DuckDB entity graph with field-level provenance, agent queries, and measured limitations." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART004.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Stop Buying Startup Data. Start Owning It.",
-  "description": "Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph.",
+  "headline": "Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph",
+  "description": "A practical build-vs-buy framework for startup intelligence, grounded in a self-hosted DuckDB entity graph with field-level provenance, agent queries, and measured limitations.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART004.webp",
   "author": {
     "@type": "Person",
@@ -45,11 +45,11 @@
     }
   },
   "datePublished": "2026-03-18",
-  "dateModified": "2026-03-18",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html",
   "proficiencyLevel": "Intermediate",
-  "dependencies": "Startup Intelligence, Data, Architecture, AI",
-  "articleSection": "Data Systems"
+  "dependencies": "Startup Intelligence, Entity Resolution, Data Provenance, DuckDB, AI Agents",
+  "articleSection": "Data Architecture"
 }
   </script>
 
@@ -92,41 +92,213 @@
           <div class="article-single__meta">
             <time datetime="2026-03-18">Mar 18 2026</time>
             <span class="article-card__dot"></span>
-            <span>5 min</span>
+            <span>9 min</span>
           </div>
-          <h1 class="article-single__title">Stop Buying Startup Data. Start Owning It.</h1>
+          <h1 class="article-single__title">Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Startup Intelligence</span>
-          <span class="article-single__tag">Data</span>
-          <span class="article-single__tag">Architecture</span>
-          <span class="article-single__tag">AI</span>
+          <span class="article-single__tag">Entity Resolution</span>
+          <span class="article-single__tag">Data Provenance</span>
+          <span class="article-single__tag">DuckDB</span>
+          <span class="article-single__tag">AI Agents</span>
           </div>
         </header>
 
-                <img src="/images/articles/ART004.webp" alt="" class="article-single__image" loading="eager" />
+        <img src="/images/articles/ART004.webp" alt="Startup records from multiple sources resolving into a self-hosted entity graph" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>I remember sitting in a meeting last year, looking at a "market intelligence" report that cost us €1,500.</p>
-<p>It was 40 pages of aggregated fluff.</p>
-<p>The data was six months old. My lead engineer looked at it, laughed, and opened a Terminal window. He spent three days scraping and stitching together free open data sources — official registry records, EU grant databases, and GitHub activity.</p>
-<p>By the end of the week, he had built a self-hosted entity graph that was more accurate, more real-time, and infinitely more queryable than the report we paid for.</p>
-<p>That was the moment I realized: Everyone says the future of startup intelligence is "better SaaS."</p>
-<p>Better dashboards. Cleaner UI. More paywalls. Founders subscribe to Crunchbase or PitchBook because they believe it's the only way to track the market.</p>
-<p>Here's the truth: the data in those platforms is backward-looking. It’s aggregate-focused, stale, and accessible by every single one of your competitors.</p>
-<p>If you are using the exact same dataset as everyone else, you aren't playing a game of intelligence. You're playing a game of common availability.</p>
-<p>The real value isn't the data you <em>buy</em>. It's the data you <em>own</em>.</p>
-<p>Most product teams are failing because they rely on fragmented, manual data silos. They don't have a single source of truth. They don't have a master entity graph that an agent can actually query.</p>
-<p>They have noise.</p>
-<p>The future of startup intelligence is self-hosted, real-time, and proprietary. By building a self-hosted Berlin/EU startup entity graph — stitching together free data sources like official registry data, EU grant records, and open-source contributions — you gain proprietary signals the big platforms simply don't see.</p>
-<p>Imagine an agent that can query: "Show me all Berlin fintechs that raised funding in the last 6 months, are hiring backend engineers, and are already partners in Horizon Europe projects."</p>
-<p>Crunchbase can't answer that. Your graph can.</p>
-<p>If you're building entity knowledge graphs or just tired of data silos, DM me. I'm building this pipeline and looking for alpha testers.</p>
+          <p><strong>Do not build a startup database merely to avoid paying for one.</strong> Build a self-hosted intelligence graph when your recurring questions require joins, source combinations, confidence rules, or private annotations that a general-purpose platform cannot model. For broad coverage and occasional lookup, buying access is usually cheaper.</p>
+
+          <p>This is the build-vs-buy framework I wish I had before creating EntityScope, a local DuckDB knowledge base queried by agents through the Model Context Protocol (MCP). The useful part was not “owning the data.” It was owning the entity model, provenance rules, and query surface. The expensive part was everything required to keep those trustworthy.</p>
+
+          <p><em>Reviewed July 28, 2026. Measurements below come from the local EntityScope database and source code at commit <code>41f5abf</code>. They describe a working prototype, not a validated replacement for a commercial data provider.</em></p>
+
+          <h2>The five-whys diagnosis</h2>
+
+          <ol>
+            <li><strong>Why was startup research slow?</strong> Each answer required opening several sources and copying facts into one note.</li>
+            <li><strong>Why did the sources not compose?</strong> They used different identifiers, schemas, coverage, and update schedules.</li>
+            <li><strong>Why did automation still produce uncertain answers?</strong> It could not show which source supported each field or how recently that field was checked.</li>
+            <li><strong>Why did a new dashboard not solve it?</strong> The bottleneck was resolution and provenance, not presentation.</li>
+            <li><strong>Why build a local graph?</strong> To make the recurring joins, confidence policy, and agent interface first-class parts of the system.</li>
+          </ol>
+
+          <p>The root problem was not that commercial databases are bad. It was that my workflow needed a different data product: a narrow, auditable view of Berlin and Munich companies that could combine public, curated, and private research.</p>
+
+          <h2>Build, buy, or use a hybrid?</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Decision factor</th>
+                <th>Buy</th>
+                <th>Build</th>
+                <th>Hybrid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coverage</td>
+                <td>You need many markets immediately</td>
+                <td>A narrow geography or domain is sufficient</td>
+                <td>Broad provider plus specialist enrichment</td>
+              </tr>
+              <tr>
+                <td>Query shape</td>
+                <td>Standard filters answer most questions</td>
+                <td>Questions require custom joins or rules</td>
+                <td>Provider facts feed local decision models</td>
+              </tr>
+              <tr>
+                <td>Evidence</td>
+                <td>Provider attribution is sufficient</td>
+                <td>You need provenance per field</td>
+                <td>Preserve both provider and local sources</td>
+              </tr>
+              <tr>
+                <td>Private context</td>
+                <td>Little or none</td>
+                <td>Internal notes are a major differentiator</td>
+                <td>Keep private context local</td>
+              </tr>
+              <tr>
+                <td>Operations</td>
+                <td>No team for ingestion and quality work</td>
+                <td>You can own freshness and incident response</td>
+                <td>Build only the differentiating layer</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>A useful default is hybrid. Buy or consume authoritative coverage where it is economical; normalize only the fields that drive a repeated decision; add sources the provider does not include; and keep private annotations behind your own access boundary.</p>
+
+          <h2>What EntityScope actually contains</h2>
+
+          <p>The current DuckDB file is 8 MB. A read-only audit on July 28 found:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Table</th>
+                <th>Rows</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>entities</code></td>
+                <td>1,010</td>
+                <td>Canonical legal-entity spine</td>
+              </tr>
+              <tr>
+                <td><code>entity_sources</code></td>
+                <td>8,018</td>
+                <td>Field, source, confidence, URL, verification time</td>
+              </tr>
+              <tr>
+                <td><code>prospects</code></td>
+                <td>333</td>
+                <td>Curated Berlin startup profiles</td>
+              </tr>
+              <tr>
+                <td><code>outreach_contacts</code></td>
+                <td>394</td>
+                <td>Private research overlay, including 150 Munich records</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>The counts look substantial, but completeness is uneven. Employee and founding-year fields are present for almost all legal entities; EU contribution fields are empty. Of 8,018 provenance rows, 8,000 came from the initial Berlin dataset, 16 from Wikidata, and 2 from manual web research. All were last checked on May 27, 2026.</p>
+
+          <p>That means three claims in the original version of this article were not defensible:</p>
+
+          <ul>
+            <li>The graph is <strong>not real-time</strong>; it is a snapshot with freshness machinery.</li>
+            <li>It has <strong>not been shown to be more accurate</strong> than commercial datasets.</li>
+            <li>The CORDIS and GitHub enrichment modules exist, but their fields are <strong>not yet populated in the audited database</strong>.</li>
+          </ul>
+
+          <p>This distinction—implemented pipeline versus populated evidence—is exactly why field-level provenance matters.</p>
+
+          <h2>The minimum useful architecture</h2>
+
+          <pre><code>Public and curated sources
+        │
+        ▼
+Source adapters ──► resolver ──► canonical entities
+        │                            │
+        └──────────────► field-level provenance
+                                     │
+Private prospect context ────────────┤
+                                     ▼
+                         parameterized query layer
+                                     │
+                                     ▼
+                               MCP tools for agents</code></pre>
+
+          <h3>1. Start with a stable entity spine</h3>
+
+          <p>Choose the most reliable identifier available for the domain: a registration number, repository owner, grant-participant identifier, or another durable key. Names are aliases, not primary keys. Entity resolution should produce a match decision and preserve the inputs that justified it.</p>
+
+          <h3>2. Store assertions, not just values</h3>
+
+          <p>A row saying <code>employee_count = 42</code> loses the information needed to trust it. Store source, source URL, observed time, confidence, and transformation. When two sources disagree, keep both assertions and let a policy choose the current value.</p>
+
+          <h3>3. Treat open data as inputs with contracts</h3>
+
+          <p><a href="https://cordis.europa.eu/about/services" target="_blank" rel="noopener noreferrer">CORDIS provides EU research-project data</a> through bulk downloads and linked open data. <a href="https://www.wikidata.org/wiki/Help%3AData_access" target="_blank" rel="noopener noreferrer">Wikidata exposes a SPARQL endpoint</a> for structured queries. GitHub provides a documented API, but its <a href="https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28" target="_blank" rel="noopener noreferrer">rate limits and secondary limits</a> are operational constraints. Every adapter needs a license check, retry policy, raw-input retention rule, and freshness expectation.</p>
+
+          <h3>4. Keep natural language outside the database boundary</h3>
+
+          <p>EntityScope first translates a question into a bounded filter object, then builds parameterized SQL. The database never executes model-generated SQL. Common patterns such as city, employee range, founding year, industry, funding, and result limit have deterministic parsers; an LLM is an optional fallback.</p>
+
+          <h3>5. Make freshness queryable</h3>
+
+          <p>“Updated weekly” is not a property of the whole database. Each source and field ages differently. The system should expose last verification time, stale-field counts, and the policy that marks a record unfit for a given decision.</p>
+
+          <h2>A build-cost model that avoids vanity engineering</h2>
+
+          <p>Compare annual cost, not subscription price:</p>
+
+          <pre><code>Annual build cost =
+  initial engineering
+  + source maintenance
+  + quality review
+  + compute and storage
+  + incident and compliance work
+
+Annual value =
+  avoided licenses
+  + research time saved
+  + decisions enabled by unique joins
+  + value of private context kept local</code></pre>
+
+          <p>Only the “unique joins” and private context are defensible strategic advantages. Re-creating commodity profiles is maintenance work. If a provider can answer the question with an export or API, integrate it. If the question depends on your own taxonomy, confidence rules, or historical observations, build that layer.</p>
+
+          <h2>Acceptance criteria before expanding sources</h2>
+
+          <ul>
+            <li>Define 20 representative research questions before designing tables.</li>
+            <li>Measure how many end with a sourced answer and no manual lookup.</li>
+            <li>Spot-check a fixed sample against authoritative sources.</li>
+            <li>Track false joins separately from missing joins; false joins are usually more damaging.</li>
+            <li>Reject answers when required fields are stale or below a confidence threshold.</li>
+            <li>Add a source only when it improves a named query, not because it is available.</li>
+          </ul>
+
+          <p>The technical implementation—schema, MCP surface, query translation, and limitations—belongs in <a href="/articles/entity-database-zero-ui-agents.html">the agent-first EntityScope architecture article</a>. Signal models built above the graph belong in <a href="/articles/startupgraph-insights-engine.html">the startup-signals article</a>. This page owns the build-vs-buy decision.</p>
+
+          <h2>The decision</h2>
+
+          <p>Build a self-hosted entity graph when the model of truth is your differentiator. Buy data when coverage is the differentiator. Use a hybrid when you need both.</p>
+
+          <p>EntityScope is useful today as a narrow, agent-queryable research store with explicit provenance. It has not yet earned the stronger claim that it replaces a commercial startup database. That claim should come only after freshness, accuracy, query-resolution rate, and operational cost are measured over time.</p>
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+        <div class="article-cta article-cta--resource">
+          <p class="article-cta__text">Continue with the schema, query layer, MCP interface, and current technical limitations.</p>
+          <a href="/articles/entity-database-zero-ui-agents.html" class="btn btn--primary">Read the EntityScope Architecture</a>
         </div>
       </article>
 

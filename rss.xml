@@ -393,15 +393,16 @@
       <category>AI</category>
     </item>
     <item>
-      <title>Stop Buying Startup Data. Start Owning It.</title>
+      <title>Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph</title>
       <link>https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html</guid>
       <pubDate>Tue, 17 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph.]]></description>
+      <description><![CDATA[A practical build-vs-buy framework grounded in a working DuckDB entity graph with field-level provenance, agent queries, and measured limitations.]]></description>
       <category>Startup Intelligence</category>
-      <category>Data</category>
-      <category>Architecture</category>
-      <category>AI</category>
+      <category>Entity Resolution</category>
+      <category>Data Provenance</category>
+      <category>DuckDB</category>
+      <category>AI Agents</category>
     </item>
     <item>
       <title>The Security Risks of Unverified AI Agent Skills</title>

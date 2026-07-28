@@ -309,15 +309,16 @@
   },
   {
     "slug": "startup-intelligence-entity-graph",
-    "title": "Stop Buying Startup Data. Start Owning It.",
+    "title": "Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph",
     "date": "2026-03-18",
-    "excerpt": "Everyone says the future of startup intelligence is better SaaS. The truth: the data in those platforms is backward-looking. What you need is a self-hosted entity graph.",
-    "readingTime": "5 min",
+    "excerpt": "A practical build-vs-buy framework grounded in a working DuckDB entity graph with field-level provenance, agent queries, and measured limitations.",
+    "readingTime": "9 min",
     "tags": [
       "Startup Intelligence",
-      "Data",
-      "Architecture",
-      "AI"
+      "Entity Resolution",
+      "Data Provenance",
+      "DuckDB",
+      "AI Agents"
     ]
   },
   {
