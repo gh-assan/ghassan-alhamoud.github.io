@@ -2784,7 +2784,7 @@ img {
 .footer__nav-link[href$="#contact"],
 a[data-cal-link],
 a[href*="calendly.com"],
-.article-cta,
+.article-cta:not(.article-cta--resource),
 .about__availability,
 .contact__availability,
 #contact {
