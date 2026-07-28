@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work — Ghassan Alhamoud</title>
-  <meta name="description" content="Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable." />
+  <title>Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates — Ghassan Alhamoud</title>
+  <meta name="description" content="A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
-  <meta property="og:title" content="How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work" />
-  <meta property="og:description" content="Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable." />
+  <meta property="og:title" content="Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates" />
+  <meta property="og:description" content="A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-026.webp" />
   <meta property="article:published_time" content="2026-05-28" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
-  <meta property="twitter:title" content="How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work" />
-  <meta property="twitter:description" content="Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable." />
+  <meta property="twitter:title" content="Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates" />
+  <meta property="twitter:description" content="A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-026.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work",
-  "description": "Serious multi-agent systems need structured handoffs, not vague chat. Here's how I use ACP to separate orchestration from implementation and make coding-agent delegation auditable.",
+  "headline": "Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates",
+  "description": "A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-026.webp",
   "author": {
     "@type": "Person",
@@ -45,10 +45,10 @@
     }
   },
   "datePublished": "2026-05-28",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html",
   "proficiencyLevel": "Expert",
-  "dependencies": "AI Agents, Architecture, Protocol, OpenClaw",
+  "dependencies": "AI Agents, Delegation, MCP, Reliability",
   "articleSection": "AI Architecture"
 }
   </script>
@@ -91,122 +91,168 @@
           <div class="article-single__meta">
             <time datetime="2026-05-28">May 28 2026</time>
             <span class="article-card__dot"></span>
-            <span>8 min</span>
+            <span>13 min</span>
           </div>
-          <h1 class="article-single__title">How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work</h1>
+          <h1 class="article-single__title">Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
-          <span class="article-single__tag">Architecture</span>
-          <span class="article-single__tag">Protocol</span>
-          <span class="article-single__tag">OpenClaw</span>
+          <span class="article-single__tag">Delegation</span>
+          <span class="article-single__tag">MCP</span>
+          <span class="article-single__tag">Reliability</span>
           </div>
         </header>
 
         <img src="/images/articles/ART-026.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>One of the clearest lessons from building multi-agent systems is that specialization helps only if the handoff is disciplined.</p>
-<p>It is not enough to have one model that is good at orchestration and another that is good at implementation. If the interaction between them is vague, you mostly just move confusion from one context window to another.</p>
-<p>That is why I ended up caring so much about the handoff protocol itself.</p>
-<hr />
-<h2>Why a Single Agent Was the Wrong Shape</h2>
-<p>At first, the tempting design is obvious: give one powerful agent all the tools and let it handle the full path from idea to implementation.</p>
-<p>Sometimes that works. But once the work spans product framing, architecture choices, implementation detail, and deployment, the tradeoffs get worse quickly. The same context window is trying to hold strategic intent and low-level coding concerns at once. The result is usually muddier than it looks.</p>
-<p>In my case, the orchestrator was good at framing the problem and setting constraints. It was not the right component to write the implementation. Pushing it to do both made the system worse, not smarter.</p>
-<hr />
-<h2>What ACP Solves</h2>
-<p>The useful move was to separate roles and make the handoff explicit.</p>
-<p>ACP, or Agent Coordination Protocol, is the pattern I used for that. The idea is simple: stop treating delegation as casual chat and start treating it as a structured contract between agents.</p>
-<p>The orchestrator defines the objective, constraints, inputs, success conditions, and kill gates. The specialist responds with a plan, effort estimate, dependencies, and risk. The orchestrator then approves, revises, escalates, or kills the task.</p>
-<p>That sounds almost boring, which is part of the point. It removes a lot of ambiguity before the expensive work begins.</p>
-<hr />
-<h2>Why Free-Form Chat Breaks Down</h2>
-<p>I do not think free-form agent conversation is useless. I do think it becomes fragile fast when the work has real execution consequences.</p>
-<p>Three failure modes show up again and again:</p>
-<ol>
-<li><strong>ambiguity compounds</strong> because the requirements keep being reinterpreted instead of restated cleanly</li>
-<li><strong>roles blur</strong> because the specialist starts making product decisions and the orchestrator starts micromanaging implementation</li>
-<li><strong>stopping conditions disappear</strong> because nobody defined when to escalate or abort</li>
-</ol>
-<p>That is expensive in exactly the same way bad human process is expensive. The agent may continue producing tokens, but the system is no longer operating with clean accountability.</p>
-<hr />
-<h2>What a Good Handoff Needs</h2>
-<p>In practice, the handoff became much stronger once it answered a few non-negotiable questions up front:</p>
-<ol>
-<li>What are we trying to build?</li>
-<li>What constraints are fixed?</li>
-<li>What counts as success?</li>
-<li>What conditions should stop the work and push it back up?</li>
-</ol>
-<p>Those questions matter more than any one model choice because they define whether the specialist can execute with confidence instead of improvising around missing assumptions.</p>
-<hr />
-<h2>Why This Matters Architecturally</h2>
-<p>The protocol is not just a communication convenience. It is an architecture boundary.</p>
-<p>Once the orchestrator is responsible for framing and governance, and the coding agent is responsible for implementation, each layer can improve at its own job without constantly stepping on the other.</p>
-<p>That also makes the overall system easier to audit. You can inspect what was requested, what was proposed, what was approved, and under which conditions the execution happened.</p>
-<p>That is much closer to how serious engineering organizations already want work to move.</p>
-<hr />
-<h2>The Operational Layer Matters Too</h2>
-<p>The protocol is the contract. Here's the transport stack:</p>
-<img src="/images/articles/ART-026-diagram.webp" alt="Orchestrator, Orch Instance, and Qwen Code communication diagram showing SSH, MCP, and ACP layers" loading="lazy" />
-<p>The orchestrator lives on my workstation. The coding agent runs on a separate machine at <strong>192.X.X.X</strong>. They communicate via three layers:</p>
-<ul>
-<li><strong>SSH</strong> for transport — file transfer and command execution</li>
-<li><strong>MCP</strong> (Model Context Protocol) for tool access — the coding agent exposes MCP tools the orchestrator can invoke</li>
-<li><strong>ACP</strong> for task handoffs — structured proposals and decisions ride over SSH/MCP</li>
-</ul>
-<p>The coding agent needs no internet access. Just SSH to the project machine and a clear brief.</p>
-<p>This separation is deliberate:</p>
-<ul>
-<li><strong>Security</strong>: The coding agent touches only what's on the orch instance — zero access to my workstation</li>
-<li><strong>Resource isolation</strong>: Heavy coding workloads don't compete with the orchestrator's reasoning context</li>
-<li><strong>Session independence</strong>: The coding agent runs for hours. The orchestrator checks in, reviews, disconnects</li>
-</ul>
-<hr />
-<h2>The EntityScope Example</h2>
-<p>EntityScope was the moment this became more than theory.</p>
-<p>The orchestrator had enough context to define the target system clearly. The coding agent had enough implementation focus to build it. ACP made the boundary usable.</p>
-<p>Here is what that handoff looked like:</p>
-<p><strong>Proposal (Orchestrator → Qwen Code):</strong></p>
-<pre><code>OBJECTIVE: Build DuckDB spine + MCP server for entity data
-CONSTRAINTS: Python 3.11+, DuckDB, MCP SDK via pip
-INPUT: Berlin Business Dataset CSV at ~/data/berlin_businesses.csv
-         Provisional schema at PP-003/03-discovery.md
-SUCCESS: 1. entityscope_query returns results from DuckDB
-         2. entityscope_health returns green
-         3. All 4 MCP tools register and respond
-KILL:    &gt;2 hours of wall time without a working health check
-         Dataset has &lt;50K usable records after dedup
+          <p><strong>A delegation message is not a handoff protocol.</strong> A reliable handoff binds an objective to scope, permissions, inputs, budgets, acceptance checks, lifecycle state, and evidence. The coding model is replaceable; that contract is the durable system boundary.</p>
+          <p>I learned this by routing implementation work from an OpenClaw orchestrator to Qwen Code. The early design looked clean on a diagram. The operating history exposed the missing parts.</p>
+
+          <h2>What the original three-message story missed</h2>
+          <p>The first version described proposal, response, and approval. That reduced ambiguity, but it did not guarantee integration. Main-machine learning records later captured three concrete failures:</p>
+          <table>
+            <thead>
+              <tr><th>Observed failure</th><th>Why the handoff allowed it</th><th>Contract repair</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>A package compiled but was not wired into the MCP server; the note estimated this occurred in roughly one in five tasks</td><td>“Build the package” was treated as completion</td><td>Require tool registration, handler, composition-root wiring, and an end-to-end call</td></tr>
+              <tr><td>Registering an MCP server in OpenClaw did not make it available inside Qwen's separate process</td><td>Capability availability was assumed across process boundaries</td><td>Preflight the assignee's actual tool list and runtime identity</td></tr>
+              <tr><td>Fourteen scheduled jobs were duplicated onto a Qwen/ACP route without needing a coding agent</td><td>Routing policy and task intent were conflated</td><td>Make assignee selection explicit and reject unsupported scheduled routes</td></tr>
+            </tbody>
+          </table>
+          <p>These are operational notes, not a controlled benchmark. They are still more useful than a flawless anecdote because they identify where the protocol boundary failed.</p>
+
+          <h2>Separate contract, transport, and executor</h2>
+          <p>These layers solve different problems:</p>
+          <table>
+            <thead>
+              <tr><th>Layer</th><th>Question</th><th>Examples</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Handoff contract</td><td>What is authorised, complete, and provable?</td><td>JSON document, schema, acceptance evidence</td></tr>
+              <tr><td>Transport</td><td>How does the request move?</td><td>Local queue, SSH, HTTP, MCP tool call</td></tr>
+              <tr><td>Executor</td><td>Who performs the work?</td><td>Qwen Code, Codex, another coding agent, a human</td></tr>
+            </tbody>
+          </table>
+          <p><a href="https://modelcontextprotocol.io/docs/learn/architecture" target="_blank" rel="noopener noreferrer">MCP's official architecture</a> likewise separates its JSON-RPC data layer from transport. MCP can expose tools and progress, but it does not define your product's delegation semantics, acceptance policy, or authority model.</p>
+
+          <h2>The contract envelope</h2>
+          <pre><code>{
+  contractVersion,
+  handoffId,
+  idempotencyKey,
+  createdAt,
+  issuer: {id, role},
+  assignee: {id, role},
+  objective,
+  scope: {include, exclude},
+  inputs: [{name, uri, digest?}],
+  constraints: [],
+  acceptance: [{
+    id,
+    assertion,
+    verificationCommand?,
+    evidenceRequired
+  }],
+  permissions: {read, write, network, secrets},
+  budget: {wallClockSeconds, maxAttempts},
+  escalation: {on, route},
+  state,
+  attempt,
+  result?
+}</code></pre>
+          <p>The downloadable JSON Schema validates this structure. The companion EntityScope example is a reference contract reconstructed from the system's lessons; it is not presented as a verbatim historical message.</p>
+
+          <h2>Treat lifecycle as a state machine</h2>
+          <pre><code>proposed ──accept──▶ accepted ──start──▶ running
+    │                   │                   │
+    └──cancel───────────┴──cancel──────────┤
+                                            ├──blocked──▶ running
+                                            │              │
+                                            ├──verify──────▶ verifying
+                                            │                 ├──succeeded
+                                            │                 └──failed
+                                            └──failed
 </code></pre>
-<p><strong>Response (Qwen Code → Orchestrator):</strong></p>
-<pre><code>PLAN: 1. Define schema and load CSV
-      2. Build MCP server with 4 tools
-      3. Test each tool
-RISK: CSV encoding issues (resolved: forced UTF-8)
-      MCP SDK version mismatch (resolved: pinned to 0.4.1)
-EFFORT: ~45 minutes
-DEPS: Nothing — all data is local
-</code></pre>
-<p><strong>Decision (Orchestrator):</strong></p>
-<pre><code>APPROVED — proceed
-</code></pre>
-<p>That structure did two valuable things at once: it reduced misinterpretation, and it made it obvious when the task was not ready for execution yet.</p>
-<hr />
-<h2>Why Consulting Buyers Should Care</h2>
-<p>If you are leading an engineering team, this is not really about whether one agent talked to another in a clever way.</p>
-<p>It is about whether your AI workflow has explicit contracts, governance points, and role boundaries. Those are the same qualities that make other distributed systems easier to trust.</p>
-<p>Without them, multi-agent design often turns into an expensive blur of partial autonomy. With them, it starts looking much more like controllable infrastructure.</p>
-<hr />
-<h2>The Broader Lesson</h2>
-<p>My takeaway is not that ACP is the only protocol shape that works.</p>
-<p>It is that serious multi-agent systems need something stricter than vibes.</p>
-<p>Once handoffs become structured, you get cleaner delegation, better auditability, clearer failure boundaries, and less wasted context. That is usually where the system stops feeling like a demo and starts feeling like engineering.</p>
+          <p>Every transition needs an actor, timestamp, reason, and attempt number. Terminal states are immutable. A retry creates a new attempt under the same idempotency key; it does not erase the failed evidence.</p>
+          <p>“Done” is not a state. <code>succeeded</code> means the verifier executed every required acceptance check against the integrated system and retained the evidence.</p>
+
+          <h2>Preflight before spending tokens</h2>
+          <ol>
+            <li><strong>Resolve the assignee.</strong> Confirm the intended agent exists and is appropriate for the task type.</li>
+            <li><strong>Negotiate capabilities.</strong> Inspect the tools visible inside that exact process, not another agent's configuration.</li>
+            <li><strong>Verify inputs.</strong> Resolve repository paths and immutable revisions; reject missing or stale briefs.</li>
+            <li><strong>Authorize scope.</strong> Grant only the required read, write, network, and secret access.</li>
+            <li><strong>Validate acceptance.</strong> Ensure checks exercise the composition root, not only isolated packages.</li>
+            <li><strong>Reserve budget.</strong> Set wall time and maximum attempts before execution begins.</li>
+          </ol>
+          <p>If preflight fails, keep the handoff in <code>proposed</code> or move it to <code>blocked</code>. Do not let the coding agent improvise missing infrastructure.</p>
+
+          <h2>Acceptance must cross the integration boundary</h2>
+          <p>The Qwen integration gap produced code that compiled in isolation but was unreachable in the running MCP server. The corrective checklist has eight points:</p>
+          <ol>
+            <li>package import;</li>
+            <li>application struct field;</li>
+            <li>constructor parameter;</li>
+            <li>constructor assignment;</li>
+            <li>tool registration;</li>
+            <li>request handler;</li>
+            <li>composition-root wiring;</li>
+            <li>tests updated at the public boundary.</li>
+          </ol>
+          <p>This generalises beyond MCP. A new class is not a feature. A passing unit test is not an integrated capability. Acceptance should invoke the same public path the consuming agent will use.</p>
+
+          <h2>Retries need idempotency and classification</h2>
+          <table>
+            <thead>
+              <tr><th>Failure class</th><th>Retry?</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Transient transport interruption</td><td>Yes, bounded</td><td>Resume or retry with the same idempotency key</td></tr>
+              <tr><td>Missing capability or dependency</td><td>No automatic retry</td><td>Block and repair preflight</td></tr>
+              <tr><td>Acceptance failure</td><td>Yes, if budget remains</td><td>Return exact failing evidence to the assignee</td></tr>
+              <tr><td>Scope or architecture conflict</td><td>No</td><td>Escalate to the issuer or human owner</td></tr>
+              <tr><td>Unknown external effect</td><td>No blind retry</td><td>Reconcile the effect first</td></tr>
+            </tbody>
+          </table>
+          <p>The idempotency key should represent the intended effect, not the delivery attempt. That prevents a transport retry from creating a duplicate branch, deployment, message, or scheduled job.</p>
+
+          <h2>Permissions belong in the handoff</h2>
+          <p>Machine separation is useful only when authority is actually constrained. “The coding agent runs elsewhere” does not prove it lacks workstation access, internet access, or inherited secrets. Bind permissions explicitly:</p>
+          <ul>
+            <li>readable and writable repository paths;</li>
+            <li>allowed network destinations;</li>
+            <li>named secrets, preferably short-lived;</li>
+            <li>permitted tools and destructive operations;</li>
+            <li>branch, deployment, and messaging authority.</li>
+          </ul>
+          <p>For remote MCP servers that handle sensitive actions, use the protocol's <a href="https://modelcontextprotocol.io/docs/tutorials/security/authorization" target="_blank" rel="noopener noreferrer">documented authorization flow</a>; do not treat network reachability as permission.</p>
+
+          <h2>Evidence returned by the specialist</h2>
+          <p>A useful result contains more than prose:</p>
+          <ul>
+            <li>changed artifact list and revision;</li>
+            <li>acceptance command, exit status, and relevant output;</li>
+            <li>unresolved risks and deliberately excluded work;</li>
+            <li>external effect receipts;</li>
+            <li>links to logs, test reports, and reviewable diffs.</li>
+          </ul>
+          <p>The orchestrator should independently rerun high-value checks. The executor's claim that tests passed is evidence to inspect, not a substitute for verification.</p>
+
+          <h2>Download the reference contract</h2>
+          <p><a href="/resources/agent-handoff-contract.schema.json" class="btn btn--primary" download>Download the handoff JSON Schema</a></p>
+          <ul>
+            <li><a href="/resources/entityscope-handoff.example.json" download>Download the EntityScope reference handoff</a></li>
+            <li><a href="/articles/entity-database-zero-ui-agents.html">Read the verified EntityScope implementation case study</a></li>
+            <li><a href="/articles/agent-execution-attestation.html">Attach verifiable execution evidence</a></li>
+            <li><a href="/articles/stop-building-agent-soup-compilers.html">Model the workflow as a compiler pipeline</a></li>
+          </ul>
 
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Designing a multi-agent workflow that must survive retries, missing tools, and partial integration?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Handoff Architecture</a>
         </div>
       </article>
 

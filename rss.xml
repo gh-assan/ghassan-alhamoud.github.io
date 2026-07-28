@@ -153,15 +153,15 @@
       <category>Data Architecture</category>
     </item>
     <item>
-      <title>How My Orchestrator Hands Off Coding Tasks to Qwen — The Agent Coordination Protocol That Makes It Work</title>
+      <title>Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates</title>
       <link>https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</guid>
       <pubDate>Wed, 27 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[I needed a database in my basement. I didn't write it. My orchestrator didn't write it either. Qwen Code on a separate machine built it in one session — communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.]]></description>
+      <description><![CDATA[A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures.]]></description>
       <category>AI Agents</category>
-      <category>Architecture</category>
-      <category>Protocol</category>
-      <category>OpenClaw</category>
+      <category>Delegation</category>
+      <category>MCP</category>
+      <category>Reliability</category>
     </item>
     <item>
       <title>Your Agent Spends 30 Seconds Finding Files - Here's How I Cut It to 3ms</title>

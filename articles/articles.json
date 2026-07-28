@@ -123,15 +123,15 @@
   },
   {
     "slug": "orchestrator-qwen-acp-handoff",
-    "title": "How My Orchestrator Hands Off Coding Tasks to Qwen \u2014 The Agent Coordination Protocol That Makes It Work",
+    "title": "Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates",
     "date": "2026-05-28",
-    "excerpt": "I needed a database in my basement. I didn't write it. My orchestrator didn't write it either. Qwen Code on a separate machine built it in one session \u2014 communicating through a structured Agent Coordination Protocol (ACP) that replaces free-form chat with typed proposals and explicit decisions.",
-    "readingTime": "8 min",
+    "excerpt": "A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures.",
+    "readingTime": "13 min",
     "tags": [
       "AI Agents",
-      "Architecture",
-      "Protocol",
-      "OpenClaw"
+      "Delegation",
+      "MCP",
+      "Reliability"
     ]
   },
   {
