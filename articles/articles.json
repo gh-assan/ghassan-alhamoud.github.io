@@ -94,10 +94,10 @@
   },
   {
     "slug": "ai-coded-83-mcp-tools-marathon",
-    "title": "83 MCP Tools in 12 Hours \u2014 What Happens When You Point an AI at Go Code and Say \"Don't Stop\"",
+    "title": "Auditing a 12-Hour AI Go Code-Generation Marathon",
     "date": "2026-05-31",
-    "excerpt": "83 new MCP tools in 12 hours. One model, one Go project, one instruction to never stop. Here's what worked, what broke, and how we restructured to handle the load.",
-    "readingTime": "9 min",
+    "excerpt": "A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, and a reusable release gate.",
+    "readingTime": "12 min",
     "tags": [
       "AI Agents",
       "Go",
