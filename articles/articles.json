@@ -46,10 +46,10 @@
   },
   {
     "slug": "alms-okf-integration-bridge",
-    "title": "ALMS and OKF: Turning Agent Experience Into Portable Knowledge",
+    "title": "From Agent Experience to Portable Knowledge: Integrating ALMS and OKF",
     "date": "2026-07-02",
-    "excerpt": "ALMS should not compete with OKF. It should export selected agent experience into OKF when a lesson is mature enough to become portable knowledge.",
-    "readingTime": "7 min",
+    "excerpt": "A governed promotion path from ALMS operational learnings to portable OKF bundles: thresholds, provenance, conflicts, security, and version compatibility.",
+    "readingTime": "12 min",
     "tags": [
       "AI Agents",
       "OKF",
