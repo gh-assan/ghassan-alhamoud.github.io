@@ -334,16 +334,16 @@
   },
   {
     "slug": "agent-reliability-sla-infrastructure",
-    "title": "Intelligence Is Trivial. Reliability Is the New Frontier.",
+    "title": "Agent Reliability SLOs: Measure Correctness, Safety, and Recovery",
     "date": "2026-03-22",
-    "excerpt": "I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke.",
-    "readingTime": "4 min",
+    "excerpt": "A practical SLI/SLO framework for production AI agents: eligible journeys, verified task success, unsafe and duplicate effects, evidence completeness, recovery time, error budgets, and burn-rate alerts.",
+    "readingTime": "13 min",
     "tags": [
       "AI Agents",
       "Reliability",
-      "Infrastructure",
-      "AI",
-      "OpenClaw"
+      "SRE",
+      "SLOs",
+      "Observability"
     ]
   },
   {

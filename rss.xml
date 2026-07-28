@@ -367,16 +367,16 @@
       <category>Auditability</category>
     </item>
     <item>
-      <title>Intelligence Is Trivial. Reliability Is the New Frontier.</title>
+      <title>Agent Reliability SLOs: Measure Correctness, Safety, and Recovery</title>
       <link>https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html</guid>
       <pubDate>Sat, 21 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[I spent 6 months building our first agentic workflow the wrong way. We focused exclusively on intelligence. Then we went to production and everything broke.]]></description>
+      <description><![CDATA[A practical SLI/SLO framework for production AI agents: eligible journeys, verified task success, unsafe and duplicate effects, evidence completeness, recovery time, error budgets, and burn-rate alerts.]]></description>
       <category>AI Agents</category>
       <category>Reliability</category>
-      <category>Infrastructure</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <category>SRE</category>
+      <category>SLOs</category>
+      <category>Observability</category>
     </item>
     <item>
       <title>Build an Ideation Engine: A Repeatable Product Discovery System</title>
