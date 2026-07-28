@@ -188,17 +188,15 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>Issue Management as a System Property</title>
+      <title>Issue Management as a Reliability Control Plane</title>
       <link>https://ghassan-alhamoud.com/articles/issue-management-system-property.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/issue-management-system-property.html</guid>
       <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[I believed good monitoring was enough. Dashboards. Alerts. Runbooks. And we fixed the same problems three times. Here's what I built instead.]]></description>
-      <category>Self-Healing</category>
+      <description><![CDATA[A durable issue-control-plane design for agent systems: fingerprints, lifecycle states, evidence-backed root cause, corrective-action classes, verification windows, recurrence, and machine-readable records.]]></description>
       <category>Reliability</category>
-      <category>Infrastructure</category>
-      <category>Monitoring</category>
-      <category>AI</category>
-      <category>OpenClaw</category>
+      <category>Incident Management</category>
+      <category>Root Cause</category>
+      <category>Evidence</category>
     </item>
     <item>
       <title>Five Failures From Three Months Building a Personal AI Agent</title>

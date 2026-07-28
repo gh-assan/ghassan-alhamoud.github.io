@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ghassan-alhamoud.com/resources/issue-learning-record.schema.json",
+  "title": "Reliability issue learning record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "issueId",
+    "fingerprint",
+    "title",
+    "state",
+    "severity",
+    "owner",
+    "detectedAt",
+    "affectedJourney",
+    "evidence",
+    "hypotheses",
+    "correctiveActions",
+    "verification",
+    "recurrence"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "issueId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "fingerprint": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 256
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "state": {
+      "enum": [
+        "detected",
+        "triaged",
+        "contained",
+        "diagnosing",
+        "remediating",
+        "verifying",
+        "resolved",
+        "closed",
+        "reopened"
+      ]
+    },
+    "severity": {
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "detectedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "affectedJourney": {
+      "type": "string",
+      "minLength": 1
+    },
+    "impact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "startAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endAt": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "eligibleEvents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "badEvents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "forbiddenEffects": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "uri", "digest"],
+        "properties": {
+          "type": {
+            "enum": ["log", "trace", "metric", "artifact", "receipt", "test"]
+          },
+          "uri": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["statement", "status", "evidenceFor", "evidenceAgainst"],
+        "properties": {
+          "statement": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["open", "supported", "rejected"]
+          },
+          "evidenceFor": {
+            "$ref": "#/$defs/stringList"
+          },
+          "evidenceAgainst": {
+            "$ref": "#/$defs/stringList"
+          }
+        }
+      }
+    },
+    "rootCause": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["causalStatement", "reproduction", "confidence"],
+      "properties": {
+        "causalStatement": {
+          "type": "string"
+        },
+        "reproduction": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "correctiveActions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "class", "owner", "status", "acceptance"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "class": {
+            "enum": ["containment", "detection", "recovery", "prevention"]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["planned", "in_progress", "done", "verified", "cancelled"]
+          },
+          "acceptance": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "windowSeconds", "status"],
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "windowSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": ["pending", "passed", "failed"]
+        },
+        "evidenceUris": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "recurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "previousIssueIds", "reopenOnMatch"],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "previousIssueIds": {
+          "$ref": "#/$defs/stringList"
+        },
+        "reopenOnMatch": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  }
+}

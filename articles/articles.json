@@ -207,17 +207,15 @@
   },
   {
     "slug": "issue-management-system-property",
-    "title": "Issue Management as a System Property",
+    "title": "Issue Management as a Reliability Control Plane",
     "date": "2026-05-04",
-    "excerpt": "I believed good monitoring was enough. Dashboards. Alerts. Runbooks. And we fixed the same problems three times. Here's what I built instead.",
-    "readingTime": "7 min",
+    "excerpt": "A durable issue-control-plane design for agent systems: fingerprints, lifecycle states, evidence-backed root cause, corrective-action classes, verification windows, recurrence, and machine-readable records.",
+    "readingTime": "12 min",
     "tags": [
-      "Self-Healing",
       "Reliability",
-      "Infrastructure",
-      "Monitoring",
-      "AI",
-      "OpenClaw"
+      "Incident Management",
+      "Root Cause",
+      "Evidence"
     ]
   },
   {
