@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>I Asked an AI to Find Automation Opportunities. It Found 42 in One Day. — Ghassan Alhamoud</title>
-  <meta name="description" content="42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries." />
+  <title>How an AI System Found and Scored 42 Automation Opportunities — Ghassan Alhamoud</title>
+  <meta name="description" content="The published 42-item dataset behind an AI automation-discovery experiment: six domains, scoring distribution, method, selection bias, false-positive risks, and validation gates." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html" />
-  <meta property="og:title" content="I Asked an AI to Find Automation Opportunities. It Found 42 in One Day." />
-  <meta property="og:description" content="42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries." />
+  <meta property="og:title" content="How an AI System Found and Scored 42 Automation Opportunities" />
+  <meta property="og:description" content="The dataset, scoring distribution, method, limitations, and validation gates behind a six-domain discovery experiment." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-017.webp" />
   <meta property="article:published_time" content="2026-05-02" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html" />
-  <meta property="twitter:title" content="I Asked an AI to Find Automation Opportunities. It Found 42 in One Day." />
-  <meta property="twitter:description" content="42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries." />
+  <meta property="twitter:title" content="How an AI System Found and Scored 42 Automation Opportunities" />
+  <meta property="twitter:description" content="The dataset, scoring distribution, method, limitations, and validation gates behind a six-domain discovery experiment." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-017.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "I Asked an AI to Find Automation Opportunities. It Found 42 in One Day.",
-  "description": "42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries.",
+  "headline": "How an AI System Found and Scored 42 Automation Opportunities",
+  "description": "The published 42-item dataset behind an AI automation-discovery experiment: six domains, scoring distribution, method, selection bias, false-positive risks, and validation gates.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-017.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-02",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html",
   "proficiencyLevel": "Expert",
   "dependencies": "Automation, Discovery, Breakthrough, Potential, AI, OpenClaw",
@@ -92,15 +92,15 @@
           <div class="article-single__meta">
             <time datetime="2026-05-02">May 02 2026</time>
             <span class="article-card__dot"></span>
-            <span>8 min</span>
+            <span>10 min</span>
           </div>
-          <h1 class="article-single__title">I Asked an AI to Find Automation Opportunities. It Found 42 in One Day.</h1>
+          <h1 class="article-single__title">How an AI System Found and Scored 42 Automation Opportunities</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Automation</span>
           <span class="article-single__tag">Discovery</span>
-          <span class="article-single__tag">Breakthrough</span>
-          <span class="article-single__tag">Potential</span>
-          <span class="article-single__tag">AI</span>
+          <span class="article-single__tag">Dataset</span>
+          <span class="article-single__tag">Scoring</span>
+          <span class="article-single__tag">Validation</span>
           <span class="article-single__tag">OpenClaw</span>
           </div>
         </header>
@@ -108,65 +108,71 @@
                 <img src="/images/articles/ART-017.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-<p>I gave one of my automation systems a simple job: go look for repeatable business processes across very different industries and tell me where the best automation opportunities are.</p>
-<p>Not vague inspiration. Not "AI could transform this space" theater. I wanted concrete opportunities with clear inputs, clear outputs, and enough signal that a team could actually build something useful.</p>
-<p>In one day, it surfaced forty-two of them.</p>
-<hr />
-<h2>That Number Wasn't the Interesting Part</h2>
-<p>Forty-two sounds impressive, but volume was never the point. What mattered was the quality of the patterns that showed up.</p>
-<p>The opportunities were spread across six unrelated domains, but they were not random. They kept clustering around the same kind of operational gap: the data already existed, the workflow already existed, and humans were still doing the last critical step by hand.</p>
-<p>That is where the real leverage lives.</p>
-<hr />
-<h2>What Counted as a Real Opportunity</h2>
-<p>I was not looking for moonshots. I was looking for work that met a higher bar:</p>
+<p>On 2 May 2026, an early automation-discovery workflow produced 42 opportunity briefs: seven candidates in each of six domains. The number is real. The original description—“production-ready”—was not. Every item in the surviving registry is still marked <code>identified</code>, not validated, designed, built, or live.</p>
+<p>This article publishes the dataset and shows what its scores can and cannot tell us.</p>
+
+<h2>The dataset at a glance</h2>
+<table>
+  <thead><tr><th>Domain</th><th>Items</th><th>Average ICE</th><th>Top item</th><th>Top ICE</th></tr></thead>
+  <tbody>
+    <tr><td>German healthcare</td><td>7</td><td>45.9</td><td>AM-004</td><td>75</td></tr>
+    <tr><td>Real estate and smart buildings</td><td>7</td><td>50.4</td><td>AM-008</td><td>75</td></tr>
+    <tr><td>Carrier bidding and e-commerce</td><td>7</td><td>48.9</td><td>AM-015</td><td>80</td></tr>
+    <tr><td>Precision irrigation</td><td>7</td><td>54.9</td><td>AM-022</td><td>80</td></tr>
+    <tr><td>Greenhouse climate</td><td>7</td><td>57.1</td><td>AM-029</td><td>80</td></tr>
+    <tr><td>Wine-cellar inventory</td><td>7</td><td>64.6</td><td>AM-036</td><td>100</td></tr>
+  </tbody>
+</table>
+<p>Across all 42, average ICE was 53.6. The portfolio contained 11 document, nine decision, eight monitoring, seven communication, and seven knowledge opportunities.</p>
+
+<h2>How the early workflow generated candidates</h2>
+<p>Each domain run deliberately produced one small portfolio rather than one “best” answer. The workflow examined five process layers—document, communication, decision, monitoring, and knowledge—then created seven self-contained briefs with global AM identifiers.</p>
+<p>Each brief received Impact, Confidence, and Ease factors from one to five:</p>
+<pre><code>ICE = Impact × Confidence × Ease
+range = 1–125</code></pre>
+<p>The arithmetic is deterministic. The factors were model judgments. That distinction prevents a score such as 80 from masquerading as measured ROI.</p>
+<p>The audit also found one integrity defect in the historical registry: AM-002 records factors 5 × 3 × 1 but an ICE total of 30; the product is 15. The downloadable CSV preserves the recorded value instead of silently rewriting history. The other 41 rows are arithmetically consistent. This defect is one reason the open-source successor moved score validation into code.</p>
+
+<h2>What the scores reveal</h2>
+<p>The distribution favored bounded, legible workflows. AM-036—unified barrel identity and a digital cellar map—scored 100 because the proposed impact, evidence confidence, and implementation ease were all high. More ambitious integrations scored lower when ease or confidence fell.</p>
+<p>The layer distribution also exposes a sampling effect: the workflow was instructed to cover five predefined layers. It therefore cannot prove that organizations naturally contain those proportions.</p>
+
+<h2>What the scores do not establish</h2>
+<ul>
+  <li><strong>Demand:</strong> no buyer interviews or willingness-to-pay evidence are present.</li>
+  <li><strong>Feasibility:</strong> source-system access, data quality, security, and integration cost remain untested.</li>
+  <li><strong>Safety:</strong> healthcare, compliance, and physical-control candidates need domain-specific assurance.</li>
+  <li><strong>Novelty:</strong> a distinct title does not prove the underlying workflow is non-duplicative.</li>
+  <li><strong>ROI:</strong> ICE ranks hypotheses; it does not calculate cash flow, adoption, or operating cost.</li>
+</ul>
+
+<h2>Selection bias in the experiment</h2>
+<p>The six domains were chosen, not randomly sampled. Every run was forced to return seven items. The same prompt structure and scoring rubric shaped all outputs. The corpus therefore supports comparison within this experiment, not a claim about the prevalence of automation across the economy.</p>
+<p>The “one day” duration measures generation throughput. It does not include domain-expert validation, solution design, procurement, implementation, or change management.</p>
+
+<h2>A validation funnel for any selected item</h2>
 <ol>
-<li>The process already happens often enough to matter.</li>
-<li>The inputs are structured or can be made structured.</li>
-<li>The outcome is measurable.</li>
-<li>The workflow is painful enough that people would actually pay to remove the friction.</li>
+  <li>Interview the workflow owner and at least two operators.</li>
+  <li>Observe real cases; measure volume, cycle time, rework, exceptions, and failure cost.</li>
+  <li>Map systems, data rights, decision authority, and human-oversight requirements.</li>
+  <li>Re-score Confidence and Ease using evidence, never the original prose.</li>
+  <li>Prototype the narrowest reversible step and compare it with the existing baseline.</li>
+  <li>Advance the status only when the evidence for that lifecycle transition is retained.</li>
 </ol>
-<p>That filter gets rid of a lot of noise. It also reveals something useful: the best automation opportunities are usually not where people expect them.</p>
-<p>They are not always the flashy front-end experience. They are often buried in repetitive operational handoffs, approval loops, document assembly, monitoring gaps, and "someone still has to check this" steps that nobody has owned properly.</p>
-<hr />
-<h2>Why This Was Useful</h2>
-<p>Most automation conversations get stuck in generalities.</p>
-<p>People say things like "we should use AI in operations" or "there must be efficiencies here" or "there's probably a workflow we can streamline." That is not wrong. It is just too abstract to build from.</p>
-<p>A discovery engine changes the conversation. Instead of asking whether AI can help, you get a scored list of candidate workflows with enough context to evaluate them quickly.</p>
-<p>That matters because teams rarely have an execution problem first. They have a prioritization problem. There are usually too many possible places to automate and not enough clarity on which one is worth touching.</p>
-<hr />
-<h2>The Pattern Under the Surface</h2>
-<p>After the first set of results, the same shape kept repeating:</p>
-<p><strong>existing data + repetitive decision + missing last-mile action layer</strong></p>
-<p>That is the sweet spot.</p>
-<p>By the time an organization has useful data, someone is usually already looking at it. The missing piece is that the data still stops at a dashboard, a spreadsheet, an inbox, or a human review queue. Nobody closed the loop.</p>
-<p>That is why some of the highest-scoring opportunities were not technically exotic at all. They were just obvious once the workflow was mapped clearly.</p>
-<hr />
-<h2>What This Means for Real Teams</h2>
-<p>If you lead product, engineering, or operations, this is the part worth paying attention to: good automation strategy is not about sprinkling AI over your company. It is about finding the narrow workflows where the economics are already favorable.</p>
-<p>That means asking better questions:</p>
-<ol>
-<li>Where are humans still copying or reconciling information between systems?</li>
-<li>Where does a decision happen the same way every week, but only after someone manually reviews the same inputs?</li>
-<li>Where are teams already paying for data collection but not for action?</li>
-<li>Which workflows are painful, measurable, and politically easy enough to improve?</li>
-</ol>
-<p>Once you ask those questions well, automation opportunities stop being speculative. They become a ranked backlog.</p>
-<hr />
-<h2>Why I Care About This</h2>
-<p>I do not think most companies are short on AI ideas. They are short on disciplined discovery.</p>
-<p>They know there is value somewhere in the system. What they do not have is a reliable way to surface high-signal candidates and separate them from low-value noise.</p>
-<p>That is why a day of structured discovery can be more useful than a month of generic AI brainstorming. It replaces hype with evidence.</p>
-<hr />
-<h2>The Real Takeaway</h2>
-<p>The interesting result was not that the system found forty-two opportunities.</p>
-<p>The interesting result was that useful automation is far more abundant than most teams think, but it tends to hide in operational blind spots rather than innovation theater.</p>
-<p>If you can map those blind spots systematically, you do not have to guess where AI belongs. You can score it, compare it, and decide where to start with far more confidence.</p>
-<p>That is a much better place to build from.</p>
+
+<h2>Download the complete 42-item inventory</h2>
+<p>The CSV contains every original ID, title, domain, layer, factor, ICE score, and lifecycle status. It is a historical dataset, not an endorsement of the ideas.</p>
+<p><a href="/resources/automation-opportunities-first-42.csv" class="btn btn--primary" download>Download the 42-item dataset</a></p>
+<ul>
+  <li><a href="/articles/automation-pattern-6-industries.html">Read the cross-industry synthesis</a></li>
+  <li><a href="/articles/automation-miner-open-source.html">Inspect the open-source successor</a></li>
+  <li><a href="/articles/systematic-ideation-engine.html">Compare the broader ideation method</a></li>
+</ul>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Need to turn a long idea list into an evidence-backed shortlist?</p>
+          <a href="/#contact" class="btn btn--primary">Review the Discovery Funnel</a>
         </div>
       </article>
 

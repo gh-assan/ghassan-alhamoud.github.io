@@ -177,16 +177,16 @@
   },
   {
     "slug": "ai-found-42-automation-opportunities",
-    "title": "I Asked an AI to Find Automation Opportunities. It Found 42 in One Day.",
+    "title": "How an AI System Found and Scored 42 Automation Opportunities",
     "date": "2026-05-02",
-    "excerpt": "42 concrete, scored, production-ready automation opportunities my AI found in a single day across six unrelated industries.",
-    "readingTime": "8 min",
+    "excerpt": "The published 42-item dataset behind a six-domain automation-discovery experiment, including score distribution, method, selection bias, and validation gates.",
+    "readingTime": "10 min",
     "tags": [
       "Automation",
       "Discovery",
-      "Breakthrough",
-      "Potential",
-      "AI",
+      "Dataset",
+      "Scoring",
+      "Validation",
       "OpenClaw"
     ]
   },
