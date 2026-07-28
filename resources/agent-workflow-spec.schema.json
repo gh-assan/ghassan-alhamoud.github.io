@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ghassan-alhamoud.com/resources/agent-workflow-spec.schema.json",
+  "title": "Agent Workflow Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "workflowId", "intent", "inputs", "capabilities", "stages", "acceptance", "failurePolicy", "telemetry"],
+  "properties": {
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "workflowId": {"type": "string", "minLength": 1},
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "objective", "constraints"],
+      "properties": {
+        "owner": {"type": "string", "minLength": 1},
+        "objective": {"type": "string", "minLength": 1},
+        "constraints": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "type", "classification", "source"],
+        "properties": {
+          "name": {"type": "string"},
+          "type": {"type": "string"},
+          "classification": {"enum": ["public", "internal", "confidential", "restricted"]},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "scope"],
+        "properties": {
+          "name": {"type": "string"},
+          "scope": {"type": "array", "items": {"type": "string"}},
+          "approvalRequired": {"type": "boolean", "default": false}
+        }
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "dependsOn", "capability", "output", "timeoutSeconds", "maxAttempts", "effect"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "dependsOn": {"type": "array", "items": {"type": "string"}},
+          "capability": {"type": "string"},
+          "output": {"type": "string"},
+          "timeoutSeconds": {"type": "integer", "minimum": 1},
+          "maxAttempts": {"type": "integer", "minimum": 1},
+          "effect": {"enum": ["none", "preview", "reversible", "irreversible"]},
+          "idempotencyKey": {"type": "string"},
+          "approvalPolicy": {"type": "string"}
+        }
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "target", "expected"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"enum": ["schema", "test", "invariant", "evaluation", "human"]},
+          "target": {"type": "string"},
+          "expected": {}
+        }
+      }
+    },
+    "failurePolicy": {
+      "type": "object",
+      "additionalProperties": {"enum": ["stop", "retry", "repair", "degrade", "escalate", "reconcile"]}
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["traceFields", "redact", "maxCost"],
+      "properties": {
+        "traceFields": {"type": "array", "items": {"type": "string"}},
+        "redact": {"type": "array", "items": {"type": "string"}},
+        "maxCost": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}

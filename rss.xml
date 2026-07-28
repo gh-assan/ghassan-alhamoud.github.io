@@ -415,11 +415,11 @@
       <category>Threat Modeling</category>
     </item>
     <item>
-      <title>Stop Building "Agent Soup." Start Building Compilers.</title>
+      <title>Stop Building Agent Soup: Use Compiler-Style Agent Workflows</title>
       <link>https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</guid>
       <pubDate>Mon, 09 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone.]]></description>
+      <description><![CDATA[A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects.]]></description>
       <category>AI Agents</category>
       <category>Architecture</category>
       <category>Engineering</category>

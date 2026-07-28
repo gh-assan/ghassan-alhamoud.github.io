@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Stop Building &quot;Agent Soup.&quot; Start Building Compilers. — Ghassan Alhamoud</title>
-  <meta name="description" content="Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone." />
+  <title>Stop Building Agent Soup: Use Compiler-Style Agent Workflows — Ghassan Alhamoud</title>
+  <meta name="description" content="A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html" />
-  <meta property="og:title" content="Stop Building &quot;Agent Soup.&quot; Start Building Compilers." />
-  <meta property="og:description" content="Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone." />
+  <meta property="og:title" content="Stop Building Agent Soup: Use Compiler-Style Agent Workflows" />
+  <meta property="og:description" content="Turn loosely coordinated agents into a typed workflow with an intermediate representation, validation passes, and explicit failure semantics." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-001.webp" />
   <meta property="article:published_time" content="2026-03-10" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html" />
-  <meta property="twitter:title" content="Stop Building &quot;Agent Soup.&quot; Start Building Compilers." />
-  <meta property="twitter:description" content="Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone." />
+  <meta property="twitter:title" content="Stop Building Agent Soup: Use Compiler-Style Agent Workflows" />
+  <meta property="twitter:description" content="Turn loosely coordinated agents into a typed workflow with an intermediate representation, validation passes, and explicit failure semantics." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-001.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Stop Building \"Agent Soup.\" Start Building Compilers.",
-  "description": "Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone.",
+  "headline": "Stop Building Agent Soup: Use Compiler-Style Agent Workflows",
+  "description": "A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-001.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-03-10",
-  "dateModified": "2026-06-09",
+  "dateModified": "2026-07-28",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html",
   "proficiencyLevel": "Intermediate",
   "dependencies": "AI Agents, Architecture, Engineering, OpenClaw",
@@ -92,9 +92,9 @@
           <div class="article-single__meta">
             <time datetime="2026-03-10">Mar 10 2026</time>
             <span class="article-card__dot"></span>
-            <span>6 min</span>
+            <span>12 min</span>
           </div>
-          <h1 class="article-single__title">Stop Building "Agent Soup." Start Building Compilers.</h1>
+          <h1 class="article-single__title">Stop Building Agent Soup: Use Compiler-Style Agent Workflows</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Architecture</span>
@@ -106,55 +106,132 @@
                 <img src="/images/articles/ART-001.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-<p>Most teams do not have an AI problem. They have a translation problem.</p>
-<p>A founder explains an idea. A product person interprets it. An engineer translates it again. Then an AI tool takes that already diluted version and confidently turns it into code. By the time something ships, the original intent is gone.</p>
-<p>That is the pattern I keep seeing behind a lot of expensive "agentic" systems. Not bad models. Not bad engineers. Bad contracts between intent and execution.</p>
-<hr />
-<h2>The Real Bottleneck Is Drift</h2>
-<p>People like to blame prompt quality, model choice, or lack of tooling. Those things matter, but they are rarely the root cause. The root cause is drift.</p>
-<p>Every handoff introduces interpretation. Every interpretation introduces loss. When a system depends on multiple people, multiple tools, and multiple models all guessing what the previous layer meant, delivery slows down and quality becomes inconsistent.</p>
-<p>That is what I mean by <strong>agent soup</strong>: a pile of loosely connected agents, prompts, and workflows that look impressive in demos but fall apart under sustained delivery.</p>
-<hr />
-<h2>Why "More Agents" Usually Makes It Worse</h2>
-<p>The instinct is understandable. If one agent helps, maybe three agents help more. Add a planner, a builder, a reviewer, maybe a researcher on the side. Suddenly the system feels sophisticated.</p>
-<p>But sophistication is not the same thing as control.</p>
-<p>If the interfaces between those agents are vague, you have not created a system. You have created a negotiation. And negotiations are slow, noisy, and full of hidden assumptions.</p>
-<p>That is why many AI delivery pipelines feel busy without feeling reliable. Work is happening, but nobody can tell you exactly where the meaning drifted or who introduced the error.</p>
-<hr />
-<h2>Think Like a Compiler, Not a Conversation</h2>
-<p>The better mental model is not a team meeting. It is a compiler.</p>
-<p>A compiler does not "kind of understand" your intent. It takes a strict input, applies a strict set of rules, and either produces a valid output or fails loudly. That is why compilers scale.</p>
-<p>Product delivery systems need more of that discipline.</p>
-<p>Instead of writing soft, interpretive specs, define machine-readable contracts. Instead of asking an implementation layer to be clever, ask it to be exact. Instead of reviewing output by vibe, validate it against the contract it was supposed to satisfy.</p>
-<p>Once you do that, the role of the AI changes. It stops being an improviser and becomes an execution engine.</p>
-<hr />
-<h2>A Better Three-Layer Pattern</h2>
-<p>The teams moving fastest without losing control tend to converge on some version of this structure:</p>
-<ol>
-<li><strong>Constraint layer.</strong> This is where intent is turned into an explicit contract: requirements, schema, boundaries, failure conditions.</li>
-<li><strong>Execution layer.</strong> This is where code, content, or workflows get produced against that contract.</li>
-<li><strong>Validation layer.</strong> This is where output is checked against the original contract before it is allowed to move forward.</li>
-</ol>
-<p>The exact implementation can vary. The principle does not.</p>
-<p>If the execution layer has to guess, the constraint layer is too weak. If the validation layer cannot explain what failed, the contract is too vague. If humans are manually resolving meaning at every step, the system is not ready to scale.</p>
-<hr />
-<h2>Why This Matters for Real Teams</h2>
-<p>This is not an abstract architecture preference. It changes delivery economics.</p>
-<p>When intent survives the path from strategy to execution, teams ship faster with less rework. Reviews become sharper. AI becomes safer to use because you are validating against structure, not hoping a smart model stayed aligned with a fuzzy brief.</p>
-<p>That is also where consulting value lives. Most teams do not need another workshop about AI potential. They need someone to identify where translation loss is happening in their pipeline and redesign the system around stricter contracts.</p>
-<hr />
-<h2>The Practical Test</h2>
-<p>If you want a simple diagnostic, ask this:</p>
-<p><strong>When a feature, workflow, or article comes out wrong, can we point to the exact contract that was violated?</strong></p>
-<p>If the answer is no, you are still operating a conversation pipeline.</p>
-<p>If the answer is yes, you are starting to build a compiler.</p>
-<p>That shift sounds technical, but it is really about organizational clarity. Less interpretation. Tighter interfaces. Fewer heroic rescues.</p>
-<p>That is how you get speed without chaos.</p>
+          <p><strong>“Agent soup” is not a criticism of multi-agent systems. It is a failure to define what moves between agents, which transformations are legal, and how the system rejects invalid work.</strong></p>
+          <p>The useful part of the compiler analogy is not that product work can become perfectly deterministic. It is that ambiguous intent can be lowered into a typed intermediate representation, checked in stages, and executed only when its contracts hold.</p>
+
+          <h2>Conversation pipeline versus compiler pipeline</h2>
+          <table>
+            <thead>
+              <tr><th>Conversation pipeline</th><th>Compiler-style pipeline</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Each agent receives prose and reinterprets it</td><td>Agents exchange a versioned workflow specification</td></tr>
+              <tr><td>Roles imply authority</td><td>Capabilities and policy grants define authority</td></tr>
+              <tr><td>“Looks good” is the acceptance test</td><td>Named checks evaluate explicit acceptance criteria</td></tr>
+              <tr><td>Retries repeat the entire conversation</td><td>Failed stages resume from an effect journal</td></tr>
+              <tr><td>Errors are natural-language apologies</td><td>Errors are typed, attributed, and routed</td></tr>
+              <tr><td>More agents mean more interpretation</td><td>More workers can share the same contract</td></tr>
+            </tbody>
+          </table>
+
+          <h2>The pattern: Agent Workflow Compiler</h2>
+          <pre><code>Intent + context
+      │
+      ▼
+[1 Parse &amp; normalize] ──syntax error──▶ clarify with owner
+      │
+      ▼
+[2 Type &amp; policy check] ──invalid────▶ deny or require approval
+      │
+      ▼
+[3 Lower to workflow IR]
+      │
+      ▼
+[4 Plan &amp; schedule] ─────no route────▶ unsupported capability
+      │
+      ▼
+[5 Execute stages] ───────tool error──▶ bounded retry/recovery
+      │
+      ▼
+[6 Verify artifacts and effects]
+      │
+      ├──fail──▶ repair within scope or stop
+      ▼
+[7 Commit + attest]</code></pre>
+          <p>The workflow IR—the intermediate representation—is the center of the design. Prompts may create or explain it, but execution consumes the structured form.</p>
+
+          <h2>What belongs in the intermediate representation</h2>
+          <p>A useful workflow spec needs more than a goal and an agent name:</p>
+          <ul>
+            <li><strong>Intent:</strong> the owner, objective, success definition, and immutable constraints.</li>
+            <li><strong>Inputs:</strong> typed references, data classification, provenance, and freshness requirements.</li>
+            <li><strong>Capabilities:</strong> required operations and the policy scope under which they may run.</li>
+            <li><strong>Stages:</strong> dependencies, tool contract, expected artifact, timeout, and retry policy.</li>
+            <li><strong>Acceptance:</strong> deterministic checks, evaluators, thresholds, and required human decisions.</li>
+            <li><strong>Effects:</strong> idempotency keys, preview/apply split, rollback reference, and receipt.</li>
+            <li><strong>Failure semantics:</strong> which errors stop, retry, degrade, repair, or escalate.</li>
+            <li><strong>Telemetry:</strong> trace fields, cost budget, retention, and redaction policy.</li>
+          </ul>
+          <p>The specification does not have to contain every runtime detail. It must contain enough to prevent an executor from inventing authority or success criteria.</p>
+
+          <h2>A concrete before-and-after workflow</h2>
+          <p>Consider an agent that handles a customer refund request.</p>
+          <p><strong>Agent-soup version:</strong> “Read the email, ask the billing agent what happened, decide whether the customer deserves a refund, process it, and send a friendly response.” This hides identity, limits, sources, concurrency, approval, and what happens if the payment succeeds but email fails.</p>
+          <p><strong>Compiler-style version:</strong></p>
+          <ol>
+            <li>Normalize the email into a request with customer and order references. Treat message content as untrusted data.</li>
+            <li>Resolve identity from the account system; never trust identifiers supplied only in the email.</li>
+            <li>Load the refund policy version and calculate the maximum automated amount.</li>
+            <li>Produce a proposed decision with cited transaction evidence.</li>
+            <li>Require human approval when amount, age, fraud signal, or policy ambiguity exceeds a threshold.</li>
+            <li>Preview the payment mutation and bind approval to its exact hash.</li>
+            <li>Apply once using an idempotency key; store the provider receipt.</li>
+            <li>Send the response only after the payment result is known. If messaging fails, queue delivery without repeating the refund.</li>
+          </ol>
+          <p>The model can help classify the request and draft the explanation. It cannot grant itself refund authority, redefine policy, or declare an external effect successful without a receipt.</p>
+
+          <h2>The validation passes</h2>
+          <table>
+            <thead>
+              <tr><th>Pass</th><th>Question</th><th>Failure output</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Schema</td><td>Are required fields present and typed?</td><td><code>invalid_spec</code> with field path</td></tr>
+              <tr><td>Capability</td><td>Can the selected worker perform every operation?</td><td><code>unsupported_capability</code></td></tr>
+              <tr><td>Policy</td><td>May this principal perform the operation in this context?</td><td><code>denied</code> or <code>approval_required</code></td></tr>
+              <tr><td>Dependency</td><td>Is the graph acyclic and are all inputs produced?</td><td><code>invalid_graph</code></td></tr>
+              <tr><td>Effect</td><td>Are mutation, idempotency, and rollback semantics defined?</td><td><code>unsafe_effect</code></td></tr>
+              <tr><td>Acceptance</td><td>Can success be evaluated before commit?</td><td><code>unverifiable_outcome</code></td></tr>
+            </tbody>
+          </table>
+          <p>Fail early. A clarification before execution is cheaper than a reviewer reconstructing intent after five agents have acted.</p>
+
+          <h2>Typed errors are part of the architecture</h2>
+          <p>“The agent failed” is not actionable. A compiler-style workflow distinguishes:</p>
+          <ul>
+            <li><code>invalid_spec</code>: the owner must clarify intent.</li>
+            <li><code>unsupported_capability</code>: route to another worker or stop.</li>
+            <li><code>policy_denied</code>: do not retry with different wording.</li>
+            <li><code>transient_tool_error</code>: retry within the declared budget.</li>
+            <li><code>verification_failed</code>: repair the artifact without expanding scope.</li>
+            <li><code>effect_unknown</code>: reconcile with the external system before any retry.</li>
+          </ul>
+          <p>The last case prevents one of the most dangerous workflow bugs: repeating a mutation because the acknowledgement was lost.</p>
+
+          <h2>Where agents still use judgment</h2>
+          <p>The pattern does not reduce every task to a static DAG. Agents remain useful for research, decomposition, implementation, critique, and recovery. The contract defines the envelope within which that judgment is allowed.</p>
+          <p>Open-ended discovery may need iterative specs. Creative work may use qualitative rubrics and human selection. Novel incidents may have no known recovery transition. In those cases, the correct compiler output can be “human decision required,” not fabricated certainty.</p>
+
+          <h2>Adoption path</h2>
+          <ol>
+            <li>Choose one costly multi-agent workflow and record its handoffs.</li>
+            <li>Replace prose handoffs with one versioned JSON object.</li>
+            <li>Add schema, capability, and policy validation before execution.</li>
+            <li>Separate preview from external mutation.</li>
+            <li>Add typed terminal outcomes and effect receipts.</li>
+            <li>Only then add parallel workers or more specialized agents.</li>
+          </ol>
+          <p>For direct agent-to-agent coding delegation, see the <a href="/articles/orchestrator-qwen-acp-handoff.html">ACP handoff protocol</a>. For the surrounding production controls, use the <a href="/articles/5-infrastructure-layers-broke-agent.html">five-layer infrastructure model</a> and the <a href="/articles/agent-execution-attestation.html">execution attestation design</a>.</p>
+
+          <h2>Download the workflow contract</h2>
+          <p>I published a vendor-neutral JSON Schema plus a concrete refund-workflow example. Use them as a starting contract, not as a universal runtime.</p>
+          <p><a href="/resources/agent-workflow-spec.schema.json" class="btn btn--primary" download>Download the agent workflow JSON Schema</a></p>
+          <p><a href="/resources/agent-workflow-spec.example.json" download>Download the example workflow specification</a></p>
         </div>
 
         <div class="article-cta">
-          <p class="article-cta__text">Read more technical writing and case-study notes from the archive.</p>
-          <a href="/articles/" class="btn btn--primary">Read More Articles</a>
+          <p class="article-cta__text">Is your multi-agent workflow difficult to inspect, retry, or govern?</p>
+          <a href="/#contact" class="btn btn--primary">Discuss an Architecture Review</a>
         </div>
       </article>
 

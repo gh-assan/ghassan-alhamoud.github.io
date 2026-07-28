@@ -136,10 +136,10 @@
   },
   {
     "slug": "stop-building-agent-soup-compilers",
-    "title": "Stop Building \"Agent Soup.\" Start Building Compilers.",
+    "title": "Stop Building Agent Soup: Use Compiler-Style Agent Workflows",
     "date": "2026-03-10",
-    "excerpt": "Founders burn millions on AI engineers and advanced LLMs. The symptom is feature drift. The cause isn't technical - it's a massive game of telephone.",
-    "readingTime": "6 min",
+    "excerpt": "A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects.",
+    "readingTime": "12 min",
     "tags": [
       "AI Agents",
       "Architecture",
