@@ -1,5 +1,20 @@
 [
   {
+    "slug": "film-pipeline-open-source",
+    "title": "I Made an AI Film Pipeline. Now It's Open Source.",
+    "date": "2026-07-31",
+    "excerpt": "The LangGraph rebuild behind my AI film pipeline is public: typed state, real human gates, MCP tools, QC evidence, and honest production boundaries.",
+    "readingTime": "9 min",
+    "tags": [
+      "AI Film",
+      "LangGraph",
+      "MCP",
+      "Open Source",
+      "Pipeline",
+      "Python"
+    ]
+  },
+  {
     "slug": "automation-miner-open-source",
     "title": "I Stopped Guessing What to Automate. So I Built an Open-Source Miner.",
     "date": "2026-07-27",

@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Film Pipeline — Open Source Project — Ghassan Alhamoud</title>
-  <meta name="description" content="A LangGraph-based film creation pipeline for structured pre-production, generation planning, QC evidence, and validated handoff state." />
+  <title>Film Pipeline — LangGraph AI Film Pipeline — Ghassan Alhamoud</title>
+  <meta name="description" content="An MIT-licensed LangGraph film pipeline with typed state, interrupt-based human gates, MCP tools, generation planning, QC evidence, and validated handoff state." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html" />
-  <meta property="og:title" content="Film Pipeline — LangGraph Film Creation Pipeline" />
-  <meta property="og:description" content="A film creation pipeline with typed state, human gates, versioned artifacts, QC validation, and git-backed checkpoints." />
-  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="og:title" content="Film Pipeline — LangGraph AI Film Pipeline" />
+  <meta property="og:description" content="An MIT-licensed film pipeline with typed state, real human gates, versioned artifacts, MCP tools, QC validation, and checkpoints." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-040.webp" />
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-040.webp" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
     "name": "Film Pipeline",
-    "description": "LangGraph-based film creation pipeline.",
+    "description": "MIT-licensed LangGraph film pipeline for approved artifacts, generation planning, QC evidence, and validated handoff state.",
     "programmingLanguage": "Python",
+    "license": "https://opensource.org/license/mit/",
     "codeRepository": "https://github.com/ghassan-ai-projects/film-pipeline-langgraph",
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
   }
@@ -52,36 +53,54 @@
     <div class="container article-layout">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Python / LangGraph / Textual</span></div>
-          <h1 class="article-single__title">Film Pipeline: structured state for AI-assisted film creation</h1>
-          <div class="article-single__tags"><span class="article-single__tag">Film Creation</span><span class="article-single__tag">LangGraph</span><span class="article-single__tag">QC</span></div>
+          <div class="article-single__meta"><span>Public Release</span><span class="article-card__dot"></span><span>Python / LangGraph / Textual / MCP</span></div>
+          <h1 class="article-single__title">Film Pipeline: typed state for AI-assisted film production</h1>
+          <div class="article-single__tags"><span class="article-single__tag">AI Film</span><span class="article-single__tag">LangGraph</span><span class="article-single__tag">Open Source</span><span class="article-single__tag">Human Gates</span><span class="article-single__tag">QC</span></div>
           <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph" target="_blank" rel="noopener noreferrer">View Repository</a>
         </header>
 
         <div class="project-facts">
-          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Creative agent workflows lose state, approvals, dependencies, and validation evidence.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">LangGraph pipeline with human gates, typed state, artifacts, and a TUI.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">In active development with CI and product gates.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">AI film workflows lose state when artifacts, approvals, revisions, costs, and QC evidence live in loose files and chat history.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Boundary</span><span class="project-fact__value">Idea -> approved artifacts -> generation planning -> QC-ready project state.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public MIT release, versioned as 0.2.0, with CI, coverage gate, and working-product gate.</span></div>
         </div>
 
         <div class="article-single__body project-single__body">
-          <p>The Film Pipeline takes an idea through structured pre-production, generation planning, QC evidence, and validated handoff state. It is not trying to be final editing software. It is the orchestration and evidence layer before downstream generation and finishing.</p>
-          <p>The project treats creative work as stateful production, not a sequence of disconnected prompts. Artifacts are versioned. Approvals are explicit. Repairs preserve dependency history. Validators produce evidence that can be inspected.</p>
+          <p><strong><a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph" target="_blank" rel="noopener noreferrer">github.com/ghassan-ai-projects/film-pipeline-langgraph</a></strong> — Python, LangGraph, MCP, Textual, MIT licensed.</p>
+
+          <p>Film Pipeline takes an idea through structured pre-production, generation planning, QC evidence, and validated handoff state. It is not final editing software, and it does not claim to generate a finished film by itself. It is the orchestration and evidence layer before downstream generation and finishing.</p>
+
+          <p>The supported product target is deliberately narrow:</p>
+
+          <pre><code>idea -> approved artifacts -> generation planning -> QC-ready project state</code></pre>
+
+          <p>The project treats creative work as stateful production, not a sequence of disconnected prompts. Artifacts are versioned. Approvals are explicit. Repairs preserve dependency history. Provider decisions and validation reports can be inspected.</p>
 
           <h2>Why I built it</h2>
-          <p>AI film workflows often fail because the process is invisible. Chat history becomes the production system. That does not scale when a scene, matrix, guide, asset plan, or QC issue needs to survive revisions and handoffs.</p>
+          <p>AI film workflows often fail because the process is invisible. Chat history becomes the production system. That does not scale when a screenplay, film matrix, shot bible, reference plan, generation batch, cost approval, provider failure, or QC issue needs to survive revisions and handoffs.</p>
+
+          <p>The project grew out of real pipeline failures: moderation blocks, bad cost assumptions, broken sequential generation chains, missing checkpoints, and validators that were too close to the work they reviewed. The rebuild turns those failures into graph state, gates, artifacts, and recovery paths.</p>
 
           <h2>What to inspect</h2>
           <ul>
             <li>Typed LangGraph state contract with append-only reducers.</li>
-            <li>Human approval gates using real graph interrupts.</li>
+            <li>Human approval gates using real LangGraph interrupts and resume commands.</li>
             <li>Versioned artifacts with dependency tracking.</li>
+            <li>Generation planning with explicit spend approval and provider routing.</li>
             <li>Parallel QC validators using LangGraph fan-out.</li>
-            <li>Terminal operator console for project control.</li>
+            <li>Terminal operator console, headless CLI, and MCP tools over the same state.</li>
           </ul>
 
+          <h2>Interfaces</h2>
+          <p>The terminal studio runs with <code>uv run film-pipeline-tui</code>. The headless runner uses <code>uv run film-pipeline-run my-idea.txt</code>. The MCP server exposes project, artifact, review, validation, generation, provider, checkpoint, rollback, audit, and knowledge-base tools for agent operation.</p>
+
+          <h2>Current limits</h2>
+          <p>Mock mode verifies the machinery, not final model quality. Real-provider mode can spend money and depends on configured provider keys. Post-production is planned, not fully executed inside the repository: final editing, sound, color, and export remain outside the current product target.</p>
+
           <h2>Why it belongs here</h2>
-          <p>This project shows the same architecture discipline in a creative domain: state contracts, checkpoints, validation, rollback, and inspectability. The medium is film creation, but the engineering problem is reliable agent workflow design.</p>
+          <p>This project shows the same architecture discipline in a creative domain: state contracts, checkpoints, validation, rollback, cost boundaries, and inspectability. The medium is film creation, but the engineering problem is reliable agent workflow design.</p>
+
+          <p><a href="/articles/film-pipeline-open-source.html">Read the open-source release article</a> or <a href="/articles/film-pipeline-postmortem.html">review the original postmortem</a>.</p>
         </div>
       </article>
     </div>

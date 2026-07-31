@@ -19,6 +19,19 @@
       <category>Context Management</category>
     </item>
     <item>
+      <title>I Made an AI Film Pipeline. Now It's Open Source.</title>
+      <link>https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html</guid>
+      <pubDate>Thu, 30 Jul 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[The LangGraph rebuild behind my AI film pipeline is public: typed state, real human gates, MCP tools, QC evidence, and honest production boundaries.]]></description>
+      <category>AI Film</category>
+      <category>LangGraph</category>
+      <category>MCP</category>
+      <category>Open Source</category>
+      <category>Pipeline</category>
+      <category>Python</category>
+    </item>
+    <item>
       <title>I Stopped Guessing What to Automate. So I Built an Open-Source Miner.</title>
       <link>https://ghassan-alhamoud.com/articles/automation-miner-open-source.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/automation-miner-open-source.html</guid>
