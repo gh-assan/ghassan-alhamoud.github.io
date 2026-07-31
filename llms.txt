@@ -15,12 +15,13 @@ Core themes:
 ## Profile
 
 - [Homepage](https://ghassan-alhamoud.com/): Overview of engineering background, services, selected work, open-source projects, articles, and contact links.
-- [Open Source Projects](https://ghassan-alhamoud.com/projects/): Curated project index with systems that can be inspected through public repositories.
+- [Open Source Projects](https://ghassan-alhamoud.com/projects/): Curated project index with durable agent, memory, evaluation, workflow, and knowledge systems that can be inspected through public repositories.
 - [Articles](https://ghassan-alhamoud.com/articles/): Long-form writing on AI architecture, agent systems, automation, reliability, and engineering practice.
 - [AI Agent Architecture Handbook](https://ghassan-alhamoud.com/handbook/): Structured handbook on agentic systems and common AI agent design patterns.
 
 ## Open Source Projects
 
+- [Tamoz](https://ghassan-alhamoud.com/projects/tamoz.html): Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows. Repository: https://github.com/ghassan-ai-projects/tamoz
 - [ALMS](https://ghassan-alhamoud.com/projects/alms.html): Agent Learning Management System. A self-hosted MCP server for shared agent learning, agent registry, knowledge sync, and protocol distribution. Repository: https://github.com/ghassan-ai-projects/alms
 - [SkillLedger](https://ghassan-alhamoud.com/projects/skill-ledger.html): Agent-to-agent skill publishing, discovery, purchase, settlement, and failure incentives with a local ledger. Repository: https://github.com/ghassan-ai-projects/skill-ledger
 - [Film Pipeline](https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html): LangGraph-based film creation pipeline with typed state, human gates, versioned artifacts, validation evidence, and handoff state. Repository: https://github.com/ghassan-ai-projects/film-pipeline-langgraph
