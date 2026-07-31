@@ -1,5 +1,18 @@
 [
   {
+    "slug": "tamoz",
+    "title": "Tamoz",
+    "name": "Ruby-Native Durable Agent Framework",
+    "status": "In active development",
+    "featured": true,
+    "repo": "https://github.com/ghassan-ai-projects/tamoz",
+    "summary": "A Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows.",
+    "problem": "Agent frameworks often move quickly on demos while leaving durability, review boundaries, evaluation evidence, and failure recovery as afterthoughts.",
+    "outcome": "Tamoz is building core runtime protocols, deterministic graph execution, SQLite durability, a RubyLLM agent runtime, and an evaluation harness as independently publishable gems.",
+    "stack": ["Ruby", "SQLite", "RubyLLM", "Agent Runtime", "Evals"],
+    "tags": ["Agent Framework", "Ruby", "Durability", "Evaluation"]
+  },
+  {
     "slug": "alms",
     "title": "ALMS",
     "name": "Agent Learning Management System",
