@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>I Made an AI Film Pipeline. Now It's Open Source. — Ghassan Alhamoud</title>
+  <meta name="description" content="A follow-up to the AI film pipeline postmortem: the LangGraph rebuild is now an MIT-licensed repository with typed state, human gates, MCP tools, and explicit limits." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html" />
+  <meta property="og:title" content="I Made an AI Film Pipeline. Now It's Open Source." />
+  <meta property="og:description" content="The LangGraph rebuild behind my AI film pipeline is public: typed state, real human gates, MCP tools, QC evidence, and honest production boundaries." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-040.webp" />
+  <meta property="article:published_time" content="2026-07-31" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html" />
+  <meta property="twitter:title" content="I Made an AI Film Pipeline. Now It's Open Source." />
+  <meta property="twitter:description" content="The LangGraph rebuild behind my AI film pipeline is public: typed state, real human gates, MCP tools, QC evidence, and honest production boundaries." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-040.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "I Made an AI Film Pipeline. Now It's Open Source.",
+  "description": "A follow-up to the AI film pipeline postmortem: the LangGraph rebuild is now an MIT-licensed repository with typed state, human gates, MCP tools, and explicit limits.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-040.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-07-31",
+  "dateModified": "2026-07-31",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "AI film, LangGraph, MCP, open source, human-in-the-loop gates, Python, typed state, QC validation",
+  "articleSection": "AI Infrastructure"
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <style>
+    .article-single__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .article-single__body th, .article-single__body td {
+      border: 1px solid var(--border, #e5e7eb);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .article-single__body th {
+      background: var(--dark, #1A1A2E);
+      color: white;
+      font-weight: 600;
+    }
+    .article-single__body td {
+      background: var(--card, #ffffff);
+    }
+    .article-single__body tr:nth-child(even) td {
+      background: #f9fafb;
+    }
+    .article-single__body code {
+      background: #f3f4f6;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .article-single__body pre {
+      background: #1a1a2e;
+      color: #e8e8e8;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85em;
+      margin: 1.5rem 0;
+    }
+    .article-single__body pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    .article-single__body ol {
+      margin: 0 0 1rem 1.5rem;
+    }
+    .article-single__body ol li {
+      margin-bottom: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-07-31">Jul 31 2026</time>
+            <span class="article-card__dot"></span>
+            <span>9 min</span>
+          </div>
+          <h1 class="article-single__title">I Made an AI Film Pipeline. Now It's Open Source.</h1>
+          <div class="article-single__tags">
+            <span class="article-single__tag">AI Film</span>
+            <span class="article-single__tag">LangGraph</span>
+            <span class="article-single__tag">MCP</span>
+            <span class="article-single__tag">Open Source</span>
+            <span class="article-single__tag">Pipeline</span>
+            <span class="article-single__tag">Python</span>
+          </div>
+        </header>
+
+        <img src="/images/articles/ART-040.webp" alt="Film frames flowing through an engineering pipeline with approval checkpoints and a terminal-style phase rail" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+
+          <p><strong><a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph">github.com/ghassan-ai-projects/film-pipeline-langgraph</a></strong> — Python, LangGraph, MCP, MIT licensed.</p>
+
+          <hr>
+
+          <p>The first version of this pipeline was oversold by the easiest person to fool: me.</p>
+
+          <p>The failures that followed had names. Content moderation walls. A 7x cost-estimation mistake. An API key that died four shots before the end of a sequential chain. Validation loops that let agents approve their own work. A provider abstraction copied between film folders because it was useful before it was disciplined.</p>
+
+          <p>I wrote the postmortem in June. This is the follow-up.</p>
+
+          <p>The rebuild is now a public repository: a LangGraph-based film production pipeline that takes an idea through structured pre-production, generation planning, QC evidence, and a validated handoff state.</p>
+
+          <p>It does not claim to generate a finished film by itself. That boundary is important. The repository is machinery for making the work inspectable: approved artifacts, human gates, provider routing, cost approval, checkpoints, rollback, audit events, and validation reports.</p>
+
+          <pre><code>idea -> approved artifacts -> generation planning -> QC-ready project state</code></pre>
+
+          <p>Final editorial finishing, sound, color, and delivery export still belong to a human production pipeline. The repo makes that boundary visible instead of hiding it behind a demo video.</p>
+
+          <hr>
+
+          <h2>The Rebuild Was the Product</h2>
+
+          <p>The postmortem described a provider layer called <code>scripts/film/providers.py</code>. It helped the first two films move, but it lived outside proper repository discipline and accumulated scar tissue with every production failure.</p>
+
+          <p>The rebuild turned that fragile operating knowledge into a package with a narrow contract:</p>
+
+          <ul>
+            <li>LangGraph supervisor graph with one phase per production stage</li>
+            <li>Typed <code>StudioGraphState</code> instead of dict-shaped plumbing</li>
+            <li>Real human gates using LangGraph <code>interrupt()</code> and resume commands</li>
+            <li>Versioned artifacts, checkpoints, rollback, and audit visibility</li>
+            <li>A terminal UI, a headless CLI, and an MCP server over the same core state</li>
+          </ul>
+
+          <p>The current package metadata is deliberately boring: Python 3.12+, Python 3.13 classifier, MIT license, <code>uv</code>-based setup, and command-line entry points for both the runner and the TUI. That matters because the first pipeline failed in exactly the places where prototypes usually stay vague.</p>
+
+          <hr>
+
+          <h2>What the Pipeline Actually Does</h2>
+
+          <p>The graph has eleven phases. They are not marketing stages. They are the operating procedure the postmortem forced into code.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>What the phase produces</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>intake</code></td>
+                <td>Idea analysis, classification, constraints, and approval decision</td>
+              </tr>
+              <tr>
+                <td><code>constitution</code></td>
+                <td>Film constitution: theme, tone, visual language, and guardrails</td>
+              </tr>
+              <tr>
+                <td><code>development</code></td>
+                <td>Logline, treatment, structure, character and world development</td>
+              </tr>
+              <tr>
+                <td><code>script</code></td>
+                <td>Scene-by-scene screenplay artifacts</td>
+              </tr>
+              <tr>
+                <td><code>visual_dev</code></td>
+                <td>Character, environment, style, and reference development</td>
+              </tr>
+              <tr>
+                <td><code>shot_bible</code></td>
+                <td>Shot-by-shot planning, continuity, prompt material, and camera language</td>
+              </tr>
+              <tr>
+                <td><code>gen_planning</code></td>
+                <td>Generation batches, spend approval, provider routing, and risk review</td>
+              </tr>
+              <tr>
+                <td><code>generation</code></td>
+                <td>Provider-backed image and video generation lifecycle state</td>
+              </tr>
+              <tr>
+                <td><code>qc</code></td>
+                <td>Validator reports, issues, repair feedback, and readiness evidence</td>
+              </tr>
+              <tr>
+                <td><code>post</code></td>
+                <td>Assembly, transition, audio, subtitle, and delivery plans</td>
+              </tr>
+              <tr>
+                <td><code>delivery</code></td>
+                <td>Packaging and handoff state, not a claim of complete in-repo finishing</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Every phase writes structured artifacts. Every gate creates a record. The state object uses append-only reducers for artifact references, issues, and validation report references, so the graph remains inspectable as it moves.</p>
+
+          <p>That is the practical difference between a film script with helper files and a production pipeline. You can ask what was approved, what was built from what, why a phase is blocked, which provider is unhealthy, what a validation report found, and where rollback would land.</p>
+
+          <hr>
+
+          <h2>The Architecture Answers Real Failures</h2>
+
+          <p>The repository documents an eight-part architecture optimization. Each item maps to a failure mode from the earlier pipeline.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Mechanism</th>
+                <th>Failure it answers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>Agent profile routing, quality instructions, retry wrapper</td>
+                <td>Generic prompts producing generic film artifacts</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Real human gates via <code>interrupt()</code> and <code>MemorySaver</code></td>
+                <td>Approval workarounds and agents approving their own output</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Typed <code>StudioGraphState</code> and partial-update nodes</td>
+                <td>Mutable dict state and defensive copying everywhere</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Auto-increment artifact versions with <code>built_from</code> tracking</td>
+                <td>Repairs overwriting the artifact they were meant to fix</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Living Master Film Matrix through versioned patches</td>
+                <td>A matrix frozen at the moment it was written</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Structured <code>RepairFeedback</code></td>
+                <td>Unstructured "fix it" loops that never converged</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Per-phase scoped context packets</td>
+                <td>Agents drowning in all artifacts at once</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>QC subgraph with LangGraph <code>Send</code> fan-out</td>
+                <td>Validation as a serial bottleneck</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Sampling controls such as <code>top_p</code> and <code>frequency_penalty</code></td>
+                <td>Creative agents repeating themselves</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Two fixes matter most.</p>
+
+          <p><strong>Human gates are real now.</strong> The graph interrupts after a phase and waits for an operator decision. Approve moves forward. Request revision cycles back into the phase. Repair sends the system into a targeted correction flow. The old failure was pretending a validator could be an authority over its own output. The new contract makes authority explicit.</p>
+
+          <p><strong>The film matrix is living now.</strong> The original matrix was useful until the next phase changed the project. Downstream phases now emit versioned patches that update individual rows. Continuity state becomes something the pipeline maintains, not a PDF everyone forgets to edit.</p>
+
+          <p>The small fix I appreciate most is less dramatic: stalled phases now expose an explicit escalate action instead of looping repair to approval forever. Infinite loops are rarely model problems. They are usually missing state-machine exits.</p>
+
+          <hr>
+
+          <h2>Three Interfaces, One State</h2>
+
+          <p>The same core is reachable three ways.</p>
+
+          <p><strong>The TUI</strong> runs with <code>uv run film-pipeline-tui</code>. It opens a terminal studio with a project gallery, a phase rail, content tabs for scenes, artifacts, assets, and issues, and a reader for screenplay-style review. The important shortcuts are simple: approve, request revision, validate, generate, refresh, and inspect.</p>
+
+          <p><strong>The headless CLI</strong> runs with <code>uv run film-pipeline-run my-idea.txt</code>. In mock mode it can move through the pipeline without provider keys. Real-provider mode requires explicit confirmation because Seedance through OpenRouter and Veo or Imagen through Google can spend real money.</p>
+
+          <p><strong>The MCP server</strong> exposes project creation, intake, phase review, approval, artifacts, shots, validation reports, generation planning, spend approval, provider health, checkpoints, rollback, audit logs, and knowledge-base search. That makes the pipeline usable by another agent without giving that agent a private path around the rules.</p>
+
+          <p>Different operators need different surfaces. A human reviewing a script wants a reader. A batch run wants a non-interactive command. An orchestrator agent wants typed tools. They should all operate on the same project state.</p>
+
+          <hr>
+
+          <h2>Verification Is Part of the Contract</h2>
+
+          <p>The repository does not treat testing as a cleanup task after the interesting work. The development contract is visible in the project itself:</p>
+
+          <ul>
+            <li><code>make ci-check</code> runs format checking, Ruff lint, mypy strict, pytest with coverage, package build, and the working-product gate.</li>
+            <li>Pytest is configured with <code>--cov-fail-under=90</code> and branch coverage.</li>
+            <li>The package builds as an installable Python project instead of a folder of scripts.</li>
+            <li>Mock mode exists so operators can test the machinery without provider keys or generation spend.</li>
+          </ul>
+
+          <p>I am being careful with the wording here. The draft article I started from claimed a precise local green test count, but the coverage artifact available on this machine was partial and not a trustworthy snapshot of a full CI run. The stronger claim is the one encoded in the repository: the release contract requires the 90% coverage gate and the working-product gate before the project is considered done.</p>
+
+          <p>That distinction matters. This pipeline can spend real money in real-provider mode. A regression in a shot bible, cost approval, or provider routing path is not just a red CI job. It can waste hours of generation time and produce assets that cannot be chained.</p>
+
+          <hr>
+
+          <h2>What It Does Not Solve</h2>
+
+          <p>Open-sourcing the pipeline does not make filmmaking easy.</p>
+
+          <p>It will not fix a weak idea. Intake can surface contradictions, but it cannot make a premise compelling.</p>
+
+          <p>It does not remove humans from the loop. Creative phase gates are human gates on purpose. If the goal is an autonomous film factory where the system approves itself, this is the wrong repository.</p>
+
+          <p>Mock mode verifies the machinery, not model quality. Real generation quality still depends on providers, prompts, references, and taste. The pipeline makes those dependencies visible; it does not erase them.</p>
+
+          <p>Post-production is planned, not fully executed inside the repository. The system can produce assembly, transition, audio, subtitle, and delivery plans. Actual finishing remains outside the current product target.</p>
+
+          <p>The project is young. The package is versioned as <code>0.2.0</code>, artifact schemas may change, and some surfaces are intentionally stubbed while the core contract matures.</p>
+
+          <p>I am stating those limits because agent infrastructure is easy to oversell. The first version failed partly because the boundary between "useful automation" and "finished production system" was too blurry. The rebuild is better because the boundary is explicit.</p>
+
+          <hr>
+
+          <h2>Why I Open-Sourced It</h2>
+
+          <p>The interesting part is not that two film projects used earlier versions of this machinery. The interesting part is the architecture that survived the failures: typed graph state, interrupt-based approvals, versioned artifacts, scoped context, a living continuity matrix, cost-aware generation planning, parallel QC, and an MCP surface other agents can inspect.</p>
+
+          <p>Those mechanisms get better when other engineers can read them, run them, break them, and argue with them.</p>
+
+          <p>The failures that shaped this pipeline are not unique to film. Moderation walls, bad cost models, expired keys, missing checkpoints, self-approving validators, and unbounded repair loops show up in agent infrastructure under different names.</p>
+
+          <p>I wrote the postmortem because the failures were worth documenting.</p>
+
+          <p>I open-sourced the code because the fixes are worth inspecting.</p>
+
+          <p><strong><a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph">github.com/ghassan-ai-projects/film-pipeline-langgraph</a></strong></p>
+
+          <ul>
+            <li><a href="/articles/film-pipeline-postmortem.html">Read the original AI film pipeline postmortem</a></li>
+            <li><a href="/projects/film-pipeline-langgraph.html">See the project page for the LangGraph film pipeline</a></li>
+            <li><a href="/articles/automation-miner-open-source.html">Compare the open-source release pattern with Automation Miner</a></li>
+          </ul>
+
+        </div>
+
+        <div class="article-cta">
+          <p class="article-cta__text">Want to inspect the pipeline boundary and MCP surface?</p>
+          <a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph" class="btn btn--primary">Open the Repository</a>
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>

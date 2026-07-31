@@ -29,14 +29,14 @@
     "slug": "film-pipeline-langgraph",
     "title": "Film Pipeline",
     "name": "LangGraph Film Creation Pipeline",
-    "status": "In active development",
+    "status": "Public release",
     "featured": true,
     "repo": "https://github.com/ghassan-ai-projects/film-pipeline-langgraph",
-    "summary": "A LangGraph-based film creation pipeline that moves an idea through structured pre-production, generation planning, QC evidence, and validated handoff state.",
-    "problem": "Generative film workflows collapse when creative artifacts, approvals, revisions, and QC evidence are handled as loose files and chat history.",
-    "outcome": "The pipeline uses typed state, human gates, versioned artifacts, parallel validators, and git-backed checkpoints to keep production state inspectable.",
-    "stack": ["Python", "LangGraph", "Textual", "MCP", "pytest"],
-    "tags": ["Film Creation", "LangGraph", "Human Gates", "QC"]
+    "summary": "An MIT-licensed LangGraph film pipeline that moves an idea through approved artifacts, generation planning, QC evidence, and validated handoff state.",
+    "problem": "Generative film workflows collapse when creative artifacts, approvals, revisions, costs, provider failures, and QC evidence are handled as loose files and chat history.",
+    "outcome": "The pipeline exposes typed state, interrupt-based human gates, versioned artifacts, MCP tools, parallel validators, and checkpoints so production state stays inspectable.",
+    "stack": ["Python", "LangGraph", "Textual", "MCP", "pytest", "uv"],
+    "tags": ["AI Film", "LangGraph", "Open Source", "Human Gates", "QC"]
   },
   {
     "slug": "email-intelligence-platform",
