@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 6: Memory & Context Management — AI-Native Engineering Handbook</title>
+  <meta name="description" content="Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, ..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html" />
+  <meta property="og:title" content="Chapter 6: Memory & Context Management — Keeping what matters" />
+  <meta property="og:description" content="Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, ..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-006-memory-context-management.webp" />
+  <meta property="article:published_time" content="2026-07-31" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html" />
+  <meta property="twitter:title" content="Chapter 6: Memory & Context Management — Keeping what matters" />
+  <meta property="twitter:description" content="Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, ..." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-006-memory-context-management.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Memory & Context Management \u2014 Keeping what matters",
+  "description": "Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, ...",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The AI-Native Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/handbook/"
+  },
+  "datePublished": "2026-07-31",
+  "dateModified": "2026-07-31",
+  "image": "https://ghassan-alhamoud.com/images/handbook/HDBK-006-memory-context-management.webp",
+  "learningResourceType": "Chapter",
+  "position": 6,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Handbook",
+      "item": "https://ghassan-alhamoud.com/handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Memory & Context Management",
+      "item": "https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When should I use summarization vs. dropping messages entirely?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drop content with no future task value. Externalize bulky content that may be needed again. Compact decisions, constraints, progress, and open questions into structured state with source pointers. Submit durable facts separately through the long-term write policy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a vector database enough for agent memory?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A vector index is useful for similarity-based candidate generation. Exact facts, identity, authorization, temporal validity, versions, and deletion need a governed source of truth. Add lexical search when exact terms and identifiers matter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I stop the agent from remembering things it shouldn't?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Default to not storing. Apply data classification, purpose and consent rules, tenant scope, retention, and allowlisted memory types before persistence. Quarantine model inferences about people and instruction-shaped content. Provide correction and deletion paths."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between RAG and agent memory?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RAG is primarily a read-time pattern for retrieving source material. Agent memory also has a write and lifecycle problem: information is created during interaction, then merged, versioned, scoped, expired, corrected, and deleted. The retrieval machinery can overlap; the governance requirements differ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I deduplicate or merge conflicting memories?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Match on subject, predicate, and scope before comparing values. Use fingerprints for exact duplicates and semantic search only to propose merge candidates. Resolve conflicts with source authority and valid time, not similarity or recency alone. Send unresolved cases to review."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should compaction run?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Trigger it from the working-memory token budget, preferably before the hard limit. Also compact at meaningful task boundaries when a clean checkpoint will improve resumability. Never rely on a timer or message count alone."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">HDBK-006</span>
+          <h1 class="handbook-hero__title">Memory & Context Management</h1>
+          <p class="handbook-hero__subtitle">Keeping what matters</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 6</span>
+            <span class="handbook-hero__dot">•</span><span>17 min</span>
+            <span class="handbook-hero__dot">•</span><span>Advanced</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-07-31</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><ul><li><a href="/handbook/chapter-01-react-pattern.html">The ReAct Pattern</a></li><li><a href="/handbook/chapter-02-plan-and-execute.html">The Plan-and-Execute Pattern</a></li><li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Tool Use and Skill Registries</a></li></ul></div>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Reading time:</strong> 17 min | <strong>Last revised:</strong> 2026-07-31 | <strong>Version:</strong> 1.2</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>The <strong>context window</strong> is the model's working set for one inference; <strong>memory</strong> is the state your application can carry across turns or sessions. Neither is useful merely because it is large. Context must be assembled for the current decision, with room left for the answer. Memory needs an explicit write policy, a permissioned and time-aware read path, and provenance on every record. The governing rule is simple: preserve decisions and evidence; discard or externalize noise. Design eviction before storage.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — every Thought/Action/Observation cycle appends to the context that drives the next decision.</li>
+<li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — plans and partial progress are state that must survive across steps.</li>
+<li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — tool results are the biggest single source of context pollution.</li>
+</ul>
+<hr />
+<p>Imagine a research agent that has been working for an hour. It has read six documents, called search eleven times, drafted three versions of a report, and received two corrections about your team's naming conventions. Now you ask: <em>"Summarize what we decided about the release plan, using the corrected vendor name."</em></p>
+<p>If the agent replays the whole hour, the early correction competes with raw search results, obsolete drafts, and abandoned reasoning. Cost and latency grow while relevance falls. If it keeps only the last few messages, it may lose the decision entirely. The problem is not how to retain everything. It is how to reconstruct the smallest trustworthy working set for the next action.</p>
+<p>That confusion is the difference between a demo and a system. This chapter is about the discipline of separating the two.</p>
+<h2 id="1-context-is-a-budget">1. Context Is a Budget</h2>
+<p>A context window is not a filing cabinet. It is the maximum token envelope available to one model call. It is <strong>finite</strong>, <strong>shared</strong> by all input and output, and not used uniformly by the model. A model accepting 128K tokens does not give the application 128K tokens of free history.</p>
+<h3 id="the-five-payers-of-the-token-bill">The Five Payers of the Token Bill</h3>
+<p>Every call draws from the same envelope. Exact accounting varies by provider, but the design constraint is stable:</p>
+<p><code>input budget = context limit − maximum output − safety reserve</code></p>
+<p>Within that input budget, five consumers compete:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What It Costs</th>
+<th>Typical Bloat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Policy and instructions</strong></td>
+<td>System/developer messages and runtime policy</td>
+<td>Accreted rules, duplicated guidance</td>
+</tr>
+<tr>
+<td><strong>Tool interface</strong></td>
+<td>Names, descriptions, schemas, and protocol overhead</td>
+<td>Too many exposed tools, verbose schemas</td>
+</tr>
+<tr>
+<td><strong>Working state</strong></td>
+<td>Recent messages, task state, and compacted history</td>
+<td>Raw results, obsolete drafts, repeated context</td>
+</tr>
+<tr>
+<td><strong>Current evidence</strong></td>
+<td>Retrieved memories, documents, and tool results needed now</td>
+<td>Unranked chunks, full files, duplicate evidence</td>
+</tr>
+<tr>
+<td><strong>Output headroom</strong></td>
+<td>Tokens the model may generate</td>
+<td>Reserving too little, then truncating the answer</td>
+</tr>
+</tbody>
+</table>
+<p>A 128K-token window sounds generous until a large tool registry, an hour of transcript, retrieved documents, and a 12K output allowance share it. Treat overflow as an admission-control problem: shrink optional evidence, compact history, or split the task before the API rejects the call or the answer loses its ending.</p>
+<h3 id="ordering-effects-are-real">Ordering Effects Are Real</h3>
+<p>Models are not uniform readers. In the retrieval and question-answering settings tested by <a href="https://arxiv.org/abs/2307.03172">Liu et al.</a>, performance was often strongest when relevant information appeared near the beginning or end and weaker in the middle. This is a warning, not a universal placement law: behavior varies by model and task. Production consequences:</p>
+<ol>
+<li><strong>Keep policy stable and authoritative.</strong> Do not mix untrusted retrieved text into the instruction layer.</li>
+<li><strong>Restate the active task and constraints clearly.</strong> Do not assume a long transcript still makes them salient.</li>
+<li><strong>Rank and label evidence.</strong> Put the most relevant material close to the question and attach source identifiers.</li>
+<li><strong>Remove dead context.</strong> Reordering does not rescue a prompt dominated by irrelevant tokens.</li>
+<li><strong>Evaluate placement with your model.</strong> A synthetic needle test is useful; a task-level regression suite is better.</li>
+</ol>
+<h3 id="measure-the-budget-dont-guess-it">Measure the Budget, Don't Guess It</h3>
+<p>Provider usage fields tell you what was billed, but often not which application component caused it. Estimate each component with the tokenizer for the exact model and reconcile the estimate against the API's authoritative usage after the call. Include message framing and tool-schema serialization; encoding concatenated text alone is only an approximation.</p>
+<pre><code class="language-python">parts = {
+    &quot;policy&quot;: policy_messages,
+    &quot;tools&quot;: exposed_tool_schemas,
+    &quot;working_state&quot;: recent_messages + compacted_state,
+    &quot;evidence&quot;: retrieved_items,
+    &quot;task&quot;: current_request,
+}
+
+estimated_input = {
+    name: model_tokenizer.count(serialized)
+    for name, serialized in parts.items()
+}
+
+assert sum(estimated_input.values()) &lt;= (
+    model_context_limit - max_output_tokens - safety_reserve
+)
+</code></pre>
+<p>Log the estimate by component, the provider-reported input and output usage, and the difference between them. Alert on absolute limits and growth rate. The mismatch is useful: it catches changed schemas, hidden wrappers, and incorrect tokenizer assumptions.</p>
+<h2 id="2-working-memory-managing-the-conversation">2. Working Memory: Managing the Conversation</h2>
+<p>Working memory is the state needed to continue the current task. The transcript is one input to that state, not the state itself. For a long-running agent, the durable working set usually contains the goal, constraints, decisions, completed steps, open questions, evidence pointers, and a short recent-message window.</p>
+<h3 id="the-message-lifecycle">The Message Lifecycle</h3>
+<p>Not every message deserves to survive verbatim:</p>
+<table>
+<thead>
+<tr>
+<th>Message Kind</th>
+<th>Keep As</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active goal and constraints</td>
+<td>Structured state + relevant verbatim text</td>
+<td>They define success and must survive compaction.</td>
+</tr>
+<tr>
+<td>Decisions and rationale</td>
+<td>Structured state with source pointers</td>
+<td>Later steps need both the choice and why it was made.</td>
+</tr>
+<tr>
+<td>Recent user and assistant messages</td>
+<td>Verbatim, within a small rolling window</td>
+<td>Local conversational meaning can be lost in summaries.</td>
+</tr>
+<tr>
+<td>Tool call and result</td>
+<td>Typed summary + trace pointer</td>
+<td>Preserve outcome, errors, and identifiers; externalize bulk data.</td>
+</tr>
+<tr>
+<td>Superseded draft or failed attempt</td>
+<td>Outcome only</td>
+<td>Keep what was learned, not every intermediate artifact.</td>
+</tr>
+<tr>
+<td>Durable correction or preference</td>
+<td>Candidate long-term memory</td>
+<td>Promote only through the write policy in Section 4.</td>
+</tr>
+<tr>
+<td>Small talk and scratch work</td>
+<td>Drop</td>
+<td>They do not help resume the task.</td>
+</tr>
+</tbody>
+</table>
+<p>The cheapest correct move is to avoid admitting low-value content. Once noise has entered a summary or an embedding index, removing it is harder.</p>
+<h3 id="truncation-the-crude-baseline">Truncation: The Crude Baseline</h3>
+<p>Drop the oldest messages past a budget. This is simple and sometimes sufficient for short, stateless conversations. It is unsafe when early messages contain acceptance criteria, authorization boundaries, or corrections. If you use truncation, pin those items in structured state first.</p>
+<h3 id="compaction-the-working-memory-pattern">Compaction: The Working-Memory Pattern</h3>
+<p>Compaction converts an older transcript segment into structured state plus a concise narrative, while retaining recent messages verbatim. It should be treated as a state transition with invariants, not as generic summarization.</p>
+<pre><code class="language-python">def compact(checkpoint, old_messages, recent_messages, limits):
+    # Bulk results remain in the trace store. The model sees typed references.
+    normalized = externalize_large_results(
+        old_messages,
+        max_inline_tokens=limits.max_inline_result,
+    )
+
+    candidate = summarizer.extract(
+        previous=checkpoint,
+        messages=normalized,
+        schema={
+            &quot;goal&quot;: &quot;string&quot;,
+            &quot;constraints&quot;: &quot;list[string]&quot;,
+            &quot;decisions&quot;: &quot;list[{text, source_id}]&quot;,
+            &quot;completed_steps&quot;: &quot;list[string]&quot;,
+            &quot;open_questions&quot;: &quot;list[string]&quot;,
+            &quot;evidence&quot;: &quot;list[{source_id, claim}]&quot;,
+            &quot;memory_candidates&quot;: &quot;list[{text, source_id}]&quot;,
+        },
+    )
+
+    validate_required_state(candidate, previous=checkpoint)
+    candidate.narrative = cap_to_tokens(
+        candidate.narrative,
+        limits.summary_tokens,
+    )
+
+    rendered = render(candidate, recent_messages)
+    if token_count(rendered) &gt; limits.working_memory_tokens:
+        rendered = shrink_optional_evidence(rendered, limits)
+    if token_count(rendered) &gt; limits.working_memory_tokens:
+        raise ContextBudgetError(&quot;split the task or reduce the recent window&quot;)
+
+    return candidate, rendered
+</code></pre>
+<p>Six properties make this work:</p>
+<ol>
+<li><strong>Required state is explicit.</strong> A schema makes omissions detectable. A fluent paragraph does not.</li>
+<li><strong>Evidence remains addressable.</strong> Summaries point to trace IDs, files, or messages instead of laundering derived claims into facts.</li>
+<li><strong>The summary pays tokens.</strong> It has a hard cap inside the working-memory allocation.</li>
+<li><strong>Compaction fails closed.</strong> If required state cannot fit, the runtime splits the task or asks for direction. It does not silently drop constraints.</li>
+<li><strong>Durable facts are candidates, not automatic writes.</strong> They still pass the write policy, consent, and access checks in Section 4.</li>
+<li><strong>Drift is tested.</strong> Periodically rebuild from raw checkpoints and compare key fields. Repeated summary-of-summary operations accumulate errors.</li>
+</ol>
+<p>Two operational notes. First, a single oversized message cannot be repaired by summarizing older messages. Store the payload outside the prompt and insert a typed reference with size, source, and retrieval method. Second, tune the recent window by tokens and task boundaries, not a universal message count. A ten-message window can be tiny or enormous.</p>
+<h3 id="budget-allocation-a-starting-point">Budget Allocation: A Starting Point</h3>
+<p>There is no universal percentage split. Start with an explicit envelope, then tune it from traces and task success. For a 128K context, one conservative experiment might be:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Budget</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policy + tool interface</td>
+<td>16K</td>
+<td>Keep the exposed tool set small; see Chapter 5.</td>
+</tr>
+<tr>
+<td>Working state</td>
+<td>32K</td>
+<td>Structured checkpoint plus recent messages.</td>
+</tr>
+<tr>
+<td>Current evidence and task</td>
+<td>56K</td>
+<td>Ranked sources, current result, and request.</td>
+</tr>
+<tr>
+<td>Maximum output</td>
+<td>16K</td>
+<td>Reserved before input is admitted.</td>
+</tr>
+<tr>
+<td>Safety reserve</td>
+<td>8K</td>
+<td>Serialization variance and emergency headroom.</td>
+</tr>
+</tbody>
+</table>
+<p>These numbers are not recommendations for every workload. Batch extraction may allocate almost everything to evidence; an interactive coding agent may need more recent state. Record the actual high-water mark, compaction frequency, task success, and cost. Recalculate when the model, tool set, or serialization format changes.</p>
+<h3 id="sessions-resume-they-dont-restart">Sessions Resume, They Don't Restart</h3>
+<p>Before a session ends, persist a checkpoint of task state and submit durable memory candidates through the write policy. On resume, load the checkpoint, then retrieve only long-term memories relevant to the new request. Do not preload a user's entire memory profile into every prompt.</p>
+<h2 id="3-long-term-memory-stores-and-retrieval">3. Long-Term Memory: Stores and Retrieval</h2>
+<p>Working memory is session-scoped. Long-term memory persists beyond the current working set. The following taxonomy is useful because each kind has different consistency and retrieval needs:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>What It Holds</th>
+<th>Example</th>
+<th>Typical Store</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Working</strong></td>
+<td>What is needed now</td>
+<td>Goal, constraints, open steps</td>
+<td>Checkpoint + context window</td>
+</tr>
+<tr>
+<td><strong>Episodic</strong></td>
+<td>What happened</td>
+<td>"The DAG planner failed on retry recovery."</td>
+<td>Event log plus searchable index</td>
+</tr>
+<tr>
+<td><strong>Semantic</strong></td>
+<td>What is currently believed to be true</td>
+<td>"The legal name is Northwind B.V."</td>
+<td>Versioned records or knowledge graph</td>
+</tr>
+<tr>
+<td><strong>Procedural</strong></td>
+<td>How to perform a repeatable task</td>
+<td>"Refunds over €500 require approval."</td>
+<td>Reviewed skills, policy, or code</td>
+</tr>
+</tbody>
+</table>
+<p>The categories are logical, not vendor choices. A relational database can hold all four; an embedding index can accelerate search across some of them. The common mistake is treating a vector index as the system of record. Similarity search is useful for candidate generation, but exact identity, authorization, temporal validity, supersession, and deletion belong in a governed store.</p>
+<h3 id="a-memory-record">A Memory Record</h3>
+<p>Whatever the store, a memory record needs enough structure to be governed:</p>
+<pre><code class="language-json">{
+  &quot;memory_id&quot;: &quot;mem_9f2c1a&quot;,
+  &quot;tenant_id&quot;: &quot;tenant_7&quot;,
+  &quot;subject_id&quot;: &quot;vendor_23&quot;,
+  &quot;type&quot;: &quot;semantic&quot;,
+  &quot;version&quot;: 3,
+  &quot;content&quot;: &quot;Vendor legal name is Northwind B.V.&quot;,
+  &quot;source&quot;: {
+    &quot;kind&quot;: &quot;user_correction&quot;,
+    &quot;session_id&quot;: &quot;sess_4412&quot;,
+    &quot;message_id&quot;: &quot;msg_88&quot;,
+    &quot;recorded_at&quot;: &quot;2026-07-31T09:14:22Z&quot;,
+    &quot;content_hash&quot;: &quot;sha256:...&quot;
+  },
+  &quot;evidence_status&quot;: &quot;direct_user_statement&quot;,
+  &quot;valid_from&quot;: &quot;2026-07-31T09:14:22Z&quot;,
+  &quot;valid_to&quot;: null,
+  &quot;supersedes&quot;: &quot;mem_7ab118&quot;,
+  &quot;created_at&quot;: &quot;2026-07-31T09:14:22Z&quot;,
+  &quot;expires_at&quot;: null,
+  &quot;retention_class&quot;: &quot;customer_profile&quot;,
+  &quot;sensitivity&quot;: &quot;internal&quot;,
+  &quot;access&quot;: {&quot;owner&quot;: &quot;user_42&quot;, &quot;policy&quot;: &quot;vendor-team-read&quot;},
+  &quot;status&quot;: &quot;active&quot;
+}
+</code></pre>
+<p>This schema separates three clocks: when the source was recorded, when the claim became valid, and when the application stored it. That distinction matters for late-arriving updates. <code>supersedes</code> creates an auditable chain instead of overwriting history. <code>evidence_status</code> describes how the claim was obtained; it is safer than invented confidence numbers unless those numbers are calibrated against labeled data. <code>expires_at: null</code> means no automatic expiry, not unlimited legal retention. Access and retention policy still apply.</p>
+<h3 id="the-read-path">The Read Path</h3>
+<p>Retrieval is a pipeline, not a single lookup:</p>
+<pre><code class="language-python">def retrieve(request, principal, as_of, token_budget):
+    scope = authorize_memory_scope(principal, request)  # fail closed
+
+    candidates = memory_store.search(
+        lexical_query=request.text,
+        vector_query=embed(request.text),
+        filters={
+            &quot;tenant_id&quot;: scope.tenant_id,
+            &quot;policy&quot;: scope.allowed_policies,
+            &quot;status&quot;: &quot;active&quot;,
+            &quot;valid_at&quot;: as_of,
+        },
+    )
+
+    candidates = remove_expired_and_superseded(candidates, as_of)
+    ranked = rerank(candidates, request, features=[
+        &quot;relevance&quot;, &quot;source_quality&quot;, &quot;temporal_fit&quot;, &quot;task_scope&quot;
+    ])
+    accepted = apply_calibrated_abstention(ranked, request.kind)
+    return pack_with_sources(accepted, token_budget)
+</code></pre>
+<p>Seven details matter more than the embedding model:</p>
+<ol>
+<li><strong>Authorize at the query boundary.</strong> Tenant and policy constraints must be enforced by the data layer or an equally strong boundary, not applied after unauthorized rows have been retrieved.</li>
+<li><strong>Use hybrid candidate generation when the corpus needs it.</strong> Lexical search helps exact names and identifiers; vector search helps paraphrases. Measure each and the fusion strategy on your data.</li>
+<li><strong>Model time explicitly.</strong> Retrieval should answer "what was true then?" as well as "what is active now?" Recency is not the same as validity.</li>
+<li><strong>Resolve versions before prompt assembly.</strong> Do not send both a superseded fact and its replacement and ask the model to arbitrate.</li>
+<li><strong>Calibrate abstention.</strong> Similarity scores are not probabilities and are not comparable across embedding models or indexes. Choose thresholds from labeled queries and permit an empty result.</li>
+<li><strong>Pack to a token budget.</strong> Deduplicate overlapping memories, preserve source IDs, and stop when marginal utility falls below marginal context cost.</li>
+<li><strong>Treat retrieved content as data.</strong> A remembered string cannot override system policy merely because it says "ignore previous instructions."</li>
+</ol>
+<h3 id="latency-and-caching">Latency and Caching</h3>
+<p>Measure latency by stage: authorization, query embedding, candidate search, reranking, and prompt packing. Cache only when the cache key includes tenant, principal scope, memory version, and retrieval configuration. A fast cross-tenant cache leak is still a privacy incident. Invalidate on updates and deletion; reuse a query embedding within a turn when the query has not changed.</p>
+<h3 id="shared-vs-isolated-memory">Shared vs. Isolated Memory</h3>
+<p>Memory topology is an architecture decision, not an implementation detail:</p>
+<table>
+<thead>
+<tr>
+<th>Topology</th>
+<th>What Lives There</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shared domain store</strong></td>
+<td>Reviewed team facts, vocabulary, operating knowledge</td>
+<td>Multiple actors need a common source of truth.</td>
+</tr>
+<tr>
+<td><strong>User-isolated store</strong></td>
+<td>Personal preferences and conversation-derived facts</td>
+<td>Personalization with strict tenant boundaries.</td>
+</tr>
+<tr>
+<td><strong>Hybrid</strong></td>
+<td>Shared domain facts plus scoped personal state</td>
+<td>Most multi-user assistants.</td>
+</tr>
+</tbody>
+</table>
+<p>The write policy chooses the topology; authorization enforces it. Precedence must be defined by fact ownership and scope. A personal preference may override a team default for that user, while a user memory must never override a security policy.</p>
+<h2 id="4-the-write-policy-what-deserves-memory">4. The Write Policy: What Deserves Memory?</h2>
+<p>Storage is cheap; polluted retrieval is expensive. Every low-value or weakly sourced record increases future ambiguity, privacy surface, and deletion cost. A write policy is a gate with a default outcome of "do not persist."</p>
+<h3 id="store-or-skip">Store or Skip</h3>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Store?</th>
+<th>Where</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explicit correction of a durable fact</td>
+<td>Usually</td>
+<td>Versioned semantic record</td>
+<td>High value, but still scoped and sourced.</td>
+</tr>
+<tr>
+<td>Decision with rationale</td>
+<td>Usually</td>
+<td>Episodic event + artifact link</td>
+<td>Supports later "why" questions.</td>
+</tr>
+<tr>
+<td>Stated durable preference</td>
+<td>With applicable consent</td>
+<td>User-scoped semantic record</td>
+<td>Useful across sessions; must be editable.</td>
+</tr>
+<tr>
+<td>Task progress</td>
+<td>Checkpoint only</td>
+<td>Session/task state</td>
+<td>Resume state is not a user profile.</td>
+</tr>
+<tr>
+<td>Raw tool output</td>
+<td>No copy by default</td>
+<td>Source system or trace store</td>
+<td>Keep a pointer, hash, and relevant extract.</td>
+</tr>
+<tr>
+<td>Model inference about a person</td>
+<td>Rarely</td>
+<td>Review queue, not active memory</td>
+<td>High risk of turning a guess into a profile.</td>
+</tr>
+<tr>
+<td>Credential, secret, or special-category data</td>
+<td>No by default</td>
+<td>Purpose-built protected system if required</td>
+<td>Memory convenience does not justify collection.</td>
+</tr>
+<tr>
+<td>One-off trivia or small talk</td>
+<td>No</td>
+<td>—</td>
+<td>Adds retrieval noise without durable value.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="write-time-checks">Write-Time Checks</h3>
+<p>Before persisting anything, ask:</p>
+<ol>
+<li><strong>Purpose:</strong> Which future decision will this improve? If there is no concrete use, skip it.</li>
+<li><strong>Authority:</strong> Is this a direct statement, a tool observation, a document claim, or a model inference? Preserve that distinction.</li>
+<li><strong>Subject and scope:</strong> Who or what is the claim about, and is it personal, project, team, or global?</li>
+<li><strong>Permission:</strong> Is persistence expected and allowed for this data class and subject?</li>
+<li><strong>Novelty:</strong> Is it new, a duplicate, a refinement, or a contradiction? Exact fingerprints catch exact copies; semantic similarity only finds candidates for merge.</li>
+<li><strong>Time:</strong> When is it valid, when should it be reviewed, and when must it expire?</li>
+<li><strong>Deletion:</strong> Can every copy, index entry, cache item, and derived summary be found when the subject asks for removal?</li>
+</ol>
+<p>The write path should be deterministic around the model:</p>
+<pre><code class="language-python">candidate = extract_candidate(message, source_id=message.id)
+policy = classify_data(candidate, principal, purpose)
+
+if not policy.may_persist:
+    return WriteDecision.skipped(policy.reason)
+
+existing = find_same_subject_and_predicate(candidate, policy.scope)
+decision = resolve(candidate, existing, precedence_rules)
+
+if decision.needs_review:
+    return review_queue.enqueue(candidate, existing)
+
+record = persist_version(decision.record, retention=policy.retention)
+index_after_commit(record)  # database remains the source of truth
+return WriteDecision.stored(record.memory_id)
+</code></pre>
+<h3 id="merge-dont-accumulate">Merge, Don't Accumulate</h3>
+<p>Memory that contradicts itself is worse than no memory. Resolve updates by subject, predicate, scope, time, and source authority. "Newer wins" is insufficient: a recent model summary should not supersede a signed contract. Keep the history, mark one version active for a given time range, and surface unresolved conflicts.</p>
+<h3 id="deletion-is-a-write-path-feature">Deletion Is a Write-Path Feature</h3>
+<p>Deletion cannot be bolted on later. Maintain an inventory from the source record to vector indexes, keyword indexes, caches, summaries, analytics exports, and backups. Define the semantics of erasure versus tombstoning and verify that deleted records cannot be retrieved while asynchronous cleanup completes. Log the operation without retaining the deleted content in the log.</p>
+<h2 id="5-provenance-and-trust">5. Provenance and Trust</h2>
+<p>A memory system that cannot answer <em>"where did this come from?"</em> will eventually act on a lie and call it knowledge.</p>
+<h3 id="every-memory-has-a-source">Every Memory Has a Source</h3>
+<p>Store the source kind, locator, capture time, and content hash on every record. A derived summary should link to the source records it summarizes. This enables the read path to exclude unsupported inferences, lets the agent cite why it believes a claim, and makes reprocessing possible when an extractor changes.</p>
+<h3 id="memory-poisoning">Memory Poisoning</h3>
+<p>The dangerous failure: something wrong enters memory, gets retrieved later as a neutral fact, and shapes decisions without any flag. Poison enters through three doors:</p>
+<ol>
+<li><strong>Inference promotion.</strong> The agent converts a plausible interpretation into an asserted fact.</li>
+<li><strong>Persistent prompt injection.</strong> Untrusted content convinces the write path to save instructions that execute on later retrieval.</li>
+<li><strong>Stale truth.</strong> A formerly valid claim remains active because validity and expiry were never modeled.</li>
+<li><strong>Identity confusion.</strong> A statement about one person, workspace, or vendor is attached to another subject.</li>
+</ol>
+<p>Controls: provenance and subject IDs on every record; allowlisted memory types; separate extraction from authorization; quarantine model inferences and instruction-shaped content; versioned updates; and audits keyed by source, subject, writer, and time range. Retrieved memories belong in a clearly delimited data section and never acquire instruction authority.</p>
+<h3 id="memory-is-permissioned">Memory Is Permissioned</h3>
+<p>One user's conversation is not another user's context. Scope writes by tenant and subject; enforce reads with server-side authorization; encrypt data in transit and at rest; minimize operator access; and audit reads as well as writes. Test with canary records that must never cross tenants. Retention, export, correction, and deletion are part of the product contract, not housekeeping.</p>
+<h3 id="the-worked-example-the-vendor-name">The Worked Example: The Vendor Name</h3>
+<p>Walk the opening scenario end to end. You say: <em>"It's Northwind B.V., not Northwind GmbH."</em> The write path identifies the vendor subject and legal-name predicate, records a direct user correction, and finds the older active value. Because the principal is authorized for that vendor profile, it creates a new version that supersedes the old one. Three days later, retrieval is scoped to the same tenant and vendor, removes the superseded version, and packs the active claim with its source ID. The agent uses <em>Northwind B.V.</em> and can show where the correction came from. Write, version, authorize, retrieve, and cite are explicit system decisions.</p>
+<h2 id="6-evaluate-the-memory-system">6. Evaluate the Memory System</h2>
+<p>A memory feature is not successful because it recalled an anecdote in a demo. Evaluate the complete lifecycle: what was written, what was retrieved, what reached the prompt, and whether it improved the task.</p>
+<h3 id="offline-evaluation">Offline Evaluation</h3>
+<p>Build replayable histories with labeled queries that cover:</p>
+<ul>
+<li>exact facts, paraphrases, and multi-hop references;</li>
+<li>corrections, contradictions, and facts valid only during a time range;</li>
+<li>irrelevant but semantically similar memories;</li>
+<li>malicious instruction-shaped records;</li>
+<li>tenant-isolation and deletion cases;</li>
+<li>long sessions with repeated compaction.</li>
+</ul>
+<p>Measure retrieval recall and precision, conflict resolution, source attribution, temporal accuracy, compaction state retention, and end-to-end task success. Compare against simple baselines: recent-window only, full context when it fits, lexical retrieval, and vector retrieval. Complexity must earn its operational cost. Benchmarks such as <a href="https://arxiv.org/abs/2507.05257">MemoryAgentBench</a> provide useful task categories, but your own data distribution and privacy boundaries remain decisive.</p>
+<h3 id="production-signals">Production Signals</h3>
+<p>Log enough to reconstruct a decision without logging sensitive content unnecessarily:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What It Reveals</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input tokens by component + output reserve</td>
+<td>Context growth and budgeting errors</td>
+</tr>
+<tr>
+<td>Compaction count, ratio, and invariant failures</td>
+<td>Summary pressure and drift</td>
+</tr>
+<tr>
+<td>Candidate, accepted, and injected memory IDs</td>
+<td>Where retrieval lost or added information</td>
+</tr>
+<tr>
+<td>Zero-result and abstention rate</td>
+<td>Coverage gaps and threshold behavior</td>
+</tr>
+<tr>
+<td>Superseded or expired records retrieved</td>
+<td>Temporal-consistency bugs</td>
+</tr>
+<tr>
+<td>Write skip, merge, conflict, and review rates</td>
+<td>Memory quality at ingestion</td>
+</tr>
+<tr>
+<td>p50/p95 latency by retrieval stage</td>
+<td>Performance bottlenecks</td>
+</tr>
+<tr>
+<td>Cross-tenant canary hits</td>
+<td>Isolation failure; target is zero</td>
+</tr>
+<tr>
+<td>Deletion completion and post-delete retrieval tests</td>
+<td>Lifecycle correctness</td>
+</tr>
+</tbody>
+</table>
+<p>Trace IDs should connect the model call to the checkpoint, retrieval configuration, memory versions, and source artifacts. Redact content where identifiers are sufficient.</p>
+<h2 id="7-production-failure-modes">7. Production Failure Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>What Happens</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Context overflow</strong></td>
+<td>The provider rejects the request, output is truncated, or an adapter drops content.</td>
+<td>Preflight accounting, output reserve, explicit overflow policy.</td>
+</tr>
+<tr>
+<td><strong>Constraint loss</strong></td>
+<td>Compaction removes an acceptance criterion or authorization boundary.</td>
+<td>Structured invariants, checkpoint validation, replay tests.</td>
+</tr>
+<tr>
+<td><strong>Summary drift</strong></td>
+<td>Repeated compaction gradually changes the recorded state.</td>
+<td>Source pointers, periodic rebuild, field-level comparison.</td>
+</tr>
+<tr>
+<td><strong>Retrieval miss</strong></td>
+<td>The right memory exists but candidate generation or filtering misses it.</td>
+<td>Labeled queries, hybrid baselines, stage-level traces.</td>
+</tr>
+<tr>
+<td><strong>False recall</strong></td>
+<td>The model invents a memory or overstates weak evidence.</td>
+<td>Source-bound context, calibrated abstention, citations.</td>
+</tr>
+<tr>
+<td><strong>Memory poisoning</strong></td>
+<td>Wrong or injected content returns later as trusted context.</td>
+<td>Allowlisted types, quarantine, instruction/data separation, audits.</td>
+</tr>
+<tr>
+<td><strong>Staleness</strong></td>
+<td>An old value is returned as current.</td>
+<td>Valid-time fields, supersession, expiry and refresh jobs.</td>
+</tr>
+<tr>
+<td><strong>Cross-tenant leakage</strong></td>
+<td>One tenant's memory reaches another tenant.</td>
+<td>Data-layer authorization, isolation tests, canaries; target zero.</td>
+</tr>
+<tr>
+<td><strong>Deletion shadow</strong></td>
+<td>The source is deleted but an index, cache, or summary still returns it.</td>
+<td>Dependency inventory, invalidation, post-delete verification.</td>
+</tr>
+<tr>
+<td><strong>Feedback loop</strong></td>
+<td>Model output is stored, retrieved, and treated as independent evidence.</td>
+<td>Provenance filtering and no self-authentication of claims.</td>
+</tr>
+<tr>
+<td><strong>Cost or latency blowup</strong></td>
+<td>History, retrieval, or reranking grows without bound.</td>
+<td>Component budgets, stage metrics, bounded candidate sets.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="debugging-checklist">Debugging Checklist</h3>
+<p>When memory behavior is wrong, ask in this order:</p>
+<ol>
+<li>Was the information present in the source trace?</li>
+<li>Did the write policy store, skip, merge, or quarantine it — and why?</li>
+<li>Does the record have the right tenant, subject, type, source, and valid time?</li>
+<li>Did authorization or lifecycle filtering remove it?</li>
+<li>Did candidate generation find it, and did reranking or abstention reject it?</li>
+<li>Was it packed into the prompt within budget, with its source attached?</li>
+<li>Did compaction preserve the active goal and constraints?</li>
+<li>Can the final claim be traced to an active record and original evidence?</li>
+</ol>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Context is an envelope.</strong> Reserve output first, then budget policy, tools, working state, and evidence.</li>
+<li><strong>Working memory is task state, not transcript replay.</strong> Compact into structured checkpoints, retain a small recent window, and keep bulky evidence addressable outside the prompt.</li>
+<li><strong>Long-term memory is a governed lifecycle.</strong> A vector index may assist retrieval; it is not the source of truth.</li>
+<li><strong>Writes default to skip.</strong> Persist only purposeful, permitted, sourced, scoped, time-aware records that can later be corrected and deleted.</li>
+<li><strong>Retrieval must authorize, resolve time and versions, abstain, and pack to budget.</strong> Relevance alone is insufficient.</li>
+<li><strong>Evaluate end to end.</strong> A memory is useful only when it improves the task without violating privacy, trust, latency, or cost boundaries.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic: Effective context engineering for AI agents</a> — compaction, structured note-taking, and context curation for long-running agents.</li>
+<li><a href="https://arxiv.org/abs/2307.03172">Liu et al.: Lost in the Middle</a> — evidence that information position can affect long-context performance.</li>
+<li><a href="https://arxiv.org/abs/2310.08560">Packer et al.: MemGPT — Towards LLMs as Operating Systems</a> — an OS-inspired hierarchy for moving information between context and external storage.</li>
+<li><a href="https://arxiv.org/abs/2005.11401">Lewis et al.: Retrieval-Augmented Generation</a> — the foundational retriever-generator architecture.</li>
+<li><a href="https://arxiv.org/abs/2507.05257">Hu et al.: MemoryAgentBench</a> — evaluation of accurate retrieval, test-time learning, long-range understanding, and conflict resolution.</li>
+</ul>
+<h2 id="whats-next">What's Next?</h2>
+<p>In Chapter 7: Human-in-the-Loop, we will cover approval gates, escalation, and the interaction patterns that keep people in control of consequential agent actions — including human review of what the agent believes.</p>
+<h2 id="related-chapters">Related Chapters</h2>
+<ul>
+<li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — each loop iteration reads from and writes to context.</li>
+<li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — plan state and partial progress are memory that must survive steps.</li>
+<li><a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> — critic and rubric outputs are prime candidates for episodic and semantic memory.</li>
+<li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Chapter 4: Multi-Agent Collaboration</a> — shared and isolated memory is a topology decision.</li>
+<li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — tool results are the main context polluter; retrieval is a read path.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: When should I use summarization vs. dropping messages entirely?</strong>
+Drop content with no future task value. Externalize bulky content that may be needed again. Compact decisions, constraints, progress, and open questions into structured state with source pointers. Submit durable facts separately through the long-term write policy.</p>
+<p><strong>Q: Is a vector database enough for agent memory?</strong>
+No. A vector index is useful for similarity-based candidate generation. Exact facts, identity, authorization, temporal validity, versions, and deletion need a governed source of truth. Add lexical search when exact terms and identifiers matter.</p>
+<p><strong>Q: How do I stop the agent from remembering things it shouldn't?</strong>
+Default to not storing. Apply data classification, purpose and consent rules, tenant scope, retention, and allowlisted memory types before persistence. Quarantine model inferences about people and instruction-shaped content. Provide correction and deletion paths.</p>
+<p><strong>Q: What is the difference between RAG and agent memory?</strong>
+RAG is primarily a read-time pattern for retrieving source material. Agent memory also has a write and lifecycle problem: information is created during interaction, then merged, versioned, scoped, expired, corrected, and deleted. The retrieval machinery can overlap; the governance requirements differ.</p>
+<p><strong>Q: How do I deduplicate or merge conflicting memories?</strong>
+Match on subject, predicate, and scope before comparing values. Use fingerprints for exact duplicates and semantic search only to propose merge candidates. Resolve conflicts with source authority and valid time, not similarity or recency alone. Send unresolved cases to review.</p>
+<p><strong>Q: How often should compaction run?</strong>
+Trigger it from the working-memory token budget, preferably before the hard limit. Also compact at meaningful task boundaries when a clean checkpoint will improve resumability. Never rely on a timer or message count alone.</p>
+<h2 id="glossary-terms-introduced">Glossary Terms Introduced</h2>
+<ul>
+<li><strong>Context Window</strong>: The maximum token envelope shared by input and generated output for one model call.</li>
+<li><strong>Working Memory</strong>: Session-scoped task state assembled into the context needed for the current decision.</li>
+<li><strong>Compaction</strong>: Converting older interaction history into a bounded checkpoint while retaining recent messages and evidence pointers.</li>
+<li><strong>Episodic Memory</strong>: A record of events, attempts, decisions, and outcomes.</li>
+<li><strong>Semantic Memory</strong>: A versioned claim about an entity, with source and temporal scope.</li>
+<li><strong>Procedural Memory</strong>: Reviewed knowledge about how to perform a repeatable task, often represented as policy, skill, prompt, or code.</li>
+<li><strong>Memory Record</strong>: A governed unit of persistent state with subject, content, provenance, time, lifecycle, and access metadata.</li>
+<li><strong>Memory Topology</strong>: The decision of which stores are shared across agents and which are isolated.</li>
+<li><strong>Provenance</strong>: The recorded origin and derivation chain of a memory.</li>
+<li><strong>Decay Policy</strong>: A schedule that lowers the retrieval weight of a record as it ages, distinct from hard expiry.</li>
+<li><strong>Memory Poisoning</strong>: False or injected content entering memory and later being retrieved as trusted fact.</li>
+<li><strong>Hybrid Search</strong>: Candidate retrieval that combines lexical and vector signals, usually with metadata constraints and rank fusion.</li>
+<li><strong>RAG (Retrieval-Augmented Generation)</strong>: A read-time pattern that retrieves relevant corpus chunks and places them in context.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.2</td>
+<td>2026-07-31</td>
+<td>Deep editorial and technical rewrite: corrected token-envelope accounting; replaced transcript-centric compaction with validated task checkpoints; strengthened record identity, temporal semantics, authorization, deletion, and poisoning controls; removed unsupported latency and confidence constants; added end-to-end evaluation and production signals.</td>
+</tr>
+<tr>
+<td>v1.1</td>
+<td>2026-07-31</td>
+<td>Post-peer-review revision: fixed compaction pseudocode (budget accounting includes summary, defined keep_recent/tokenizer, oversized-message handling, promotion hook); added tokenizer-based measurement, retrieval budget, latency/caching, shared-vs-isolated topology, dedup and conflict guidance, provenance filtering, ground-truth checkpoints, and model/window-change controls.</td>
+</tr>
+<tr>
+<td>v1.0</td>
+<td>2026-07-31</td>
+<td>Initial publication.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<a href="/handbook/chapter-05-tool-use-skill-registry.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">Tool Use and Skill Registries</div></a>
+<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites">Prerequisites</a></li>
+<li><a class="handbook-toc__link" href="#1-context-is-a-budget">1. Context Is a Budget</a><ul>
+<li><a class="handbook-toc__link" href="#the-five-payers-of-the-token-bill">The Five Payers of the Token Bill</a></li>
+<li><a class="handbook-toc__link" href="#ordering-effects-are-real">Ordering Effects Are Real</a></li>
+<li><a class="handbook-toc__link" href="#measure-the-budget-dont-guess-it">Measure the Budget, Don't Guess It</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#2-working-memory-managing-the-conversation">2. Working Memory: Managing the Conversation</a><ul>
+<li><a class="handbook-toc__link" href="#the-message-lifecycle">The Message Lifecycle</a></li>
+<li><a class="handbook-toc__link" href="#truncation-the-crude-baseline">Truncation: The Crude Baseline</a></li>
+<li><a class="handbook-toc__link" href="#compaction-the-working-memory-pattern">Compaction: The Working-Memory Pattern</a></li>
+<li><a class="handbook-toc__link" href="#budget-allocation-a-starting-point">Budget Allocation: A Starting Point</a></li>
+<li><a class="handbook-toc__link" href="#sessions-resume-they-dont-restart">Sessions Resume, They Don't Restart</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#3-long-term-memory-stores-and-retrieval">3. Long-Term Memory: Stores and Retrieval</a><ul>
+<li><a class="handbook-toc__link" href="#a-memory-record">A Memory Record</a></li>
+<li><a class="handbook-toc__link" href="#the-read-path">The Read Path</a></li>
+<li><a class="handbook-toc__link" href="#latency-and-caching">Latency and Caching</a></li>
+<li><a class="handbook-toc__link" href="#shared-vs-isolated-memory">Shared vs. Isolated Memory</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#4-the-write-policy-what-deserves-memory">4. The Write Policy: What Deserves Memory?</a><ul>
+<li><a class="handbook-toc__link" href="#store-or-skip">Store or Skip</a></li>
+<li><a class="handbook-toc__link" href="#write-time-checks">Write-Time Checks</a></li>
+<li><a class="handbook-toc__link" href="#merge-dont-accumulate">Merge, Don't Accumulate</a></li>
+<li><a class="handbook-toc__link" href="#deletion-is-a-write-path-feature">Deletion Is a Write-Path Feature</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#5-provenance-and-trust">5. Provenance and Trust</a><ul>
+<li><a class="handbook-toc__link" href="#every-memory-has-a-source">Every Memory Has a Source</a></li>
+<li><a class="handbook-toc__link" href="#memory-poisoning">Memory Poisoning</a></li>
+<li><a class="handbook-toc__link" href="#memory-is-permissioned">Memory Is Permissioned</a></li>
+<li><a class="handbook-toc__link" href="#the-worked-example-the-vendor-name">The Worked Example: The Vendor Name</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#6-evaluate-the-memory-system">6. Evaluate the Memory System</a><ul>
+<li><a class="handbook-toc__link" href="#offline-evaluation">Offline Evaluation</a></li>
+<li><a class="handbook-toc__link" href="#production-signals">Production Signals</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#7-production-failure-modes">7. Production Failure Modes</a><ul>
+<li><a class="handbook-toc__link" href="#debugging-checklist">Debugging Checklist</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#further-reading">Further Reading</a></li>
+<li><a class="handbook-toc__link" href="#whats-next">What's Next?</a></li>
+<li><a class="handbook-toc__link" href="#related-chapters">Related Chapters</a></li>
+<li><a class="handbook-toc__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a class="handbook-toc__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>

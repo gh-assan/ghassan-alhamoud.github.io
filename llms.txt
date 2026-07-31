@@ -42,6 +42,7 @@ Core themes:
 - [The Reflection Pattern](https://ghassan-alhamoud.com/handbook/chapter-03-reflection.html): Generator-critic loops, rubrics, and quality gates.
 - [Multi-Agent Collaboration](https://ghassan-alhamoud.com/handbook/chapter-04-multi-agent-collaboration.html): Orchestrators, worker handoffs, debate, topology choices, and production failure modes.
 - [Tool Use and Skill Registries](https://ghassan-alhamoud.com/handbook/chapter-05-tool-use-skill-registry.html): Reliable tool contracts, permission-first discovery, guarded execution, idempotency, observability, and governance.
+- [Memory & Context Management](https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html): Context budgets, validated compaction, governed memory writes, permissioned retrieval, provenance, lifecycle controls, and evaluation.
 
 ## External Profiles
 

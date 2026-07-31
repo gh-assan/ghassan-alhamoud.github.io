@@ -44,7 +44,9 @@ def md_to_html(text: str) -> tuple[str, str]:
         extensions=[
             "tables",
             "fenced_code",
-            TocExtension(title=""),
+            # The page template renders the Markdown H1 as the hero. Excluding
+            # H1 here prevents the sidebar from linking to the removed element.
+            TocExtension(title="", toc_depth="2-6"),
         ]
     )
     html = md.convert(text)
