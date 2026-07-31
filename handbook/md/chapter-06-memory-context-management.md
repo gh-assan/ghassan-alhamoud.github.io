@@ -1,6 +1,6 @@
 # Chapter 6: Memory & Context Management — Keeping What Matters
 
-**Reading time:** 17 min | **Last revised:** 2026-07-31 | **Version:** 1.2
+**Reading time:** 22 min | **Last revised:** 2026-07-31 | **Version:** 1.3
 
 ## If You Only Read One Section
 The **context window** is the model's working set for one inference; **memory** is the state your application can carry across turns or sessions. Neither is useful merely because it is large. Context must be assembled for the current decision, with room left for the answer. Memory needs an explicit write policy, a permissioned and time-aware read path, and provenance on every record. The governing rule is simple: preserve decisions and evidence; discard or externalize noise. Design eviction before storage.
@@ -22,13 +22,16 @@ That confusion is the difference between a demo and a system. This chapter is ab
 
 A context window is not a filing cabinet. It is the maximum token envelope available to one model call. It is **finite**, **shared** by all input and output, and not used uniformly by the model. A model accepting 128K tokens does not give the application 128K tokens of free history.
 
+![HDBK-006 Memory and Context Management Architecture](/images/handbook/HDBK-006-memory-context-management.webp)
+*Figure 1: Context assembly combines policy, tools, working state, ranked evidence, and an output reserve. Durable memory enters governed stores only through an authorized write path; retrieval is authorized before search, resolves time and versions, and returns sourced evidence within a token budget.*
+
 ### The Five Payers of the Token Bill
 
 Every call draws from the same envelope. Exact accounting varies by provider, but the design constraint is stable:
 
 `input budget = context limit − maximum output − safety reserve`
 
-Within that input budget, five consumers compete:
+Across the full envelope, five consumers compete. The first four consume the input budget; output headroom is reserved before input is admitted:
 
 | Component | What It Costs | Typical Bloat |
 |---|---|---|
@@ -122,14 +125,18 @@ def compact(checkpoint, old_messages, recent_messages, limits):
             "open_questions": "list[string]",
             "evidence": "list[{source_id, claim}]",
             "memory_candidates": "list[{text, source_id}]",
+            "brief": "string",
         },
     )
 
     validate_required_state(candidate, previous=checkpoint)
-    candidate.narrative = cap_to_tokens(
-        candidate.narrative,
-        limits.summary_tokens,
+    candidate = fit_checkpoint_to_budget(
+        candidate,
+        token_budget=limits.summary_tokens,
+        preserve=["goal", "constraints", "decisions", "open_questions"],
     )
+    if token_count(candidate) > limits.summary_tokens:
+        raise ContextBudgetError("required checkpoint state exceeds its budget")
 
     rendered = render(candidate, recent_messages)
     if token_count(rendered) > limits.working_memory_tokens:
@@ -167,7 +174,7 @@ These numbers are not recommendations for every workload. Batch extraction may a
 
 ### Sessions Resume, They Don't Restart
 
-Before a session ends, persist a checkpoint of task state and submit durable memory candidates through the write policy. On resume, load the checkpoint, then retrieve only long-term memories relevant to the new request. Do not preload a user's entire memory profile into every prompt.
+Persist checkpoints at stable task boundaries and before expected session shutdown; do not assume the process will exit cleanly. Submit durable memory candidates through the write policy. On resume, load the latest committed checkpoint, then retrieve only long-term memories relevant to the new request. Do not preload a user's entire memory profile into every prompt.
 
 ## 3. Long-Term Memory: Stores and Retrieval
 
@@ -320,7 +327,7 @@ return WriteDecision.stored(record.memory_id)
 
 ### Merge, Don't Accumulate
 
-Memory that contradicts itself is worse than no memory. Resolve updates by subject, predicate, scope, time, and source authority. "Newer wins" is insufficient: a recent model summary should not supersede a signed contract. Keep the history, mark one version active for a given time range, and surface unresolved conflicts.
+Unresolved active contradictions make retrieval less trustworthy. Resolve updates by subject, predicate, scope, time, and source authority. "Newer wins" is insufficient: a recent model summary should not supersede a signed contract. Keep the history, mark one version active for a given time range, and surface unresolved conflicts.
 
 ### Deletion Is a Write-Path Feature
 
@@ -336,7 +343,7 @@ Store the source kind, locator, capture time, and content hash on every record. 
 
 ### Memory Poisoning
 
-The dangerous failure: something wrong enters memory, gets retrieved later as a neutral fact, and shapes decisions without any flag. Poison enters through three doors:
+The dangerous failure: something wrong enters memory, gets retrieved later as a neutral fact, and shapes decisions without any flag. Poison enters through four doors:
 
 1. **Inference promotion.** The agent converts a plausible interpretation into an asserted fact.
 2. **Persistent prompt injection.** Untrusted content convinces the write path to save instructions that execute on later retrieval.
@@ -482,6 +489,7 @@ Trigger it from the working-memory token budget, preferably before the hard limi
 ## Revision History
 | Version | Date | Changes |
 |---|---|---|
+| v1.3 | 2026-07-31 | Added the governed context-and-memory architecture diagram; corrected the input/output budget explanation; fixed compaction schema and checkpoint bounds; strengthened crash-safe checkpointing; clarified conflict and poisoning language. |
 | v1.2 | 2026-07-31 | Deep editorial and technical rewrite: corrected token-envelope accounting; replaced transcript-centric compaction with validated task checkpoints; strengthened record identity, temporal semantics, authorization, deletion, and poisoning controls; removed unsupported latency and confidence constants; added end-to-end evaluation and production signals. |
 | v1.1 | 2026-07-31 | Post-peer-review revision: fixed compaction pseudocode (budget accounting includes summary, defined keep_recent/tokenizer, oversized-message handling, promotion hook); added tokenizer-based measurement, retrieval budget, latency/caching, shared-vs-isolated topology, dedup and conflict guidance, provenance filtering, ground-truth checkpoints, and model/window-change controls. |
 | v1.0 | 2026-07-31 | Initial publication. |

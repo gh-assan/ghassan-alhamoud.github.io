@@ -177,7 +177,7 @@
           <p class="handbook-hero__subtitle">Keeping what matters</p>
           <div class="handbook-hero__meta">
             <span>Chapter 6</span>
-            <span class="handbook-hero__dot">•</span><span>17 min</span>
+            <span class="handbook-hero__dot">•</span><span>22 min</span>
             <span class="handbook-hero__dot">•</span><span>Advanced</span>
             <span class="handbook-hero__dot">•</span><span>Updated 2026-07-31</span>
           </div>
@@ -187,7 +187,7 @@
 
         <div class="article-single__body handbook-body">
 
-<p><strong>Reading time:</strong> 17 min | <strong>Last revised:</strong> 2026-07-31 | <strong>Version:</strong> 1.2</p>
+<p><strong>Reading time:</strong> 22 min | <strong>Last revised:</strong> 2026-07-31 | <strong>Version:</strong> 1.3</p>
 <h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
 <p>The <strong>context window</strong> is the model's working set for one inference; <strong>memory</strong> is the state your application can carry across turns or sessions. Neither is useful merely because it is large. Context must be assembled for the current decision, with room left for the answer. Memory needs an explicit write policy, a permissioned and time-aware read path, and provenance on every record. The governing rule is simple: preserve decisions and evidence; discard or externalize noise. Design eviction before storage.</p>
 <h2 id="prerequisites">Prerequisites</h2>
@@ -202,10 +202,11 @@
 <p>That confusion is the difference between a demo and a system. This chapter is about the discipline of separating the two.</p>
 <h2 id="1-context-is-a-budget">1. Context Is a Budget</h2>
 <p>A context window is not a filing cabinet. It is the maximum token envelope available to one model call. It is <strong>finite</strong>, <strong>shared</strong> by all input and output, and not used uniformly by the model. A model accepting 128K tokens does not give the application 128K tokens of free history.</p>
+<figure class="diagram-panel"><img src="/images/handbook/HDBK-006-memory-context-management.webp" alt="HDBK-006 Memory and Context Management Architecture" loading="lazy" /><figcaption>Figure 1: Context assembly combines policy, tools, working state, ranked evidence, and an output reserve. Durable memory enters governed stores only through an authorized write path; retrieval is authorized before search, resolves time and versions, and returns sourced evidence within a token budget.</figcaption></figure>
 <h3 id="the-five-payers-of-the-token-bill">The Five Payers of the Token Bill</h3>
 <p>Every call draws from the same envelope. Exact accounting varies by provider, but the design constraint is stable:</p>
 <p><code>input budget = context limit − maximum output − safety reserve</code></p>
-<p>Within that input budget, five consumers compete:</p>
+<p>Across the full envelope, five consumers compete. The first four consume the input budget; output headroom is reserved before input is admitted:</p>
 <table>
 <thead>
 <tr>
@@ -345,14 +346,18 @@ assert sum(estimated_input.values()) &lt;= (
             &quot;open_questions&quot;: &quot;list[string]&quot;,
             &quot;evidence&quot;: &quot;list[{source_id, claim}]&quot;,
             &quot;memory_candidates&quot;: &quot;list[{text, source_id}]&quot;,
+            &quot;brief&quot;: &quot;string&quot;,
         },
     )
 
     validate_required_state(candidate, previous=checkpoint)
-    candidate.narrative = cap_to_tokens(
-        candidate.narrative,
-        limits.summary_tokens,
+    candidate = fit_checkpoint_to_budget(
+        candidate,
+        token_budget=limits.summary_tokens,
+        preserve=[&quot;goal&quot;, &quot;constraints&quot;, &quot;decisions&quot;, &quot;open_questions&quot;],
     )
+    if token_count(candidate) &gt; limits.summary_tokens:
+        raise ContextBudgetError(&quot;required checkpoint state exceeds its budget&quot;)
 
     rendered = render(candidate, recent_messages)
     if token_count(rendered) &gt; limits.working_memory_tokens:
@@ -412,7 +417,7 @@ assert sum(estimated_input.values()) &lt;= (
 </table>
 <p>These numbers are not recommendations for every workload. Batch extraction may allocate almost everything to evidence; an interactive coding agent may need more recent state. Record the actual high-water mark, compaction frequency, task success, and cost. Recalculate when the model, tool set, or serialization format changes.</p>
 <h3 id="sessions-resume-they-dont-restart">Sessions Resume, They Don't Restart</h3>
-<p>Before a session ends, persist a checkpoint of task state and submit durable memory candidates through the write policy. On resume, load the checkpoint, then retrieve only long-term memories relevant to the new request. Do not preload a user's entire memory profile into every prompt.</p>
+<p>Persist checkpoints at stable task boundaries and before expected session shutdown; do not assume the process will exit cleanly. Submit durable memory candidates through the write policy. On resume, load the latest committed checkpoint, then retrieve only long-term memories relevant to the new request. Do not preload a user's entire memory profile into every prompt.</p>
 <h2 id="3-long-term-memory-stores-and-retrieval">3. Long-Term Memory: Stores and Retrieval</h2>
 <p>Working memory is session-scoped. Long-term memory persists beyond the current working set. The following taxonomy is useful because each kind has different consistency and retrieval needs:</p>
 <table>
@@ -637,7 +642,7 @@ index_after_commit(record)  # database remains the source of truth
 return WriteDecision.stored(record.memory_id)
 </code></pre>
 <h3 id="merge-dont-accumulate">Merge, Don't Accumulate</h3>
-<p>Memory that contradicts itself is worse than no memory. Resolve updates by subject, predicate, scope, time, and source authority. "Newer wins" is insufficient: a recent model summary should not supersede a signed contract. Keep the history, mark one version active for a given time range, and surface unresolved conflicts.</p>
+<p>Unresolved active contradictions make retrieval less trustworthy. Resolve updates by subject, predicate, scope, time, and source authority. "Newer wins" is insufficient: a recent model summary should not supersede a signed contract. Keep the history, mark one version active for a given time range, and surface unresolved conflicts.</p>
 <h3 id="deletion-is-a-write-path-feature">Deletion Is a Write-Path Feature</h3>
 <p>Deletion cannot be bolted on later. Maintain an inventory from the source record to vector indexes, keyword indexes, caches, summaries, analytics exports, and backups. Define the semantics of erasure versus tombstoning and verify that deleted records cannot be retrieved while asynchronous cleanup completes. Log the operation without retaining the deleted content in the log.</p>
 <h2 id="5-provenance-and-trust">5. Provenance and Trust</h2>
@@ -645,7 +650,7 @@ return WriteDecision.stored(record.memory_id)
 <h3 id="every-memory-has-a-source">Every Memory Has a Source</h3>
 <p>Store the source kind, locator, capture time, and content hash on every record. A derived summary should link to the source records it summarizes. This enables the read path to exclude unsupported inferences, lets the agent cite why it believes a claim, and makes reprocessing possible when an extractor changes.</p>
 <h3 id="memory-poisoning">Memory Poisoning</h3>
-<p>The dangerous failure: something wrong enters memory, gets retrieved later as a neutral fact, and shapes decisions without any flag. Poison enters through three doors:</p>
+<p>The dangerous failure: something wrong enters memory, gets retrieved later as a neutral fact, and shapes decisions without any flag. Poison enters through four doors:</p>
 <ol>
 <li><strong>Inference promotion.</strong> The agent converts a plausible interpretation into an asserted fact.</li>
 <li><strong>Persistent prompt injection.</strong> Untrusted content convinces the write path to save instructions that execute on later retrieval.</li>
@@ -865,6 +870,11 @@ Trigger it from the working-memory token budget, preferably before the hard limi
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>v1.3</td>
+<td>2026-07-31</td>
+<td>Added the governed context-and-memory architecture diagram; corrected the input/output budget explanation; fixed compaction schema and checkpoint bounds; strengthened crash-safe checkpointing; clarified conflict and poisoning language.</td>
+</tr>
 <tr>
 <td>v1.2</td>
 <td>2026-07-31</td>

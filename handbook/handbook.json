@@ -134,7 +134,7 @@
         "keywords": ["AI agent memory", "LLM context management", "context compaction", "long-term memory", "memory retrieval", "memory provenance"],
         "status": "published",
         "difficulty": "advanced",
-        "readingTime": "17 min",
+        "readingTime": "22 min",
         "file": "chapter-06-memory-context-management.md",
         "diagram": "HDBK-006-memory-context-management.webp",
         "ogImage": "/images/handbook/HDBK-006-memory-context-management.webp",
