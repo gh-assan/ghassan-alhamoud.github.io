@@ -72,9 +72,16 @@ def validate_file(path: Path) -> list[str]:
             continue
         if href.startswith("/#") or href == "/" or href.startswith("mailto:"):
             continue
-        target = local_path(href)
+        target = path if not urlparse(href).path else local_path(href)
         if not target.exists():
             errors.append(f"broken internal link: {href}")
+            continue
+
+        fragment = urlparse(href).fragment
+        if fragment and target.is_file():
+            target_html = html if target == path else target.read_text(encoding="utf-8")
+            if not re.search(rf'\bid="{re.escape(fragment)}"', target_html):
+                errors.append(f"broken internal fragment: {href}")
 
     # Check internal images
     for src in re.findall(r'src="([^"]+)"', html):

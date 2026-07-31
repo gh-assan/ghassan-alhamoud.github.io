@@ -2,7 +2,7 @@
   "handbook": {
     "title": "The AI-Native Engineering Handbook",
     "subtitle": "Production-tested patterns for building autonomous agents",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "baseUrl": "https://ghassan-alhamoud.com/handbook/",
     "author": {
       "name": "Ghassan Alhamoud",
@@ -120,9 +120,28 @@
         "diagram": "05-diagram.webp",
         "ogImage": "/images/handbook/HDBK-005-tool-use-skill-registry.webp",
         "prerequisites": ["react-pattern", "plan-and-execute", "multi-agent-collaboration"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "memory-context-management"],
         "publishedAt": "2026-07-23",
         "lastModified": "2026-07-23"
+      },
+      {
+        "id": 6,
+        "slug": "memory-context-management",
+        "title": "Memory & Context Management",
+        "subtitle": "Keeping what matters",
+        "description": "Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, and lifecycle evaluation.",
+        "primaryKeyword": "AI agent memory and context management",
+        "keywords": ["AI agent memory", "LLM context management", "context compaction", "long-term memory", "memory retrieval", "memory provenance"],
+        "status": "published",
+        "difficulty": "advanced",
+        "readingTime": "22 min",
+        "file": "chapter-06-memory-context-management.md",
+        "diagram": "HDBK-006-memory-context-management.webp",
+        "ogImage": "/images/handbook/HDBK-006-memory-context-management.webp",
+        "prerequisites": ["react-pattern", "plan-and-execute", "tool-use-skill-registry"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry"],
+        "publishedAt": "2026-07-31",
+        "lastModified": "2026-07-31"
       }
     ]
   }
