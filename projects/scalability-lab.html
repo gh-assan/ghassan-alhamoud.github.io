@@ -92,26 +92,27 @@
         </div>
 
         <div class="article-single__body project-single__body">
-          <p>ScaleShop is an interactive workshop for practicing scalability decisions. Each level presents an architecture, operating constraints, and telemetry. Participants form a diagnosis, cite decisive evidence, choose the smallest sufficient intervention, and compare the modeled result with a reference path.</p>
-          <p>The goal is not to memorize a ladder from monolith to microservices. It is to learn when a system actually needs a new cache, queue, replica, service boundary, concurrency control, or resilience mechanism—and when it does not.</p>
+          <p>ScaleShop is an interactive workshop for practicing scalability decisions. Each level drops you into a system that is struggling: an architecture, a set of operating limits, and a dashboard full of telemetry. Your job is to figure out what is actually going wrong, point to the evidence that convinced you, pick the smallest change that fixes it, and then see how your call plays out against a reference path.</p>
+          <p>This is not about memorizing the climb from monolith to microservices. It is about learning to tell when a system genuinely needs a new cache, queue, replica, service boundary, concurrency control, or resilience mechanism, and just as important, when it does not.</p>
 
           <h2>Why I built it</h2>
-          <p>Architecture discussions often jump from a symptom to a fashionable technology. That skips the hard part: identifying the current constraint, protecting invariants, and accepting only the operational complexity the evidence justifies. ScaleShop makes that reasoning visible and repeatable.</p>
+          <p>Most architecture discussions I've sat in take a symptom and jump straight to a fashionable technology. The hard part gets skipped: naming the real constraint, protecting the invariants that matter, and only taking on the operational complexity the evidence actually justifies. ScaleShop makes that reasoning visible and repeatable, so teams can practice it before the pressure is on.</p>
 
           <h2>What the workshop covers</h2>
+          <p>The twelve levels move from the everyday to the genuinely painful:</p>
           <ul>
-            <li>Observability and capacity envelopes.</li>
-            <li>Database query behavior, caching, and read replicas.</li>
-            <li>Asynchronous side effects and horizontal scaling.</li>
-            <li>Service isolation, concurrency control, and data lifecycle.</li>
-            <li>Compound dependency, zone, and deployment failures.</li>
+            <li>Reading observability and understanding your capacity envelope.</li>
+            <li>Database query behavior, caching, and when read replicas earn their keep.</li>
+            <li>Asynchronous side effects and horizontal scaling done for the right reasons.</li>
+            <li>Service isolation, concurrency control, and the stuff that quietly breaks around data lifecycle.</li>
+            <li>Compound dependency, zone, and deployment failures, the incidents that really ruin your week.</li>
           </ul>
 
           <h2>What to inspect</h2>
-          <p>The repository includes the authored level model, deterministic scoring and outcome calculations, accessibility contracts, regression tests, product specifications, and architecture documentation. The workshop stores optional progress only in the participant's browser and provisions no infrastructure.</p>
+          <p>Everything you need to audit the project is in the repository: the authored level model, the deterministic scoring and outcome calculations, accessibility contracts, regression tests, product specifications, and architecture docs. The workshop itself keeps any optional progress in your browser and provisions no infrastructure, so you can poke at it freely without worrying about cost or cleanup.</p>
 
           <h2>Why it belongs here</h2>
-          <p>ScaleShop represents how I approach systems work: start from evidence, make constraints explicit, prefer the smallest maintainable intervention, and test the consequences—not just the happy path.</p>
+          <p>ScaleShop captures how I actually approach systems work: start from evidence, make the constraints explicit, reach for the smallest maintainable intervention, and test the consequences rather than just the happy path. It is my own practice made into something other engineers can try out.</p>
         </div>
       </article>
     </div>
