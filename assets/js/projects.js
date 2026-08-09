@@ -14,6 +14,7 @@
   function createProjectCard(project) {
     var card = document.createElement('a');
     card.className = 'article-card project-card';
+    if (project.highlighted) card.classList.add('project-card--featured');
     card.href = '/projects/' + project.slug + '.html';
 
     var tagsHtml = '';
@@ -25,7 +26,7 @@
         '</div>';
     }
 
-    card.innerHTML =
+    var contentHtml =
       '<div class="article-card__meta project-card__meta">' +
         '<span class="article-card__date project-card__status">' + project.status + '</span>' +
         '<span class="article-card__dot"></span>' +
@@ -34,7 +35,16 @@
       '<div class="article-card__title project-card__title">' + project.title + '</div>' +
       '<div class="article-card__excerpt project-card__summary">' + project.summary + '</div>' +
       '<div class="article-card__excerpt project-card__outcome"><strong>Outcome:</strong> ' + project.outcome + '</div>' +
-      tagsHtml;
+      tagsHtml +
+      (project.highlighted ? '<span class="project-card__action">Explore the live workshop &rarr;</span>' : '');
+
+    if (project.image) {
+      card.innerHTML =
+        '<div class="project-card__visual"><img class="project-card__image" src="' + project.image + '" alt="" width="1200" height="630" loading="lazy"></div>' +
+        '<div class="project-card__content">' + contentHtml + '</div>';
+    } else {
+      card.innerHTML = contentHtml;
+    }
 
     return card;
   }

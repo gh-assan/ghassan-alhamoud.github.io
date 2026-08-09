@@ -211,6 +211,7 @@ img {
 .nav {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
 }
 
@@ -325,6 +326,7 @@ img {
     padding: 0;
     gap: 0;
     border: none;
+    transform: none;
   }
 }
 
@@ -372,6 +374,19 @@ img {
 .nav__link--cta {
   color: var(--accent);
   font-weight: 600;
+}
+
+.nav__link--lab {
+  color: var(--success);
+  font-weight: 700;
+  background: rgba(var(--success-rgb), 0.08);
+  border: 1px solid rgba(var(--success-rgb), 0.28);
+}
+
+.nav__link--lab:hover,
+.nav__link--lab:focus-visible {
+  color: var(--success);
+  background: rgba(var(--success-rgb), 0.15);
 }
 
 .nav__link--cta::after {
@@ -1493,6 +1508,59 @@ img {
   letter-spacing: 0.02em;
 }
 
+.project-card--featured {
+  border-color: rgba(var(--success-rgb), 0.35);
+  background: linear-gradient(135deg, var(--bg-primary), rgba(var(--success-rgb), 0.08));
+}
+
+.project-card--featured::before {
+  transform: scaleY(1);
+}
+
+.project-card__visual {
+  align-self: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.project-card__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 630;
+  object-fit: contain;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.project-card:hover .project-card__image {
+  transform: scale(1.025);
+}
+
+.project-card__content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-card__action {
+  margin-top: 4px;
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 760px) {
+  .project-card--featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    align-items: stretch;
+  }
+}
+
 /* ================================================================
    PROJECT PAGES
    ================================================================ */
@@ -1509,6 +1577,25 @@ img {
 .project-single__repo {
   display: inline-flex;
   margin-top: 12px;
+}
+
+.project-single__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.project-single__actions .project-single__repo {
+  margin-top: 0;
+}
+
+.project-single__hero {
+  width: min(100%, 920px);
+  margin: 0 0 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 50px rgba(var(--accent-rgb), 0.10);
 }
 
 .project-single__body {

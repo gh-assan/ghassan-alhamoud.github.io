@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScaleShop Scalability Lab — Interactive Workshop — Ghassan Alhamoud</title>
+  <meta name="description" content="ScaleShop is an evidence-driven interactive workshop for diagnosing bottlenecks and making proportionate scalability decisions." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/scalability-lab.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/scalability-lab.html" />
+  <meta property="og:title" content="ScaleShop Scalability Lab" />
+  <meta property="og:description" content="Inspect telemetry, diagnose the bottleneck, and choose the smallest sufficient architecture change." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/projects/scaleshop-social.png" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="ScaleShop Scalability Lab" />
+  <meta property="twitter:description" content="An evidence-driven interactive scalability workshop for engineering teams." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/projects/scaleshop-social.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ScaleShop Scalability Lab",
+    "description": "An evidence-driven interactive scalability workshop for engineering teams.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web",
+    "url": "https://lab.ghassan-alhamoud.com",
+    "codeRepository": "https://github.com/ghassan-ai-projects/scaleshop-scalability-lab",
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20260809-3" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span>
+      </button>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/projects/" class="nav__link nav__link--active">Projects</a></li>
+        <li><a href="https://lab.ghassan-alhamoud.com" class="nav__link nav__link--lab">Scalability Lab</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <span>Live interactive workshop</span>
+            <span class="article-card__dot"></span>
+            <span>React / TypeScript / Systems Design</span>
+          </div>
+          <h1 class="article-single__title">ScaleShop: learn to scale from evidence</h1>
+          <div class="article-single__tags">
+            <span class="article-single__tag">Scalability</span>
+            <span class="article-single__tag">Distributed Systems</span>
+            <span class="article-single__tag">Open Source</span>
+          </div>
+          <div class="project-single__actions">
+            <a class="btn btn--primary project-single__repo" href="https://lab.ghassan-alhamoud.com">Launch the Lab</a>
+            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/scaleshop-scalability-lab" target="_blank" rel="noopener noreferrer">View Repository</a>
+          </div>
+        </header>
+
+        <img class="project-single__hero" src="/images/projects/scaleshop-social.png" alt="ScaleShop Scalability Lab showing an abstract distributed-system topology" width="1200" height="630" />
+
+        <div class="project-facts">
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Scaling advice is often technology-first instead of evidence-first.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Format</span><span class="project-fact__value">Twelve progressive, counterfactual incidents with modeled outcomes.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public, live, and open source under the MIT License.</span></div>
+        </div>
+
+        <div class="article-single__body project-single__body">
+          <p>ScaleShop is an interactive workshop for practicing scalability decisions. Each level presents an architecture, operating constraints, and telemetry. Participants form a diagnosis, cite decisive evidence, choose the smallest sufficient intervention, and compare the modeled result with a reference path.</p>
+          <p>The goal is not to memorize a ladder from monolith to microservices. It is to learn when a system actually needs a new cache, queue, replica, service boundary, concurrency control, or resilience mechanism—and when it does not.</p>
+
+          <h2>Why I built it</h2>
+          <p>Architecture discussions often jump from a symptom to a fashionable technology. That skips the hard part: identifying the current constraint, protecting invariants, and accepting only the operational complexity the evidence justifies. ScaleShop makes that reasoning visible and repeatable.</p>
+
+          <h2>What the workshop covers</h2>
+          <ul>
+            <li>Observability and capacity envelopes.</li>
+            <li>Database query behavior, caching, and read replicas.</li>
+            <li>Asynchronous side effects and horizontal scaling.</li>
+            <li>Service isolation, concurrency control, and data lifecycle.</li>
+            <li>Compound dependency, zone, and deployment failures.</li>
+          </ul>
+
+          <h2>What to inspect</h2>
+          <p>The repository includes the authored level model, deterministic scoring and outcome calculations, accessibility contracts, regression tests, product specifications, and architecture documentation. The workshop stores optional progress only in the participant's browser and provisions no infrastructure.</p>
+
+          <h2>Why it belongs here</h2>
+          <p>ScaleShop represents how I approach systems work: start from evidence, make constraints explicit, prefer the smallest maintainable intervention, and test the consequences—not just the happy path.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">LinkedIn</a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col"><span class="footer__nav-heading">Expertise</span><a href="/#services" class="footer__nav-link">System Design</a><a href="/#services" class="footer__nav-link">AI Architecture</a><a href="/#services" class="footer__nav-link">Architecture Reviews</a></div>
+        <div class="footer__nav-col"><span class="footer__nav-heading">Explore</span><a href="/projects/" class="footer__nav-link">Projects</a><a href="https://lab.ghassan-alhamoud.com" class="footer__nav-link">Scalability Lab</a><a href="/articles/" class="footer__nav-link">Articles</a><a href="/handbook/" class="footer__nav-link">Handbook</a></div>
+        <div class="footer__nav-col"><span class="footer__nav-heading">Connect</span><a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a><a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a></div>
+      </nav>
+    </div>
+    <div class="footer__bottom"><div class="container"><span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span></div></div>
+  </footer>
+
+  <script>var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>

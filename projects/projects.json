@@ -1,5 +1,21 @@
 [
   {
+    "slug": "scalability-lab",
+    "title": "ScaleShop Scalability Lab",
+    "name": "Interactive Scalability Workshop",
+    "status": "Live workshop",
+    "featured": true,
+    "highlighted": true,
+    "repo": "https://github.com/ghassan-ai-projects/scaleshop-scalability-lab",
+    "liveUrl": "https://lab.ghassan-alhamoud.com",
+    "image": "/images/projects/scaleshop-social.png",
+    "summary": "An evidence-driven workshop where engineers diagnose bottlenecks from telemetry and choose the smallest sufficient architecture change.",
+    "problem": "Scalability education often rewards naming powerful technologies instead of reading evidence, protecting invariants, and making proportionate trade-offs.",
+    "outcome": "Twelve progressive incidents turn capacity signals, failure modes, and architecture constraints into deliberate scaling decisions with modeled outcomes.",
+    "stack": ["React", "TypeScript", "Systems Design", "Cloudflare"],
+    "tags": ["Scalability", "Distributed Systems", "Interactive Lab", "Open Source"]
+  },
+  {
     "slug": "alms",
     "title": "ALMS",
     "name": "Agent Learning Management System",
