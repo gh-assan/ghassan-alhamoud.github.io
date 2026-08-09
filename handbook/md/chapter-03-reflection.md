@@ -125,6 +125,7 @@ In **Chapter 4: Multi-Agent Collaboration**, we will see how to scale this into 
 - Chapter 1: The ReAct Pattern
 - Chapter 2: Plan-and-Execute
 - Chapter 4: Multi-Agent Collaboration
+- [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) — critic evidence and calibrated scores can support approval and escalation decisions.
 
 ## Frequently Asked Questions
 

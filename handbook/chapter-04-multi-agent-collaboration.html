@@ -420,7 +420,7 @@
     return positions[-1] + f&quot;\n\nNo supermajority reached. Dissenting opinions:\n{dissent_block}&quot;
 </code></pre>
 <p><strong>Why not edit distance?</strong> Textual similarity measures whether two strings look alike — not whether the agents agree. Two agents can produce nearly identical text while holding opposite conclusions, or wildly different text that reaches the same verdict. Explicit voting (<code>vote_accept</code>) measures agreement directly: each agent is asked <em>"Do you accept this version as correct?"</em> and responds yes/no with reasoning.</p>
-<p>Consensus is a stopping signal, not proof of correctness. Agents can agree on the same wrong premise. High-stakes debates still need source checks, deterministic validation, or human review.</p>
+<p>Consensus is a stopping signal, not proof of correctness. Agents can agree on the same wrong premise. High-stakes debates still need source checks, deterministic validation, or human review through an explicit <a href="/handbook/chapter-07-human-in-the-loop.html">Human-in-the-Loop policy</a>.</p>
 <h3 id="preventing-echo-chambers">Preventing Echo Chambers</h3>
 <p>Multi-agent debates can devolve into agreement spirals — especially if all agents share the same base model. Mitigations:</p>
 <ul>
@@ -606,6 +606,7 @@
                                                                  │
                                                                  └── NO → Full automated debate with structured dissent audit trail
 </code></pre>
+<p>When the decision reaches a human gate, use <a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7's approval and escalation pattern</a>. A low model score is only a routing signal after calibration; it is not proof that an action is safe or unsafe.</p>
 <h3 id="adding-observability-from-day-one">Adding Observability from Day One</h3>
 <p>Multi-agent systems are distributed systems. Debugging them without observability is slow and unreliable. Every agent call should emit:</p>
 <ul>
@@ -639,6 +640,7 @@
 <li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — the Orchestrator's internal engine.</li>
 <li><a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> — the foundation of the Debate pattern.</li>
 <li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — the capability control plane used by the Orchestrator and Workers.</li>
+<li><a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a> — the terminating authority, approval gate, and escalation policy for consequential delegated actions.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Q: Should I start with a multi-agent system?</strong>

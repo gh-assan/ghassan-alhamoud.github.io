@@ -46,6 +46,7 @@ Core themes:
 - [Multi-Agent Collaboration](https://ghassan-alhamoud.com/handbook/chapter-04-multi-agent-collaboration.html): Orchestrators, worker handoffs, debate, topology choices, and production failure modes.
 - [Tool Use and Skill Registries](https://ghassan-alhamoud.com/handbook/chapter-05-tool-use-skill-registry.html): Reliable tool contracts, permission-first discovery, guarded execution, idempotency, observability, and governance.
 - [Memory & Context Management](https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html): Context budgets, validated compaction, governed memory writes, permissioned retrieval, provenance, lifecycle controls, and evaluation.
+- [Human-in-the-Loop](https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html): Risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable human oversight.
 
 ## External Profiles
 

@@ -2,7 +2,7 @@
   "handbook": {
     "title": "The AI-Native Engineering Handbook",
     "subtitle": "Production-tested patterns for building autonomous agents",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "baseUrl": "https://ghassan-alhamoud.com/handbook/",
     "author": {
       "name": "Ghassan Alhamoud",
@@ -25,7 +25,7 @@
         "diagram": "00-diagram.png",
         "ogImage": "/images/handbook/HDBK-000-agentic-landscape.webp",
         "prerequisites": [],
-        "relatedPatterns": ["react-pattern", "plan-and-execute"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "human-in-the-loop"],
         "publishedAt": "2026-07-01",
         "lastModified": "2026-07-01"
       },
@@ -63,7 +63,7 @@
         "diagram": "02-diagram.png",
         "ogImage": "/images/handbook/HDBK-002-plan-and-execute.webp",
         "prerequisites": ["agentic-landscape", "react-pattern"],
-        "relatedPatterns": ["react-pattern", "reflection"],
+        "relatedPatterns": ["react-pattern", "reflection", "human-in-the-loop"],
         "publishedAt": "2026-06-28",
         "lastModified": "2026-06-28"
       },
@@ -82,7 +82,7 @@
         "diagram": "03-diagram.png",
         "ogImage": "/images/handbook/HDBK-003-reflection.webp",
         "prerequisites": ["agentic-landscape", "react-pattern", "plan-and-execute"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "human-in-the-loop"],
         "publishedAt": "2026-06-28",
         "lastModified": "2026-06-28"
       },
@@ -101,7 +101,7 @@
         "diagram": "04-diagram.svg",
         "ogImage": "/images/handbook/HDBK-004-multi-agent-collaboration.svg",
         "prerequisites": ["react-pattern", "plan-and-execute", "reflection"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "tool-use-skill-registry"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "tool-use-skill-registry", "human-in-the-loop"],
         "publishedAt": "2026-07-05",
         "lastModified": "2026-07-23"
       },
@@ -120,7 +120,7 @@
         "diagram": "05-diagram.webp",
         "ogImage": "/images/handbook/HDBK-005-tool-use-skill-registry.webp",
         "prerequisites": ["react-pattern", "plan-and-execute", "multi-agent-collaboration"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "memory-context-management"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "memory-context-management", "human-in-the-loop"],
         "publishedAt": "2026-07-23",
         "lastModified": "2026-07-23"
       },
@@ -139,9 +139,28 @@
         "diagram": "HDBK-006-memory-context-management.webp",
         "ogImage": "/images/handbook/HDBK-006-memory-context-management.webp",
         "prerequisites": ["react-pattern", "plan-and-execute", "tool-use-skill-registry"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry", "human-in-the-loop"],
         "publishedAt": "2026-07-31",
         "lastModified": "2026-07-31"
+      },
+      {
+        "id": 7,
+        "slug": "human-in-the-loop",
+        "title": "Human-in-the-Loop",
+        "subtitle": "Keeping people in control",
+        "description": "Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight.",
+        "primaryKeyword": "human in the loop AI agents",
+        "keywords": ["human in the loop", "AI agent approval gates", "agent autonomy", "agent escalation", "delegation contract", "human oversight"],
+        "status": "published",
+        "difficulty": "advanced",
+        "readingTime": "27 min",
+        "file": "chapter-07-human-in-the-loop.md",
+        "diagram": "HDBK-007-human-in-the-loop.webp",
+        "ogImage": "/images/handbook/HDBK-007-human-in-the-loop.webp",
+        "prerequisites": ["react-pattern", "plan-and-execute", "multi-agent-collaboration", "tool-use-skill-registry", "memory-context-management"],
+        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry", "memory-context-management"],
+        "publishedAt": "2026-08-09",
+        "lastModified": "2026-08-09"
       }
     ]
   }

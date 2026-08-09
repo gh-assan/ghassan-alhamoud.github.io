@@ -220,6 +220,8 @@ def invoke_tool(call: ToolCall, identity: Identity, snapshot: RegistrySnapshot):
     return tool_runtime.execute(skill, arguments, identity)
 ```
 
+`ApprovalRequired` is a durable state transition, not a prompt response. [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) defines how to bind the approval to an exact action and authorized decider, handle expiry and revision, and resume without widening scope.
+
 ## 3. Tool Selection: Keep the Active Set Deliberate
 
 Tool-selection quality depends on more than tool count. Similar names, overlapping descriptions, large schemas, irrelevant tools, model choice, and task ambiguity all matter. There is no universal number at which a flat list fails.
@@ -523,6 +525,7 @@ In Chapter 6: Memory and Context Management, we will tackle short-term context, 
 - [Chapter 2: Plan-and-Execute](/handbook/chapter-02-plan-and-execute.html) — plan steps resolve into bounded actions.
 - [Chapter 3: The Reflection Pattern](/handbook/chapter-03-reflection.html) — deterministic checks and critics can validate tool results.
 - [Chapter 4: Multi-Agent Collaboration](/handbook/chapter-04-multi-agent-collaboration.html) — Worker capabilities and handoff contracts depend on the registry.
+- [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) — approval gates and escalation policies enforced at the tool boundary.
 
 ## Frequently Asked Questions
 

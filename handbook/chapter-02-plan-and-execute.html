@@ -358,7 +358,7 @@ def plan_and_execute(goal, tools):
 <li><strong>Over-Planning</strong>: Planner generates 20+ steps. </li>
 <li><em>Mitigation</em>: Use a "Sliding Window" plan. Limit initial plans to 5-7 steps; the final step should be "Assess remaining goal."</li>
 <li><strong>Plan Oscillation</strong>: Re-Planner loops between two failing approaches.</li>
-<li><em>Mitigation</em>: Implement a global <code>MAX_REPLANS</code> counter. If reached, escalate to human approval or fail safely.</li>
+<li><em>Mitigation</em>: Implement a global <code>MAX_REPLANS</code> counter. If reached, use the approval or escalation policy from <a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a>, or fail safely.</li>
 <li><strong>Dependency Deadlock</strong>: Task A depends on B, and B depends on A (circular).</li>
 <li><em>Mitigation</em>: Validate the JSON Plan against a Directed Acyclic Graph (DAG) check before starting execution.</li>
 </ul>

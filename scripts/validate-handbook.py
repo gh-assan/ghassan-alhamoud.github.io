@@ -192,6 +192,7 @@ def main():
         print("\nAll handbook pages validated successfully.")
     else:
         print("\nValidation completed with errors.")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 7: Human-in-the-Loop — AI-Native Engineering Handbook</title>
+  <meta name="description" content="Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html" />
+  <meta property="og:title" content="Chapter 7: Human-in-the-Loop — Keeping people in control" />
+  <meta property="og:description" content="Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-007-human-in-the-loop.webp" />
+  <meta property="article:published_time" content="2026-08-09" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html" />
+  <meta property="twitter:title" content="Chapter 7: Human-in-the-Loop — Keeping people in control" />
+  <meta property="twitter:description" content="Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-007-human-in-the-loop.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Human-in-the-Loop \u2014 Keeping people in control",
+  "description": "Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The AI-Native Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/handbook/"
+  },
+  "datePublished": "2026-08-09",
+  "dateModified": "2026-08-09",
+  "image": "https://ghassan-alhamoud.com/images/handbook/HDBK-007-human-in-the-loop.webp",
+  "learningResourceType": "Chapter",
+  "position": 7,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Handbook",
+      "item": "https://ghassan-alhamoud.com/handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Human-in-the-Loop",
+      "item": "https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Should every agent action require human approval?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Approval is a scarce resource. Classify actions by authority, impact, reversibility, exposure, aggregate value, and applicable policy. Bounded internal actions can often run autonomously; consequential actions need the control selected by the threat model and policy. Externality raises risk, but it does not make every external action identical."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent the agent from gaming approval thresholds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enforce thresholds in the permission layer with aggregation, not per-call checks: sum financial actions per session, rate-limit external writes, and flag patterns that split one large action into several small ones. A gate that checks \"is this single action over \u20ac500?\" while the agent fires five \u20ac400 actions is not a gate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the approver doesn't respond?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The approval expires and the gate fails closed: abort the action or route it to a configured fallback approver who satisfies the required role. Never silently proceed on an expired approval. Timeouts should be short enough that \"approved\" still describes the world."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is human-in-the-loop different from just having a human review the output?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The timing and authority differ. In approve-on-action, the human authorizes a side effect before it occurs. In approve-on-commit, the agent prepares a staged artifact and a human authorizes making it durable or visible. Post-hoc review happens after the side effect and is monitoring, not approval. Choose among them from the action's risk and reversibility."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much should the agent ask? How do I know if it's too much?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set a friction budget for non-urgent attention, batch compatible decisions, and measure decision quality and outcomes. Never let budget exhaustion bypass a mandatory gate. If people approve without review, reduce unnecessary asks and improve the evidence before adding more checkpoints."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a confirmed memory ever need re-confirmation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, when the world changes. Confirmation is a point-in-time judgment. A \"confirmed\" status means a human reviewed the belief, not that the belief is eternally true. Supersession (Chapter 6) handles updates; re-confirmation matters for facts with expiry or when the evidence chain changes."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">HDBK-007</span>
+          <h1 class="handbook-hero__title">Human-in-the-Loop</h1>
+          <p class="handbook-hero__subtitle">Keeping people in control</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 7</span>
+            <span class="handbook-hero__dot">•</span><span>27 min</span>
+            <span class="handbook-hero__dot">•</span><span>Advanced</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-08-09</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><ul><li><a href="/handbook/chapter-01-react-pattern.html">The ReAct Pattern</a></li><li><a href="/handbook/chapter-02-plan-and-execute.html">The Plan-and-Execute Pattern</a></li><li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Multi-Agent Collaboration</a></li><li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Tool Use and Skill Registries</a></li><li><a href="/handbook/chapter-06-memory-context-management.html">Memory & Context Management</a></li></ul></div>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Reading time:</strong> 27 min | <strong>Last revised:</strong> 2026-08-09 | <strong>Version:</strong> 1.2</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>Autonomy is a per-action decision, not a global setting. Classify each action by impact, reversibility, exposure, value, and applicable policy. Gate actions whose downside exceeds the organization's risk tolerance; let bounded, reversible actions proceed under monitoring. A human approval is useful only when the approver has authority, enough context, and a real opportunity to disagree. Bind every decision to an exact action, expire it, re-check preconditions, and record the result. A vague gate does not create control. It creates rubber-stamping with an audit trail.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — human input arrives in the loop as an observation; the loop is where you insert a stop.</li>
+<li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — plan steps and checkpoints are the natural places to pause and ask.</li>
+<li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Chapter 4: Multi-Agent Collaboration</a> — delegation chains between agents still need to terminate in a human authority.</li>
+<li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — tool permissioning is the enforcement layer where approval gates actually bite.</li>
+<li><a href="/handbook/chapter-06-memory-context-management.html">Chapter 6: Memory &amp; Context Management</a> — the write policy and review queue are where humans correct what the agent believes.</li>
+</ul>
+<hr />
+<p>Friday, 17:42. Your release agent has been running for an hour. It has built the artifact, run the test suite, and staged the deployment. Now it wants to push to production. The approval request arrives on your phone: <em>"Deploy v2.4.1 to production? 412 builds passed, 3 flaky tests quarantined, rollback verified. Estimated blast radius: payments API. Approve / Deny / Revise."</em></p>
+<p>You are not being asked because the agent is weak. You are being asked because the action is consequential. Somewhere between "the agent does everything" and "the agent does nothing," there is a line and where you draw it determines whether your system is a tool or a liability. This chapter is about drawing that line deliberately.</p>
+<figure class="diagram-panel"><img src="/images/handbook/HDBK-007-human-in-the-loop.webp" alt="HDBK-007 Human-in-the-Loop control architecture" loading="lazy" /><figcaption>Figure 1: Human oversight is configured per action. The autonomy policy selects where approval is required, the gate binds a decision to a specific proposal, and escalation routes exceptions without weakening the protected action's policy.</figcaption></figure>
+<h2 id="1-the-autonomy-spectrum">1. The Autonomy Spectrum</h2>
+<p>Human oversight is not binary. Between full teleoperation and full autonomy there is a spectrum, and the useful question is not "is there a human in the loop?" but "<strong>at which actions, and with what latency, does a human weigh in?</strong>"</p>
+<h3 id="the-spectrum">The Spectrum</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Code</th>
+<th>What the Human Does</th>
+<th>Latency Cost</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Teleoperation</strong></td>
+<td><code>AUTONOMY_TELEOPERATE</code></td>
+<td>Selects or directly commands each action</td>
+<td>Seconds per action</td>
+<td>Unproven capability, new domain, incident response</td>
+</tr>
+<tr>
+<td><strong>Approve-on-action</strong></td>
+<td><code>AUTONOMY_APPROVE</code></td>
+<td>Approves before consequential actions; routine actions flow</td>
+<td>Seconds per gate</td>
+<td>Production agents with real blast radius</td>
+</tr>
+<tr>
+<td><strong>Approve-on-commit</strong></td>
+<td><code>AUTONOMY_COMMIT</code></td>
+<td>Lets the agent act, but requires approval before the change becomes durable/visible</td>
+<td>Minutes to hours</td>
+<td>Drafting, staging, non-public writes</td>
+</tr>
+<tr>
+<td><strong>Escalate-on-exception</strong></td>
+<td><code>AUTONOMY_ESCALATE</code></td>
+<td>Intervenes when policy, risk, or calibrated uncertainty crosses a threshold</td>
+<td>Variable</td>
+<td>Mature agents with evaluated exception detection</td>
+</tr>
+<tr>
+<td><strong>Full autonomy</strong></td>
+<td><code>AUTONOMY_FULL</code></td>
+<td>Monitors or audits after the fact; does not approve in-path</td>
+<td>None in-path</td>
+<td>Bounded, reversible, low-risk, high-volume actions</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Code</code> column is not decoration: the same five values appear in the classification function below and in the delegation contract (Section 6). Keep one vocabulary everywhere three parallel naming schemes is how action classes fall through cracks.</p>
+<p>Most production systems are not at one level. They are a <strong>mixture</strong>: full autonomy for bounded internal work, approve-on-commit for reviewed artifacts, approve-on-action for consequential side effects, and exception-based escalation for conditions the policy cannot safely classify. Draw the boundary per action and destination, not per agent.</p>
+<h3 id="blast-radius-is-the-core-variable">Blast Radius Is the Core Variable</h3>
+<p>What turns a routine action into a consequential one? Four dimensions:</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Question</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Irreversibility</strong></td>
+<td>Can this be undone, and at what cost?</td>
+<td>Deleting a table vs. creating a draft</td>
+</tr>
+<tr>
+<td><strong>Externality</strong></td>
+<td>Does it affect people or systems outside the agent's controlled environment?</td>
+<td>Sending an email vs. editing a local draft</td>
+</tr>
+<tr>
+<td><strong>Value</strong></td>
+<td>How much money, time, or trust is at stake?</td>
+<td>Refunding €500 vs. reordering a pen</td>
+</tr>
+<tr>
+<td><strong>Policy</strong></td>
+<td>Do law, contract, safety rules, or internal policy require specific oversight?</td>
+<td>A legally significant automated decision, contract execution, clinical advice</td>
+</tr>
+</tbody>
+</table>
+<p>A useful starting rule: <strong>proceed on authorized, bounded, reversible, low-risk actions; gate actions that are irreversible, externally visible, high-value, safety-relevant, or policy-bound.</strong> Reversibility is not a free pass: a deleted record may be restored while a leaked secret or sent message cannot be recalled. When possible, reduce the risk before adding a gate. Draft instead of send, stage instead of deploy, use a recoverable delete, cap the transaction, or require a separate publish step.</p>
+<p>This framing is not new. Sheridan and Verplank's classic levels-of-automation work mapped how control can move between human and machine. Modern agent systems sharpen the operational problem: one mistaken decision can be repeated at machine speed and scale. NIST's AI Risk Management Framework therefore calls for human roles, responsibilities, and oversight processes to be explicitly defined and assessed rather than assumed.</p>
+<h3 id="autonomy-is-a-per-action-decision">Autonomy Is a Per-Action Decision</h3>
+<pre><code class="language-python">def autonomy_level(action, context):
+    if not context.actor.can_request(action):
+        return AUTONOMY_TELEOPERATE   # no delegated authority
+    if action.policy_requires_approval:
+        return AUTONOMY_APPROVE       # law or policy requires a decision
+    if action.aggregate_value(context.window) &gt; context.high_value_threshold:
+        return AUTONOMY_APPROVE       # gate before acting
+    if action.irreversible or action.exposes_sensitive_data:
+        return AUTONOMY_APPROVE
+    if action.can_stage_before_commit:
+        return AUTONOMY_COMMIT
+    if action.reversible and action.bounded and not action.external:
+        return AUTONOMY_FULL          # act, notify afterwards
+    return AUTONOMY_ESCALATE          # fallback: unclassified actions escalate
+</code></pre>
+<p>Check order matters. Authority, policy, aggregate value, sensitive-data exposure, and irreversibility are evaluated <strong>before</strong> the reversibility shortcut. Aggregation prevents a large action from being split into smaller calls to avoid a threshold. The final branch is the fallback: an action the policy cannot classify does not inherit permission by accident.</p>
+<p>The important property: the decision is <strong>computed from the action and the context</strong>, not hardcoded per agent. The same agent can be fully autonomous for internal refactors and gated for anything touching production. This is what makes the spectrum a policy rather than a personality trait.</p>
+<h2 id="2-what-deserves-an-approval-gate">2. What Deserves an Approval Gate</h2>
+<p>A gate is a checkpoint where the agent must stop and obtain authorization before an action proceeds. Gates cost human attention, so they must be earned. The discipline: <strong>classify actions first, then place gates.</strong></p>
+<h3 id="the-action-classification">The Action Classification</h3>
+<table>
+<thead>
+<tr>
+<th>Action Class</th>
+<th>Examples</th>
+<th>Gate?</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authorized read-only</strong></td>
+<td>Read a permitted file, run a bounded query</td>
+<td>Usually no</td>
+<td>No side effect, but data scope and query cost still apply</td>
+</tr>
+<tr>
+<td><strong>Reversible internal</strong></td>
+<td>Edit a draft, create a branch, run a test</td>
+<td>Usually no; notify as needed</td>
+<td>Bounded and recoverable</td>
+</tr>
+<tr>
+<td><strong>External communication</strong></td>
+<td>Send an email, post a message, reply to a ticket</td>
+<td>Approve-on-action unless an explicit policy delegates it</td>
+<td>The side effect occurs at send time and may be impossible to recall</td>
+</tr>
+<tr>
+<td><strong>Staged external write</strong></td>
+<td>Prepare a pull-request description or page draft in a controlled workspace</td>
+<td>Approve-on-commit</td>
+<td>Work is reviewable before it becomes visible or durable</td>
+</tr>
+<tr>
+<td><strong>Destructive</strong></td>
+<td>Drop a table, permanently delete data, overwrite without versioning</td>
+<td>Approve or block</td>
+<td>Recovery may be impossible or incomplete</td>
+</tr>
+<tr>
+<td><strong>Financial</strong></td>
+<td>Issue a refund, make a payment, change a price</td>
+<td>Thresholded approval, often dual control</td>
+<td>Money, fraud, and audit exposure</td>
+</tr>
+<tr>
+<td><strong>Privileged or sensitive</strong></td>
+<td>Deploy, elevate permissions, access customer data</td>
+<td>Approve with evidence and least privilege</td>
+<td>Large blast radius and confidentiality risk</td>
+</tr>
+<tr>
+<td><strong>Policy-bound</strong></td>
+<td>Execute a contract or make a regulated high-impact decision</td>
+<td>Apply the specific required control</td>
+<td>Requirements depend on jurisdiction, role, and use case</td>
+</tr>
+</tbody>
+</table>
+<p>The table is a baseline, not legal advice or a substitute for a threat model. For example, GDPR Article 22 addresses certain decisions based solely on automated processing that produce legal or similarly significant effects; it does not say every erasure request requires a human decision. Translate the law and your contracts into precise policy with qualified counsel.</p>
+<h3 id="gate-placement">Gate Placement</h3>
+<p>Gates belong <strong>between the agent and the world</strong>, not inside the agent's reasoning. Three rules:</p>
+<ol>
+<li><strong>Gate at the tool boundary.</strong> The enforcement lives in the tool permission layer (Chapter 5), not in the prompt. A prompt can ask nicely; a permission layer refuses.</li>
+<li><strong>Gate before the irreversible step, not before the pipeline.</strong> Do not make the human approve "start the job" when the dangerous part is "delete the old table" an hour in. The gate should sit on the destructive call itself.</li>
+<li><strong>Treat novelty as evidence, not permission.</strong> First-time or out-of-distribution actions should start under tighter supervision. Repeated approval can justify a reviewed policy change only when outcomes support it; repetition alone does not make an action safe.</li>
+</ol>
+<h3 id="ask-dont-narrate">Ask, Don't Narrate</h3>
+<p>There are two ways to involve a human: <strong>asking</strong> (a decision is required before the action proceeds) and <strong>telling</strong> (the action proceeds and a notification lands afterwards). Asking is expensive; telling is cheap. The classification table above is really a rule for choosing between them. A common mistake is to make everything an ask, which guarantees the human stops reading. Reserve asks for the classes that earned them.</p>
+<h2 id="3-the-approval-gate-pattern">3. The Approval Gate Pattern</h2>
+<p>An approval gate is a state machine with four states and a well-defined lifecycle.</p>
+<h3 id="the-lifecycle">The Lifecycle</h3>
+<pre><code>propose → present → decide → validate → execute
+              │          │          ├─ valid   → claim idempotency key → run
+              │          │          └─ stale   → expire and re-propose
+              │          ├─ deny    → abort
+              │          ├─ revise  → supersede and re-propose (capped)
+              │          └─ expire  → stop action or route to fallback approver
+              └─ revision limit hit → escalate or abort
+</code></pre>
+<ol>
+<li><strong>Propose.</strong> The agent assembles the action, its justification, its cost, and its risks into a structured proposal.</li>
+<li><strong>Present.</strong> The proposal reaches the right human through the right channel, with everything needed to decide.</li>
+<li><strong>Decide.</strong> An authorized human approves, denies, or requests a revision. Record the authenticated identity, role, channel, rationale, and timestamp.</li>
+<li><strong>Validate and execute.</strong> Verify that the decision covers the exact action, has not expired or been consumed, and still satisfies current preconditions. Then execute once under a stable operation key.</li>
+</ol>
+<h3 id="what-a-good-approval-request-contains">What a Good Approval Request Contains</h3>
+<p>A request that cannot be answered in thirty seconds is a request that will be rubber-stamped or ignored. Include:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What</strong> — the exact action and its parameters</td>
+<td>No ambiguity about what will happen</td>
+</tr>
+<tr>
+<td><strong>Why now</strong> — the trigger and context</td>
+<td>The human can judge urgency</td>
+</tr>
+<tr>
+<td><strong>Cost</strong> — money, resources, time</td>
+<td>Obvious, often forgotten</td>
+</tr>
+<tr>
+<td><strong>Risk</strong> — what could go wrong and the mitigation</td>
+<td>The human needs the worst case, not the best case</td>
+</tr>
+<tr>
+<td><strong>Alternatives</strong> — what else was considered and rejected</td>
+<td>Shows the agent explored, not just decided</td>
+</tr>
+<tr>
+<td><strong>Expiry</strong> — how long the request stays valid</td>
+<td>Prevents stale approvals</td>
+</tr>
+<tr>
+<td><strong>Scope</strong> — resource, environment, destination, and maximum effect</td>
+<td>Prevents a narrow approval from authorizing a broader action</td>
+</tr>
+<tr>
+<td><strong>Evidence</strong> — checks, diffs, policy result, and rollback readiness</td>
+<td>Lets the approver verify claims instead of trusting a summary</td>
+</tr>
+</tbody>
+</table>
+<p>A good proposal can reuse work the agent already did: the reflection critic from <a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> is a natural source for the <em>why now</em> and <em>risk</em> fields the critic's assessment of the proposed action becomes the justification a human reads.</p>
+<h3 id="the-gate-implemented">The Gate, Implemented</h3>
+<pre><code class="language-python">class ApprovalGate:
+    def run(self, action, context, operation_id, revision=0):
+        assessment = self.policy.evaluate(action, context)
+        if assessment.effect == &quot;deny&quot;:
+            return abort(action, reason=assessment.reason)
+        if assessment.effect == &quot;allow&quot;:
+            return self.executor.execute_once(operation_id, action)
+
+        proposal = self.store.create_proposal(
+            proposal_id=uuid4(),
+            operation_id=operation_id,       # stable across retries
+            action_digest=canonical_hash(action),
+            requested_scope=action.scope(),
+            required_role=assessment.approver_role,
+            what=action.describe(),
+            why_now=context.trigger,
+            cost=action.estimate_cost(),
+            risk=action.worst_case(),
+            evidence=action.validation_evidence(),
+            alternatives=action.considered_alternatives(),
+            expires_at=now() + assessment.ttl,
+        )
+        self.notifier.present(proposal)
+        decision = self.notifier.wait(proposal, timeout=assessment.ttl)
+
+        if decision is None:
+            return self.router.on_timeout(proposal)  # abort or fallback approver
+        if not self.authorizer.valid_decider(decision.actor, proposal.required_role):
+            return abort(action, reason=&quot;unauthorized_approver&quot;)
+        if not self.store.consume_decision_once(decision, proposal):
+            return abort(action, reason=&quot;invalid_or_replayed_decision&quot;)
+        if decision.kind == &quot;deny&quot;:
+            return abort(action, reason=decision.reason)
+        if decision.kind == &quot;revise&quot;:
+            if revision &gt;= self.policy.max_revisions:
+                return self.router.on_revision_limit(proposal)
+            self.store.supersede(proposal)
+            return self.run(
+                action.with_changes(decision.changes),
+                context,
+                operation_id,
+                revision + 1,
+            )
+
+        if canonical_hash(action) != proposal.action_digest:
+            return abort(action, reason=&quot;approval_scope_mismatch&quot;)
+        if proposal.expired() or not action.preconditions_still_hold():
+            return abort(action, reason=&quot;stale_approval&quot;)
+
+        return self.executor.execute_once(operation_id, action)
+</code></pre>
+<h3 id="the-details-that-make-or-break-it">The Details That Make or Break It</h3>
+<ol>
+<li><strong>Bind approval to immutable intent.</strong> Store a canonical digest of the action, arguments, resource, environment, destination, and policy version. Any material revision invalidates the old approval and creates a new proposal. A screenshot or free-text “yes” is not sufficient authority.</li>
+<li><strong>Authenticate and authorize the decider.</strong> Approval identity is separate from delivery identity. A message arriving through a valid channel does not prove that the sender has the required role. Protect the decision against replay and require separation of duties where the risk model calls for it.</li>
+<li><strong>Re-validate preconditions.</strong> Between approval and execution, a file may change, a price may move, or a branch may merge. Use version tokens, hashes, or conditional writes. When they no longer match, expire the approval and re-propose instead of executing a nearby action.</li>
+<li><strong>Expiry is mandatory; the protected action fails closed.</strong> No approval is valid forever. On timeout, the action does not proceed. The workflow may <em>fail over</em> to another authorized approver, but that is not fail-open: the same gate and evidence requirements remain in force.</li>
+<li><strong>Separate proposal identity from operation identity.</strong> A proposal ID identifies one approval attempt. A stable operation ID deduplicates execution across retries. Even then, “exactly once” is not guaranteed by a UUID: the executor needs an atomic idempotency record, durable result storage, and downstream support or reconciliation.</li>
+<li><strong>Support asynchronous work without leaking side effects.</strong> The agent may continue in an isolated workspace while a commit waits, provided later work cannot make the pending action broader or externally visible. The gate blocks the side effect, not unrelated computation.</li>
+<li><strong>Learn through policy review, not approval counts.</strong> Repeated successful approvals are evidence for proposing a narrower policy change. They do not silently widen authority. Evaluate outcomes, obtain consent, version the contract, and make rollback possible.</li>
+<li><strong>Make decisions observable.</strong> Record proposal, policy version, evidence, decider, rationale, timestamps, expiry, action digest, execution result, and correlation IDs. Protect the log from alteration and avoid storing unnecessary sensitive payloads.</li>
+</ol>
+<h3 id="sync-vs-async-vs-deferred">Sync vs. Async vs. Deferred</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Agent Behavior</th>
+<th>Human Behavior</th>
+<th>Use When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sync</strong></td>
+<td>Blocks until decision</td>
+<td>Interrupts to decide now</td>
+<td>Irreversible, urgent, high-value</td>
+</tr>
+<tr>
+<td><strong>Async</strong></td>
+<td>Keeps working in sandbox</td>
+<td>Decides when convenient</td>
+<td>Approve-on-commit actions</td>
+</tr>
+<tr>
+<td><strong>Deferred</strong></td>
+<td>Executes, reports after</td>
+<td>Reviews a report later</td>
+<td>Reversible, low-value, needs audit</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-escalation-and-interruption">4. Escalation and Interruption</h2>
+<p>Not everything that needs a human is a pre-approved action. Sometimes the agent must <strong>stop and raise its hand</strong> because it is out of its depth. Escalation is the mechanism; interruption is the cost.</p>
+<h3 id="when-to-raise-the-hand">When to Raise the Hand</h3>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Example</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Low confidence</strong></td>
+<td>Model confidence below a calibrated threshold on a consequential step</td>
+<td>Escalate</td>
+</tr>
+<tr>
+<td><strong>Policy boundary</strong></td>
+<td>Action falls outside the delegation contract's scope</td>
+<td>Escalate, never improvise</td>
+</tr>
+<tr>
+<td><strong>Novelty</strong></td>
+<td>First time this action class is attempted</td>
+<td>Escalate</td>
+</tr>
+<tr>
+<td><strong>Cost spike</strong></td>
+<td>Estimated cost or rate exceeds the contract's limits</td>
+<td>Escalate</td>
+</tr>
+<tr>
+<td><strong>Conflict</strong></td>
+<td>New instruction contradicts a stored constraint (Chapter 6)</td>
+<td>Escalate; never silently override</td>
+</tr>
+<tr>
+<td><strong>Credential boundary</strong></td>
+<td>Action requires privileges the agent does not have</td>
+<td>Escalate, never work around</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-escalation-ladder">The Escalation Ladder</h3>
+<p>Escalation is a routing menu, not a pipeline: pick the cheapest rung that resolves the situation you do not climb every rung. What matters is that each rung's failure has a defined next step:</p>
+<pre><code>notify  →  ask  →  page  →  block
+  │          │        │        │
+  info       decision  urgent   hard stop,
+  (log it)   (gate)    (SMS/    (require human
+                       phone)   to unblock)
+</code></pre>
+<ul>
+<li><strong>Notify</strong> — tell a human after the fact. For reversible actions that should be observed.</li>
+<li><strong>Ask</strong> — the approval gate from Section 3. For consequential actions.</li>
+<li><strong>Page</strong> — urgent, time-sensitive escalation: "the nightly job is about to miss its SLA, approve the fallback plan." Uses a high-priority channel and includes everything the human needs to decide in one message.</li>
+<li><strong>Block</strong> — the hard stop. The agent refuses to proceed, no matter what, until a human explicitly unblocks. Used when the agent detects it is being manipulated (for example, instruction-shaped content from an untrusted source, Chapter 6), when policy is ambiguous, or when a paged human does not respond in time.</li>
+</ul>
+<p>Fail-closed applies to the protected action: without a valid approval, it does not run. The surrounding workflow can still <strong>fail over to a fallback approver</strong> or take a separately authorized safe action. Failover must preserve the same evidence, role, and policy requirements; it is not permission to bypass the gate. Reserve a hard block for cases where no safe fallback exists.</p>
+<h3 id="interrupting-long-running-work-safely">Interrupting Long-Running Work Safely</h3>
+<p>A long-running agent cannot just drop everything. The safe interruption pattern:</p>
+<ol>
+<li><strong>Checkpoint at task boundaries</strong> (the Chapter 6 pattern), so the agent can pause and resume without losing decisions or state.</li>
+<li><strong>Use the tool's cancellation contract.</strong> Cancel only when the operation is explicitly cancellation-safe. Otherwise let it reach a known terminal state, or run a documented compensating action. A process kill during an external write can leave the world half-changed.</li>
+<li><strong>Quiesce dependent work.</strong> Do not start steps whose inputs or authority depend on the pending decision. Independent work may continue inside its existing permissions.</li>
+<li><strong>Resume with a diff.</strong> On resume, show what completed, what remains, and which preconditions changed. Re-evaluate policy before continuing.</li>
+<li><strong>Model interruption as a state.</strong> “Paused for human” is not a generic error. It has a checkpoint, owner, deadline, allowed transitions, and recovery path.</li>
+</ol>
+<h3 id="the-context-switch-tax">The Context-Switch Tax</h3>
+<p>Every interruption costs the human attention they were spending elsewhere. Two mitigations matter: <strong>batch</strong> (collect pending decisions and present them in one review session, not one message per decision) and <strong>schedule</strong> (for non-urgent decisions, present them at a predictable checkpoint rather than instantly). Both are policies, not implementation details put them in the delegation contract.</p>
+<h2 id="5-human-review-of-agent-beliefs">5. Human Review of Agent Beliefs</h2>
+<p>The most subtle human-in-the-loop surface is not actions it is <strong>beliefs</strong>. Chapter 6 established the write policy: model inferences about people should go to a review queue, not directly into memory. This section is the interaction pattern around that queue.</p>
+<h3 id="provisional-vs-confirmed">Provisional vs. Confirmed</h3>
+<p>A memory record needs both a belief status and source trust. The agent may <strong>act provisionally</strong> on a tentative belief only within policy. Human confirmation raises confidence in a claim; it does not override data permissions, freshness requirements, or the human's authority to attest to it.</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Can It Drive Consequential Action?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Observed</strong></td>
+<td>Directly recorded from a named source; not yet validated</td>
+<td>Only if source trust, freshness, and policy allow it</td>
+</tr>
+<tr>
+<td><strong>Provisional</strong></td>
+<td>Model inference, flagged as unconfirmed</td>
+<td>Reversible actions only</td>
+</tr>
+<tr>
+<td><strong>Confirmed</strong></td>
+<td>An authorized human reviewed the claim and evidence</td>
+<td>Only within the confirmation's scope and lifetime</td>
+</tr>
+<tr>
+<td><strong>Superseded</strong></td>
+<td>Replaced by a newer confirmed record</td>
+<td>No resolved before retrieval (Chapter 6)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-belief-correction-loop">The Belief-Correction Loop</h3>
+<pre><code>agent proposes belief + evidence + source trust
+        │
+        ▼
+policy permits provisional use? ──yes──► bounded use, no durable promotion
+        │ no
+        ▼
+present to authorized reviewer: &quot;I believe X, because Y&quot;
+        │
+        ├── confirm ──► write memory record (status: confirmed, source: human)
+        ├── correct  ──► write corrected record, supersede old (Chapter 6)
+        └── abstain  ──► no write; agent continues without the belief
+</code></pre>
+<p>Three properties make this loop trustworthy:</p>
+<ol>
+<li><strong>Evidence travels with the belief.</strong> The human must see <em>why</em> the agent believes something, the source's trust class, and when it was observed. "I believe the vendor is Northwind B.V. source: authorized user correction on 2026-07-31, message 88" is reviewable; "the vendor is Northwind B.V." is not.</li>
+<li><strong>The human corrects the record, not the agent.</strong> When the human says "no, it's Northwind GmbH," the correction writes a new version that supersedes the old one (the Chapter 6 pattern). The agent does not need to "remember to forget" the memory system resolves it.</li>
+<li><strong>Abstention is a valid outcome.</strong> If the human says "I don't know," the system must not write a guess. It continues without the belief, and the retrieval path (Chapter 6) can return an empty result rather than a fabricated fact.</li>
+</ol>
+<h3 id="calibrate-dont-guess">Calibrate, Don't Guess</h3>
+<p>Escalation-on-low-confidence works only when the score used for routing is <strong>calibrated on the decision being gated</strong>. Do not assume a model's verbal “90% confident” is a probability. Build a risk or quality score from measurable signals such as policy matches, retrieval coverage, deterministic validation, critic results, and historical error rates. On a representative labeled set, compare score bands with observed outcomes, choose thresholds against the cost of false allows and false escalations, and monitor drift. The critic loop from <a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> can contribute a signal, but it must itself be evaluated. Never ship an escalation threshold you have not measured on your workload.</p>
+<h2 id="6-delegation-contracts-and-the-friction-budget">6. Delegation Contracts and the Friction Budget</h2>
+<p>A human-in-the-loop system needs an explicit agreement about what the agent may do, what it must ask about, and how much human attention it is allowed to consume. This is the <strong>delegation contract</strong>.</p>
+<h3 id="the-contract">The Contract</h3>
+<pre><code class="language-json">{
+  &quot;agent&quot;: &quot;release-agent&quot;,
+  &quot;principal&quot;: &quot;release-service-account&quot;,
+  &quot;scope&quot;: &quot;build, test, stage&quot;,
+  &quot;action_classes&quot;: {
+    &quot;read_internal&quot;:     &quot;AUTONOMY_FULL&quot;,
+    &quot;external_write&quot;:    &quot;AUTONOMY_COMMIT&quot;,
+    &quot;deploy_production&quot;: &quot;AUTONOMY_APPROVE&quot;,
+    &quot;delete_data&quot;:       &quot;BLOCK&quot;
+  },
+  &quot;thresholds&quot;: {
+    &quot;high_value&quot;: 500,
+    &quot;max_cost_per_run&quot;: 50,
+    &quot;max_rate&quot;: {&quot;requests_per_minute&quot;: 60}
+  },
+  &quot;escalation&quot;: {
+    &quot;page_after_minutes&quot;: 10,
+    &quot;required_role&quot;: &quot;release-approver&quot;,
+    &quot;fallback_role&quot;: &quot;incident-commander&quot;,
+    &quot;max_revisions&quot;: 2
+  },
+  &quot;friction_budget&quot;: {
+    &quot;max_asks_per_day&quot;: 10,
+    &quot;batch_window_minutes&quot;: 30,
+    &quot;on_exhaustion&quot;: &quot;batch_or_pause&quot;
+  },
+  &quot;policy_version&quot;: &quot;release-policy/12&quot;,
+  &quot;expires_at&quot;: &quot;2026-09-01T00:00:00Z&quot;
+}
+</code></pre>
+<p>The <code>action_classes</code> values use the autonomy vocabulary from Section 1, plus <code>BLOCK</code>, which is a policy denial rather than an autonomy level. The contract names roles rather than individual inboxes, separates the agent from its runtime principal, and versions the policy used for each decision. In a real schema, also define resources, environments, destinations, data classes, aggregation windows, approver separation, and safe fallback actions.</p>
+<p>The contract is policy-as-code: it is versioned, reviewable, and — crucially — <strong>enforced by the permission layer</strong>, not by a prompt. A prompt that says "remember to ask before deploying" is a suggestion; the contract is a gate.</p>
+<h3 id="the-friction-budget">The Friction Budget</h3>
+<p>Human attention is the scarcest resource in the system. Give it a budget:</p>
+<ul>
+<li><strong>Max asks per day.</strong> A load-shedding threshold for non-urgent review. Exhausting it must never downgrade an action from required approval to execute-and-report. Batch, pause, reroute, or block according to policy.</li>
+<li><strong>Batch window.</strong> Collect decisions and present them together. A human reviewing five proposals in one session spends far less than five interrupted sessions.</li>
+<li><strong>Learn, then review.</strong> Repeated approvals with successful outcomes can become a policy-change candidate through the Chapter 6 write path. A human reviews the proposed scope, evidence, expiry, and rollback before the contract changes. The runtime never edits its own authority.</li>
+</ul>
+<h3 id="the-rubber-stamp-failure-mode">The Rubber-Stamp Failure Mode</h3>
+<p>When asks are frequent, vague, or almost always approved, the human stops reading and clicks "approve." This is <strong>rubber-stamp approval</strong>: the workflow records a decision without gaining meaningful judgment. The defenses are upstream—fewer asks, better evidence, independent verification, calibrated routing, and enough time and authority to refuse. Measure suspiciously fast decisions, approval concentration, override rates, post-approval incidents, and sampled review quality. Do not secretly plant dangerous-looking approvals to test people; any simulation or control test should be governed, non-harmful, and disclosed to the responsible assurance function.</p>
+<h2 id="7-evaluate-the-oversight-system">7. Evaluate the Oversight System</h2>
+<p>A gate is not effective because it exists. It is effective when it reduces expected harm at an acceptable cost without transferring the same risk to an overloaded approver. Evaluate the combined human-machine system, not just the model.</p>
+<h3 id="start-with-decision-outcomes">Start with Decision Outcomes</h3>
+<p>For each action class, maintain a labeled evaluation set containing ordinary cases, boundary cases, policy violations, stale approvals, adversarial instructions, and changed preconditions. Replay the policy and presentation layer without executing the side effect. Measure:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Question It Answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unsafe-allow rate</strong></td>
+<td>How often did the system execute an action that policy or a qualified reviewer says should have been blocked?</td>
+</tr>
+<tr>
+<td><strong>Unnecessary-escalation rate</strong></td>
+<td>How often did a safe, delegated action consume human attention?</td>
+</tr>
+<tr>
+<td><strong>Decision quality</strong></td>
+<td>Did the approver reach the correct decision with the evidence presented?</td>
+</tr>
+<tr>
+<td><strong>Time to decision</strong></td>
+<td>Can the right person respond before the approval becomes stale?</td>
+</tr>
+<tr>
+<td><strong>Override and revision rate</strong></td>
+<td>Are humans adding judgment, or merely confirming the default?</td>
+</tr>
+<tr>
+<td><strong>Stale-precondition catch rate</strong></td>
+<td>Does validation stop actions whose target state changed after approval?</td>
+</tr>
+<tr>
+<td><strong>Duplicate-effect rate</strong></td>
+<td>Do retries or concurrent workers repeat a side effect?</td>
+</tr>
+<tr>
+<td><strong>Fallback success rate</strong></td>
+<td>Does routing reach an authorized fallback without weakening the gate?</td>
+</tr>
+</tbody>
+</table>
+<p>Optimize against asymmetric cost. One unsafe payment may matter more than hundreds of unnecessary escalations, while an emergency-response system may assign substantial cost to delay. Report the trade-off curve instead of hiding it behind one “accuracy” number.</p>
+<h3 id="test-the-state-machine-not-just-the-happy-path">Test the State Machine, Not Just the Happy Path</h3>
+<p>At minimum, automate these cases:</p>
+<ol>
+<li>An unauthorized or expired decision is rejected.</li>
+<li>A revised action cannot reuse the original approval.</li>
+<li>Two concurrent approvals cannot consume the same proposal twice.</li>
+<li>A crash after claiming the operation key does not duplicate the side effect on retry.</li>
+<li>A changed resource version forces re-proposal.</li>
+<li>A timeout stops the action and routes only to configured fallback roles.</li>
+<li>Friction-budget exhaustion never weakens a mandatory gate.</li>
+<li>Audit events join proposal, decision, policy version, execution, and outcome without logging secrets.</li>
+</ol>
+<p>Then observe production by action class and policy version. Alert on shifts in approval volume, decision latency, timeout rate, override rate, unsafe outcomes, and approver concentration. Review samples with domain experts. A 99% approval rate may mean the classifier is excellent, or that the gate is wasting attention; the outcome data tells you which.</p>
+<h2 id="8-production-failure-modes">8. Production Failure Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>What Happens</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rubber-stamp approval</strong></td>
+<td>Human approves without meaningful review; the gate is theater</td>
+<td>Fewer asks, decision-ready evidence, sampled quality review, workload limits</td>
+</tr>
+<tr>
+<td><strong>Alert fatigue</strong></td>
+<td>Too many notifications → human ignores everything, including real ones</td>
+<td>Batch, schedule, friction budget, escalation ladder</td>
+</tr>
+<tr>
+<td><strong>Stale approval</strong></td>
+<td>World changed between approval and execution; agent executes anyway</td>
+<td>Precondition re-validation, expiry, fail-closed</td>
+</tr>
+<tr>
+<td><strong>Gate deadlock</strong></td>
+<td>Human is unavailable; an approval-required action waits forever</td>
+<td>Expiry with fail-closed routing to an authorized fallback approver</td>
+</tr>
+<tr>
+<td><strong>Approval gaming</strong></td>
+<td>Agent splits one €1,000 action into three €400 actions to dodge a threshold</td>
+<td>Rate and aggregate checks in the permission layer, not per-call checks</td>
+</tr>
+<tr>
+<td><strong>Prompt-only gates</strong></td>
+<td>"Please ask before deleting" in the system prompt, no enforcement</td>
+<td>Gates enforced at the tool boundary (Chapter 5)</td>
+</tr>
+<tr>
+<td><strong>Context-switch tax</strong></td>
+<td>Human is interrupted 40 times a day by one agent</td>
+<td>Batch window, scheduled checkpoints, friction budget</td>
+</tr>
+<tr>
+<td><strong>Uncalibrated escalation</strong></td>
+<td>Agent escalates everything (or nothing) because confidence is unmeasured</td>
+<td>Calibration evaluation, labeled thresholds</td>
+</tr>
+<tr>
+<td><strong>Scope drift</strong></td>
+<td>The executed resource, arguments, or environment differ from the approved proposal</td>
+<td>Canonical action digest, immutable proposal, re-propose on change</td>
+</tr>
+<tr>
+<td><strong>Unauthorized approval</strong></td>
+<td>A valid account without the required role approves the action</td>
+<td>Strong authentication, role checks, separation of duties, replay protection</td>
+</tr>
+<tr>
+<td><strong>Audit gap</strong></td>
+<td>Proposal, decision, and execution cannot be reconstructed</td>
+<td>Tamper-evident correlated events with data minimization (Chapter 8)</td>
+</tr>
+<tr>
+<td><strong>Belief laundering</strong></td>
+<td>A provisional inference gets stored, retrieved, and treated as fact</td>
+<td>Status field, review queue, evidence with belief (Chapter 6)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="debugging-checklist">Debugging Checklist</h3>
+<p>When human-in-the-loop behavior is wrong, ask in this order:</p>
+<ol>
+<li>Was the action classified correctly? Is it really consequential or reversible and over-gated?</li>
+<li>Is the gate enforced at the tool boundary, or only in a prompt?</li>
+<li>What did the approval request actually contain? Could a busy human answer it in 30 seconds?</li>
+<li>Did the agent re-validate preconditions after approval?</li>
+<li>What happened on timeout fail closed, or silent proceed?</li>
+<li>Is escalation calibrated, or is the agent raising its hand for everything?</li>
+<li>Are repeated asks being remembered and reduced, or is the human answering the same question daily?</li>
+<li>Is every approval, denial, and escalation in the audit log with decider and timestamp?</li>
+<li>Does the approval digest match the exact action, resource, environment, and policy version that executed?</li>
+<li>Do outcome metrics show that the gate prevents harm rather than merely adding latency?</li>
+</ol>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Autonomy is per-action, not per-agent.</strong> Classify by authority, impact, reversibility, exposure, aggregate value, and policy; gate the consequential and bound the rest.</li>
+<li><strong>Gates are state machines, not prompts.</strong> Propose → present → decide → validate → execute, with immutable scope, expiry, precondition checks, and fail-closed defaults.</li>
+<li><strong>Escalation is a ladder.</strong> Notify → ask → page → block, chosen by severity, never binary.</li>
+<li><strong>Humans correct beliefs, not just actions.</strong> The review queue, status field, and supersession from Chapter 6 make belief correction a system decision.</li>
+<li><strong>Write a delegation contract.</strong> Scope, thresholds, escalation, and a friction budget enforced by the permission layer, versioned, and expiring.</li>
+<li><strong>Bind authority to exact intent.</strong> Authenticate the approver, hash the action and scope, separate proposal and operation IDs, and re-propose after any material change.</li>
+<li><strong>Evaluate the joint system.</strong> Track unsafe allows, unnecessary escalations, decision quality, staleness, duplicate effects, and production outcomes by policy version.</li>
+<li><strong>The enemy is rubber-stamping.</strong> Badly-asked approvals train humans to click through; design for fewer, better, batched asks.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://ntrl.ntis.gov/NTRL/dashboard/searchResults/titleDetail/ADA057655.xhtml">Sheridan &amp; Verplank: Human and Computer Control of Undersea Teleoperators</a> — the original levels-of-automation taxonomy; the intellectual ancestor of every autonomy dial.</li>
+<li><a href="https://doi.org/10.1145/3290605.3300233">Amershi et al.: Guidelines for Human-AI Interaction</a> — 18 interaction guidelines including "make clear why the system did what it did" and "support efficient dismissal/correction."</li>
+<li><a href="https://doi.org/10.6028/NIST.AI.100-1">NIST: AI Risk Management Framework 1.0</a> — governance guidance for defining human-AI roles, oversight, measurement, and risk ownership.</li>
+<li><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679">EU General Data Protection Regulation, Article 22</a> — the primary legal text on certain solely automated decisions and safeguards including human intervention.</li>
+<li><a href="https://cdn.openai.com/papers/practices-for-governing-agentic-ai-systems.pdf">OpenAI: Practices for Governing Agentic AI Systems</a> — a research paper on review processes, human oversight, and escalation for agentic systems.</li>
+<li><a href="https://www.manning.com/books/human-in-the-loop-machine-learning">Monarch: Human-in-the-Loop Machine Learning</a> — active learning and annotation as the practical foundation for human review loops.</li>
+<li><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic: Building Effective Agents</a> — workflow patterns including where human-in-the-loop checkpoints fit in agent designs.</li>
+</ul>
+<h2 id="whats-next">What's Next?</h2>
+<p>In Chapter 8: Observability and Evaluation, we will cover the telemetry layer that makes human-in-the-loop decisions auditable: approval trails, escalation logs, and evaluating whether your gates and escalations actually improve outcomes.</p>
+<h2 id="related-chapters">Related Chapters</h2>
+<ul>
+<li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — the loop where human input and approval arrive as observations.</li>
+<li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — plan checkpoints are the natural home of approval gates.</li>
+<li><a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> — the critic's rubric is the natural source of calibrated confidence for escalation and belief review.</li>
+<li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Chapter 4: Multi-Agent Collaboration</a> — delegation chains need a terminating human authority.</li>
+<li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — the permission layer is where gates are enforced.</li>
+<li><a href="/handbook/chapter-06-memory-context-management.html">Chapter 6: Memory &amp; Context Management</a> — the write policy, review queue, and supersession that make belief correction possible.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Should every agent action require human approval?</strong>
+No. Approval is a scarce resource. Classify actions by authority, impact, reversibility, exposure, aggregate value, and applicable policy. Bounded internal actions can often run autonomously; consequential actions need the control selected by the threat model and policy. Externality raises risk, but it does not make every external action identical.</p>
+<p><strong>Q: How do I prevent the agent from gaming approval thresholds?</strong>
+Enforce thresholds in the permission layer with aggregation, not per-call checks: sum financial actions per session, rate-limit external writes, and flag patterns that split one large action into several small ones. A gate that checks "is this single action over €500?" while the agent fires five €400 actions is not a gate.</p>
+<p><strong>Q: What happens if the approver doesn't respond?</strong>
+The approval expires and the gate fails closed: abort the action or route it to a configured fallback approver who satisfies the required role. Never silently proceed on an expired approval. Timeouts should be short enough that "approved" still describes the world.</p>
+<p><strong>Q: How is human-in-the-loop different from just having a human review the output?</strong>
+The timing and authority differ. In approve-on-action, the human authorizes a side effect before it occurs. In approve-on-commit, the agent prepares a staged artifact and a human authorizes making it durable or visible. Post-hoc review happens after the side effect and is monitoring, not approval. Choose among them from the action's risk and reversibility.</p>
+<p><strong>Q: How much should the agent ask? How do I know if it's too much?</strong>
+Set a friction budget for non-urgent attention, batch compatible decisions, and measure decision quality and outcomes. Never let budget exhaustion bypass a mandatory gate. If people approve without review, reduce unnecessary asks and improve the evidence before adding more checkpoints.</p>
+<p><strong>Q: Does a confirmed memory ever need re-confirmation?</strong>
+Yes, when the world changes. Confirmation is a point-in-time judgment. A "confirmed" status means a human reviewed the belief, not that the belief is eternally true. Supersession (Chapter 6) handles updates; re-confirmation matters for facts with expiry or when the evidence chain changes.</p>
+<h2 id="glossary-terms-introduced">Glossary Terms Introduced</h2>
+<ul>
+<li><strong>Human-in-the-Loop (HITL)</strong>: A design where a human makes or approves consequential decisions within an agent workflow, as opposed to reviewing outcomes afterwards.</li>
+<li><strong>Autonomy Spectrum</strong>: The range of human oversight levels from teleoperation to full autonomy, applied per action rather than per system.</li>
+<li><strong>Blast Radius</strong>: The reach and severity of an action's worst credible outcome across people, systems, data, money, trust, and policy obligations.</li>
+<li><strong>Approval Gate</strong>: A checkpoint where an agent must obtain authorization before a consequential action proceeds.</li>
+<li><strong>Approve-on-Action</strong>: An oversight mode where a human decides before the agent executes a consequential action.</li>
+<li><strong>Approve-on-Commit</strong>: An oversight mode where the agent acts in a sandbox but requires approval before the change becomes durable or visible.</li>
+<li><strong>Escalation Ladder</strong>: A set of increasingly interruptive routing options (notify, ask, page, block) selected by urgency and risk, with a defined failure path.</li>
+<li><strong>Delegation Contract</strong>: Policy-as-code defining an agent's scope, action classes, thresholds, escalation, and friction budget.</li>
+<li><strong>Friction Budget</strong>: An operational budget for non-urgent human attention, managed through ask limits, batching, routing, and reviewed policy changes without bypassing mandatory gates.</li>
+<li><strong>Rubber-Stamp Approval</strong>: Approving without reading, caused by frequent or vague asks; the failure mode that makes gates theater.</li>
+<li><strong>Provisional Belief</strong>: A model inference flagged as unconfirmed, usable for reversible actions but not for consequential ones.</li>
+<li><strong>Belief-Correction Loop</strong>: The pattern where a human confirms or corrects an agent's belief, writing a versioned memory record via supersession.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.2</td>
+<td>2026-08-09</td>
+<td>Production correctness pass: separated fail-closed from approver failover; bound approvals to authenticated roles, immutable action scope, policy versions, and stable operation IDs; corrected idempotency and legal overclaims; tightened belief provenance and confidence calibration; prevented friction budgets from weakening gates; added oversight evaluation metrics and state-machine tests.</td>
+</tr>
+<tr>
+<td>v1.1</td>
+<td>2026-08-09</td>
+<td>Post-peer-review revision: fixed autonomy-classification ordering (compliance/value now gate before the reversibility shortcut); unified the spectrum/code/contract vocabularies onto one set of levels; capped the revise loop with escalation on limit; added request IDs, idempotent execution keys, decider recording, and four-eyes approval; defined fail-closed and sandbox on first use; clarified the escalation ladder as a routing menu with fail-open-to-fallback semantics; made "remember, don't re-ask" concrete; cross-linked Chapter 3 (Reflection) for calibration and proposal justification.</td>
+</tr>
+<tr>
+<td>v1.0</td>
+<td>2026-08-09</td>
+<td>Initial publication.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<a href="/handbook/chapter-06-memory-context-management.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">Memory & Context Management</div></a>
+<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites">Prerequisites</a></li>
+<li><a class="handbook-toc__link" href="#1-the-autonomy-spectrum">1. The Autonomy Spectrum</a><ul>
+<li><a class="handbook-toc__link" href="#the-spectrum">The Spectrum</a></li>
+<li><a class="handbook-toc__link" href="#blast-radius-is-the-core-variable">Blast Radius Is the Core Variable</a></li>
+<li><a class="handbook-toc__link" href="#autonomy-is-a-per-action-decision">Autonomy Is a Per-Action Decision</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#2-what-deserves-an-approval-gate">2. What Deserves an Approval Gate</a><ul>
+<li><a class="handbook-toc__link" href="#the-action-classification">The Action Classification</a></li>
+<li><a class="handbook-toc__link" href="#gate-placement">Gate Placement</a></li>
+<li><a class="handbook-toc__link" href="#ask-dont-narrate">Ask, Don't Narrate</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#3-the-approval-gate-pattern">3. The Approval Gate Pattern</a><ul>
+<li><a class="handbook-toc__link" href="#the-lifecycle">The Lifecycle</a></li>
+<li><a class="handbook-toc__link" href="#what-a-good-approval-request-contains">What a Good Approval Request Contains</a></li>
+<li><a class="handbook-toc__link" href="#the-gate-implemented">The Gate, Implemented</a></li>
+<li><a class="handbook-toc__link" href="#the-details-that-make-or-break-it">The Details That Make or Break It</a></li>
+<li><a class="handbook-toc__link" href="#sync-vs-async-vs-deferred">Sync vs. Async vs. Deferred</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#4-escalation-and-interruption">4. Escalation and Interruption</a><ul>
+<li><a class="handbook-toc__link" href="#when-to-raise-the-hand">When to Raise the Hand</a></li>
+<li><a class="handbook-toc__link" href="#the-escalation-ladder">The Escalation Ladder</a></li>
+<li><a class="handbook-toc__link" href="#interrupting-long-running-work-safely">Interrupting Long-Running Work Safely</a></li>
+<li><a class="handbook-toc__link" href="#the-context-switch-tax">The Context-Switch Tax</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#5-human-review-of-agent-beliefs">5. Human Review of Agent Beliefs</a><ul>
+<li><a class="handbook-toc__link" href="#provisional-vs-confirmed">Provisional vs. Confirmed</a></li>
+<li><a class="handbook-toc__link" href="#the-belief-correction-loop">The Belief-Correction Loop</a></li>
+<li><a class="handbook-toc__link" href="#calibrate-dont-guess">Calibrate, Don't Guess</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#6-delegation-contracts-and-the-friction-budget">6. Delegation Contracts and the Friction Budget</a><ul>
+<li><a class="handbook-toc__link" href="#the-contract">The Contract</a></li>
+<li><a class="handbook-toc__link" href="#the-friction-budget">The Friction Budget</a></li>
+<li><a class="handbook-toc__link" href="#the-rubber-stamp-failure-mode">The Rubber-Stamp Failure Mode</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#7-evaluate-the-oversight-system">7. Evaluate the Oversight System</a><ul>
+<li><a class="handbook-toc__link" href="#start-with-decision-outcomes">Start with Decision Outcomes</a></li>
+<li><a class="handbook-toc__link" href="#test-the-state-machine-not-just-the-happy-path">Test the State Machine, Not Just the Happy Path</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#8-production-failure-modes">8. Production Failure Modes</a><ul>
+<li><a class="handbook-toc__link" href="#debugging-checklist">Debugging Checklist</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#further-reading">Further Reading</a></li>
+<li><a class="handbook-toc__link" href="#whats-next">What's Next?</a></li>
+<li><a class="handbook-toc__link" href="#related-chapters">Related Chapters</a></li>
+<li><a class="handbook-toc__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a class="handbook-toc__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>

@@ -77,7 +77,7 @@ This handbook is organized around patterns—reusable architectural solutions to
 | **Multi-Agent Collaboration** | How specialized agents divide work and hand off results. | 4 |
 | **Tool Use & Skill Registry** | How agents discover and manage tools. | 5 |
 | **Memory & Context Management** | How agents retain and retrieve relevant context. | 6 |
-| **Human-in-the-Loop** | When and how to bring a human back into the loop. | 7 |
+| [**Human-in-the-Loop**](/handbook/chapter-07-human-in-the-loop.html) | How to assign autonomy per action and enforce approval, escalation, and review. | [7](/handbook/chapter-07-human-in-the-loop.html) |
 | **Observability & Evaluation** | How to measure and debug agent behavior. | 8 |
 | **Safety & Guardrails** | How to constrain agent behavior. | 9 |
 | **Agent Platform** | How to build the infrastructure that hosts many agents. | 10 |
@@ -134,7 +134,7 @@ In **Chapter 1: The ReAct Pattern**, we start with the simplest complete agent l
 No. A chatbot that only answers questions is not an agent. An application becomes an agent when it uses tools and makes decisions over multiple turns to pursue a goal.
 
 **Q: Do agents need to be autonomous?**
-Not fully. Many production agents are human-in-the-loop systems where the agent proposes actions and a human approves them. Autonomy should match the risk and cost of mistakes.
+Not fully. Many production agents use risk-based autonomy: bounded actions proceed, while consequential actions require approval or escalation. [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) explains how to set that boundary per action.
 
 **Q: What is the difference between an agent and a workflow?**
 A workflow has a fixed control flow. An agent discovers the control flow through reasoning and observation. Workflows are more predictable; agents are more flexible.
