@@ -94,7 +94,7 @@
       "name": "Do agents need to be autonomous?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Not fully. Many production agents are human-in-the-loop systems where the agent proposes actions and a human approves them. Autonomy should match the risk and cost of mistakes."
+        "text": "Not fully. Many production agents use risk-based autonomy: bounded actions proceed, while consequential actions require approval or escalation. Chapter 7: Human-in-the-Loop explains how to set that boundary per action."
       }
     },
     {
@@ -311,9 +311,9 @@
 <td>6</td>
 </tr>
 <tr>
-<td><strong>Human-in-the-Loop</strong></td>
-<td>When and how to bring a human back into the loop.</td>
-<td>7</td>
+<td><a href="/handbook/chapter-07-human-in-the-loop.html"><strong>Human-in-the-Loop</strong></a></td>
+<td>How to assign autonomy per action and enforce approval, escalation, and review.</td>
+<td><a href="/handbook/chapter-07-human-in-the-loop.html">7</a></td>
 </tr>
 <tr>
 <td><strong>Observability &amp; Evaluation</strong></td>
@@ -377,7 +377,7 @@
 <p><strong>Q: Is every LLM application an agent?</strong>
 No. A chatbot that only answers questions is not an agent. An application becomes an agent when it uses tools and makes decisions over multiple turns to pursue a goal.</p>
 <p><strong>Q: Do agents need to be autonomous?</strong>
-Not fully. Many production agents are human-in-the-loop systems where the agent proposes actions and a human approves them. Autonomy should match the risk and cost of mistakes.</p>
+Not fully. Many production agents use risk-based autonomy: bounded actions proceed, while consequential actions require approval or escalation. <a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a> explains how to set that boundary per action.</p>
 <p><strong>Q: What is the difference between an agent and a workflow?</strong>
 A workflow has a fixed control flow. An agent discovers the control flow through reasoning and observation. Workflows are more predictable; agents are more flexible.</p>
 <p><strong>Q: Which pattern should I start with?</strong>

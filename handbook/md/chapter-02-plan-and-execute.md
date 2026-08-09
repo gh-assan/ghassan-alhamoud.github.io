@@ -142,7 +142,7 @@ Once all dependencies for Task 6 are satisfied, the Executor synthesizes the fin
 - **Over-Planning**: Planner generates 20+ steps. 
   *   *Mitigation*: Use a "Sliding Window" plan. Limit initial plans to 5-7 steps; the final step should be "Assess remaining goal."
 - **Plan Oscillation**: Re-Planner loops between two failing approaches.
-  *   *Mitigation*: Implement a global `MAX_REPLANS` counter. If reached, escalate to human approval or fail safely.
+  *   *Mitigation*: Implement a global `MAX_REPLANS` counter. If reached, use the approval or escalation policy from [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html), or fail safely.
 - **Dependency Deadlock**: Task A depends on B, and B depends on A (circular).
   *   *Mitigation*: Validate the JSON Plan against a Directed Acyclic Graph (DAG) check before starting execution.
 

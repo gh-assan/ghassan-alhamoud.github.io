@@ -394,6 +394,7 @@
 
     return tool_runtime.execute(skill, arguments, identity)
 </code></pre>
+<p><code>ApprovalRequired</code> is a durable state transition, not a prompt response. <a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a> defines how to bind the approval to an exact action and authorized decider, handle expiry and revision, and resume without widening scope.</p>
 <h2 id="3-tool-selection-keep-the-active-set-deliberate">3. Tool Selection: Keep the Active Set Deliberate</h2>
 <p>Tool-selection quality depends on more than tool count. Similar names, overlapping descriptions, large schemas, irrelevant tools, model choice, and task ambiguity all matter. There is no universal number at which a flat list fails.</p>
 <p>Use representative evaluations. Measure:</p>
@@ -793,6 +794,7 @@ billing.create_refund_request
 <li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — plan steps resolve into bounded actions.</li>
 <li><a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> — deterministic checks and critics can validate tool results.</li>
 <li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Chapter 4: Multi-Agent Collaboration</a> — Worker capabilities and handoff contracts depend on the registry.</li>
+<li><a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a> — approval gates and escalation policies enforced at the tool boundary.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Q: When does a static list of tools stop working?</strong>

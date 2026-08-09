@@ -210,7 +210,7 @@ def debate(proposal: str, agents: list[Agent], max_rounds: int = 3) -> str:
 
 **Why not edit distance?** Textual similarity measures whether two strings look alike — not whether the agents agree. Two agents can produce nearly identical text while holding opposite conclusions, or wildly different text that reaches the same verdict. Explicit voting (`vote_accept`) measures agreement directly: each agent is asked *"Do you accept this version as correct?"* and responds yes/no with reasoning.
 
-Consensus is a stopping signal, not proof of correctness. Agents can agree on the same wrong premise. High-stakes debates still need source checks, deterministic validation, or human review.
+Consensus is a stopping signal, not proof of correctness. Agents can agree on the same wrong premise. High-stakes debates still need source checks, deterministic validation, or human review through an explicit [Human-in-the-Loop policy](/handbook/chapter-07-human-in-the-loop.html).
 
 ### Preventing Echo Chambers
 
@@ -327,6 +327,8 @@ Is the task decomposable into independent sub-tasks?
                                                                  └── NO → Full automated debate with structured dissent audit trail
 ```
 
+When the decision reaches a human gate, use [Chapter 7's approval and escalation pattern](/handbook/chapter-07-human-in-the-loop.html). A low model score is only a routing signal after calibration; it is not proof that an action is safe or unsafe.
+
 ### Adding Observability from Day One
 
 Multi-agent systems are distributed systems. Debugging them without observability is slow and unreliable. Every agent call should emit:
@@ -361,6 +363,7 @@ In [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skil
 - [Chapter 2: Plan-and-Execute](/handbook/chapter-02-plan-and-execute.html) — the Orchestrator's internal engine.
 - [Chapter 3: The Reflection Pattern](/handbook/chapter-03-reflection.html) — the foundation of the Debate pattern.
 - [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) — the capability control plane used by the Orchestrator and Workers.
+- [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) — the terminating authority, approval gate, and escalation policy for consequential delegated actions.
 
 ## Frequently Asked Questions
 

@@ -442,7 +442,7 @@ When memory behavior is wrong, ask in this order:
 - [Hu et al.: MemoryAgentBench](https://arxiv.org/abs/2507.05257) — evaluation of accurate retrieval, test-time learning, long-range understanding, and conflict resolution.
 
 ## What's Next?
-In Chapter 7: Human-in-the-Loop, we will cover approval gates, escalation, and the interaction patterns that keep people in control of consequential agent actions — including human review of what the agent believes.
+In [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html), we cover approval gates, escalation, and the interaction patterns that keep people in control of consequential agent actions — including human review of what the agent believes.
 
 ## Related Chapters
 - [Chapter 1: The ReAct Pattern](/handbook/chapter-01-react-pattern.html) — each loop iteration reads from and writes to context.
@@ -450,6 +450,7 @@ In Chapter 7: Human-in-the-Loop, we will cover approval gates, escalation, and t
 - [Chapter 3: The Reflection Pattern](/handbook/chapter-03-reflection.html) — critic and rubric outputs are prime candidates for episodic and semantic memory.
 - [Chapter 4: Multi-Agent Collaboration](/handbook/chapter-04-multi-agent-collaboration.html) — shared and isolated memory is a topology decision.
 - [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) — tool results are the main context polluter; retrieval is a read path.
+- [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) — the review queue and supersession rules become an interaction pattern for correcting agent beliefs.
 
 ## Frequently Asked Questions
 
