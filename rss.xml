@@ -5,8 +5,19 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 09 Aug 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 18 Aug 2026 12:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Handbook: Observability &amp; Evaluation (Chapter 8)</title>
+      <link>https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html</guid>
+      <pubDate>Tue, 18 Aug 2026 10:00:00 GMT</pubDate>
+      <description><![CDATA[Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gates, canaries, and drift detection.]]></description>
+      <category>Handbook</category>
+      <category>AI Engineering</category>
+      <category>Observability</category>
+      <category>Evaluation</category>
+    </item>
     <item>
       <title>Handbook: Human-in-the-Loop (Chapter 7)</title>
       <link>https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html</link>

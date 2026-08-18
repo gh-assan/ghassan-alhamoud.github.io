@@ -200,7 +200,7 @@
 </ul>
 <hr />
 <p>Friday, 17:42. Your release agent has been running for an hour. It has built the artifact, run the test suite, and staged the deployment. Now it wants to push to production. The approval request arrives on your phone: <em>"Deploy v2.4.1 to production? 412 builds passed, 3 flaky tests quarantined, rollback verified. Estimated blast radius: payments API. Approve / Deny / Revise."</em></p>
-<p>You are not being asked because the agent is weak. You are being asked because the action is consequential. Somewhere between "the agent does everything" and "the agent does nothing," there is a line and where you draw it determines whether your system is a tool or a liability. This chapter is about drawing that line deliberately.</p>
+<p>You are not being asked because the agent is weak. You are being asked because the action is consequential. Somewhere between "the agent does everything" and "the agent does nothing," there is a line — and where you draw it determines whether your system is a tool or a liability. This chapter is about drawing that line deliberately.</p>
 <figure class="diagram-panel"><img src="/images/handbook/HDBK-007-human-in-the-loop.webp" alt="HDBK-007 Human-in-the-Loop control architecture" loading="lazy" /><figcaption>Figure 1: Human oversight is configured per action. The autonomy policy selects where approval is required, the gate binds a decision to a specific proposal, and escalation routes exceptions without weakening the protected action's policy.</figcaption></figure>
 <h2 id="1-the-autonomy-spectrum">1. The Autonomy Spectrum</h2>
 <p>Human oversight is not binary. Between full teleoperation and full autonomy there is a spectrum, and the useful question is not "is there a human in the loop?" but "<strong>at which actions, and with what latency, does a human weigh in?</strong>"</p>
@@ -253,7 +253,7 @@
 </tr>
 </tbody>
 </table>
-<p>The <code>Code</code> column is not decoration: the same five values appear in the classification function below and in the delegation contract (Section 6). Keep one vocabulary everywhere three parallel naming schemes is how action classes fall through cracks.</p>
+<p>The <code>Code</code> column is not decoration: the same five values appear in the classification function below and in the delegation contract (Section 6). Keep one vocabulary everywhere — three parallel naming schemes is how action classes fall through cracks.</p>
 <p>Most production systems are not at one level. They are a <strong>mixture</strong>: full autonomy for bounded internal work, approve-on-commit for reviewed artifacts, approve-on-action for consequential side effects, and exception-based escalation for conditions the policy cannot safely classify. Draw the boundary per action and destination, not per agent.</p>
 <h3 id="blast-radius-is-the-core-variable">Blast Radius Is the Core Variable</h3>
 <p>What turns a routine action into a consequential one? Four dimensions:</p>
@@ -442,7 +442,7 @@
 </tr>
 </tbody>
 </table>
-<p>A good proposal can reuse work the agent already did: the reflection critic from <a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> is a natural source for the <em>why now</em> and <em>risk</em> fields the critic's assessment of the proposed action becomes the justification a human reads.</p>
+<p>A good proposal can reuse work the agent already did: the reflection critic from <a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> is a natural source for the <em>why now</em> and <em>risk</em> fields — the critic's assessment of the proposed action becomes the justification a human reads.</p>
 <h3 id="the-gate-implemented">The Gate, Implemented</h3>
 <pre><code class="language-python">class ApprovalGate:
     def run(self, action, context, operation_id, revision=0):
@@ -582,7 +582,7 @@
 </tbody>
 </table>
 <h3 id="the-escalation-ladder">The Escalation Ladder</h3>
-<p>Escalation is a routing menu, not a pipeline: pick the cheapest rung that resolves the situation you do not climb every rung. What matters is that each rung's failure has a defined next step:</p>
+<p>Escalation is a routing menu, not a pipeline: pick the cheapest rung that resolves the situation — you do not climb every rung. What matters is that each rung's failure has a defined next step:</p>
 <pre><code>notify  →  ask  →  page  →  block
   │          │        │        │
   info       decision  urgent   hard stop,
@@ -606,9 +606,9 @@
 <li><strong>Model interruption as a state.</strong> “Paused for human” is not a generic error. It has a checkpoint, owner, deadline, allowed transitions, and recovery path.</li>
 </ol>
 <h3 id="the-context-switch-tax">The Context-Switch Tax</h3>
-<p>Every interruption costs the human attention they were spending elsewhere. Two mitigations matter: <strong>batch</strong> (collect pending decisions and present them in one review session, not one message per decision) and <strong>schedule</strong> (for non-urgent decisions, present them at a predictable checkpoint rather than instantly). Both are policies, not implementation details put them in the delegation contract.</p>
+<p>Every interruption costs the human attention they were spending elsewhere. Two mitigations matter: <strong>batch</strong> (collect pending decisions and present them in one review session, not one message per decision) and <strong>schedule</strong> (for non-urgent decisions, present them at a predictable checkpoint rather than instantly). Both are policies, not implementation details — put them in the delegation contract.</p>
 <h2 id="5-human-review-of-agent-beliefs">5. Human Review of Agent Beliefs</h2>
-<p>The most subtle human-in-the-loop surface is not actions it is <strong>beliefs</strong>. Chapter 6 established the write policy: model inferences about people should go to a review queue, not directly into memory. This section is the interaction pattern around that queue.</p>
+<p>The most subtle human-in-the-loop surface is not actions — it is <strong>beliefs</strong>. Chapter 6 established the write policy: model inferences about people should go to a review queue, not directly into memory. This section is the interaction pattern around that queue.</p>
 <h3 id="provisional-vs-confirmed">Provisional vs. Confirmed</h3>
 <p>A memory record needs both a belief status and source trust. The agent may <strong>act provisionally</strong> on a tentative belief only within policy. Human confirmation raises confidence in a claim; it does not override data permissions, freshness requirements, or the human's authority to attest to it.</p>
 <table>
@@ -638,7 +638,7 @@
 <tr>
 <td><strong>Superseded</strong></td>
 <td>Replaced by a newer confirmed record</td>
-<td>No resolved before retrieval (Chapter 6)</td>
+<td>No — resolved before retrieval (Chapter 6)</td>
 </tr>
 </tbody>
 </table>
@@ -657,8 +657,8 @@ present to authorized reviewer: &quot;I believe X, because Y&quot;
 </code></pre>
 <p>Three properties make this loop trustworthy:</p>
 <ol>
-<li><strong>Evidence travels with the belief.</strong> The human must see <em>why</em> the agent believes something, the source's trust class, and when it was observed. "I believe the vendor is Northwind B.V. source: authorized user correction on 2026-07-31, message 88" is reviewable; "the vendor is Northwind B.V." is not.</li>
-<li><strong>The human corrects the record, not the agent.</strong> When the human says "no, it's Northwind GmbH," the correction writes a new version that supersedes the old one (the Chapter 6 pattern). The agent does not need to "remember to forget" the memory system resolves it.</li>
+<li><strong>Evidence travels with the belief.</strong> The human must see <em>why</em> the agent believes something, the source's trust class, and when it was observed. "I believe the vendor is Northwind B.V. — source: authorized user correction on 2026-07-31, message 88" is reviewable; "the vendor is Northwind B.V." is not.</li>
+<li><strong>The human corrects the record, not the agent.</strong> When the human says "no, it's Northwind GmbH," the correction writes a new version that supersedes the old one (the Chapter 6 pattern). The agent does not need to "remember to forget" — the memory system resolves it.</li>
 <li><strong>Abstention is a valid outcome.</strong> If the human says "I don't know," the system must not write a guess. It continues without the belief, and the retrieval path (Chapter 6) can return an empty result rather than a fabricated fact.</li>
 </ol>
 <h3 id="calibrate-dont-guess">Calibrate, Don't Guess</h3>
@@ -830,7 +830,7 @@ present to authorized reviewer: &quot;I believe X, because Y&quot;
 <tr>
 <td><strong>Audit gap</strong></td>
 <td>Proposal, decision, and execution cannot be reconstructed</td>
-<td>Tamper-evident correlated events with data minimization (Chapter 8)</td>
+<td>Tamper-evident correlated events with data minimization (<a href="/handbook/chapter-08-observability-evaluation.html">Chapter 8</a>)</td>
 </tr>
 <tr>
 <td><strong>Belief laundering</strong></td>
@@ -842,11 +842,11 @@ present to authorized reviewer: &quot;I believe X, because Y&quot;
 <h3 id="debugging-checklist">Debugging Checklist</h3>
 <p>When human-in-the-loop behavior is wrong, ask in this order:</p>
 <ol>
-<li>Was the action classified correctly? Is it really consequential or reversible and over-gated?</li>
+<li>Was the action classified correctly? Is it really consequential — or reversible and over-gated?</li>
 <li>Is the gate enforced at the tool boundary, or only in a prompt?</li>
 <li>What did the approval request actually contain? Could a busy human answer it in 30 seconds?</li>
 <li>Did the agent re-validate preconditions after approval?</li>
-<li>What happened on timeout fail closed, or silent proceed?</li>
+<li>What happened on timeout — fail closed, or silent proceed?</li>
 <li>Is escalation calibrated, or is the agent raising its hand for everything?</li>
 <li>Are repeated asks being remembered and reduced, or is the human answering the same question daily?</li>
 <li>Is every approval, denial, and escalation in the audit log with decider and timestamp?</li>
@@ -860,7 +860,7 @@ present to authorized reviewer: &quot;I believe X, because Y&quot;
 <li><strong>Gates are state machines, not prompts.</strong> Propose → present → decide → validate → execute, with immutable scope, expiry, precondition checks, and fail-closed defaults.</li>
 <li><strong>Escalation is a ladder.</strong> Notify → ask → page → block, chosen by severity, never binary.</li>
 <li><strong>Humans correct beliefs, not just actions.</strong> The review queue, status field, and supersession from Chapter 6 make belief correction a system decision.</li>
-<li><strong>Write a delegation contract.</strong> Scope, thresholds, escalation, and a friction budget enforced by the permission layer, versioned, and expiring.</li>
+<li><strong>Write a delegation contract.</strong> Scope, thresholds, escalation, and a friction budget — enforced by the permission layer, versioned, and expiring.</li>
 <li><strong>Bind authority to exact intent.</strong> Authenticate the approver, hash the action and scope, separate proposal and operation IDs, and re-propose after any material change.</li>
 <li><strong>Evaluate the joint system.</strong> Track unsafe allows, unnecessary escalations, decision quality, staleness, duplicate effects, and production outcomes by policy version.</li>
 <li><strong>The enemy is rubber-stamping.</strong> Badly-asked approvals train humans to click through; design for fewer, better, batched asks.</li>
@@ -876,7 +876,7 @@ present to authorized reviewer: &quot;I believe X, because Y&quot;
 <li><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic: Building Effective Agents</a> — workflow patterns including where human-in-the-loop checkpoints fit in agent designs.</li>
 </ul>
 <h2 id="whats-next">What's Next?</h2>
-<p>In Chapter 8: Observability and Evaluation, we will cover the telemetry layer that makes human-in-the-loop decisions auditable: approval trails, escalation logs, and evaluating whether your gates and escalations actually improve outcomes.</p>
+<p>Continue with <a href="/handbook/chapter-08-observability-evaluation.html">Chapter 8: Observability &amp; Evaluation</a> for the telemetry layer that makes human-in-the-loop decisions auditable: approval trails, escalation logs, and evidence that gates and escalations actually improve outcomes.</p>
 <h2 id="related-chapters">Related Chapters</h2>
 <ul>
 <li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — the loop where human input and approval arrive as observations.</li>
@@ -945,7 +945,7 @@ Yes, when the world changes. Confirmation is a point-in-time judgment. A "confir
 
         <nav class="chapter-nav" aria-label="Chapter navigation">
 <a href="/handbook/chapter-06-memory-context-management.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">Memory & Context Management</div></a>
-<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+<a href="/handbook/chapter-08-observability-evaluation.html" class="chapter-nav__link chapter-nav__link--next"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Observability & Evaluation</div></a>
 </nav>
 
         <div class="article-cta">

@@ -41,6 +41,39 @@ class HandbookValidationTests(unittest.TestCase):
             )
             self.assertIn("human-in-the-loop", chapter["relatedPatterns"])
 
+    def test_observability_evaluation_chapter_is_integrated(self):
+        page = ROOT / "handbook" / "chapter-08-observability-evaluation.html"
+        source = ROOT / "handbook" / "md" / "chapter-08-observability-evaluation.md"
+        diagram = (
+            ROOT
+            / "images"
+            / "handbook"
+            / "HDBK-008-observability-evaluation.webp"
+        )
+
+        self.assertTrue(page.is_file())
+        self.assertTrue(source.is_file())
+        self.assertTrue(diagram.is_file())
+        self.assertEqual([], validate_handbook.validate_file(page))
+
+        markdown = source.read_text(encoding="utf-8")
+        self.assertIn("input reconstruction", markdown)
+        self.assertNotIn("reasoning text, model, temperature", markdown)
+
+    def test_human_in_the_loop_links_to_observability_evaluation(self):
+        catalog = json.loads(
+            (ROOT / "handbook" / "handbook.json").read_text(encoding="utf-8")
+        )["handbook"]["chapters"]
+        by_id = {chapter["id"]: chapter for chapter in catalog}
+        chapter = by_id[7]
+        source = ROOT / "handbook" / "md" / chapter["file"]
+        markdown = source.read_text(encoding="utf-8")
+
+        self.assertIn(
+            "/handbook/chapter-08-observability-evaluation.html", markdown
+        )
+        self.assertIn("observability-evaluation", chapter["relatedPatterns"])
+
     def test_cli_exits_nonzero_when_validation_fails(self):
         output = io.StringIO()
         with redirect_stdout(output):

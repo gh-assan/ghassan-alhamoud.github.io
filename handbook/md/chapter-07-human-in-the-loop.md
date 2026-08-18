@@ -413,7 +413,7 @@ Then observe production by action class and policy version. Alert on shifts in a
 | **Uncalibrated escalation** | Agent escalates everything (or nothing) because confidence is unmeasured | Calibration evaluation, labeled thresholds |
 | **Scope drift** | The executed resource, arguments, or environment differ from the approved proposal | Canonical action digest, immutable proposal, re-propose on change |
 | **Unauthorized approval** | A valid account without the required role approves the action | Strong authentication, role checks, separation of duties, replay protection |
-| **Audit gap** | Proposal, decision, and execution cannot be reconstructed | Tamper-evident correlated events with data minimization (Chapter 8) |
+| **Audit gap** | Proposal, decision, and execution cannot be reconstructed | Tamper-evident correlated events with data minimization ([Chapter 8](/handbook/chapter-08-observability-evaluation.html)) |
 | **Belief laundering** | A provisional inference gets stored, retrieved, and treated as fact | Status field, review queue, evidence with belief (Chapter 6) |
 
 ### Debugging Checklist
@@ -453,7 +453,7 @@ When human-in-the-loop behavior is wrong, ask in this order:
 - [Anthropic: Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) — workflow patterns including where human-in-the-loop checkpoints fit in agent designs.
 
 ## What's Next?
-In Chapter 8: Observability and Evaluation, we will cover the telemetry layer that makes human-in-the-loop decisions auditable: approval trails, escalation logs, and evaluating whether your gates and escalations actually improve outcomes.
+Continue with [Chapter 8: Observability & Evaluation](/handbook/chapter-08-observability-evaluation.html) for the telemetry layer that makes human-in-the-loop decisions auditable: approval trails, escalation logs, and evidence that gates and escalations actually improve outcomes.
 
 ## Related Chapters
 - [Chapter 1: The ReAct Pattern](/handbook/chapter-01-react-pattern.html) — the loop where human input and approval arrive as observations.
