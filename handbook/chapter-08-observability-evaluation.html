@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 8: Observability & Evaluation — AI-Native Engineering Handbook</title>
+  <meta name="description" content="Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gat..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html" />
+  <meta property="og:title" content="Chapter 8: Observability & Evaluation — Knowing what happened — and whether it was good" />
+  <meta property="og:description" content="Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gat..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-008-observability-evaluation.webp" />
+  <meta property="article:published_time" content="2026-08-18" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html" />
+  <meta property="twitter:title" content="Chapter 8: Observability & Evaluation — Knowing what happened — and whether it was good" />
+  <meta property="twitter:description" content="Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gat..." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/handbook/HDBK-008-observability-evaluation.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Observability & Evaluation \u2014 Knowing what happened \u2014 and whether it was good",
+  "description": "Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gat...",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The AI-Native Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/handbook/"
+  },
+  "datePublished": "2026-08-18",
+  "dateModified": "2026-08-18",
+  "image": "https://ghassan-alhamoud.com/images/handbook/HDBK-008-observability-evaluation.webp",
+  "learningResourceType": "Chapter",
+  "position": 8,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Handbook",
+      "item": "https://ghassan-alhamoud.com/handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Observability & Evaluation",
+      "item": "https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I really need both observability and evaluation, or is one enough?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You need both. Observability without evaluation tells you what happened but not whether it was good; you'll spot anomalies but can't tell a bug from a feature. Evaluation without observability gives you scores with no production signal \u2014 you'll know the agent passed the golden set but not whether it fails in the wild. The two meet in the development loop: you trace a failure, encode it as a case, and gate on it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How big does my golden set need to be?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no universal case count. Start with the smallest set that covers each critical capability, harm, boundary, and known failure slice, then measure coverage and add production failures. Ten diverse, reviewed situations can be more useful than 1,000 paraphrases, but the right size depends on how many behaviors and risk strata the system must cover."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know if my LLM-as-judge is trustworthy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You do not until you validate it. Build a held-out, human-labeled set, measure human-human agreement, then compare the judge by dimension. Disagreement may come from the rubric, judge, evidence, or labels. Pin the judge and rubric versions, investigate errors, and route unsupported slices to human review."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I use a different model as judge than as generator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Test it; do not assume model family alone decides quality. A cross-family judge can reduce one source of self-preference, but it can introduce different errors. Blind model identity, test position swaps, and choose the judge that best agrees with qualified human labels on your rubric. For verifiable tasks, skip the judge and use deterministic evidence."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should I re-run evaluation in production?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Continuously as a feedback process, not necessarily on every request. Run fast deterministic checks on each change, relevant task slices before merge, broad repeated/adversarial suites before release, and an authorized production sample on a risk-appropriate schedule. The release suite is a change gate; sampled production evaluation is a health signal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I stop the agent from gaming the evaluation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Assume any optimized proxy can be gamed. Keep a stable rubric for comparability, protect hidden holdout cases, evaluate real outcomes and aggregates, record which component answered, and never extend validity windows or fall back to a fixture brain just to make the suite pass. The goal is evidence, not a green checkmark."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" role="navigation">
+        <li><a href="/#services" class="nav__link">Expertise</a></li>
+        <li><a href="/#work" class="nav__link">Case Studies</a></li>
+        <li><a href="/articles/" class="nav__link">Articles</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">HDBK-008</span>
+          <h1 class="handbook-hero__title">Observability & Evaluation</h1>
+          <p class="handbook-hero__subtitle">Knowing what happened — and whether it was good</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 8</span>
+            <span class="handbook-hero__dot">•</span><span>31 min</span>
+            <span class="handbook-hero__dot">•</span><span>Advanced</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-08-18</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><ul><li><a href="/handbook/chapter-01-react-pattern.html">The ReAct Pattern</a></li><li><a href="/handbook/chapter-03-reflection.html">The Reflection Pattern</a></li><li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Tool Use and Skill Registries</a></li><li><a href="/handbook/chapter-06-memory-context-management.html">Memory & Context Management</a></li><li><a href="/handbook/chapter-07-human-in-the-loop.html">Human-in-the-Loop</a></li></ul></div>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Reading time:</strong> 31 min | <strong>Last revised:</strong> 2026-08-18 | <strong>Version:</strong> 1.2</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>Observability and evaluation are two different loops, and conflating them is how agents ship broken. Observability answers <em>what did the agent do?</em> — traces, spans, events, and the audit trail. Evaluation answers <em>was it any good?</em> — test sets, rubrics, scores, and verdicts against a standard. You need both, but they should not become one undifferentiated system: telemetry records reality; evaluation applies judgment, and the two have different schemas, costs, failure modes, and owners. The practical rule that carries the rest of the chapter: <strong>trace model calls, tool calls, observations, state transitions, and decisions with stable correlation IDs; evaluate distinct, reproducible situations; and report run-to-run variation separately from quality.</strong> If you do only one thing, put a small, representative golden set into CI before the agent gets near production. That gate is worth more than a warehouse of dashboards nobody acts on.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — the Thought/Action/Observation loop is the atomic unit you trace.</li>
+<li><a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> — the Generator-Critic loop is evaluation in miniature; the critic's rubric is your first LLM-as-judge.</li>
+<li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — tool calls are the highest-signal telemetry events, and idempotency keys are what make replay safe.</li>
+<li><a href="/handbook/chapter-06-memory-context-management.html">Chapter 6: Memory &amp; Context Management</a> — retrieval quality is a component eval, and provenance is what makes a trace auditable.</li>
+<li><a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a> — approvals, denials, and escalations are audit events; evaluating whether your gates actually improve outcomes is this chapter's job.</li>
+</ul>
+<hr />
+<p>Monday, 09:14. Your support agent has been live for three weeks. It passed every demo, aced the hallway test, and closed real tickets in week one. This morning a customer forwards you a thread where the agent confidently refunded the wrong order, cited a policy that doesn't exist, and then — asked to explain itself — produced a plausible-sounding summary that left out the two failed tool calls that led it there.</p>
+<p>You open the logs and find the problem: you can see <em>that</em> the agent called the refund tool, but not <em>why</em>, not what it observed before deciding, not which retries failed silently. And you have no way to know whether this is a one-off or a pattern, because you never measured the agent against anything except vibes. The demo worked; production has no ground truth.</p>
+<p>This chapter is about building the two systems that answer the two questions the demo never asked: <strong>what did it do, and was it any good?</strong></p>
+<figure class="diagram-panel"><img src="/images/handbook/HDBK-008-observability-evaluation.webp" alt="HDBK-008 observability and evaluation architecture" loading="lazy" /><figcaption>Figure 1: Observability reconstructs what happened; evaluation judges cases against a standard. Production failures become regression tests that connect the two loops.</figcaption></figure>
+<h2 id="1-the-two-loops-observability-and-evaluation">1. The Two Loops — Observability and Evaluation</h2>
+<h3 id="they-are-not-the-same-system">They Are Not the Same System</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Observability</th>
+<th>Evaluation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Question</strong></td>
+<td>What did the agent do?</td>
+<td>How well did it do it?</td>
+</tr>
+<tr>
+<td><strong>Object</strong></td>
+<td>Real production traffic, every request</td>
+<td>Curated samples against a standard</td>
+</tr>
+<tr>
+<td><strong>Schema</strong></td>
+<td>Traces, spans, events, timestamps</td>
+<td>Test cases, rubrics, scores, verdicts</td>
+</tr>
+<tr>
+<td><strong>Judgment</strong></td>
+<td>None — records reality</td>
+<td>Explicit — compares to ground truth</td>
+</tr>
+<tr>
+<td><strong>Runs</strong></td>
+<td>Continuously, on everything</td>
+<td>On change, on sampled traffic, on drift</td>
+</tr>
+<tr>
+<td><strong>Failure mode</strong></td>
+<td>Missing/ambiguous events, broken correlation</td>
+<td>Test-set contamination, judge bias, eval gaming</td>
+</tr>
+</tbody>
+</table>
+<p>The reason to keep them separate is practical, not aesthetic. Telemetry must be <strong>low-overhead enough for broad coverage</strong> and <strong>complete enough to reconstruct control flow without collecting unnecessary content</strong>. Evaluation can spend more on carefully built cases, repeated runs, and calibrated graders, so it runs on selected slices at the right time. If you try to make telemetry judge, you get a dashboard that says "confidence: 0.7" with no standard behind it. If you run expensive evaluation on all traffic, you burn money scoring obvious cases and can bury the rare hard one in noise.</p>
+<p>The two loops meet in one place: <strong>the development loop.</strong> You trace to find a failure, you encode that failure as a test case, you add the test to the gate, and you never regress on it again. Observability finds the hole; evaluation fills it.</p>
+<p>Keeping the two loops separate is a statement about <strong>schema and ownership</strong>, not a prohibition on data flow. Telemetry is the raw material evaluation consumes: a drift detector (Section 6) scores a sample of production traces, and a canary compares a new agent against live traffic. That is not conflation. Conflation is storing traces and verdicts in one undifferentiated blob, or judging <em>inside</em> the telemetry path itself. Feed telemetry into evaluation freely; just never blur the boundary between <em>what happened</em> and <em>how good it was.</em></p>
+<h3 id="it-worked-in-my-demo-is-not-evidence">"It Worked in My Demo" Is Not Evidence</h3>
+<p>The demo is an <em>existence proof</em>: it shows the agent <em>can</em> do the thing on one lucky trajectory. It says nothing about whether the agent <em>reliably</em> does the thing across the distribution of situations it will actually face. A model that passes your demo and fails 9 out of 10 real cases is not "90% almost there" — it is broken, and the demo actively misled you.</p>
+<p>The antidote is a <strong>golden set</strong>: a curated, versioned collection of representative cases with expected outcomes or scoring rules. Run deterministic cases once and repeat only the cases whose model or environment can vary enough to affect a release decision. The golden set is not a benchmark you run once and screenshot. It is a maintained test asset that grows from real failures and gates changes. Everything in Sections 3–6 is about building and using it correctly.</p>
+<h2 id="2-agent-telemetry-tracing-the-loop">2. Agent Telemetry — Tracing the Loop</h2>
+<h3 id="the-trace-model">The Trace Model</h3>
+<p>A single user request produces a nested structure. Naming it once, consistently, is the single highest-leverage telemetry decision you will make:</p>
+<pre><code>session                         ← one conversation or workflow
+  └─ trace                     ← one agent turn or run
+       ├─ span: model_call       ← request, response metadata, usage
+       ├─ span: tool_call        ← one tool operation with duration
+       │     ├─ event: request     (name, redacted args, operation key)
+       │     └─ event: result      (status, redacted result, latency)
+       ├─ event: context_update  ← what entered working context
+       └─ event: decision        ← chosen next step or final outcome
+</code></pre>
+<p>A <strong>span</strong> is an operation with a duration, such as a model or tool call. An <strong>event</strong> is a point-in-time occurrence, such as a state transition, approval, retry, or result attached to a span. Spans nest; events attach to trace context — keep them distinct. This mirrors OpenTelemetry's general model, but GenAI semantic conventions are still evolving, so version the convention your instrumentation implements instead of treating today's attribute names as permanent. Multi-agent systems add cross-agent links (Chapter 4), while Plan-and-Execute agents add a plan span whose steps fail independently (Chapter 2). This trace is the atomic core they build on.</p>
+<p>Three rules make this model actually useful:</p>
+<ol>
+<li><strong>Every span carries a trace ID and span ID; non-root spans carry a parent span ID or explicit link.</strong> Add a domain request or operation ID when one user intent may cross multiple traces. Correlation turns a pile of records into a connected execution graph.</li>
+<li><strong>Record governed tool inputs and outputs, not just the tool name.</strong> A log line that says <code>tool=refund status=ok</code> cannot explain why the tool acted on the wrong order. Capture a redacted or tokenized representation under an explicit content-capture policy.</li>
+<li><strong>Record the observation that entered context, not only the raw tool result.</strong> The model may receive a truncated, summarized, filtered, or cached form. Store a content hash and transformation metadata by default; retain payload content only when policy permits it.</li>
+</ol>
+<pre><code class="language-python">def trace_event(trace_id, span_id, parent_span_id, sequence, kind, payload, ts=None):
+    return {
+        &quot;trace_id&quot;: trace_id,
+        &quot;span_id&quot;: span_id,
+        &quot;parent_span_id&quot;: parent_span_id,
+        &quot;sequence&quot;: sequence,       # producer-local order; spans/links model concurrency
+        &quot;kind&quot;: kind,               # model_call | tool_call | context_update | decision
+        &quot;ts&quot;: ts or now_iso(),      # useful across services; not sufficient for ordering
+        &quot;payload&quot;: payload,
+    }
+
+# Tool-call span carries a governed request/result pair:
+tool_span = trace_event(
+    trace_id, span_id, parent_model_span_id, sequence=7, kind=&quot;tool_call&quot;,
+    payload={
+        &quot;function&quot;: &quot;refund_order&quot;,
+        &quot;args&quot;: {&quot;order_id&quot;: &quot;tok_order_7f2&quot;, &quot;amount_euro&quot;: 41.00},
+        &quot;operation_id&quot;: &quot;op_refund_01J5...&quot;,  # stable across retries
+        &quot;result&quot;: {&quot;status&quot;: &quot;ok&quot;, &quot;refund_id&quot;: &quot;tok_refund_91a&quot;},
+        &quot;latency_ms&quot;: 840,
+        &quot;content_capture&quot;: &quot;tokenized-v2&quot;,
+    },
+)
+</code></pre>
+<p>The stable operation ID is not decorative (Chapter 5). It lets a shadow replay replace side-effecting tools with safe fakes and deduplicate accidental retries. Reconstructing the situation also requires the prompt and policy versions, requested and returned model identifiers, tool-definition hash, memory or retrieval snapshot IDs, sampling parameters, and provider response metadata. Record a sampling seed only when the provider supports one, and treat it as best effort: hosted inference can still vary. The honest promise is <strong>input reconstruction</strong>, not byte-identical token reproduction.</p>
+<h3 id="what-to-record-on-every-loop">What to Record on Every Loop</h3>
+<p>The ReAct loop (Chapter 1) has a natural per-iteration shape. Capture at minimum:</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Fields</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Model call</strong></td>
+<td>prompt/policy versions, requested and returned model, parameters, response ID, usage</td>
+<td>To identify the exact configuration that produced the next action</td>
+</tr>
+<tr>
+<td><strong>Action</strong></td>
+<td>tool name, governed args, stable operation ID, policy decision</td>
+<td>To reproduce or safely simulate the call and validate authorization</td>
+</tr>
+<tr>
+<td><strong>Observation</strong></td>
+<td>status, latency, content hash, transformation metadata, optional governed payload</td>
+<td>To know what entered context rather than assuming it matched the raw result</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>chosen next step, public rationale or planner record when explicitly emitted</td>
+<td>To evaluate the observable choice and state transition</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>completion status, side effects, retries, token/currency cost</td>
+<td>To catch loops, duplicate effects, latency, and budget breaches</td>
+</tr>
+</tbody>
+</table>
+<p>Two boundaries matter:</p>
+<ul>
+<li><strong>Do not invent access to hidden reasoning.</strong> Some providers expose a public rationale or reasoning summary; others return opaque reasoning state. Even when text is exposed, research shows it may not faithfully describe the mechanism that produced the answer. Log explicitly emitted summaries as model output, not as ground truth. Evaluate the observable action against the allowed or expected action set.</li>
+<li><strong>Distinguish raw from as-observed content.</strong> Context truncation and summarization (Chapter 6) silently reshape what the model sees. When policy allows full capture, label both forms and the transformation between them. Otherwise store hashes, source IDs, truncation ranges, and compactor versions.</li>
+</ul>
+<h3 id="telemetry-is-a-privacy-and-cost-liability">Telemetry Is a Privacy and Cost Liability</h3>
+<p>Recording everything is a privacy bill and a cost bill, and the two requirements — "cheap" and "lossless" — pull against each other. "Cheap enough to run on every request" and "lossless enough to reconstruct the decision" cannot both be literally true at full fidelity; resolve the tension with three controls:</p>
+<ol>
+<li><strong>Redact before you store.</strong> Tool arguments, prompts, observations, outputs, and human rationales can carry PII, secrets, and customer data. Redact or tokenize at the instrumentation boundary so sensitive content never reaches the general trace store.</li>
+<li><strong>Tier your capture.</strong> Log lean events broadly: span names, statuses, latency, usage, hashes, versions, and IDs. Enable full-fidelity content only for an authorized sample or incident workflow. Failure-triggered capture must still obey consent, residency, and retention policy.</li>
+<li><strong>Retain with a policy.</strong> Telemetry carrying customer data is regulated data. Set a retention window, an access-control list, and a deletion path, and treat the trace store like any other store you would be unhappy to leak.</li>
+</ol>
+<p>The rule of thumb: <strong>capture enough to debug, redact what you would not want in a breach report, and sample the expensive stuff.</strong></p>
+<h3 id="telemetry-is-the-audit-trail">Telemetry Is the Audit Trail</h3>
+<p>Chapter 7 ended with a promise: every approval, denial, and escalation is an audit event. In the telemetry model, human decisions are first-class events on the same trace:</p>
+<pre><code class="language-python">audit_event = trace_event(
+    trace_id, span_id, parent_gate_id, sequence=12, kind=&quot;human_decision&quot;,
+    payload={
+        &quot;gate&quot;: &quot;external_write:refund&quot;,
+        &quot;decision&quot;: &quot;approve&quot;,            # approve | deny | revise | expire
+        &quot;actor_ref&quot;: &quot;staff_tok_7f2&quot;,     # resolvable only by authorized auditors
+        &quot;reason_code&quot;: &quot;LOW_VALUE_VERIFIED&quot;,
+        &quot;proposal_id&quot;: &quot;PROP-2241&quot;,       # links back to what was asked
+    },
+)
+</code></pre>
+<p>This is what makes oversight measurable rather than theatrical. Six months later, you can join <code>human_decision</code> events to <code>refund_order</code> outcomes and compare error, delay, revision, and escalation rates by gate policy. The join shows association, not causation: risk-based gates intentionally receive harder cases. To ask whether a gate <em>reduced</em> bad refunds, use a safe randomized rollout, stepped-wedge release, or a risk-adjusted comparison with explicit assumptions. That analysis is evaluation (Section 3), running on top of observability.</p>
+<h2 id="3-the-evaluation-pyramid">3. The Evaluation Pyramid</h2>
+<p>Evaluation is not one thing; it is three questions at three altitudes. Conflating them is the second most common mistake (after conflating observability and evaluation).</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Question</th>
+<th>Unit</th>
+<th>Method</th>
+<th>Cost / Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Component</strong></td>
+<td>Does this <em>part</em> work?</td>
+<td>Single capability</td>
+<td>Deterministic checks + small judges</td>
+<td>Low cost, high precision, narrow scope</td>
+</tr>
+<tr>
+<td><strong>Task</strong></td>
+<td>Does the <em>agent</em> complete the job?</td>
+<td>End-to-end trajectory</td>
+<td>Golden set + judge + rubric</td>
+<td>Medium cost, the real measure</td>
+</tr>
+<tr>
+<td><strong>System</strong></td>
+<td>Does the <em>product</em> get better?</td>
+<td>Business outcome</td>
+<td>A/B, user metrics, human review</td>
+<td>High cost, the only thing that pays</td>
+</tr>
+</tbody>
+</table>
+<h3 id="component-evals">Component Evals</h3>
+<p>Before you evaluate the whole agent, evaluate its parts in isolation, because a component failure contaminates every downstream signal and is a nightmare to localize after the fact:</p>
+<ul>
+<li><strong>Tool calling</strong> — given a prompt, does the agent emit the right tool with the right arguments? This is frequently <em>verifiable</em>, so use a deterministic checker (exact/typed match, JSON-schema validation), not an LLM judge. Only fall back to a judge for open-ended argument semantics.</li>
+<li><strong>Retrieval</strong> (Chapter 6) — given a query, does it fetch the right chunks? Evaluate precision and recall against a labeled retrieval set; this is classic IR evaluation and needs no LLM at all.</li>
+<li><strong>Compaction / summarization</strong> — after compressing context, does the compacted context still support the correct answer? Test the <em>compactor</em> against the same golden set you use for the full agent.</li>
+<li><strong>Memory writes</strong> — do records land with correct provenance, status, and supersession? Deterministic checks against the memory schema.</li>
+</ul>
+<p>Component evals are the ones you run on every commit, because they are fast and their failures are unambiguous.</p>
+<h3 id="task-evals">Task Evals</h3>
+<p>The task eval runs the full agent on a trajectory and scores the outcome. This is the heart of the golden set. A task case is a <em>situation</em> — a starting state, an instruction, and an expected result — not a single message. The agent starts in the situation, runs its loop, and is scored on where it ended up and how it got there.</p>
+<h3 id="system-evals">System Evals</h3>
+<p>The system eval asks whether the agent made the <em>product</em> better: resolution rate, refund error rate, churn, revenue, time-to-resolution. These are slow, noisy, and the measures that ultimately matter to the business. The trap is to treat a good task-eval score as proof of a good system outcome. They are correlated but not identical: an agent can pass every task in the golden set and still make the product worse because it is too slow, surprises users, shifts work to another queue, or erodes trust in a way no test case captures. Monitor system metrics continuously and evaluate causal impact at an appropriate cadence, but do not expect a top-line metric to identify which component regressed — that is what the lower levels are for.</p>
+<p>Attribution is the hard part. When churn drops 2%, you want to know <em>why</em>, and a system metric alone cannot tell you. Join outcomes to telemetry by system version and case slice, then use a randomized experiment or an explicit quasi-experimental design when causality matters. A simple before/after comparison can be confounded by seasonality, traffic mix, policy changes, or concurrent releases. The system metric says <em>whether an outcome moved</em>; task and component evals help localize which part of the agent plausibly contributed.</p>
+<h2 id="4-building-a-test-set-that-isnt-theater">4. Building a Test Set That Isn't Theater</h2>
+<p>Most agent test sets are theater: a handful of happy-path examples, sampled from the same distribution the model already aced, scored pass/fail on a single run. They pass forever and tell you nothing. A test set that earns its place obeys five rules.</p>
+<h3 id="rule-1-the-unit-is-a-seeded-situation-not-a-prompt">Rule 1: The Unit Is a Seeded Situation, Not a Prompt</h3>
+<p>The primary evaluation unit is a <strong>distinct seeded situation</strong> — a specific starting state with specific entities, faults, and confounders — not a bare prompt repeated with different wording. "Refund order 1001" is a prompt. "Refund order 1001 where the customer has two open orders, the item was already partially shipped, and the payment was split across two cards" is a situation.</p>
+<p>Each situation should be <strong>seeded</strong> so that it is reproducible: a fixed initial state (database rows, account balances, message history) from which the agent starts every time. Without a seed, two runs of "the same" test are not the same test, and your scores are comparing different worlds.</p>
+<h3 id="rule-2-vary-entities-faults-and-confounders-independently">Rule 2: Vary Entities, Faults, and Confounders — Independently</h3>
+<p>Build the set as a cross-product, not a grab bag:</p>
+<ul>
+<li><strong>Entities</strong> — different orders, customers, accounts, documents, each with realistic attributes.</li>
+<li><strong>Faults</strong> — missing data, malformed input, contradictory evidence, tool failures, timeouts.</li>
+<li><strong>Confounders</strong> — plausible distractors: an old order with the same ID prefix, a policy that was updated last week, a similarly-named customer.</li>
+</ul>
+<p>A case that combines an entity, a fault, and a confounder is where agents actually break. Happy paths saturate fast; the signal is in the collisions.</p>
+<h3 id="rule-3-report-stochastic-variance-separately">Rule 3: Report Stochastic Variance Separately</h3>
+<p>First, a naming trap: this rule's "seed" is the <em>sampling seed</em> — when a provider exposes one — not the "seeded situation" from Rule 1 (the fixed initial state). Two different concepts, two different jobs: Rule 1 fixes the <em>world</em>; repeated inference estimates run-to-run variation.</p>
+<p>The same situation can produce different results because of sampling, parallel tool scheduling, nondeterministic infrastructure, or a changed model/backend version. A pinned model snapshot reduces one source of change; it does not make the whole agent deterministic. The cardinal sin is to run a variable case once and report a universal claim:</p>
+<ul>
+<li><strong>Repeat cases where variance can change the decision.</strong> Use different provider-supported seeds or independent runs and report the outcome distribution. Keep fast deterministic checks single-run.</li>
+<li><strong>Report variance as variance.</strong> "Passed 7/10 samples" is data. "Passed" (on the one lucky sample) is theater.</li>
+<li><strong>Report uncertainty with the estimate.</strong> A pass rate without its sample count or interval hides how little you know. Compare candidates on paired cases and use a predeclared practical margin, not just a noisy mean.</li>
+</ul>
+<p><strong>Aggregate in CI, don't serialize.</strong> Repeated runs do not have to be a bottleneck. Run independent samples in parallel, store per-run results, and aggregate in the gate. Reserve higher sample counts for variable or decision-critical slices; stable cases need fewer runs.</p>
+<p>This matters doubly for any task with a score distribution: if the agent emits a <em>distribution</em> over possible answers — the right behavior when the task is genuinely ambiguous — score the whole distribution (e.g., log-loss / Brier score on the correct label), not just whether the argmax was right. A confident wrong answer and a hesitant wrong answer are different failures, and a scalar pass/fail erases the difference.</p>
+<h3 id="rule-4-include-adversarial-and-edge-cases">Rule 4: Include Adversarial and Edge Cases</h3>
+<p>A test set with no adversarial cases is a comfort blanket. Add, where they match the system's threat model:</p>
+<ul>
+<li><strong>Boundary cases</strong> — exactly at the threshold (€50 refund, 500-token context, 10-step limit).</li>
+<li><strong>Negatives</strong> — cases where the correct answer is <em>no</em> (do not refund, do not escalate, do not act).</li>
+<li><strong>Adversarial inputs</strong> — prompt-injection attempts, contradictory instructions, and the classic "ignore previous instructions." Evaluate whether the agent <em>resists</em> them, not just whether it handles the happy path.</li>
+<li><strong>Holdout cases</strong> — unpublished situations outside the development set, to catch optimization against familiar fixtures.</li>
+</ul>
+<h3 id="rule-5-keep-the-test-set-out-of-the-training-set">Rule 5: Keep the Test Set Out of the Training Set</h3>
+<p>Test-set contamination — the system has been optimized on the cases it is supposed to be measured against — silently inflates scores. With hosted foundation models you usually cannot know every pretraining example, so control the surfaces you own:</p>
+<ul>
+<li><strong>Version the set and its provenance.</strong> Know when each case was added and from where.</li>
+<li><strong>Separate development, regression, and holdout slices.</strong> Do not put the holdout answers into prompts, fine-tuning data, or optimization loops.</li>
+<li><strong>Add fresh production failures after fixing them</strong>, while retaining an unpublished slice for honest release decisions.</li>
+<li><strong>Prefer parameterized situations over verbatim prompts.</strong> Varying state, entities, faults, and confounders tests behavior instead of string recall.</li>
+</ul>
+<h3 id="a-worked-example">A Worked Example</h3>
+<p>The refund case from the opening, formalized as a seeded situation:</p>
+<pre><code class="language-json">{
+  &quot;case_id&quot;: &quot;refund-0041&quot;,
+  &quot;situation&quot;: {
+    &quot;seed&quot;: {
+      &quot;orders&quot;: [
+        {&quot;id&quot;: &quot;ORD-8841&quot;, &quot;status&quot;: &quot;partially_shipped&quot;, &quot;total&quot;: 41.00},
+        {&quot;id&quot;: &quot;ORD-8842&quot;, &quot;status&quot;: &quot;delivered&quot;, &quot;total&quot;: 41.00}
+      ],
+      &quot;payments&quot;: [
+        {&quot;order&quot;: &quot;ORD-8841&quot;, &quot;cards&quot;: [&quot;****1234&quot;, &quot;****5678&quot;], &quot;split&quot;: [20.00, 21.00]}
+      ],
+      &quot;customer&quot;: {&quot;id&quot;: &quot;CUS-117&quot;, &quot;history&quot;: &quot;no prior refunds&quot;}
+    },
+    &quot;instruction&quot;: &quot;Customer says they were double-charged for ORD-8841. Resolve.&quot;,
+    &quot;entity&quot;: &quot;ORD-8841&quot;,
+    &quot;fault&quot;: &quot;payment split across two cards&quot;,
+    &quot;confounder&quot;: &quot;ORD-8842 has the same total and a similar ID&quot;
+  },
+  &quot;expected&quot;: {
+    &quot;action&quot;: &quot;refund_only&quot;,
+    &quot;amount&quot;: 41.00,
+    &quot;order&quot;: &quot;ORD-8841&quot;,
+    &quot;must_not&quot;: [&quot;refund ORD-8842&quot;, &quot;refund 82.00&quot;]
+  },
+  &quot;scoring&quot;: {
+    &quot;primary&quot;: &quot;exact_match_on_action_and_target&quot;,
+    &quot;fallback&quot;: &quot;judge_rubric_refund&quot;
+  }
+}
+</code></pre>
+<p>Every rule is at work here: the <strong>seed state</strong> fixes the world, the <strong>entity / fault / confounder</strong> make it a real case rather than a prompt, and the <strong>expected result</strong> includes what must <em>not</em> happen — the negative space happy-path tests omit. If repeated runs are warranted, report both the result and the denominator: "9/10 refunded only ORD-8841," not merely "passed."</p>
+<h2 id="5-llm-as-judge-done-right">5. LLM-as-Judge Done Right</h2>
+<p>Sometimes there is no deterministic checker — "is this refund explanation correct and appropriately worded?" has no exact answer. Then you use an LLM as a judge. Done badly, the judge is the weakest link in the pipeline and you have merely moved the uncertainty around. Done well, it is a force multiplier. The discipline is the same as any measurement: control the bias, define the scale, and validate the instrument.</p>
+<h3 id="use-a-rubric-not-a-vibe">Use a Rubric, Not a Vibe</h3>
+<p>A judge that returns "8/10" with no criteria is a vibe machine. The rubric decomposes the target quality into scored, observable dimensions:</p>
+<pre><code>Correctness   — is the answer factually right, given the ground truth?   (0-3)
+Completeness  — does it address every part of the instruction?           (0-2)
+Groundedness  — is every claim traceable to the provided context?        (0-3)
+Concision     — is it appropriately brief, no filler?                    (0-1)
+Tone          — is it appropriately polite and on-brand?                 (0-1)
+</code></pre>
+<p>A machine-parseable version, so a harness can consume it without re-typing:</p>
+<pre><code class="language-json">{
+  &quot;rubric_id&quot;: &quot;refund-explain-v1&quot;,
+  &quot;dimensions&quot;: [
+    {&quot;key&quot;: &quot;correctness&quot;, &quot;label&quot;: &quot;Correctness&quot;, &quot;max&quot;: 3,
+     &quot;anchors&quot;: {&quot;3&quot;: &quot;factually right vs ground truth&quot;, &quot;0&quot;: &quot;hallucinates a fact&quot;}},
+    {&quot;key&quot;: &quot;completeness&quot;, &quot;label&quot;: &quot;Completeness&quot;, &quot;max&quot;: 2,
+     &quot;anchors&quot;: {&quot;2&quot;: &quot;addresses every part&quot;, &quot;0&quot;: &quot;misses a required part&quot;}},
+    {&quot;key&quot;: &quot;groundedness&quot;, &quot;label&quot;: &quot;Groundedness&quot;, &quot;max&quot;: 3,
+     &quot;anchors&quot;: {&quot;3&quot;: &quot;every claim traceable to context&quot;, &quot;0&quot;: &quot;unsupported claim&quot;}},
+    {&quot;key&quot;: &quot;concision&quot;, &quot;label&quot;: &quot;Concision&quot;, &quot;max&quot;: 1},
+    {&quot;key&quot;: &quot;tone&quot;, &quot;label&quot;: &quot;Tone&quot;, &quot;max&quot;: 1}
+  ]
+}
+</code></pre>
+<p>Each dimension gets anchors (for example, "3 = every claim is verifiable in context; 0 = at least one material claim is unsupported"). Anchors improve consistency, but do not guarantee that two judges or two runs use the scale identically. A rubric score is a quality measurement, not automatically the agent's probability of being correct. Use it for escalation only after validating that the chosen threshold predicts the failure you care about; otherwise it is confidence theater.</p>
+<h3 id="pointwise-vs-pairwise">Pointwise vs. Pairwise</h3>
+<ul>
+<li><strong>Pointwise</strong> — score a single output against the rubric. Cheap, absolute, but subject to the judge's scale drift (a "3" today is not a "3" tomorrow).</li>
+<li><strong>Pairwise</strong> — present two outputs and ask which is better. More robust to scale drift, because it only asks for a relative judgment. More expensive, because it needs a comparison partner.</li>
+</ul>
+<p>The practical rule: <strong>use deterministic or pass/fail graders for hard gates, calibrated pointwise scores for trend monitoring, and pairwise comparison for choosing between candidates.</strong> Pairwise is especially useful for prompt, model, and canary comparisons, where the question is literally "is the new one better than the old one?" For pairwise judging, swap answer order and require consistent preference or record a tie.</p>
+<h3 id="control-the-known-biases">Control the Known Biases</h3>
+<p>LLM judges have systematic, well-documented biases. Control the big four:</p>
+<table>
+<thead>
+<tr>
+<th>Bias</th>
+<th>Symptom</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Position bias</strong></td>
+<td>Judge prefers the first (or last) answer</td>
+<td>Randomize order; or run pairwise both ways and require agreement</td>
+</tr>
+<tr>
+<td><strong>Self-preference</strong></td>
+<td>Judge may favor outputs from itself or related models</td>
+<td>Blind model identity; test cross-family judges; calibrate every chosen judge against human labels</td>
+</tr>
+<tr>
+<td><strong>Verbosity bias</strong></td>
+<td>Longer answers score higher</td>
+<td>Add a concision dimension; or score length-neutral criteria</td>
+</tr>
+<tr>
+<td><strong>Leniency / severity drift</strong></td>
+<td>Judge's scale creeps over time</td>
+<td>Anchor the rubric; periodically re-anchor against a fixed set of human-labeled cases</td>
+</tr>
+</tbody>
+</table>
+<h3 id="calibrate-the-judge-before-you-trust-it">Calibrate the Judge Before You Trust It</h3>
+<p>A judge is a measurement instrument, and you don't trust an instrument you haven't validated. Before relying on LLM-as-judge scores:</p>
+<ol>
+<li><strong>Collect a held-out labeled set.</strong> Use qualified reviewers, clear instructions, and multiple labels for ambiguous or high-impact dimensions.</li>
+<li><strong>Measure human-human agreement first.</strong> If reviewers disagree, the task or rubric may be underspecified; a model cannot repair an undefined standard.</li>
+<li><strong>Score the same set with the judge</strong> and use a metric appropriate to the output: accuracy/F1 for classes, rank correlation for orderings, or agreement by rubric dimension.</li>
+<li><strong>Investigate disagreement.</strong> The cause may be the rubric, judge, missing evidence, label noise, or genuine ambiguity. Refine the instrument or route that slice to human review.</li>
+<li><strong>Track calibration over time.</strong> Pin the judge and rubric versions, then re-run the labeled set whenever either changes and periodically while they remain in use.</li>
+</ol>
+<h3 id="when-not-to-use-a-judge">When Not to Use a Judge</h3>
+<p>The most important skill with LLM-as-judge is knowing when to refuse it:</p>
+<ul>
+<li><strong>Verifiable tasks</strong> — if the answer can be checked with a schema, execution, exact target, invariant, or authoritative reference, use that evidence. An LLM judge adds cost and uncertainty.</li>
+<li><strong>High-stakes, low-volume decisions</strong> — use qualified human review or domain-specific verification unless a validated automated control meets the required risk tolerance.</li>
+<li><strong>Claims without sufficient evidence</strong> — a judge asked whether medical, legal, or financial content is correct cannot reliably grade facts it was not given the authority and evidence to verify.</li>
+</ul>
+<h3 id="resist-eval-gaming">Resist Eval Gaming</h3>
+<p>Evaluation creates an incentive, and incentives create gaming. Watch for:</p>
+<ul>
+<li><strong>Overfitting to the rubric</strong> — the agent learns to hit scored dimensions while ignoring the task. Counter: keep the production rubric stable for comparability, maintain hidden holdout cases, and periodically test whether the rubric still predicts human and system outcomes.</li>
+<li><strong>Threshold splitting</strong> — the agent splits one disallowed action into several just-below-threshold actions to dodge a rule (the same pattern as approval gaming in Chapter 7). Counter: evaluate on <em>aggregates</em>, not per-call.</li>
+<li><strong>Stale-time tricks</strong> — the agent exploits a stale snapshot or an extended validity window to "pass" a case it shouldn't. Counter: enforce freshness gates in the harness itself, and <strong>never extend action validity just to help the model pass.</strong></li>
+<li><strong>Silent fixture fallback</strong> — in a shadow environment, a model that fails may quietly fall back to a deterministic "fixture brain" that always passes. Counter: record <em>which</em> component answered, and flag any trajectory where the scored output didn't come from the system under test.</li>
+<li><strong>Reward hacking</strong> — the RLHF/RLAIF cousin of eval gaming: the agent maximizes the learned reward signal while degrading the true objective. The structural lesson is the same as everywhere else in this chapter: any proxy that can be gamed will be. Treat every eval metric as a proxy for the real goal, and re-anchor it against ground truth periodically.</li>
+</ul>
+<h2 id="6-evaluation-driven-development">6. Evaluation-Driven Development</h2>
+<p>Evaluation is not a report you generate at the end; it is the gate every change passes through. Wire it into the loop:</p>
+<h3 id="the-ci-regression-gate">The CI Regression Gate</h3>
+<p>Every behavior-changing change — prompt, tool, model, routing rule, memory policy, guardrail, or judge — should run the relevant eval slices in CI. Use a tiered gate: fast deterministic component checks on every commit, representative task evals before merge, and broader repeated or adversarial runs before release. Hard safety invariants may require 100% pass; stochastic quality metrics need paired comparisons, uncertainty estimates, and a predeclared tolerance.</p>
+<pre><code>push → build → component evals (fast, deterministic)
+              → task evals (reproducible situations, paired by case)
+              → regression gate: invariants + slice floors + tolerated delta
+              → merge or block
+</code></pre>
+<p>Concretely, the gate is a little logic around the scores, not a flowchart:</p>
+<pre><code class="language-yaml"># eval-gate.yml (concept)
+gate:
+  baseline: golden-set-v17@agent-v2.4.0
+  candidate: golden-set-v17@agent-v2.4.1
+  rules:
+    - hard_invariant: &quot;no_wrong_order_refund&quot;
+      required_pass_rate: 1.0
+    - slice: &quot;refund_edge_cases&quot;
+      min_pass_rate: 0.95
+    - metric: &quot;paired_task_success_delta&quot;
+      min_acceptable_delta: -0.02
+      confidence: 0.95
+    - metric: &quot;p95_cost_per_success&quot;
+      max_relative_increase: 0.10
+  on_fail: block
+</code></pre>
+<p>The <code>baseline</code> is the point. A gate without a comparison target is just a score. Run baseline and candidate on the same case version, keep per-run evidence, and block on declared invariants or meaningful slice-level regressions — not on one noisy case moving from pass to fail once. Thresholds in the example are illustrative; derive yours from the harm, traffic, sample size, and cost of false promotion versus false rejection.</p>
+<h3 id="version-the-dataset-and-the-system-together">Version the Dataset and the System Together</h3>
+<p>An eval result is only meaningful against a <em>known</em> dataset version and a <em>known</em> system version. If both change, run a comparison matrix — baseline and candidate on the same old and new slices — so a score movement can be attributed. Treat the whole evaluated system as versioned artifacts:</p>
+<ul>
+<li><strong>Dataset version</strong> — <code>golden-set v17</code> (added 3 adversarial refund cases; retired 2 contaminated cases).</li>
+<li><strong>System version</strong> — agent code, prompt, policy, tool schemas, retrieval index, model, judge, and rubric versions.</li>
+</ul>
+<p>Store the version tuple with every score so any result can be reconstructed or, at minimum, explained.</p>
+<h3 id="canary-evaluation">Canary Evaluation</h3>
+<p>Before a change goes to everyone, route a slice of traffic through it and compare:</p>
+<ol>
+<li><strong>Start in shadow mode</strong> when the agent can create side effects. Replay or mirror production inputs through stubbed or isolated tools so evaluation cannot refund, send, delete, or deploy.</li>
+<li><strong>Route a risk-appropriate slice</strong> to the live canary only after offline and shadow gates pass. The percentage and duration depend on traffic, harm, and the sample needed to decide.</li>
+<li><strong>Score baseline and candidate</strong> against the same rubric and traffic slice — pairwise when appropriate — while keeping model identity blinded from the judge.</li>
+<li><strong>Compare system outcomes and guardrail metrics</strong> — resolution rate, error rate, refund mistakes, latency, escalation load, and cost — not just task scores.</li>
+<li><strong>Promote, hold, or roll back</strong> using predeclared criteria. A canary is the last safety net, not the first.</li>
+</ol>
+<p>The canary is where the two loops finally converge: telemetry (Section 2) feeds real traffic into evaluation (Section 3), and the result drives the release decision.</p>
+<h3 id="drift-detection-in-production">Drift Detection in Production</h3>
+<p>Inputs, user behavior, tools, retrieval corpora, policies, and the world change. A moving model alias or provider backend can also change; a pinned snapshot removes that source only while the provider preserves it. A golden set that passed last month therefore needs current production evidence. Detect change by <strong>scoring an authorized sample of production traffic</strong> against a versioned rubric and watching for movement:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What It Catches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Score distribution shift</strong></td>
+<td>Output quality or the production case mix changed; investigate before assigning cause</td>
+</tr>
+<tr>
+<td><strong>Novel-tool / novel-argument rate</strong></td>
+<td>The agent is doing things it never did before (Chapter 7: escalate)</td>
+</tr>
+<tr>
+<td><strong>Retry-storm / loop rate</strong></td>
+<td>The agent is stuck in a cycle (Section 7)</td>
+</tr>
+<tr>
+<td><strong>Cost-per-trajectory drift</strong></td>
+<td>The agent is spending more tokens for the same work</td>
+</tr>
+<tr>
+<td><strong>Latency p95/p99 drift</strong></td>
+<td>The agent is getting slower, or a dependency is</td>
+</tr>
+</tbody>
+</table>
+<p>The unifying principle from Chapter 7 carries over: <strong>every gate decision is an audit event, and every audit event is a telemetry event.</strong> Evaluating whether your gates, escalations, and approvals actually <em>improve outcomes</em> — rather than just <em>occur</em> — is an evaluation task, and it is how you close the loop from "we have oversight" to "oversight works."</p>
+<h2 id="7-production-failure-modes">7. Production Failure Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>What Happens</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Retry storm</strong></td>
+<td>A failing tool call retries unboundedly, burning tokens and money</td>
+<td>Retry budget per span, exponential backoff, circuit breaker</td>
+</tr>
+<tr>
+<td><strong>Loop / cycle</strong></td>
+<td>The agent alternates between two steps without converging</td>
+<td>Step cap per trajectory, loop detector on repeated (state → action) pairs</td>
+</tr>
+<tr>
+<td><strong>Silent degradation</strong></td>
+<td>The agent gets slowly worse and no one notices</td>
+<td>Continuous scoring of sampled traffic, drift alerts (Section 6)</td>
+</tr>
+<tr>
+<td><strong>Eval gaming</strong></td>
+<td>The agent optimizes the metric, not the task</td>
+<td>Hidden holdout cases, outcome checks, aggregate controls, no fixture fallback</td>
+</tr>
+<tr>
+<td><strong>Test-set contamination</strong></td>
+<td>Development or tuning leaks holdout cases</td>
+<td>Versioned provenance, separated slices, fresh private cases, parameterized situations</td>
+</tr>
+<tr>
+<td><strong>Judge drift</strong></td>
+<td>A judge, rubric, or backend change moves the scale</td>
+<td>Pin and version the instrument; revalidate against held-out human labels</td>
+</tr>
+<tr>
+<td><strong>Telemetry that lies</strong></td>
+<td>Logs show a raw result but omit what actually entered context</td>
+<td>Record transformation metadata and governed as-observed evidence (Section 2)</td>
+</tr>
+<tr>
+<td><strong>Variance-as-quality</strong></td>
+<td>A lucky run is reported as universal success</td>
+<td>Repeat variable slices; report sample count, distribution, and uncertainty</td>
+</tr>
+<tr>
+<td><strong>Dashboard theater</strong></td>
+<td>Beautiful dashboards no one reads, no action follows</td>
+<td>Tie every dashboard to a gate or an alert, or delete it</td>
+</tr>
+<tr>
+<td><strong>Cost-blindness</strong></td>
+<td>Token spend grows invisibly until the bill lands</td>
+<td>Cost telemetry per span, budget alerts, per-trajectory cost floor/ceiling</td>
+</tr>
+</tbody>
+</table>
+<h3 id="debugging-checklist">Debugging Checklist</h3>
+<p>When an agent misbehaves in production, ask in this order:</p>
+<ol>
+<li>Can I reconstruct the trajectory from the trace? (If not, telemetry is broken — fix that first.)</li>
+<li>What did the model <em>observe</em> before the bad decision — and was it the raw result or a truncated summary?</li>
+<li>Was this a known case? Is it in the golden set, and if not, why not?</li>
+<li>Was the failure stable or variable? (Re-run the same seeded situation when another run would change the diagnosis.)</li>
+<li>Did a gate or escalation fire — and was it <em>correct</em> to fire or not fire here?</li>
+<li>Is the score distribution drifting, or was this a one-off outlier?</li>
+<li>Did the failure come from the model, a tool, the memory, or the judge?</li>
+<li>What single test case, added to the golden set, would have caught this — and is it in CI now?</li>
+</ol>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Observability and evaluation are two different loops.</strong> Observability records what the agent did; evaluation judges how well it did it. Conflating them breaks both.</li>
+<li><strong>Trace the observable loop as structured operations and events</strong> with trace/parent IDs, governed tool evidence, versions, and the as-observed context — not imagined access to hidden reasoning.</li>
+<li><strong>Evaluate at three altitudes:</strong> component (does the part work), task (does the agent complete the job), and system (does the product get better). All three, for different reasons.</li>
+<li><strong>Build test sets around distinct reproducible situations</strong> — entities, faults, and confounders as the unit — and report run-to-run variation with its sample count and uncertainty.</li>
+<li><strong>Treat LLM-as-judge as an instrument:</strong> rubric it, control position/self/verbosity bias, calibrate against human labels, and refuse it for verifiable or high-stakes tasks.</li>
+<li><strong>Wire evaluation into CI</strong> with hard invariants, slice floors, and baseline comparisons; version the full evaluated system; then shadow, canary, and monitor in production.</li>
+<li><strong>Every gate decision is an audit event, and every audit event is a telemetry event</strong> — evaluating whether oversight <em>works</em> is this chapter's job, closing the loop from Chapter 7.</li>
+</ul>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI Semantic Conventions</a> — the current OpenTelemetry repository for GenAI spans, metrics, events, and provider conventions; track its version because the specification is still evolving.</li>
+<li><a href="https://developers.openai.com/api/docs/guides/evaluation-best-practices">OpenAI: Evaluation Best Practices</a> — task-specific evals, continuous evaluation, human calibration, edge cases, and grader selection.</li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf">NIST AI RMF: Generative AI Profile</a> — risk-based guidance for measurement, monitoring, testing, evaluation, verification, and validation.</li>
+<li><a href="https://arxiv.org/abs/2306.05685">Zheng et al.: Judging LLM-as-a-Judge</a> — MT-Bench research documenting position, verbosity, self-enhancement, and reasoning limitations in model judges.</li>
+<li><a href="https://www.anthropic.com/research/measuring-faithfulness-in-chain-of-thought-reasoning">Anthropic: Measuring Faithfulness in Chain-of-Thought Reasoning</a> — evidence that generated reasoning text is not automatically a faithful explanation of model behavior.</li>
+<li><a href="https://docs.ragas.io/">Ragas Documentation</a> — practical component metrics for retrieval and retrieval-augmented generation, including context precision and recall.</li>
+</ul>
+<h2 id="whats-next">What's Next?</h2>
+<p>In Chapter 9: Safety and Guardrails, we turn from <em>measuring</em> the agent to <em>constraining</em> it — policy checks, input/output filters, and the guardrail layer that makes evaluation thresholds enforceable. Where this chapter asked "is it good?", the next asks "can it do harm, and how do we stop it?"</p>
+<h2 id="related-chapters">Related Chapters</h2>
+<ul>
+<li><a href="/handbook/chapter-01-react-pattern.html">Chapter 1: The ReAct Pattern</a> — the loop you trace; Thought/Action/Observation is the event vocabulary.</li>
+<li><a href="/handbook/chapter-02-plan-and-execute.html">Chapter 2: Plan-and-Execute</a> — a plan span and per-step execution spans change what you trace; plan-adherence is its own component eval.</li>
+<li><a href="/handbook/chapter-03-reflection.html">Chapter 3: The Reflection Pattern</a> — the critic's rubric is your first LLM-as-judge, and its calibrated confidence feeds escalation.</li>
+<li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Chapter 4: Multi-Agent Collaboration</a> — cross-agent trace propagation and attribution add a dimension to every trace.</li>
+<li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Chapter 5: Tool Use and Skill Registries</a> — tool-call telemetry and idempotency keys that make replay safe.</li>
+<li><a href="/handbook/chapter-06-memory-context-management.html">Chapter 6: Memory &amp; Context Management</a> — retrieval evals, provenance, and compaction correctness as component evals.</li>
+<li><a href="/handbook/chapter-07-human-in-the-loop.html">Chapter 7: Human-in-the-Loop</a> — approvals, denials, and escalations as audit events; evaluating whether gates work.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Do I really need both observability and evaluation, or is one enough?</strong>
+You need both. Observability without evaluation tells you what happened but not whether it was good; you'll spot anomalies but can't tell a bug from a feature. Evaluation without observability gives you scores with no production signal — you'll know the agent passed the golden set but not whether it fails in the wild. The two meet in the development loop: you trace a failure, encode it as a case, and gate on it.</p>
+<p><strong>Q: How big does my golden set need to be?</strong>
+There is no universal case count. Start with the smallest set that covers each critical capability, harm, boundary, and known failure slice, then measure coverage and add production failures. Ten diverse, reviewed situations can be more useful than 1,000 paraphrases, but the right size depends on how many behaviors and risk strata the system must cover.</p>
+<p><strong>Q: How do I know if my LLM-as-judge is trustworthy?</strong>
+You do not until you validate it. Build a held-out, human-labeled set, measure human-human agreement, then compare the judge by dimension. Disagreement may come from the rubric, judge, evidence, or labels. Pin the judge and rubric versions, investigate errors, and route unsupported slices to human review.</p>
+<p><strong>Q: Should I use a different model as judge than as generator?</strong>
+Test it; do not assume model family alone decides quality. A cross-family judge can reduce one source of self-preference, but it can introduce different errors. Blind model identity, test position swaps, and choose the judge that best agrees with qualified human labels on your rubric. For verifiable tasks, skip the judge and use deterministic evidence.</p>
+<p><strong>Q: How often should I re-run evaluation in production?</strong>
+Continuously as a feedback process, not necessarily on every request. Run fast deterministic checks on each change, relevant task slices before merge, broad repeated/adversarial suites before release, and an authorized production sample on a risk-appropriate schedule. The release suite is a <em>change gate</em>; sampled production evaluation is a <em>health signal</em>.</p>
+<p><strong>Q: How do I stop the agent from gaming the evaluation?</strong>
+Assume any optimized proxy can be gamed. Keep a stable rubric for comparability, protect hidden holdout cases, evaluate real outcomes and aggregates, record <em>which</em> component answered, and never extend validity windows or fall back to a fixture brain just to make the suite pass. The goal is evidence, not a green checkmark.</p>
+<h2 id="glossary-terms-introduced">Glossary Terms Introduced</h2>
+<ul>
+<li><strong>Observability</strong>: Recording what a system did — traces, spans, events, and the audit trail — without judgment, so behavior can be reconstructed after the fact.</li>
+<li><strong>Evaluation</strong>: Judging how well a system performed against a standard, using test sets, rubrics, and scores.</li>
+<li><strong>Trace / Span / Event</strong>: The nested structure of telemetry: a trace is a whole request, a span is one unit of work within it, and an event is a point-in-time record within a span.</li>
+<li><strong>Golden Set</strong>: A curated, versioned collection of representative cases with expected outcomes or scoring rules, used to compare and gate changes.</li>
+<li><strong>Seeded Situation</strong>: A reproducible evaluation unit defined by a fixed initial state plus entities, faults, and confounders — the primary unit of a good test set.</li>
+<li><strong>Stochastic Variance</strong>: The run-to-run variation in model output from sampling and nondeterminism, which must be reported separately from quality.</li>
+<li><strong>LLM-as-Judge</strong>: Using a language model to score output quality against a rubric, used when no deterministic checker exists.</li>
+<li><strong>Rubric</strong>: A scored, dimensioned set of criteria (with anchors) that makes evaluation consistent and comparable.</li>
+<li><strong>Pointwise vs. Pairwise Evaluation</strong>: Scoring a single output against a rubric (pointwise) versus comparing two outputs directly (pairwise).</li>
+<li><strong>Regression Gate</strong>: A release check that applies declared invariants, slice floors, and tolerated baseline deltas to evaluation evidence.</li>
+<li><strong>Drift Detection</strong>: Monitoring input, behavior, outcome, cost, and score distributions to detect change that needs investigation.</li>
+<li><strong>Eval Gaming</strong>: The agent optimizing the evaluation (rubric, threshold, fixture) rather than the underlying task.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.2</td>
+<td>2026-08-18</td>
+<td>Website editorial and evidence pass: replaced hidden-thought logging with observable model/tool/context events; aligned trace identifiers and content governance with current OpenTelemetry guidance; corrected seed and replay claims; added uncertainty-aware CI gates, full-system versioning, safe shadowing, nuanced drift attribution, stronger holdout controls, calibrated judge guidance, current primary references, and a new verified handbook diagram.</td>
+</tr>
+<tr>
+<td>v1.1</td>
+<td>2026-08-16</td>
+<td>Post-peer-review revision: reconciled the two-loops doctrine with drift scoring (telemetry feeds evaluation as data, not as one merged system); corrected the deterministic-replay overstatement (replay is faithful only when model version, temperature, seed, and inputs are logged — now in the trace schema); added a telemetry privacy/cost subsection (redaction, tiered capture, retention); added a worked seeded-situation example and a machine-parseable rubric; added concrete CI-gate YAML and system-eval attribution; disambiguated "seed" (situation vs. sampling) and span vs. event; added reward hacking; added Chapter 2 and Chapter 4 cross-links.</td>
+</tr>
+<tr>
+<td>v1.0</td>
+<td>2026-08-16</td>
+<td>Initial publication.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<a href="/handbook/chapter-07-human-in-the-loop.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">Human-in-the-Loop</div></a>
+<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites">Prerequisites</a></li>
+<li><a class="handbook-toc__link" href="#1-the-two-loops-observability-and-evaluation">1. The Two Loops — Observability and Evaluation</a><ul>
+<li><a class="handbook-toc__link" href="#they-are-not-the-same-system">They Are Not the Same System</a></li>
+<li><a class="handbook-toc__link" href="#it-worked-in-my-demo-is-not-evidence">"It Worked in My Demo" Is Not Evidence</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#2-agent-telemetry-tracing-the-loop">2. Agent Telemetry — Tracing the Loop</a><ul>
+<li><a class="handbook-toc__link" href="#the-trace-model">The Trace Model</a></li>
+<li><a class="handbook-toc__link" href="#what-to-record-on-every-loop">What to Record on Every Loop</a></li>
+<li><a class="handbook-toc__link" href="#telemetry-is-a-privacy-and-cost-liability">Telemetry Is a Privacy and Cost Liability</a></li>
+<li><a class="handbook-toc__link" href="#telemetry-is-the-audit-trail">Telemetry Is the Audit Trail</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#3-the-evaluation-pyramid">3. The Evaluation Pyramid</a><ul>
+<li><a class="handbook-toc__link" href="#component-evals">Component Evals</a></li>
+<li><a class="handbook-toc__link" href="#task-evals">Task Evals</a></li>
+<li><a class="handbook-toc__link" href="#system-evals">System Evals</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#4-building-a-test-set-that-isnt-theater">4. Building a Test Set That Isn't Theater</a><ul>
+<li><a class="handbook-toc__link" href="#rule-1-the-unit-is-a-seeded-situation-not-a-prompt">Rule 1: The Unit Is a Seeded Situation, Not a Prompt</a></li>
+<li><a class="handbook-toc__link" href="#rule-2-vary-entities-faults-and-confounders-independently">Rule 2: Vary Entities, Faults, and Confounders — Independently</a></li>
+<li><a class="handbook-toc__link" href="#rule-3-report-stochastic-variance-separately">Rule 3: Report Stochastic Variance Separately</a></li>
+<li><a class="handbook-toc__link" href="#rule-4-include-adversarial-and-edge-cases">Rule 4: Include Adversarial and Edge Cases</a></li>
+<li><a class="handbook-toc__link" href="#rule-5-keep-the-test-set-out-of-the-training-set">Rule 5: Keep the Test Set Out of the Training Set</a></li>
+<li><a class="handbook-toc__link" href="#a-worked-example">A Worked Example</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#5-llm-as-judge-done-right">5. LLM-as-Judge Done Right</a><ul>
+<li><a class="handbook-toc__link" href="#use-a-rubric-not-a-vibe">Use a Rubric, Not a Vibe</a></li>
+<li><a class="handbook-toc__link" href="#pointwise-vs-pairwise">Pointwise vs. Pairwise</a></li>
+<li><a class="handbook-toc__link" href="#control-the-known-biases">Control the Known Biases</a></li>
+<li><a class="handbook-toc__link" href="#calibrate-the-judge-before-you-trust-it">Calibrate the Judge Before You Trust It</a></li>
+<li><a class="handbook-toc__link" href="#when-not-to-use-a-judge">When Not to Use a Judge</a></li>
+<li><a class="handbook-toc__link" href="#resist-eval-gaming">Resist Eval Gaming</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#6-evaluation-driven-development">6. Evaluation-Driven Development</a><ul>
+<li><a class="handbook-toc__link" href="#the-ci-regression-gate">The CI Regression Gate</a></li>
+<li><a class="handbook-toc__link" href="#version-the-dataset-and-the-system-together">Version the Dataset and the System Together</a></li>
+<li><a class="handbook-toc__link" href="#canary-evaluation">Canary Evaluation</a></li>
+<li><a class="handbook-toc__link" href="#drift-detection-in-production">Drift Detection in Production</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#7-production-failure-modes">7. Production Failure Modes</a><ul>
+<li><a class="handbook-toc__link" href="#debugging-checklist">Debugging Checklist</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#further-reading">Further Reading</a></li>
+<li><a class="handbook-toc__link" href="#whats-next">What's Next?</a></li>
+<li><a class="handbook-toc__link" href="#related-chapters">Related Chapters</a></li>
+<li><a class="handbook-toc__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a class="handbook-toc__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Expertise</span>
+          <a href="/#services" class="footer__nav-link">System Design</a>
+          <a href="/#services" class="footer__nav-link">AI Architecture</a>
+          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
+          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/#work" class="footer__nav-link">Case Studies</a>
+          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="/#contact" class="footer__nav-link">Contact</a>
+          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/cal-widget.js" defer></script>
+</body>
+</html>
