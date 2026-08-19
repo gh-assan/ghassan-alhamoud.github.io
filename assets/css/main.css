@@ -2881,3 +2881,26 @@ img {
   opacity: 0.06;
 }
 
+
+/* ----- Legal pages (impressum, privacy) ----- */
+.legal__content {
+  max-width: 720px;
+  padding-top: calc(var(--nav-height) + 3rem);
+}
+.legal__content h1 { margin-bottom: 1rem; }
+.legal__content h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-size: 1.15rem;
+}
+.legal__content p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+.legal__content a { color: var(--accent); }
+.legal__content code {
+  background: var(--bg-tertiary);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
