@@ -72,11 +72,13 @@
   }
 
   function showError() {
+    // Non-destructive failure: keep statically rendered cards in place
+    // and only show an error where a container has nothing to show.
     [
       document.getElementById('featuredProjectList'),
       document.getElementById('projectsPageList')
     ].forEach(function (el) {
-      if (el) {
+      if (el && el.querySelectorAll('a').length === 0) {
         el.innerHTML = '<p class="articles-preview__loading">Could not load projects.</p>';
       }
     });

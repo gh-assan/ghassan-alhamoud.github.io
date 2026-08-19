@@ -374,7 +374,7 @@ def check_static_first():
         problems.append("index.html: no static curated field notes")
 
     for page, needle, minimum in (
-        ("projects/index.html", 'class="article-card project-card"', 6),
+        ("projects/index.html", 'class="article-card project-card', 6),
         ("articles/index.html", 'class="article-card"', 30),
     ):
         text = read(ROOT / page)
