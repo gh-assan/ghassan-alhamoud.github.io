@@ -39,8 +39,11 @@ def build_tree(articles: list) -> ET.Element:
     )
     ET.SubElement(channel, "language").text = "en"
 
-    now = formatdate(timeval=None, localtime=False, usegmt=True)
-    ET.SubElement(channel, "lastBuildDate").text = now
+    # Deterministic: derived from the newest article, not the wall clock.
+    newest = max(a["date"] for a in articles)
+    build_ts = datetime.strptime(newest, "%Y-%m-%d").timestamp()
+    ET.SubElement(channel, "lastBuildDate").text = formatdate(
+        timeval=build_ts, localtime=False, usegmt=True)
 
     # atom:link (self-reference)
     atom_link = ET.SubElement(channel, "{http://www.w3.org/2005/Atom}link")
@@ -80,6 +83,8 @@ def inject_cdata(xml_str: str) -> str:
 
     def _replacer(m: re.Match) -> str:
         content = unescape(m.group(1))
+        # Split any ]]> inside content so the CDATA section stays well-formed.
+        content = content.replace("]]>", "]]]]><![CDATA[>")
         return f"<![CDATA[{content}]]>"
 
     return re.sub(r"__CDATA__(.*?)__CDATA__", _replacer, xml_str)
