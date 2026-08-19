@@ -254,7 +254,7 @@ def check_css_parses():
 # ---------------------------------------------------------------- gate 7
 def check_proof_structure():
     index = read(ROOT / "index.html")
-    cards = re.findall(r'<article class="system-card".*?</article>', index, re.S)
+    cards = re.findall(r'<article class="system-card[^"]*".*?</article>', index, re.S)
     problems = []
     if len(cards) != 3:
         problems.append(f"expected 3 featured system cards, found {len(cards)}")

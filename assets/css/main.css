@@ -2904,3 +2904,183 @@ img {
   border-radius: 4px;
   font-size: 0.85em;
 }
+
+/* ================================================================
+   EDITORIAL HOMEPAGE — hero layout, artifact, systems, field notes
+   ================================================================ */
+
+.hero__layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero__eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.hero__proof {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.hero__artifact {
+  margin: 0;
+  max-width: 100%;
+}
+
+.hero__artifact svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .hero__layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .hero__artifact {
+    max-width: 460px;
+  }
+}
+
+/* ----- System cards ----- */
+.systems__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 1000px) {
+  .systems__grid { grid-template-columns: 1fr; }
+}
+
+.system-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.system-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.system-card__title { font-size: 1.15rem; margin: 0; }
+.system-card__title a { color: var(--text-primary); text-decoration: none; }
+.system-card__title a:hover { color: var(--accent); }
+
+.system-card__status {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.system-card__summary {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.system-card__facts { margin: 0 0 1rem; }
+.system-card__fact { margin-bottom: 0.6rem; }
+.system-card__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.1rem;
+}
+.system-card__fact dd {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.system-card__links {
+  margin-top: auto;
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.9rem;
+}
+.system-card__links a { color: var(--accent); }
+
+.systems__more {
+  margin-top: 2rem;
+  color: var(--text-secondary);
+}
+.systems__more a { color: var(--accent); }
+
+/* ----- Handbook feature ----- */
+.handbook-feature__chapters {
+  margin: 2rem 0;
+  padding-left: 1.25rem;
+  columns: 3;
+  column-gap: 2.5rem;
+  color: var(--text-secondary);
+  line-height: 2;
+}
+.handbook-feature__chapters a { color: var(--text-primary); text-decoration: none; }
+.handbook-feature__chapters a:hover { color: var(--accent); }
+@media (max-width: 900px) { .handbook-feature__chapters { columns: 2; } }
+@media (max-width: 560px) { .handbook-feature__chapters { columns: 1; } }
+
+/* ----- Field notes ----- */
+.field-notes__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+@media (max-width: 800px) { .field-notes__list { grid-template-columns: 1fr; } }
+
+.field-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+.field-note:hover { border-color: var(--accent); }
+.field-note__path {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.field-note__title { color: var(--text-primary); font-weight: 600; line-height: 1.4; }
+.field-note__excerpt { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; }
+.field-notes__footer { margin-top: 2rem; }
+
+/* ----- Counter scope notes ----- */
+.counter__scope {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
