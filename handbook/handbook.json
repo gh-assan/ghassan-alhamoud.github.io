@@ -7,7 +7,7 @@
     "author": {
       "name": "Ghassan Alhamoud",
       "url": "https://ghassan-alhamoud.com/",
-      "jobTitle": "Senior Software Engineer — AI Agent Enablement"
+      "jobTitle": "Senior Software Engineer — AI Agent Enabler, Software Architecture"
     },
     "chapters": [
       {
@@ -17,7 +17,12 @@
         "subtitle": "Autonomy, tools, and the patterns that make agents work",
         "description": "A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know.",
         "primaryKeyword": "agentic landscape",
-        "keywords": ["AI agents", "agent architecture", "autonomous agents", "LLM tool use"],
+        "keywords": [
+          "AI agents",
+          "agent architecture",
+          "autonomous agents",
+          "LLM tool use"
+        ],
         "status": "published",
         "difficulty": "beginner",
         "readingTime": "10 min",
@@ -25,7 +30,12 @@
         "diagram": "00-diagram.png",
         "ogImage": "/images/handbook/HDBK-000-agentic-landscape.webp",
         "prerequisites": [],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "human-in-the-loop", "observability-evaluation"],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-07-01",
         "lastModified": "2026-07-01"
       },
@@ -36,15 +46,26 @@
         "subtitle": "Reasoning and Acting in the Agent Era",
         "description": "Learn the ReAct pattern: how LLMs interleave reasoning (Thought), tool calls (Action), and feedback (Observation) to solve complex tasks.",
         "primaryKeyword": "ReAct pattern LLM",
-        "keywords": ["ReAct agent", "thought action observation", "LLM reasoning loop", "agent tool use"],
+        "keywords": [
+          "ReAct agent",
+          "thought action observation",
+          "LLM reasoning loop",
+          "agent tool use"
+        ],
         "status": "published",
         "difficulty": "beginner",
         "readingTime": "8 min",
         "file": "chapter-01-react-pattern.md",
         "diagram": "01-diagram.png",
         "ogImage": "/images/handbook/HDBK-001-react-pattern.webp",
-        "prerequisites": ["agentic-landscape"],
-        "relatedPatterns": ["plan-and-execute", "reflection", "observability-evaluation"],
+        "prerequisites": [
+          "agentic-landscape"
+        ],
+        "relatedPatterns": [
+          "plan-and-execute",
+          "reflection",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-06-28",
         "lastModified": "2026-06-28"
       },
@@ -55,15 +76,28 @@
         "subtitle": "Orchestrating Complex Tasks",
         "description": "Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner.",
         "primaryKeyword": "plan and execute agent",
-        "keywords": ["agent planning pattern", "DAG task execution", "planner executor replanner", "agent orchestration"],
+        "keywords": [
+          "agent planning pattern",
+          "DAG task execution",
+          "planner executor replanner",
+          "agent orchestration"
+        ],
         "status": "published",
         "difficulty": "intermediate",
         "readingTime": "12 min",
         "file": "chapter-02-plan-and-execute.md",
         "diagram": "02-diagram.png",
         "ogImage": "/images/handbook/HDBK-002-plan-and-execute.webp",
-        "prerequisites": ["agentic-landscape", "react-pattern"],
-        "relatedPatterns": ["react-pattern", "reflection", "human-in-the-loop", "observability-evaluation"],
+        "prerequisites": [
+          "agentic-landscape",
+          "react-pattern"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "reflection",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-06-28",
         "lastModified": "2026-06-28"
       },
@@ -74,15 +108,29 @@
         "subtitle": "Self-Correction and Quality Control",
         "description": "Learn the Reflection pattern: how a Generator-Critic loop with a structured rubric reduces hallucinations and improves output quality.",
         "primaryKeyword": "reflection pattern AI",
-        "keywords": ["generator critic pattern", "AI self correction", "LLM reflection loop", "agent quality control"],
+        "keywords": [
+          "generator critic pattern",
+          "AI self correction",
+          "LLM reflection loop",
+          "agent quality control"
+        ],
         "status": "published",
         "difficulty": "intermediate",
         "readingTime": "8 min",
         "file": "chapter-03-reflection.md",
         "diagram": "03-diagram.png",
         "ogImage": "/images/handbook/HDBK-003-reflection.webp",
-        "prerequisites": ["agentic-landscape", "react-pattern", "plan-and-execute"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "human-in-the-loop", "observability-evaluation"],
+        "prerequisites": [
+          "agentic-landscape",
+          "react-pattern",
+          "plan-and-execute"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-06-28",
         "lastModified": "2026-06-28"
       },
@@ -93,15 +141,32 @@
         "subtitle": "Teams, topologies, and debate",
         "description": "Learn when multi-agent collaboration is worth the cost: orchestrators, worker handoffs, debate, topology choices, observability, and production failure modes.",
         "primaryKeyword": "multi-agent collaboration",
-        "keywords": ["multi-agent systems", "agent orchestration", "AI agent debate", "agent handoff protocol", "agent topology"],
+        "keywords": [
+          "multi-agent systems",
+          "agent orchestration",
+          "AI agent debate",
+          "agent handoff protocol",
+          "agent topology"
+        ],
         "status": "published",
         "difficulty": "advanced",
         "readingTime": "13 min",
         "file": "chapter-04-multi-agent-collaboration.md",
         "diagram": "04-diagram.svg",
         "ogImage": "/images/handbook/HDBK-004-multi-agent-collaboration.svg",
-        "prerequisites": ["react-pattern", "plan-and-execute", "reflection"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "tool-use-skill-registry", "human-in-the-loop", "observability-evaluation"],
+        "prerequisites": [
+          "react-pattern",
+          "plan-and-execute",
+          "reflection"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "reflection",
+          "tool-use-skill-registry",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-07-05",
         "lastModified": "2026-07-23"
       },
@@ -112,15 +177,33 @@
         "subtitle": "The agent's interface to the world",
         "description": "Design reliable agent tools and a governed skill registry with schemas, permissions, discovery, idempotency, approvals, observability, and failure controls.",
         "primaryKeyword": "AI agent skill registry",
-        "keywords": ["LLM tool use", "agent tool calling", "skill registry", "function calling", "tool governance"],
+        "keywords": [
+          "LLM tool use",
+          "agent tool calling",
+          "skill registry",
+          "function calling",
+          "tool governance"
+        ],
         "status": "published",
         "difficulty": "advanced",
         "readingTime": "16 min",
         "file": "chapter-05-tool-use-skill-registry.md",
         "diagram": "05-diagram.webp",
         "ogImage": "/images/handbook/HDBK-005-tool-use-skill-registry.webp",
-        "prerequisites": ["react-pattern", "plan-and-execute", "multi-agent-collaboration"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "memory-context-management", "human-in-the-loop", "observability-evaluation"],
+        "prerequisites": [
+          "react-pattern",
+          "plan-and-execute",
+          "multi-agent-collaboration"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "reflection",
+          "multi-agent-collaboration",
+          "memory-context-management",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-07-23",
         "lastModified": "2026-07-23"
       },
@@ -131,15 +214,34 @@
         "subtitle": "Keeping what matters",
         "description": "Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, and lifecycle evaluation.",
         "primaryKeyword": "AI agent memory and context management",
-        "keywords": ["AI agent memory", "LLM context management", "context compaction", "long-term memory", "memory retrieval", "memory provenance"],
+        "keywords": [
+          "AI agent memory",
+          "LLM context management",
+          "context compaction",
+          "long-term memory",
+          "memory retrieval",
+          "memory provenance"
+        ],
         "status": "published",
         "difficulty": "advanced",
         "readingTime": "22 min",
         "file": "chapter-06-memory-context-management.md",
         "diagram": "HDBK-006-memory-context-management.webp",
         "ogImage": "/images/handbook/HDBK-006-memory-context-management.webp",
-        "prerequisites": ["react-pattern", "plan-and-execute", "tool-use-skill-registry"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry", "human-in-the-loop", "observability-evaluation"],
+        "prerequisites": [
+          "react-pattern",
+          "plan-and-execute",
+          "tool-use-skill-registry"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "reflection",
+          "multi-agent-collaboration",
+          "tool-use-skill-registry",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-07-31",
         "lastModified": "2026-07-31"
       },
@@ -150,15 +252,36 @@
         "subtitle": "Keeping people in control",
         "description": "Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight.",
         "primaryKeyword": "human in the loop AI agents",
-        "keywords": ["human in the loop", "AI agent approval gates", "agent autonomy", "agent escalation", "delegation contract", "human oversight"],
+        "keywords": [
+          "human in the loop",
+          "AI agent approval gates",
+          "agent autonomy",
+          "agent escalation",
+          "delegation contract",
+          "human oversight"
+        ],
         "status": "published",
         "difficulty": "advanced",
         "readingTime": "27 min",
         "file": "chapter-07-human-in-the-loop.md",
         "diagram": "HDBK-007-human-in-the-loop.webp",
         "ogImage": "/images/handbook/HDBK-007-human-in-the-loop.webp",
-        "prerequisites": ["react-pattern", "plan-and-execute", "multi-agent-collaboration", "tool-use-skill-registry", "memory-context-management"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry", "memory-context-management", "observability-evaluation"],
+        "prerequisites": [
+          "react-pattern",
+          "plan-and-execute",
+          "multi-agent-collaboration",
+          "tool-use-skill-registry",
+          "memory-context-management"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "reflection",
+          "multi-agent-collaboration",
+          "tool-use-skill-registry",
+          "memory-context-management",
+          "observability-evaluation"
+        ],
         "publishedAt": "2026-08-09",
         "lastModified": "2026-08-09"
       },
@@ -169,15 +292,37 @@
         "subtitle": "Knowing what happened — and whether it was good",
         "description": "Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gates, canaries, and drift detection.",
         "primaryKeyword": "AI agent observability and evaluation",
-        "keywords": ["AI agent observability", "LLM evaluation", "agent tracing", "golden dataset", "LLM as judge", "evaluation regression gate", "agent telemetry"],
+        "keywords": [
+          "AI agent observability",
+          "LLM evaluation",
+          "agent tracing",
+          "golden dataset",
+          "LLM as judge",
+          "evaluation regression gate",
+          "agent telemetry"
+        ],
         "status": "published",
         "difficulty": "advanced",
         "readingTime": "31 min",
         "file": "chapter-08-observability-evaluation.md",
         "diagram": "HDBK-008-observability-evaluation.webp",
         "ogImage": "/images/handbook/HDBK-008-observability-evaluation.webp",
-        "prerequisites": ["react-pattern", "reflection", "tool-use-skill-registry", "memory-context-management", "human-in-the-loop"],
-        "relatedPatterns": ["react-pattern", "plan-and-execute", "reflection", "multi-agent-collaboration", "tool-use-skill-registry", "memory-context-management", "human-in-the-loop"],
+        "prerequisites": [
+          "react-pattern",
+          "reflection",
+          "tool-use-skill-registry",
+          "memory-context-management",
+          "human-in-the-loop"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "reflection",
+          "multi-agent-collaboration",
+          "tool-use-skill-registry",
+          "memory-context-management",
+          "human-in-the-loop"
+        ],
         "publishedAt": "2026-08-18",
         "lastModified": "2026-08-18"
       }
