@@ -53,8 +53,8 @@ FORBIDDEN = [
     "accepting new clients",
     "available for new engagements",
     "free 30-min call",
-    "newsletter",
-    "subscribe to",
+    "newsletter signup",
+    "subscribe",
 ]
 
 PUBLISHED_GLOBS = ["*.html", "rss.xml", "sitemap.xml", "llms.txt"]
@@ -112,8 +112,10 @@ def normalize_href(href):
 def check_forbidden_surfaces():
     offenders = []
     targets = published_files() + code_files()
+    # The validator and the cleanup migration contain the patterns by design.
+    exempt = {Path(__file__).name, "clean-booking-surfaces.py"}
     for f in targets:
-        if f.name == Path(__file__).name:
+        if f.name in exempt:
             continue
         text = read(f).lower()
         for pat in FORBIDDEN:

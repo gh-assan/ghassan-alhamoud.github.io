@@ -353,7 +353,6 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/handbook.css" />
 </head>
@@ -454,7 +453,6 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
           <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
         </div>
@@ -476,7 +474,6 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
     }})();
   </script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>"""
 
@@ -588,7 +585,6 @@ def render_index(handbook: dict, chapters: list) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/handbook.css" />
 </head>
@@ -680,7 +676,6 @@ def render_index(handbook: dict, chapters: list) -> str:
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
           <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
         </div>
@@ -702,7 +697,6 @@ def render_index(handbook: dict, chapters: list) -> str:
     }})();
   </script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>"""
     return html
