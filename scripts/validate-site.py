@@ -248,6 +248,11 @@ def check_css_parses():
         if text.count("{") != text.count("}"):
             problems.append(f"{f.name}: unbalanced braces "
                             f"({text.count('{')} vs {text.count('}')})")
+        # every referenced keyframe must be defined, and vice versa
+        used = set(re.findall(r'animation:\s*([\w-]+)', text)) - {"none"}
+        defined = set(re.findall(r'@keyframes\s+([\w-]+)', text))
+        for name in sorted(used - defined):
+            problems.append(f"{f.name}: animation '{name}' has no @keyframes")
     report("css-parses", not problems, "; ".join(problems))
 
 
