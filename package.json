@@ -1,0 +1,10 @@
+{
+  "name": "ghassan-alhamoud-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal website of Ghassan Alhamoud — static site, no build step required.",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "validate": "python3 scripts/validate-site.py"
+  }
+}
