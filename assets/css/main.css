@@ -11,7 +11,7 @@
   --bg-hover: #1e1e1e;
   --text-primary: #f0f0f0;
   --text-secondary: #a8a8a8;
-  --text-muted: #3d3d3d;
+  --text-muted: #8a8a8a; /* 5.6:1 on dark bg */
   --accent: #e4006f;
   --accent-hover: #ff1a82;
   --accent-rgb: 228, 0, 111;
@@ -47,7 +47,7 @@
   /* Typography — deep forest, sage mid-tones */
   --text-primary:       #1a2e1a;
   --text-secondary:     #4a6741;
-  --text-muted:         #6b8268;  /* darkened for readability on light bg (~3.7:1) */
+  --text-muted:         #556b52;  /* 5.4:1 on sage-white bg — meets WCAG AA body text */
 
   /* Primary action — forest emerald (CTAs, links, active states) */
   --accent:             #1d6f42;
@@ -82,8 +82,8 @@
   border-color: var(--border);
   background: rgba(var(--accent-rgb), 0.07);
 }
-   orbs are visible blobs on white — reduce opacity;
-   grid border is light sage — boost opacity so it shows */
+/* Orbs are visible blobs on white — reduce opacity;
+   grid border is light sage — boost opacity so it shows. */
 [data-theme="nature"] .hero__orb--1,
 [data-theme="nature"] .hero__orb--2 { opacity: 0.07; }
 [data-theme="nature"] .hero__grid   { opacity: 0.45; }
@@ -165,13 +165,18 @@ img {
    ================================================================ */
 
 .reveal {
+  opacity: 1;
+}
+
+/* Hidden only once JavaScript has confirmed it can reveal again */
+html.js .reveal {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.8s var(--ease-out),
               transform 0.8s var(--ease-out);
 }
 
-.reveal--visible {
+html.js .reveal--visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -3083,4 +3088,45 @@ img {
   margin-top: 0.35rem;
   font-size: 0.72rem;
   color: var(--text-muted);
+}
+
+/* ----- Mobile navigation scrim ----- */
+.nav__scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+.nav__scrim--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (min-width: 1000px) {
+  .nav__scrim { display: none; }
+}
+
+/* ----- Reduced motion policy ----- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .hero__orb,
+  .hero__grid,
+  .page-transition {
+    display: none !important;
+  }
 }

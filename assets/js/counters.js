@@ -9,9 +9,26 @@
   if (!counters.length) return;
 
   var hasAnimated = false;
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setFinalValues() {
+    counters.forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      var suffix = el.getAttribute('data-suffix') || '';
+      el.textContent = target + suffix;
+    });
+  }
 
   function animateCounters() {
     if (hasAnimated) return;
+
+    // Reduced motion: no counting animation, just the final values.
+    if (reduceMotion) {
+      setFinalValues();
+      hasAnimated = true;
+      return;
+    }
 
     counters.forEach(function (el) {
       var target = parseInt(el.getAttribute('data-target'), 10);

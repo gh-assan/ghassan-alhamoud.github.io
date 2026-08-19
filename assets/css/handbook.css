@@ -364,7 +364,7 @@
 }
 
 /* ----- Responsive: hide sidebar on small screens ----- */
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   .handbook-sidebar {
     display: none;
   }
