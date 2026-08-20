@@ -21,6 +21,7 @@
     "name": "Ruby-Native Durable Agent Framework",
     "status": "In active development",
     "featured": true,
+    "highlighted": true,
     "repo": "https://github.com/ghassan-ai-projects/tamoz",
     "summary": "A Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows.",
     "problem": "Agent frameworks often move quickly on demos while leaving durability, review boundaries, evaluation evidence, and failure recovery as afterthoughts.",

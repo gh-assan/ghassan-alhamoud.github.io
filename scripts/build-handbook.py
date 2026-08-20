@@ -32,6 +32,21 @@ CTA_HTML = """<div class="article-cta">
   <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
 </div>"""
 
+# Condensed from each chapter's `description` in handbook.json: what the
+# reader can do after finishing the chapter. Keyed by slug so the index
+# presents chapters as a decision path with explicit outcomes.
+CHAPTER_OUTCOMES = {
+    "agentic-landscape": "you can map autonomy levels and pick a pattern.",
+    "react-pattern": "you can apply the Thought / Action / Observation loop.",
+    "plan-and-execute": "you can separate planning from execution and add a re-planner.",
+    "reflection": "you can run a Generator-Critic loop with a structured rubric.",
+    "multi-agent-collaboration": "you can judge when multi-agent collaboration is worth the cost.",
+    "tool-use-skill-registry": "you can design governed tools and a skill registry.",
+    "memory-context-management": "you can design memory with budgets, governed writes, and lifecycle evaluation.",
+    "human-in-the-loop": "you can set risk-based autonomy with enforceable approval gates.",
+    "observability-evaluation": "you can wire traces, evals, and regression gates for agents.",
+}
+
 
 def load_json():
     with open(JSON_PATH, "r", encoding="utf-8") as f:
@@ -562,11 +577,17 @@ def render_index(handbook: dict, chapters: list) -> str:
     chapter_cards = []
     for c in published:
         url = f"/handbook/chapter-{c['id']:02d}-{c['slug']}.html"
+        outcome = CHAPTER_OUTCOMES.get(c["slug"])
+        outcome_html = (
+            f'<p class="chapter-card__outcome">Outcome: {outcome}</p>'
+            if outcome else ""
+        )
         chapter_cards.append(
             f'<a href="{url}" class="handbook-index__card">'
             f'<span class="handbook-index__card-number">HDBK-{c["id"]:03d}</span>'
             f'<h3 class="handbook-index__card-title">{c["title"]}</h3>'
             f'<p class="handbook-index__card-desc">{c["description"]}</p>'
+            f'{outcome_html}'
             f'<span class="handbook-index__card-meta">{c.get("readingTime", "")} • {c.get("difficulty", "").capitalize()}</span>'
             f'</a>'
         )

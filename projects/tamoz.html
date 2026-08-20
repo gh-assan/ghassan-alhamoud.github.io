@@ -62,6 +62,18 @@
           <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">In active development; core, graph, SQLite, agent, and evaluation foundations are underway.</span></div>
         </div>
 
+        <figure class="artifact-frame" style="margin-inline: 0">
+          <pre><code>$ tamoz run support-triage.graph
+[graph]  node "intake" done      &rarr; checkpoint cp_0142 written (SQLite)
+[graph]  node "draft-reply"      &rarr; reducer applied, state v18
+[effect] journal staged: fs.write workspace/notes/ticket-4417.md
+[gate]   1 effect pending review &rarr; run paused, interrupt recorded
+$ tamoz review cp_0142 --approve
+[graph]  resume from cp_0142     &rarr; deterministic replay, no drift
+[effect] journal committed       &rarr; boundary audit logged</code></pre>
+          <figcaption class="evidence-caption">Design artifact — the checkpoint loop composed from the public repo's documented primitives (deterministic graph execution, checkpoints, reducers, effect journals, review gates). The acceptance discipline behind it comes from a documented failure: <a href="/articles/smart-models-go-stupid.html">6,142 lines of TUI design became a 280-line REPL</a>.</figcaption>
+        </figure>
+
         <div class="article-single__body project-single__body">
           <p>Tamoz is a Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows. It is structured as a monorepo of independently publishable gems rather than one large runtime.</p>
           <p>The current build is risk-first. Evaluation contracts come before broad agent behavior. Deterministic graph execution comes before persistence. Persistence comes before larger model-driven workflows. The result is slower than a demo framework, but the boundaries are easier to inspect.</p>

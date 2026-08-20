@@ -86,6 +86,24 @@
   flex-grow: 1;
 }
 
+/* Outcome line: what the reader can do after the chapter.
+   Muted and marked so it reads as a decision-path label, not body copy. */
+.chapter-card__outcome {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+  padding-left: 14px;
+  position: relative;
+}
+
+.chapter-card__outcome::before {
+  content: "\2192"; /* → */
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
 .handbook-index__card-meta {
   font-size: 13px;
   color: var(--text-muted);

@@ -80,13 +80,27 @@
           </div>
         </header>
 
-        <img class="project-single__hero" src="/images/projects/scaleshop-social.png" alt="ScaleShop Scalability Lab showing an abstract distributed-system topology" width="1200" height="630" />
+        <figure class="artifact-frame" style="margin-inline: 0">
+          <img class="project-single__hero" src="/images/projects/scaleshop-social.png" alt="ScaleShop Scalability Lab showing an abstract distributed-system topology" width="1200" height="630" />
+          <figcaption class="evidence-caption">Illustrative render — the workshop itself is live at <a href="https://lab.ghassan-alhamoud.com">lab.ghassan-alhamoud.com</a> and open source.</figcaption>
+        </figure>
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Scaling advice is often technology-first instead of evidence-first.</span></div>
           <div class="project-fact"><span class="project-fact__label">Format</span><span class="project-fact__value">Twelve progressive, counterfactual incidents with modeled outcomes.</span></div>
           <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public, live, and open source under the MIT License.</span></div>
         </div>
+
+        <figure class="artifact-frame" style="margin-inline: 0">
+          <pre><code>incident:  read path degrades as traffic grows
+telemetry: p95 read latency climbing; cache hit rate falling;
+           replica lag still zero
+decision:  tune the queries · add a cache · add a read replica ·
+           change nothing yet
+outcome:   scored against a reference path; trade-offs explained,
+           including the cost of each rejected option</code></pre>
+          <figcaption class="evidence-caption">Modeled — one of twelve playable incident scenarios in the live workshop. Outcomes come from the lab's deterministic scoring model, not from production measurements.</figcaption>
+        </figure>
 
         <div class="article-single__body project-single__body">
           <p>ScaleShop is an interactive workshop for practicing scalability decisions. Each level drops you into a system that is struggling: an architecture, a set of operating limits, and a dashboard full of telemetry. Your job is to figure out what is actually going wrong, point to the evidence that convinced you, pick the smallest change that fixes it, and then see how your call plays out against a reference path.</p>
