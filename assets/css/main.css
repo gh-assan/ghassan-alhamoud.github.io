@@ -1943,6 +1943,126 @@ html.js .reveal--visible {
 }
 
 /* ================================================================
+   EVIDENCE REGISTER — shared contract
+   Used by the homepage (role explainer, impact blocks, hero caption)
+   and by projects/handbook pages (artifact frames, captions, legend).
+   A distinct register from the rounded marketing cards: flatter,
+   sharper, left-ruled, monospace-friendly.
+   ================================================================ */
+
+/* Reality label under artifact visuals — reads as a label, not body */
+.evidence-caption {
+  display: block;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+  max-width: 100%;
+}
+
+/* Bordered container for evidence visuals (traces, tables, terminals) */
+.artifact-frame {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.artifact-frame .evidence-caption {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Quiet inline legend for the project status taxonomy;
+   items are small pills matching .system-card__status */
+.status-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.status-legend__item {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+/* Role explainer — one calm, restrained definition near the top */
+.role-explainer {
+  max-width: 62ch;
+  margin: 0 0 1.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* Selected impact — compressed, employer-linked evidence blocks */
+.impacts {
+  margin-top: 2.25rem;
+}
+
+.impacts__heading {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 1.25rem;
+}
+
+.impact {
+  border-left: 2px solid var(--accent);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.impact:last-child {
+  margin-bottom: 0;
+}
+
+.impact__employer {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.impact__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary);
+  margin: 0 0 0.4rem;
+}
+
+.impact__body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 64ch;
+  margin: 0;
+}
+
+/* ================================================================
    HOW I WORK (PROCESS)
    ================================================================ */
 
