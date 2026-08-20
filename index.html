@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- THEME: swap data-theme value to switch palettes
      "nature" = sage white · forest green · ocean blue (active)
-     "dark"   = ThoughtWorks black · hot pink -->
+     "dark"   = near-black canvas · vivid magenta accent -->
 <html lang="en" data-theme="nature" id="htmlTheme">
 <head>
   <meta charset="UTF-8" />
@@ -118,65 +118,76 @@
             Every system on this site is public, documented, and inspectable — code,
             decisions, and limitations included.
           </p>
+          <figure class="hero__signature" aria-label="Compact map of the practice's agent loop: events flow into the runtime, then durable memory, then a human gate.">
+            <svg viewBox="0 0 316 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <defs>
+                <marker id="sig-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/>
+                </marker>
+              </defs>
+              <rect x="0" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="31" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">events</text>
+              <line x1="64" y1="28" x2="78" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
+              <rect x="82" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5" fill="var(--bg-secondary)"/>
+              <text x="113" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">runtime</text>
+              <line x1="146" y1="28" x2="160" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
+              <rect x="164" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="195" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">memory</text>
+              <line x1="228" y1="28" x2="242" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
+              <rect x="246" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="277" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">gate</text>
+            </svg>
+          </figure>
           <div class="hero__cta">
             <a href="/projects/" class="btn btn--primary">Explore Public Systems</a>
             <a href="/handbook/">Read the Handbook</a>
           </div>
         </div>
 
-        <figure class="hero__artifact" aria-label="Architecture map of a durable agent runtime: events enter a checkpointed runtime loop connected to tools and durable memory; a human gate and an evaluation harness bound the system, and evaluation evidence feeds back into the runtime.">
-          <svg viewBox="0 0 520 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <figure class="hero__artifact" aria-label="Checkpoint loop of the agent runtime behind the public systems on this site: events enter a checkpointed runtime that cycles plan, act, observe; every step is written to SQLite checkpoints and artifacts; a human gate approves or denies consequential actions; and an eval harness records an evidence log that feeds back into the runtime.">
+          <svg viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
             <defs>
               <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                 <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/>
               </marker>
             </defs>
 
-            <!-- system boundary -->
-            <rect x="8" y="8" width="504" height="384" rx="10" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4"/>
-            <text x="24" y="32" fill="var(--text-muted)" font-size="11" font-family="Inter, sans-serif" letter-spacing="1.5">SYSTEM BOUNDARY</text>
-
             <!-- events -->
-            <rect x="24" y="148" width="88" height="48" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="68" y="176" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-family="Inter, sans-serif">events</text>
+            <rect x="16" y="146" width="84" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="58" y="173" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-family="Inter, sans-serif">events</text>
 
-            <!-- runtime loop -->
-            <rect x="160" y="112" width="204" height="88" rx="8" stroke="var(--accent)" stroke-width="2" fill="var(--bg-secondary)"/>
-            <text x="262" y="146" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="600" font-family="Inter, sans-serif">agent runtime</text>
-            <text x="262" y="168" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-family="Inter, sans-serif">plan → act → observe → checkpoint</text>
+            <!-- checkpointed runtime -->
+            <rect x="148" y="104" width="216" height="92" rx="8" stroke="var(--accent)" stroke-width="2" fill="var(--bg-secondary)"/>
+            <text x="256" y="140" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="600" font-family="Inter, sans-serif">checkpointed runtime</text>
+            <text x="256" y="164" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-family="Inter, sans-serif">plan → act → observe</text>
 
-            <!-- durable memory -->
-            <rect x="160" y="240" width="204" height="48" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="262" y="260" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">durable memory</text>
-            <text x="262" y="277" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif">checkpoints · artifacts · learnings</text>
-
-            <!-- tools -->
-            <rect x="404" y="116" width="92" height="40" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="450" y="140" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">tools</text>
+            <!-- sqlite durability -->
+            <rect x="148" y="236" width="216" height="56" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="256" y="262" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="600" font-family="Inter, sans-serif">sqlite</text>
+            <text x="256" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif">checkpoints + artifacts</text>
 
             <!-- human gate -->
-            <rect x="404" y="196" width="92" height="40" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="450" y="220" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">human gate</text>
+            <rect x="404" y="104" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="454" y="126" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">human gate</text>
+            <text x="454" y="144" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif">approve / deny</text>
 
-            <!-- evaluation -->
-            <rect x="160" y="328" width="120" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="220" y="354" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">evaluation</text>
+            <!-- eval harness -->
+            <rect x="404" y="196" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="454" y="225" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">eval harness</text>
 
             <!-- evidence log -->
-            <rect x="324" y="328" width="120" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="384" y="354" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">evidence log</text>
+            <rect x="404" y="288" width="100" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="454" y="315" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">evidence log</text>
 
             <!-- flows -->
-            <line x1="112" y1="172" x2="152" y2="164" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="364" y1="140" x2="396" y2="138" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="364" y1="188" x2="396" y2="208" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="262" y1="200" x2="262" y2="232" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="262" y1="232" x2="262" y2="200" stroke="var(--accent)" stroke-width="1.2" opacity="0.4" marker-end="url(#arrow)"/>
-            <line x1="450" y1="236" x2="450" y2="310" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
-            <line x1="450" y1="310" x2="288" y2="344" stroke="var(--accent)" stroke-width="1.2" opacity="0.6" marker-end="url(#arrow)"/>
-            <line x1="280" y1="350" x2="316" y2="350" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <path d="M 160 344 C 96 344 96 220 148 196" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" marker-end="url(#arrow)"/>
-            <text x="66" y="290" fill="var(--text-muted)" font-size="10" font-family="Inter, sans-serif" transform="rotate(-90 66 290)">evidence feeds the next run</text>
+            <line x1="100" y1="168" x2="140" y2="156" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
+            <line x1="364" y1="130" x2="396" y2="130" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
+            <line x1="404" y1="118" x2="372" y2="118" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5" marker-end="url(#arrow)"/>
+            <line x1="256" y1="196" x2="256" y2="228" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
+            <line x1="236" y1="228" x2="236" y2="196" stroke="var(--accent)" stroke-width="1.2" opacity="0.4" marker-end="url(#arrow)"/>
+            <line x1="454" y1="248" x2="454" y2="280" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
+            <path d="M 404 236 C 384 246 372 256 366 266" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" marker-end="url(#arrow)"/>
+            <text x="330" y="318" fill="var(--text-muted)" font-size="10" font-family="Inter, sans-serif">evidence feeds the next run</text>
           </svg>
         </figure>
       </div>
@@ -498,7 +509,7 @@
         </p>
         <div class="contact__actions reveal reveal--delay-2">
           <a href="mailto:galhamoud@gmx.de" class="btn btn--secondary btn--large">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; flex-shrink: 0;" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="btn__icon" aria-hidden="true">
               <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
               <path d="M2 6L10 11L18 6" stroke="currentColor" stroke-width="1.5" fill="none"/>
             </svg>

@@ -163,12 +163,24 @@ img {
   opacity: 1;
 }
 
+/* Pure-CSS failsafe: even if reveal.js never runs or throws, the delayed
+   animation forces hidden .reveal content visible after 2.5s. When JS
+   reveals an element earlier, the animation completes harmlessly on an
+   already-visible element. The reduced-motion policy below neutralizes it. */
+@keyframes reveal-safety {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Hidden only once JavaScript has confirmed it can reveal again */
 html.js .reveal {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.8s var(--ease-out),
               transform 0.8s var(--ease-out);
+  animation: reveal-safety 0s linear 2.5s forwards;
 }
 
 html.js .reveal--visible {
@@ -534,12 +546,12 @@ html.js .reveal--visible {
    ================================================================ */
 
 .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
   position: relative;
   overflow: hidden;
-  padding-top: var(--nav-height);
+  /* Content-sized hero: top padding clears the fixed header (64px) plus
+     breathing room; bottom padding plus .systems.section { padding-top: 56px }
+     keeps the hero → Public Systems transition at ~120px, not a viewport. */
+  padding: calc(var(--nav-height) + 88px) 0 64px;
 }
 
 
@@ -563,6 +575,13 @@ html.js .reveal--visible {
   color: var(--text-secondary);
   font-weight: 500;
   margin-bottom: 16px;
+}
+
+.hero__role {
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  margin: -8px 0 12px;
 }
 
 .hero__cta {
@@ -2317,7 +2336,7 @@ html.js .reveal--visible {
 /* ----- System cards ----- */
 .systems__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-top: 2.5rem;
 }
@@ -2528,9 +2547,32 @@ html.js .reveal--visible {
   }
 }
 
+/* Compact signature strip: hidden everywhere except small phones, where
+   the full artifact is dropped. Slim enough to sit between the hero copy
+   and the CTA without pushing the CTA below the fold. */
+.hero__signature {
+  display: none;
+  margin: 0 0 1.5rem;
+  max-width: 320px;
+}
+
+.hero__signature svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 @media (max-width: 600px) {
+  .hero {
+    padding: calc(var(--nav-height) + 48px) 0 56px;
+  }
+
   .hero__artifact {
     display: none;
+  }
+
+  .hero__signature {
+    display: block;
   }
 }
 
@@ -2544,7 +2586,8 @@ html.js .reveal--visible {
 }
 
 /* Desktop: the flagship spans the full grid with a two-column inner
-   layout (text left, proof/meta right). Mobile: stacks like the rest. */
+   layout (text left, proof/meta right) using explicit grid placement.
+   Mobile: stacks like the rest. */
 @media (min-width: 1001px) {
   .system-card--flagship {
     grid-column: 1 / -1;
@@ -2557,6 +2600,25 @@ html.js .reveal--visible {
 
   .system-card--flagship > * {
     min-width: 0;
+  }
+
+  /* Explicit placement: header, summary, action read down the left
+     column; proof line and tags form the meta column on the right. */
+  .system-card--flagship .system-card__header,
+  .system-card--flagship .system-card__summary,
+  .system-card--flagship .system-card__action {
+    grid-column: 1;
+  }
+
+  .system-card--flagship .system-card__proof,
+  .system-card--flagship .article-card__tags {
+    grid-column: 2;
+  }
+
+  /* margin-top:auto only does work in the flex-column cards; in this
+     grid context it is inert, so give the action a real spacing here. */
+  .system-card--flagship .system-card__action {
+    margin-top: 0.5rem;
   }
 }
 
@@ -2659,4 +2721,131 @@ html.js .reveal--visible {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ================================================================
+   ARTICLE TOC — "On this page" panel with scroll-spy (article-toc.js)
+   ================================================================ */
+
+.article-toc {
+  margin: 0 0 2.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+
+.article-toc p {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.article-toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article-toc li {
+  margin: 0;
+}
+
+.article-toc a {
+  display: block;
+  padding: 0.55rem 0.75rem;
+  min-height: 44px;
+  box-sizing: border-box;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.article-toc a:hover {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.article-toc__link--active,
+.article-toc a.article-toc__link--active {
+  color: var(--accent);
+  background: var(--accent-glow);
+  font-weight: 600;
+}
+
+/* Collapsed state for small viewports: the toggle button owns the
+   "On this page" row and the list stays hidden until expanded. */
+.article-toc__toggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.article-toc__toggle:hover {
+  color: var(--accent);
+}
+
+.article-toc__toggle::after {
+  content: '+';
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.article-toc__toggle[aria-expanded="true"]::after {
+  content: '–';
+}
+
+.article-toc--collapsed .article-toc__toggle {
+  display: flex;
+}
+
+.article-toc--collapsed > p {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.article-toc--collapsed ul {
+  display: none;
+  padding-top: 0.5rem;
+}
+
+.article-toc--collapsed.article-toc--open ul {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .article-toc {
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* ================================================================
+   BUTTON ICON — inline SVG alignment inside buttons
+   ================================================================ */
+
+.btn__icon {
+  margin-right: 8px;
+  flex-shrink: 0;
 }

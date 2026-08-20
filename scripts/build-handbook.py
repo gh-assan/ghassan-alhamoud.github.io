@@ -571,6 +571,26 @@ def render_index(handbook: dict, chapters: list) -> str:
             f'</a>'
         )
 
+    first = published[0] if published else None
+    first_url = (
+        f"/handbook/chapter-{first['id']:02d}-{first['slug']}.html"
+        if first else "/handbook/"
+    )
+    start_here = ""
+    if first:
+        start_here = (
+            '<div class="article-cta handbook-index__start-here">'
+            '<p class="article-cta__text">'
+            f'<strong>Start here.</strong> The handbook is a single reading path, '
+            f'not a reference pile: begin with Chapter {first["id"]}, '
+            f'&ldquo;{first["title"]},&rdquo; and each chapter builds the '
+            f'vocabulary and decisions the next one assumes.'
+            '</p>'
+            f'<a href="{first_url}" class="btn btn--primary">'
+            f'Begin Chapter {first["id"]}</a>'
+            '</div>'
+        )
+
     html = f"""<!DOCTYPE html>
 <html lang="en" data-theme="nature">
 <head>
@@ -648,13 +668,15 @@ def render_index(handbook: dict, chapters: list) -> str:
         </p>
       </div>
 
+      {start_here}
+
       <div class="handbook-index__grid">
 {chr(10).join(chapter_cards)}
       </div>
 
       <div class="article-cta handbook-index__cta">
-        <p class="article-cta__text">Continue exploring the handbook chapters and production patterns.</p>
-        <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
+        <p class="article-cta__text">The chapters are sequential — start at the beginning and the patterns compound.</p>
+        <a href="{first_url}" class="btn btn--primary">Start with Chapter {first['id'] if first else 0}</a>
       </div>
     </div>
   </main>

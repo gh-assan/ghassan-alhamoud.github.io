@@ -62,12 +62,13 @@ def project_card(p):
     return f'        <a class="{classes}" href="/projects/{esc(p["slug"])}.html">{content}</a>'
 
 
-def article_card(a):
+def article_card(a, featured=False):
     tags = "".join(
         f'<span class="article-card__tag">{esc(t)}</span>' for t in a.get("tags", [])
     )
+    classes = "article-card article-card--featured" if featured else "article-card"
     return (
-        f'        <a class="article-card" href="/articles/{esc(a["slug"])}.html">'
+        f'        <a class="{classes}" href="/articles/{esc(a["slug"])}.html">'
         f'<div class="article-card__meta">'
         f'<span class="article-card__date">{esc(format_date(a["date"]))}</span>'
         f'<span class="article-card__dot"></span>'
@@ -117,7 +118,9 @@ def main():
               [project_card(p) for p in projects]):
         changed.append("projects/index.html")
     if inject(ROOT / "articles/index.html", "articlesPageList",
-              [article_card(a) for a in articles]):
+              # Newest article leads the index as the featured note.
+              [article_card(a, featured=(i == 0))
+               for i, a in enumerate(articles)]):
         changed.append("articles/index.html")
 
     print(f"{len(changed)} files changed")
