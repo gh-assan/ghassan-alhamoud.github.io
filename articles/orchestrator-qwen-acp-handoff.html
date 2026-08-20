@@ -103,10 +103,28 @@
         <img src="/images/articles/ART-026.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#what-the-original-three-message-story-missed">What the original three-message story missed</a></li>
+        <li><a href="#separate-contract-transport-and-executor">Separate contract, transport, and executor</a></li>
+        <li><a href="#the-contract-envelope">The contract envelope</a></li>
+        <li><a href="#treat-lifecycle-as-a-state-machine">Treat lifecycle as a state machine</a></li>
+        <li><a href="#preflight-before-spending-tokens">Preflight before spending tokens</a></li>
+        <li><a href="#acceptance-must-cross-the-integration-boundary">Acceptance must cross the integration boundary</a></li>
+        <li><a href="#retries-need-idempotency-and-classification">Retries need idempotency and classification</a></li>
+        <li><a href="#permissions-belong-in-the-handoff">Permissions belong in the handoff</a></li>
+        <li><a href="#evidence-returned-by-the-specialist">Evidence returned by the specialist</a></li>
+        <li><a href="#download-the-reference-contract">Download the reference contract</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>A delegation message is not a handoff protocol.</strong> A reliable handoff binds an objective to scope, permissions, inputs, budgets, acceptance checks, lifecycle state, and evidence. The coding model is replaceable; that contract is the durable system boundary.</p>
           <p>I learned this by routing implementation work from an OpenClaw orchestrator to Qwen Code. The early design looked clean on a diagram. The operating history exposed the missing parts.</p>
 
-          <h2>What the original three-message story missed</h2>
+          <h2 id="what-the-original-three-message-story-missed">What the original three-message story missed</h2>
           <p>The first version described proposal, response, and approval. That reduced ambiguity, but it did not guarantee integration. Main-machine learning records later captured three concrete failures:</p>
           <table>
             <thead>
@@ -120,7 +138,7 @@
           </table>
           <p>These are operational notes, not a controlled benchmark. They are still more useful than a flawless anecdote because they identify where the protocol boundary failed.</p>
 
-          <h2>Separate contract, transport, and executor</h2>
+          <h2 id="separate-contract-transport-and-executor">Separate contract, transport, and executor</h2>
           <p>These layers solve different problems:</p>
           <table>
             <thead>
@@ -134,7 +152,7 @@
           </table>
           <p><a href="https://modelcontextprotocol.io/docs/learn/architecture" target="_blank" rel="noopener noreferrer">MCP's official architecture</a> likewise separates its JSON-RPC data layer from transport. MCP can expose tools and progress, but it does not define your product's delegation semantics, acceptance policy, or authority model.</p>
 
-          <h2>The contract envelope</h2>
+          <h2 id="the-contract-envelope">The contract envelope</h2>
           <pre><code>{
   contractVersion,
   handoffId,
@@ -161,7 +179,7 @@
 }</code></pre>
           <p>The downloadable JSON Schema validates this structure. The companion EntityScope example is a reference contract reconstructed from the system's lessons; it is not presented as a verbatim historical message.</p>
 
-          <h2>Treat lifecycle as a state machine</h2>
+          <h2 id="treat-lifecycle-as-a-state-machine">Treat lifecycle as a state machine</h2>
           <pre><code>proposed ──accept──▶ accepted ──start──▶ running
     │                   │                   │
     └──cancel───────────┴──cancel──────────┤
@@ -175,7 +193,7 @@
           <p>Every transition needs an actor, timestamp, reason, and attempt number. Terminal states are immutable. A retry creates a new attempt under the same idempotency key; it does not erase the failed evidence.</p>
           <p>“Done” is not a state. <code>succeeded</code> means the verifier executed every required acceptance check against the integrated system and retained the evidence.</p>
 
-          <h2>Preflight before spending tokens</h2>
+          <h2 id="preflight-before-spending-tokens">Preflight before spending tokens</h2>
           <ol>
             <li><strong>Resolve the assignee.</strong> Confirm the intended agent exists and is appropriate for the task type.</li>
             <li><strong>Negotiate capabilities.</strong> Inspect the tools visible inside that exact process, not another agent's configuration.</li>
@@ -186,7 +204,7 @@
           </ol>
           <p>If preflight fails, keep the handoff in <code>proposed</code> or move it to <code>blocked</code>. Do not let the coding agent improvise missing infrastructure.</p>
 
-          <h2>Acceptance must cross the integration boundary</h2>
+          <h2 id="acceptance-must-cross-the-integration-boundary">Acceptance must cross the integration boundary</h2>
           <p>The Qwen integration gap produced code that compiled in isolation but was unreachable in the running MCP server. The corrective checklist has eight points:</p>
           <ol>
             <li>package import;</li>
@@ -200,7 +218,7 @@
           </ol>
           <p>This generalises beyond MCP. A new class is not a feature. A passing unit test is not an integrated capability. Acceptance should invoke the same public path the consuming agent will use.</p>
 
-          <h2>Retries need idempotency and classification</h2>
+          <h2 id="retries-need-idempotency-and-classification">Retries need idempotency and classification</h2>
           <table>
             <thead>
               <tr><th>Failure class</th><th>Retry?</th><th>Action</th></tr>
@@ -215,7 +233,7 @@
           </table>
           <p>The idempotency key should represent the intended effect, not the delivery attempt. That prevents a transport retry from creating a duplicate branch, deployment, message, or scheduled job.</p>
 
-          <h2>Permissions belong in the handoff</h2>
+          <h2 id="permissions-belong-in-the-handoff">Permissions belong in the handoff</h2>
           <p>Machine separation is useful only when authority is actually constrained. “The coding agent runs elsewhere” does not prove it lacks workstation access, internet access, or inherited secrets. Bind permissions explicitly:</p>
           <ul>
             <li>readable and writable repository paths;</li>
@@ -226,7 +244,7 @@
           </ul>
           <p>For remote MCP servers that handle sensitive actions, use the protocol's <a href="https://modelcontextprotocol.io/docs/tutorials/security/authorization" target="_blank" rel="noopener noreferrer">documented authorization flow</a>; do not treat network reachability as permission.</p>
 
-          <h2>Evidence returned by the specialist</h2>
+          <h2 id="evidence-returned-by-the-specialist">Evidence returned by the specialist</h2>
           <p>A useful result contains more than prose:</p>
           <ul>
             <li>changed artifact list and revision;</li>
@@ -237,7 +255,7 @@
           </ul>
           <p>The orchestrator should independently rerun high-value checks. The executor's claim that tests passed is evidence to inspect, not a substitute for verification.</p>
 
-          <h2>Download the reference contract</h2>
+          <h2 id="download-the-reference-contract">Download the reference contract</h2>
           <p><a href="/resources/agent-handoff-contract.schema.json" class="btn btn--primary" download>Download the handoff JSON Schema</a></p>
           <ul>
             <li><a href="/resources/entityscope-handoff.example.json" download>Download the EntityScope reference handoff</a></li>

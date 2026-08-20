@@ -104,10 +104,28 @@
                 <img src="/images/articles/ART007.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#current-application-timeline">Current application timeline</a></li>
+        <li><a href="#step-1-make-applicability-an-owned-decision">Step 1: make applicability an owned decision</a></li>
+        <li><a href="#step-2-map-obligations-to-controls-and-evidence">Step 2: map obligations to controls and evidence</a></li>
+        <li><a href="#the-evidence-architecture">The evidence architecture</a></li>
+        <li><a href="#step-3-treat-every-material-change-as-an-impact-question">Step 3: treat every material change as an impact question</a></li>
+        <li><a href="#step-4-bind-evidence-to-the-exact-release">Step 4: bind evidence to the exact release</a></li>
+        <li><a href="#step-5-make-runtime-controls-observable">Step 5: make runtime controls observable</a></li>
+        <li><a href="#step-6-generate-an-audit-package-not-an-evidence-dump">Step 6: generate an audit package, not an evidence dump</a></li>
+        <li><a href="#what-must-remain-human-owned">What must remain human-owned</a></li>
+        <li><a href="#download-the-engineering-control-matrix">Download the engineering control matrix</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>Compliance as code does not decide whether the EU AI Act applies. Legal and compliance owners make that determination. Engineering turns the resulting obligations into versioned controls and reproducible evidence.</strong></p>
           <p>This article is engineering guidance, not legal advice. It was checked on <strong>28 July 2026</strong>, one day after the EU AI Omnibus entered into force. Re-check the official sources and obtain qualified advice for your role, system, sector, and Member State.</p>
 
-          <h2>Current application timeline</h2>
+          <h2 id="current-application-timeline">Current application timeline</h2>
           <p>The European Commission's <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener noreferrer">implementation timeline</a> and <a href="https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" target="_blank" rel="noopener noreferrer">27 July 2026 Omnibus notice</a> now describe these key dates:</p>
           <table>
             <thead>
@@ -123,7 +141,7 @@
           </table>
           <p>The official <a href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act" target="_blank" rel="noopener noreferrer">Article 50 FAQ</a> confirms the 2 August 2026 transparency start and describes a limited transition for certain marking obligations on systems already on the market. Do not copy this table into policy and forget it; store source, retrieval date, legal owner, and review trigger.</p>
 
-          <h2>Step 1: make applicability an owned decision</h2>
+          <h2 id="step-1-make-applicability-an-owned-decision">Step 1: make applicability an owned decision</h2>
           <p>Before implementing a control matrix, record:</p>
           <ul>
             <li>system and intended purpose;</li>
@@ -135,7 +153,7 @@
           </ul>
           <p>Code may detect that a use case resembles an Annex III category. It should open a review; it should not make the binding classification. Intended purpose, contractual role, substantial modification, exceptions, and sector law require accountable interpretation.</p>
 
-          <h2>Step 2: map obligations to controls and evidence</h2>
+          <h2 id="step-2-map-obligations-to-controls-and-evidence">Step 2: map obligations to controls and evidence</h2>
           <p>For a high-risk provider, the original Regulation's requirements include risk management (Article 9), data and data governance (Article 10), technical documentation (Article 11), record keeping (Article 12), information to deployers (Article 13), human oversight (Article 14), and accuracy, robustness, and cybersecurity (Article 15). Provider duties and the quality-management system sit in Articles 16 and 17. The current legal text and Omnibus amendments—not this summary—control.</p>
           <table>
             <thead>
@@ -153,7 +171,7 @@
           </table>
           <p>The downloadable matrix includes source links and additional deployer, transparency, conformity, and post-market rows.</p>
 
-          <h2>The evidence architecture</h2>
+          <h2 id="the-evidence-architecture">The evidence architecture</h2>
           <pre><code>Legal applicability decision
           │
           ▼
@@ -171,7 +189,7 @@ Versioned obligation-control matrix
           release-specific audit package</code></pre>
           <p>The evidence index should reference artifacts rather than copy sensitive inputs into a compliance warehouse. Each record needs the system release, model and data versions, control version, owner, timestamp, result, source artifact digest, retention, and access class.</p>
 
-          <h2>Step 3: treat every material change as an impact question</h2>
+          <h2 id="step-3-treat-every-material-change-as-an-impact-question">Step 3: treat every material change as an impact question</h2>
           <p>A model version is not the only change that matters. Trigger analysis when any of these change:</p>
           <ul>
             <li>intended purpose, users, geography, or affected population;</li>
@@ -184,7 +202,7 @@ Versioned obligation-control matrix
           </ul>
           <p>The pipeline should calculate affected controls and block release until required evidence is refreshed. It should not declare “compliant.” A useful output is: “controls C-09, C-14, and C-15 require new evidence; legal applicability decision A-17 requires review.”</p>
 
-          <h2>Step 4: bind evidence to the exact release</h2>
+          <h2 id="step-4-bind-evidence-to-the-exact-release">Step 4: bind evidence to the exact release</h2>
           <p>A model card in a wiki can drift away from production. Bind the release manifest to:</p>
           <ul>
             <li>source and build digest;</li>
@@ -198,11 +216,11 @@ Versioned obligation-control matrix
           </ul>
           <p>The runtime should emit a verifiable execution record that points back to that manifest. My <a href="/articles/agent-execution-attestation.html">execution-attestation design</a> specifies a vendor-neutral envelope for this connection.</p>
 
-          <h2>Step 5: make runtime controls observable</h2>
+          <h2 id="step-5-make-runtime-controls-observable">Step 5: make runtime controls observable</h2>
           <p>Written human oversight is not enough. Test whether the designated person can understand the decision context, stop or override the system, and see when the system is outside its operating boundary. Record overrides and do not punish operators for using them.</p>
           <p>Likewise, transparency is a user-interface and content-pipeline property. For applicable Article 50 cases, test that notices appear at the correct time, machine-readable marks survive supported transformations, deployer disclosures render, and exceptions are owned—not inferred by a prompt.</p>
 
-          <h2>Step 6: generate an audit package, not an evidence dump</h2>
+          <h2 id="step-6-generate-an-audit-package-not-an-evidence-dump">Step 6: generate an audit package, not an evidence dump</h2>
           <p>A release package should answer:</p>
           <ol>
             <li>What system and release is this?</li>
@@ -216,7 +234,7 @@ Versioned obligation-control matrix
           </ol>
           <p>Generate this view from the evidence index, but preserve signed human judgments. Automation should eliminate transcription, not accountability.</p>
 
-          <h2>What must remain human-owned</h2>
+          <h2 id="what-must-remain-human-owned">What must remain human-owned</h2>
           <ul>
             <li>legal scope, role, classification, and interpretation;</li>
             <li>intended purpose and acceptable residual risk;</li>
@@ -227,7 +245,7 @@ Versioned obligation-control matrix
           </ul>
           <p>A compliance bot that auto-approves its own evidence is a control failure.</p>
 
-          <h2>Download the engineering control matrix</h2>
+          <h2 id="download-the-engineering-control-matrix">Download the engineering control matrix</h2>
           <p>The CSV maps selected AI Act provisions to roles, controls, evidence, triggers, owners, status, official sources, and review dates. It is a starting template, not a complete legal analysis.</p>
           <p><a href="/resources/eu-ai-act-engineering-control-matrix.csv" class="btn btn--primary" download>Download the EU AI Act engineering control matrix</a></p>
           <p>Use the <a href="/articles/quality-vs-speed-agent-era.html">risk-based quality-gate framework</a> to route releases and the <a href="/articles/agent-reliability-sla-infrastructure.html">agent reliability SLO framework</a> to connect operational signals with governance.</p>

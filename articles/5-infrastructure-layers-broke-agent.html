@@ -107,10 +107,27 @@
                 <img src="/images/articles/ART-024.webp" alt="Five controlled infrastructure layers surrounding a production AI agent core" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#the-reference-architecture">The reference architecture</a></li>
+        <li><a href="#layer-1-interface-and-transport">Layer 1: interface and transport</a></li>
+        <li><a href="#layer-2-identity-policy-and-authority">Layer 2: identity, policy, and authority</a></li>
+        <li><a href="#layer-3-orchestration-state-and-model-routing">Layer 3: orchestration, state, and model routing</a></li>
+        <li><a href="#layer-4-verification-recovery-and-change-control">Layer 4: verification, recovery, and change control</a></li>
+        <li><a href="#layer-5-observability-evaluation-and-learning">Layer 5: observability, evaluation, and learning</a></li>
+        <li><a href="#the-end-to-end-contract">The end-to-end contract</a></li>
+        <li><a href="#production-readiness-gates">Production readiness gates</a></li>
+        <li><a href="#download-the-readiness-assessment">Download the readiness assessment</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>A production agent is not a model with tools. It is a controlled execution system in which a probabilistic planner is one replaceable component.</strong></p>
           <p>This reference architecture grew out of real failures in my own system, but it is not another incident narrative. It defines the five infrastructure layers I now expect to see before an agent can take consequential action.</p>
 
-          <h2>The reference architecture</h2>
+          <h2 id="the-reference-architecture">The reference architecture</h2>
           <pre><code>Human, service, schedule, or event
                  │
                  ▼
@@ -140,7 +157,7 @@ Every layer ──events──▶ 5. Observability,
                          Evaluation &amp; Learning</code></pre>
           <p>The arrows are contracts, not prompt text. A layer may be a library in a small deployment or a separate service at scale. What matters is that its responsibility and evidence are explicit.</p>
 
-          <h2>Layer 1: interface and transport</h2>
+          <h2 id="layer-1-interface-and-transport">Layer 1: interface and transport</h2>
           <p>This layer converts email, chat, API calls, schedules, queues, and human requests into one trusted envelope. It should not decide what the agent is allowed to do.</p>
           <p><strong>Minimum input contract:</strong> request ID, source, authenticated principal, timestamp, payload schema version, idempotency key, data classification, and reply channel.</p>
           <table>
@@ -156,7 +173,7 @@ Every layer ──events──▶ 5. Observability,
           </table>
           <p>The output is a normalized request or a typed rejection. “The model can parse it” is not a transport contract.</p>
 
-          <h2>Layer 2: identity, policy, and authority</h2>
+          <h2 id="layer-2-identity-policy-and-authority">Layer 2: identity, policy, and authority</h2>
           <p>Authentication says who initiated the request. Authorization says what that principal and this agent may do. Policy adds context: risk class, data boundary, budget, environment, time, and required approval.</p>
           <p><strong>Decision contract:</strong> allow, deny, or require approval; permitted tools and resources; financial and rate limits; expiration; reason; policy version; approving principal.</p>
           <table>
@@ -172,7 +189,7 @@ Every layer ──events──▶ 5. Observability,
           </table>
           <p>This layer is the architectural response to excessive agency. OWASP's <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener noreferrer">Top 10 for Agentic Applications</a> is a useful threat-model companion, but a checklist cannot replace enforcement in the execution path.</p>
 
-          <h2>Layer 3: orchestration, state, and model routing</h2>
+          <h2 id="layer-3-orchestration-state-and-model-routing">Layer 3: orchestration, state, and model routing</h2>
           <p>The orchestrator turns an authorized intent into a bounded plan, executes tools, records state, and resumes safely after interruption. The model proposes; the state machine owns progression.</p>
           <p><strong>Execution contract:</strong> run ID, immutable intent, plan version, current step, allowed transitions, tool inputs and results, retry count, deadline, model route, and terminal outcome.</p>
           <table>
@@ -188,7 +205,7 @@ Every layer ──events──▶ 5. Observability,
           </table>
           <p>Model routing belongs here because it is an execution decision. Select a route using task risk, required capability, latency, privacy, and measured performance—not brand preference.</p>
 
-          <h2>Layer 4: verification, recovery, and change control</h2>
+          <h2 id="layer-4-verification-recovery-and-change-control">Layer 4: verification, recovery, and change control</h2>
           <p>Verification is not a final “looks good” prompt. It is a set of deterministic and human gates around effects. The checks must match the artifact: parser and tests for code, schema and constraints for data, render inspection for visual output, approval for irreversible external action.</p>
           <p><strong>Verdict contract:</strong> artifact or proposed action hash, checks executed, invariant results, reviewer identity where required, decision, rollback reference, and effect receipt.</p>
           <table>
@@ -204,7 +221,7 @@ Every layer ──events──▶ 5. Observability,
           </table>
           <p>High-risk changes should use preview → verify → approve → apply. The verifier must not share the same blind spot as the generator.</p>
 
-          <h2>Layer 5: observability, evaluation, and learning</h2>
+          <h2 id="layer-5-observability-evaluation-and-learning">Layer 5: observability, evaluation, and learning</h2>
           <p>Logs are not observability if they cannot answer who asked, what was authorized, which model and tools acted, what changed, what it cost, and whether the result satisfied the objective.</p>
           <p><strong>Event contract:</strong> trace ID, timestamp, actor, policy and plan versions, step, tool, model, sanitized input/output references, latency, cost, result, error class, approval, and effect receipt.</p>
           <table>
@@ -220,7 +237,7 @@ Every layer ──events──▶ 5. Observability,
           </table>
           <p>The <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence" target="_blank" rel="noopener noreferrer">NIST Generative AI Profile</a> provides a broader governance and risk-management frame. This layer supplies the operational evidence needed to make that work concrete.</p>
 
-          <h2>The end-to-end contract</h2>
+          <h2 id="the-end-to-end-contract">The end-to-end contract</h2>
           <p>For a consequential action, one trace should let an operator reconstruct this chain:</p>
           <ol>
             <li>The transport authenticated and normalized request <code>R</code>.</li>
@@ -232,7 +249,7 @@ Every layer ──events──▶ 5. Observability,
           </ol>
           <p>If one link is missing, the system may still be useful, but it is not independently auditable.</p>
 
-          <h2>Production readiness gates</h2>
+          <h2 id="production-readiness-gates">Production readiness gates</h2>
           <table>
             <thead>
               <tr><th>Gate</th><th>Minimum evidence before production</th></tr>
@@ -247,7 +264,7 @@ Every layer ──events──▶ 5. Observability,
           </table>
           <p>A demo proves the happy path once. Production readiness proves bounded failure and recovery repeatedly.</p>
 
-          <h2>Download the readiness assessment</h2>
+          <h2 id="download-the-readiness-assessment">Download the readiness assessment</h2>
           <p>The assessment turns every control above into an evidence field with an owner, status, last-tested date, and remediation gap.</p>
           <p><a href="/resources/production-agent-infrastructure-readiness.csv" class="btn btn--primary" download>Download the production agent readiness assessment</a></p>
           <p>For the incidents that produced this model, read <a href="/articles/5-failures-building-agent-3-months.html">Five Failures From Three Months Building a Personal AI Agent</a>. For measurement, continue with the <a href="/articles/agent-reliability-sla-infrastructure.html">agent reliability SLO framework</a> and the <a href="/articles/every-token-is-rent-memory-architecture.html">memory architecture</a>.</p>

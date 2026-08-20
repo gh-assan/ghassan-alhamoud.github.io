@@ -104,10 +104,29 @@
                 <img src="/images/articles/ART015.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#what-the-live-system-says-today">What the live system says today</a></li>
+        <li><a href="#the-control-loop">The control loop</a></li>
+        <li><a href="#make-the-inventory-declarative">Make the inventory declarative</a></li>
+        <li><a href="#findings-need-identity-and-evidence">Findings need identity and evidence</a></li>
+        <li><a href="#classify-auto-fixes-by-blast-radius">Classify auto-fixes by blast radius</a></li>
+        <li><a href="#preconditions-prevent-stale-write-damage">Preconditions prevent stale-write damage</a></li>
+        <li><a href="#verification-must-prove-behavior">Verification must prove behavior</a></li>
+        <li><a href="#rollback-is-part-of-the-action">Rollback is part of the action</a></li>
+        <li><a href="#reconcile-the-engine-s-own-books">Reconcile the engine's own books</a></li>
+        <li><a href="#metrics-that-resist-vanity">Metrics that resist vanity</a></li>
+        <li><a href="#download-the-safe-manifest">Download the safe manifest</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>The safest self-improvement engine is mostly a linter.</strong> It inventories components, detects drift with deterministic checks, proposes bounded repairs, verifies the result, and rolls back when proof fails. It does not give an agent open-ended permission to “make the system better.”</p>
           <p>I run such an engine around an OpenClaw workspace. Its operational state is useful precisely because it is imperfect: the scanner finds real drift, while its own counters reveal why the improvement loop needs stronger reconciliation.</p>
 
-          <h2>What the live system says today</h2>
+          <h2 id="what-the-live-system-says-today">What the live system says today</h2>
           <p>I inspected the main-machine registry and append-only log on 28 July 2026:</p>
           <table>
             <thead>
@@ -124,7 +143,7 @@
           </table>
           <p>The last line matters. A self-improvement system that cannot reconcile its registry with its findings ledger cannot accurately report success rate, rollback rate, or change burden. Detection value remains; improvement claims do not.</p>
 
-          <h2>The control loop</h2>
+          <h2 id="the-control-loop">The control loop</h2>
           <pre><code>manifest ──▶ scan ──▶ finding ──▶ risk classification
                                       │
                         ┌─────────────┴─────────────┐
@@ -141,7 +160,7 @@
                                       └────────▶ reconcile ◀──────┘</code></pre>
           <p>Every arrow needs durable evidence. The next scan should verify persistence, but immediate verification belongs in the same run. Waiting until tomorrow leaves a bad mutation active for a day.</p>
 
-          <h2>Make the inventory declarative</h2>
+          <h2 id="make-the-inventory-declarative">Make the inventory declarative</h2>
           <p>For each component, record:</p>
           <ul>
             <li>stable ID, type, owner, and paths;</li>
@@ -153,7 +172,7 @@
           </ul>
           <p>Discovery can suggest new entries, but it should not silently enroll arbitrary files. A reviewed manifest defines scope; filesystem traversal only observes it.</p>
 
-          <h2>Findings need identity and evidence</h2>
+          <h2 id="findings-need-identity-and-evidence">Findings need identity and evidence</h2>
           <p>A finding is not a log line. Give it a stable ID and lifecycle:</p>
           <pre><code>proposed → approved → applied → verified
     │          │          │
@@ -162,7 +181,7 @@
     └─superseded</code></pre>
           <p>Store run ID, check version, component ID, file digest, observed value, expected value, severity, and disposition. This makes duplicate findings idempotent and lets the engine measure whether flags lead to useful action.</p>
 
-          <h2>Classify auto-fixes by blast radius</h2>
+          <h2 id="classify-auto-fixes-by-blast-radius">Classify auto-fixes by blast radius</h2>
           <table>
             <thead>
               <tr><th>Risk class</th><th>Example</th><th>Default action</th></tr>
@@ -177,7 +196,7 @@
           </table>
           <p>The existing engine correctly refuses to auto-tune an email threshold that was initially set to 60 without outcome data. “The value looks arbitrary” is evidence for an experiment, not evidence for a replacement value.</p>
 
-          <h2>Preconditions prevent stale-write damage</h2>
+          <h2 id="preconditions-prevent-stale-write-damage">Preconditions prevent stale-write damage</h2>
           <p>Before an automatic edit:</p>
           <ol>
             <li>confirm the target remains inside the manifest scope;</li>
@@ -189,7 +208,7 @@
           </ol>
           <p>This closes the time-of-check/time-of-use gap. If a human edits the file after the scan, the engine must rescan rather than append against stale assumptions.</p>
 
-          <h2>Verification must prove behavior</h2>
+          <h2 id="verification-must-prove-behavior">Verification must prove behavior</h2>
           <p>Verification should match the repair:</p>
           <ul>
             <li>re-run the original detector;</li>
@@ -201,11 +220,11 @@
           </ul>
           <p>“The text is present” verifies a documentation section. It does not verify that a heartbeat, tool, or guardrail is actually wired into the runtime.</p>
 
-          <h2>Rollback is part of the action</h2>
+          <h2 id="rollback-is-part-of-the-action">Rollback is part of the action</h2>
           <p>Define rollback before applying the fix. For a single-file documentation edit, restoring captured bytes may be enough. For configuration, use a versioned previous value. For a deployment, require the platform's rollback handle.</p>
           <p>If verification and rollback both fail, stop the run and escalate. Continuing to “improve” other components after losing control of one mutation multiplies uncertainty.</p>
 
-          <h2>Reconcile the engine's own books</h2>
+          <h2 id="reconcile-the-engine-s-own-books">Reconcile the engine's own books</h2>
           <p>At run end, derive counters from the append-only findings ledger:</p>
           <pre><code>applied_count  = count(disposition in [applied, verified])
 verified_count = count(disposition == verified)
@@ -217,7 +236,7 @@ assert every failed application has rollback or escalation evidence
 assert summary counters equal ledger counts</code></pre>
           <p>This directly addresses the current registry/log contradiction. A mutable lifetime counter should be a cache, never the source of truth.</p>
 
-          <h2>Metrics that resist vanity</h2>
+          <h2 id="metrics-that-resist-vanity">Metrics that resist vanity</h2>
           <table>
             <thead>
               <tr><th>Metric</th><th>Question answered</th></tr>
@@ -234,7 +253,7 @@ assert summary counters equal ledger counts</code></pre>
           </table>
           <p>“Suggestions generated” measures output volume, not improvement.</p>
 
-          <h2>Download the safe manifest</h2>
+          <h2 id="download-the-safe-manifest">Download the safe manifest</h2>
           <p><a href="/resources/safe-improvement-manifest.yaml" class="btn btn--primary" download>Download the safe improvement manifest</a></p>
           <ul>
             <li><a href="/articles/self-healing-architecture-feedback-loop.html">Design the wider feedback loop</a></li>

@@ -104,10 +104,29 @@
                 <img src="/images/articles/ART-021.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#the-rule-audit">The rule audit</a></li>
+        <li><a href="#the-remediation-state-machine">The remediation state machine</a></li>
+        <li><a href="#prefer-typed-errors-over-regex-stories">Prefer typed errors over regex stories</a></li>
+        <li><a href="#preconditions-carry-the-safety-argument">Preconditions carry the safety argument</a></li>
+        <li><a href="#design-idempotency-around-the-intended-effect">Design idempotency around the intended effect</a></li>
+        <li><a href="#bound-the-remediation">Bound the remediation</a></li>
+        <li><a href="#verification-must-test-the-invariant">Verification must test the invariant</a></li>
+        <li><a href="#compensation-is-not-always-rollback">Compensation is not always rollback</a></li>
+        <li><a href="#circuit-breakers-stop-recursive-harm">Circuit breakers stop recursive harm</a></li>
+        <li><a href="#promote-rules-safely">Promote rules safely</a></li>
+        <li><a href="#download-the-bounded-rule">Download the bounded rule</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>Self-healing is not “catch an error and try something else.”</strong> It is a bounded state machine that detects a known condition, proves preconditions, executes one authorised remediation, verifies the invariant, compensates if needed, and escalates before uncertainty spreads.</p>
           <p>The live OpenClaw workspace has three documented rules—stale edit, missing path, and directory read. Auditing them shows why rule documentation alone is not yet safe runtime automation.</p>
 
-          <h2>The rule audit</h2>
+          <h2 id="the-rule-audit">The rule audit</h2>
           <table>
             <thead>
               <tr><th>Rule</th><th>Documented recovery</th><th>Safety gap</th></tr>
@@ -120,7 +139,7 @@
           </table>
           <p>All three are marked auto-recoverable, but their verification checklists are incomplete. One stale-edit rule records 37 occurrences against a threshold of five while <code>auto-filed</code> remains false. The documents capture valuable patterns; they do not prove the wrapper, reporting, recovery, or learning path is wired end to end.</p>
 
-          <h2>The remediation state machine</h2>
+          <h2 id="the-remediation-state-machine">The remediation state machine</h2>
           <pre><code>observed
    │
    ▼
@@ -140,7 +159,7 @@ verifying ──pass──────▶ recovered
                          └──failure──▶ circuit_open</code></pre>
           <p>Every transition records rule version, trace ID, attempt, actor, timestamps, and evidence. <code>recovered</code> is terminal only for that attempt; a recurrence may open a systemic issue.</p>
 
-          <h2>Prefer typed errors over regex stories</h2>
+          <h2 id="prefer-typed-errors-over-regex-stories">Prefer typed errors over regex stories</h2>
           <p>Match a structured tool error code plus context:</p>
           <pre><code>{
   "code": "STALE_PRECONDITION",
@@ -152,7 +171,7 @@ verifying ──pass──────▶ recovered
 }</code></pre>
           <p>Free-form error text changes across versions and may contain untrusted content. Regex can support legacy adapters, but the classifier should emit a versioned internal failure type and confidence. Low confidence routes to observation or escalation, not mutation.</p>
 
-          <h2>Preconditions carry the safety argument</h2>
+          <h2 id="preconditions-carry-the-safety-argument">Preconditions carry the safety argument</h2>
           <p>Before remediation, verify:</p>
           <ul>
             <li>the original action was authorised;</li>
@@ -164,12 +183,12 @@ verifying ──pass──────▶ recovered
           </ul>
           <p>For ENOENT, preflight must distinguish “expected existing file is missing” from “caller intends to create a new file.” The safe default for a read is to report missing—not to manufacture an empty success.</p>
 
-          <h2>Design idempotency around the intended effect</h2>
+          <h2 id="design-idempotency-around-the-intended-effect">Design idempotency around the intended effect</h2>
           <p>Use a stable key such as:</p>
           <pre><code>trace_id + original_tool_call_id + rule_version</code></pre>
           <p>Persist attempts and terminal effect state. If a timeout occurs after an external mutation, move to <code>uncertain</code> and reconcile before retrying. This prevents duplicate messages, deployments, payments, or writes.</p>
 
-          <h2>Bound the remediation</h2>
+          <h2 id="bound-the-remediation">Bound the remediation</h2>
           <table>
             <thead>
               <tr><th>Boundary</th><th>Example control</th></tr>
@@ -185,7 +204,7 @@ verifying ──pass──────▶ recovered
           </table>
           <p>For stale edits, re-read and recompute the minimal patch. If intent no longer maps cleanly, stop. Replacing the entire file because an exact patch failed is not a fallback; it is a larger operation with a different risk profile.</p>
 
-          <h2>Verification must test the invariant</h2>
+          <h2 id="verification-must-test-the-invariant">Verification must test the invariant</h2>
           <p>A successful tool response is insufficient. Verify:</p>
           <ul>
             <li>the intended invariant now holds;</li>
@@ -197,7 +216,7 @@ verifying ──pass──────▶ recovered
           </ul>
           <p>For directory reads, the invariant may be “caller receives a typed path-kind mismatch,” not “some output was returned.” Listing a directory can be offered as a separate next action.</p>
 
-          <h2>Compensation is not always rollback</h2>
+          <h2 id="compensation-is-not-always-rollback">Compensation is not always rollback</h2>
           <p>Local file bytes can often be restored. An email cannot be unsent and a payment cannot be unmade. Classify effects:</p>
           <table>
             <thead>
@@ -211,7 +230,7 @@ verifying ──pass──────▶ recovered
             </tbody>
           </table>
 
-          <h2>Circuit breakers stop recursive harm</h2>
+          <h2 id="circuit-breakers-stop-recursive-harm">Circuit breakers stop recursive harm</h2>
           <p>Open the rule's circuit when:</p>
           <ul>
             <li>verification fails twice in a short window;</li>
@@ -222,7 +241,7 @@ verifying ──pass──────▶ recovered
           </ul>
           <p>An open circuit disables remediation, continues safe observation where possible, and creates an owned issue. Reset requires evidence and owner review—not merely elapsed time.</p>
 
-          <h2>Promote rules safely</h2>
+          <h2 id="promote-rules-safely">Promote rules safely</h2>
           <ol>
             <li><strong>Replay:</strong> evaluate the detector against historical failures and normal traffic.</li>
             <li><strong>Shadow:</strong> propose remediations without executing them.</li>
@@ -232,7 +251,7 @@ verifying ──pass──────▶ recovered
           </ol>
           <p>Track detector precision, precondition rejection, verified recovery, compensation, circuit-open, recurrence, and change-induced incident rates by rule version.</p>
 
-          <h2>Download the bounded rule</h2>
+          <h2 id="download-the-bounded-rule">Download the bounded rule</h2>
           <p><a href="/resources/bounded-self-healing-rule.yaml" class="btn btn--primary" download>Download the bounded self-healing rule</a></p>
           <ul>
             <li><a href="/articles/issue-management-system-property.html">Use the reliability issue control plane</a></li>

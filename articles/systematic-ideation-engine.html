@@ -104,13 +104,33 @@
         <img src="/images/articles/ART005.webp" alt="A structured ideation pipeline turning evidence into scored product candidates" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#the-output-is-a-test-not-an-idea">The output is a test, not an idea</a></li>
+        <li><a href="#the-complete-pipeline">The complete pipeline</a></li>
+        <li><a href="#step-1-assemble-evidence-before-asking-for-ideas">Step 1: assemble evidence before asking for ideas</a></li>
+        <li><a href="#step-2-use-independent-lenses">Step 2: use independent lenses</a></li>
+        <li><a href="#step-3-normalize-every-candidate">Step 3: normalize every candidate</a></li>
+        <li><a href="#step-4-enforce-hard-gates">Step 4: enforce hard gates</a></li>
+        <li><a href="#step-5-deduplicate-by-problem-not-title">Step 5: deduplicate by problem, not title</a></li>
+        <li><a href="#step-6-score-evidence-not-enthusiasm">Step 6: score evidence, not enthusiasm</a></li>
+        <li><a href="#a-worked-example-execution-attestation">A worked example: execution attestation</a></li>
+        <li><a href="#rejected-ideas-are-first-class-data">Rejected ideas are first-class data</a></li>
+        <li><a href="#step-7-close-the-learning-loop">Step 7: close the learning loop</a></li>
+        <li><a href="#copy-the-operating-template">Copy the operating template</a></li>
+      </ul>
+    </nav>
+
+
           <p>Most “AI ideation” advice is a prompt that produces a longer list. That is not a discovery system. It is autocomplete with ambitions.</p>
 
           <p>I built an ideation engine in OpenClaw to turn project evidence, customer research, and competitive threats into a small number of testable product candidates. The engine runs on the main machine; a portable copy of its operating skill also exists locally. Its value is not the number of ideas it generates. Its value is the trail from observation to rejection, test, and eventual outcome.</p>
 
           <p>This article publishes that process, including the parts that failed.</p>
 
-          <h2>The output is a test, not an idea</h2>
+          <h2 id="the-output-is-a-test-not-an-idea">The output is a test, not an idea</h2>
 
           <p>An idea is cheap. A decision-ready candidate is a structured record with:</p>
 
@@ -126,7 +146,7 @@
 
           <p>If the engine cannot produce that record, it has generated prose—not product discovery.</p>
 
-          <h2>The complete pipeline</h2>
+          <h2 id="the-complete-pipeline">The complete pipeline</h2>
 
           <pre><code>observations + project state + rejected ideas
                     │
@@ -149,7 +169,7 @@
 
           <p>The feedback arrow is the important part. Without it, an ideation engine optimizes for ideas that sound plausible to a model. With it, the system can learn which sources, lenses, and scoring judgments predict real progress.</p>
 
-          <h2>Step 1: assemble evidence before asking for ideas</h2>
+          <h2 id="step-1-assemble-evidence-before-asking-for-ideas">Step 1: assemble evidence before asking for ideas</h2>
 
           <p>The evidence-driven mode reads five classes of input:</p>
 
@@ -194,7 +214,7 @@
 
           <p>Bulk prompt mode is useful for exploring a supplied question, but it is a different product. A user prompt can be a source of direction; it is not automatically market evidence.</p>
 
-          <h2>Step 2: use independent lenses</h2>
+          <h2 id="step-2-use-independent-lenses">Step 2: use independent lenses</h2>
 
           <p>The engine runs three roles independently so they do not converge on the first attractive framing:</p>
 
@@ -227,7 +247,7 @@
 
           <p>Each lens returns at most three candidates. “No high-confidence candidate” is a valid result. The engine is a filter, not a quota.</p>
 
-          <h2>Step 3: normalize every candidate</h2>
+          <h2 id="step-3-normalize-every-candidate">Step 3: normalize every candidate</h2>
 
           <p>Different models produce different rhetoric. A fixed candidate contract removes the style advantage:</p>
 
@@ -250,7 +270,7 @@ duplicate_candidates:</code></pre>
 
           <p>Assign the ID before evaluation and use it in every table. In the first real run, nine candidates entered the gate, three were promoted, five were explicitly merged or rejected, and one was left without a recorded disposition. That bookkeeping gap made the run impossible to reconcile cleanly. Stable IDs and a required final status fix it.</p>
 
-          <h2>Step 4: enforce hard gates</h2>
+          <h2 id="step-4-enforce-hard-gates">Step 4: enforce hard gates</h2>
 
           <table>
             <thead>
@@ -291,7 +311,7 @@ duplicate_candidates:</code></pre>
 
           <p>A gate that never rejects is a heading, not a control. One 25-prompt batch reported that all 25 ideas passed all four original gates. The source for each job was often the prompt itself, so “source tie” did not measure market evidence. The process had become good at documenting acceptance.</p>
 
-          <h2>Step 5: deduplicate by problem, not title</h2>
+          <h2 id="step-5-deduplicate-by-problem-not-title">Step 5: deduplicate by problem, not title</h2>
 
           <p>Embeddings can help retrieve candidates, but the merge decision should compare four explicit fields:</p>
 
@@ -304,7 +324,7 @@ duplicate_candidates:</code></pre>
 
           <p>If the first three match, treat the records as one opportunity even when the proposed mechanisms differ. Preserve both mechanisms as solution options and combine their evidence. This prevents the registry from filling with differently named versions of the same problem.</p>
 
-          <h2>Step 6: score evidence, not enthusiasm</h2>
+          <h2 id="step-6-score-evidence-not-enthusiasm">Step 6: score evidence, not enthusiasm</h2>
 
           <p>The original engine averaged four 0–10 judgments: market pull, feasibility, defensibility, and personal fit. That is a useful portfolio view, but a confident score based on weak evidence still looks precise. I now apply an evidence-confidence multiplier:</p>
 
@@ -345,7 +365,7 @@ decision_score = base × evidence_confidence</code></pre>
 
           <p>Use the number to order tests, not to declare winners. A score above 7 with low confidence is a research priority. It is not a product decision.</p>
 
-          <h2>A worked example: execution attestation</h2>
+          <h2 id="a-worked-example-execution-attestation">A worked example: execution attestation</h2>
 
           <p>The first engine run combined two active systems: an agent-discovery network and a skill marketplace. The pattern lens asked what must exist after an agent finds another agent and installs its capability. The missing layer was evidence of what executed.</p>
 
@@ -376,7 +396,7 @@ decision_score = base × evidence_confidence</code></pre>
 
           <p>The engine did not “validate” the market. It found a coherent, testable seam between existing systems. That is the correct claim.</p>
 
-          <h2>Rejected ideas are first-class data</h2>
+          <h2 id="rejected-ideas-are-first-class-data">Rejected ideas are first-class data</h2>
 
           <p>The first run’s rejection log was more useful than its launch list:</p>
 
@@ -419,7 +439,7 @@ decision_score = base × evidence_confidence</code></pre>
 
           <p>Keep these records. Otherwise the same attractive ideas return every month with new names.</p>
 
-          <h2>Step 7: close the learning loop</h2>
+          <h2 id="step-7-close-the-learning-loop">Step 7: close the learning loop</h2>
 
           <p>The engine’s hit tracker defined a target conversion rate above 30%, but the tracker was still empty after the runs I reviewed. That means the system could score ideas but could not yet measure whether its judgment correlated with validation or delivery.</p>
 
@@ -437,7 +457,7 @@ decision_score = base × evidence_confidence</code></pre>
 
           <p>If a lens produces exciting ideas that never reach a test, reduce its weight. If a source repeatedly leads to real adoption, sample it more often. That is how the engine improves.</p>
 
-          <h2>Copy the operating template</h2>
+          <h2 id="copy-the-operating-template">Copy the operating template</h2>
 
           <p>For a weekly run, use this sequence:</p>
 

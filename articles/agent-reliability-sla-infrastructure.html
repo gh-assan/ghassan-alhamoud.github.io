@@ -105,10 +105,28 @@
                 <img src="/images/articles/ART006.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#start-with-one-eligible-journey">Start with one eligible journey</a></li>
+        <li><a href="#use-an-end-to-end-success-sli">Use an end-to-end success SLI</a></li>
+        <li><a href="#the-minimum-agent-reliability-scorecard">The minimum agent reliability scorecard</a></li>
+        <li><a href="#set-targets-from-user-harm-and-operating-cost">Set targets from user harm and operating cost</a></li>
+        <li><a href="#error-budgets-turn-percentages-into-decisions">Error budgets turn percentages into decisions</a></li>
+        <li><a href="#alert-on-burn-not-every-bad-output">Alert on burn, not every bad output</a></li>
+        <li><a href="#semantic-evaluation-must-be-versioned">Semantic evaluation must be versioned</a></li>
+        <li><a href="#instrument-the-causal-path">Instrument the causal path</a></li>
+        <li><a href="#review-the-scorecard-as-an-operating-contract">Review the scorecard as an operating contract</a></li>
+        <li><a href="#download-the-slo-template">Download the SLO template</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>An agent can return HTTP 200, finish on time, and still fail the user.</strong> Availability and latency remain necessary, but agent reliability also includes semantic correctness, policy compliance, effect integrity, evidence completeness, and recoverability.</p>
           <p>The practical response is not a bigger dashboard. It is a small set of user-centered service level indicators (SLIs), explicit service level objectives (SLOs), and an error-budget policy that changes engineering behavior.</p>
 
-          <h2>Start with one eligible journey</h2>
+          <h2 id="start-with-one-eligible-journey">Start with one eligible journey</h2>
           <p>Define the unit before defining the percentage. For an outreach agent, one journey might be:</p>
           <blockquote>
             An authorised request is accepted, the correct recipient and message are verified, exactly one message is sent, the provider receipt is reconciled, and the required evidence is retained.
@@ -116,7 +134,7 @@
           <p>The denominator is every <em>eligible</em> accepted journey. Eligibility must be machine-checkable: supported intent, valid authority, and required inputs present at acceptance time. Unsupported requests rejected before acceptance can be excluded; failures discovered after acceptance cannot.</p>
           <p>Denominator policy is production code. If a team can relabel failures as “unsupported” after the fact, the SLI becomes a vanity metric.</p>
 
-          <h2>Use an end-to-end success SLI</h2>
+          <h2 id="use-an-end-to-end-success-sli">Use an end-to-end success SLI</h2>
           <pre><code>verified_task_success =
   eligible journeys with every acceptance check passing
   -------------------------------------------------------
@@ -124,7 +142,7 @@
           <p>Measure this at the user boundary, not by multiplying component availability figures. Agent-stage failures are correlated: a malformed retrieval result can poison planning, tool choice, and verification together.</p>
           <p>Keep diagnostic component metrics—model errors, tool latency, retrieval misses—but do not mistake them for the journey SLI.</p>
 
-          <h2>The minimum agent reliability scorecard</h2>
+          <h2 id="the-minimum-agent-reliability-scorecard">The minimum agent reliability scorecard</h2>
           <table>
             <thead>
               <tr><th>SLI</th><th>Good event</th><th>Bad event</th></tr>
@@ -140,7 +158,7 @@
           </table>
           <p>Forbidden effects deserve a separate safety policy. A 99.9% target does not make one unauthorised payment acceptable. Record the rate for observability, but treat every miss as an incident rather than “spendable budget.”</p>
 
-          <h2>Set targets from user harm and operating cost</h2>
+          <h2 id="set-targets-from-user-harm-and-operating-cost">Set targets from user harm and operating cost</h2>
           <p>There is no universal “three nines” for agents. Segment by journey and risk:</p>
           <ul>
             <li>a draft summariser may tolerate abstention and human correction;</li>
@@ -150,7 +168,7 @@
           </ul>
           <p>For each SLO, document the user consequence of a miss, the cost of prevention, the measurement source, and the owner. Set a target below 100% where an error budget is meaningful. Google's SRE guidance similarly warns that demanding 100% can produce excessive cost and slower change; the target should support a deliberate risk decision in the <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener noreferrer">service-level objective</a>.</p>
 
-          <h2>Error budgets turn percentages into decisions</h2>
+          <h2 id="error-budgets-turn-percentages-into-decisions">Error budgets turn percentages into decisions</h2>
           <pre><code>allowed_bad_ratio = 1 - SLO
 error_budget_events = eligible_events × allowed_bad_ratio
 burn_rate = observed_bad_ratio ÷ allowed_bad_ratio</code></pre>
@@ -163,7 +181,7 @@ burn_rate = observed_bad_ratio ÷ allowed_bad_ratio</code></pre>
             <li>budget exhausted: freeze risky releases and prioritise recovery.</li>
           </ul>
 
-          <h2>Alert on burn, not every bad output</h2>
+          <h2 id="alert-on-burn-not-every-bad-output">Alert on burn, not every bad output</h2>
           <p>For sufficiently high-volume journeys, multi-window burn-rate alerts balance detection speed and noise. The <a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener noreferrer">Google SRE Workbook</a> recommends this approach and gives 14.4× over one hour and 6× over six hours as starting points for paging, with shorter confirmation windows.</p>
           <table>
             <thead>
@@ -178,7 +196,7 @@ burn_rate = observed_bad_ratio ÷ allowed_bad_ratio</code></pre>
           </table>
           <p>Low-volume agents need different treatment. One failure may appear as an enormous burn rate with little statistical confidence. Show raw counts, confidence intervals, and longer windows; page directly only for high-severity event classes.</p>
 
-          <h2>Semantic evaluation must be versioned</h2>
+          <h2 id="semantic-evaluation-must-be-versioned">Semantic evaluation must be versioned</h2>
           <p>A model grader is another fallible component. Store:</p>
           <ul>
             <li>verifier version and rubric digest;</li>
@@ -189,7 +207,7 @@ burn_rate = observed_bad_ratio ÷ allowed_bad_ratio</code></pre>
           </ul>
           <p>Run calibration sets before changing the verifier. Where possible, blind reviewers to model version and treatment. A rising SLI caused by a more permissive grader is measurement drift, not improved reliability.</p>
 
-          <h2>Instrument the causal path</h2>
+          <h2 id="instrument-the-causal-path">Instrument the causal path</h2>
           <p>Every journey should carry a stable trace ID and immutable configuration dimensions:</p>
           <pre><code>workflow_version
 model_provider + model_id
@@ -202,7 +220,7 @@ accepted_at → started_at → first_effect_at
              → completed_at → verified_at</code></pre>
           <p>Avoid raw prompts, personal data, and secrets in metric labels. Keep detailed evidence in access-controlled storage and expose low-cardinality digests in telemetry.</p>
 
-          <h2>Review the scorecard as an operating contract</h2>
+          <h2 id="review-the-scorecard-as-an-operating-contract">Review the scorecard as an operating contract</h2>
           <p>A useful monthly review answers five questions:</p>
           <ol>
             <li>Which user journey consumed the most budget?</li>
@@ -213,7 +231,7 @@ accepted_at → started_at → first_effect_at
           </ol>
           <p>If no engineering decision changes when the SLO misses, it is reporting—not an objective.</p>
 
-          <h2>Download the SLO template</h2>
+          <h2 id="download-the-slo-template">Download the SLO template</h2>
           <p><a href="/resources/agent-reliability-slo-template.yaml" class="btn btn--primary" download>Download the agent reliability SLO template</a></p>
           <ul>
             <li><a href="/articles/quality-vs-speed-agent-era.html">Define risk-based quality gates</a></li>

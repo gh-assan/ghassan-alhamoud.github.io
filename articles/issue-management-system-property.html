@@ -104,10 +104,29 @@
                 <img src="/images/articles/ART-019.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#keep-signals-incidents-problems-and-changes-separate">Keep signals, incidents, problems, and changes separate</a></li>
+        <li><a href="#fingerprint-the-failure-class">Fingerprint the failure class</a></li>
+        <li><a href="#the-issue-lifecycle">The issue lifecycle</a></li>
+        <li><a href="#evidence-before-explanation">Evidence before explanation</a></li>
+        <li><a href="#use-five-whys-carefully">Use five whys carefully</a></li>
+        <li><a href="#corrective-actions-need-distinct-classes">Corrective actions need distinct classes</a></li>
+        <li><a href="#verification-is-not-deployment">Verification is not deployment</a></li>
+        <li><a href="#agent-specific-issue-dimensions">Agent-specific issue dimensions</a></li>
+        <li><a href="#metrics-for-learning-not-ticket-throughput">Metrics for learning, not ticket throughput</a></li>
+        <li><a href="#how-this-differs-from-self-healing">How this differs from self-healing</a></li>
+        <li><a href="#download-the-issue-record-schema">Download the issue record schema</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>An alert is an event. An issue is a durable control object.</strong> It connects impact, evidence, hypotheses, ownership, corrective actions, verification, and recurrence across many alerts and deployments.</p>
           <p>This is the role of an issue-management control plane: preserve accountability and system learning after the runtime emergency ends.</p>
 
-          <h2>Keep signals, incidents, problems, and changes separate</h2>
+          <h2 id="keep-signals-incidents-problems-and-changes-separate">Keep signals, incidents, problems, and changes separate</h2>
           <table>
             <thead>
               <tr><th>Object</th><th>Purpose</th><th>Typical lifetime</th></tr>
@@ -121,7 +140,7 @@
           </table>
           <p>Many signals may map to one issue. One issue may produce several changes. Closing an incident because service recovered must not close the deeper issue automatically.</p>
 
-          <h2>Fingerprint the failure class</h2>
+          <h2 id="fingerprint-the-failure-class">Fingerprint the failure class</h2>
           <p>A useful fingerprint uses stable causal features, not volatile text:</p>
           <pre><code>fingerprint = hash(
   affected_journey,
@@ -133,7 +152,7 @@
           <p>Exclude timestamps, request IDs, model prose, and full stack traces. Those belong in evidence. The fingerprint should group the same failure while keeping distinct causes apart.</p>
           <p>When a new signal matches a closed issue, increment recurrence and reopen it under policy. Do not create an unrelated ticket that hides the repeat.</p>
 
-          <h2>The issue lifecycle</h2>
+          <h2 id="the-issue-lifecycle">The issue lifecycle</h2>
           <pre><code>detected → triaged → contained → diagnosing
                                   │
                                   ▼
@@ -149,7 +168,7 @@
                             closed</code></pre>
           <p><code>resolved</code> means corrective actions passed their checks. <code>closed</code> means the verification window elapsed without recurrence and required learning artifacts were published. A matching failure during verification moves the issue to <code>reopened</code>.</p>
 
-          <h2>Evidence before explanation</h2>
+          <h2 id="evidence-before-explanation">Evidence before explanation</h2>
           <p>Attach immutable references to relevant logs, traces, metrics, artifacts, receipts, and tests. Record digests so later reviewers know whether evidence changed.</p>
           <p>Maintain competing hypotheses:</p>
           <table>
@@ -166,7 +185,7 @@
           </table>
           <p>“The model hallucinated” and “bad deploy” are symptoms unless they identify the violated invariant and the system condition that allowed harm.</p>
 
-          <h2>Use five whys carefully</h2>
+          <h2 id="use-five-whys-carefully">Use five whys carefully</h2>
           <p>Five Whys is a prompt for deeper inquiry, not proof that every incident has one linear root. Stop when evidence stops. Branch when independent contributing causes exist.</p>
           <ol>
             <li>Why did the user journey fail?</li>
@@ -177,7 +196,7 @@
           </ol>
           <p>The result may be a causal graph: triggering event, latent condition, missing control, and amplification path.</p>
 
-          <h2>Corrective actions need distinct classes</h2>
+          <h2 id="corrective-actions-need-distinct-classes">Corrective actions need distinct classes</h2>
           <table>
             <thead>
               <tr><th>Class</th><th>Goal</th><th>Example</th></tr>
@@ -191,7 +210,7 @@
           </table>
           <p>Each action needs an owner, due date, acceptance condition, and evidence. “Update documentation” cannot be the only prevention for a machine-enforceable invariant.</p>
 
-          <h2>Verification is not deployment</h2>
+          <h2 id="verification-is-not-deployment">Verification is not deployment</h2>
           <p>A merged change proves only that code changed. Verification should include:</p>
           <ul>
             <li>a regression reproducer that failed before and passes now;</li>
@@ -202,7 +221,7 @@
           </ul>
           <p>Low-volume workflows may need replay, simulation, or fault injection because waiting for organic traffic would leave the issue open indefinitely.</p>
 
-          <h2>Agent-specific issue dimensions</h2>
+          <h2 id="agent-specific-issue-dimensions">Agent-specific issue dimensions</h2>
           <p>In addition to conventional service fields, capture:</p>
           <ul>
             <li>workflow, model, prompt, toolset, policy, and verifier versions;</li>
@@ -213,7 +232,7 @@
           </ul>
           <p>This lets the control plane join a plausible but wrong output to the exact configuration and evidence chain that produced it.</p>
 
-          <h2>Metrics for learning, not ticket throughput</h2>
+          <h2 id="metrics-for-learning-not-ticket-throughput">Metrics for learning, not ticket throughput</h2>
           <table>
             <thead>
               <tr><th>Metric</th><th>Interpretation</th></tr>
@@ -229,10 +248,10 @@
           </table>
           <p>Ticket closure count rewards throughput. Recurrence elimination rewards reliability.</p>
 
-          <h2>How this differs from self-healing</h2>
+          <h2 id="how-this-differs-from-self-healing">How this differs from self-healing</h2>
           <p>The runtime self-healing loop detects a known condition and executes a bounded remediation. The issue control plane decides whether the condition is understood, who owns systemic prevention, what evidence supports closure, and whether the same failure came back. The runtime loop is a consumer and producer of issue records—not their replacement.</p>
 
-          <h2>Download the issue record schema</h2>
+          <h2 id="download-the-issue-record-schema">Download the issue record schema</h2>
           <p><a href="/resources/issue-learning-record.schema.json" class="btn btn--primary" download>Download the issue learning JSON Schema</a></p>
           <ul>
             <li><a href="/articles/self-healing-architecture-feedback-loop.html">Implement the bounded runtime remediation loop</a></li>

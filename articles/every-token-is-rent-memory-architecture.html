@@ -104,10 +104,29 @@
                 <img src="/images/articles/ART014.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#four-memory-classes-four-jobs">Four memory classes, four jobs</a></li>
+        <li><a href="#the-lifecycle-is-the-architecture">The lifecycle is the architecture</a></li>
+        <li><a href="#admission-remember-less-but-remember-it-well">Admission: remember less, but remember it well</a></li>
+        <li><a href="#retrieval-is-an-authorization-decision">Retrieval is an authorization decision</a></li>
+        <li><a href="#consolidation-must-preserve-disagreement">Consolidation must preserve disagreement</a></li>
+        <li><a href="#forgetting-is-a-feature">Forgetting is a feature</a></li>
+        <li><a href="#deletion-needs-propagation-and-proof">Deletion needs propagation and proof</a></li>
+        <li><a href="#evaluate-memory-as-a-treatment">Evaluate memory as a treatment</a></li>
+        <li><a href="#the-economics-of-token-rent">The economics of “token rent”</a></li>
+        <li><a href="#what-the-alms-implementation-contributes">What the ALMS implementation contributes</a></li>
+        <li><a href="#download-the-lifecycle-template">Download the lifecycle template</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>Agent memory is not “put the chat in a vector database.”</strong> It is a governed lifecycle that decides what may be remembered, how it is represented, when it is retrieved, how contradictions are resolved, and when it must disappear.</p>
           <p>Without those decisions, memory can make an agent worse: stale instructions outrank current policy, private facts cross tenants, summaries lose provenance, and irrelevant retrieval consumes the context it was meant to save.</p>
 
-          <h2>Four memory classes, four jobs</h2>
+          <h2 id="four-memory-classes-four-jobs">Four memory classes, four jobs</h2>
           <table>
             <thead>
               <tr><th>Class</th><th>Question answered</th><th>Typical lifetime</th></tr>
@@ -121,7 +140,7 @@
           </table>
           <p>Do not search every class with one ranking function. Working memory is injected by task state. Episodes need actor, project, and time filters. Semantic memory benefits from hybrid retrieval. Procedures require exact scope and version compatibility.</p>
 
-          <h2>The lifecycle is the architecture</h2>
+          <h2 id="the-lifecycle-is-the-architecture">The lifecycle is the architecture</h2>
           <pre><code>observation
     │
     ▼
@@ -133,7 +152,7 @@ candidate ──admit──▶ active ──merge──▶ consolidated
                        └──expire / erase──▶ deleted</code></pre>
           <p>Each transition should be explicit and auditable. A record is not durable merely because it was written. It becomes active only after admission. Consolidation creates a stable synthesis while preserving source links. Supersession keeps history without allowing old instructions to compete. Quarantine removes doubtful material from retrieval. Deletion produces a receipt and propagates to indexes and caches.</p>
 
-          <h2>Admission: remember less, but remember it well</h2>
+          <h2 id="admission-remember-less-but-remember-it-well">Admission: remember less, but remember it well</h2>
           <p>A candidate memory needs:</p>
           <ul>
             <li>a future decision or action it can improve;</li>
@@ -145,7 +164,7 @@ candidate ──admit──▶ active ──merge──▶ consolidated
           </ul>
           <p>Reject raw speculation phrased as fact, secrets, disallowed personal data, and “notes to self” with no reusable value. Store the evidence separately when it is large; keep a digest and resolvable reference in the memory record.</p>
 
-          <h2>Retrieval is an authorization decision</h2>
+          <h2 id="retrieval-is-an-authorization-decision">Retrieval is an authorization decision</h2>
           <p>Filter before ranking:</p>
           <pre><code>authorized scope
 ∩ project or tenant
@@ -162,7 +181,7 @@ rank by relevance + source quality + recency
           <p>Every returned item should carry its memory ID, provenance, confidence, observation time, and state. The model needs to know whether it is seeing a current policy, an old episode, or an uncertain inference.</p>
           <p>Cap the memory token budget independently from the task-input budget. A retrieval system that always fills the context window turns “available memory” into mandatory noise.</p>
 
-          <h2>Consolidation must preserve disagreement</h2>
+          <h2 id="consolidation-must-preserve-disagreement">Consolidation must preserve disagreement</h2>
           <p>When several episodes support one lesson, consolidation can reduce duplication. But do not flatten conflicts into a confident average. Keep:</p>
           <ul>
             <li>the consolidated statement;</li>
@@ -173,7 +192,7 @@ rank by relevance + source quality + recency
           </ul>
           <p>If two memories prescribe incompatible actions under the same scope, quarantine or surface the conflict. Ranking one slightly higher is not conflict resolution.</p>
 
-          <h2>Forgetting is a feature</h2>
+          <h2 id="forgetting-is-a-feature">Forgetting is a feature</h2>
           <p>Decay should lower retrieval priority or trigger reverification; it should not silently rewrite historical evidence. Use a stable base score and a <code>last_evaluated_at</code> checkpoint.</p>
           <pre><code>priority_now =
   base_quality
@@ -184,7 +203,7 @@ rank by relevance + source quality + recency
           <p>This avoids a subtle failure I found in the local ALMS implementation: its decay function derives lifetime decay from creation time, then subtracts that amount from the already-decayed current score. Repeated sweeps can therefore punish the same elapsed time more than once. The safe alternatives are to recompute from an immutable base or apply only the delta since the last checkpoint.</p>
           <p>Pinning should be rare and reviewed. Safety policy, contractual constraints, and human-approved durable decisions may justify it. “This was useful once” does not.</p>
 
-          <h2>Deletion needs propagation and proof</h2>
+          <h2 id="deletion-needs-propagation-and-proof">Deletion needs propagation and proof</h2>
           <p>Soft deletion is helpful for audit and recovery, but it is not the end of erasure. A deletion workflow should cover:</p>
           <ol>
             <li>primary record state;</li>
@@ -196,7 +215,7 @@ rank by relevance + source quality + recency
           </ol>
           <p>Measure deletion-propagation latency. “Deleted from the database” is incomplete if the record remains retrievable from an embedding index.</p>
 
-          <h2>Evaluate memory as a treatment</h2>
+          <h2 id="evaluate-memory-as-a-treatment">Evaluate memory as a treatment</h2>
           <p>Run the same task set under three conditions: no memory, retrieval only, and retrieval plus consolidation. Segment by workflow and memory class.</p>
           <table>
             <thead>
@@ -215,7 +234,7 @@ rank by relevance + source quality + recency
           </table>
           <p>Do not optimise retrieval relevance alone. A highly relevant false memory can do more damage than an irrelevant one because the model is more likely to act on it.</p>
 
-          <h2>The economics of “token rent”</h2>
+          <h2 id="the-economics-of-token-rent">The economics of “token rent”</h2>
           <pre><code>avoided cost =
   successful reuses × (reconstruction cost − retrieval cost)
   + avoided human reconstruction time
@@ -227,10 +246,10 @@ net memory value =
           <p>Use provider bills and measured human time, not generic token prices. A memory system can reduce prompt tokens while increasing total cost through extraction models, embeddings, review, and incident cleanup.</p>
           <p>The decisive metric is not “memories stored.” It is successful, attributable reuse without unacceptable stale, contradictory, or sensitive recall.</p>
 
-          <h2>What the ALMS implementation contributes</h2>
+          <h2 id="what-the-alms-implementation-contributes">What the ALMS implementation contributes</h2>
           <p>The local Agent Learning Management System already implements several sound primitives: shared learning records, sync plus acknowledgement, pinning, scoring, TTL, soft deletion, protocol distribution, and an architecture that stays out of the agent's hot path. The next maturity step is to make admission state, provenance-aware retrieval, contradiction handling, and decay checkpoints equally explicit.</p>
 
-          <h2>Download the lifecycle template</h2>
+          <h2 id="download-the-lifecycle-template">Download the lifecycle template</h2>
           <p><a href="/resources/agent-memory-lifecycle-template.yaml" class="btn btn--primary" download>Download the agent memory lifecycle template</a></p>
           <ul>
             <li><a href="/articles/alms-open-source-shared-agent-memory.html">Read the ALMS implementation case study</a></li>

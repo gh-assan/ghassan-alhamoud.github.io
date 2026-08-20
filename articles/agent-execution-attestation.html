@@ -105,10 +105,28 @@
                 <img src="/images/articles/ART008.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#logs-audit-records-and-attestations">Logs, audit records, and attestations</a></li>
+        <li><a href="#the-envelope">The envelope</a></li>
+        <li><a href="#identity-and-delegated-authority">Identity and delegated authority</a></li>
+        <li><a href="#bind-configuration-not-raw-secrets">Bind configuration, not raw secrets</a></li>
+        <li><a href="#external-effects-need-receipts">External effects need receipts</a></li>
+        <li><a href="#verification-flow">Verification flow</a></li>
+        <li><a href="#threat-model">Threat model</a></li>
+        <li><a href="#canonicalization-and-signature-profile">Canonicalization and signature profile</a></li>
+        <li><a href="#a-practical-adoption-path">A practical adoption path</a></li>
+        <li><a href="#download-and-verify-the-example">Download and verify the example</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>An execution attestation is a signed statement about an agent run. It can prove that a particular key signed particular bytes. It cannot, by itself, prove those bytes describe reality.</strong></p>
           <p>That distinction separates useful audit infrastructure from cryptographic theatre. The attestation must bind identity, authorised intent, runtime configuration, inputs, tool effects, checks, and outcomes—and the verifier must trust how each field was measured.</p>
 
-          <h2>Logs, audit records, and attestations</h2>
+          <h2 id="logs-audit-records-and-attestations">Logs, audit records, and attestations</h2>
           <table>
             <thead>
               <tr><th>Artifact</th><th>Purpose</th><th>Integrity property</th></tr>
@@ -121,7 +139,7 @@
           </table>
           <p>Do not put every prompt and document into the attestation. Store sensitive evidence in its authorised system and reference it by digest and evidence ID.</p>
 
-          <h2>The envelope</h2>
+          <h2 id="the-envelope">The envelope</h2>
           <pre><code>{
   schemaVersion,
   attestationId,
@@ -141,7 +159,7 @@
 }</code></pre>
           <p>The downloadable JSON Schema makes these fields concrete. It deliberately keeps the detached signature outside the payload so the signed bytes are unambiguous.</p>
 
-          <h2>Identity and delegated authority</h2>
+          <h2 id="identity-and-delegated-authority">Identity and delegated authority</h2>
           <p>The issuer is the component that measured and signed the claim. The actor is the human or service principal plus the agent operating under delegated authority. They are not necessarily the same.</p>
           <p>For a consequential effect, bind:</p>
           <ul>
@@ -153,7 +171,7 @@
           </ul>
           <p>A signature from “the agent” is weak if the agent held the key and could invent its own authority. Prefer a separate execution gateway or trusted collector that observes policy decisions and tool calls.</p>
 
-          <h2>Bind configuration, not raw secrets</h2>
+          <h2 id="bind-configuration-not-raw-secrets">Bind configuration, not raw secrets</h2>
           <p>Model behavior depends on more than a model name. Record immutable identifiers or digests for:</p>
           <ul>
             <li>model provider, model identifier, and revision where the provider exposes one;</li>
@@ -164,7 +182,7 @@
           </ul>
           <p>A hash proves equality to bytes you already possess. It does not reveal what opaque hosted model weights actually ran. Record provider receipts and be explicit about that assurance gap.</p>
 
-          <h2>External effects need receipts</h2>
+          <h2 id="external-effects-need-receipts">External effects need receipts</h2>
           <p>“Tool call returned success” is not enough. For a payment, deployment, email, or deletion, capture the provider's stable operation ID, idempotency key, accepted payload digest, status, and reconciliation timestamp.</p>
           <table>
             <thead>
@@ -178,7 +196,7 @@
             </tbody>
           </table>
 
-          <h2>Verification flow</h2>
+          <h2 id="verification-flow">Verification flow</h2>
           <pre><code>payload + detached signature + public key
                     │
                     ▼
@@ -195,7 +213,7 @@
 verified | rejected | incomplete | untrusted</code></pre>
           <p>Signature success is step 2, not the final verdict. A revoked key, untrusted collector, expired approval, missing receipt, or inaccessible evidence can still make the attestation unusable.</p>
 
-          <h2>Threat model</h2>
+          <h2 id="threat-model">Threat model</h2>
           <table>
             <thead>
               <tr><th>Threat</th><th>Control</th><th>Residual limitation</th></tr>
@@ -211,7 +229,7 @@ verified | rejected | incomplete | untrusted</code></pre>
             </tbody>
           </table>
 
-          <h2>Canonicalization and signature profile</h2>
+          <h2 id="canonicalization-and-signature-profile">Canonicalization and signature profile</h2>
           <p>Production systems should adopt a defined canonicalization and envelope standard rather than inventing one. The downloadable demonstration avoids canonicalization entirely: the Ed25519 signature covers the exact bytes of <code>agent-execution-attestation.example.json</code>. Any whitespace change invalidates it.</p>
           <pre><code>openssl base64 -d -A \
   -in agent-execution-attestation.example.sig.b64 \
@@ -224,7 +242,7 @@ openssl pkeyutl -verify -pubin \
   -sigfile /tmp/agent-attestation.sig</code></pre>
           <p>The private demonstration key is not published and must never be trusted for production. The public key proves only that the included sample and signature match.</p>
 
-          <h2>A practical adoption path</h2>
+          <h2 id="a-practical-adoption-path">A practical adoption path</h2>
           <ol>
             <li>Choose one irreversible or externally visible action.</li>
             <li>Define its subject, authority, effect receipt, and minimum checks.</li>
@@ -235,7 +253,7 @@ openssl pkeyutl -verify -pubin \
             <li>Add sequence integrity or a transparency log when omission matters.</li>
           </ol>
 
-          <h2>Download and verify the example</h2>
+          <h2 id="download-and-verify-the-example">Download and verify the example</h2>
           <p><a href="/resources/agent-execution-attestation.schema.json" class="btn btn--primary" download>Download the attestation JSON Schema</a></p>
           <ul>
             <li><a href="/resources/agent-execution-attestation.example.json" download>Example signed payload</a></li>
