@@ -608,6 +608,52 @@ def check_tablet_principles():
     report("tablet-principles", not problems, "; ".join(problems))
 
 
+# --------------------------------------------------------------- gate 25
+def check_article_toc_system():
+    """Article TOCs must be a real component: styled and with active-position JS."""
+    problems = []
+    articles_with_toc = [f for f in sorted((ROOT / "articles").glob("*.html"))
+                         if 'class="article-toc"' in read(f)]
+    if articles_with_toc:
+        css = read(ROOT / "assets/css/main.css")
+        if ".article-toc" not in css:
+            problems.append("article-toc markup exists but no .article-toc CSS")
+        js = ROOT / "assets/js/article-toc.js"
+        if not js.exists():
+            problems.append("article-toc markup exists but no article-toc.js")
+        elif "IntersectionObserver" not in read(js):
+            problems.append("article-toc.js: no active-position tracking")
+        for f in articles_with_toc:
+            if "article-toc.js" not in read(f):
+                problems.append(f"articles/{f.name}: TOC without article-toc.js")
+    report("article-toc-system", not problems,
+           "; ".join(problems[:8]))
+
+
+# --------------------------------------------------------------- gate 26
+def check_hero_transition():
+    """No viewport-height hero dead zone before the first proof section."""
+    css = read(ROOT / "assets/css/main.css")
+    problems = []
+    hero = re.search(r'\.hero\s*\{([^}]*)\}', css)
+    if hero and re.search(r'min-height:\s*100vh', hero.group(1)):
+        problems.append(".hero still uses min-height:100vh (dead zone)")
+    report("hero-transition", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 27
+def check_reveal_css_safety():
+    """A pure-CSS failsafe must reveal content even if reveal.js never runs."""
+    css = read(ROOT / "assets/css/main.css")
+    problems = []
+    if "reveal-safety" not in css:
+        problems.append("main.css: no reveal-safety CSS failsafe")
+    m = re.search(r'html\.js \.reveal\s*\{([^}]*)\}', css)
+    if not m or "reveal-safety" not in m.group(1):
+        problems.append("html.js .reveal rule does not apply the safety animation")
+    report("reveal-css-safety", not problems, "; ".join(problems))
+
+
 GATES = [
     check_forbidden_surfaces,
     check_canonical_identity,
@@ -633,6 +679,9 @@ GATES = [
     check_fieldnotes_curation,
     check_owned_visual_language,
     check_tablet_principles,
+    check_article_toc_system,
+    check_hero_transition,
+    check_reveal_css_safety,
 ]
 
 
