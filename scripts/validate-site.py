@@ -658,6 +658,124 @@ def check_reveal_css_safety():
     report("reveal-css-safety", not problems, "; ".join(problems))
 
 
+# --------------------------------------------------------------- gate 28
+def check_fieldnote_cta_semantics():
+    """A link to the article index must say so; 'next note' must point at a note."""
+    problems = []
+    index = read(ROOT / "index.html")
+    for m in re.finditer(r'<a[^>]*href="([^"]+)"[^>]*>([^<]+)</a>', index):
+        href, label = m.group(1), m.group(2).strip()
+        if href == "/articles/" and re.search(r'\bnext\b', label, re.I):
+            problems.append(f"'{label}' links to the index, not a next note")
+        if re.match(r"/articles/[\w-]+\.html$", href) \
+                and re.search(r'\ball\b|\bbrowse\b|\barchive\b', label, re.I):
+            problems.append(f"'{label}' links to one article, not the archive")
+    report("fieldnote-cta-semantics", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 29
+def check_status_taxonomy():
+    """Project maturity is an explicit, bounded taxonomy with a visible legend."""
+    ALLOWED = {"live workshop", "public release", "mvp", "in active development"}
+    problems = []
+    text = read(ROOT / "projects/index.html")
+    if "status-legend" not in text:
+        problems.append("projects/index.html: no status-legend block")
+    statuses = re.findall(r'project-card__status[^>]*>([^<]+)<', text)
+    if not statuses:
+        problems.append("projects/index.html: no card statuses found")
+    for s in statuses:
+        if s.strip().lower() not in ALLOWED:
+            problems.append(f"status '{s.strip()}' outside taxonomy")
+    report("status-taxonomy", not problems, "; ".join(problems[:8]))
+
+
+# --------------------------------------------------------------- gate 30
+def check_flagship_pair():
+    """Exactly two flagship projects: ScaleShop + Tamoz."""
+    text = read(ROOT / "projects/index.html")
+    cards = re.findall(
+        r'<(?:article|a) class="[^"]*project-card--featured[^"]*"[^>]*>.*?</(?:article|a)>',
+        text, re.S)
+    problems = []
+    if len(cards) != 2:
+        problems.append(f"expected 2 featured project cards, found {len(cards)}")
+    joined = " ".join(cards)
+    for slug in ("scalability-lab.html", "tamoz.html"):
+        if slug not in joined:
+            problems.append(f"flagship {slug} not featured")
+    report("flagship-pair", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 31
+def check_role_explainer():
+    """The AI Agent Enabler title is explained once, with the internal role target."""
+    index = read(ROOT / "index.html")
+    problems = []
+    m = re.search(r'<[^>]*class="role-explainer"[^>]*>(.*?)</',
+                  index, re.S)
+    if not m:
+        problems.append("index.html: no role-explainer block")
+    else:
+        text = re.sub(r"<[^>]+>", " ", m.group(1)).lower()
+        if "enabl" not in text:
+            problems.append("role-explainer does not explain 'AI Agent Enabler'")
+        if not re.search(r'\bstaff\b', text):
+            problems.append("role-explainer does not name the senior/staff target")
+    report("role-explainer", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 32
+def check_selected_impact():
+    """About carries compressed, employer-linked impact blocks."""
+    index = read(ROOT / "index.html")
+    problems = []
+    blocks = re.findall(r'class="impact\b[^"]*"', index)
+    if len(blocks) < 2:
+        problems.append(f"expected >=2 impact blocks, found {len(blocks)}")
+    section = re.search(r'<section class="about.*?</section>', index, re.S)
+    body = section.group(0) if section else ""
+    for employer in ("Vinted", "Wayfair"):
+        if not re.search(r'impact[\s\S]{0,2000}' + employer, body):
+            problems.append(f"no impact block tied to {employer}")
+    report("selected-impact", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 33
+def check_evidence_artifacts():
+    """Flagship visuals carry reality labels; the hero is labeled illustrative."""
+    LABELS = ("production", "from the public repo", "modeled",
+              "illustrative", "work in progress")
+    problems = []
+    for page in ("projects/tamoz.html", "projects/scalability-lab.html"):
+        text = read(ROOT / page)
+        caps = re.findall(r'class="evidence-caption"[^>]*>(.*?)</', text, re.S)
+        caps = [re.sub(r"<[^>]+>", "", c).strip().lower() for c in caps]
+        if not caps:
+            problems.append(f"{page}: no evidence-caption on any artifact")
+        elif not any(any(lbl in c for lbl in LABELS) for c in caps):
+            problems.append(f"{page}: evidence-caption missing a reality label")
+    index = read(ROOT / "index.html")
+    hero = re.search(r'<figure class="hero__artifact".*?</figure>',
+                     index, re.S)
+    if not hero or "illustrative" not in hero.group(0).lower():
+        problems.append("index.html: hero artifact not labeled illustrative")
+    report("evidence-artifacts", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 34
+def check_handbook_decision_path():
+    """Handbook index presents chapters as a progression with outcomes."""
+    text = read(ROOT / "handbook/index.html")
+    problems = []
+    outcomes = len(re.findall(r'chapter-card__outcome', text))
+    if outcomes < 9:
+        problems.append(f"handbook index: {outcomes}/9 chapters with outcome lines")
+    if "Start here" not in text:
+        problems.append("handbook index: start-here block missing")
+    report("handbook-decision-path", not problems, "; ".join(problems))
+
+
 GATES = [
     check_forbidden_surfaces,
     check_canonical_identity,
@@ -686,6 +804,13 @@ GATES = [
     check_article_toc_system,
     check_hero_transition,
     check_reveal_css_safety,
+    check_fieldnote_cta_semantics,
+    check_status_taxonomy,
+    check_flagship_pair,
+    check_role_explainer,
+    check_selected_impact,
+    check_evidence_artifacts,
+    check_handbook_decision_path,
 ]
 
 
