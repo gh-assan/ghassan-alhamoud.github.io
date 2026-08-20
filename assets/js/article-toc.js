@@ -35,6 +35,11 @@
       behavior: reduceMotion ? 'auto' : 'smooth',
       block: 'start'
     });
+    // Move focus to the target so keyboard/AT users land where they navigated.
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '-1');
+    }
+    target.focus({ preventScroll: true });
     // Keep the URL in sync for shareability without a page jump.
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, '', hash);
@@ -74,6 +79,13 @@
         toggle.className = 'article-toc__toggle';
         toggle.setAttribute('aria-expanded', 'false');
         toggle.textContent = 'On this page';
+        var tocList = toc.querySelector('ul');
+        if (tocList) {
+          if (!tocList.id) {
+            tocList.id = 'article-toc-list';
+          }
+          toggle.setAttribute('aria-controls', tocList.id);
+        }
         toggle.addEventListener('click', function () {
           setExpanded(toggle.getAttribute('aria-expanded') !== 'true');
         });

@@ -44,10 +44,16 @@
     }
   });
 
-  // 3. Timed failsafe: nothing stays hidden longer than ~1.2s, even if
-  //    the observer never fires.
+  // 3. Timed failsafe: in-viewport content never stays hidden longer than
+  //    ~1.2s, even if the observer never fires. Below-fold elements keep
+  //    their scroll-reveal behavior.
   setTimeout(function () {
-    revealElements.forEach(reveal);
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    revealElements.forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh) {
+        reveal(el);
+      }
+    });
   }, 1200);
 
   // 4. Below-fold elements: IntersectionObserver; no-IO → show everything.
@@ -73,6 +79,10 @@
 
   revealElements.forEach(function (el) {
     if (!el.classList.contains('reveal--visible')) {
+      // JS has taken over: clear the CSS reveal-safety backstop so the
+      // normal hidden state + entrance transition keep working past 2.5s.
+      // The timed failsafe above still covers an observer that never fires.
+      el.style.animation = 'none';
       observer.observe(el);
     }
   });

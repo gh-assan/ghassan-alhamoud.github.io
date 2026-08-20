@@ -20,7 +20,10 @@
 
   if (!input || !list) return;
 
-  var FEATURED_HREF = '/articles/film-pipeline-open-source.html';
+  // Derive the featured card from the static HTML instead of hardcoding it,
+  // so a rebuild featuring a newer note cannot drift out of sync.
+  var featuredEl = list.querySelector('.article-card--featured');
+  var FEATURED_HREF = featuredEl ? featuredEl.getAttribute('href') : null;
 
   function cards() {
     return list.querySelectorAll('.article-card');
@@ -41,6 +44,7 @@
   }
 
   function markFeatured() {
+    if (!FEATURED_HREF) return;
     var all = cards();
     for (var i = 0; i < all.length; i++) {
       if (all[i].getAttribute('href') === FEATURED_HREF) {
