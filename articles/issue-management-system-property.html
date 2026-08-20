@@ -55,7 +55,6 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 <body>
@@ -75,12 +74,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -106,10 +104,29 @@
                 <img src="/images/articles/ART-019.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#keep-signals-incidents-problems-and-changes-separate">Keep signals, incidents, problems, and changes separate</a></li>
+        <li><a href="#fingerprint-the-failure-class">Fingerprint the failure class</a></li>
+        <li><a href="#the-issue-lifecycle">The issue lifecycle</a></li>
+        <li><a href="#evidence-before-explanation">Evidence before explanation</a></li>
+        <li><a href="#use-five-whys-carefully">Use five whys carefully</a></li>
+        <li><a href="#corrective-actions-need-distinct-classes">Corrective actions need distinct classes</a></li>
+        <li><a href="#verification-is-not-deployment">Verification is not deployment</a></li>
+        <li><a href="#agent-specific-issue-dimensions">Agent-specific issue dimensions</a></li>
+        <li><a href="#metrics-for-learning-not-ticket-throughput">Metrics for learning, not ticket throughput</a></li>
+        <li><a href="#how-this-differs-from-self-healing">How this differs from self-healing</a></li>
+        <li><a href="#download-the-issue-record-schema">Download the issue record schema</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>An alert is an event. An issue is a durable control object.</strong> It connects impact, evidence, hypotheses, ownership, corrective actions, verification, and recurrence across many alerts and deployments.</p>
           <p>This is the role of an issue-management control plane: preserve accountability and system learning after the runtime emergency ends.</p>
 
-          <h2>Keep signals, incidents, problems, and changes separate</h2>
+          <h2 id="keep-signals-incidents-problems-and-changes-separate">Keep signals, incidents, problems, and changes separate</h2>
           <table>
             <thead>
               <tr><th>Object</th><th>Purpose</th><th>Typical lifetime</th></tr>
@@ -123,7 +140,7 @@
           </table>
           <p>Many signals may map to one issue. One issue may produce several changes. Closing an incident because service recovered must not close the deeper issue automatically.</p>
 
-          <h2>Fingerprint the failure class</h2>
+          <h2 id="fingerprint-the-failure-class">Fingerprint the failure class</h2>
           <p>A useful fingerprint uses stable causal features, not volatile text:</p>
           <pre><code>fingerprint = hash(
   affected_journey,
@@ -135,7 +152,7 @@
           <p>Exclude timestamps, request IDs, model prose, and full stack traces. Those belong in evidence. The fingerprint should group the same failure while keeping distinct causes apart.</p>
           <p>When a new signal matches a closed issue, increment recurrence and reopen it under policy. Do not create an unrelated ticket that hides the repeat.</p>
 
-          <h2>The issue lifecycle</h2>
+          <h2 id="the-issue-lifecycle">The issue lifecycle</h2>
           <pre><code>detected → triaged → contained → diagnosing
                                   │
                                   ▼
@@ -151,7 +168,7 @@
                             closed</code></pre>
           <p><code>resolved</code> means corrective actions passed their checks. <code>closed</code> means the verification window elapsed without recurrence and required learning artifacts were published. A matching failure during verification moves the issue to <code>reopened</code>.</p>
 
-          <h2>Evidence before explanation</h2>
+          <h2 id="evidence-before-explanation">Evidence before explanation</h2>
           <p>Attach immutable references to relevant logs, traces, metrics, artifacts, receipts, and tests. Record digests so later reviewers know whether evidence changed.</p>
           <p>Maintain competing hypotheses:</p>
           <table>
@@ -168,7 +185,7 @@
           </table>
           <p>“The model hallucinated” and “bad deploy” are symptoms unless they identify the violated invariant and the system condition that allowed harm.</p>
 
-          <h2>Use five whys carefully</h2>
+          <h2 id="use-five-whys-carefully">Use five whys carefully</h2>
           <p>Five Whys is a prompt for deeper inquiry, not proof that every incident has one linear root. Stop when evidence stops. Branch when independent contributing causes exist.</p>
           <ol>
             <li>Why did the user journey fail?</li>
@@ -179,7 +196,7 @@
           </ol>
           <p>The result may be a causal graph: triggering event, latent condition, missing control, and amplification path.</p>
 
-          <h2>Corrective actions need distinct classes</h2>
+          <h2 id="corrective-actions-need-distinct-classes">Corrective actions need distinct classes</h2>
           <table>
             <thead>
               <tr><th>Class</th><th>Goal</th><th>Example</th></tr>
@@ -193,7 +210,7 @@
           </table>
           <p>Each action needs an owner, due date, acceptance condition, and evidence. “Update documentation” cannot be the only prevention for a machine-enforceable invariant.</p>
 
-          <h2>Verification is not deployment</h2>
+          <h2 id="verification-is-not-deployment">Verification is not deployment</h2>
           <p>A merged change proves only that code changed. Verification should include:</p>
           <ul>
             <li>a regression reproducer that failed before and passes now;</li>
@@ -204,7 +221,7 @@
           </ul>
           <p>Low-volume workflows may need replay, simulation, or fault injection because waiting for organic traffic would leave the issue open indefinitely.</p>
 
-          <h2>Agent-specific issue dimensions</h2>
+          <h2 id="agent-specific-issue-dimensions">Agent-specific issue dimensions</h2>
           <p>In addition to conventional service fields, capture:</p>
           <ul>
             <li>workflow, model, prompt, toolset, policy, and verifier versions;</li>
@@ -215,7 +232,7 @@
           </ul>
           <p>This lets the control plane join a plausible but wrong output to the exact configuration and evidence chain that produced it.</p>
 
-          <h2>Metrics for learning, not ticket throughput</h2>
+          <h2 id="metrics-for-learning-not-ticket-throughput">Metrics for learning, not ticket throughput</h2>
           <table>
             <thead>
               <tr><th>Metric</th><th>Interpretation</th></tr>
@@ -231,10 +248,10 @@
           </table>
           <p>Ticket closure count rewards throughput. Recurrence elimination rewards reliability.</p>
 
-          <h2>How this differs from self-healing</h2>
+          <h2 id="how-this-differs-from-self-healing">How this differs from self-healing</h2>
           <p>The runtime self-healing loop detects a known condition and executes a bounded remediation. The issue control plane decides whether the condition is understood, who owns systemic prevention, what evidence supports closure, and whether the same failure came back. The runtime loop is a consumer and producer of issue records—not their replacement.</p>
 
-          <h2>Download the issue record schema</h2>
+          <h2 id="download-the-issue-record-schema">Download the issue record schema</h2>
           <p><a href="/resources/issue-learning-record.schema.json" class="btn btn--primary" download>Download the issue learning JSON Schema</a></p>
           <ul>
             <li><a href="/articles/self-healing-architecture-feedback-loop.html">Implement the bounded runtime remediation loop</a></li>
@@ -244,10 +261,6 @@
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Need an issue system that eliminates recurring failure classes instead of merely closing tickets?</p>
-          <a href="/#contact" class="btn btn--primary">Design the Control Plane</a>
-        </div>
       </article>
 
       <aside class="article-sidebar">
@@ -268,7 +281,7 @@
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -280,25 +293,22 @@
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -311,6 +321,7 @@
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -318,8 +329,8 @@
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

@@ -36,12 +36,19 @@
       '<div class="article-card__excerpt project-card__summary">' + project.summary + '</div>' +
       '<div class="article-card__excerpt project-card__outcome"><strong>Outcome:</strong> ' + project.outcome + '</div>' +
       tagsHtml +
-      (project.highlighted ? '<span class="project-card__action">Explore the live workshop &rarr;</span>' : '');
+      '<span class="project-card__action">' +
+        (project.slug === 'scalability-lab' ? 'Explore the live workshop' : 'Inspect the system') +
+        ' &rarr;</span>';
 
     if (project.image) {
       card.innerHTML =
         '<div class="project-card__visual"><img class="project-card__image" src="' + project.image + '" alt="" width="1200" height="630" loading="lazy"></div>' +
         '<div class="project-card__content">' + contentHtml + '</div>';
+    } else if (project.highlighted) {
+      // Featured cards use a two-column grid on wide screens; without an
+      // image the content column must span both tracks.
+      card.innerHTML =
+        '<div class="project-card__content project-card__content--full">' + contentHtml + '</div>';
     } else {
       card.innerHTML = contentHtml;
     }
@@ -50,17 +57,6 @@
   }
 
   function renderProjects(projects) {
-    var featuredList = document.getElementById('featuredProjectList');
-    if (featuredList) {
-      featuredList.innerHTML = '';
-      projects.filter(function (project) {
-        return project.featured;
-      }).forEach(function (project) {
-        featuredList.appendChild(createProjectCard(project));
-      });
-      featuredList.classList.add('reveal--visible');
-    }
-
     var projectsPageList = document.getElementById('projectsPageList');
     if (projectsPageList) {
       projectsPageList.innerHTML = '';
@@ -72,11 +68,12 @@
   }
 
   function showError() {
+    // Non-destructive failure: keep statically rendered cards in place
+    // and only show an error where a container has nothing to show.
     [
-      document.getElementById('featuredProjectList'),
       document.getElementById('projectsPageList')
     ].forEach(function (el) {
-      if (el) {
+      if (el && el.querySelectorAll('a').length === 0) {
         el.innerHTML = '<p class="articles-preview__loading">Could not load projects.</p>';
       }
     });

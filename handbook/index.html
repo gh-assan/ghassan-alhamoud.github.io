@@ -134,7 +134,6 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/handbook.css" />
 </head>
@@ -155,13 +154,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/#work" class="nav__link">Case Studies</a></li>
-        <li><a href="/articles/" class="nav__link">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -178,21 +175,23 @@
         </p>
       </div>
 
+      <div class="article-cta handbook-index__start-here"><p class="article-cta__text"><strong>Start here.</strong> The handbook is a single reading path, not a reference pile: begin with Chapter 0, &ldquo;The Agentic Landscape,&rdquo; and each chapter builds the vocabulary and decisions the next one assumes.</p><a href="/handbook/chapter-00-agentic-landscape.html" class="btn btn--primary">Begin Chapter 0</a></div>
+
       <div class="handbook-index__grid">
-<a href="/handbook/chapter-00-agentic-landscape.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-000</span><h3 class="handbook-index__card-title">The Agentic Landscape</h3><p class="handbook-index__card-desc">A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know.</p><span class="handbook-index__card-meta">10 min • Beginner</span></a>
-<a href="/handbook/chapter-01-react-pattern.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-001</span><h3 class="handbook-index__card-title">The ReAct Pattern</h3><p class="handbook-index__card-desc">Learn the ReAct pattern: how LLMs interleave reasoning (Thought), tool calls (Action), and feedback (Observation) to solve complex tasks.</p><span class="handbook-index__card-meta">8 min • Beginner</span></a>
-<a href="/handbook/chapter-02-plan-and-execute.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-002</span><h3 class="handbook-index__card-title">The Plan-and-Execute Pattern</h3><p class="handbook-index__card-desc">Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner.</p><span class="handbook-index__card-meta">12 min • Intermediate</span></a>
-<a href="/handbook/chapter-03-reflection.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-003</span><h3 class="handbook-index__card-title">The Reflection Pattern</h3><p class="handbook-index__card-desc">Learn the Reflection pattern: how a Generator-Critic loop with a structured rubric reduces hallucinations and improves output quality.</p><span class="handbook-index__card-meta">8 min • Intermediate</span></a>
-<a href="/handbook/chapter-04-multi-agent-collaboration.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-004</span><h3 class="handbook-index__card-title">Multi-Agent Collaboration</h3><p class="handbook-index__card-desc">Learn when multi-agent collaboration is worth the cost: orchestrators, worker handoffs, debate, topology choices, observability, and production failure modes.</p><span class="handbook-index__card-meta">13 min • Advanced</span></a>
-<a href="/handbook/chapter-05-tool-use-skill-registry.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-005</span><h3 class="handbook-index__card-title">Tool Use and Skill Registries</h3><p class="handbook-index__card-desc">Design reliable agent tools and a governed skill registry with schemas, permissions, discovery, idempotency, approvals, observability, and failure controls.</p><span class="handbook-index__card-meta">16 min • Advanced</span></a>
-<a href="/handbook/chapter-06-memory-context-management.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-006</span><h3 class="handbook-index__card-title">Memory & Context Management</h3><p class="handbook-index__card-desc">Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, and lifecycle evaluation.</p><span class="handbook-index__card-meta">22 min • Advanced</span></a>
-<a href="/handbook/chapter-07-human-in-the-loop.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-007</span><h3 class="handbook-index__card-title">Human-in-the-Loop</h3><p class="handbook-index__card-desc">Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight.</p><span class="handbook-index__card-meta">27 min • Advanced</span></a>
-<a href="/handbook/chapter-08-observability-evaluation.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-008</span><h3 class="handbook-index__card-title">Observability & Evaluation</h3><p class="handbook-index__card-desc">Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gates, canaries, and drift detection.</p><span class="handbook-index__card-meta">31 min • Advanced</span></a>
+<a href="/handbook/chapter-00-agentic-landscape.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-000</span><h3 class="handbook-index__card-title">The Agentic Landscape</h3><p class="handbook-index__card-desc">A map of the agent ecosystem: autonomy levels, tool use, and the design patterns every AI-native engineer should know.</p><p class="chapter-card__outcome">Outcome: you can map autonomy levels and pick a pattern.</p><span class="handbook-index__card-meta">10 min • Beginner</span></a>
+<a href="/handbook/chapter-01-react-pattern.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-001</span><h3 class="handbook-index__card-title">The ReAct Pattern</h3><p class="handbook-index__card-desc">Learn the ReAct pattern: how LLMs interleave reasoning (Thought), tool calls (Action), and feedback (Observation) to solve complex tasks.</p><p class="chapter-card__outcome">Outcome: you can apply the Thought / Action / Observation loop.</p><span class="handbook-index__card-meta">8 min • Beginner</span></a>
+<a href="/handbook/chapter-02-plan-and-execute.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-002</span><h3 class="handbook-index__card-title">The Plan-and-Execute Pattern</h3><p class="handbook-index__card-desc">Learn how Plan-and-Execute agents separate high-level planning from low-level execution using task lists, DAGs, and a re-planner.</p><p class="chapter-card__outcome">Outcome: you can separate planning from execution and add a re-planner.</p><span class="handbook-index__card-meta">12 min • Intermediate</span></a>
+<a href="/handbook/chapter-03-reflection.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-003</span><h3 class="handbook-index__card-title">The Reflection Pattern</h3><p class="handbook-index__card-desc">Learn the Reflection pattern: how a Generator-Critic loop with a structured rubric reduces hallucinations and improves output quality.</p><p class="chapter-card__outcome">Outcome: you can run a Generator-Critic loop with a structured rubric.</p><span class="handbook-index__card-meta">8 min • Intermediate</span></a>
+<a href="/handbook/chapter-04-multi-agent-collaboration.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-004</span><h3 class="handbook-index__card-title">Multi-Agent Collaboration</h3><p class="handbook-index__card-desc">Learn when multi-agent collaboration is worth the cost: orchestrators, worker handoffs, debate, topology choices, observability, and production failure modes.</p><p class="chapter-card__outcome">Outcome: you can judge when multi-agent collaboration is worth the cost.</p><span class="handbook-index__card-meta">13 min • Advanced</span></a>
+<a href="/handbook/chapter-05-tool-use-skill-registry.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-005</span><h3 class="handbook-index__card-title">Tool Use and Skill Registries</h3><p class="handbook-index__card-desc">Design reliable agent tools and a governed skill registry with schemas, permissions, discovery, idempotency, approvals, observability, and failure controls.</p><p class="chapter-card__outcome">Outcome: you can design governed tools and a skill registry.</p><span class="handbook-index__card-meta">16 min • Advanced</span></a>
+<a href="/handbook/chapter-06-memory-context-management.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-006</span><h3 class="handbook-index__card-title">Memory & Context Management</h3><p class="handbook-index__card-desc">Design reliable agent memory with explicit context budgets, validated compaction, governed writes, permissioned retrieval, provenance, temporal consistency, and lifecycle evaluation.</p><p class="chapter-card__outcome">Outcome: you can design memory with budgets, governed writes, and lifecycle evaluation.</p><span class="handbook-index__card-meta">22 min • Advanced</span></a>
+<a href="/handbook/chapter-07-human-in-the-loop.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-007</span><h3 class="handbook-index__card-title">Human-in-the-Loop</h3><p class="handbook-index__card-desc">Design human-in-the-loop agent systems with risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable oversight.</p><p class="chapter-card__outcome">Outcome: you can set risk-based autonomy with enforceable approval gates.</p><span class="handbook-index__card-meta">27 min • Advanced</span></a>
+<a href="/handbook/chapter-08-observability-evaluation.html" class="handbook-index__card"><span class="handbook-index__card-number">HDBK-008</span><h3 class="handbook-index__card-title">Observability & Evaluation</h3><p class="handbook-index__card-desc">Build observable and evaluable AI agents with correlated traces, governed telemetry, representative test sets, calibrated graders, statistical regression gates, canaries, and drift detection.</p><p class="chapter-card__outcome">Outcome: you can wire traces, evals, and regression gates for agents.</p><span class="handbook-index__card-meta">31 min • Advanced</span></a>
       </div>
 
       <div class="article-cta handbook-index__cta">
-        <p class="article-cta__text">Continue exploring the handbook chapters and production patterns.</p>
-        <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
+        <p class="article-cta__text">The chapters are sequential — start at the beginning and the patterns compound.</p>
+        <a href="/handbook/chapter-00-agentic-landscape.html" class="btn btn--primary">Start with Chapter 0</a>
       </div>
     </div>
   </main>
@@ -206,7 +205,7 @@
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -218,25 +217,22 @@
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -249,6 +245,7 @@
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -256,6 +253,5 @@
     })();
   </script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

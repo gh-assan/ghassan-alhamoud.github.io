@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature" id="htmlTheme">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impressum — Ghassan Alhamoud</title>
+  <meta name="description" content="Legal notice (Impressum) for ghassan-alhamoud.com, the independent engineering website of Ghassan Alhamoud." />
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/impressum.html" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20260819" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section legal">
+      <div class="container legal__content">
+        <h1 class="section__title">Impressum</h1>
+        <p>Legal notice and provider identification for this website under § 5 DDG (Digitale-Dienste-Gesetz).</p>
+
+        <h2>Operator</h2>
+        <p>
+          Ghassan Alhamoud<br />
+          Berlin, Germany
+        </p>
+        <p>
+          Email: <a href="mailto:galhamoud@gmx.de">galhamoud@gmx.de</a><br />
+          Website: <a href="https://ghassan-alhamoud.com">https://ghassan-alhamoud.com</a>
+        </p>
+
+        <h2>Purpose of this website</h2>
+        <p>
+          This site is the personal, non-commercial publication of an independent software
+          engineer. It presents public engineering systems, technical field notes, and a
+          structured engineering handbook. It does not offer goods or services for sale,
+          does not conclude contracts online, and carries no advertising.
+        </p>
+
+        <h2>Responsible for content (§ 18 Abs. 2 MStV)</h2>
+        <p>Ghassan Alhamoud, address as above.</p>
+
+        <h2>Liability for content and links</h2>
+        <p>
+          The content of this site was created with care. External links point to
+          third-party sites (for example GitHub and LinkedIn) whose content is outside
+          the operator's control; responsibility for linked content lies with the
+          respective provider.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved · <a href="/privacy.html" class="footer__nav-link">Privacy</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

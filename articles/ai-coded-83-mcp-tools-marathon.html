@@ -55,7 +55,6 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 <body>
@@ -75,12 +74,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -109,6 +107,25 @@
         <img src="/images/articles/art-028-header.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#why-we-ran-the-marathon">Why We Ran the Marathon</a></li>
+        <li><a href="#the-assembly-line">The Assembly Line</a></li>
+        <li><a href="#experimental-configuration">Experimental Configuration</a></li>
+        <li><a href="#what-went-right">What Went Right</a></li>
+        <li><a href="#what-went-wrong">What Went Wrong</a></li>
+        <li><a href="#contemporaneous-task-log">Contemporaneous Task Log</a></li>
+        <li><a href="#five-lessons">Five Lessons</a></li>
+        <li><a href="#how-we-restructured-to-handle-the-load">How We Restructured to Handle the Load</a></li>
+        <li><a href="#constraints-limitations">Constraints &amp; Limitations</a></li>
+        <li><a href="#the-numbers">The Numbers</a></li>
+        <li><a href="#the-release-gate-this-run-needed">The release gate this run needed</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>Evidence note after auditing the repository:</strong> the full operator-observed marathon ran for 12 hours. Within it, the independently reproducible P82–P113 slice contains 32 feature commits between 07:18 and 10:48 on 31 May. Counting literal <code>mcp.NewTool(</code> constructors at those Git boundaries gives 116 before P82 and 185 after P113: a net increase of 69. The 12-hour duration and the 3h30 audited slice describe different boundaries.</p>
 
 <p>The wider day contained 69 commits and may explain how the working notes arrived at a larger number. But a backlink-worthy engineering case study should publish the count another person can reproduce. This article therefore focuses on the 32-commit window, what the code proves, and what raw throughput concealed.</p>
@@ -127,7 +144,7 @@
 
 <hr />
 
-<h2>Why We Ran the Marathon</h2>
+<h2 id="why-we-ran-the-marathon">Why We Ran the Marathon</h2>
 
 <p>I'm building an open-source MCP server called <code>a2a-negotiation-mcp</code> — a headless server that negotiates SaaS pricing between AI agents. It's a Go service built on the <code>mark3labs/mcp-go</code> framework with a SQLite backend, 75+ internal packages, and a growing list of MCP tool definitions.</p>
 
@@ -137,7 +154,7 @@
 
 <hr />
 
-<h2>The Assembly Line</h2>
+<h2 id="the-assembly-line">The Assembly Line</h2>
 
 <p>The dispatch loop ended up being dead simple:</p>
 
@@ -162,7 +179,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>Experimental Configuration</h2>
+<h2 id="experimental-configuration">Experimental Configuration</h2>
 
 <p>Before we go further — the specifics of the setup, because reproducibility matters:</p>
 
@@ -204,7 +221,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>What Went Right</h2>
+<h2 id="what-went-right">What Went Right</h2>
 
 <h3>1. The Spec Template Eliminated Interpretation Errors</h3>
 
@@ -252,7 +269,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>What Went Wrong</h2>
+<h2 id="what-went-wrong">What Went Wrong</h2>
 
 <h3>1. The Tab-Ate-First-Letter Bug (the most specific failure)</h3>
 
@@ -344,7 +361,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>Contemporaneous Task Log</h2>
+<h2 id="contemporaneous-task-log">Contemporaneous Task Log</h2>
 
 <p>The following table is retained as a contemporaneous operator log. Package names and commit order match the repository. Per-task runtimes and retry counts were not recorded in Git or a durable benchmark artifact, so they should not be treated as independently reproducible measurements.</p>
 
@@ -435,7 +452,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>Five Lessons</h2>
+<h2 id="five-lessons">Five Lessons</h2>
 
 <h3>1. AI Code Generation Reaches Escape Velocity at Task 10</h3>
 
@@ -463,7 +480,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>How We Restructured to Handle the Load</h2>
+<h2 id="how-we-restructured-to-handle-the-load">How We Restructured to Handle the Load</h2>
 
 <h3>PATTERNS.md — The Qwen Cookbook</h3>
 
@@ -487,7 +504,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>Constraints & Limitations</h2>
+<h2 id="constraints-limitations">Constraints & Limitations</h2>
 
 <p>This experiment is n=1. Every finding here is a <strong>hypothesis</strong> for others to test, not a definitive claim:</p>
 
@@ -503,7 +520,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>The Numbers</h2>
+<h2 id="the-numbers">The Numbers</h2>
 
 <table>
 
@@ -540,7 +557,7 @@ QUALITY: build + test + self-certification</code></pre>
 
 <hr />
 
-<h2>The release gate this run needed</h2>
+<h2 id="the-release-gate-this-run-needed">The release gate this run needed</h2>
 
 <ol>
   <li>Build the exact production command, not only library packages.</li>
@@ -566,10 +583,6 @@ QUALITY: build + test + self-certification</code></pre>
 <hr />
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Scaling AI-assisted delivery without scaling integration debt?</p>
-          <a href="/#contact" class="btn btn--primary">Review the Delivery Gate</a>
-        </div>
       </article>
 
       <aside class="article-sidebar">
@@ -590,7 +603,7 @@ QUALITY: build + test + self-certification</code></pre>
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -602,25 +615,22 @@ QUALITY: build + test + self-certification</code></pre>
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -633,6 +643,7 @@ QUALITY: build + test + self-certification</code></pre>
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -640,9 +651,9 @@ QUALITY: build + test + self-certification</code></pre>
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

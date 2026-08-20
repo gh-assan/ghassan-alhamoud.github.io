@@ -32,6 +32,21 @@ CTA_HTML = """<div class="article-cta">
   <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
 </div>"""
 
+# Condensed from each chapter's `description` in handbook.json: what the
+# reader can do after finishing the chapter. Keyed by slug so the index
+# presents chapters as a decision path with explicit outcomes.
+CHAPTER_OUTCOMES = {
+    "agentic-landscape": "you can map autonomy levels and pick a pattern.",
+    "react-pattern": "you can apply the Thought / Action / Observation loop.",
+    "plan-and-execute": "you can separate planning from execution and add a re-planner.",
+    "reflection": "you can run a Generator-Critic loop with a structured rubric.",
+    "multi-agent-collaboration": "you can judge when multi-agent collaboration is worth the cost.",
+    "tool-use-skill-registry": "you can design governed tools and a skill registry.",
+    "memory-context-management": "you can design memory with budgets, governed writes, and lifecycle evaluation.",
+    "human-in-the-loop": "you can set risk-based autonomy with enforceable approval gates.",
+    "observability-evaluation": "you can wire traces, evals, and regression gates for agents.",
+}
+
 
 def load_json():
     with open(JSON_PATH, "r", encoding="utf-8") as f:
@@ -246,6 +261,28 @@ def render_toc(toc_html: str) -> str:
     )
 
 
+def render_mobile_toc(body_html: str) -> str:
+    """Render the 'On this page' disclosure shown below 900px (see handbook.css).
+
+    Flat list of the chapter's h2 anchors; the sticky sidebar TOC is hidden on
+    small screens, so this keeps wayfinding available without JavaScript.
+    """
+    items = []
+    for anchor, raw_title in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body_html):
+        title = re.sub(r"<[^>]+>", "", raw_title).strip()
+        items.append(
+            f'<li><a class="on-this-page__link" href="#{anchor}">{title}</a></li>'
+        )
+    if not items:
+        return ""
+    return (
+        '<details class="on-this-page">'
+        '<summary>On this page</summary>'
+        f'<ul class="on-this-page__list">{"".join(items)}</ul>'
+        '</details>'
+    )
+
+
 def render_prerequisites(chapter: dict, all_chapters: dict) -> str:
     """Render prerequisites box."""
     prereqs = chapter.get("prerequisites", [])
@@ -295,6 +332,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
     cta_html = CTA_HTML
     toc_sidebar = render_toc(toc_html)
     prereq_box = render_prerequisites(chapter, all_chapters)
+    mobile_toc = render_mobile_toc(body_html)
 
     page_url = f"/handbook/chapter-{chapter['id']:02d}-{chapter['slug']}.html"
     canonical = BASE_URL + page_url
@@ -353,7 +391,6 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/handbook.css" />
 </head>
@@ -374,13 +411,11 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/#work" class="nav__link">Case Studies</a></li>
-        <li><a href="/articles/" class="nav__link">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -401,6 +436,8 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
         </header>
 
         {prereq_box}
+
+        {mobile_toc}
 
         <div class="article-single__body handbook-body">
 {body_html}
@@ -426,7 +463,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -438,25 +475,22 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -469,6 +503,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
 
   <script>
     (function() {{
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {{
         document.documentElement.setAttribute("data-theme", saved);
@@ -476,7 +511,6 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
     }})();
   </script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>"""
 
@@ -543,13 +577,39 @@ def render_index(handbook: dict, chapters: list) -> str:
     chapter_cards = []
     for c in published:
         url = f"/handbook/chapter-{c['id']:02d}-{c['slug']}.html"
+        outcome = CHAPTER_OUTCOMES.get(c["slug"])
+        outcome_html = (
+            f'<p class="chapter-card__outcome">Outcome: {outcome}</p>'
+            if outcome else ""
+        )
         chapter_cards.append(
             f'<a href="{url}" class="handbook-index__card">'
             f'<span class="handbook-index__card-number">HDBK-{c["id"]:03d}</span>'
             f'<h3 class="handbook-index__card-title">{c["title"]}</h3>'
             f'<p class="handbook-index__card-desc">{c["description"]}</p>'
+            f'{outcome_html}'
             f'<span class="handbook-index__card-meta">{c.get("readingTime", "")} • {c.get("difficulty", "").capitalize()}</span>'
             f'</a>'
+        )
+
+    first = published[0] if published else None
+    first_url = (
+        f"/handbook/chapter-{first['id']:02d}-{first['slug']}.html"
+        if first else "/handbook/"
+    )
+    start_here = ""
+    if first:
+        start_here = (
+            '<div class="article-cta handbook-index__start-here">'
+            '<p class="article-cta__text">'
+            f'<strong>Start here.</strong> The handbook is a single reading path, '
+            f'not a reference pile: begin with Chapter {first["id"]}, '
+            f'&ldquo;{first["title"]},&rdquo; and each chapter builds the '
+            f'vocabulary and decisions the next one assumes.'
+            '</p>'
+            f'<a href="{first_url}" class="btn btn--primary">'
+            f'Begin Chapter {first["id"]}</a>'
+            '</div>'
         )
 
     html = f"""<!DOCTYPE html>
@@ -588,7 +648,6 @@ def render_index(handbook: dict, chapters: list) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/handbook.css" />
 </head>
@@ -609,13 +668,11 @@ def render_index(handbook: dict, chapters: list) -> str:
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/#work" class="nav__link">Case Studies</a></li>
-        <li><a href="/articles/" class="nav__link">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -632,13 +689,15 @@ def render_index(handbook: dict, chapters: list) -> str:
         </p>
       </div>
 
+      {start_here}
+
       <div class="handbook-index__grid">
 {chr(10).join(chapter_cards)}
       </div>
 
       <div class="article-cta handbook-index__cta">
-        <p class="article-cta__text">Continue exploring the handbook chapters and production patterns.</p>
-        <a href="/handbook/" class="btn btn--primary">Read the Handbook</a>
+        <p class="article-cta__text">The chapters are sequential — start at the beginning and the patterns compound.</p>
+        <a href="{first_url}" class="btn btn--primary">Start with Chapter {first['id'] if first else 0}</a>
       </div>
     </div>
   </main>
@@ -652,7 +711,7 @@ def render_index(handbook: dict, chapters: list) -> str:
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -664,25 +723,22 @@ def render_index(handbook: dict, chapters: list) -> str:
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -695,6 +751,7 @@ def render_index(handbook: dict, chapters: list) -> str:
 
   <script>
     (function() {{
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {{
         document.documentElement.setAttribute("data-theme", saved);
@@ -702,7 +759,6 @@ def render_index(handbook: dict, chapters: list) -> str:
     }})();
   </script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>"""
     return html

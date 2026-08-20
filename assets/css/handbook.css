@@ -86,6 +86,24 @@
   flex-grow: 1;
 }
 
+/* Outcome line: what the reader can do after the chapter.
+   Muted and marked so it reads as a decision-path label, not body copy. */
+.chapter-card__outcome {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+  padding-left: 14px;
+  position: relative;
+}
+
+.chapter-card__outcome::before {
+  content: "\2192"; /* → */
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
 .handbook-index__card-meta {
   font-size: 13px;
   color: var(--text-muted);
@@ -364,8 +382,89 @@
 }
 
 /* ----- Responsive: hide sidebar on small screens ----- */
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   .handbook-sidebar {
     display: none;
   }
+}
+
+
+/* ----- On this page (mobile TOC disclosure) -----
+   A <details> element listing the chapter's h2 anchors. Visible only
+   below 900px, where the sticky sidebar TOC is hidden. */
+.on-this-page {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .on-this-page {
+    display: block;
+    margin: 0 0 32px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .on-this-page summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .on-this-page summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .on-this-page summary::after {
+    content: '›';
+    color: var(--accent);
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  .on-this-page[open] summary::after {
+    transform: rotate(90deg);
+  }
+
+  .on-this-page__list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 16px 14px;
+  }
+
+  .on-this-page__link {
+    display: block;
+    padding: 8px 0 8px 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-left: 2px solid var(--border);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .on-this-page__link:hover {
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+}
+
+/* Start-here featured block on the handbook index */
+.handbook-index__start-here {
+  margin: 2.5rem 0;
+  border-color: rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 10px 32px rgba(var(--accent-rgb), 0.08);
+}
+
+.handbook-index__start-here .article-cta__text strong {
+  color: var(--accent);
 }

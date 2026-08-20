@@ -55,58 +55,7 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
-  <style>
-    .article-single__body table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
-    }
-    .article-single__body th, .article-single__body td {
-      border: 1px solid var(--border, #e5e7eb);
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-    }
-    .article-single__body th {
-      background: var(--dark, #1A1A2E);
-      color: white;
-      font-weight: 600;
-    }
-    .article-single__body td {
-      background: var(--card, #ffffff);
-    }
-    .article-single__body tr:nth-child(even) td {
-      background: #f9fafb;
-    }
-    .article-single__body blockquote {
-      border-left: 3px solid var(--primary, #D4A574);
-      padding: 0.75rem 1rem;
-      margin: 1.5rem 0;
-      background: #fefcf8;
-      font-style: italic;
-    }
-    .article-single__body code {
-      background: #f3f4f6;
-      padding: 0.15rem 0.4rem;
-      border-radius: 3px;
-      font-size: 0.85em;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-    }
-    .article-single__body ol {
-      margin: 0 0 1rem 1.5rem;
-    }
-    .article-single__body ol li {
-      margin-bottom: 0.3rem;
-    }
-    .article-single__body img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 1.5rem 0;
-    }
-  </style>
 </head>
 <body>
   <header class="header" id="header">
@@ -125,12 +74,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -159,6 +107,23 @@
 
         <div class="article-single__body">
 
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#the-context-two-films-zero-shared-infrastructure">The Context: Two Films, Zero Shared Infrastructure</a></li>
+        <li><a href="#every-problem-has-a-name">Every Problem Has A Name</a></li>
+        <li><a href="#the-human-in-the-loop">The Human In The Loop</a></li>
+        <li><a href="#what-the-pipeline-actually-does">What The Pipeline Actually Does</a></li>
+        <li><a href="#consistency-and-flow-what-improved">Consistency And Flow: What Improved</a></li>
+        <li><a href="#what-went-wrong-this-time">What Went Wrong This Time</a></li>
+        <li><a href="#next-steps-recorded-in-june">Next Steps Recorded in June</a></li>
+        <li><a href="#what-i-d-tell-someone-starting-today">What I'd Tell Someone Starting Today</a></li>
+        <li><a href="#download-the-production-checklist">Download the production checklist</a></li>
+      </ul>
+    </nav>
+
+
+
     <p><strong>Current result, verified 28 July 2026:</strong> the repository passes formatting, linting, static typing, packaging, the working-product gate, and 1,840 tests with 90.47% coverage; six tests are skipped. Its supported product boundary is idea → approved artifacts → generation planning → QC-ready project state. Final editorial finishing, audio, colour, and delivery export are not claimed as in-repository production completion.</p>
 
     <table>
@@ -183,7 +148,7 @@
 
     <hr>
 
-    <h2>The Context: Two Films, Zero Shared Infrastructure</h2>
+    <h2 id="the-context-two-films-zero-shared-infrastructure">The Context: Two Films, Zero Shared Infrastructure</h2>
 
     <p>By June 2026, we had two active AI film projects:</p>
 
@@ -201,7 +166,7 @@
 
     <hr>
 
-    <h2>Every Problem Has A Name</h2>
+    <h2 id="every-problem-has-a-name">Every Problem Has A Name</h2>
 
     <h3>The Content Moderation Wall</h3>
 
@@ -239,7 +204,7 @@
 
     <hr>
 
-    <h2>The Human In The Loop</h2>
+    <h2 id="the-human-in-the-loop">The Human In The Loop</h2>
 
     <p>Here is the truth that the pipeline won't fix: agents are confidently wrong.</p>
 
@@ -265,7 +230,7 @@
 
     <hr>
 
-    <h2>What The Pipeline Actually Does</h2>
+    <h2 id="what-the-pipeline-actually-does">What The Pipeline Actually Does</h2>
 
     <p>The unified protocol that emerged from these 2 days has 8 phases:</p>
 
@@ -303,7 +268,7 @@
 
     <hr>
 
-    <h2>Consistency And Flow: What Improved</h2>
+    <h2 id="consistency-and-flow-what-improved">Consistency And Flow: What Improved</h2>
 
     <p>Before the pipeline, every shot was effectively a one-off. Prompt wording drifted shot-to-shot. Character descriptions varied. Camera angles changed unprompted. The same environment looked different in consecutive frames.</p>
 
@@ -315,7 +280,7 @@
 
     <hr>
 
-    <h2>What Went Wrong This Time</h2>
+    <h2 id="what-went-wrong-this-time">What Went Wrong This Time</h2>
 
     <p>A few things that didn't make it into the protocol:</p>
 
@@ -329,7 +294,7 @@
 
     <hr>
 
-    <h2>Next Steps Recorded in June</h2>
+    <h2 id="next-steps-recorded-in-june">Next Steps Recorded in June</h2>
 
     <p>This is the historical backlog at the time of the incident review, not the current feature list. The current repository now implements resumable graph state, generation lifecycle tooling, frame heuristics, assembly agents, and explicit product gates; inspect the repository before treating any line below as open.</p>
 
@@ -343,7 +308,7 @@
 
     <hr>
 
-    <h2>What I'd Tell Someone Starting Today</h2>
+    <h2 id="what-i-d-tell-someone-starting-today">What I'd Tell Someone Starting Today</h2>
 
     <p>If you're building an AI film pipeline, start with the simplest thing that generates a single clip. Then generate two clips in sequence. Then handle the failure when the second clip doesn't match the first.</p>
 
@@ -355,7 +320,7 @@
 
     <p><em>Filed under: AI film, pipeline design, postmortem</em></p>
 
-    <h2>Download the production checklist</h2>
+    <h2 id="download-the-production-checklist">Download the production checklist</h2>
     <p><a href="/resources/ai-film-pipeline-production-checklist.csv" class="btn btn--primary" download>Download the eight-phase checklist</a></p>
     <ul>
       <li><a href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph">Inspect the current repository</a></li>
@@ -365,10 +330,6 @@
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Building a media pipeline whose evidence must survive provider failures?</p>
-          <a href="/#contact" class="btn btn--primary">Review the Production Boundary</a>
-        </div>
       </article>
 
       <aside class="article-sidebar">
@@ -389,7 +350,7 @@
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -401,25 +362,22 @@
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -432,6 +390,7 @@
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -439,9 +398,9 @@
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

@@ -17,7 +17,6 @@ REQUIRED_FIELDS = {
     "title",
     "name",
     "status",
-    "featured",
     "repo",
     "summary",
     "problem",
@@ -25,6 +24,10 @@ REQUIRED_FIELDS = {
     "stack",
     "tags",
 }
+
+# The two flagship systems curated as the evidence pair on projects/index.html
+# (gate: flagship-pair in scripts/validate-site.py).
+FLAGSHIP_SLUGS = {"scalability-lab", "tamoz"}
 
 
 def main() -> int:
@@ -38,7 +41,6 @@ def main() -> int:
         projects = []
 
     slugs: set[str] = set()
-    highlighted = 0
 
     for index, project in enumerate(projects):
         label = project.get("slug", f"item {index}")
@@ -61,9 +63,6 @@ def main() -> int:
         if canonical not in llms:
             errors.append(f"{slug}: missing llms.txt entry")
 
-        if project.get("highlighted"):
-            highlighted += 1
-
         image = project.get("image")
         if image and image.startswith("/") and not (ROOT / image.removeprefix("/")).exists():
             errors.append(f"{slug}: missing image {image}")
@@ -73,8 +72,13 @@ def main() -> int:
         if not project["stack"] or not project["tags"]:
             errors.append(f"{slug}: stack and tags must not be empty")
 
-    if highlighted > 1:
-        errors.append("only one project may be highlighted")
+    highlighted_slugs = {p.get("slug") for p in projects if p.get("highlighted")}
+    if highlighted_slugs != FLAGSHIP_SLUGS:
+        errors.append(
+            "the flagship pair must be highlighted: "
+            + ", ".join(sorted(FLAGSHIP_SLUGS))
+            + f" (got {', '.join(sorted(highlighted_slugs)) or 'none'})"
+        )
 
     if errors:
         print("Project validation failed:")

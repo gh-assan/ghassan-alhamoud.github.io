@@ -55,7 +55,6 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 <body>
@@ -75,12 +74,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -106,10 +104,29 @@
                 <img src="/images/articles/ART015.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#what-the-live-system-says-today">What the live system says today</a></li>
+        <li><a href="#the-control-loop">The control loop</a></li>
+        <li><a href="#make-the-inventory-declarative">Make the inventory declarative</a></li>
+        <li><a href="#findings-need-identity-and-evidence">Findings need identity and evidence</a></li>
+        <li><a href="#classify-auto-fixes-by-blast-radius">Classify auto-fixes by blast radius</a></li>
+        <li><a href="#preconditions-prevent-stale-write-damage">Preconditions prevent stale-write damage</a></li>
+        <li><a href="#verification-must-prove-behavior">Verification must prove behavior</a></li>
+        <li><a href="#rollback-is-part-of-the-action">Rollback is part of the action</a></li>
+        <li><a href="#reconcile-the-engine-s-own-books">Reconcile the engine's own books</a></li>
+        <li><a href="#metrics-that-resist-vanity">Metrics that resist vanity</a></li>
+        <li><a href="#download-the-safe-manifest">Download the safe manifest</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>The safest self-improvement engine is mostly a linter.</strong> It inventories components, detects drift with deterministic checks, proposes bounded repairs, verifies the result, and rolls back when proof fails. It does not give an agent open-ended permission to “make the system better.”</p>
           <p>I run such an engine around an OpenClaw workspace. Its operational state is useful precisely because it is imperfect: the scanner finds real drift, while its own counters reveal why the improvement loop needs stronger reconciliation.</p>
 
-          <h2>What the live system says today</h2>
+          <h2 id="what-the-live-system-says-today">What the live system says today</h2>
           <p>I inspected the main-machine registry and append-only log on 28 July 2026:</p>
           <table>
             <thead>
@@ -126,7 +143,7 @@
           </table>
           <p>The last line matters. A self-improvement system that cannot reconcile its registry with its findings ledger cannot accurately report success rate, rollback rate, or change burden. Detection value remains; improvement claims do not.</p>
 
-          <h2>The control loop</h2>
+          <h2 id="the-control-loop">The control loop</h2>
           <pre><code>manifest ──▶ scan ──▶ finding ──▶ risk classification
                                       │
                         ┌─────────────┴─────────────┐
@@ -143,7 +160,7 @@
                                       └────────▶ reconcile ◀──────┘</code></pre>
           <p>Every arrow needs durable evidence. The next scan should verify persistence, but immediate verification belongs in the same run. Waiting until tomorrow leaves a bad mutation active for a day.</p>
 
-          <h2>Make the inventory declarative</h2>
+          <h2 id="make-the-inventory-declarative">Make the inventory declarative</h2>
           <p>For each component, record:</p>
           <ul>
             <li>stable ID, type, owner, and paths;</li>
@@ -155,7 +172,7 @@
           </ul>
           <p>Discovery can suggest new entries, but it should not silently enroll arbitrary files. A reviewed manifest defines scope; filesystem traversal only observes it.</p>
 
-          <h2>Findings need identity and evidence</h2>
+          <h2 id="findings-need-identity-and-evidence">Findings need identity and evidence</h2>
           <p>A finding is not a log line. Give it a stable ID and lifecycle:</p>
           <pre><code>proposed → approved → applied → verified
     │          │          │
@@ -164,7 +181,7 @@
     └─superseded</code></pre>
           <p>Store run ID, check version, component ID, file digest, observed value, expected value, severity, and disposition. This makes duplicate findings idempotent and lets the engine measure whether flags lead to useful action.</p>
 
-          <h2>Classify auto-fixes by blast radius</h2>
+          <h2 id="classify-auto-fixes-by-blast-radius">Classify auto-fixes by blast radius</h2>
           <table>
             <thead>
               <tr><th>Risk class</th><th>Example</th><th>Default action</th></tr>
@@ -179,7 +196,7 @@
           </table>
           <p>The existing engine correctly refuses to auto-tune an email threshold that was initially set to 60 without outcome data. “The value looks arbitrary” is evidence for an experiment, not evidence for a replacement value.</p>
 
-          <h2>Preconditions prevent stale-write damage</h2>
+          <h2 id="preconditions-prevent-stale-write-damage">Preconditions prevent stale-write damage</h2>
           <p>Before an automatic edit:</p>
           <ol>
             <li>confirm the target remains inside the manifest scope;</li>
@@ -191,7 +208,7 @@
           </ol>
           <p>This closes the time-of-check/time-of-use gap. If a human edits the file after the scan, the engine must rescan rather than append against stale assumptions.</p>
 
-          <h2>Verification must prove behavior</h2>
+          <h2 id="verification-must-prove-behavior">Verification must prove behavior</h2>
           <p>Verification should match the repair:</p>
           <ul>
             <li>re-run the original detector;</li>
@@ -203,11 +220,11 @@
           </ul>
           <p>“The text is present” verifies a documentation section. It does not verify that a heartbeat, tool, or guardrail is actually wired into the runtime.</p>
 
-          <h2>Rollback is part of the action</h2>
+          <h2 id="rollback-is-part-of-the-action">Rollback is part of the action</h2>
           <p>Define rollback before applying the fix. For a single-file documentation edit, restoring captured bytes may be enough. For configuration, use a versioned previous value. For a deployment, require the platform's rollback handle.</p>
           <p>If verification and rollback both fail, stop the run and escalate. Continuing to “improve” other components after losing control of one mutation multiplies uncertainty.</p>
 
-          <h2>Reconcile the engine's own books</h2>
+          <h2 id="reconcile-the-engine-s-own-books">Reconcile the engine's own books</h2>
           <p>At run end, derive counters from the append-only findings ledger:</p>
           <pre><code>applied_count  = count(disposition in [applied, verified])
 verified_count = count(disposition == verified)
@@ -219,7 +236,7 @@ assert every failed application has rollback or escalation evidence
 assert summary counters equal ledger counts</code></pre>
           <p>This directly addresses the current registry/log contradiction. A mutable lifetime counter should be a cache, never the source of truth.</p>
 
-          <h2>Metrics that resist vanity</h2>
+          <h2 id="metrics-that-resist-vanity">Metrics that resist vanity</h2>
           <table>
             <thead>
               <tr><th>Metric</th><th>Question answered</th></tr>
@@ -236,7 +253,7 @@ assert summary counters equal ledger counts</code></pre>
           </table>
           <p>“Suggestions generated” measures output volume, not improvement.</p>
 
-          <h2>Download the safe manifest</h2>
+          <h2 id="download-the-safe-manifest">Download the safe manifest</h2>
           <p><a href="/resources/safe-improvement-manifest.yaml" class="btn btn--primary" download>Download the safe improvement manifest</a></p>
           <ul>
             <li><a href="/articles/self-healing-architecture-feedback-loop.html">Design the wider feedback loop</a></li>
@@ -246,10 +263,6 @@ assert summary counters equal ledger counts</code></pre>
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Building automation that may change its own operating environment?</p>
-          <a href="/#contact" class="btn btn--primary">Review the Safety Boundary</a>
-        </div>
       </article>
 
       <aside class="article-sidebar">
@@ -270,7 +283,7 @@ assert summary counters equal ledger counts</code></pre>
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -282,25 +295,22 @@ assert summary counters equal ledger counts</code></pre>
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -313,6 +323,7 @@ assert summary counters equal ledger counts</code></pre>
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -320,8 +331,8 @@ assert summary counters equal ledger counts</code></pre>
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

@@ -54,72 +54,7 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
-  <style>
-    .article-single__body table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
-    }
-    .article-single__body th, .article-single__body td {
-      border: 1px solid var(--border, #e5e7eb);
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-    }
-    .article-single__body th {
-      background: var(--dark, #1A1A2E);
-      color: white;
-      font-weight: 600;
-    }
-    .article-single__body td {
-      background: var(--card, #ffffff);
-    }
-    .article-single__body tr:nth-child(even) td {
-      background: #f9fafb;
-    }
-    .article-single__body blockquote {
-      border-left: 3px solid var(--primary, #D4A574);
-      padding: 0.75rem 1rem;
-      margin: 1.5rem 0;
-      background: #fefcf8;
-      font-style: italic;
-    }
-    .article-single__body code {
-      background: #f3f4f6;
-      padding: 0.15rem 0.4rem;
-      border-radius: 3px;
-      font-size: 0.85em;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-    }
-    .article-single__body pre {
-      background: #1a1a2e;
-      color: #e8e8e8;
-      padding: 1rem;
-      border-radius: 6px;
-      overflow-x: auto;
-      font-size: 0.85em;
-      margin: 1.5rem 0;
-    }
-    .article-single__body pre code {
-      background: transparent;
-      padding: 0;
-      color: inherit;
-    }
-    .article-single__body ol {
-      margin: 0 0 1rem 1.5rem;
-    }
-    .article-single__body ol li {
-      margin-bottom: 0.3rem;
-    }
-    .article-single__body img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 1.5rem 0;
-    }
-  </style>
 </head>
 <body>
   <header class="header" id="header">
@@ -138,12 +73,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -172,6 +106,25 @@
 
         <div class="article-single__body">
 
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#quick-recipe">Quick recipe</a></li>
+        <li><a href="#the-black-box-problem">The Black Box Problem</a></li>
+        <li><a href="#the-tmux-bridge">The tmux Bridge</a></li>
+        <li><a href="#start-with-a-real-terminal-not-the-default-one">Start with a Real Terminal, Not the Default One</a></li>
+        <li><a href="#determinism-over-hope">Determinism over Hope</a></li>
+        <li><a href="#the-focus-trap-that-breaks-everything">The Focus Trap That Breaks Everything</a></li>
+        <li><a href="#a-fixture-you-can-release-with-the-application">A fixture you can release with the application</a></li>
+        <li><a href="#test-a-terminal-size-matrix">Test a terminal-size matrix</a></li>
+        <li><a href="#failure-modes-worth-memorizing">Failure Modes Worth Memorizing</a></li>
+        <li><a href="#where-tmux-fits-in-the-test-pyramid">Where tmux fits in the test pyramid</a></li>
+        <li><a href="#why-this-matters-for-agents">Why This Matters for Agents</a></li>
+      </ul>
+    </nav>
+
+
+
     <p>A terminal UI is a stateful screen attached to a terminal device. Piping text into stdin does not reproduce key events, focus, dimensions, raw mode, or in-place rendering.</p>
 
     <blockquote>
@@ -180,7 +133,7 @@
 
     <p>For a black-box smoke test, <code>tmux</code> supplies both sides of the boundary: a pseudo-terminal for the app and commands for the test to send keys, resize the viewport, and capture visible state.</p>
 
-    <h2>Quick recipe</h2>
+    <h2 id="quick-recipe">Quick recipe</h2>
 
 <pre><code>session="tui-smoke-$$"
 socket="tui-smoke-$$"
@@ -194,7 +147,7 @@ tmux -L "$socket" kill-server</code></pre>
 
     <p><a href="/resources/tmux-tui-smoke-test.sh" class="btn btn--primary" download>Download the tmux smoke-test fixture</a></p>
 
-    <h2>The Black Box Problem</h2>
+    <h2 id="the-black-box-problem">The Black Box Problem</h2>
 
     <p>Normal CLI tooling assumes a Unix contract:</p>
 
@@ -235,7 +188,7 @@ tmux -L "$socket" kill-server</code></pre>
 
     <p>If you want deterministic testing, you need something that behaves like a terminal from the app's perspective and like an automation surface from your script's perspective.</p>
 
-    <h2>The <code>tmux</code> Bridge</h2>
+    <h2 id="the-tmux-bridge">The <code>tmux</code> Bridge</h2>
 
     <p><code>tmux</code> is usually described as a terminal multiplexer for humans. For testing, it is more useful to think of it as a PTY broker with a CLI control surface.</p>
 
@@ -256,7 +209,7 @@ tmux -L tui-test kill-server</code></pre>
 
     <p>That is the core loop. Everything else is about making those four calls reliable.</p>
 
-    <h2>Start with a Real Terminal, Not the Default One</h2>
+    <h2 id="start-with-a-real-terminal-not-the-default-one">Start with a Real Terminal, Not the Default One</h2>
 
     <p>The first trap is detached-session size. Do not let environment-specific defaults decide the viewport. Modern TUIs truncate panels, collapse sections, and hide labels as dimensions shrink.</p>
 
@@ -271,7 +224,7 @@ tmux -L tui-test kill-server</code></pre>
 
     <p>And always kill stale sessions before starting a run. A zombie session silently receiving your keys is one of the easiest ways to manufacture nonsense.</p>
 
-    <h2>Determinism over Hope</h2>
+    <h2 id="determinism-over-hope">Determinism over Hope</h2>
 
     <p>The testing pattern that actually scales is not "press a key and sleep two seconds." It is "press a key and poll the rendered screen until a marker proves the app reached the next state."</p>
 
@@ -301,7 +254,7 @@ tmux -L tui-test kill-server</code></pre>
 
     <p>If you own the app, help yourself by rendering an explicit busy indicator or state marker. A visible <code>loading</code> or <code>phase 3/11</code> label is not just good UX. It is test infrastructure.</p>
 
-    <h2>The Focus Trap That Breaks Everything</h2>
+    <h2 id="the-focus-trap-that-breaks-everything">The Focus Trap That Breaks Everything</h2>
 
     <p>The number one reason automated TUI tests "randomly" stop working is focus.</p>
 
@@ -318,7 +271,7 @@ tmux -L tui-test kill-server</code></pre>
 
     <p>That last point is worth stressing. If a keybinding is being swallowed by an input, <code>capture-pane</code> often shows the stray characters sitting inside the field. The failure is visible. That is what makes this test strategy debuggable.</p>
 
-    <h2>A fixture you can release with the application</h2>
+    <h2 id="a-fixture-you-can-release-with-the-application">A fixture you can release with the application</h2>
 
     <p>The downloadable fixture uses <code>set -euo pipefail</code>, an isolated tmux socket, an exact pane target, cleanup traps, configurable dimensions, and state-based polling. Configure it without editing the script:</p>
 
@@ -331,7 +284,7 @@ WIDTH=120 HEIGHT=36 \
 
     <p>The project-specific version can continue from there: fill one form, complete one phase, restart the app, and verify durable state. Keep that journey short. A smoke test should protect operability, not duplicate the application’s full functional suite.</p>
 
-    <h2>Test a terminal-size matrix</h2>
+    <h2 id="test-a-terminal-size-matrix">Test a terminal-size matrix</h2>
 
     <table>
       <thead><tr><th>Viewport</th><th>Purpose</th><th>Suggested assertion</th></tr></thead>
@@ -344,7 +297,7 @@ WIDTH=120 HEIGHT=36 \
 
     <p>These are test cases, not universal support requirements. Publish your own minimum viewport and assert behavior at the boundary. Use <code>tmux resize-window -x … -y …</code> when resize handling itself is part of the contract.</p>
 
-    <h2>Failure Modes Worth Memorizing</h2>
+    <h2 id="failure-modes-worth-memorizing">Failure Modes Worth Memorizing</h2>
 
     <table>
       <thead>
@@ -388,7 +341,7 @@ WIDTH=120 HEIGHT=36 \
       </tbody>
     </table>
 
-    <h2>Where <code>tmux</code> fits in the test pyramid</h2>
+    <h2 id="where-tmux-fits-in-the-test-pyramid">Where <code>tmux</code> fits in the test pyramid</h2>
 
     <p>You should not build your entire test pyramid around tmux. It is slower, rendering-coupled, and intentionally black-box.</p>
 
@@ -434,7 +387,7 @@ WIDTH=120 HEIGHT=36 \
       <p>Unit and harness tests prove your internals are coherent. A tmux script proves the terminal experience still works.</p>
     </blockquote>
 
-    <h2>Why This Matters for Agents</h2>
+    <h2 id="why-this-matters-for-agents">Why This Matters for Agents</h2>
 
     <p>Agents can generate and operate terminal-first tools, but the same acceptance rule applies: do not accept a transcript that bypasses the real interface. Give the app a PTY, drive the published bindings, and retain the pane capture on failure.</p>
 
@@ -476,7 +429,7 @@ WIDTH=120 HEIGHT=36 \
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -488,25 +441,22 @@ WIDTH=120 HEIGHT=36 \
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -519,6 +469,7 @@ WIDTH=120 HEIGHT=36 \
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -526,9 +477,9 @@ WIDTH=120 HEIGHT=36 \
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

@@ -1,8 +1,9 @@
 /**
  * nav.js — Navigation & Mobile Menu
- * - Toggles mobile hamburger menu
- * - Closes menu on link click
- * - Closes menu on outside click
+ * - Toggles mobile hamburger menu with scrim
+ * - Closed menu stays out of the tab order and accessibility tree (inert)
+ * - Escape closes the menu and restores focus to the toggle
+ * - Closes menu on link click and scrim click
  * - Sets active link based on scroll position (scroll spy)
  * - Hides header on scroll down, shows on scroll up
  */
@@ -10,64 +11,118 @@
 (function () {
   'use strict';
 
-  const header = document.getElementById('header');
-  const navToggle = document.getElementById('navToggle');
-  const navMenu = document.getElementById('navMenu');
-  const navLinks = document.querySelectorAll('.nav__link');
+  var header = document.getElementById('header');
+  var navToggle = document.getElementById('navToggle');
+  var navMenu = document.getElementById('navMenu');
+  var navLinks = document.querySelectorAll('.nav__link');
 
   if (!navToggle || !navMenu) return;
 
-  // --- Toggle mobile menu ---
+  var mobileQuery = window.matchMedia('(max-width: 999px)');
+
+  // --- Scrim (created here so page markup stays untouched) ---
+  var scrim = document.createElement('div');
+  scrim.className = 'nav__scrim';
+  scrim.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(scrim);
+
+  function isOpen() {
+    return navToggle.getAttribute('aria-expanded') === 'true';
+  }
+
+  function applyInertState() {
+    // Below the desktop breakpoint the menu is off-canvas when closed;
+    // keep it unreachable for keyboard and assistive technology.
+    if (mobileQuery.matches && !isOpen()) {
+      navMenu.setAttribute('inert', '');
+    } else {
+      navMenu.removeAttribute('inert');
+    }
+  }
+
+  function openMenu() {
+    navToggle.setAttribute('aria-expanded', 'true');
+    navMenu.classList.add('nav__menu--open');
+    scrim.classList.add('nav__scrim--visible');
+    document.body.style.overflow = 'hidden';
+    applyInertState();
+    var firstLink = navMenu.querySelector('a');
+    if (firstLink) firstLink.focus();
+  }
+
+  function closeMenu(restoreFocus) {
+    navToggle.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('nav__menu--open');
+    scrim.classList.remove('nav__scrim--visible');
+    document.body.style.overflow = '';
+    applyInertState();
+    if (restoreFocus) navToggle.focus();
+  }
+
   navToggle.addEventListener('click', function () {
-    const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', String(!isOpen));
-    navMenu.classList.toggle('nav__menu--open');
-    document.body.style.overflow = isOpen ? '' : 'hidden';
+    if (isOpen()) closeMenu(true);
+    else openMenu();
   });
 
-  // --- Close menu on link click ---
   navLinks.forEach(function (link) {
     link.addEventListener('click', function () {
-      navToggle.setAttribute('aria-expanded', 'false');
-      navMenu.classList.remove('nav__menu--open');
-      document.body.style.overflow = '';
+      closeMenu(false);
     });
   });
 
-  // --- Close menu on click outside ---
-  document.addEventListener('click', function (e) {
-    if (navMenu.classList.contains('nav__menu--open')) {
-      if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-        navToggle.setAttribute('aria-expanded', 'false');
-        navMenu.classList.remove('nav__menu--open');
-        document.body.style.overflow = '';
-      }
-    }
+  scrim.addEventListener('click', function () {
+    closeMenu(true);
   });
 
-  // --- Close menu on Escape key ---
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && navMenu.classList.contains('nav__menu--open')) {
-      navToggle.setAttribute('aria-expanded', 'false');
-      navMenu.classList.remove('nav__menu--open');
-      document.body.style.overflow = '';
+    if (e.key === 'Escape' && isOpen()) {
+      closeMenu(true);
     }
   });
 
-  // --- Scroll Spy (only on homepage with sections) ---
-  const sections = document.querySelectorAll('section[id]');
-  if (sections.length > 0) {
-    const observer = new IntersectionObserver(
+  if (mobileQuery.addEventListener) {
+    mobileQuery.addEventListener('change', applyInertState);
+  } else if (mobileQuery.addListener) {
+    mobileQuery.addListener(applyInertState);
+  }
+  applyInertState();
+
+  // --- Scroll Spy (homepage sections → route nav links) ---
+  // Homepage nav links point at routes, not in-page anchors, so map each
+  // homepage section id to the href of the nav link it should activate.
+  var SECTION_TO_LINK = {
+    'systems': '/projects/',
+    'field-notes': '/articles/',
+    'handbook': '/handbook/',
+    'about': '#about'
+  };
+
+  var sections = document.querySelectorAll('section[id]');
+  if (sections.length > 0 && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            navLinks.forEach(function (link) {
-              link.classList.remove('nav__link--active');
-              if (link.getAttribute('href') === '#' + entry.target.id) {
-                link.classList.add('nav__link--active');
-              }
-            });
-          }
+          if (!entry.isIntersecting) return;
+
+          // Explicit mapping first; fall back to in-page anchor match so
+          // non-homepage sections keep working if a link targets them.
+          var href = SECTION_TO_LINK[entry.target.id] ||
+            ('#' + entry.target.id);
+
+          var matched = false;
+          navLinks.forEach(function (link) {
+            if (link.getAttribute('href') === href) matched = true;
+          });
+          // No nav link for this section: leave the current active
+          // (route-based) state untouched.
+          if (!matched) return;
+
+          navLinks.forEach(function (link) {
+            link.classList.toggle(
+              'nav__link--active',
+              link.getAttribute('href') === href
+            );
+          });
         });
       },
       { rootMargin: '-50% 0px -50% 0px' }
@@ -79,11 +134,11 @@
   }
 
   // --- Hide/show header on scroll ---
-  let lastScrollY = window.scrollY;
-  let ticking = false;
+  var lastScrollY = window.scrollY;
+  var ticking = false;
 
   function handleScroll() {
-    const currentScrollY = window.scrollY;
+    var currentScrollY = window.scrollY;
 
     if (currentScrollY > lastScrollY && currentScrollY > 100) {
       header.classList.add('header--hidden');

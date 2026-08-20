@@ -55,7 +55,6 @@
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preconnect" href="https://app.cal.eu" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 <body>
@@ -75,12 +74,11 @@
         <span class="nav__toggle-bar"></span>
       </button>
 
-      <ul class="nav__menu" id="navMenu" role="navigation">
-        <li><a href="/#services" class="nav__link">Expertise</a></li>
-        <li><a href="/articles/" class="nav__link nav__link--active">Articles</a></li>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link">Handbook</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
-        <li><a href="/#contact" class="nav__link nav__link--cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -105,10 +103,28 @@
         <img src="/images/articles/ART-026.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#what-the-original-three-message-story-missed">What the original three-message story missed</a></li>
+        <li><a href="#separate-contract-transport-and-executor">Separate contract, transport, and executor</a></li>
+        <li><a href="#the-contract-envelope">The contract envelope</a></li>
+        <li><a href="#treat-lifecycle-as-a-state-machine">Treat lifecycle as a state machine</a></li>
+        <li><a href="#preflight-before-spending-tokens">Preflight before spending tokens</a></li>
+        <li><a href="#acceptance-must-cross-the-integration-boundary">Acceptance must cross the integration boundary</a></li>
+        <li><a href="#retries-need-idempotency-and-classification">Retries need idempotency and classification</a></li>
+        <li><a href="#permissions-belong-in-the-handoff">Permissions belong in the handoff</a></li>
+        <li><a href="#evidence-returned-by-the-specialist">Evidence returned by the specialist</a></li>
+        <li><a href="#download-the-reference-contract">Download the reference contract</a></li>
+      </ul>
+    </nav>
+
+
           <p><strong>A delegation message is not a handoff protocol.</strong> A reliable handoff binds an objective to scope, permissions, inputs, budgets, acceptance checks, lifecycle state, and evidence. The coding model is replaceable; that contract is the durable system boundary.</p>
           <p>I learned this by routing implementation work from an OpenClaw orchestrator to Qwen Code. The early design looked clean on a diagram. The operating history exposed the missing parts.</p>
 
-          <h2>What the original three-message story missed</h2>
+          <h2 id="what-the-original-three-message-story-missed">What the original three-message story missed</h2>
           <p>The first version described proposal, response, and approval. That reduced ambiguity, but it did not guarantee integration. Main-machine learning records later captured three concrete failures:</p>
           <table>
             <thead>
@@ -122,7 +138,7 @@
           </table>
           <p>These are operational notes, not a controlled benchmark. They are still more useful than a flawless anecdote because they identify where the protocol boundary failed.</p>
 
-          <h2>Separate contract, transport, and executor</h2>
+          <h2 id="separate-contract-transport-and-executor">Separate contract, transport, and executor</h2>
           <p>These layers solve different problems:</p>
           <table>
             <thead>
@@ -136,7 +152,7 @@
           </table>
           <p><a href="https://modelcontextprotocol.io/docs/learn/architecture" target="_blank" rel="noopener noreferrer">MCP's official architecture</a> likewise separates its JSON-RPC data layer from transport. MCP can expose tools and progress, but it does not define your product's delegation semantics, acceptance policy, or authority model.</p>
 
-          <h2>The contract envelope</h2>
+          <h2 id="the-contract-envelope">The contract envelope</h2>
           <pre><code>{
   contractVersion,
   handoffId,
@@ -163,7 +179,7 @@
 }</code></pre>
           <p>The downloadable JSON Schema validates this structure. The companion EntityScope example is a reference contract reconstructed from the system's lessons; it is not presented as a verbatim historical message.</p>
 
-          <h2>Treat lifecycle as a state machine</h2>
+          <h2 id="treat-lifecycle-as-a-state-machine">Treat lifecycle as a state machine</h2>
           <pre><code>proposed ──accept──▶ accepted ──start──▶ running
     │                   │                   │
     └──cancel───────────┴──cancel──────────┤
@@ -177,7 +193,7 @@
           <p>Every transition needs an actor, timestamp, reason, and attempt number. Terminal states are immutable. A retry creates a new attempt under the same idempotency key; it does not erase the failed evidence.</p>
           <p>“Done” is not a state. <code>succeeded</code> means the verifier executed every required acceptance check against the integrated system and retained the evidence.</p>
 
-          <h2>Preflight before spending tokens</h2>
+          <h2 id="preflight-before-spending-tokens">Preflight before spending tokens</h2>
           <ol>
             <li><strong>Resolve the assignee.</strong> Confirm the intended agent exists and is appropriate for the task type.</li>
             <li><strong>Negotiate capabilities.</strong> Inspect the tools visible inside that exact process, not another agent's configuration.</li>
@@ -188,7 +204,7 @@
           </ol>
           <p>If preflight fails, keep the handoff in <code>proposed</code> or move it to <code>blocked</code>. Do not let the coding agent improvise missing infrastructure.</p>
 
-          <h2>Acceptance must cross the integration boundary</h2>
+          <h2 id="acceptance-must-cross-the-integration-boundary">Acceptance must cross the integration boundary</h2>
           <p>The Qwen integration gap produced code that compiled in isolation but was unreachable in the running MCP server. The corrective checklist has eight points:</p>
           <ol>
             <li>package import;</li>
@@ -202,7 +218,7 @@
           </ol>
           <p>This generalises beyond MCP. A new class is not a feature. A passing unit test is not an integrated capability. Acceptance should invoke the same public path the consuming agent will use.</p>
 
-          <h2>Retries need idempotency and classification</h2>
+          <h2 id="retries-need-idempotency-and-classification">Retries need idempotency and classification</h2>
           <table>
             <thead>
               <tr><th>Failure class</th><th>Retry?</th><th>Action</th></tr>
@@ -217,7 +233,7 @@
           </table>
           <p>The idempotency key should represent the intended effect, not the delivery attempt. That prevents a transport retry from creating a duplicate branch, deployment, message, or scheduled job.</p>
 
-          <h2>Permissions belong in the handoff</h2>
+          <h2 id="permissions-belong-in-the-handoff">Permissions belong in the handoff</h2>
           <p>Machine separation is useful only when authority is actually constrained. “The coding agent runs elsewhere” does not prove it lacks workstation access, internet access, or inherited secrets. Bind permissions explicitly:</p>
           <ul>
             <li>readable and writable repository paths;</li>
@@ -228,7 +244,7 @@
           </ul>
           <p>For remote MCP servers that handle sensitive actions, use the protocol's <a href="https://modelcontextprotocol.io/docs/tutorials/security/authorization" target="_blank" rel="noopener noreferrer">documented authorization flow</a>; do not treat network reachability as permission.</p>
 
-          <h2>Evidence returned by the specialist</h2>
+          <h2 id="evidence-returned-by-the-specialist">Evidence returned by the specialist</h2>
           <p>A useful result contains more than prose:</p>
           <ul>
             <li>changed artifact list and revision;</li>
@@ -239,7 +255,7 @@
           </ul>
           <p>The orchestrator should independently rerun high-value checks. The executor's claim that tests passed is evidence to inspect, not a substitute for verification.</p>
 
-          <h2>Download the reference contract</h2>
+          <h2 id="download-the-reference-contract">Download the reference contract</h2>
           <p><a href="/resources/agent-handoff-contract.schema.json" class="btn btn--primary" download>Download the handoff JSON Schema</a></p>
           <ul>
             <li><a href="/resources/entityscope-handoff.example.json" download>Download the EntityScope reference handoff</a></li>
@@ -250,10 +266,6 @@
 
         </div>
 
-        <div class="article-cta">
-          <p class="article-cta__text">Designing a multi-agent workflow that must survive retries, missing tools, and partial integration?</p>
-          <a href="/#contact" class="btn btn--primary">Review the Handoff Architecture</a>
-        </div>
       </article>
 
       <aside class="article-sidebar">
@@ -273,7 +285,7 @@
             <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
           </svg>
         </a>
-        <p class="footer__tagline">Senior Software Engineer — AI Systems and Architecture</p>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
         <div class="footer__socials">
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -285,25 +297,22 @@
       </div>
       <nav class="footer__nav" aria-label="Footer navigation">
         <div class="footer__nav-col">
-          <span class="footer__nav-heading">Expertise</span>
-          <a href="/#services" class="footer__nav-link">System Design</a>
-          <a href="/#services" class="footer__nav-link">AI Architecture</a>
-          <a href="/#services" class="footer__nav-link">LLM Coaching</a>
-          <a href="/#services" class="footer__nav-link">Architecture Reviews</a>
-        </div>
-        <div class="footer__nav-col">
           <span class="footer__nav-heading">Explore</span>
-          <a href="/#work" class="footer__nav-link">Case Studies</a>
-          <a href="/articles/" class="footer__nav-link">Articles</a>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
           <span class="footer__nav-heading">Connect</span>
-          <a href="/#contact" class="footer__nav-link">Contact</a>
-          <a href="https://calendly.com/ghassan-alhamoud/30min" target="_blank" rel="noopener noreferrer" class="footer__nav-link" data-cal-link="ghassan-alhamoud/30min" data-cal-namespace="30min">Book a Call</a>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
           <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
           <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
         </div>
       </nav>
     </div>
@@ -316,6 +325,7 @@
 
   <script>
     (function() {
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {
         document.documentElement.setAttribute("data-theme", saved);
@@ -323,9 +333,9 @@
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/cal-widget.js" defer></script>
 </body>
 </html>

@@ -75,10 +75,9 @@
     // --- Articles listing page: all ---
     var articlesPageList = document.getElementById('articlesPageList');
     if (articlesPageList) {
-      // Preserve existing article cards if already rendered (defensive)
-      if (articlesPageList.children.length === 1 && articlesPageList.children[0].classList.contains('articles-preview__loading')) {
-        articlesPageList.innerHTML = '';
-      }
+      // Fresh data won: replace static/placeholder content with the
+      // current catalog render (same source, seamless swap).
+      articlesPageList.innerHTML = '';
       articles.forEach(function (article) {
         articlesPageList.appendChild(createArticleCard(article));
       });
@@ -126,13 +125,15 @@
       })
       .catch(function (err) {
         console.error('Articles.js: Could not load articles', err);
+        // Non-destructive failure: keep static/cached cards in place and
+        // only show an error where a container has nothing to show.
         var containers = [
           document.getElementById('articleList'),
           document.getElementById('articlesPageList'),
           document.getElementById('articleSidebarList')
         ];
         containers.forEach(function (el) {
-          if (el) {
+          if (el && el.querySelectorAll('a').length === 0) {
             el.innerHTML = '<p class="articles-preview__loading">Could not load articles.</p>';
           }
         });
