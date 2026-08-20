@@ -48,10 +48,12 @@
     <div class="container article-layout">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Python / SQLite / MCP</span></div>
+          <div class="article-single__meta"><span>In active development · Open Source</span><span class="article-card__dot"></span><span>Python / SQLite / MCP</span></div>
           <h1 class="article-single__title">Email Intelligence: local-first knowledge for agent workflows</h1>
           <div class="article-single__tags"><span class="article-single__tag">Email</span><span class="article-single__tag">Local First</span><span class="article-single__tag">Security</span></div>
-          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/email-intelligence-platform" target="_blank" rel="noopener noreferrer">View Repository</a>
+          <div class="project-single__actions">
+            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/email-intelligence-platform" target="_blank" rel="noopener noreferrer">View Repository</a>
+          </div>
         </header>
 
         <div class="project-facts">
@@ -64,6 +66,9 @@
           <p>Email Intelligence turns local mail into a continuously enriched knowledge base. Maildir stays the immutable source of truth. SQLite stores metadata, full-text search, embeddings, action items, facts, drafts, and append-only events. Agents query it through MCP.</p>
           <p>The important distinction is level of abstraction. Agents should not only search messages. They should find decisions, waiting replies, open tasks, sender context, related threads, and safe draft workflows.</p>
 
+          <h2>Design</h2>
+          <p>Maildir stays the immutable source of truth. SQLite holds the enriched knowledge store — metadata, FTS5 full-text search, embeddings via sqlite-vec, action items, drafts, and an append-only event feed — and agents reach it through a narrow MCP tool surface. Outgoing mail is draft-first with allowlist-guarded sending, so every write-back is reviewable by default.</p>
+
           <h2>Why I built it</h2>
           <p>Email is full of operational knowledge, but most automation treats it as a mailbox API. That forces every agent to rediscover context from raw messages. The platform makes email state queryable, enriched, and writable without sending private data to a hosted inbox product.</p>
 
@@ -75,6 +80,12 @@
             <li>Draft-first outgoing mail and allowlist-guarded sending.</li>
             <li>Prompt-injection and untrusted-content guardrails.</li>
           </ul>
+
+          <h2>Evidence</h2>
+          <p>The evidence is the public repository: ingestion, enrichment, event-feed, and write-back behavior are covered by tests and CI checks, and the security posture — prompt-injection handling, untrusted-content guardrails, allowlist-guarded sending — is documented rather than implied. The platform is in active development, so the honest read is to inspect the repo and its decision record, not a launch announcement.</p>
+
+          <h2>Boundary</h2>
+          <p>Local-first is the hard edge: no hosted inbox, no third-party data flow. It is not a mail client and not an autonomous sender — drafts wait for review and sending is confined to an explicit allowlist. Enrichment quality still depends on the model you point it at; the platform guarantees structure and auditability, not model judgment.</p>
 
           <h2>Why it belongs here</h2>
           <p>This is a practical example of agent infrastructure that respects local control, auditability, and security. It combines retrieval, enrichment, write-back, and operational safety in one inspectable system.</p>

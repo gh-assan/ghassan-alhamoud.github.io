@@ -52,7 +52,7 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
-            <span>Open Source</span>
+            <span>Public release · Open Source</span>
             <span class="article-card__dot"></span>
             <span>Go / PostgreSQL / MCP</span>
           </div>
@@ -62,7 +62,9 @@
             <span class="article-single__tag">MCP</span>
             <span class="article-single__tag">Infrastructure</span>
           </div>
-          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/alms" target="_blank" rel="noopener noreferrer">View Repository</a>
+          <div class="project-single__actions">
+            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/alms" target="_blank" rel="noopener noreferrer">View Repository</a>
+          </div>
         </header>
 
         <div class="project-facts">
@@ -86,6 +88,12 @@
             <li>OKF export for mature, accepted learnings.</li>
             <li>Deployment assets for self-hosted environments.</li>
           </ul>
+
+          <h2>Evidence</h2>
+          <p>The evidence is the public repository and its documented decisions. Gap-safe learning sync with acknowledgement, the agent registry and heartbeat flow, tag-based protocol distribution, OKF export for accepted learnings, and the systemd deployment assets all ship in the open as the 0.1.0 MIT release. There are no adoption metrics to cite; the proof is that the contracts exist and can be inspected end to end.</p>
+
+          <h2>Boundary</h2>
+          <p>ALMS refuses to become an agent runtime, a queue, a scheduler, or an orchestration framework. Agents keep their own execution model and continue working when ALMS is offline. It stores and distributes operational memory; deciding which learnings are mature enough to export stays with the operator, not the server.</p>
 
           <h2>Why it belongs here</h2>
           <p>ALMS is a good representation of my engineering taste: narrow scope, explicit contracts, boring persistence, and production behavior over demo behavior. It turns agent learning from chat history into infrastructure.</p>

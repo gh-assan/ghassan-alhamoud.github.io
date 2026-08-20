@@ -246,6 +246,28 @@ def render_toc(toc_html: str) -> str:
     )
 
 
+def render_mobile_toc(body_html: str) -> str:
+    """Render the 'On this page' disclosure shown below 900px (see handbook.css).
+
+    Flat list of the chapter's h2 anchors; the sticky sidebar TOC is hidden on
+    small screens, so this keeps wayfinding available without JavaScript.
+    """
+    items = []
+    for anchor, raw_title in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body_html):
+        title = re.sub(r"<[^>]+>", "", raw_title).strip()
+        items.append(
+            f'<li><a class="on-this-page__link" href="#{anchor}">{title}</a></li>'
+        )
+    if not items:
+        return ""
+    return (
+        '<details class="on-this-page">'
+        '<summary>On this page</summary>'
+        f'<ul class="on-this-page__list">{"".join(items)}</ul>'
+        '</details>'
+    )
+
+
 def render_prerequisites(chapter: dict, all_chapters: dict) -> str:
     """Render prerequisites box."""
     prereqs = chapter.get("prerequisites", [])
@@ -295,6 +317,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
     cta_html = CTA_HTML
     toc_sidebar = render_toc(toc_html)
     prereq_box = render_prerequisites(chapter, all_chapters)
+    mobile_toc = render_mobile_toc(body_html)
 
     page_url = f"/handbook/chapter-{chapter['id']:02d}-{chapter['slug']}.html"
     canonical = BASE_URL + page_url
@@ -399,6 +422,8 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
 
         {prereq_box}
 
+        {mobile_toc}
+
         <div class="article-single__body handbook-body">
 {body_html}
         </div>
@@ -463,6 +488,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
 
   <script>
     (function() {{
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {{
         document.documentElement.setAttribute("data-theme", saved);
@@ -682,6 +708,7 @@ def render_index(handbook: dict, chapters: list) -> str:
 
   <script>
     (function() {{
+      document.documentElement.classList.add('js');
       var saved = localStorage.getItem("theme");
       if (saved) {{
         document.documentElement.setAttribute("data-theme", saved);

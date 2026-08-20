@@ -48,10 +48,12 @@
     <div class="container article-layout">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Rails / SQLite / API-only</span></div>
+          <div class="article-single__meta"><span>MVP · Open Source</span><span class="article-card__dot"></span><span>Rails / SQLite / API-only</span></div>
           <h1 class="article-single__title">SkillLedger: an incentive layer for reusable agent skills</h1>
           <div class="article-single__tags"><span class="article-single__tag">Agent Economy</span><span class="article-single__tag">Skill Registry</span><span class="article-single__tag">Ledger</span></div>
-          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/skill-ledger" target="_blank" rel="noopener noreferrer">View Repository</a>
+          <div class="project-single__actions">
+            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/skill-ledger" target="_blank" rel="noopener noreferrer">View Repository</a>
+          </div>
         </header>
 
         <div class="project-facts">
@@ -64,6 +66,9 @@
           <p>SkillLedger models a local marketplace where agents can publish skills, stake a bond, sell executions, and settle the result. It deliberately avoids real crypto and external payment systems. The interesting part is the incentive model, not the token mechanics.</p>
           <p>When an execution succeeds, the author earns the price. When it fails, the author's stake is slashed and the buyer is refunded. Every movement is written as a ledger entry, giving the system an audit trail rather than a loose balance update.</p>
 
+          <h2>Design</h2>
+          <p>A Rails 8 API-only service over local SQLite. Accounts authenticate with API keys stored as bcrypt digests, authors publish skills with a staked bond, buyers purchase executions, and settlement moves credits through immutable ledger entries. When an execution fails, the author's stake is slashed and the buyer is refunded — the incentive is enforced by the data model, not by policy text.</p>
+
           <h2>Why I built it</h2>
           <p>Agent capability sharing is easy to demo and hard to trust. A registry alone tells you what exists. It does not answer whether the author has skin in the game, whether failures are visible, or whether a buyer can inspect settlement history.</p>
 
@@ -75,6 +80,12 @@
             <li>Immutable ledger entries for every transfer.</li>
             <li>Simple local-first SQLite deployment.</li>
           </ul>
+
+          <h2>Evidence</h2>
+          <p>The evidence is the public repository: an MVP you can run locally, with the account, skill, execution, settlement, and slashing paths visible in the code. There are no marketplace adoption claims to make at this stage — the proof is that the ledger mechanics exist, are inspectable, and behave as documented.</p>
+
+          <h2>Boundary</h2>
+          <p>SkillLedger deliberately avoids real crypto and external payment systems. The ledger is local and SQLite-backed, not production payment rails. It models the incentive layer for skill exchange; cross-marketplace reputation, real-money settlement, and discovery quality sit outside its scope.</p>
 
           <h2>Why it belongs here</h2>
           <p>SkillLedger shows how I think about agent systems beyond prompt orchestration. Useful ecosystems need incentives, auditability, and failure economics. This project turns that argument into a small, inspectable API.</p>

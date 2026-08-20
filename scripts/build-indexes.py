@@ -51,8 +51,8 @@ def project_card(p):
         f'<div class="article-card__excerpt project-card__outcome"><strong>Outcome:</strong> {esc(p["outcome"])}</div>'
         f'<div class="article-card__tags project-card__tags">{tags}</div>'
     )
-    if p.get("highlighted"):
-        content += '<span class="project-card__action">Explore the live workshop &rarr;</span>'
+    action_label = "Explore the live workshop" if p.get("highlighted") else "Inspect the system"
+    content += f'<span class="project-card__action">{action_label} &rarr;</span>'
     if p.get("image"):
         content = (
             f'<div class="project-card__visual"><img class="project-card__image" '

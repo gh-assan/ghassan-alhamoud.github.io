@@ -48,10 +48,12 @@
     <div class="container article-layout">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>Open Source</span><span class="article-card__dot"></span><span>Ruby / SQLite / RubyLLM</span></div>
+          <div class="article-single__meta"><span>In active development · Open Source</span><span class="article-card__dot"></span><span>Ruby / SQLite / RubyLLM</span></div>
           <h1 class="article-single__title">Tamoz: durable agent workflows for Ruby</h1>
           <div class="article-single__tags"><span class="article-single__tag">Agent Framework</span><span class="article-single__tag">Durability</span><span class="article-single__tag">Evaluation</span></div>
-          <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
+          <div class="project-single__actions">
+            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
+          </div>
         </header>
 
         <div class="project-facts">
@@ -63,6 +65,9 @@
         <div class="article-single__body project-single__body">
           <p>Tamoz is a Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows. It is structured as a monorepo of independently publishable gems rather than one large runtime.</p>
           <p>The current build is risk-first. Evaluation contracts come before broad agent behavior. Deterministic graph execution comes before persistence. Persistence comes before larger model-driven workflows. The result is slower than a demo framework, but the boundaries are easier to inspect.</p>
+
+          <h2>Design</h2>
+          <p>The design is a monorepo of independently publishable gems, built risk-first: evaluation contracts come before broad agent behavior, deterministic graph execution comes before persistence, and persistence comes before larger model-driven workflows. Checkpoints, interrupts, reducers, effect journals, leases, and boundary audits are primitives of the runtime, not add-ons, and Tamoz Agent acts only through a reviewed plan-before-action loop with workspace-confined tools.</p>
 
           <h2>Why I built it</h2>
           <p>Most agent systems fail at the edges: repeated side effects, ambiguous recovery, hidden state, unreviewed edits, weak verification, and no durable evidence trail. Tamoz treats those as first-order product requirements instead of cleanup work after the agent can already act.</p>
