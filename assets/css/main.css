@@ -1524,7 +1524,7 @@ html.js .reveal--visible {
   white-space: pre-wrap;
 }
 
-.article-single__body a {
+.article-single__body a:not(.btn) {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;

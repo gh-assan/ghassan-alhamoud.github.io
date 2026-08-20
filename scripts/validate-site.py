@@ -590,6 +590,10 @@ def check_owned_visual_language():
     if principles and ("system-card" in principles.group(0)
                        or "article-card" in principles.group(0)):
         problems.append("principles section reuses the card composition")
+    css_all = read(ROOT / "assets/css/main.css")
+    if re.search(r'\.article-single__body a\s*\{', css_all):
+        problems.append("main.css: body-link rule must exclude .btn "
+                        "(green-on-green button regression)")
     report("owned-visual-language", not problems, "; ".join(problems))
 
 
