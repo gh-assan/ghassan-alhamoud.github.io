@@ -1,9 +1,10 @@
 /* ================================================================
    MAIN.CSS — Ghassan Alhamoud Personal Website
-   ThoughtWorks-Inspired Palette | Pure CSS | No Frameworks
+   Calm sage/forest palette for an engineering practice
+   Pure CSS | No Frameworks
    ================================================================ */
 
-/* ----- CSS Variables (ThoughtWorks Dark — default) ----- */
+/* ----- CSS Variables (Dark — default) ----- */
 :root {
   --bg-primary: #0d0d0d;
   --bg-secondary: #161616;
@@ -248,15 +249,19 @@ html.js .reveal--visible {
   }
 }
 
-/* Nav Toggle (Hamburger) */
+/* Nav Toggle (Hamburger) — 24px icon centered in a 44px touch target */
 .nav__toggle {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
   z-index: 1001;
 }
 
@@ -1956,7 +1961,7 @@ html.js .reveal--visible {
   position: relative;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .process__steps {
     flex-direction: row;
     align-items: flex-start;
@@ -1979,7 +1984,7 @@ html.js .reveal--visible {
   box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.09);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .process__step {
     flex-direction: column;
     gap: 16px;
@@ -1990,7 +1995,7 @@ html.js .reveal--visible {
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .process__connector {
     display: flex;
     align-items: center;
@@ -2159,8 +2164,8 @@ html.js .reveal--visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   color: var(--text-muted);
   background: var(--bg-secondary);
@@ -2480,4 +2485,178 @@ html.js .reveal--visible {
   .page-transition {
     display: none !important;
   }
+}
+
+
+/* ================================================================
+   SECTION RHYTHM MODIFIER
+   ================================================================ */
+
+/* Secondary sections sit tighter than the default 120px rhythm */
+.section--compact {
+  padding: 88px 0;
+}
+
+@media (max-width: 600px) {
+  .section--compact {
+    padding: 64px 0;
+  }
+}
+
+/* ================================================================
+   HOMEPAGE RHYTHM — collapse the hero → Public Systems dead zone
+   ================================================================ */
+
+.systems.section {
+  padding-top: 56px;
+}
+
+/* ================================================================
+   HERO ARTIFACT — mobile handling
+   The architecture diagram scales cleanly (width: 100%, height: auto),
+   so it is never cropped; below tablet width it takes the full column
+   after the CTAs, and on small phones it is dropped entirely rather
+   than shown cramped.
+   ================================================================ */
+
+@media (max-width: 768px) {
+  .hero__artifact {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    margin: 0.5rem auto 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero__artifact {
+    display: none;
+  }
+}
+
+/* ================================================================
+   SYSTEM CARD — flagship modifier, proof line, action link
+   ================================================================ */
+
+.system-card--flagship {
+  border-color: rgba(var(--accent-rgb), 0.4);
+  box-shadow: 0 12px 36px rgba(var(--accent-rgb), 0.1);
+}
+
+/* Desktop: the flagship spans the full grid with a two-column inner
+   layout (text left, proof/meta right). Mobile: stacks like the rest. */
+@media (min-width: 1001px) {
+  .system-card--flagship {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    column-gap: 2.5rem;
+    align-items: start;
+    padding: 2rem 2.25rem;
+  }
+
+  .system-card--flagship > * {
+    min-width: 0;
+  }
+}
+
+/* Single highlighted proof line inside a system card */
+.system-card__proof {
+  margin: 0 0 1rem;
+  padding: 0.4rem 0 0.4rem 0.9rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--accent-glow);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Visible text-link action with arrow; 44px-tall hit area */
+.system-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  margin-top: auto;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.system-card__action::after {
+  content: '→';
+  transition: transform 0.2s var(--ease-out);
+}
+
+.system-card__action:hover {
+  color: var(--accent-hover);
+}
+
+.system-card__action:hover::after {
+  transform: translateX(4px);
+}
+
+/* ================================================================
+   FIELD NOTES — featured card + archive filter
+   ================================================================ */
+
+.article-card--featured {
+  padding: 36px 40px;
+  background: var(--bg-tertiary);
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 10px 32px rgba(var(--accent-rgb), 0.08);
+}
+
+.article-card--featured .article-card__title {
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.article-card--featured .article-card__excerpt {
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .article-card--featured {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .article-card--featured {
+    padding: 24px;
+  }
+}
+
+/* Archive search input */
+.archive-filter {
+  margin: 0 0 2rem;
+  max-width: 480px;
+}
+
+.archive-filter__input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.archive-filter__input::placeholder {
+  color: var(--text-muted);
+}
+
+.archive-filter__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }

@@ -87,20 +87,42 @@
   }
   applyInertState();
 
-  // --- Scroll Spy (only on homepage with sections) ---
+  // --- Scroll Spy (homepage sections → route nav links) ---
+  // Homepage nav links point at routes, not in-page anchors, so map each
+  // homepage section id to the href of the nav link it should activate.
+  var SECTION_TO_LINK = {
+    'systems': '/projects/',
+    'field-notes': '/articles/',
+    'handbook': '/handbook/',
+    'about': '#about'
+  };
+
   var sections = document.querySelectorAll('section[id]');
-  if (sections.length > 0) {
+  if (sections.length > 0 && 'IntersectionObserver' in window) {
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            navLinks.forEach(function (link) {
-              link.classList.remove('nav__link--active');
-              if (link.getAttribute('href') === '#' + entry.target.id) {
-                link.classList.add('nav__link--active');
-              }
-            });
-          }
+          if (!entry.isIntersecting) return;
+
+          // Explicit mapping first; fall back to in-page anchor match so
+          // non-homepage sections keep working if a link targets them.
+          var href = SECTION_TO_LINK[entry.target.id] ||
+            ('#' + entry.target.id);
+
+          var matched = false;
+          navLinks.forEach(function (link) {
+            if (link.getAttribute('href') === href) matched = true;
+          });
+          // No nav link for this section: leave the current active
+          // (route-based) state untouched.
+          if (!matched) return;
+
+          navLinks.forEach(function (link) {
+            link.classList.toggle(
+              'nav__link--active',
+              link.getAttribute('href') === href
+            );
+          });
         });
       },
       { rootMargin: '-50% 0px -50% 0px' }
