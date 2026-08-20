@@ -258,15 +258,19 @@ def check_css_parses():
 
 # ---------------------------------------------------------------- gate 7
 def check_proof_structure():
-    index = read(ROOT / "index.html")
-    cards = re.findall(r'<article class="system-card[^"]*".*?</article>', index, re.S)
+    """Homepage curates (slim cards); project detail pages carry the full proof."""
     problems = []
-    if len(cards) != 3:
-        problems.append(f"expected 3 featured system cards, found {len(cards)}")
-    for i, card in enumerate(cards, 1):
-        for label in SYSTEM_CARD_LABELS:
-            if f'system-card__label">{label}<' not in card:
-                problems.append(f"system card {i}: missing '{label}' field")
+    index = read(ROOT / "index.html")
+    if 'system-card__label"' in index:
+        problems.append("index.html: homepage cards must stay slim — "
+                        "Problem/Design/Evidence/Boundary belong on detail pages")
+    for f in sorted((ROOT / "projects").glob("*.html")):
+        if f.name == "index.html":
+            continue
+        text = read(f).lower()
+        for field in ("problem", "design", "evidence", "boundary"):
+            if field not in text:
+                problems.append(f"projects/{f.name}: missing '{field}' section")
     report("proof-structure", not problems, "; ".join(problems[:10]))
 
 
@@ -389,6 +393,221 @@ def check_static_first():
     report("static-first", not problems, "; ".join(problems))
 
 
+# --------------------------------------------------------------- gate 13
+def check_no_inline_article_styles():
+    """One visual system: no page-level style forks, no undefined variables."""
+    problems = []
+    for f in sorted((ROOT / "articles").glob("*.html")):
+        if f.name == "index.html":
+            continue
+        if "<style" in read(f):
+            problems.append(f"articles/{f.name}: inline <style> block")
+    self_name = Path(__file__).name
+    for f in published_files() + code_files():
+        if f.name == self_name:
+            continue
+        text = read(f)
+        for var in ("var(--dark", "var(--card"):
+            if var in text:
+                problems.append(f"{f.relative_to(ROOT)}: undefined {var})")
+                break
+    report("no-inline-article-styles", not problems, "; ".join(problems[:10]))
+
+
+# --------------------------------------------------------------- gate 14
+def check_reveal_failsafe():
+    """Content exists by default; reveal is progressive enhancement with a failsafe."""
+    problems = []
+    js_path = ROOT / "assets/js/reveal.js"
+    js = read(js_path)
+    if "setTimeout" not in js:
+        problems.append("reveal.js: no timed failsafe that force-reveals content")
+    if "getBoundingClientRect" not in js:
+        problems.append("reveal.js: no immediate reveal of in-viewport content on load")
+    hero = re.search(r'<section class="hero".*?</section>',
+                     read(ROOT / "index.html"), re.S)
+    if hero and "reveal" in hero.group(0):
+        problems.append("index.html: hero content still gated behind .reveal")
+    report("reveal-failsafe", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 15
+def check_counters_fallback():
+    """Counters render accurate final values in HTML; animation must not blank them."""
+    problems = []
+    js = read(ROOT / "assets/js/counters.js")
+    if re.search(r"textContent\s*=\s*['\"]0", js):
+        problems.append("counters.js: resets rendered value to '0' before animating")
+    index = read(ROOT / "index.html")
+    spans = re.findall(
+        r'<span class="counter__number"([^>]*)>([^<]*)</span>', index)
+    if not spans:
+        problems.append("index.html: no counter__number spans found")
+    for attrs, text in spans:
+        target = re.search(r'data-target="(\d+)"', attrs)
+        suffix = re.search(r'data-suffix="([^"]*)"', attrs)
+        if not target:
+            problems.append("counter span without data-target")
+            continue
+        expected = target.group(1) + (suffix.group(1) if suffix else "")
+        if text.strip() != expected:
+            problems.append(f"counter renders '{text.strip()}', expected '{expected}'")
+    report("counters-fallback", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 16
+def check_touch_targets():
+    """Interactive targets must be at least 44x44px."""
+    problems = []
+    css = read(ROOT / "assets/css/main.css")
+
+    def rule_text(selector):
+        m = re.search(re.escape(selector) + r'\s*\{([^}]*)\}', css)
+        return m.group(1) if m else None
+
+    toggle = rule_text(".nav__toggle")
+    if not toggle or not re.search(r'min-width:\s*44px', toggle) \
+            or not re.search(r'min-height:\s*44px', toggle):
+        problems.append(".nav__toggle: hit area below 44x44px")
+    social = rule_text(".footer__social-link")
+    if not social or not re.search(r'(min-)?width:\s*44px', social) \
+            or not re.search(r'(min-)?height:\s*44px', social):
+        problems.append(".footer__social-link: hit area below 44x44px")
+    report("touch-targets", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 17
+def check_shell_parity():
+    """404 and Connect must use the standard shell, not a forked one."""
+    problems = []
+    for page in ("404.html", "connect/index.html"):
+        text = read(ROOT / page)
+        for needle in ("nav__menu", "nav__toggle", "footer__nav",
+                       "/assets/js/nav.js"):
+            if needle not in text:
+                problems.append(f"{page}: missing standard shell piece '{needle}'")
+        if "<style" in text:
+            problems.append(f"{page}: inline <style> block (forked visual system)")
+    report("shell-parity", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 18
+def check_scroll_spy_contract():
+    """Homepage section activity must map to route nav links."""
+    js = read(ROOT / "assets/js/nav.js")
+    problems = []
+    for needle in ("systems", "/projects/", "/articles/"):
+        if needle not in js:
+            problems.append(f"nav.js: scroll-spy mapping missing '{needle}'")
+    report("scroll-spy-contract", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 19
+def check_homepage_card_contract():
+    """Homepage system cards: summary, one proof, status, <=3 tags, one action;
+    exactly one flagship."""
+    problems = []
+    index = read(ROOT / "index.html")
+    cards = re.findall(r'<article class="system-card[^"]*"[^>]*>.*?</article>',
+                       index, re.S)
+    if len(cards) != 3:
+        problems.append(f"expected 3 system cards, found {len(cards)}")
+    flagship = sum(1 for c in cards if "system-card--flagship" in c)
+    if flagship != 1:
+        problems.append(f"expected exactly 1 flagship card, found {flagship}")
+    for i, card in enumerate(cards, 1):
+        if "system-card__proof" not in card:
+            problems.append(f"card {i}: missing system-card__proof")
+        if "system-card__action" not in card:
+            problems.append(f"card {i}: missing system-card__action")
+        tags = len(re.findall(r'system-card__tag[">\s]', card))
+        if tags > 3:
+            problems.append(f"card {i}: {tags} tags (max 3)")
+    report("homepage-card-contract", not problems, "; ".join(problems[:10]))
+
+
+# --------------------------------------------------------------- gate 20
+def check_hero_contract():
+    """Hero: short claim, short support, one primary action."""
+    problems = []
+    index = read(ROOT / "index.html")
+    hero = re.search(r'<section class="hero".*?</section>', index, re.S)
+    if not hero:
+        report("hero-contract", False, "hero section not found")
+        return
+    block = hero.group(0)
+    h1 = re.search(r'<h1 class="hero__title">(.*?)</h1>', block, re.S)
+    if not h1:
+        problems.append("hero title missing")
+    else:
+        text = re.sub(r"<[^>]+>", "", h1.group(1)).strip()
+        if len(text) > 64:
+            problems.append(f"H1 is {len(text)} chars (max 64): '{text}'")
+    sub = re.search(r'<p class="hero__subtitle">(.*?)</p>', block, re.S)
+    if not sub:
+        problems.append("hero subtitle missing")
+    else:
+        text = re.sub(r"<[^>]+>", "", sub.group(1)).strip()
+        if len(text) > 160:
+            problems.append(f"subtitle is {len(text)} chars (max 160)")
+    primaries = len(re.findall(r'btn--primary', block))
+    if primaries != 1:
+        problems.append(f"hero has {primaries} primary buttons (need exactly 1)")
+    report("hero-contract", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 21
+def check_handbook_mobile_toc():
+    """Every handbook chapter exposes an 'On this page' control for small screens."""
+    problems = []
+    for f in sorted((ROOT / "handbook").glob("chapter-*.html")):
+        if "on-this-page" not in read(f):
+            problems.append(f"handbook/{f.name}: no on-this-page control")
+    report("handbook-mobile-toc", not problems, "; ".join(problems[:10]))
+
+
+# --------------------------------------------------------------- gate 22
+def check_fieldnotes_curation():
+    """Field Notes index: one featured note plus a way to narrow the archive."""
+    problems = []
+    text = read(ROOT / "articles/index.html")
+    if "article-card--featured" not in text:
+        problems.append("articles/index.html: no featured note")
+    if 'type="search"' not in text:
+        problems.append("articles/index.html: no search/topic filter control")
+    report("fieldnotes-curation", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 23
+def check_owned_visual_language():
+    """No borrowed-brand cues; homepage families use distinct compositions."""
+    problems = []
+    for f in sorted((ROOT / "assets/css").glob("*.css")):
+        if "thoughtworks" in read(f).lower():
+            problems.append(f"{f.name}: borrowed-brand reference 'ThoughtWorks'")
+    index = read(ROOT / "index.html")
+    principles = re.search(r'<section class="process.*?</section>', index, re.S)
+    if principles and ("system-card" in principles.group(0)
+                       or "article-card" in principles.group(0)):
+        problems.append("principles section reuses the card composition")
+    report("owned-visual-language", not problems, "; ".join(problems))
+
+
+# --------------------------------------------------------------- gate 24
+def check_tablet_principles():
+    """The process row must not activate below 900px (no 3x208px row at 768px)."""
+    problems = []
+    css = read(ROOT / "assets/css/main.css")
+    for m in re.finditer(r'@media\s*\(min-width:\s*(\d+)px\)\s*\{', css):
+        start = int(m.group(1))
+        # scan forward a bounded window for a process__steps layout activation
+        window = css[m.end():m.end() + 1200]
+        if "process__steps" in window and start < 900:
+            problems.append(
+                f"process__steps layout activates at {start}px (< 900px)")
+    report("tablet-principles", not problems, "; ".join(problems))
+
+
 GATES = [
     check_forbidden_surfaces,
     check_canonical_identity,
@@ -402,6 +621,18 @@ GATES = [
     check_legal_pages,
     check_content_validators,
     check_static_first,
+    check_no_inline_article_styles,
+    check_reveal_failsafe,
+    check_counters_fallback,
+    check_touch_targets,
+    check_shell_parity,
+    check_scroll_spy_contract,
+    check_homepage_card_contract,
+    check_hero_contract,
+    check_handbook_mobile_toc,
+    check_fieldnotes_curation,
+    check_owned_visual_language,
+    check_tablet_principles,
 ]
 
 
