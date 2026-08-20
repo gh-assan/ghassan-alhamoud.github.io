@@ -108,12 +108,11 @@
       <div class="container hero__layout">
         <div class="hero__content">
           <p class="hero__eyebrow">Ghassan Alhamoud · Independent Engineering Practice</p>
-          <h1 class="hero__title">Production-oriented AI agent systems, built with distributed-systems discipline.</h1>
+          <h1 class="hero__title">AI agent systems, built with distributed-systems discipline.</h1>
           <p class="hero__role">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
           <p class="hero__subtitle">
-            I build and document agent runtimes, memory, tools, human control, and
-            evaluation — with 15+ years of backend and distributed-systems engineering
-            behind every decision.
+            I build and document agent systems in public — Tamoz, ALMS, and the
+            ScaleShop lab — with 15+ years of distributed-systems discipline.
           </p>
           <p class="hero__proof">
             Every system on this site is public, documented, and inspectable — code,
@@ -121,7 +120,7 @@
           </p>
           <div class="hero__cta">
             <a href="/projects/" class="btn btn--primary">Explore Public Systems</a>
-            <a href="/handbook/" class="btn btn--secondary">Read the Handbook</a>
+            <a href="/handbook/">Read the Handbook</a>
           </div>
         </div>
 
@@ -188,13 +187,13 @@
       <div class="container">
         <h2 class="section__title reveal">Public Systems</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          Working systems with public repositories. Each one states its problem, its
-          design decision, and where its boundary is.
+          The argument starts with shipped work — three public systems you can run,
+          inspect, and trace back to their reasoning.
         </p>
 
         <div class="systems__grid">
 
-          <article class="system-card reveal reveal--delay-1">
+          <article class="system-card system-card--flagship reveal reveal--delay-1">
             <header class="system-card__header">
               <h3 class="system-card__title"><a href="/projects/scalability-lab.html">ScaleShop Scalability Lab</a></h3>
               <span class="system-card__status">Live workshop</span>
@@ -203,32 +202,16 @@
               An evidence-driven workshop where engineers diagnose bottlenecks from
               telemetry and choose the smallest sufficient architecture change.
             </p>
-            <dl class="system-card__facts">
-              <div class="system-card__fact">
-                <dt class="system-card__label">Problem</dt>
-                <dd>Scalability education often rewards naming powerful technologies instead of reading evidence, protecting invariants, and making proportionate trade-offs.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Design</dt>
-                <dd>Twelve progressive incidents; each asks for the smallest sufficient change against capacity signals and failure modes, not the most powerful one.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Status</dt>
-                <dd>Live at lab.ghassan-alhamoud.com · open source</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Evidence</dt>
-                <dd>Playable incident scenarios with modeled outcomes; full reasoning documented in the repository.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Boundary</dt>
-                <dd>Outcomes are modeled, not measured against production traffic. The lab teaches decision discipline, not benchmark numbers.</dd>
-              </div>
-            </dl>
-            <footer class="system-card__links">
-              <a href="https://lab.ghassan-alhamoud.com" target="_blank" rel="noopener noreferrer">Live lab</a>
-              <a href="https://github.com/ghassan-ai-projects/scaleshop-scalability-lab" target="_blank" rel="noopener noreferrer">Repository</a>
-            </footer>
+            <p class="system-card__proof">
+              Twelve playable incident scenarios with modeled outcomes — live and open
+              source at lab.ghassan-alhamoud.com, with full reasoning in the repository.
+            </p>
+            <div class="article-card__tags">
+              <span class="article-card__tag system-card__tag">Scalability</span>
+              <span class="article-card__tag system-card__tag">Distributed Systems</span>
+              <span class="article-card__tag system-card__tag">Interactive Lab</span>
+            </div>
+            <a class="system-card__action" href="/projects/scalability-lab.html">Inspect the system</a>
           </article>
 
           <article class="system-card reveal reveal--delay-2">
@@ -240,32 +223,16 @@
               A Ruby-native durable agent framework for checkpointed, interruptible,
               observable, and evaluation-governed AI workflows.
             </p>
-            <dl class="system-card__facts">
-              <div class="system-card__fact">
-                <dt class="system-card__label">Problem</dt>
-                <dd>Agent frameworks often move quickly on demos while leaving durability, review boundaries, evaluation evidence, and failure recovery as afterthoughts.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Design</dt>
-                <dd>Deterministic graph execution with SQLite-backed checkpoints; evaluation gates are first-class controls, not post-hoc reports.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Status</dt>
-                <dd>In active development · core runtime protocols being published as independent gems</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Evidence</dt>
-                <dd>Runtime protocols, deterministic graph execution, SQLite durability, a RubyLLM agent runtime, and an evaluation harness are visible in the public repository.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Boundary</dt>
-                <dd>Pre-1.0: APIs and the storage format are still evolving; not yet load-tested at production scale.</dd>
-              </div>
-            </dl>
-            <footer class="system-card__links">
-              <a href="/projects/tamoz.html">Project page</a>
-              <a href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">Repository</a>
-            </footer>
+            <p class="system-card__proof">
+              Deterministic graph execution, SQLite durability, a RubyLLM agent runtime,
+              and an evaluation harness are inspectable in the public repository.
+            </p>
+            <div class="article-card__tags">
+              <span class="article-card__tag system-card__tag">Agent Framework</span>
+              <span class="article-card__tag system-card__tag">Ruby</span>
+              <span class="article-card__tag system-card__tag">Durability</span>
+            </div>
+            <a class="system-card__action" href="/projects/tamoz.html">Inspect the system</a>
           </article>
 
           <article class="system-card reveal reveal--delay-3">
@@ -277,32 +244,16 @@
               A self-hosted MCP server that gives autonomous agents shared operational
               memory without turning into an orchestration framework.
             </p>
-            <dl class="system-card__facts">
-              <div class="system-card__fact">
-                <dt class="system-card__label">Problem</dt>
-                <dd>Agent fleets repeatedly rediscover the same failure modes because useful learnings stay trapped inside individual runs.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Design</dt>
-                <dd>A narrow control plane — register, publish learnings, sync, pull protocols by tag — that agents can leave and rejoin; it stores knowledge and gets out of the way.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Status</dt>
-                <dd>Public release 0.1.0 · open source</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Evidence</dt>
-                <dd>Agents can register, publish learnings, sync new knowledge, and pull operational protocols by tag while continuing to work if ALMS is offline.</dd>
-              </div>
-              <div class="system-card__fact">
-                <dt class="system-card__label">Boundary</dt>
-                <dd>Single-operator, self-hosted scope. A known TTL-decay issue (documented in the release notes) requires compensating controls for repeated decay sweeps.</dd>
-              </div>
-            </dl>
-            <footer class="system-card__links">
-              <a href="/projects/alms.html">Project page</a>
-              <a href="https://github.com/ghassan-ai-projects/alms" target="_blank" rel="noopener noreferrer">Repository</a>
-            </footer>
+            <p class="system-card__proof">
+              Agents register, publish learnings, and pull operational protocols by
+              tag — and keep working when ALMS itself is offline.
+            </p>
+            <div class="article-card__tags">
+              <span class="article-card__tag system-card__tag">Agent Memory</span>
+              <span class="article-card__tag system-card__tag">MCP</span>
+              <span class="article-card__tag system-card__tag">Open Source</span>
+            </div>
+            <a class="system-card__action" href="/projects/alms.html">Inspect the system</a>
           </article>
 
         </div>
@@ -316,11 +267,11 @@
     </section>
 
     <!-- ==================== OPERATING PRINCIPLES ==================== -->
-    <section class="process section" id="principles">
+    <section class="process section section--compact" id="principles">
       <div class="container">
         <div class="process__intro">
           <h2 class="section__title reveal">Operating Principles</h2>
-          <p class="section__subtitle reveal reveal--delay-1">How I frame problems, make architecture tradeoffs, and carry work into production.</p>
+          <p class="section__subtitle reveal reveal--delay-1">The method behind those systems — framing, tradeoffs, and follow-through — developed in full in the handbook.</p>
         </div>
         <div class="process__steps">
           <div class="process__step reveal reveal--delay-1">
@@ -354,12 +305,12 @@
     </section>
 
     <!-- ==================== HANDBOOK ==================== -->
-    <section class="handbook-feature section" id="handbook">
+    <section class="handbook-feature section section--compact" id="handbook">
       <div class="container">
         <h2 class="section__title reveal">The AI-Native Engineering Handbook</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          A structured, public reference for building reliable agent systems — from the
-          first ReAct loop to observability and evaluation in production.
+          The method, structured for teaching — nine chapters from the first ReAct
+          loop to observability and evaluation in production.
         </p>
         <ol class="handbook-feature__chapters reveal reveal--delay-2">
           <li><a href="/handbook/chapter-00-agentic-landscape.html">The Agentic Landscape</a></li>
@@ -379,11 +330,12 @@
     </section>
 
     <!-- ==================== FIELD NOTES ==================== -->
-    <section class="field-notes section" id="field-notes">
+    <section class="field-notes section section--compact" id="field-notes">
       <div class="container">
         <h2 class="section__title reveal">Field Notes</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          Long-form engineering writing, organized by the problem it addresses.
+          Current thinking in long form — case studies and frameworks from the systems
+          above, examined while they are still in motion.
         </p>
         <div class="field-notes__list reveal reveal--delay-2">
           <a class="field-note" href="/articles/stop-building-agent-soup-compilers.html">
