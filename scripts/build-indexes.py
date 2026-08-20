@@ -91,7 +91,7 @@ def project_card(p):
         # wide screens; without an image the content column must span both
         # tracks so the card does not collapse into its first grid cell.
         content = (
-            f'<div class="project-card__content" style="grid-column: 1 / -1">'
+            f'<div class="project-card__content project-card__content--full">'
             f'{content}</div>'
         )
     return f'        <a class="{classes}" href="/projects/{esc(p["slug"])}.html">{content}</a>'

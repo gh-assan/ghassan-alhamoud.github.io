@@ -1123,6 +1123,11 @@ html.js .reveal--visible {
   gap: 12px;
 }
 
+/* Featured cards are a two-track grid; without an image the content spans both. */
+.project-card__content--full {
+  grid-column: 1 / -1;
+}
+
 .project-card__action {
   margin-top: 4px;
   color: var(--success);
@@ -1965,6 +1970,7 @@ html.js .reveal--visible {
 
 /* Bordered container for evidence visuals (traces, tables, terminals) */
 .artifact-frame {
+  margin-inline: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--bg-secondary);

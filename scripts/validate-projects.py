@@ -17,7 +17,6 @@ REQUIRED_FIELDS = {
     "title",
     "name",
     "status",
-    "featured",
     "repo",
     "summary",
     "problem",
