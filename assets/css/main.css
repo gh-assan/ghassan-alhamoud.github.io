@@ -2110,7 +2110,7 @@ html.js .reveal--visible {
 @media (min-width: 900px) {
   .process__steps {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
   }
 }
 
