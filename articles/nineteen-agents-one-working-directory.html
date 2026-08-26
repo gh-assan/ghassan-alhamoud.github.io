@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner — Ghassan Alhamoud</title>
+  <meta name="description" content="A field report on coordinating nineteen coding agents with bounded ownership, file-based memory, independent review, and a serialized commit path." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html" />
+  <meta property="og:title" content="Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner" />
+  <meta property="og:description" content="How a shared queue, bounded ownership, independent review, and a commit chokepoint turned nineteen coding agents into one controlled engineering system." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-043.webp" />
+  <meta property="article:published_time" content="2026-08-26" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html" />
+  <meta property="twitter:title" content="Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner" />
+  <meta property="twitter:description" content="How a shared queue, bounded ownership, independent review, and a commit chokepoint turned nineteen coding agents into one controlled engineering system." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-043.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner",
+  "description": "A field report on coordinating nineteen coding agents with bounded ownership, file-based memory, independent review, and a serialized commit path.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-043.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-08-26",
+  "dateModified": "2026-08-26",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "Multi-Agent Systems, Clean Code, Ruby, Agent Orchestration, Verification",
+  "articleSection": "AI Engineering"
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-08-26">Aug 26 2026</time>
+            <span class="article-card__dot"></span>
+            <span>10 min</span>
+          </div>
+          <h1 class="article-single__title">Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner</h1>
+          <div class="article-single__tags">
+          <span class="article-single__tag">Multi-Agent Systems</span>
+          <span class="article-single__tag">Clean Code</span>
+          <span class="article-single__tag">Agent Orchestration</span>
+          <span class="article-single__tag">Verification</span>
+          <span class="article-single__tag">Ruby</span>
+          </div>
+        </header>
+
+        <img src="/images/articles/ART-043.webp" alt="Many specialized software agents moving work through a shared, carefully controlled codebase" width="1200" height="627" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#the-screenshot-is-an-architecture-diagram">The screenshot is an architecture diagram</a></li>
+        <li><a href="#the-working-directory-became-the-message-bus">The working directory became the message bus</a></li>
+        <li><a href="#three-kinds-of-work-one-controlled-loop">Three kinds of work, one controlled loop</a></li>
+        <li><a href="#the-orchestrator-was-a-traffic-controller">The orchestrator was a traffic controller</a></li>
+        <li><a href="#what-the-loop-found-at-repository-scale">What the loop found at repository scale</a></li>
+        <li><a href="#the-loop-caught-itself-twice">The loop caught itself twice</a></li>
+        <li><a href="#the-model-was-only-half-the-story">The model was only half the story</a></li>
+        <li><a href="#what-breaks-without-the-artifacts">What breaks without the artifacts</a></li>
+        <li><a href="#the-real-lesson-for-engineers">The real lesson for engineers</a></li>
+      </ul>
+    </nav>
+
+    <p>The screenshot is almost comically small: <strong>19 subagents</strong>, <strong>Standard mode</strong>, <strong>1 background job</strong>.</p>
+
+    <p>But that little status bar captures the most important change in how I work with coding agents. This was not one model answering one prompt. It was a small engineering team operating on one difficult task, with planning, implementation, review, and coordination happening at the same time.</p>
+
+    <p>The goal was familiar: make a large Ruby codebase easier to read without changing what it does.</p>
+
+    <p>The interesting part was not that nineteen agents could be started. Starting agents is easy. The interesting part was making them behave like a system rather than nineteen parallel conversations.</p>
+
+    <img src="/images/articles/ART-043-orchestrator.webp" alt="Session header showing 19 subagents working in Standard mode" width="1334" height="174" loading="lazy" />
+
+    <p>This is the actual session view that prompted the story. It is not a benchmark chart or a claim about model quality. It is a snapshot of the coordination surface: a visible fleet attached to one task.</p>
+
+    <h2 id="the-screenshot-is-an-architecture-diagram">The screenshot is an architecture diagram</h2>
+
+    <p>At one point, the interface showed nineteen subagents working on the same task. A few were working on planning. Others were implementing the accepted plan. The remaining agents were reviewing the plans and the implementation, checking whether the work was safe, complete, and consistent with the repository's rules.</p>
+
+    <p>“The same task” did not mean nineteen agents editing the same file. That would be a race condition with a user interface.</p>
+
+    <p>It meant one shared objective, one repository, one working directory, and a controlled division of ownership.</p>
+
+    <p>Each agent had a bounded responsibility. The orchestrator had the global view. The working directory held the state that the agents needed to share. The result was less like asking a crowd to edit a document and more like running a build system whose workers happen to be language models.</p>
+
+    <p>That distinction matters. Parallelism creates throughput. Boundaries create safety.</p>
+
+    <h2 id="the-working-directory-became-the-message-bus">The working directory became the message bus</h2>
+
+    <p>The orchestrator could not keep the whole task in its own context. It also could not rely on every agent remembering what an earlier agent had discovered.</p>
+
+    <p>So the durable conversation moved into files.</p>
+
+    <p>The repository carried an ordered queue, a standing brief, per-file reports, owner flags, liveness logs, and a referee script. A simplified version looked like this:</p>
+
+<pre><code>.review-state/
+  queue.tsv              # every unit of work and its closed-set status
+  brief_combined.md      # the current standard and incident-derived rails
+  reports/               # one audit record per worker assignment
+  FLAGS.md               # decisions reserved for the human owner
+  verify_and_commit.sh   # independent gate before a change enters history
+
+/tmp/tamoz-agents/
+  combined-&lt;rank&gt;.log    # liveness, not a substitute for evidence</code></pre>
+
+    <p>Planning agents wrote down the shape of the work. Implementation agents read that plan and changed only their assigned target. Review agents read the plan, the diff, and the repository rules, then recorded what they accepted, rejected, or escalated.</p>
+
+    <p>The orchestrator moved data back and forth through those artifacts. It did not have to retell the whole story in a prompt every time another worker woke up.</p>
+
+    <p>That was the breakthrough: the working directory was not merely where the code lived. It was the coordination surface.</p>
+
+    <h2 id="three-kinds-of-work-one-controlled-loop">Three kinds of work, one controlled loop</h2>
+
+    <p>The fleet was easiest to reason about when I separated the work into three roles.</p>
+
+    <h3>Planning: make the work legible before it is large</h3>
+
+    <p>The planning lane turned a vague request—“clean up the codebase”—into bounded units.</p>
+
+    <p>It identified production files, ordered them by size, recorded the current status, and attached the rails that made each file dangerous or safe to change. It also made the acceptance criteria explicit: behavior-preserving only, no suppressed lint, no unproven public-API rename, and no pretending that a clean audit was a proof of correctness.</p>
+
+    <p>The plan was not disposable setup. It became part of the system's memory.</p>
+
+    <h3>Implementation: make the smallest defensible change</h3>
+
+    <p>The implementation lane owned exactly one target at a time. Its brief required an audit before editing, a written candidate list, and a rejection reason for every idea that did not survive scrutiny.</p>
+
+    <p>The changes were deliberately unglamorous:</p>
+
+<pre><code class="language-ruby"># before
+return unless tag &amp;&amp; !tag.start_with?('tag:yaml.org,2002:')
+
+# after
+return if tag.nil? || tag.start_with?('tag:yaml.org,2002:')</code></pre>
+
+    <p>Other passes replaced positional arguments with keywords after a repository-wide call-site search, removed a boolean parameter after proving its sole call site, or named receipt columns at the point where they were fetched.</p>
+
+    <p>The unit of progress was not “the agent made a clever change.” It was “this exact target has a recorded verdict, a bounded diff, and evidence that its behavior stayed inside the contract.”</p>
+
+    <h3>Review: turn claims into facts</h3>
+
+    <p>An implementation agent could say that syntax, lint, and focused tests passed. That was a claim, not a fact.</p>
+
+    <p>The review lane checked the plan, the diff, the ownership boundary, and the reported commands. Then an independent referee re-ran the important gates before the change was committed. Agents did not commit directly.</p>
+
+    <p>This separation was essential. A reviewer that shares the implementer's assumptions is useful. A referee that can still say “no” is safer.</p>
+
+    <h2 id="the-orchestrator-was-a-traffic-controller">The orchestrator was a traffic controller, not a super-agent</h2>
+
+    <p>The orchestrator had a very specific job:</p>
+
+    <ol>
+      <li>Take the next bounded wave from the queue.</li>
+      <li>Launch workers with exact bindings and disjoint write ownership.</li>
+      <li>Wait for reports instead of busy-polling every conversation.</li>
+      <li>Inspect the diff and report for each completed unit.</li>
+      <li>Run the independent referee.</li>
+      <li>Serialize the commit and update the queue.</li>
+      <li>Periodically run whole-repository gates.</li>
+    </ol>
+
+    <p>The most important step was the last one. Per-file tests can pass while the composition of several changes breaks an architectural rule. The fleet therefore had cohort gates over the whole tree, with single-unit reverts available when a cohort failed.</p>
+
+    <p>The shared directory made coordination possible. The single commit chokepoint made it auditable.</p>
+
+    <h2 id="what-the-loop-found-at-repository-scale">What the loop found at repository scale</h2>
+
+    <p>The underlying field report comes from Tamoz, a monorepo of seventeen Ruby gems. At the evidence snapshot:</p>
+
+    <ul>
+      <li><strong>515 production files</strong> entered the queue.</li>
+      <li><strong>260 files</strong> were fully processed: 216 committed, 37 audited clean, 4 exempt as declarative data, and 3 skipped as out of scope.</li>
+      <li><strong>214 atomic commits</strong> landed after the loop began.</li>
+      <li><strong>257 per-file verdict reports</strong> were written.</li>
+      <li><strong>69 decisions</strong> were flagged for the human owner instead of being guessed by an agent.</li>
+      <li>The first 200-file closing sweep reduced uncached RuboCop offenses from roughly <strong>1,023 to 976</strong>, with no suppressions and no file allowed to get worse.</li>
+    </ul>
+
+    <p>Those numbers describe the repository loop, not a claim that every one of the nineteen visible agents edited code simultaneously. The screenshot shows the coordination surface; the source evidence shows what entered history.</p>
+
+    <p>That distinction is important. A screenshot proves that a fleet was active. It does not prove that the fleet was safe. The ledger, reports, gates, and commits are the evidence for that.</p>
+
+    <h2 id="the-loop-caught-itself-twice">The loop caught itself twice</h2>
+
+    <p>The most convincing part of the run was not the number of refactors. It was the way the system found its own mistakes.</p>
+
+    <p>The first regression was a composition failure. Two individually green changes, when stacked, broke a static reachability check in the SQLite boundary. A cohort gate caught the problem. Single-file reverts isolated the pairing, commit <code>fc3878a</code> reverted it, and the lesson became a standing rail in later briefs.</p>
+
+    <p>The second regression was smaller and more embarrassing. An agent renamed a local variable at two remembered sites and missed a third occurrence. The focused tests for that file passed. Forty files later, another agent hit the failing path while running a sibling test lane as due diligence. It proved the failure predated its own edit, traced it to the earlier commit, and repaired it in <code>af81312</code> while preserving the refusal message byte-for-byte.</p>
+
+    <p>The new rule was simple: before renaming anything, search the entire file for every occurrence. Memory is not evidence.</p>
+
+    <p>Neither catch required a human to notice the defect first. Both required verification to have a real job, a real artifact, and permission to stop the line.</p>
+
+    <h2 id="the-model-was-only-half-the-story">The model was only half the story</h2>
+
+    <p>There was also a model story behind the run.</p>
+
+    <p>I was using <code>ox/alpha</code>, a mysterious model label in the environment. Later, in my setup, it turned out to resolve to <strong>GLM 5.3 Flash</strong>. Through a DeepSeek harness, the usage counter reached roughly <strong>two billion tokens in a single week</strong>, free of charge to me.</p>
+
+    <p>That is an extraordinary opportunity for an independent engineer. The model was able to keep working for hours on a difficult task and eventually crack it. I am genuinely grateful to the GLM team for making that kind of heavy experimentation possible.</p>
+
+    <p>But the model did not carry the whole operation in its head. The harness kept the process running. The working directory preserved state. The queue made progress countable. The review lanes challenged assumptions. The referee separated “the model says it passed” from “the repository accepted the change.”</p>
+
+    <p>The free tokens made the experiment possible. The coordination system made the tokens useful.</p>
+
+    <h2 id="what-breaks-without-the-artifacts">What breaks without the artifacts</h2>
+
+    <p>Nineteen agents without a protocol would have produced a familiar mess:</p>
+
+    <ul>
+      <li>overlapping edits and merge conflicts;</li>
+      <li>plans that existed only in forgotten chat messages;</li>
+      <li>reviewers checking code without knowing the acceptance criteria;</li>
+      <li>“done” meaning whatever the last agent claimed;</li>
+      <li>no durable record of rejected changes;</li>
+      <li>no way to distinguish a real failure from a stale status update.</li>
+    </ul>
+
+    <p>The remedy was not a more elaborate prompt. It was a small control plane:</p>
+
+    <ul>
+      <li>one queue with closed-set statuses;</li>
+      <li>one writable target per worker;</li>
+      <li>one file-based report contract;</li>
+      <li>first-class no-op and escalation outcomes;</li>
+      <li>one independent commit path;</li>
+      <li>periodic whole-system gates;</li>
+      <li>incident lessons amended into the standing brief.</li>
+    </ul>
+
+    <p>This is why I now think of prompts as worker configuration, not as infrastructure. The infrastructure is the set of files and gates that survives when the prompt, the model, or the orchestrator session disappears.</p>
+
+    <h2 id="the-real-lesson-for-engineers">The real lesson for engineers</h2>
+
+    <p>The seductive headline is that nineteen agents cleaned a codebase.</p>
+
+    <p>The more accurate headline is that a written standard, an ordered queue, a shared working directory, and independent verification turned a fleet of agents into a maintainable engineering process.</p>
+
+    <p>The agents supplied parallel attention. The artifacts supplied memory. The review lanes supplied friction. The referee supplied authority. The human stayed responsible for the decisions that were semantic, cross-cutting, or too product-sensitive to delegate.</p>
+
+    <p>That is the shape of AI-assisted engineering I trust:</p>
+
+    <blockquote>
+      <p><strong>Scale the workers horizontally; keep control vertical.</strong></p>
+    </blockquote>
+
+    <p>Clean code is still a reading order. At repository scale, maintaining that reading order becomes a coordination problem. Solve the coordination problem, and the model can work for hours without the task dissolving into twenty disconnected chats.</p>
+
+    <p>The screenshot shows nineteen agents.</p>
+
+    <p>The files show whether they were a team.</p>
+        </div>
+
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>
