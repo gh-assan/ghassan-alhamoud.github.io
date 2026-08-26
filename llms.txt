@@ -31,6 +31,7 @@ Core themes:
 
 ## High-Signal Articles
 
+- [Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner](https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html): Field report on coordinating a large coding-agent fleet through bounded ownership, durable file-based state, independent review, and serialized commits.
 - [ALMS 0.1.0: A Shared Brain for Autonomous Agents](https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html): Release article for ALMS and the shared memory problem in agent fleets.
 - [ALMS and OKF: Turning Agent Experience Into Portable Knowledge](https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html): How ALMS can export mature learnings into portable Open Knowledge Format.
 - [SkillLedger: Verified Agent Skill Marketplace](https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html): Article on reusable agent skills, incentives, and settlement.

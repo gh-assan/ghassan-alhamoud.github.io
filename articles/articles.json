@@ -1,5 +1,19 @@
 [
   {
+    "slug": "nineteen-agents-one-working-directory",
+    "title": "Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner",
+    "date": "2026-08-26",
+    "excerpt": "How a shared queue, bounded ownership, independent review, and a commit chokepoint turned nineteen coding agents into one controlled engineering system.",
+    "readingTime": "10 min",
+    "tags": [
+      "Multi-Agent Systems",
+      "Clean Code",
+      "Agent Orchestration",
+      "Verification",
+      "Ruby"
+    ]
+  },
+  {
     "slug": "film-pipeline-open-source",
     "title": "I Made an AI Film Pipeline. Now It's Open Source.",
     "date": "2026-07-31",
