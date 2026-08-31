@@ -470,7 +470,7 @@ When an agent misbehaves in production, ask in this order:
 - [Ragas Documentation](https://docs.ragas.io/) — practical component metrics for retrieval and retrieval-augmented generation, including context precision and recall.
 
 ## What's Next?
-In Chapter 9: Safety and Guardrails, we turn from *measuring* the agent to *constraining* it — policy checks, input/output filters, and the guardrail layer that makes evaluation thresholds enforceable. Where this chapter asked "is it good?", the next asks "can it do harm, and how do we stop it?"
+Continue with [Chapter 9: Safety & Guardrails](/handbook/chapter-09-safety-guardrails.html) to turn measurement into enforceable control: complete mediation, task-scoped authority, typed policy decisions, prompt-injection containment, exact approvals, and effect-level safety tests. Where this chapter asked “is it good?”, the next asks “what is it allowed to do, and what happens when a defense misses?”
 
 ## Related Chapters
 - [Chapter 1: The ReAct Pattern](/handbook/chapter-01-react-pattern.html) — the loop you trace; Thought/Action/Observation is the event vocabulary.
@@ -480,6 +480,7 @@ In Chapter 9: Safety and Guardrails, we turn from *measuring* the agent to *cons
 - [Chapter 5: Tool Use and Skill Registries](/handbook/chapter-05-tool-use-skill-registry.html) — tool-call telemetry and idempotency keys that make replay safe.
 - [Chapter 6: Memory & Context Management](/handbook/chapter-06-memory-context-management.html) — retrieval evals, provenance, and compaction correctness as component evals.
 - [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) — approvals, denials, and escalations as audit events; evaluating whether gates work.
+- [Chapter 9: Safety & Guardrails](/handbook/chapter-09-safety-guardrails.html) — policy events, adversarial cases, control mutations, and incident regressions turn evaluation into a safety control loop.
 
 ## Frequently Asked Questions
 

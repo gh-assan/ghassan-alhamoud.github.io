@@ -49,6 +49,7 @@ Core themes:
 - [Memory & Context Management](https://ghassan-alhamoud.com/handbook/chapter-06-memory-context-management.html): Context budgets, validated compaction, governed memory writes, permissioned retrieval, provenance, lifecycle controls, and evaluation.
 - [Human-in-the-Loop](https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html): Risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable human oversight.
 - [Observability & Evaluation](https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html): Correlated agent traces, governed telemetry, representative test sets, calibrated graders, statistical regression gates, canaries, and drift detection.
+- [Safety & Guardrails](https://ghassan-alhamoud.com/handbook/chapter-09-safety-guardrails.html): Complete mediation, task-scoped authority, typed policy decisions, prompt-injection containment, exact approvals, and effect-level safety tests.
 
 ## External Profiles
 

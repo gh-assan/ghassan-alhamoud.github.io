@@ -115,6 +115,12 @@
     <ns0:changefreq>monthly</ns0:changefreq>
     <ns0:priority>0.8</ns0:priority>
   </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/handbook/chapter-09-safety-guardrails.html</ns0:loc>
+    <ns0:lastmod>2026-09-01</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
+  </ns0:url>
 
   <ns0:url>
     <ns0:loc>https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html</ns0:loc>
