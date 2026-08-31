@@ -2,7 +2,7 @@
   "handbook": {
     "title": "The AI-Native Engineering Handbook",
     "subtitle": "Production-tested patterns for building autonomous agents",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "baseUrl": "https://ghassan-alhamoud.com/handbook/",
     "author": {
       "name": "Ghassan Alhamoud",
@@ -321,10 +321,53 @@
           "multi-agent-collaboration",
           "tool-use-skill-registry",
           "memory-context-management",
-          "human-in-the-loop"
+          "human-in-the-loop",
+          "safety-guardrails"
         ],
         "publishedAt": "2026-08-18",
         "lastModified": "2026-08-18"
+      },
+      {
+        "id": 9,
+        "slug": "safety-guardrails",
+        "title": "Safety & Guardrails",
+        "subtitle": "Constraining what an agent can do",
+        "description": "Design enforceable AI agent guardrails with complete mediation, task-scoped authority, typed policy decisions, supply-chain controls, exact approvals, and effect-level safety tests.",
+        "primaryKeyword": "AI agent safety guardrails",
+        "keywords": [
+          "AI agent safety",
+          "AI guardrails",
+          "policy enforcement",
+          "prompt injection defense",
+          "least privilege agents",
+          "agent tool security",
+          "human approval"
+        ],
+        "status": "published",
+        "difficulty": "advanced",
+        "readingTime": "32 min",
+        "file": "chapter-09-safety-guardrails.md",
+        "diagram": "HDBK-009-safety-guardrails.webp",
+        "ogImage": "/images/handbook/HDBK-009-safety-guardrails.webp",
+        "prerequisites": [
+          "react-pattern",
+          "multi-agent-collaboration",
+          "tool-use-skill-registry",
+          "memory-context-management",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
+        "relatedPatterns": [
+          "react-pattern",
+          "plan-and-execute",
+          "multi-agent-collaboration",
+          "tool-use-skill-registry",
+          "memory-context-management",
+          "human-in-the-loop",
+          "observability-evaluation"
+        ],
+        "publishedAt": "2026-09-01",
+        "lastModified": "2026-09-01"
       }
     ]
   }

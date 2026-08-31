@@ -45,6 +45,7 @@ CHAPTER_OUTCOMES = {
     "memory-context-management": "you can design memory with budgets, governed writes, and lifecycle evaluation.",
     "human-in-the-loop": "you can set risk-based autonomy with enforceable approval gates.",
     "observability-evaluation": "you can wire traces, evals, and regression gates for agents.",
+    "safety-guardrails": "you can constrain agent authority with enforceable policy and effect-level tests.",
 }
 
 

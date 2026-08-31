@@ -74,6 +74,39 @@ class HandbookValidationTests(unittest.TestCase):
         )
         self.assertIn("observability-evaluation", chapter["relatedPatterns"])
 
+    def test_safety_guardrails_chapter_is_integrated(self):
+        page = ROOT / "handbook" / "chapter-09-safety-guardrails.html"
+        source = ROOT / "handbook" / "md" / "chapter-09-safety-guardrails.md"
+        diagram = ROOT / "images" / "handbook" / "HDBK-009-safety-guardrails.webp"
+
+        self.assertTrue(page.is_file())
+        self.assertTrue(source.is_file())
+        self.assertTrue(diagram.is_file())
+        self.assertEqual([], validate_handbook.validate_file(page))
+
+        markdown = source.read_text(encoding="utf-8")
+        self.assertIn(
+            "Effective authority is an intersection, never a union", markdown
+        )
+        self.assertIn("Treat Tool Discovery as a Supply-Chain Boundary", markdown)
+        self.assertIn("class DecisionReceipt", markdown)
+        self.assertIn(
+            "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+            markdown,
+        )
+
+    def test_observability_evaluation_links_to_safety_guardrails(self):
+        catalog = json.loads(
+            (ROOT / "handbook" / "handbook.json").read_text(encoding="utf-8")
+        )["handbook"]["chapters"]
+        by_id = {chapter["id"]: chapter for chapter in catalog}
+        chapter = by_id[8]
+        source = ROOT / "handbook" / "md" / chapter["file"]
+        markdown = source.read_text(encoding="utf-8")
+
+        self.assertIn("/handbook/chapter-09-safety-guardrails.html", markdown)
+        self.assertIn("safety-guardrails", chapter["relatedPatterns"])
+
     def test_cli_exits_nonzero_when_validation_fails(self):
         output = io.StringIO()
         with redirect_stdout(output):
