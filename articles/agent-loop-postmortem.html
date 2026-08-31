@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Loop Passed Its Research Bar, Not Its Implementation Bar — Ghassan Alhamoud</title>
+  <meta name="description" content="A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html" />
+  <meta property="og:title" content="The Loop Passed Its Research Bar, Not Its Implementation Bar" />
+  <meta property="og:description" content="A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-044.webp" />
+  <meta property="article:published_time" content="2026-09-01" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html" />
+  <meta property="twitter:title" content="The Loop Passed Its Research Bar, Not Its Implementation Bar" />
+  <meta property="twitter:description" content="A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-044.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "The Loop Passed Its Research Bar, Not Its Implementation Bar",
+  "description": "A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-044.webp",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ghassan Alhamoud",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ghassan-alhamoud.com/favicon.svg"
+    }
+  },
+  "datePublished": "2026-09-01",
+  "dateModified": "2026-09-01",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html",
+  "proficiencyLevel": "Expert",
+  "dependencies": "Multi-Agent Systems, Clean Code, Ruby, Agent Orchestration, Verification",
+  "articleSection": "AI Engineering"
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link nav__link--active">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single">
+    <div class="container article-layout">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta">
+            <time datetime="2026-09-01">Sep 1 2026</time>
+            <span class="article-card__dot"></span>
+            <span>30 min</span>
+          </div>
+          <h1 class="article-single__title">The Loop Passed Its Research Bar, Not Its Implementation Bar</h1>
+          <div class="article-single__tags">
+          <span class="article-single__tag">Agent Orchestration</span>
+          <span class="article-single__tag">Postmortem</span>
+          <span class="article-single__tag">Verification</span>
+          <span class="article-single__tag">AI Engineering</span>
+          <span class="article-single__tag">Reliability</span>
+          </div>
+        </header>
+
+        <img src="/images/articles/ART-044.webp" alt="An evidence-driven agent review loop around a central control-plane ledger" width="1200" height="627" class="article-single__image" loading="eager" />
+
+        <div class="article-single__body">
+<nav class="article-toc" aria-label="On this page"><p><strong>On this page</strong></p><ul><li><a href="#the-first-rule-define-what-done-means">The first rule: define what “done” means</a></li><li><a href="#what-the-loop-actually-did">What the loop actually did</a></li><li><a href="#requirement-by-requirement-ledger">Requirement-by-requirement ledger</a></li><li><a href="#what-worked-well">What worked well</a></li><li><a href="#what-did-not-work">What did not work</a></li><li><a href="#what-the-study-itself-revealed">What the study itself revealed</a></li><li><a href="#five-whys-an-inference-about-why-the-loop-was-useful-but-not-fully-reliable">Five whys: an inference about why the loop was useful but not fully reliable</a></li><li><a href="#the-optimized-loop-for-next-time">The optimized loop for next time</a></li><li><a href="#metrics-for-future-loops">Metrics for future loops</a></li><li><a href="#keep-stop-add">Keep, stop, add</a></li><li><a href="#final-assessment">Final assessment</a></li></ul></nav><p>I asked an agent to run a difficult review of Tamoz’s OpenClaw chat workflow.
+The request was deliberately demanding: create a branch, reread the earlier
+study, run three specialist reviews, make each review meet a bar, brainstorm
+through a facilitator and a Fourier lens, run three product-engineering
+reviews, build nested orchestration, monitor the loop every ten minutes, and
+write the result into a durable documentation package.
+(evidence/original-request.md:15-29)</p>
+<p>The useful answer is not “the agents did it.”</p>
+<p>The useful answer is more precise:</p>
+<p><strong>The loop produced an evidence-rich study and found real Tamoz defects. It
+followed most of the requested structure. It did not fully satisfy the
+independence and monitoring requirements because three Lane C attempts and the
+product-engineering parent stalled before materializing their own summaries
+(evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:36-47,96-119;
+evidence/subagent-logs/lane-c-final.log:1-2;
+evidence/subagent-logs/pe-orchestrator.log:1).</strong></p>
+<p>That distinction is the subject of this article.</p>
+<p>If you run agent reviews, take three rules from this one: define the evidence
+bar before dispatch, require a small checkpoint before a long report, and make
+the controller—not a worker or a fallback—the authority for completion. The
+rest of this postmortem shows why those rules matter.</p>
+<p>The raw records are preserved in the evidence archive (source archive).
+The original request is preserved in original-request.md (source archive).
+The completed Tamoz review package is copied under
+evidence/refresh-package (source archive).
+The independent postmortem audits are in fact-audit.md (source archive)
+and loop-design-audit.md (source archive).</p>
+<h2 id="the-first-rule-define-what-done-means">The first rule: define what “done” means</h2>
+<p>The first thing I did well was create a bar before asking the agents to
+investigate. The bar required exact repository evidence, explicit labels for
+facts and hypotheses, end-to-end source reading, user-visible failure modes,
+root causes, ranked recommendations, owner seams, acceptance tests, real
+transport/provider gates, non-goals, and a verdict.</p>
+<p>Those requirements are recorded in
+evidence/refresh-package/openclaw-chat-study-refresh/00-review-bar.md:14-50.</p>
+<p>The bar also defined what the final package had to contain:</p>
+<ul>
+<li>an indexed README;</li>
+<li>the bar itself;</li>
+<li>three specialist reports;</li>
+<li>two brainstorming reports;</li>
+<li>a consolidated study;</li>
+<li>a roadmap;</li>
+<li>three product-engineering reports;</li>
+<li>an evidence index;</li>
+<li>a correction log.</li>
+</ul>
+<p>The package inventory is verified by
+evidence/refresh-package/openclaw-chat-study-refresh/README.md:7-43 and
+evidence/archive-validation.md:12-17.</p>
+<p>This was the right control. It made “high quality” inspectable. It also made it
+possible to say that the current Tamoz experience was not ready even when a
+report was complete.</p>
+<p>The important distinction was:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requested</td>
+<td>The user asked for this work.</td>
+</tr>
+<tr>
+<td>Dispatched</td>
+<td>An agent was started for it.</td>
+</tr>
+<tr>
+<td>Started</td>
+<td>The agent wrote a progress checkpoint.</td>
+</tr>
+<tr>
+<td>Materialized</td>
+<td>The assigned output file exists.</td>
+</tr>
+<tr>
+<td>Reviewed</td>
+<td>The main orchestrator inspected the output against the bar.</td>
+</tr>
+<tr>
+<td>Corrected</td>
+<td>A targeted correction was requested and incorporated.</td>
+</tr>
+<tr>
+<td>Accepted</td>
+<td>The report content met its bar.</td>
+</tr>
+<tr>
+<td>Blocked</td>
+<td>A required fact or external condition remained unresolved.</td>
+</tr>
+<tr>
+<td>Fallback</td>
+<td>The main orchestrator wrote an output after delegated work failed to materialize.</td>
+</tr>
+</tbody>
+</table>
+<p>Most agent workflows collapse these states into one word: “done.” That is how
+confidence leaks into the system.</p>
+<h2 id="what-the-loop-actually-did">What the loop actually did</h2>
+<p>The source archive contains 15 rollout JSONL records captured from the session
+directory: 12 content/orchestration records and three guardian-review records.
+The 14 original-prefix files contain 12 content/orchestration records and two
+guardian records; the fifteenth is another guardian record attached to the same
+parent thread. The parent record also contains later turns because the
+postmortem continued in the same Codex task. Guardian records are preserved as
+provenance but are not treated as analysis agents. The archive contains 11
+relevant subagent progress logs, the 15-file
+refresh package, the 41-file prior study, repository instructions, and ART-043
+reference material. The exact inventory is in
+evidence/MANIFEST.md (source archive) and
+archive-validation.md (source archive).</p>
+<p>The execution sequence was:</p>
+<ol>
+<li>A new branch was created:
+   codex/openclaw-chat-experience-refresh-20260827
+   (evidence/source-snapshots/branch-state.md:5-9; parent rollout record 36).</li>
+<li>The earlier OpenClaw/Tamoz study, implementation plan, benchmark protocol,
+   scenario catalog, current code, tests, and documentation were read
+   (evidence/subagent-logs/lane-a-gap-audit.log:1-3;
+   evidence/subagent-logs/lane-b-interaction-product.log:1-3).</li>
+<li>A refresh bar and indexed package were created under
+   docs/openclaw-chat-study-refresh
+   (evidence/refresh-package/openclaw-chat-study-refresh/00-review-bar.md:1-12;
+   evidence/refresh-package/openclaw-chat-study-refresh/README.md:1-15).</li>
+<li>Three specialist lanes were dispatched:
+   gap audit, interaction/product, and chat/Telegram architecture
+   (parent rollout records 116-118).</li>
+<li>The gap lane initially found 17 evidence and product gaps. Its correction
+   loop clarified the verdict and added G18, a confirmed clarification-
+   projection defect, for 18 final gaps
+   (evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:15-24,36-47;
+   evidence/refresh-package/openclaw-chat-study-refresh/specialist-reviews/01-gap-audit.md:671-697).</li>
+<li>The interaction lane produced journeys, message cards, attention budgets,
+   metrics, safety tradeoffs, and a phased product program
+   (evidence/refresh-package/openclaw-chat-study-refresh/specialist-reviews/02-interaction-product.md:1-12,360-373).</li>
+<li>The architecture lane synthesized but failed to materialize. Two narrower
+   replacement passes also failed to materialize, so the main orchestrator
+   wrote a transparent fallback architecture report
+   (evidence/subagent-logs/lane-c-chat-architecture.log:1-3;
+   evidence/subagent-logs/lane-c-chat-architecture-replacement.log:1;
+   evidence/subagent-logs/lane-c-final.log:1-2;
+   evidence/refresh-package/openclaw-chat-study-refresh/specialist-reviews/03-chat-telegram-architecture.md:14-16,369-377).</li>
+<li>Two brainstorming agents then ran:
+   a facilitator generated and clustered options; Fourier examined turn,
+   conversation, work-session, operator, channel, organization, and
+   long-term measurement scales
+   (evidence/subagent-logs/brainstorm-facilitator.log:4-6;
+   evidence/subagent-logs/brainstorm-fourier.log:1-3;
+   evidence/refresh-package/openclaw-chat-study-refresh/brainstorming/01-facilitator.md:438-454;
+   evidence/refresh-package/openclaw-chat-study-refresh/brainstorming/02-fourier.md:356-370).</li>
+<li>A product-engineering orchestrator spawned three second-level reviewers:
+   product/agent vision, architecture/security/reliability, and
+   implementation/evidence
+   (evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:7-20).</li>
+<li>All three child report files materialized, and the agents reported
+    correction completion. Independent acceptance is not proved by those
+    completion records. The parent orchestrator itself failed to materialize
+    its summary, so the main orchestrator wrote a clearly labeled reconciliation
+    fallback
+    (evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:7-20;
+    evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:96-119).</li>
+<li>The package was checked with the pinned Ruby 3.3.11 executable. The
+    documentation_tree_test.rb command passed with 7 runs and 1089 assertions;
+    documentation_surface_test.rb passed with 9 runs and 95 assertions. The
+    broader documentation_test.rb command remained red with three failures on
+    pre-existing ADR-count and broken-link conditions
+    (evidence/refresh-package/openclaw-chat-study-refresh/03-evidence-index.md:39-53;
+    parent rollout records 1388-1392 and 1427-1430).</li>
+</ol>
+<p>The raw rollout records are more authoritative than this summary. They contain
+the dispatches, waits, correction messages, completion claims, and tool
+outputs. Key sequence anchors are the branch snapshot at
+evidence/source-snapshots/branch-state.md:5-12; specialist dispatches and Lane
+C attempts in the parent records 116-118 and 678-781; brainstorming records
+866-904 and 978; product-engineering dispatch and child activity in records 989,
+1049, and 1287-1430; and the named test results in
+evidence/refresh-package/openclaw-chat-study-refresh/03-evidence-index.md:39-53.</p>
+<h2 id="requirement-by-requirement-ledger">Requirement-by-requirement ledger</h2>
+<table>
+<thead>
+<tr>
+<th>Original requirement</th>
+<th>Result</th>
+<th>Evidence and honest boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a new feature branch</td>
+<td><strong>Followed</strong></td>
+<td>evidence/source-snapshots/branch-state.md:5-9; parent rollout record 36. The parent initially reported main, then the captured snapshot was on codex/openclaw-chat-experience-refresh-20260827.</td>
+</tr>
+<tr>
+<td>Read and understand the previous study</td>
+<td><strong>Partly supported</strong></td>
+<td>Reading checkpoints: lane-a-gap-audit.log:1-3 and lane-b-interaction-product.log:1-3; copied archive: evidence/MANIFEST.md:19-22. Reading is evidenced; “understood” is an inference.</td>
+</tr>
+<tr>
+<td>Start a gap-finding subagent</td>
+<td><strong>Followed</strong></td>
+<td>Parent rollout records 116-117; specialist-reviews/01-gap-audit.md; lane-a-gap-audit.log:5-6. This proves dispatch/materialization, not acceptance by itself.</td>
+</tr>
+<tr>
+<td>Start an interaction/product subagent</td>
+<td><strong>Followed</strong></td>
+<td>Parent rollout records 116-117; specialist-reviews/02-interaction-product.md; lane-b-interaction-product.log:1-5. This proves dispatch/materialization, not acceptance by itself.</td>
+</tr>
+<tr>
+<td>Start a chat/Telegram architecture subagent</td>
+<td><strong>Partly followed</strong></td>
+<td>Three Lane C attempts were dispatched but did not produce a delegated report: parent records 118 and 678-781; 04-correction-log.md:36-47. The main-authored fallback is specialist-reviews/03-chat-telegram-architecture.md.</td>
+</tr>
+<tr>
+<td>Create a high bar and loop each specialist until it met the bar</td>
+<td><strong>Partly followed</strong></td>
+<td>Bar: 00-review-bar.md:32-50. Lane A/B report verdicts are in their report files; Lane C had three failed attempts and a fallback, so independent completion was not achieved: 04-correction-log.md:15-47.</td>
+</tr>
+<tr>
+<td>Brainstorm through two agents</td>
+<td><strong>Followed for dispatch and materialization</strong></td>
+<td>Parent records 866-904 and 978; brainstorming logs and reports. Report acceptance remains bounded by the report contents, not completion messages.</td>
+</tr>
+<tr>
+<td>Use a facilitator and Fourier lens</td>
+<td><strong>Followed</strong></td>
+<td>brainstorming/01-facilitator.md:438-454 and brainstorming/02-fourier.md:356-370; corresponding logs.</td>
+</tr>
+<tr>
+<td>Set a bar and loop the brainstorming outcome</td>
+<td><strong>Partly followed</strong></td>
+<td>Those reports state content/readiness verdicts at the cited ranges; parent records show nudges/forced materialization, not a complete independent correction loop.</td>
+</tr>
+<tr>
+<td>Write everything under a docs subfolder</td>
+<td><strong>Followed as materialization</strong></td>
+<td>evidence/source-snapshots/branch-state.md:10-12; 15 files. This is not proof that every report passed.</td>
+</tr>
+<tr>
+<td>Run three product-engineering lenses</td>
+<td><strong>Followed for child dispatch/materialization</strong></td>
+<td>Parent record 989; child records 1239, 1412, and 1420; pe-product-agent-vision.log:4-5; pe-architecture-security-reliability.log:3-4.</td>
+</tr>
+<tr>
+<td>Use multiple orchestration levels</td>
+<td><strong>Structurally followed; operationally incomplete</strong></td>
+<td>Parent records 989, 1049, and 1287-1310; product-engineering-reviews/00-orchestrator.md:7-20. The parent summary required a main fallback.</td>
+</tr>
+<tr>
+<td>Check and optimize the loop every ten minutes</td>
+<td><strong>Partly followed</strong></td>
+<td>Request: evidence/original-request.md:29; correction log:89-94; parent wait/check records 207-264, 548-655, and 1005-1197. No scheduler or exact ten-minute cadence is evidenced.</td>
+</tr>
+<tr>
+<td>Produce something useful for Tamoz and its agent vision</td>
+<td><strong>Study produced; product readiness not achieved</strong></td>
+<td>Readiness: product-engineering-reviews/00-orchestrator.md:108-119; no production changes: source-snapshots/branch-state.md:8-12. “Useful” is an inference, while human usefulness is explicitly unproven: 04-correction-log.md:33-35,85-87.</td>
+</tr>
+<tr>
+<td>Use the original subagent data</td>
+<td><strong>Followed for archive preservation</strong></td>
+<td>evidence/MANIFEST.md:8-25; parent copy records 1498-1506. Derived conclusions remain bounded by MANIFEST.md:27-36.</td>
+</tr>
+</tbody>
+</table>
+<p>This table is the most important answer to “what did you actually follow?”
+The structure was mostly followed. The independent materialization contract
+was not fully followed. The monitoring request was approximated manually.</p>
+<h2 id="what-worked-well">What worked well</h2>
+<h3 id="the-bar-came-before-the-agents">The bar came before the agents</h3>
+<p>The refresh bar prevented the review from turning into a collection of opinions.
+It forced every material statement into one of five categories: fact,
+inference, hypothesis, proposal, or evidence gap.</p>
+<p>That discipline survived the review. The reports repeatedly said that focused
+tests and deterministic fixture providers proved plumbing, not intelligence,
+enjoyment, or real Telegram behavior
+(evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:37-39;
+evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:63-72).</p>
+<h3 id="ownership-was-concrete">Ownership was concrete</h3>
+<p>Each specialist had one report path, one log, and a no-production-edit scope.
+The brainstorming agents had separate paths. The product-engineering children
+had separate paths. This avoided report contention and made missing
+materialization visible. The absence of a reported path collision supports the
+contention assessment, but does not measure whether the ownership design caused
+it to be avoided
+(evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:7-11,61-65;
+evidence/source-snapshots/branch-state.md:8-12).</p>
+<p>The final package is not just a conversation transcript. It is a durable
+directory with a README, bar, reports, decisions, roadmap, evidence index, and
+correction log:</p>
+<p>refresh README (source archive)
+(evidence/refresh-package/openclaw-chat-study-refresh/README.md:7-43).</p>
+<h3 id="correction-changed-the-substance">Correction changed the substance</h3>
+<p>The correction loops were not cosmetic, based on the changed report contents
+and correction log rather than on completion messages alone
+(evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:15-24,36-47,96-119).</p>
+<p>The gap lane initially ended with an ambiguous NEEDS FIXES verdict. The
+correction forced it to distinguish report completeness from system readiness.
+It then verified and added G18: a clarification descriptor can reach the
+approval-only evidence lookup and raise before a question reaches the channel
+(evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:15-24,36-47;
+specialist-reviews/01-gap-audit.md:671-697).</p>
+<p>The product-engineering architecture lens found two further defects that the
+first consolidation had missed:</p>
+<ul>
+<li>request-scoped status can aggregate delivery/effect state across a
+  conversation or thread;</li>
+<li>cancellation is thread-oriented rather than exact-reference scoped.</li>
+</ul>
+<p>The product/agent-vision lens separately found that the proposed clarification
+answer had no durable comms ingress and that a safe goal label needed a
+deterministic owner. These findings changed the roadmap order. The attribution
+and source details are preserved in
+evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:43-67.
+Ownership and control truth must precede a polished human card.</p>
+<h3 id="the-independent-lenses-converged-an-editorial-inference">The independent lenses converged — an editorial inference</h3>
+<p>The facilitator and Fourier reports did not merely repeat the same prose. This
+is an editorial inference from the distinct findings, not a measured causal
+proof.
+Fourier identified cross-scale feedback loops:</p>
+<ul>
+<li>worker-health silence creates status polling and resubmission;</li>
+<li>more liveness messages can create notification noise and muted channels;</li>
+<li>missing request identity makes local progress look like global truth;</li>
+<li>green fixture readiness can reduce pressure to run live evidence.
+(evidence/refresh-package/openclaw-chat-study-refresh/brainstorming/02-fourier.md:1-20,300-356;
+evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:49-59)</li>
+</ul>
+<p>The product, architecture, and implementation reviewers independently converged
+on the same hard gates: typed interruption, request-local truth, exact controls,
+worker health, real surface evidence, and separate usefulness measurement
+(evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:22-41).</p>
+<h3 id="the-system-did-not-overclaim">The system did not overclaim</h3>
+<p>The final package says the current readiness is NEEDS FIXES
+(evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:108-119).
+It does not say
+that Tamoz communicates well because a fake transport delivered deterministic
+cards
+(evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:33-35,85-87).
+Calling that restraint a success condition is an editorial assessment.</p>
+<h2 id="what-did-not-work">What did not work</h2>
+<h3 id="broad-delegated-briefs-created-silent-synthesis-stalls">Broad delegated briefs created silent synthesis stalls</h3>
+<p>The architecture specialist read and synthesized the relevant material but did
+not materialize its report. A replacement pass with a narrower brief and a
+final Lane C pass also stalled. The main orchestrator eventually wrote a
+fallback from verified source evidence
+(evidence/subagent-logs/lane-c-chat-architecture.log:1-3;
+lane-c-chat-architecture-replacement.log:1;
+lane-c-final.log:1-2;
+evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:36-47).</p>
+<p>The product-engineering parent did something similar: it spawned the required
+children, the child report files materialized, but the parent summary did not
+materialize. The main orchestrator wrote a reconciliation fallback
+(evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:7-20).</p>
+<p>This means the package contains the requested reports, but not every report was
+produced independently by the agent assigned to it. The correction log states
+that plainly. Any future article that says “all agents completed” would be
+false.</p>
+<h3 id="the-monitoring-loop-was-not-a-real-monitor">The monitoring loop was not a real monitor</h3>
+<p>The request asked for a check every ten minutes and optimization based on what
+was happening. The main process did perform repeated checks of:</p>
+<ul>
+<li>agent completion status;</li>
+<li>report-file existence;</li>
+<li>progress-log tails;</li>
+<li>branch/worktree state.</li>
+</ul>
+<p>That was useful, but it was not a durable scheduler, heartbeat, or exact
+ten-minute control loop
+(evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:89-94;
+parent rollout records 207-264, 548-655, and 1005-1197). No durable scheduler
+or machine-readable orchestration state is evidenced that could wake the main
+process, classify a stale child, and apply a policy automatically.</p>
+<h3 id="meet-the-bar-was-initially-ambiguous">“Meet the bar” was initially ambiguous</h3>
+<p>A report can meet its content bar while the system it reviews fails readiness.
+The first Lane A verdict blurred those two meanings. The correction repaired
+the language, but the protocol should have separated them from the beginning:</p>
+<ul>
+<li>report/content status;</li>
+<li>current system/evidence readiness;</li>
+<li>implementation authorization status.</li>
+</ul>
+<h3 id="the-raw-evidence-was-not-packaged-at-the-beginning">The raw evidence was not packaged at the beginning</h3>
+<p>The original review wrote its own package, but no initial manifest is evidenced
+in the retained original artifacts. The postmortem had to reconstruct the evidence from
+rollout records, logs, branch state, reports, and copied source packages.</p>
+<p>The reconstruction succeeded because the session records were available at
+collection time. The claim that this was luck rather than a robust protocol is
+an operational inference, not a measured causal result.</p>
+<h3 id="thoroughness-appears-to-have-consumed-the-critical-path">Thoroughness appears to have consumed the critical path</h3>
+<p>The agents were asked to reread large document and source sets, then synthesize
+large reports before materializing. The records show long waits and stalled
+attempts, but no timing study proves causality. The operational inference is
+that this delayed visible output. A better process would require a short
+evidence map and initial findings checkpoint before the full narrative
+(parent rollout records 548-781 and 1005-1308;
+evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:36-47,89-94).</p>
+<h2 id="what-the-study-itself-revealed">What the study itself revealed</h2>
+<p>The process postmortem is also a product postmortem.</p>
+<p>The reviewed system already had durable admission, lifecycle state, delivery
+fencing, unknown outcomes, cancellation visibility, context controls, and
+pairing according to the consolidated study and its evidence index
+(evidence/refresh-package/openclaw-chat-study-refresh/01-consolidated-study.md:20-46;
+evidence/refresh-package/openclaw-chat-study-refresh/03-evidence-index.md:10-19).
+The second sentence is a product inference: it
+still did not feel interactive enough because it lacked one truthful, actionable
+work session.</p>
+<p>The most important confirmed defect was not a tone problem. A clarification
+interrupt was routed through approval semantics. The worker emitted an approval
+event for every non-empty interrupt, while the clarification descriptor had a
+question but no approval decision. The sink then fetched approval evidence
+(evidence/refresh-package/openclaw-chat-study-refresh/03-evidence-index.md:15;
+04-correction-log.md:15-24,36-47).</p>
+<p>The architecture review also found that a human could be shown a request-local
+status projection built from conversation-wide delivery/effect state, and that
+canceling did not reliably target one request among several
+(evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:43-57).
+The final sentence is an inference about UX risk: a friendly card on top of
+those facts could make the wrong answer more persuasive.</p>
+<p>The lesson for loop design is direct:</p>
+<p><strong>A review must challenge the authority and ownership boundaries beneath the
+user interface, not only the wording on the interface.</strong></p>
+<h2 id="five-whys-an-inference-about-why-the-loop-was-useful-but-not-fully-reliable">Five whys: an inference about why the loop was useful but not fully reliable</h2>
+<p>The following chain is an analysis model built from the observed waits,
+fallbacks, and manual checks; it is not a directly measured causal study.</p>
+<ol>
+<li><strong>Why did the final package need main-authored fallbacks?</strong> Because delegated
+   agents and the parent orchestrator did not materialize their summaries
+   within the available bounded waits
+   (evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:36-47,96-119).</li>
+<li><strong>Why could they remain active without a durable state transition?</strong> Because
+   the loop used progress logs and manual waits, but did not enforce a
+   machine-readable materialization deadline
+   (parent rollout records 548-781 and 1005-1308;
+   evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:89-94).</li>
+<li><strong>Why was materialization not enforced?</strong> Because the bar described report
+   quality more precisely than it described orchestration liveness and fallback
+   semantics (evidence/refresh-package/openclaw-chat-study-refresh/00-review-bar.md:32-50;
+   evidence/source-snapshots/subagent-orchestration.md:38-47).</li>
+<li><strong>Why did the process emphasize content over liveness?</strong> Because the task was
+   treated primarily as a deep research problem, while the coordination loop
+   itself was not modeled as a system with queueing, heartbeat, timeout, and
+   recovery behavior (evidence/original-request.md:15-30; parent rollout
+   records 207-264,548-781,1005-1308).</li>
+<li><strong>Why does that matter?</strong> Because the process reproduced the same failure
+   mode under study: a human could not tell whether a lane was working, waiting,
+   or stuck without inspecting an external log. This last sentence is an
+   inference from the manual-monitoring evidence
+   (evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:89-94).</li>
+</ol>
+<p>Inference from those observed events: the loop had a quality bar but not a
+complete control-plane contract for agent liveness, artifact materialization,
+and fallback authority.</p>
+<h2 id="the-optimized-loop-for-next-time">The optimized loop for next time</h2>
+<p>The answer is not “use more agents.” The answer is a smaller control plane with
+better state transitions.</p>
+<h3 id="phase-0-freeze-the-request">Phase 0 — Freeze the request</h3>
+<p>Create one REQUEST.md containing:</p>
+<ul>
+<li>the verbatim user request;</li>
+<li>explicit requirements;</li>
+<li>implied outcomes;</li>
+<li>forbidden assumptions;</li>
+<li>scope and write permissions;</li>
+<li>success and stop conditions.</li>
+</ul>
+<p>Create QUALITY_BAR.md before delegation. Split its final verdict into three
+independent axes:</p>
+<ol>
+<li>content completeness;</li>
+<li>evidence readiness;</li>
+<li>implementation authorization.</li>
+</ol>
+<p>Also create the immutable claim registry: one row per material claim with its
+claim class, safety class, required evidence, owner, and fallback eligibility.
+This registry is the authority used by the evidence validator and publication
+gate.</p>
+<h3 id="phase-1-build-the-evidence-spine-first">Phase 1 — Build the evidence spine first</h3>
+<p>Before analysis begins, capture the planned inventory:</p>
+<ul>
+<li>branch and base commit;</li>
+<li>worktree status;</li>
+<li>relevant prior study;</li>
+<li>repository instructions;</li>
+<li>test/runtime environment;</li>
+<li>source and artifact inventory;</li>
+<li>evidence retention paths.</li>
+</ul>
+<p>Then append observed entries as the session creates them. The manifest must not
+pretend to know future session or subagent IDs. Each observed entry should carry
+the artifact path, producer, attempt ID, parent ID, content hash, event or line
+range, collection timestamp, availability, and any replacement or fallback
+relationship. A validator should reject a claim whose cited path, range, or
+digest is absent from the observed manifest.</p>
+<p>This postmortem’s evidence/MANIFEST.md (source archive) is the archive
+artifact assembled after the original review. No initial manifest is evidenced
+in the retained original artifacts. In a future run, the manifest would be a
+two-phase, append-only record: planned inventory first, observed evidence
+second.</p>
+<p>For implementation, use one manifest writer and canonical UTF-8 bytes with a
+declared SHA-256 digest. The planned phase records requirement ID, expected
+artifact class, owner, and destination. The observed phase appends the actual
+producer, attempt ID, parent ID, path, byte digest, event or line range,
+collection time, runtime/toolchain, availability, and supersession relation.
+The validator reads the manifest and the article claim registry, verifies that
+each cited path exists, its selected range is valid, its digest matches, and
+the artifact status permits the claim class. A source change creates a new
+observed entry and invalidates the old digest; it never rewrites history.
+Publication fails closed when a required entry is absent, contradictory, or
+unavailable.</p>
+<h3 id="phase-2-use-narrow-specialists-with-early-materialization">Phase 2 — Use narrow specialists with early materialization</h3>
+<p>Keep three specialists, but give each two required outputs and explicit
+proposal-level deadlines. For example, a run may set a five-minute checkpoint
+deadline, a twenty-five-minute attempt deadline, and a thirty-five-minute
+parent budget. Those values are an example policy, not a fact about the
+original run; the controller must record the chosen values in the run ledger.</p>
+<p>Each specialist must produce:</p>
+<ol>
+<li>a short checkpoint by the checkpoint deadline: source map, top findings, and
+   blocked questions;</li>
+<li>a final report by the attempt deadline.</li>
+</ol>
+<p>Use a monotonic clock for active deadlines and record queue time separately from
+active execution time. Persist the controller clock anchor and a recovery
+timestamp; after a controller restart, do not mark a lane stale from wall-clock
+silence alone. Reconcile the anchor first or emit monitor_inconclusive. The
+controller should allow at most one bounded replacement attempt unless the user
+explicitly authorizes more. The replacement receives a new attempt ID and a
+separate staging path.</p>
+<p>The run ledger should distinguish these states:</p>
+<ul>
+<li>normal path: requested, dispatched, started, checkpointed, materialized,
+  reviewed, corrected, accepted;</li>
+<li>exception path: blocked, failed, stale, stopped, replaced, fallback,
+  reopened, superseded.</li>
+</ul>
+<p>These are not free-form labels. A single controller owns the legal transitions,
+records an event timestamp, reason, owner or lease, and evidence digest, and
+rejects an illegal or stale write. Artifact status, independence status,
+content verdict, evidence verdict, readiness verdict, and implementation
+authorization are separate fields. A late artifact after stop or fallback is
+quarantined; it cannot silently replace the fallback or become independent
+evidence retroactively.</p>
+<p>Each specialist should own one report path and one log path. No specialist
+should be asked to produce the entire final narrative before it has written a
+compact evidence map.</p>
+<p>The report path is a promotion target, not a shared scratch file. An attempt
+writes to its own immutable staging path, then a validator checks the canonical
+bytes and SHA-256 digest. Only after the staged artifact is durably flushed and
+renamed into its immutable destination may the controller commit the matching
+ledger transition. Recovery reconciles the destination and digest before
+advancing state; a missing or mismatched artifact leaves the attempt blocked.
+SQLite WAL is paired with durable commit settings (for example,
+<code>synchronous=FULL</code>) and a filesystem that provides the promised rename
+durability. This is a proposed publication protocol, not evidence that the
+original run implemented it.</p>
+<h4 id="executable-ledger-contract">Executable ledger contract</h4>
+<p>The following is a proposed reference contract for the controller, not a claim
+about what the original run implemented. Store one append-only event ledger and
+one derived attempt projection in a durable store. A projection row must
+contain: run_id, attempt_id, parent_id, actor_id, artifact_path, state,
+artifact_status, independence_status, content_verdict, evidence_verdict,
+readiness_verdict, authorization_status, owner, lease_token, lease_epoch,
+lease_expiry_utc, started_at, checkpoint_deadline, attempt_deadline,
+last_checkpoint_at, source_digest, artifact_digest, reason, and
+supersedes_attempt_id.</p>
+<p>Only the controller may advance the projection. A transition transaction must
+lock the run, require the expected current state and lease epoch, append the
+transition event, update the projection, and commit both together. A worker
+heartbeat or artifact write with an old lease epoch is rejected and recorded as
+stale. The event includes actor, previous state, next state, reason, timestamp,
+and digest; no state is changed by editing an earlier event.</p>
+<p>The reference implementation for this proposal is one SQLite ledger in WAL
+mode. Lease acquisition runs in an immediate transaction: it requires an
+unleased or expired row, increments lease_epoch, creates a fresh random
+lease_token, assigns owner, and writes lease_expiry_utc. Renewal requires the
+same owner and token, the current epoch, a non-terminal state, and an unexpired
+lease; it extends the expiry and appends a heartbeat event. The controller that
+observes expiry advances the row to stale, increments the epoch, clears the
+token, and commits that fence before any replacement acquisition. A restart
+uses the persisted UTC expiry only after clock reconciliation; otherwise it
+records monitor_inconclusive and takes no lane-advancing action. This makes
+acquisition, renewal, expiry, and fencing one defined operation rather than a
+choice left to each worker.</p>
+<p>The legal transition table is:</p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>Allowed next states</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>requested</td>
+<td>dispatched, blocked, failed</td>
+</tr>
+<tr>
+<td>dispatched</td>
+<td>started, blocked, failed</td>
+</tr>
+<tr>
+<td>started</td>
+<td>checkpointed, blocked, failed, stale</td>
+</tr>
+<tr>
+<td>checkpointed</td>
+<td>materialized, blocked, failed, stale</td>
+</tr>
+<tr>
+<td>materialized</td>
+<td>reviewed, blocked, failed</td>
+</tr>
+<tr>
+<td>reviewed</td>
+<td>corrected, accepted, blocked</td>
+</tr>
+<tr>
+<td>corrected</td>
+<td>reviewed, accepted, blocked</td>
+</tr>
+<tr>
+<td>stale</td>
+<td>stopped</td>
+</tr>
+<tr>
+<td>stopped</td>
+<td>replaced, fallback, blocked</td>
+</tr>
+<tr>
+<td>failed</td>
+<td>replaced, fallback, blocked</td>
+</tr>
+<tr>
+<td>accepted</td>
+<td>reopened, superseded</td>
+</tr>
+<tr>
+<td>replaced</td>
+<td>started, blocked, failed</td>
+</tr>
+<tr>
+<td>reopened</td>
+<td>dispatched, blocked</td>
+</tr>
+<tr>
+<td>fallback</td>
+<td>superseded</td>
+</tr>
+</tbody>
+</table>
+<p>For a concrete default policy, set heartbeat to 60 seconds, declare an attempt
+stale after two missed heartbeats or at its absolute attempt deadline, send a
+stop request, and allow a 30-second stop-acknowledgment grace period. If the
+acknowledgment is absent, the controller advances the attempt to stopped with
+reason stop_ack_timeout, fences its lease, and only then creates the one
+replacement attempt. A child cannot consume the parent’s final grace period:
+the parent deadline is authoritative and child deadlines are allocated at
+dispatch. These values are proposals for a future implementation and must be
+configurable and recorded in the run ledger; they are not evidence about the
+original session.</p>
+<p>Terminal publication requires an immutable attempt-scoped artifact whose
+content hash and validation result are already in the ledger. The final index
+points to that immutable path and digest; it does not overwrite a shared report
+path. If a process writes after its lease is fenced or its state is terminal,
+the controller stores the late artifact under a quarantine path and records it
+as inadmissible.</p>
+<h3 id="phase-3-make-correction-policy-explicit">Phase 3 — Make correction policy explicit</h3>
+<p>The main orchestrator should apply typed correction actions:</p>
+<ul>
+<li>content correction: a required section or argument is missing;</li>
+<li>evidence correction: a citation, range, digest, or fact classification is
+  missing or unverifiable;</li>
+<li>scope correction: the report crossed its file or question boundary;</li>
+<li>block: the evidence or environment cannot support the requested claim.</li>
+</ul>
+<p>If a report exists and misses a bar item, send one targeted correction. If it
+cites unverifiable facts, return it for evidence correction. If there is no
+checkpoint by the checkpoint deadline, mark the attempt stale after one
+inspection. Before a replacement starts, fence the live attempt by changing
+its lease and state atomically. If there is no materialization by the attempt
+deadline, stop it and use one narrower replacement pass. If the replacement
+also fails, write a fallback only with a FALLBACK label.</p>
+<p>Every attempt needs a distinct staging path and attempt ID. The fallback must
+retain the failed or stopped attempt references. It may fill a non-safety-
+critical synthesis gap, but it must never satisfy the independent-report gate,
+authorize a risky action, or erase an unresolved evidence gap.</p>
+<p>The fallback eligibility predicate is: the missing artifact is synthesis-only;
+all safety-critical and authorizing claims have independent evidence; the
+stopped attempt and its reason are recorded; no ownership or lease conflict is
+unresolved; the main process names the fallback author; and the package labels
+the result FALLBACK or PARENT_FALLBACK. If any predicate is false, the only
+permitted outcome is blocked.</p>
+<p>“Synthesis-only” is determined by an authoritative claim registry created in
+Phase 0, not by the fallback author. Each claim row has claim_id, claim_class,
+safety_class, required_evidence, owner, and fallback_eligible. The allowed
+claim classes are execution_fact, source_fact, inference, hypothesis, proposal,
+readiness, and authorization. safety_class is non_safety, safety_critical, or
+authorizing; fallback_eligible defaults to false and may be true only for a
+non-safety synthesis or editorial claim. The validator rejects a fallback if a
+covered claim is missing from the registry, has conflicting classification, or
+has safety_class safety_critical or authorizing. No worker or model may change
+these fields after the run starts; a reclassification requires a new run
+version and new evidence review.</p>
+<p>This is what the original loop eventually did by judgment. The future loop
+should make it an append-only, fenced protocol.</p>
+<h3 id="phase-4-brainstorm-from-evidence-not-from-fresh-drift">Phase 4 — Brainstorm from evidence, not from fresh drift</h3>
+<p>Run the facilitator and Fourier lanes only after the specialist evidence map is
+closed enough to challenge.</p>
+<p>The facilitator should produce:</p>
+<ul>
+<li>options;</li>
+<li>assumptions;</li>
+<li>tensions;</li>
+<li>clusters;</li>
+<li>a challenge to the strongest option;</li>
+<li>converged bets;</li>
+<li>discarded ideas.</li>
+</ul>
+<p>Fourier should produce:</p>
+<ul>
+<li>turn-scale signal and latency;</li>
+<li>conversation-scale queueing and memory;</li>
+<li>work-session recovery;</li>
+<li>operator workflow;</li>
+<li>channel capabilities;</li>
+<li>organizational aggregation;</li>
+<li>long-term learning and measurement;</li>
+<li>cross-scale reversals.</li>
+</ul>
+<p>Their outputs should be timeboxed and should not reopen the entire repository.</p>
+<h3 id="phase-5-use-a-real-second-level-orchestrator">Phase 5 — Use a real second-level orchestrator</h3>
+<p>Use at most one bounded aggregation layer below the main orchestrator. The main
+process remains the control-plane owner. The product-engineering parent should
+have its own owner, lease, checkpoint deadline, final deadline, and explicit
+parent-fallback rule. It should own a small state table:</p>
+<table>
+<thead>
+<tr>
+<th>Child</th>
+<th>Lens</th>
+<th>Path</th>
+<th>State</th>
+<th>Last checkpoint</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P</td>
+<td>product/vision</td>
+<td>fixed path</td>
+<td>state plus attempt/lease</td>
+<td>timestamp</td>
+<td>content/readiness</td>
+</tr>
+<tr>
+<td>A</td>
+<td>architecture/security</td>
+<td>fixed path</td>
+<td>state plus attempt/lease</td>
+<td>timestamp</td>
+<td>content/readiness</td>
+</tr>
+<tr>
+<td>E</td>
+<td>implementation/evidence</td>
+<td>fixed path</td>
+<td>state plus attempt/lease</td>
+<td>timestamp</td>
+<td>content/readiness</td>
+</tr>
+</tbody>
+</table>
+<p>The parent may not claim completion until all three paths exist, their
+independence status is known, and it has written its own summary. If the parent
+stalls, the main process may write a reconciliation fallback, but the final
+package must say PARENT_FALLBACK and retain the child reports as the independent
+evidence. A parent fallback is a synthesis substitute, never a fourth
+independent lens.</p>
+<p>The parent summary is promoted through the same ledger transaction as a child
+artifact: validate all three child references, record their digests and verdict
+axes, then publish an immutable parent artifact. A parent stop or replacement
+cannot mutate a child’s state. The main process owns the parent’s final stop
+decision; the parent may request a stop but cannot authorize its own fallback.</p>
+<h3 id="phase-6-enforce-the-ten-minute-monitor">Phase 6 — Enforce the ten-minute monitor</h3>
+<p>The monitor should run from a durable state file or scheduler, not from memory.
+The controller should perform an immediate launch check and then observe on a
+maximum ten-minute interval with bounded jitter; “every ten minutes” must not
+depend on an exact wall-clock tick. A single writer or idempotent claim key
+must prevent two monitors from stopping or replacing the same attempt. Each
+observation should append:</p>
+<ol>
+<li>child state, last checkpoint, lease, and deadline;</li>
+<li>the classification: active, stale, materialized, blocked, failed, or
+   monitor_inconclusive;</li>
+<li>progress against the current bar;</li>
+<li>the chosen action and its idempotency key;</li>
+<li>what is working, what is not, what changed, and what will be optimized.</li>
+</ol>
+<p>The monitor must distinguish a slow but healthy attempt from a dead one using
+heartbeats and progress evidence. If the monitor itself is unavailable, the
+run fails closed with monitor_inconclusive; it must not infer health from
+silence. The monitor is not there to generate more prose. It is there to make
+silence observable and intervention auditable.</p>
+<p>The heartbeat event must include run_id, attempt_id, lease_epoch, monotonic
+timestamp, last completed unit, current state, and controller version. The
+monitor owns one durable claim key per intervention, for example
+attempt_id plus deadline plus action. On restart it reloads the last observation
+and claim keys before taking action; an already-claimed stop or replacement is
+not repeated. A monitor observation that cannot read the ledger, validate the
+clock anchor, or acquire its claim is monitor_inconclusive and cannot advance a
+lane.</p>
+<h3 id="phase-7-close-with-a-fail-closed-gate">Phase 7 — Close with a fail-closed gate</h3>
+<p>The package cannot be marked ready if:</p>
+<ul>
+<li>a required report is missing;</li>
+<li>a fallback is presented as independent evidence;</li>
+<li>a claim lacks a raw artifact pointer;</li>
+<li>a high-severity reviewer finding is unresolved;</li>
+<li>a real-provider or real-transport claim has only fixture evidence;</li>
+<li>the original request ledger has an unclassified requirement;</li>
+<li>the evidence manifest cannot explain where the session records went.</li>
+</ul>
+<p>The controller should maintain this stop matrix, with each row persisted as a
+decision event:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Severity</th>
+<th>Authority</th>
+<th>State/evidence</th>
+<th>Owner and recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>write-boundary violation or ownership conflict</td>
+<td>critical</td>
+<td>main controller</td>
+<td>stop, preserve artifact and lease event</td>
+<td>main owner; no replacement until conflict resolved</td>
+</tr>
+<tr>
+<td>stale source snapshot or malformed artifact</td>
+<td>high</td>
+<td>evidence validator</td>
+<td>blocked with invalid digest or schema result</td>
+<td>evidence owner; reopen as a new attempt</td>
+</tr>
+<tr>
+<td>monitor cannot read ledger or trusted clock</td>
+<td>high</td>
+<td>monitor</td>
+<td>monitor_inconclusive with last observation</td>
+<td>main owner; restore monitor, no lane advance</td>
+</tr>
+<tr>
+<td>checkpoint or attempt budget exhausted</td>
+<td>medium/high</td>
+<td>deadline controller</td>
+<td>stopped with deadline event</td>
+<td>lane owner; one fenced replacement if eligible</td>
+</tr>
+<tr>
+<td>unsafe unknown outcome</td>
+<td>critical</td>
+<td>effect/control owner</td>
+<td>blocked with immutable unknown receipt</td>
+<td>domain owner; reconcile before any retry</td>
+</tr>
+<tr>
+<td>missing independent evidence or known-red gate</td>
+<td>high</td>
+<td>publication gate</td>
+<td>readiness blocked with missing requirement</td>
+<td>main owner; obtain independent evidence or stop</td>
+</tr>
+<tr>
+<td>ordinary lane failure</td>
+<td>medium</td>
+<td>main controller</td>
+<td>failed with error receipt</td>
+<td>lane owner; fence, then apply fallback predicate</td>
+</tr>
+</tbody>
+</table>
+<p>Resume means a new attempt with a new ID, not mutation of a stopped attempt.
+The run must also carry forward the repository’s behavior model, file-ownership
+contract, named gates, and known-red list from
+docs/subagent-orchestration.md. Those are operating constraints, not optional
+background reading.</p>
+<h2 id="metrics-for-future-loops">Metrics for future loops</h2>
+<p>Track the loop itself, not just the number of agents. Every metric needs a
+run ID, attempt ID, event source, time window, numerator, denominator, owner,
+and threshold:</p>
+<ul>
+<li>time to first checkpoint;</li>
+<li>time to materialized report;</li>
+<li>stale-lane rate;</li>
+<li>fallback rate;</li>
+<li>correction rate;</li>
+<li>independent-report coverage;</li>
+<li>percentage of article claims with raw evidence pointers;</li>
+<li>repeated-reading overlap across lanes;</li>
+<li>unresolved high-severity findings at each gate;</li>
+<li>parent-summary materialization time;</li>
+<li>monitor observations completed versus expected;</li>
+<li>false-stale interventions;</li>
+<li>late artifacts after stop or fallback;</li>
+<li>correction latency and time to fence;</li>
+<li>monitor-inconclusive outcomes;</li>
+<li>token and cost budget consumption;</li>
+<li>decision quality against the declared acceptance test.</li>
+</ul>
+<p>Agent count is an explanatory variable, not an objective. A lower count may be
+better, but only if decision quality and evidence coverage remain above their
+declared thresholds.</p>
+<p>The first rollout should publish formulas and thresholds before it starts. For
+example: checkpoint latency is checkpoint event time minus dispatch event time;
+independent-report coverage is accepted independent reports divided by required
+independent reports; stale rate is stale attempts divided by started attempts;
+late-artifact rate is quarantined late artifacts divided by terminal attempts;
+and claim coverage is claims with a validated manifest pointer divided by all
+material claims. The owner of each metric records the denominator window and
+the threshold; missing telemetry is unknown, not zero.</p>
+<h2 id="keep-stop-add">Keep, stop, add</h2>
+<table>
+<thead>
+<tr>
+<th>Keep</th>
+<th>Stop</th>
+<th>Add</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bar before delegation</td>
+<td>Treating dispatch as progress</td>
+<td>Explicit state machine</td>
+</tr>
+<tr>
+<td>Disjoint report ownership</td>
+<td>Broad briefs with no early artifact</td>
+<td>Evidence manifest at minute zero</td>
+</tr>
+<tr>
+<td>Fact/inference/proposal labels</td>
+<td>Endless waits for silent synthesis</td>
+<td>Checkpoint deadlines</td>
+</tr>
+<tr>
+<td>Independent lenses</td>
+<td>Counting fallback as independence</td>
+<td>Fallback authority label</td>
+</tr>
+<tr>
+<td>Real-provider evidence boundary</td>
+<td>Calling fixtures intelligence</td>
+<td>Fail-closed readiness</td>
+</tr>
+<tr>
+<td>Durable docs package</td>
+<td>Manual-only ten-minute monitoring</td>
+<td>Durable heartbeat/monitor</td>
+</tr>
+<tr>
+<td>Correction loops</td>
+<td>Copy-only “fixes”</td>
+<td>Separate content/readiness/authorization verdicts</td>
+</tr>
+</tbody>
+</table>
+<h2 id="final-assessment">Final assessment</h2>
+<p>What I actually followed was most of the user’s requested architecture:
+branch, previous-study reading, three specialist roles, bars, two-agent
+brainstorming, three product-engineering lenses, nested orchestration, durable
+docs, and evidence retrieval.
+(evidence/original-request.md:15-29;
+evidence/source-snapshots/branch-state.md:5-12;
+evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:7-11,36-47,96-119)</p>
+<p>What I did not fully follow was equally important:</p>
+<ul>
+<li>the architecture specialist did not produce an independent report;</li>
+<li>the parent orchestrator did not produce its own summary;</li>
+<li>the ten-minute check was manual rather than automated;</li>
+<li>no initial evidence manifest is evidenced in the retained original artifacts;</li>
+<li>the final package remained system-unready because real experience evidence and
+  several high-severity Tamoz fixes were still open.
+(evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:108-119;
+evidence/refresh-package/openclaw-chat-study-refresh/04-correction-log.md:74-119)</li>
+</ul>
+<p>Editorial assessment: the result is therefore not a failure. It is a qualified
+success, not a measured product outcome:</p>
+<p><strong>The loop was good enough to discover real defects and produce a useful
+roadmap. It was not yet good enough to make every delegated result independently
+auditable or to prove the product experience itself.</strong>
+(evidence/refresh-package/openclaw-chat-study-refresh/03-evidence-index.md:15-30;
+evidence/refresh-package/openclaw-chat-study-refresh/product-engineering-reviews/00-orchestrator.md:16-20,108-119)</p>
+<p>That is exactly the kind of result a serious loop should report.</p>
+        </div>
+
+      </article>
+
+      <aside class="article-sidebar">
+        <h3 class="article-sidebar__title">More Articles</h3>
+        <div class="article-sidebar__list" id="articleSidebarList">
+          <p class="articles-preview__loading">Loading...</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>

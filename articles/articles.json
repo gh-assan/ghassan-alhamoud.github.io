@@ -1,5 +1,19 @@
 [
   {
+    "slug": "agent-loop-postmortem",
+    "title": "The Loop Passed Its Research Bar, Not Its Implementation Bar",
+    "date": "2026-09-01",
+    "excerpt": "A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane.",
+    "readingTime": "30 min",
+    "tags": [
+      "Agent Orchestration",
+      "Postmortem",
+      "Verification",
+      "AI Engineering",
+      "Reliability"
+    ]
+  },
+  {
     "slug": "nineteen-agents-one-working-directory",
     "title": "Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner",
     "date": "2026-08-26",
