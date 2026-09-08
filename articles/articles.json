@@ -179,9 +179,9 @@
   },
   {
     "slug": "stop-building-agent-soup-compilers",
-    "title": "Stop Building Agent Soup: Use Compiler-Style Agent Workflows",
+    "title": "Stop Building “Agent Soup”: A Compiler-Style Multi-Agent Workflow",
     "date": "2026-03-10",
-    "excerpt": "A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects.",
+    "excerpt": "A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate capabilities and policy, execute deterministically, verify effects.",
     "readingTime": "12 min",
     "tags": [
       "AI Agents",
