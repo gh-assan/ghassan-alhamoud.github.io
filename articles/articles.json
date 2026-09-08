@@ -468,7 +468,7 @@
     "slug": "every-token-is-rent-memory-architecture",
     "title": "Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting",
     "date": "2026-04-01",
-    "excerpt": "A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting.",
+    "excerpt": "Agent memory architecture as a production lifecycle: admission gates, provenance-aware retrieval, consolidation, forgetting, deletion, and evaluation.",
     "readingTime": "14 min",
     "tags": [
       "Agent Memory",
