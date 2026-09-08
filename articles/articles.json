@@ -304,9 +304,9 @@
   },
   {
     "slug": "5-infrastructure-layers-broke-agent",
-    "title": "Five Infrastructure Layers Every Production AI Agent Needs",
+    "title": "5 Infrastructure Layers Every Production AI Agent Needs",
     "date": "2026-05-04",
-    "excerpt": "A production AI agent reference architecture covering transport, policy, orchestration, verification and recovery, and observability—with interfaces, failure modes, and readiness gates.",
+    "excerpt": "5 infrastructure layers every production AI agent needs: transport, identity and policy, orchestration, verification, observability, and readiness gates.",
     "readingTime": "13 min",
     "tags": [
       "AI Agents",
