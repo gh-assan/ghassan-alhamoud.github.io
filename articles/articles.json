@@ -360,9 +360,9 @@
   },
   {
     "slug": "systematic-ideation-engine",
-    "title": "Build an Ideation Engine: A Repeatable Product Discovery System",
+    "title": "How to Build a Product Ideation Engine: A Repeatable Discovery System",
     "date": "2026-03-20",
-    "excerpt": "A practical product ideation system with three analytical lenses, hard quality gates, deduplication, a weighted scorecard, rejected ideas, and a copyable validation workflow.",
+    "excerpt": "How to build a product ideation engine, a repeatable discovery system: three lenses, hard gates, dedup by problem, evidence-weighted scoring, and a learning loop.",
     "readingTime": "12 min",
     "tags": [
       "Ideation",
