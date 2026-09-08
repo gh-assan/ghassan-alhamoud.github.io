@@ -1,9 +1,9 @@
 [
   {
     "slug": "agent-loop-postmortem",
-    "title": "The Loop Passed Its Research Bar, Not Its Implementation Bar",
+    "title": "Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It",
     "date": "2026-09-01",
-    "excerpt": "A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane.",
+    "excerpt": "Agent review loop postmortem: what the evidence proved, where nested delegation and monitoring stalled, and a smaller control plane to fix it next time.",
     "readingTime": "30 min",
     "tags": [
       "Agent Orchestration",
