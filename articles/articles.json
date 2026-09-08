@@ -389,7 +389,7 @@
     "slug": "compliance-as-code-eu-ai-act",
     "title": "Compliance as Code for the EU AI Act: An Engineering Framework",
     "date": "2026-03-25",
-    "excerpt": "A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages.",
+    "excerpt": "Compliance as code for the EU AI Act: turn obligations into versioned controls and reproducible evidence, with CI change-impact and an audit package.",
     "readingTime": "14 min",
     "tags": [
       "EU AI Act",
