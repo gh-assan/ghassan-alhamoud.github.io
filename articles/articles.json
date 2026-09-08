@@ -74,9 +74,9 @@
   },
   {
     "slug": "testing-tuis-with-tmux",
-    "title": "Testing Terminal UIs with tmux: A Deterministic PTY Workflow",
+    "title": "How to Test Terminal UIs with tmux: A Deterministic PTY Workflow",
     "date": "2026-07-02",
-    "excerpt": "A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script.",
+    "excerpt": "Test terminal UIs with tmux: a copyable black-box workflow using a real PTY, explicit dimensions, state polling, focus handling, a size matrix, and a CI fixture.",
     "readingTime": "12 min",
     "tags": [
       "TUI",
