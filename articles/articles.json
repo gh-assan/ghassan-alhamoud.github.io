@@ -289,9 +289,9 @@
   },
   {
     "slug": "5-failures-building-agent-3-months",
-    "title": "Five Failures From Three Months Building a Personal AI Agent",
+    "title": "5 Failures From 3 Months Building a Production AI Agent",
     "date": "2026-05-04",
-    "excerpt": "A documented failure timeline from three months operating a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and unverified fixes.",
+    "excerpt": "5 failures from 3 months building a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and premature closure.",
     "readingTime": "11 min",
     "tags": [
       "AI Agents",
