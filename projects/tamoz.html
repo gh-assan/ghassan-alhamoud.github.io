@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tamoz — Open Source Project — Ghassan Alhamoud</title>
-  <meta name="description" content="Tamoz is a Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows." />
+  <meta name="description" content="Tamoz is a Ruby-native durable agent framework for reviewed, explainable decisions, bounded actions, and crash-safe recovery." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz.html" />
-  <meta property="og:title" content="Tamoz — Ruby-Native Durable Agent Framework" />
-  <meta property="og:description" content="Checkpointed, interruptible, observable, and evaluation-governed AI workflows for Ruby." />
+  <meta property="og:title" content="Tamoz: An agent that makes sense of the world and acts on it" />
+  <meta property="og:description" content="Reviewed, explainable decisions, bounded actions, and crash-safe recovery for Ruby agents." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
@@ -19,7 +19,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
     "name": "Tamoz",
-    "description": "Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows.",
+    "description": "Ruby-native durable agent framework for reviewed, explainable decisions, bounded actions, and crash-safe recovery.",
     "programmingLanguage": "Ruby",
     "codeRepository": "https://github.com/ghassan-ai-projects/tamoz",
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
@@ -48,8 +48,8 @@
     <div class="container article-layout">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>In active development · Open Source</span><span class="article-card__dot"></span><span>Ruby / SQLite / RubyLLM</span></div>
-          <h1 class="article-single__title">Tamoz: durable agent workflows for Ruby</h1>
+          <div class="article-single__meta"><span>Public release · MIT</span><span class="article-card__dot"></span><span>Ruby / SQLite / durable agent runtime</span></div>
+          <h1 class="article-single__title">Tamoz: an agent that makes sense of the world and acts on it</h1>
           <div class="article-single__tags"><span class="article-single__tag">Agent Framework</span><span class="article-single__tag">Durability</span><span class="article-single__tag">Evaluation</span></div>
           <div class="project-single__actions">
             <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
@@ -57,44 +57,57 @@
         </header>
 
         <div class="project-facts">
-          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Agent runtimes need durable execution, explicit review boundaries, and evidence before they can be trusted with real work.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">Ruby monorepo with core protocols, graph execution, SQLite persistence, agent runtime, and eval gems.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">In active development; core, graph, SQLite, agent, and evaluation foundations are underway.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">You can't trust an agent with real work until it survives a crash, shows what it's about to do, and stops at the right line.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">A Ruby monorepo of small, independently shippable gems. It's the part that thinks in a larger three-repo system, not the whole thing.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public and MIT-licensed, out today. It's early (<code>0.1.0.alpha.1</code>), and I've kept the rough edges written down rather than hidden. Release claims are backed by generated test evidence; the hardware boundary is stated separately below.</span></div>
         </div>
 
         <figure class="artifact-frame">
-          <pre><code>$ tamoz run support-triage.graph
-[graph]  node "intake" done      &rarr; checkpoint cp_0142 written (SQLite)
-[graph]  node "draft-reply"      &rarr; reducer applied, state v18
-[effect] journal staged: fs.write workspace/notes/ticket-4417.md
-[gate]   1 effect pending review &rarr; run paused, interrupt recorded
-$ tamoz review cp_0142 --approve
-[graph]  resume from cp_0142     &rarr; deterministic replay, no drift
-[effect] journal committed       &rarr; boundary audit logged</code></pre>
-          <figcaption class="evidence-caption">Design artifact — the checkpoint loop composed from the public repo's documented primitives (deterministic graph execution, checkpoints, reducers, effect journals, review gates). The acceptance discipline behind it comes from a documented failure: <a href="/articles/smart-models-go-stupid.html">6,142 lines of TUI design became a 280-line REPL</a>.</figcaption>
+          <pre><code>$ tamoz --root . --allow-changes --check 'test=rake test' "Fix the failing parser test"
+[discovery] read 4 files            &rarr; evidence only, no changes proposed
+[plan]      action plan reviewed    &rarr; bound to digest 9f2c17…
+[effect]    diff staged  lib/parser.rb (+6 &minus;2)  &rarr; approval required, run paused
+$ tamoz resolve 1f4a --approve
+[patch]     atomic apply            &rarr; checkpoint committed (SQLite)
+[check]     rake test               &rarr; green; verification recorded</code></pre>
+          <figcaption class="evidence-caption">A design sketch, not a recording. It's the reviewed change loop, built from the public repo's own building blocks: a read-only look first, then a plan pinned to its digest, the exact diff before you approve, an atomic patch, and a check that has to pass. I learned to work this way the hard way: <a href="/articles/smart-models-go-stupid.html">6,142 lines of TUI design became a 280-line REPL</a>.</figcaption>
         </figure>
 
         <div class="article-single__body project-single__body">
-          <p>Tamoz is a Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows. It is structured as a monorepo of independently publishable gems rather than one large runtime.</p>
-          <p>The current build is risk-first. Evaluation contracts come before broad agent behavior. Deterministic graph execution comes before persistence. Persistence comes before larger model-driven workflows. The result is slower than a demo framework, but the boundaries are easier to inspect.</p>
+          <p>Tamoz is a durable agent framework for Ruby. The idea behind it is plain: an agent should be able to do real work without losing its mind when something goes wrong. A single turn runs as a graph over a SQLite checkpoint store, so it survives a <code>kill -9</code>, picks up from the last committed step, and figures out what happened to an interrupted side effect instead of guessing. It won't act without a plan you can read first, and it won't touch a file without your approval.</p>
+          <p>I built it in the least exciting order on purpose. Evaluation came before behavior, deterministic execution before persistence, persistence before anything model-driven. That makes it slower to demo than most frameworks, and I'm fine with that. The whole point is that you can look inside and see where the edges are. Even the "what's released" status is generated by running the tests, not written by me in a hopeful paragraph.</p>
 
-          <h2>Design</h2>
-          <p>The design is a monorepo of independently publishable gems, built risk-first: evaluation contracts come before broad agent behavior, deterministic graph execution comes before persistence, and persistence comes before larger model-driven workflows. Checkpoints, interrupts, reducers, effect journals, leases, and boundary audits are primitives of the runtime, not add-ons, and Tamoz Agent acts only through a reviewed plan-before-action loop with workspace-confined tools.</p>
+          <h2>Three repos, one job each</h2>
+          <p>On its own, Tamoz is deliberately narrow. It's the part that thinks: it reads a sealed, versioned snapshot of a situation and answers with a decision or an intent. It never touches the serial port, the PWM loop, or a safety stop. That's someone else's job, on purpose. Two sibling repos handle the rest:</p>
+          <ul>
+            <li><a href="https://github.com/ghassan-ai-projects/agentic-stream" target="_blank" rel="noopener noreferrer"><strong>Agentic Stream</strong></a> (Go, Apache-2.0) is the always-on side. It processes events as they arrive, builds the situations Tamoz reads, and runs the policy that decides what's actually allowed to happen.</li>
+            <li><a href="https://github.com/ghassan-ai-projects/streams-simulator" target="_blank" rel="noopener noreferrer"><strong>Streams Simulator</strong></a> (Go, MIT) is a world I can replay on demand. It keeps "what really happened" separate from "what the system was told," then scores the agent against the truth.</li>
+          </ul>
+          <p>That split is the whole point. The model is allowed to say "cool things down" (<code>bounded_cooling</code>). It is never allowed to pick the exact PWM value or how long the motor runs. Policy owns the physical envelope, every time.</p>
+
+          <h2>How it's put together</h2>
+          <p>Under the hood it's a monorepo of small gems, each one installing with only what it actually needs. Checkpoints, interrupts, effect journals, leases, audit trails: those are the building blocks, not features I bolted on afterward. There's no third-party agent library doing the thinking; the model connection is my own, pinned to a digest and speaking a plain OpenAI-compatible protocol. The reference app, Tamoz Agent, can only act through a plan-review-act loop, inside a workspace it's allowed to touch, with one sealed set of capabilities. A skill or a tool description can ask for more power, but it can never hand itself any.</p>
+
+          <h2>I wired it to a real motor</h2>
+          <p>I wanted to watch the boundary hold on actual hardware, so I connected the wider system to an Arduino and a small motor. Tamoz proved that a real model could select a bounded cooling mode without choosing PWM or timing. In a separate hardware run, deterministic policy produced a bounded command and the motor spun before an explicit safe-stop returned the board to a safe state.</p>
+          <p class="evidence-caption">What actually happened: I watched the motor run under a governed direct-serial command (bounded PWM, a 10-second lease, and an explicit safe-stop). What's still work in progress: the reviewed Tamoz-to-Agentic Stream conversion seam, the full live loop end to end, the complete fault-and-recovery matrix, independent sensors confirming motion, and a long soak run.</p>
 
           <h2>Why I built it</h2>
-          <p>Most agent systems fail at the edges: repeated side effects, ambiguous recovery, hidden state, unreviewed edits, weak verification, and no durable evidence trail. Tamoz treats those as first-order product requirements instead of cleanup work after the agent can already act.</p>
+          <p>Most agent demos look great right up until they hit the edges: the same side effect fires twice, a crash leaves things half-done, edits land without anyone reviewing them, and there's no record of what happened or why. I got tired of treating all of that as cleanup you do later. In Tamoz it's the starting requirement. Effects are assumed to run at-least-once unless I can prove otherwise, and anything genuinely ambiguous stops and asks a human rather than quietly retrying.</p>
 
-          <h2>What to inspect</h2>
+          <h2>If you want to poke at it</h2>
+          <p>A few places I'd open first:</p>
           <ul>
-            <li>Core runtime values for context isolation, cancellation, streams, and state codecs.</li>
-            <li>Deterministic graph execution with checkpoints, interrupts, reducers, and subgraph support.</li>
-            <li>SQLite durability for checkpoints, effect journals, leases, backups, and boundary audits.</li>
-            <li>Tamoz Agent's reviewed plan-before-action loop with workspace-confined tools.</li>
-            <li>Evaluation artifacts, scorecards, schemas, and conformance fixtures that describe release evidence.</li>
+            <li>The graph engine: checkpointed, deterministic, with interrupts and reducers so a run can pause and resume without drifting.</li>
+            <li>The SQLite layer that holds the checkpoints, the effect journal, leases, backups, and audit trail.</li>
+            <li>Tamoz Agent's plan-review-act loop, its sealed capabilities, and sessions that survive across restarts.</li>
+            <li>The episode worker and the Situation boundary: the seam where Tamoz meets the stream.</li>
+            <li>Governed MCP, layered durable memory, bounded self-healing, and the approval engine driven by policy-as-data.</li>
+            <li>The evals: scorecards and a requirements audit that's regenerated by running each named test.</li>
           </ul>
 
-          <h2>Why it belongs here</h2>
-          <p>Tamoz reflects the same engineering thesis behind my other agent infrastructure work: autonomy needs contracts, recovery paths, observability, and evaluation gates. The project is still in progress, but the architectural direction is already visible in the code and docs.</p>
+          <h2>Why it's here</h2>
+          <p>Tamoz is the clearest version of something I keep coming back to: if you want an agent to be trusted, you have to give it contracts, a way to recover, something to watch, and gates it has to pass. It's early (<code>0.1.0.alpha.1</code>, gaps and all, written down where you can see them), but the direction is already there in the code, the docs, and a physical boundary being tested one claim at a time.</p>
         </div>
       </article>
     </div>

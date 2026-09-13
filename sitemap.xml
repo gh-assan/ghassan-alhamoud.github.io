@@ -3,15 +3,21 @@
   
   <ns0:url>
     <ns0:loc>https://ghassan-alhamoud.com/</ns0:loc>
-    <ns0:lastmod>2026-09-08</ns0:lastmod>
+    <ns0:lastmod>2026-09-14</ns0:lastmod>
     <ns0:changefreq>weekly</ns0:changefreq>
     <ns0:priority>1.0</ns0:priority>
   </ns0:url>
   <ns0:url>
     <ns0:loc>https://ghassan-alhamoud.com/articles/</ns0:loc>
-    <ns0:lastmod>2026-09-08</ns0:lastmod>
+    <ns0:lastmod>2026-09-14</ns0:lastmod>
     <ns0:changefreq>weekly</ns0:changefreq>
     <ns0:priority>0.9</ns0:priority>
+  </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html</ns0:loc>
+    <ns0:lastmod>2026-09-14</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.8</ns0:priority>
   </ns0:url>
   <ns0:url>
     <ns0:loc>https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html</ns0:loc>
@@ -39,7 +45,7 @@
   </ns0:url>
   <ns0:url>
     <ns0:loc>https://ghassan-alhamoud.com/projects/tamoz.html</ns0:loc>
-    <ns0:lastmod>2026-07-31</ns0:lastmod>
+    <ns0:lastmod>2026-09-14</ns0:lastmod>
     <ns0:changefreq>monthly</ns0:changefreq>
     <ns0:priority>0.8</ns0:priority>
   </ns0:url>

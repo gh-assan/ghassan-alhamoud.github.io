@@ -1,5 +1,19 @@
 [
   {
+    "slug": "agent-spun-the-motor",
+    "title": "When an AI Agent Met a Real Motor: Energized Is Not Spinning",
+    "date": "2026-09-14",
+    "excerpt": "A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open.",
+    "readingTime": "9 min",
+    "tags": [
+      "AI Agents",
+      "Hardware",
+      "Governance",
+      "Verification",
+      "AI Engineering"
+    ]
+  },
+  {
     "slug": "agent-loop-postmortem",
     "title": "Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It",
     "date": "2026-09-01",
