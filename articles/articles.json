@@ -1,9 +1,9 @@
 [
   {
     "slug": "agent-loop-postmortem",
-    "title": "The Loop Passed Its Research Bar, Not Its Implementation Bar",
+    "title": "Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It",
     "date": "2026-09-01",
-    "excerpt": "A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane.",
+    "excerpt": "Agent review loop postmortem: what the evidence proved, where nested delegation and monitoring stalled, and a smaller control plane to fix it next time.",
     "readingTime": "30 min",
     "tags": [
       "Agent Orchestration",
@@ -17,7 +17,7 @@
     "slug": "nineteen-agents-one-working-directory",
     "title": "Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner",
     "date": "2026-08-26",
-    "excerpt": "How a shared queue, bounded ownership, independent review, and a commit chokepoint turned nineteen coding agents into one controlled engineering system.",
+    "excerpt": "A multi-agent coding field report: coordinating 19 agents in one working directory with bounded ownership, independent review, and a single commit chokepoint.",
     "readingTime": "10 min",
     "tags": [
       "Multi-Agent Systems",
@@ -31,7 +31,7 @@
     "slug": "film-pipeline-open-source",
     "title": "I Made an AI Film Pipeline. Now It's Open Source.",
     "date": "2026-07-31",
-    "excerpt": "The LangGraph rebuild behind my AI film pipeline is public: typed state, real human gates, MCP tools, QC evidence, and honest production boundaries.",
+    "excerpt": "An open-source LangGraph AI film pipeline: typed state, real human gates, MCP tools, versioned artifacts, QC evidence, and honest production boundaries.",
     "readingTime": "9 min",
     "tags": [
       "AI Film",
@@ -44,9 +44,9 @@
   },
   {
     "slug": "automation-miner-open-source",
-    "title": "I Stopped Guessing What to Automate. So I Built an Open-Source Miner.",
+    "title": "An Open-Source Miner for Finding Automation Opportunities",
     "date": "2026-07-27",
-    "excerpt": "Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating.",
+    "excerpt": "An open-source miner for finding automation opportunities: domain evidence becomes a citable, scored portfolio via LangGraph, MCP, and ICE.",
     "readingTime": "8 min",
     "tags": [
       "Open Source",
@@ -61,7 +61,7 @@
     "slug": "email-intelligence-protocol",
     "title": "Your Agent Does Not Need Inbox Access. It Needs Email Intelligence.",
     "date": "2026-07-24",
-    "excerpt": "Raw mailbox access gave my agents messages, not understanding — and exposed them to untrusted content. So I built an open-source, local-first email intelligence layer.",
+    "excerpt": "A local-first email intelligence layer for AI agents: durable state, prompt-injection scanning, and draft-first sending with Maildir, SQLite, and MCP.",
     "readingTime": "6 min",
     "tags": [
       "Open Source",
@@ -74,9 +74,9 @@
   },
   {
     "slug": "testing-tuis-with-tmux",
-    "title": "Testing Terminal UIs with tmux: A Deterministic PTY Workflow",
+    "title": "How to Test Terminal UIs with tmux: A Deterministic PTY Workflow",
     "date": "2026-07-02",
-    "excerpt": "A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script.",
+    "excerpt": "Test terminal UIs with tmux: a copyable black-box workflow using a real PTY, dimensions, state polling, focus handling, a size matrix, and a CI fixture.",
     "readingTime": "12 min",
     "tags": [
       "TUI",
@@ -89,9 +89,9 @@
   },
   {
     "slug": "alms-okf-integration-bridge",
-    "title": "From Agent Experience to Portable Knowledge: Integrating ALMS and OKF",
+    "title": "Turn Agent Experience into Shared Knowledge: An ALMS→OKF Export Bridge",
     "date": "2026-07-02",
-    "excerpt": "A governed promotion path from ALMS operational learnings to portable OKF bundles: thresholds, provenance, conflicts, security, and version compatibility.",
+    "excerpt": "A governed path from AI agent learnings to portable OKF knowledge: export filters, provenance, conflict handling, and a security boundary.",
     "readingTime": "12 min",
     "tags": [
       "AI Agents",
@@ -106,7 +106,7 @@
     "slug": "smart-models-go-stupid",
     "title": "Why a Strong Coding Agent Failed a TUI Task: A Detailed Case Study",
     "date": "2026-06-24",
-    "excerpt": "A repository-backed case study: 6,142 lines of TUI design became a 280-line input/print REPL. Here is the acceptance gap and the workflow that later produced the real application.",
+    "excerpt": "A repository-backed case study: 6,142 lines of TUI design became a 280-line REPL. Here is the acceptance gap and the delivery contract that fixed it.",
     "readingTime": "11 min",
     "tags": [
       "AI Agents",
@@ -120,9 +120,9 @@
   },
   {
     "slug": "alms-open-source-shared-agent-memory",
-    "title": "ALMS: Shared Operational Memory for Autonomous Agents via MCP",
+    "title": "Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)",
     "date": "2026-06-11",
-    "excerpt": "Inside ALMS 0.1.0: a Go/PostgreSQL MCP control plane for shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits.",
+    "excerpt": "Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.",
     "readingTime": "9 min",
     "tags": [
       "Open Source",
@@ -139,7 +139,7 @@
     "slug": "ai-coded-83-mcp-tools-marathon",
     "title": "Auditing a 12-Hour AI Go Code-Generation Marathon",
     "date": "2026-05-31",
-    "excerpt": "A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, and a reusable release gate.",
+    "excerpt": "A repository-backed audit of an AI-assisted Go code-generation marathon: 32 feature commits, a variable-corruption bug, and a reusable release gate.",
     "readingTime": "12 min",
     "tags": [
       "AI Agents",
@@ -155,7 +155,7 @@
     "slug": "entity-database-zero-ui-agents",
     "title": "Agent-First Entity Database: Schema, MCP Contract, and Benchmarks",
     "date": "2026-05-28",
-    "excerpt": "Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts.",
+    "excerpt": "A zero-UI, agent-first entity database on DuckDB: field-level provenance, four bounded MCP tools, measured query latency, and conservative entity resolution.",
     "readingTime": "12 min",
     "tags": [
       "AI Agents",
@@ -168,7 +168,7 @@
     "slug": "orchestrator-qwen-acp-handoff",
     "title": "Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates",
     "date": "2026-05-28",
-    "excerpt": "A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures.",
+    "excerpt": "A production pattern for delegating coding work between AI agents: typed scope, permissions, idempotency, lifecycle states, and integration acceptance evidence.",
     "readingTime": "13 min",
     "tags": [
       "AI Agents",
@@ -179,9 +179,9 @@
   },
   {
     "slug": "stop-building-agent-soup-compilers",
-    "title": "Stop Building Agent Soup: Use Compiler-Style Agent Workflows",
+    "title": "Stop Building \"Agent Soup\": A Compiler-Style Multi-Agent Workflow",
     "date": "2026-03-10",
-    "excerpt": "A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects.",
+    "excerpt": "A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate policy, execute deterministically, and verify effects.",
     "readingTime": "12 min",
     "tags": [
       "AI Agents",
@@ -194,7 +194,7 @@
     "slug": "a2a-negotiation-outreach",
     "title": "Agent-to-Agent Negotiation by Email: A Pre-Experiment Protocol",
     "date": "2026-04-12",
-    "excerpt": "An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol.",
+    "excerpt": "An honest pre-experiment protocol for AI agent negotiation over email: hypotheses, pre-registered metrics, safety controls, a dry run, and go/no-go gates.",
     "readingTime": "10 min",
     "tags": [
       "AI Agents",
@@ -205,9 +205,9 @@
   },
   {
     "slug": "automation-pattern-6-industries",
-    "title": "The Same Automation Pattern Across Six Industries: A Comparative Study",
+    "title": "One Automation Pattern Across Six Industries: A Comparative Study",
     "date": "2026-05-02",
-    "excerpt": "A six-domain comparison of top-scoring automation candidates: triggers, bottlenecks, available data, risks, expected value, confidence, and selection bias.",
+    "excerpt": "Comparing the top automation candidates across six industries: the recurring last-mile transformation pattern, and where inputs, risks, and authority differ.",
     "readingTime": "10 min",
     "tags": [
       "Automation",
@@ -222,7 +222,7 @@
     "slug": "ai-found-42-automation-opportunities",
     "title": "How an AI System Found and Scored 42 Automation Opportunities",
     "date": "2026-05-02",
-    "excerpt": "The published 42-item dataset behind a six-domain automation-discovery experiment, including score distribution, method, selection bias, and validation gates.",
+    "excerpt": "The published 42-item automation-discovery dataset: ICE scoring across six domains, what the scores establish, selection bias, and a validation funnel.",
     "readingTime": "10 min",
     "tags": [
       "Automation",
@@ -235,9 +235,9 @@
   },
   {
     "slug": "stress-test-self-healing-250-target",
-    "title": "What a 250-Item Agent Run Actually Proved",
+    "title": "What a 250-Item Agent Run Actually Proved: A Fault-Injection Postmortem",
     "date": "2026-05-03",
-    "excerpt": "An evidence-backed postmortem of a 252-item workflow, plus a reproducible 250-case protocol that tests recovery without confusing throughput with self-healing.",
+    "excerpt": "An evidence-backed agent-workflow postmortem and a reproducible 250-case fault-injection protocol: detection, verified recovery, and safety metrics.",
     "readingTime": "11 min",
     "tags": [
       "Reliability",
@@ -249,9 +249,9 @@
   },
   {
     "slug": "issue-management-system-property",
-    "title": "Issue Management as a Reliability Control Plane",
+    "title": "Issue Management as a Reliability Control Plane for AI Agents",
     "date": "2026-05-04",
-    "excerpt": "A durable issue-control-plane design for agent systems: fingerprints, lifecycle states, evidence-backed root cause, corrective-action classes, verification windows, recurrence, and machine-readable records.",
+    "excerpt": "A durable issue-control-plane design for AI agents: fingerprints, lifecycle, evidence-first root cause, corrective actions, and learning metrics.",
     "readingTime": "12 min",
     "tags": [
       "Reliability",
@@ -264,7 +264,7 @@
     "slug": "self-healing-architecture-feedback-loop",
     "title": "Self-Healing Agent Systems: A Bounded Remediation State Machine",
     "date": "2026-05-05",
-    "excerpt": "A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation.",
+    "excerpt": "Self-healing AI agent runtimes as a bounded state machine: typed detection, idempotency, invariant verification, compensation, and circuit breakers.",
     "readingTime": "13 min",
     "tags": [
       "Self-Healing",
@@ -277,7 +277,7 @@
     "slug": "workspace-indexing-3ms",
     "title": "How I Built a 3 ms Workspace Index for AI Agents",
     "date": "2026-05-06",
-    "excerpt": "A reproducible benchmark of a 302 KB semantic registry over 2,408 files, plus its schema, update strategy, correctness gates, and retrieval tradeoffs.",
+    "excerpt": "A reproducible workspace-index benchmark for AI agents: a compact semantic registry, measured JSON parse latency, and when to use a registry vs grep vs vectors.",
     "readingTime": "10 min",
     "tags": [
       "Architecture",
@@ -289,9 +289,9 @@
   },
   {
     "slug": "5-failures-building-agent-3-months",
-    "title": "Five Failures From Three Months Building a Personal AI Agent",
+    "title": "5 Failures From 3 Months Building a Personal AI Agent",
     "date": "2026-05-04",
-    "excerpt": "A documented failure timeline from three months operating a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and unverified fixes.",
+    "excerpt": "5 failures from 3 months building a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and premature closure.",
     "readingTime": "11 min",
     "tags": [
       "AI Agents",
@@ -304,9 +304,9 @@
   },
   {
     "slug": "5-infrastructure-layers-broke-agent",
-    "title": "Five Infrastructure Layers Every Production AI Agent Needs",
+    "title": "5 Infrastructure Layers Every Production AI Agent Needs",
     "date": "2026-05-04",
-    "excerpt": "A production AI agent reference architecture covering transport, policy, orchestration, verification and recovery, and observability—with interfaces, failure modes, and readiness gates.",
+    "excerpt": "5 infrastructure layers every production AI agent needs: transport, identity and policy, orchestration, verification, observability, and readiness gates.",
     "readingTime": "13 min",
     "tags": [
       "AI Agents",
@@ -320,7 +320,7 @@
     "slug": "agent-reasoning-discovery-fallacy",
     "title": "AI Agent Discovery Is a Bigger Bottleneck Than Reasoning",
     "date": "2026-03-08",
-    "excerpt": "A five-stage capability-discovery model for AI agents: registry, semantic matching, compatibility, trust qualification, and policy-aware runtime selection.",
+    "excerpt": "Capability discovery for AI agents: a five-stage pipeline from registry to runtime selection, with semantic matching, compatibility, and trust.",
     "readingTime": "12 min",
     "tags": [
       "AI Agents",
@@ -334,7 +334,7 @@
     "slug": "agent-black-box-skill-ledger",
     "title": "The Security Risks of Unverified AI Agent Skills",
     "date": "2026-03-12",
-    "excerpt": "A practical threat model for third-party agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove.",
+    "excerpt": "A practical threat model for third-party AI agent skills: identity, integrity, provenance, policy, safe behavior, and why a \"verified\" badge is not enough.",
     "readingTime": "8 min",
     "tags": [
       "AI Agents",
@@ -348,7 +348,7 @@
     "slug": "startup-intelligence-entity-graph",
     "title": "Build vs Buy Startup Intelligence: A Self-Hosted Entity Graph",
     "date": "2026-03-18",
-    "excerpt": "A practical build-vs-buy framework grounded in a working DuckDB entity graph with field-level provenance, agent queries, and measured limitations.",
+    "excerpt": "Build vs buy for startup intelligence data: a decision framework grounded in a self-hosted DuckDB entity graph with field-level provenance and honest limits.",
     "readingTime": "9 min",
     "tags": [
       "Startup Intelligence",
@@ -360,9 +360,9 @@
   },
   {
     "slug": "systematic-ideation-engine",
-    "title": "Build an Ideation Engine: A Repeatable Product Discovery System",
+    "title": "How to Build a Product Ideation Engine: A Repeatable Discovery System",
     "date": "2026-03-20",
-    "excerpt": "A practical product ideation system with three analytical lenses, hard quality gates, deduplication, a weighted scorecard, rejected ideas, and a copyable validation workflow.",
+    "excerpt": "How to build a product ideation engine for repeatable discovery: three lenses, hard gates, dedup by problem, evidence-weighted scoring, and a learning loop.",
     "readingTime": "12 min",
     "tags": [
       "Ideation",
@@ -375,7 +375,7 @@
     "slug": "agent-reliability-sla-infrastructure",
     "title": "Agent Reliability SLOs: Measure Correctness, Safety, and Recovery",
     "date": "2026-03-22",
-    "excerpt": "A practical SLI/SLO framework for production AI agents: eligible journeys, verified task success, unsafe and duplicate effects, evidence completeness, recovery time, error budgets, and burn-rate alerts.",
+    "excerpt": "An SLI/SLO and error-budget framework for production AI agents: verified task success, forbidden and duplicate effects, recovery, and burn-rate alerts.",
     "readingTime": "13 min",
     "tags": [
       "AI Agents",
@@ -389,7 +389,7 @@
     "slug": "compliance-as-code-eu-ai-act",
     "title": "Compliance as Code for the EU AI Act: An Engineering Framework",
     "date": "2026-03-25",
-    "excerpt": "A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages.",
+    "excerpt": "Compliance as code for the EU AI Act: versioned controls and reproducible evidence, without pretending code makes the legal determination.",
     "readingTime": "14 min",
     "tags": [
       "EU AI Act",
@@ -402,7 +402,7 @@
     "slug": "agent-execution-attestation",
     "title": "AI Agent Execution Attestation: A Verifiable Audit Trail",
     "date": "2026-03-28",
-    "excerpt": "A vendor-neutral execution-attestation design for AI agents: envelope schema, threat model, signing and verification flow, effect receipts, and a cryptographically verifiable example.",
+    "excerpt": "AI agent execution attestation, vendor-neutral: a signed envelope, delegated authority, effect receipts, a threat model, and a step-by-step verification flow.",
     "readingTime": "13 min",
     "tags": [
       "AI Agents",
@@ -414,9 +414,9 @@
   },
   {
     "slug": "startupgraph-insights-engine",
-    "title": "StartupGraph in Production: A Self-Hosted Startup Intelligence System",
+    "title": "Self-Hosted Startup Intelligence: A Working Case Study",
     "date": "2026-03-30",
-    "excerpt": "A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system.",
+    "excerpt": "A working self-hosted startup intelligence system: DuckDB, field-level provenance, deterministic query filters, MCP tools for agents, and honest limits.",
     "readingTime": "10 min",
     "tags": [
       "Startup Intelligence",
@@ -429,7 +429,7 @@
     "slug": "echoweave-on-device-narrative-os",
     "title": "Designing an On-Device Personal Memory System",
     "date": "2026-04-05",
-    "excerpt": "EchoWeave is an unbuilt design proposal for private personal memory: an on-device architecture, consent and deletion model, threat analysis, resource constraints, and validation plan.",
+    "excerpt": "An on-device personal memory architecture and privacy threat model: consent, provenance, deletion of derived data, and measured device resource budgets.",
     "readingTime": "12 min",
     "tags": [
       "Privacy",
@@ -440,9 +440,9 @@
   },
   {
     "slug": "dreamforge-automation-pipeline",
-    "title": "Designing a 90% Automated Product Pipeline—What Must Stay Human",
+    "title": "How Much of a Product Pipeline Can AI Agents Own? What Must Stay Human",
     "date": "2026-04-08",
-    "excerpt": "An honest architecture case study of DreamForge: what agents can own from idea to pull request, where human approval remains essential, and how to validate automation safely.",
+    "excerpt": "An honest product-to-code automation architecture: what AI agents can own, what must stay human, circuit breakers, and how to actually measure automation.",
     "readingTime": "11 min",
     "tags": [
       "Automation",
@@ -455,7 +455,7 @@
     "slug": "negotiation-veteran-collapse-llm-coach",
     "title": "How I Use an LLM to Prepare for a High-Stakes Negotiation",
     "date": "2026-04-10",
-    "excerpt": "A privacy-conscious LLM negotiation-preparation protocol: define decision boundaries, rehearse difficult scenarios, challenge assumptions, and debrief without outsourcing judgment.",
+    "excerpt": "A privacy-conscious LLM negotiation protocol: set your BATNA and reservation point, rehearse adversarially, design questions, and debrief the result.",
     "readingTime": "10 min",
     "tags": [
       "Negotiation",
@@ -468,7 +468,7 @@
     "slug": "every-token-is-rent-memory-architecture",
     "title": "Agent Memory Architecture: Admission, Retrieval, Consolidation, and Forgetting",
     "date": "2026-04-01",
-    "excerpt": "A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting.",
+    "excerpt": "Agent memory architecture as a production lifecycle: admission gates, provenance-aware retrieval, consolidation, forgetting, deletion, and evaluation.",
     "readingTime": "14 min",
     "tags": [
       "Agent Memory",
@@ -481,7 +481,7 @@
     "slug": "most-boring-automation-self-improving",
     "title": "Safe Self-Improvement Automation: Detect, Repair, Verify, Roll Back",
     "date": "2026-04-15",
-    "excerpt": "A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics.",
+    "excerpt": "A bounded self-improvement pattern: declarative inventory, evidence-backed findings, blast-radius classes, preconditions, verification, and rollback.",
     "readingTime": "12 min",
     "tags": [
       "Automation",
@@ -494,7 +494,7 @@
     "slug": "film-pipeline-postmortem",
     "title": "Building an AI Film Pipeline: Architecture, Failures, and Current Evidence",
     "date": "2026-06-02",
-    "excerpt": "An evidence-backed postmortem covering historical production failures, eight-phase architecture, current scope, and a 1,840-test verification snapshot.",
+    "excerpt": "An AI film pipeline postmortem: named production failures (moderation, cost, API key limits), an eight-phase architecture, and human-in-the-loop review gates.",
     "readingTime": "14 min",
     "tags": [
       "AI Film",
@@ -509,7 +509,7 @@
     "slug": "quality-vs-speed-agent-era",
     "title": "Quality vs Speed with AI Agents: A Risk-Based Gate Framework",
     "date": "2026-06-04",
-    "excerpt": "A practical framework for routing AI-agent work through fast, standard, or critical quality gates based on impact, reversibility, sensitivity, authority, and verifiability.",
+    "excerpt": "Route AI-agent work through fast, standard, or critical quality gates by risk: a classification matrix, per-path evidence, and metrics that expose false speed.",
     "readingTime": "11 min",
     "tags": [
       "AI Agents",
@@ -520,9 +520,9 @@
   },
   {
     "slug": "skill-ledger-open-source-verified-agent-skill-marketplace",
-    "title": "SkillLedger: A Verification and Entitlement Layer for Agent Skills",
+    "title": "A Verification & Entitlement Layer for AI Agent Skills (SkillLedger)",
     "date": "2026-06-15",
-    "excerpt": "Inside SkillLedger's MVP trust model: versioned manifests, deterministic integrity checks, separate approval, entitlements, ledger entries, and explicit limits.",
+    "excerpt": "A verification and entitlement layer for AI agent skills: manifest checks, purchase ledger, entitlement tokens, and REST plus MCP, all open source.",
     "readingTime": "11 min",
     "tags": [
       "Open Source",
