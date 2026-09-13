@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates — Ghassan Alhamoud</title>
-  <meta name="description" content="A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures." />
+  <meta name="description" content="A production pattern for delegating coding work between AI agents: typed scope, permissions, idempotency, lifecycle states, and integration acceptance evidence." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
   <meta property="og:title" content="Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates" />
-  <meta property="og:description" content="A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures." />
+  <meta property="og:description" content="A production pattern for delegating coding work between AI agents: typed scope, permissions, idempotency, lifecycle states, and integration acceptance evidence." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-026.webp" />
   <meta property="article:published_time" content="2026-05-28" />
   <meta property="article:author" content="Ghassan Alhamoud" />
@@ -20,7 +20,7 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html" />
   <meta property="twitter:title" content="Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates" />
-  <meta property="twitter:description" content="A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures." />
+  <meta property="twitter:description" content="A production pattern for delegating coding work between AI agents: typed scope, permissions, idempotency, lifecycle states, and integration acceptance evidence." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-026.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -29,7 +29,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Structured Agent Handoffs: Contracts, State Machines, and Acceptance Gates",
-  "description": "A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures.",
+  "description": "A production pattern for delegating coding work between AI agents: typed scope, permissions, idempotency, lifecycle states, and integration acceptance evidence.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-026.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-28",
-  "dateModified": "2026-07-28",
+  "dateModified": "2026-09-08",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html",
   "proficiencyLevel": "Expert",
   "dependencies": "AI Agents, Delegation, MCP, Reliability",
@@ -121,7 +121,7 @@
     </nav>
 
 
-          <p><strong>A delegation message is not a handoff protocol.</strong> A reliable handoff binds an objective to scope, permissions, inputs, budgets, acceptance checks, lifecycle state, and evidence. The coding model is replaceable; that contract is the durable system boundary.</p>
+          <p><strong>A delegation message between agents is not a handoff protocol.</strong> A reliable handoff binds an objective to scope, permissions, inputs, budgets, acceptance checks, lifecycle state, and evidence. The coding model is replaceable; that contract is the durable system boundary.</p>
           <p>I learned this by routing implementation work from an OpenClaw orchestrator to Qwen Code. The early design looked clean on a diagram. The operating history exposed the missing parts.</p>
 
           <h2 id="what-the-original-three-message-story-missed">What the original three-message story missed</h2>

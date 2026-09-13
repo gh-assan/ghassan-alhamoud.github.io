@@ -8,11 +8,11 @@
     <lastBuildDate>Mon, 31 Aug 2026 22:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>The Loop Passed Its Research Bar, Not Its Implementation Bar</title>
+      <title>Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It</title>
       <link>https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html</guid>
       <pubDate>Mon, 31 Aug 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A factual postmortem of an agent review loop: what the evidence proved, where delegation stalled, and how to build a smaller control plane.]]></description>
+      <description><![CDATA[Agent review loop postmortem: what the evidence proved, where nested delegation and monitoring stalled, and a smaller control plane to fix it next time.]]></description>
       <category>Agent Orchestration</category>
       <category>Postmortem</category>
       <category>Verification</category>
@@ -24,7 +24,7 @@
       <link>https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html</guid>
       <pubDate>Tue, 25 Aug 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[How a shared queue, bounded ownership, independent review, and a commit chokepoint turned nineteen coding agents into one controlled engineering system.]]></description>
+      <description><![CDATA[A multi-agent coding field report: coordinating 19 agents in one working directory with bounded ownership, independent review, and a single commit chokepoint.]]></description>
       <category>Multi-Agent Systems</category>
       <category>Clean Code</category>
       <category>Agent Orchestration</category>
@@ -36,7 +36,7 @@
       <link>https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/film-pipeline-open-source.html</guid>
       <pubDate>Thu, 30 Jul 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[The LangGraph rebuild behind my AI film pipeline is public: typed state, real human gates, MCP tools, QC evidence, and honest production boundaries.]]></description>
+      <description><![CDATA[An open-source LangGraph AI film pipeline: typed state, real human gates, MCP tools, versioned artifacts, QC evidence, and honest production boundaries.]]></description>
       <category>AI Film</category>
       <category>LangGraph</category>
       <category>MCP</category>
@@ -45,11 +45,11 @@
       <category>Python</category>
     </item>
     <item>
-      <title>I Stopped Guessing What to Automate. So I Built an Open-Source Miner.</title>
+      <title>An Open-Source Miner for Finding Automation Opportunities</title>
       <link>https://ghassan-alhamoud.com/articles/automation-miner-open-source.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/automation-miner-open-source.html</guid>
       <pubDate>Sun, 26 Jul 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Most AI projects start with a solution and search for a problem. Automation Miner turns domain evidence into a citable, scored portfolio of opportunities worth investigating.]]></description>
+      <description><![CDATA[An open-source miner for finding automation opportunities: domain evidence becomes a citable, scored portfolio via LangGraph, MCP, and ICE.]]></description>
       <category>Open Source</category>
       <category>Automation</category>
       <category>AI Agents</category>
@@ -62,7 +62,7 @@
       <link>https://ghassan-alhamoud.com/articles/email-intelligence-protocol.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/email-intelligence-protocol.html</guid>
       <pubDate>Thu, 23 Jul 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Raw mailbox access gave my agents messages, not understanding — and exposed them to untrusted content. So I built an open-source, local-first email intelligence layer.]]></description>
+      <description><![CDATA[A local-first email intelligence layer for AI agents: durable state, prompt-injection scanning, and draft-first sending with Maildir, SQLite, and MCP.]]></description>
       <category>Open Source</category>
       <category>AI Agents</category>
       <category>MCP</category>
@@ -71,11 +71,11 @@
       <category>Local First</category>
     </item>
     <item>
-      <title>Testing Terminal UIs with tmux: A Deterministic PTY Workflow</title>
+      <title>How to Test Terminal UIs with tmux: A Deterministic PTY Workflow</title>
       <link>https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html</guid>
       <pubDate>Wed, 01 Jul 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A copyable tmux workflow for black-box TUI tests: isolated PTY, explicit dimensions, state polling, focus handling, terminal-size matrix, CI boundary, and fixture script.]]></description>
+      <description><![CDATA[Test terminal UIs with tmux: a copyable black-box workflow using a real PTY, dimensions, state polling, focus handling, a size matrix, and a CI fixture.]]></description>
       <category>TUI</category>
       <category>Testing</category>
       <category>tmux</category>
@@ -84,11 +84,11 @@
       <category>DevOps</category>
     </item>
     <item>
-      <title>From Agent Experience to Portable Knowledge: Integrating ALMS and OKF</title>
+      <title>Turn Agent Experience into Shared Knowledge: An ALMS→OKF Export Bridge</title>
       <link>https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html</guid>
       <pubDate>Wed, 01 Jul 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A governed promotion path from ALMS operational learnings to portable OKF bundles: thresholds, provenance, conflicts, security, and version compatibility.]]></description>
+      <description><![CDATA[A governed path from AI agent learnings to portable OKF knowledge: export filters, provenance, conflict handling, and a security boundary.]]></description>
       <category>AI Agents</category>
       <category>OKF</category>
       <category>ALMS</category>
@@ -101,7 +101,7 @@
       <link>https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/smart-models-go-stupid.html</guid>
       <pubDate>Tue, 23 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A repository-backed case study: 6,142 lines of TUI design became a 280-line input/print REPL. Here is the acceptance gap and the workflow that later produced the real application.]]></description>
+      <description><![CDATA[A repository-backed case study: 6,142 lines of TUI design became a 280-line REPL. Here is the acceptance gap and the delivery contract that fixed it.]]></description>
       <category>AI Agents</category>
       <category>Code Generation</category>
       <category>Engineering</category>
@@ -111,11 +111,11 @@
       <category>Terminal</category>
     </item>
     <item>
-      <title>SkillLedger: A Verification and Entitlement Layer for Agent Skills</title>
+      <title>A Verification &amp; Entitlement Layer for AI Agent Skills (SkillLedger)</title>
       <link>https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html</guid>
       <pubDate>Sun, 14 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Inside SkillLedger's MVP trust model: versioned manifests, deterministic integrity checks, separate approval, entitlements, ledger entries, and explicit limits.]]></description>
+      <description><![CDATA[A verification and entitlement layer for AI agent skills: manifest checks, purchase ledger, entitlement tokens, and REST plus MCP, all open source.]]></description>
       <category>Open Source</category>
       <category>Agents</category>
       <category>MCP</category>
@@ -126,11 +126,11 @@
       <category>Agent Skills</category>
     </item>
     <item>
-      <title>ALMS: Shared Operational Memory for Autonomous Agents via MCP</title>
+      <title>Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)</title>
       <link>https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html</guid>
       <pubDate>Wed, 10 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Inside ALMS 0.1.0: a Go/PostgreSQL MCP control plane for shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits.]]></description>
+      <description><![CDATA[Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.]]></description>
       <category>Open Source</category>
       <category>Agents</category>
       <category>MCP</category>
@@ -145,7 +145,7 @@
       <link>https://ghassan-alhamoud.com/articles/quality-vs-speed-agent-era.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/quality-vs-speed-agent-era.html</guid>
       <pubDate>Wed, 03 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A practical framework for routing AI-agent work through fast, standard, or critical quality gates based on impact, reversibility, sensitivity, authority, and verifiability.]]></description>
+      <description><![CDATA[Route AI-agent work through fast, standard, or critical quality gates by risk: a classification matrix, per-path evidence, and metrics that expose false speed.]]></description>
       <category>AI Agents</category>
       <category>Quality Gates</category>
       <category>Engineering</category>
@@ -156,7 +156,7 @@
       <link>https://ghassan-alhamoud.com/articles/film-pipeline-postmortem.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/film-pipeline-postmortem.html</guid>
       <pubDate>Mon, 01 Jun 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[An evidence-backed postmortem covering historical production failures, eight-phase architecture, current scope, and a 1,840-test verification snapshot.]]></description>
+      <description><![CDATA[An AI film pipeline postmortem: named production failures (moderation, cost, API key limits), an eight-phase architecture, and human-in-the-loop review gates.]]></description>
       <category>AI Film</category>
       <category>Pipeline</category>
       <category>Postmortem</category>
@@ -169,7 +169,7 @@
       <link>https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html</guid>
       <pubDate>Sat, 30 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, and a reusable release gate.]]></description>
+      <description><![CDATA[A repository-backed audit of an AI-assisted Go code-generation marathon: 32 feature commits, a variable-corruption bug, and a reusable release gate.]]></description>
       <category>AI Agents</category>
       <category>Go</category>
       <category>Architecture</category>
@@ -183,7 +183,7 @@
       <link>https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html</guid>
       <pubDate>Wed, 27 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts.]]></description>
+      <description><![CDATA[A zero-UI, agent-first entity database on DuckDB: field-level provenance, four bounded MCP tools, measured query latency, and conservative entity resolution.]]></description>
       <category>AI Agents</category>
       <category>MCP</category>
       <category>DuckDB</category>
@@ -194,7 +194,7 @@
       <link>https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/orchestrator-qwen-acp-handoff.html</guid>
       <pubDate>Wed, 27 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A production pattern for delegating coding work between agents: typed scope, permissions, idempotency, lifecycle states, retries, acceptance evidence, and hard-won integration failures.]]></description>
+      <description><![CDATA[A production pattern for delegating coding work between AI agents: typed scope, permissions, idempotency, lifecycle states, and integration acceptance evidence.]]></description>
       <category>AI Agents</category>
       <category>Delegation</category>
       <category>MCP</category>
@@ -205,7 +205,7 @@
       <link>https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html</guid>
       <pubDate>Tue, 05 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A reproducible benchmark of a 302 KB semantic registry over 2,408 files, plus its schema, update strategy, correctness gates, and retrieval tradeoffs.]]></description>
+      <description><![CDATA[A reproducible workspace-index benchmark for AI agents: a compact semantic registry, measured JSON parse latency, and when to use a registry vs grep vs vectors.]]></description>
       <category>Architecture</category>
       <category>Performance</category>
       <category>Workspace Indexing</category>
@@ -217,29 +217,29 @@
       <link>https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/self-healing-architecture-feedback-loop.html</guid>
       <pubDate>Mon, 04 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A production design for self-healing agent runtimes: typed detection, confidence, preconditions, idempotency, bounded remediation, verification, compensation, circuit breakers, and escalation.]]></description>
+      <description><![CDATA[Self-healing AI agent runtimes as a bounded state machine: typed detection, idempotency, invariant verification, compensation, and circuit breakers.]]></description>
       <category>Self-Healing</category>
       <category>Reliability</category>
       <category>State Machines</category>
       <category>Circuit Breakers</category>
     </item>
     <item>
-      <title>Issue Management as a Reliability Control Plane</title>
+      <title>Issue Management as a Reliability Control Plane for AI Agents</title>
       <link>https://ghassan-alhamoud.com/articles/issue-management-system-property.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/issue-management-system-property.html</guid>
       <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A durable issue-control-plane design for agent systems: fingerprints, lifecycle states, evidence-backed root cause, corrective-action classes, verification windows, recurrence, and machine-readable records.]]></description>
+      <description><![CDATA[A durable issue-control-plane design for AI agents: fingerprints, lifecycle, evidence-first root cause, corrective actions, and learning metrics.]]></description>
       <category>Reliability</category>
       <category>Incident Management</category>
       <category>Root Cause</category>
       <category>Evidence</category>
     </item>
     <item>
-      <title>Five Failures From Three Months Building a Personal AI Agent</title>
+      <title>5 Failures From 3 Months Building a Personal AI Agent</title>
       <link>https://ghassan-alhamoud.com/articles/5-failures-building-agent-3-months.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/5-failures-building-agent-3-months.html</guid>
       <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A documented failure timeline from three months operating a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and unverified fixes.]]></description>
+      <description><![CDATA[5 failures from 3 months building a personal AI agent: provider loss, daemon outages, unsafe self-modification, reboot fragility, and premature closure.]]></description>
       <category>AI Agents</category>
       <category>Infrastructure</category>
       <category>Failure</category>
@@ -248,11 +248,11 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>Five Infrastructure Layers Every Production AI Agent Needs</title>
+      <title>5 Infrastructure Layers Every Production AI Agent Needs</title>
       <link>https://ghassan-alhamoud.com/articles/5-infrastructure-layers-broke-agent.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/5-infrastructure-layers-broke-agent.html</guid>
       <pubDate>Sun, 03 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A production AI agent reference architecture covering transport, policy, orchestration, verification and recovery, and observability—with interfaces, failure modes, and readiness gates.]]></description>
+      <description><![CDATA[5 infrastructure layers every production AI agent needs: transport, identity and policy, orchestration, verification, observability, and readiness gates.]]></description>
       <category>AI Agents</category>
       <category>Infrastructure</category>
       <category>Architecture</category>
@@ -260,11 +260,11 @@
       <category>Security</category>
     </item>
     <item>
-      <title>What a 250-Item Agent Run Actually Proved</title>
+      <title>What a 250-Item Agent Run Actually Proved: A Fault-Injection Postmortem</title>
       <link>https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/stress-test-self-healing-250-target.html</guid>
       <pubDate>Sat, 02 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[An evidence-backed postmortem of a 252-item workflow, plus a reproducible 250-case protocol that tests recovery without confusing throughput with self-healing.]]></description>
+      <description><![CDATA[An evidence-backed agent-workflow postmortem and a reproducible 250-case fault-injection protocol: detection, verified recovery, and safety metrics.]]></description>
       <category>Reliability</category>
       <category>Evaluation</category>
       <category>Fault Injection</category>
@@ -272,11 +272,11 @@
       <category>OpenClaw</category>
     </item>
     <item>
-      <title>The Same Automation Pattern Across Six Industries: A Comparative Study</title>
+      <title>One Automation Pattern Across Six Industries: A Comparative Study</title>
       <link>https://ghassan-alhamoud.com/articles/automation-pattern-6-industries.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/automation-pattern-6-industries.html</guid>
       <pubDate>Fri, 01 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A six-domain comparison of top-scoring automation candidates: triggers, bottlenecks, available data, risks, expected value, confidence, and selection bias.]]></description>
+      <description><![CDATA[Comparing the top automation candidates across six industries: the recurring last-mile transformation pattern, and where inputs, risks, and authority differ.]]></description>
       <category>Automation</category>
       <category>Discovery</category>
       <category>Architecture</category>
@@ -289,7 +289,7 @@
       <link>https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/ai-found-42-automation-opportunities.html</guid>
       <pubDate>Fri, 01 May 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[The published 42-item dataset behind a six-domain automation-discovery experiment, including score distribution, method, selection bias, and validation gates.]]></description>
+      <description><![CDATA[The published 42-item automation-discovery dataset: ICE scoring across six domains, what the scores establish, selection bias, and a validation funnel.]]></description>
       <category>Automation</category>
       <category>Discovery</category>
       <category>Dataset</category>
@@ -302,7 +302,7 @@
       <link>https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/most-boring-automation-self-improving.html</guid>
       <pubDate>Tue, 14 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A production pattern for bounded self-improvement automation: declarative inventory, evidence-backed findings, risk-classed auto-fixes, preconditions, verification, rollback, reconciliation, and honest metrics.]]></description>
+      <description><![CDATA[A bounded self-improvement pattern: declarative inventory, evidence-backed findings, blast-radius classes, preconditions, verification, and rollback.]]></description>
       <category>Automation</category>
       <category>Feedback Loops</category>
       <category>Verification</category>
@@ -313,7 +313,7 @@
       <link>https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/a2a-negotiation-outreach.html</guid>
       <pubDate>Sat, 11 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[An honest pre-experiment report for agent negotiation over email: what was built, what was not tested, the required metrics, safety controls, and a reproducible protocol.]]></description>
+      <description><![CDATA[An honest pre-experiment protocol for AI agent negotiation over email: hypotheses, pre-registered metrics, safety controls, a dry run, and go/no-go gates.]]></description>
       <category>AI Agents</category>
       <category>Negotiation</category>
       <category>Experimental Design</category>
@@ -324,18 +324,18 @@
       <link>https://ghassan-alhamoud.com/articles/negotiation-veteran-collapse-llm-coach.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/negotiation-veteran-collapse-llm-coach.html</guid>
       <pubDate>Thu, 09 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A privacy-conscious LLM negotiation-preparation protocol: define decision boundaries, rehearse difficult scenarios, challenge assumptions, and debrief without outsourcing judgment.]]></description>
+      <description><![CDATA[A privacy-conscious LLM negotiation protocol: set your BATNA and reservation point, rehearse adversarially, design questions, and debrief the result.]]></description>
       <category>Negotiation</category>
       <category>LLM</category>
       <category>Preparation</category>
       <category>Decision Support</category>
     </item>
     <item>
-      <title>Designing a 90% Automated Product Pipeline—What Must Stay Human</title>
+      <title>How Much of a Product Pipeline Can AI Agents Own? What Must Stay Human</title>
       <link>https://ghassan-alhamoud.com/articles/dreamforge-automation-pipeline.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/dreamforge-automation-pipeline.html</guid>
       <pubDate>Tue, 07 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[An honest architecture case study of DreamForge: what agents can own from idea to pull request, where human approval remains essential, and how to validate automation safely.]]></description>
+      <description><![CDATA[An honest product-to-code automation architecture: what AI agents can own, what must stay human, circuit breakers, and how to actually measure automation.]]></description>
       <category>Automation</category>
       <category>Product Delivery</category>
       <category>AI Agents</category>
@@ -346,7 +346,7 @@
       <link>https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/echoweave-on-device-narrative-os.html</guid>
       <pubDate>Sat, 04 Apr 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[EchoWeave is an unbuilt design proposal for private personal memory: an on-device architecture, consent and deletion model, threat analysis, resource constraints, and validation plan.]]></description>
+      <description><![CDATA[An on-device personal memory architecture and privacy threat model: consent, provenance, deletion of derived data, and measured device resource budgets.]]></description>
       <category>Privacy</category>
       <category>On-Device AI</category>
       <category>Personal Memory</category>
@@ -357,18 +357,18 @@
       <link>https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/every-token-is-rent-memory-architecture.html</guid>
       <pubDate>Tue, 31 Mar 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A production lifecycle for agent memory: memory classes, admission gates, provenance-aware retrieval, consolidation, contradiction handling, decay, deletion, evaluation, and cost accounting.]]></description>
+      <description><![CDATA[Agent memory architecture as a production lifecycle: admission gates, provenance-aware retrieval, consolidation, forgetting, deletion, and evaluation.]]></description>
       <category>Agent Memory</category>
       <category>Retrieval</category>
       <category>Knowledge Systems</category>
       <category>Evaluation</category>
     </item>
     <item>
-      <title>StartupGraph in Production: A Self-Hosted Startup Intelligence System</title>
+      <title>Self-Hosted Startup Intelligence: A Working Case Study</title>
       <link>https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/startupgraph-insights-engine.html</guid>
       <pubDate>Sun, 29 Mar 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A production-minded case study of StartupGraph: 1,010 entities, field-level provenance, agent queries over MCP, and the limits of a self-hosted startup intelligence system.]]></description>
+      <description><![CDATA[A working self-hosted startup intelligence system: DuckDB, field-level provenance, deterministic query filters, MCP tools for agents, and honest limits.]]></description>
       <category>Startup Intelligence</category>
       <category>MCP</category>
       <category>DuckDB</category>
@@ -379,7 +379,7 @@
       <link>https://ghassan-alhamoud.com/articles/agent-execution-attestation.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-execution-attestation.html</guid>
       <pubDate>Fri, 27 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A vendor-neutral execution-attestation design for AI agents: envelope schema, threat model, signing and verification flow, effect receipts, and a cryptographically verifiable example.]]></description>
+      <description><![CDATA[AI agent execution attestation, vendor-neutral: a signed envelope, delegated authority, effect receipts, a threat model, and a step-by-step verification flow.]]></description>
       <category>AI Agents</category>
       <category>Attestation</category>
       <category>Auditability</category>
@@ -391,7 +391,7 @@
       <link>https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/compliance-as-code-eu-ai-act.html</guid>
       <pubDate>Tue, 24 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A source-linked engineering framework for EU AI Act evidence: applicability, versioned controls, CI change impact, runtime records, approval gates, and audit packages.]]></description>
+      <description><![CDATA[Compliance as code for the EU AI Act: versioned controls and reproducible evidence, without pretending code makes the legal determination.]]></description>
       <category>EU AI Act</category>
       <category>Compliance Engineering</category>
       <category>AI Governance</category>
@@ -402,7 +402,7 @@
       <link>https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-reliability-sla-infrastructure.html</guid>
       <pubDate>Sat, 21 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A practical SLI/SLO framework for production AI agents: eligible journeys, verified task success, unsafe and duplicate effects, evidence completeness, recovery time, error budgets, and burn-rate alerts.]]></description>
+      <description><![CDATA[An SLI/SLO and error-budget framework for production AI agents: verified task success, forbidden and duplicate effects, recovery, and burn-rate alerts.]]></description>
       <category>AI Agents</category>
       <category>Reliability</category>
       <category>SRE</category>
@@ -410,11 +410,11 @@
       <category>Observability</category>
     </item>
     <item>
-      <title>Build an Ideation Engine: A Repeatable Product Discovery System</title>
+      <title>How to Build a Product Ideation Engine: A Repeatable Discovery System</title>
       <link>https://ghassan-alhamoud.com/articles/systematic-ideation-engine.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/systematic-ideation-engine.html</guid>
       <pubDate>Thu, 19 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A practical product ideation system with three analytical lenses, hard quality gates, deduplication, a weighted scorecard, rejected ideas, and a copyable validation workflow.]]></description>
+      <description><![CDATA[How to build a product ideation engine for repeatable discovery: three lenses, hard gates, dedup by problem, evidence-weighted scoring, and a learning loop.]]></description>
       <category>Ideation</category>
       <category>Product Discovery</category>
       <category>Validation</category>
@@ -425,7 +425,7 @@
       <link>https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/startup-intelligence-entity-graph.html</guid>
       <pubDate>Tue, 17 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A practical build-vs-buy framework grounded in a working DuckDB entity graph with field-level provenance, agent queries, and measured limitations.]]></description>
+      <description><![CDATA[Build vs buy for startup intelligence data: a decision framework grounded in a self-hosted DuckDB entity graph with field-level provenance and honest limits.]]></description>
       <category>Startup Intelligence</category>
       <category>Entity Resolution</category>
       <category>Data Provenance</category>
@@ -437,7 +437,7 @@
       <link>https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-black-box-skill-ledger.html</guid>
       <pubDate>Wed, 11 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A practical threat model for third-party agent skills: what manifests, checksums, approvals, signatures, sandboxes, and execution attestations can—and cannot—prove.]]></description>
+      <description><![CDATA[A practical threat model for third-party AI agent skills: identity, integrity, provenance, policy, safe behavior, and why a "verified" badge is not enough.]]></description>
       <category>AI Agents</category>
       <category>Agent Skills</category>
       <category>Security</category>
@@ -445,11 +445,11 @@
       <category>Threat Modeling</category>
     </item>
     <item>
-      <title>Stop Building Agent Soup: Use Compiler-Style Agent Workflows</title>
+      <title>Stop Building "Agent Soup": A Compiler-Style Multi-Agent Workflow</title>
       <link>https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html</guid>
       <pubDate>Mon, 09 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A concrete compiler-style pattern for agent workflows: normalize intent into an intermediate representation, validate capabilities and policy, execute deterministically, and verify effects.]]></description>
+      <description><![CDATA[A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate policy, execute deterministically, and verify effects.]]></description>
       <category>AI Agents</category>
       <category>Architecture</category>
       <category>Engineering</category>
@@ -460,7 +460,7 @@
       <link>https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-reasoning-discovery-fallacy.html</guid>
       <pubDate>Sat, 07 Mar 2026 23:00:00 GMT</pubDate>
-      <description><![CDATA[A five-stage capability-discovery model for AI agents: registry, semantic matching, compatibility, trust qualification, and policy-aware runtime selection.]]></description>
+      <description><![CDATA[Capability discovery for AI agents: a five-stage pipeline from registry to runtime selection, with semantic matching, compatibility, and trust.]]></description>
       <category>AI Agents</category>
       <category>Discovery</category>
       <category>Distributed Systems</category>

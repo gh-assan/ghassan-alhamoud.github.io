@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>ALMS: Shared Operational Memory for Autonomous Agents via MCP — Ghassan Alhamoud</title>
-  <meta name="description" content="Inside ALMS 0.1.0: an open-source Go/PostgreSQL MCP control plane for agent registry, shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits." />
+  <title>Shared Operational Memory for AI Agents via MCP (ALMS, Open Source) — Ghassan Alhamoud</title>
+  <meta name="description" content="Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html" />
-  <meta property="og:title" content="ALMS: Shared Operational Memory for Autonomous Agents via MCP" />
-  <meta property="og:description" content="A Go/PostgreSQL MCP control plane for shared operational learnings, sync, protocols, OKF export, and explicit limits." />
+  <meta property="og:title" content="Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)" />
+  <meta property="og:description" content="Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-032.webp" />
   <meta property="article:published_time" content="2026-06-11" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html" />
-  <meta property="twitter:title" content="ALMS: Shared Operational Memory for Autonomous Agents via MCP" />
-  <meta property="twitter:description" content="A Go/PostgreSQL MCP control plane for shared operational learnings, sync, protocols, OKF export, and explicit limits." />
+  <meta property="twitter:title" content="Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)" />
+  <meta property="twitter:description" content="Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-032.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "ALMS: Shared Operational Memory for Autonomous Agents via MCP",
-  "description": "Inside ALMS 0.1.0: an open-source Go/PostgreSQL MCP control plane for agent registry, shared operational learnings, gap-safe sync, protocols, OKF export, and explicit limits.",
+  "headline": "Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)",
+  "description": "Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-032.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-06-11",
-  "dateModified": "2026-07-28",
+  "dateModified": "2026-09-08",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html",
   "proficiencyLevel": "Expert",
   "dependencies": "open-source, agents, MCP, Go, PostgreSQL, multi-agent, learning, infrastructure",
@@ -92,7 +92,7 @@
             <span class="article-card__dot"></span>
             <span>9 min</span>
           </div>
-          <h1 class="article-single__title">ALMS: Shared Operational Memory for Autonomous Agents via MCP</h1>
+          <h1 class="article-single__title">Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">Open Source</span>
           <span class="article-single__tag">Agents</span>
@@ -115,7 +115,7 @@
 
     <p>Last month I lost an afternoon to a bug I'd already fixed. An ingestion agent in my fleet hit a malformed payload from a vendor API. It adapted, worked around it, and moved on. Two days later, a different agent hit the same API, the same payload shape, and failed the same way. I had to debug it again. Same root cause, same fix, zero knowledge transfer between the two agents.</p>
 
-    <p>That's when I stopped adding features and built ALMS.</p>
+    <p>That's when I stopped adding features and built ALMS: shared operational memory for AI agents.</p>
 
     <p>ALMS — the <strong>Agent Learning Management System</strong> — is a self-hosted Model Context Protocol (MCP) server that gives autonomous agents a shared operational memory. Register agents, store what they learn, sync that knowledge across the fleet, and distribute operator protocols by tag. It's a single Go binary backed by PostgreSQL, and it's open source today under MIT.</p>
 

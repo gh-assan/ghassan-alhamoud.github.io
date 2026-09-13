@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Agent-First Entity Database: Schema, MCP Contract, and Benchmarks — Ghassan Alhamoud</title>
-  <meta name="description" content="Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts." />
+  <meta name="description" content="A zero-UI, agent-first entity database on DuckDB: field-level provenance, four bounded MCP tools, measured query latency, and conservative entity resolution." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html" />
   <meta property="og:title" content="Agent-First Entity Database: Schema, MCP Contract, and Benchmarks" />
-  <meta property="og:description" content="Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts." />
+  <meta property="og:description" content="A zero-UI, agent-first entity database on DuckDB: field-level provenance, four bounded MCP tools, measured query latency, and conservative entity resolution." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-025.webp" />
   <meta property="article:published_time" content="2026-05-28" />
   <meta property="article:author" content="Ghassan Alhamoud" />
@@ -20,7 +20,7 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html" />
   <meta property="twitter:title" content="Agent-First Entity Database: Schema, MCP Contract, and Benchmarks" />
-  <meta property="twitter:description" content="Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts." />
+  <meta property="twitter:description" content="A zero-UI, agent-first entity database on DuckDB: field-level provenance, four bounded MCP tools, measured query latency, and conservative entity resolution." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-025.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -29,7 +29,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Agent-First Entity Database: Schema, MCP Contract, and Benchmarks",
-  "description": "Inside EntityScope: a zero-UI DuckDB knowledge base for agents, with field-level provenance, bounded MCP tools, measured query latency, test results, and reusable contracts.",
+  "description": "A zero-UI, agent-first entity database on DuckDB: field-level provenance, four bounded MCP tools, measured query latency, and conservative entity resolution.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-025.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-28",
-  "dateModified": "2026-07-28",
+  "dateModified": "2026-09-08",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/entity-database-zero-ui-agents.html",
   "proficiencyLevel": "Expert",
   "dependencies": "AI Agents, MCP, DuckDB, Data Architecture",
@@ -103,7 +103,7 @@
         <img src="/images/articles/ART-025.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p><strong>EntityScope is a working, self-hosted entity knowledge base whose primary client is an agent.</strong> It uses DuckDB for storage, exposes four bounded MCP tools, tracks provenance at field level, and has no application UI.</p>
+          <p><strong>EntityScope is a working, self-hosted entity database whose primary client is an agent.</strong> It uses DuckDB for storage, exposes four bounded MCP tools, tracks provenance at field level, and has no application UI.</p>
           <p>The interesting decision was not “remove the dashboard.” It was to replace a forgiving human interface with a stricter machine contract. An agent needs explicit identifiers, bounded queries, freshness signals, provenance, and failure states. A blank cell and a stale fact cannot look the same.</p>
 
           <h2>What exists today</h2>

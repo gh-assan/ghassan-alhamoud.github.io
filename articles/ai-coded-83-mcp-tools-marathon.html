@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Auditing a 12-Hour AI Go Code-Generation Marathon — Ghassan Alhamoud</title>
-  <meta name="description" content="A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, integration failures, and a reusable release gate." />
+  <meta name="description" content="A repository-backed audit of an AI-assisted Go code-generation marathon: 32 feature commits, a variable-corruption bug, and a reusable release gate." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
   <meta property="og:title" content="Auditing a 12-Hour AI Go Code-Generation Marathon" />
-  <meta property="og:description" content="A repository-backed audit of 32 AI-assisted Go commits—and the integration debt their throughput created." />
+  <meta property="og:description" content="A repository-backed audit of an AI-assisted Go code-generation marathon: 32 feature commits, a variable-corruption bug, and a reusable release gate." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/art-028-header.webp" />
   <meta property="article:published_time" content="2026-05-31" />
   <meta property="article:author" content="Ghassan Alhamoud" />
@@ -20,7 +20,7 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html" />
   <meta property="twitter:title" content="Auditing a 12-Hour AI Go Code-Generation Marathon" />
-  <meta property="twitter:description" content="A repository-backed audit of 32 AI-assisted Go commits—and the integration debt their throughput created." />
+  <meta property="twitter:description" content="A repository-backed audit of an AI-assisted Go code-generation marathon: 32 feature commits, a variable-corruption bug, and a reusable release gate." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/art-028-header.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -29,7 +29,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Auditing a 12-Hour AI Go Code-Generation Marathon",
-  "description": "A repository-backed audit of a 12-hour AI-assisted Go marathon: 32 measured feature commits, tool growth, a 97-parameter constructor, integration failures, and a reusable release gate.",
+  "description": "A repository-backed audit of an AI-assisted Go code-generation marathon: 32 feature commits, a variable-corruption bug, and a reusable release gate.",
   "image": "https://ghassan-alhamoud.com/images/articles/art-028-header.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-31",
-  "dateModified": "2026-07-28",
+  "dateModified": "2026-09-08",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/ai-coded-83-mcp-tools-marathon.html",
   "proficiencyLevel": "Expert",
   "dependencies": "AI Agents, Go, Architecture, MCP, Automation, Code Generation, Engineering",
@@ -126,7 +126,7 @@
     </nav>
 
 
-          <p><strong>Evidence note after auditing the repository:</strong> the full operator-observed marathon ran for 12 hours. Within it, the independently reproducible P82–P113 slice contains 32 feature commits between 07:18 and 10:48 on 31 May. Counting literal <code>mcp.NewTool(</code> constructors at those Git boundaries gives 116 before P82 and 185 after P113: a net increase of 69. The 12-hour duration and the 3h30 audited slice describe different boundaries.</p>
+          <p><strong>Evidence note after auditing the repository:</strong> the full operator-observed AI Go code-generation marathon ran for 12 hours. Within it, the independently reproducible P82–P113 slice contains 32 feature commits between 07:18 and 10:48 on 31 May. Counting literal <code>mcp.NewTool(</code> constructors at those Git boundaries gives 116 before P82 and 185 after P113: a net increase of 69. The 12-hour duration and the 3h30 audited slice describe different boundaries.</p>
 
 <p>The wider day contained 69 commits and may explain how the working notes arrived at a larger number. But a backlink-worthy engineering case study should publish the count another person can reproduce. This article therefore focuses on the 32-commit window, what the code proves, and what raw throughput concealed.</p>
 

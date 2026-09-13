@@ -31,13 +31,13 @@ Core themes:
 
 ## High-Signal Articles
 
-- [The Loop Passed Its Research Bar, Not Its Implementation Bar](https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html): Factual postmortem of an agent review loop, its evidence boundaries, delegation stalls, and a smaller control-plane protocol.
+- [Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It](https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html): Agent review loop postmortem: what the evidence proved, where nested delegation and monitoring stalled, and a smaller control plane to fix it next time.
 - [Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner](https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html): Field report on coordinating a large coding-agent fleet through bounded ownership, durable file-based state, independent review, and serialized commits.
-- [ALMS 0.1.0: A Shared Brain for Autonomous Agents](https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html): Release article for ALMS and the shared memory problem in agent fleets.
-- [ALMS and OKF: Turning Agent Experience Into Portable Knowledge](https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html): How ALMS can export mature learnings into portable Open Knowledge Format.
-- [SkillLedger: Verified Agent Skill Marketplace](https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html): Article on reusable agent skills, incentives, and settlement.
-- [The Ghost in the Terminal: Testing TUIs with tmux](https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html): Practical article on testing terminal UIs with PTYs and tmux.
-- [Stop Building Agent Soup. Start Building Compilers.](https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html): Argument for structured agent orchestration and stronger system boundaries.
+- [Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)](https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html): Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.
+- [Turn Agent Experience into Shared Knowledge: An ALMS→OKF Export Bridge](https://ghassan-alhamoud.com/articles/alms-okf-integration-bridge.html): A governed path from AI agent learnings to portable OKF knowledge: export filters, provenance, conflict handling, and a security boundary.
+- [A Verification & Entitlement Layer for AI Agent Skills (SkillLedger)](https://ghassan-alhamoud.com/articles/skill-ledger-open-source-verified-agent-skill-marketplace.html): A verification and entitlement layer for AI agent skills: manifest checks, purchase ledger, entitlement tokens, and REST plus MCP, all open source.
+- [How to Test Terminal UIs with tmux: A Deterministic PTY Workflow](https://ghassan-alhamoud.com/articles/testing-tuis-with-tmux.html): Test terminal UIs with tmux: a copyable black-box workflow using a real PTY, dimensions, state polling, focus handling, a size matrix, and a CI fixture.
+- [Stop Building "Agent Soup": A Compiler-Style Multi-Agent Workflow](https://ghassan-alhamoud.com/articles/stop-building-agent-soup-compilers.html): A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate policy, execute deterministically, and verify effects.
 
 ## AI Agent Architecture Handbook
 

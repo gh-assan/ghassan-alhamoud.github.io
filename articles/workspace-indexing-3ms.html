@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>How I Built a 3 ms Workspace Index for AI Agents — Ghassan Alhamoud</title>
-  <meta name="description" content="A reproducible workspace-index benchmark: 2,408 files, a 302 KB semantic registry, 2.142 ms median JSON parse, 0.0153 ms warm ID scan, schema, update strategy, tradeoffs, and code." />
+  <meta name="description" content="A reproducible workspace-index benchmark for AI agents: a compact semantic registry, measured JSON parse latency, and when to use a registry vs grep vs vectors." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
   <meta property="og:title" content="How I Built a 3 ms Workspace Index for AI Agents" />
-  <meta property="og:description" content="A reproducible benchmark, compact schema, update strategy, and honest comparison with filesystem search and vector retrieval." />
+  <meta property="og:description" content="A reproducible workspace-index benchmark for AI agents: a compact semantic registry, measured JSON parse latency, and when to use a registry vs grep vs vectors." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-022.webp" />
   <meta property="article:published_time" content="2026-05-06" />
   <meta property="article:author" content="Ghassan Alhamoud" />
@@ -20,7 +20,7 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html" />
   <meta property="twitter:title" content="How I Built a 3 ms Workspace Index for AI Agents" />
-  <meta property="twitter:description" content="A reproducible benchmark, compact schema, update strategy, and honest comparison with filesystem search and vector retrieval." />
+  <meta property="twitter:description" content="A reproducible workspace-index benchmark for AI agents: a compact semantic registry, measured JSON parse latency, and when to use a registry vs grep vs vectors." />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-022.webp" />
 
   <!-- JSON-LD Article Schema -->
@@ -29,7 +29,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "How I Built a 3 ms Workspace Index for AI Agents",
-  "description": "A reproducible workspace-index benchmark: 2,408 files, a 302 KB semantic registry, 2.142 ms median JSON parse, 0.0153 ms warm ID scan, schema, update strategy, tradeoffs, and code.",
+  "description": "A reproducible workspace-index benchmark for AI agents: a compact semantic registry, measured JSON parse latency, and when to use a registry vs grep vs vectors.",
   "image": "https://ghassan-alhamoud.com/images/articles/ART-022.webp",
   "author": {
     "@type": "Person",
@@ -45,7 +45,7 @@
     }
   },
   "datePublished": "2026-05-06",
-  "dateModified": "2026-07-28",
+  "dateModified": "2026-09-08",
   "mainEntityOfPage": "https://ghassan-alhamoud.com/articles/workspace-indexing-3ms.html",
   "proficiencyLevel": "Expert",
   "dependencies": "Architecture, Performance, Workspace Indexing, AI, OpenClaw",
@@ -105,7 +105,7 @@
                 <img src="/images/articles/ART-022.webp" alt="" class="article-single__image" loading="eager" />
 
         <div class="article-single__body">
-          <p>The original headline compared “30 seconds” with “3 ms” without publishing a protocol. I could reproduce the index side, not the 30-second baseline. On the current main-machine workspace, loading the complete semantic registry takes a median 2.142 ms over 500 runs; p95 is 2.545 ms and max is 5.8 ms.</p>
+          <p>The original headline for this workspace index compared “30 seconds” with “3 ms” without publishing a protocol. I could reproduce the index side, not the 30-second baseline. On the current main-machine workspace, loading the complete semantic registry takes a median 2.142 ms over 500 runs; p95 is 2.545 ms and max is 5.8 ms.</p>
 
 <table>
   <thead><tr><th>Benchmark input</th><th>Value</th></tr></thead>

@@ -24,7 +24,10 @@ class DocumentParser(HTMLParser):
         self.links: list[dict[str, str]] = []
         self.canonicals: list[str] = []
         self.og_urls: list[str] = []
+        self.descriptions: list[str] = []
         self.h1_count = 0
+        self.h1_text_chunks: list[str] = []
+        self._in_h1 = False
         self._json_ld_depth = 0
         self._json_ld_chunks: list[str] = []
         self.json_ld_blocks: list[str] = []
@@ -38,6 +41,7 @@ class DocumentParser(HTMLParser):
             self.ids.append(identifier)
         if tag == "h1":
             self.h1_count += 1
+            self._in_h1 = True
         if tag == "a" and values.get("href"):
             self.links.append(values)
         if (
@@ -52,15 +56,25 @@ class DocumentParser(HTMLParser):
             and values.get("content")
         ):
             self.og_urls.append(values["content"])
+        if (
+            tag == "meta"
+            and values.get("name") == "description"
+            and values.get("content")
+        ):
+            self.descriptions.append(values["content"])
         if tag == "script" and values.get("type") == "application/ld+json":
             self._json_ld_depth += 1
             self._json_ld_chunks = []
 
     def handle_data(self, data: str) -> None:
+        if self._in_h1:
+            self.h1_text_chunks.append(data)
         if self._json_ld_depth:
             self._json_ld_chunks.append(data)
 
     def handle_endtag(self, tag: str) -> None:
+        if tag == "h1":
+            self._in_h1 = False
         if tag == "script" and self._json_ld_depth:
             self.json_ld_blocks.append("".join(self._json_ld_chunks))
             self._json_ld_chunks = []
@@ -104,6 +118,7 @@ def validate() -> list[str]:
     errors: list[str] = []
     article_records = json.loads(ARTICLE_DATA.read_text(encoding="utf-8"))
     slugs = [record["slug"] for record in article_records]
+    records_by_slug = {record["slug"]: record for record in article_records}
 
     if len(slugs) != len(set(slugs)):
         errors.append("articles/articles.json contains duplicate slugs")
@@ -130,6 +145,18 @@ def validate() -> list[str]:
 
         if parser.h1_count != 1:
             errors.append(f"{article.relative_to(ROOT)}: expected one h1, found {parser.h1_count}")
+        record = records_by_slug.get(article.stem)
+        if record and parser.h1_count == 1:
+            h1_text = " ".join("".join(parser.h1_text_chunks).split())
+            if h1_text != record["title"]:
+                errors.append(
+                    f"{article.relative_to(ROOT)}: H1 must match articles.json title"
+                )
+        if record and parser.descriptions != [record["excerpt"]]:
+            errors.append(
+                f"{article.relative_to(ROOT)}: meta description must match "
+                "articles.json excerpt"
+            )
         if parser.canonicals != [expected_url]:
             errors.append(
                 f"{article.relative_to(ROOT)}: canonical must be exactly {expected_url}"
