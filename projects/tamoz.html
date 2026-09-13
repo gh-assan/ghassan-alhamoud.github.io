@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tamoz — Open Source Project — Ghassan Alhamoud</title>
-  <meta name="description" content="Tamoz is a Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows." />
+  <meta name="description" content="Tamoz is a Ruby-native durable agent framework for reviewed, explainable decisions, bounded actions, and crash-safe recovery." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz.html" />
   <meta property="og:title" content="Tamoz: An agent that makes sense of the world and acts on it" />
-  <meta property="og:description" content="Checkpointed, interruptible, observable, and evaluation-governed AI workflows for Ruby." />
+  <meta property="og:description" content="Reviewed, explainable decisions, bounded actions, and crash-safe recovery for Ruby agents." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
@@ -19,7 +19,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
     "name": "Tamoz",
-    "description": "Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows.",
+    "description": "Ruby-native durable agent framework for reviewed, explainable decisions, bounded actions, and crash-safe recovery.",
     "programmingLanguage": "Ruby",
     "codeRepository": "https://github.com/ghassan-ai-projects/tamoz",
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
@@ -59,7 +59,7 @@
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">You can't trust an agent with real work until it survives a crash, shows what it's about to do, and stops at the right line.</span></div>
           <div class="project-fact"><span class="project-fact__label">Shape</span><span class="project-fact__value">A Ruby monorepo of small, independently shippable gems. It's the part that thinks in a larger three-repo system, not the whole thing.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public and MIT-licensed, out today. It's early (<code>0.1.0.alpha.1</code>), and I've kept the rough edges written down rather than hidden. Every claim here is backed by a test that actually runs.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Public and MIT-licensed, out today. It's early (<code>0.1.0.alpha.1</code>), and I've kept the rough edges written down rather than hidden. Release claims are backed by generated test evidence; the hardware boundary is stated separately below.</span></div>
         </div>
 
         <figure class="artifact-frame">
@@ -89,8 +89,8 @@ $ tamoz resolve 1f4a --approve
           <p>Under the hood it's a monorepo of small gems, each one installing with only what it actually needs. Checkpoints, interrupts, effect journals, leases, audit trails: those are the building blocks, not features I bolted on afterward. There's no third-party agent library doing the thinking; the model connection is my own, pinned to a digest and speaking a plain OpenAI-compatible protocol. The reference app, Tamoz Agent, can only act through a plan-review-act loop, inside a workspace it's allowed to touch, with one sealed set of capabilities. A skill or a tool description can ask for more power, but it can never hand itself any.</p>
 
           <h2>I wired it to a real motor</h2>
-          <p>I wanted to watch the boundary hold on actual hardware, so I connected it to an Arduino and a small motor. The agent picked a mode; policy turned that into a bounded, time-limited command; the motor spun, then stopped itself when the lease ran out. At no point did the model choose the PWM value or the runtime. Policy did.</p>
-          <p class="evidence-caption">What actually happened: I watched the motor spin and stop under a governed command over a direct serial link (bounded PWM, a 10-second lease, a hard safe-stop). What's still work in progress: the full live loop end to end, the complete fault-and-recovery matrix, independent sensors confirming the motion, and a long soak run. I'd rather say so than pretend otherwise.</p>
+          <p>I wanted to watch the boundary hold on actual hardware, so I connected the wider system to an Arduino and a small motor. Tamoz proved that a real model could select a bounded cooling mode without choosing PWM or timing. In a separate hardware run, deterministic policy produced a bounded command and the motor spun before an explicit safe-stop returned the board to a safe state.</p>
+          <p class="evidence-caption">What actually happened: I watched the motor run under a governed direct-serial command (bounded PWM, a 10-second lease, and an explicit safe-stop). What's still work in progress: the reviewed Tamoz-to-Agentic Stream conversion seam, the full live loop end to end, the complete fault-and-recovery matrix, independent sensors confirming motion, and a long soak run.</p>
 
           <h2>Why I built it</h2>
           <p>Most agent demos look great right up until they hit the edges: the same side effect fires twice, a crash leaves things half-done, edits land without anyone reviewing them, and there's no record of what happened or why. I got tired of treating all of that as cleanup you do later. In Tamoz it's the starting requirement. Effects are assumed to run at-least-once unless I can prove otherwise, and anything genuinely ambiguous stops and asks a human rather than quietly retrying.</p>
@@ -107,7 +107,7 @@ $ tamoz resolve 1f4a --approve
           </ul>
 
           <h2>Why it's here</h2>
-          <p>Tamoz is the clearest version of something I keep coming back to: if you want an agent to be trusted, you have to give it contracts, a way to recover, something to watch, and gates it has to pass. It's early (<code>0.1.0.alpha.1</code>, gaps and all, written down where you can see them), but the direction is already there in the code, the docs, and a motor that spun exactly when it was told to.</p>
+          <p>Tamoz is the clearest version of something I keep coming back to: if you want an agent to be trusted, you have to give it contracts, a way to recover, something to watch, and gates it has to pass. It's early (<code>0.1.0.alpha.1</code>, gaps and all, written down where you can see them), but the direction is already there in the code, the docs, and a physical boundary being tested one claim at a time.</p>
         </div>
       </article>
     </div>

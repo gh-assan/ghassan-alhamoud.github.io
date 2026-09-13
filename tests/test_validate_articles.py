@@ -30,6 +30,10 @@ class ArticleValidationTests(unittest.TestCase):
             articles_dir = root / "articles"
             articles_dir.mkdir()
             (root / "index.html").write_text("<html></html>", encoding="utf-8")
+            (root / "sitemap.xml").write_text("<urlset></urlset>", encoding="utf-8")
+            (root / "rss.xml").write_text(
+                "<rss><channel></channel></rss>", encoding="utf-8"
+            )
             (articles_dir / "index.html").write_text(
                 "<html></html>", encoding="utf-8"
             )
@@ -52,14 +56,18 @@ class ArticleValidationTests(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            with patch.object(validate_articles, "ROOT", root):
-                with patch.object(validate_articles, "ARTICLES_DIR", articles_dir):
-                    with patch.object(
-                        validate_articles,
-                        "ARTICLE_DATA",
-                        articles_dir / "articles.json",
-                    ):
-                        errors = validate_articles.validate()
+            with (
+                patch.object(validate_articles, "ROOT", root),
+                patch.object(validate_articles, "ARTICLES_DIR", articles_dir),
+                patch.object(
+                    validate_articles,
+                    "ARTICLE_DATA",
+                    articles_dir / "articles.json",
+                ),
+                patch.object(validate_articles, "SITEMAP", root / "sitemap.xml"),
+                patch.object(validate_articles, "RSS", root / "rss.xml"),
+            ):
+                errors = validate_articles.validate()
 
         self.assertIn(
             "articles/example.html: H1 must match articles.json title",
@@ -69,6 +77,53 @@ class ArticleValidationTests(unittest.TestCase):
             "articles/example.html: meta description must match articles.json excerpt",
             errors,
         )
+        self.assertIn("articles/example.html: missing sitemap entry", errors)
+        self.assertIn("articles/example.html: missing RSS entry", errors)
+
+    def test_validation_accepts_complete_discovery_surfaces(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            articles_dir = root / "articles"
+            articles_dir.mkdir()
+            canonical = "https://ghassan-alhamoud.com/articles/example.html"
+            (root / "index.html").write_text("<html></html>", encoding="utf-8")
+            (root / "sitemap.xml").write_text(
+                f"<urlset><url><loc>{canonical}</loc></url></urlset>",
+                encoding="utf-8",
+            )
+            (root / "rss.xml").write_text(
+                f"<rss><channel><item><link>{canonical}</link></item></channel></rss>",
+                encoding="utf-8",
+            )
+            (articles_dir / "index.html").write_text(
+                "<html></html>", encoding="utf-8"
+            )
+            (articles_dir / "example.html").write_text(
+                f"""<!DOCTYPE html>
+<html><head>
+<meta name="description" content="Description">
+<link rel="canonical" href="{canonical}">
+<meta property="og:url" content="{canonical}">
+<script type="application/ld+json">{{"@type":"Article","mainEntityOfPage":"{canonical}"}}</script>
+</head><body><h1>Example</h1></body></html>
+""",
+                encoding="utf-8",
+            )
+            (articles_dir / "articles.json").write_text(
+                '[{"slug":"example","title":"Example","excerpt":"Description"}]',
+                encoding="utf-8",
+            )
+
+            with (
+                patch.object(validate_articles, "ROOT", root),
+                patch.object(validate_articles, "ARTICLES_DIR", articles_dir),
+                patch.object(validate_articles, "ARTICLE_DATA", articles_dir / "articles.json"),
+                patch.object(validate_articles, "SITEMAP", root / "sitemap.xml"),
+                patch.object(validate_articles, "RSS", root / "rss.xml"),
+            ):
+                errors = validate_articles.validate()
+
+        self.assertEqual([], errors)
 
 
 if __name__ == "__main__":

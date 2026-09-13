@@ -1,9 +1,9 @@
 [
   {
     "slug": "agent-spun-the-motor",
-    "title": "When an AI Agent Spun a Real Motor: Energized Is Not Spinning",
+    "title": "When an AI Agent Met a Real Motor: Energized Is Not Spinning",
     "date": "2026-09-14",
-    "excerpt": "A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft.",
+    "excerpt": "A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open.",
     "readingTime": "9 min",
     "tags": [
       "AI Agents",

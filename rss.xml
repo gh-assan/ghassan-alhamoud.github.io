@@ -8,11 +8,11 @@
     <lastBuildDate>Sun, 13 Sep 2026 22:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>When an AI Agent Spun a Real Motor: Energized Is Not Spinning</title>
+      <title>When an AI Agent Met a Real Motor: Energized Is Not Spinning</title>
       <link>https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html</link>
       <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html</guid>
       <pubDate>Sun, 13 Sep 2026 22:00:00 GMT</pubDate>
-      <description><![CDATA[A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft.]]></description>
+      <description><![CDATA[A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open.]]></description>
       <category>AI Agents</category>
       <category>Hardware</category>
       <category>Governance</category>

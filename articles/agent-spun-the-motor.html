@@ -4,33 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>When an AI Agent Spun a Real Motor: Energized Is Not Spinning — Ghassan Alhamoud</title>
-  <meta name="description" content="A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft." />
+  <title>When an AI Agent Met a Real Motor: Energized Is Not Spinning — Ghassan Alhamoud</title>
+  <meta name="description" content="A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html" />
-  <meta property="og:title" content="When an AI Agent Spun a Real Motor: Energized Is Not Spinning" />
-  <meta property="og:description" content="A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft." />
-  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="og:title" content="When an AI Agent Met a Real Motor: Energized Is Not Spinning" />
+  <meta property="og:description" content="A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/articles/ART-046.webp" />
   <meta property="article:published_time" content="2026-09-14" />
   <meta property="article:author" content="Ghassan Alhamoud" />
 
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html" />
-  <meta property="twitter:title" content="When an AI Agent Spun a Real Motor: Energized Is Not Spinning" />
-  <meta property="twitter:description" content="A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft." />
-  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:title" content="When an AI Agent Met a Real Motor: Energized Is Not Spinning" />
+  <meta property="twitter:description" content="A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/articles/ART-046.webp" />
 
   <!-- JSON-LD Article Schema -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "When an AI Agent Spun a Real Motor: Energized Is Not Spinning",
-  "description": "A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft.",
-  "image": "https://ghassan-alhamoud.com/images/og-default.jpg",
+  "headline": "When an AI Agent Met a Real Motor: Energized Is Not Spinning",
+  "description": "A real model chose bounded cooling, while a separately verified hardware run exposed why GPIO state is not physical proof—and why the integration seam remains open.",
+  "image": "https://ghassan-alhamoud.com/images/articles/ART-046.webp",
   "author": {
     "@type": "Person",
     "name": "Ghassan Alhamoud",
@@ -92,7 +92,7 @@
             <span class="article-card__dot"></span>
             <span>9 min</span>
           </div>
-          <h1 class="article-single__title">When an AI Agent Spun a Real Motor: Energized Is Not Spinning</h1>
+          <h1 class="article-single__title">When an AI Agent Met a Real Motor: Energized Is Not Spinning</h1>
           <div class="article-single__tags">
           <span class="article-single__tag">AI Agents</span>
           <span class="article-single__tag">Hardware</span>
@@ -102,17 +102,33 @@
           </div>
         </header>
 
+        <img src="/images/articles/ART-046.webp" alt="A small fan motor connected through a breadboard motor driver to a microcontroller on an electronics workbench" width="1200" height="627" class="article-single__image" loading="eager" />
+
         <div class="article-single__body">
+
+    <nav class="article-toc" aria-label="On this page">
+      <p><strong>On this page</strong></p>
+      <ul>
+        <li><a href="#six-layers-six-chances-to-lie">Six layers, six chances to lie</a></li>
+        <li><a href="#the-board-was-flawless-the-motor-was-dead">The board was flawless. The motor was dead.</a></li>
+        <li><a href="#ruling-out-the-software-at-full-power">Ruling out the software, at full power</a></li>
+        <li><a href="#the-root-cause-was-two-wrong-pins">The root cause was two wrong pins</a></li>
+        <li><a href="#the-harder-claim-putting-a-model-in-the-loop">The harder claim: putting a model in the loop</a></li>
+        <li><a href="#the-fix-is-the-governance-not-the-model">The fix is the governance, not the model</a></li>
+        <li><a href="#what-is-proven-and-what-is-a-stand-in">What is proven, and what is a stand-in</a></li>
+        <li><a href="#three-rules-for-anyone-wiring-a-model-to-the-world">Three rules for wiring a model to the world</a></li>
+      </ul>
+    </nav>
 
     <p>The board said <code>energized: true</code>. The motor did not move.</p>
 
     <p>That one line is the whole experiment. Underneath it sits a supervisory language model, a policy engine, a serial gateway, Arduino firmware, an L293D H-bridge, and a three-dollar DC motor: six layers, each capable of reporting success while the physical world stays perfectly still. The interesting work was not wiring them together. It was refusing to believe any one of them until the shaft actually turned.</p>
 
-    <p>Here is the honest result up front. <strong>A real supervisory model, given a hot-and-rising cold-box snapshot, produced a governed decision to cool. Deterministic policy, not the model, turned that decision into a bounded PWM command, and the physical motor spun, then returned to a safe state on its own. What was <em>not</em> proven: the full multi-daemon runtime running as one process, and independent instrumented feedback. Rotation was confirmed by a human eye, and the model-to-motor bridge ran through a single driver rather than the production <code>serve</code> pipeline.</strong> Everything after this paragraph is how those two sentences were earned.</p>
+    <p>Here is the honest result up front. <strong>A real supervisory model, given a hot-and-rising cold-box snapshot, produced a governed decision to cool without choosing PWM or timing. Separately, deterministic policy produced a bounded command that made the physical motor spin and return to a safe state. What was <em>not</em> proven: the reviewed Tamoz-to-Agentic Stream conversion seam, the full multi-service runtime, or independent instrumented feedback. Rotation was confirmed by a human eye.</strong> Everything after this paragraph is how those boundaries were earned.</p>
 
     <p>This experiment sits at the actuation edge of <a href="/projects/tamoz.html">Tamoz</a>, the supervisory agent framework that produced the decision, and the wider three-repository system around it.</p>
 
-    <h2>Six layers, six chances to lie</h2>
+    <h2 id="six-layers-six-chances-to-lie">Six layers, six chances to lie</h2>
 
     <p>The bench is deliberately small: an ELEGOO Mega 2560, a DHT11 temperature and humidity module on pin D2, an L293D motor driver, a 3-6 V DC motor with a fan blade, and the Mega's onboard LED. The stack above it is not small. A reading becomes a <em>situation</em>; a situation becomes a <em>decision</em>; a decision becomes a <em>bounded intent</em>; an intent becomes a <em>materialized command</em>; a command crosses USB into firmware; firmware drives the H-bridge; the H-bridge drives the motor.</p>
 
@@ -127,7 +143,7 @@
 
     <p>Collapse any two of those and you get a demo that lies to you. Keep them separate and you get an experiment.</p>
 
-    <h2>The board was flawless. The motor was dead.</h2>
+    <h2 id="the-board-was-flawless-the-motor-was-dead">The board was flawless. The motor was dead.</h2>
 
     <p>The firmware exposes exactly one bounded actuation: <code>set_pwm_lease</code> on <code>fan-01</code>, capped at 60% duty and a ten-second lease, with a local watchdog that de-energizes the output when the lease expires. Sending that command produced a textbook trace every time: an accepted receipt, an <code>executed</code> result, a queried state showing <code>value: 600, energized: true</code>, and, after the lease, a clean return to <code>safe_state: true</code>. The firmware digest and capability-catalog digest matched the checked-in build on every boot.</p>
 
@@ -135,23 +151,23 @@
 
     <p>This is the first and most important lesson of physical work: <code>energized: true</code> is a statement about a GPIO register. It says the firmware set the enable line high. It says nothing about whether 3 volts reached a shaft. The temptation is to trust the trace (the trace is beautiful), and the trace is exactly what you must not trust.</p>
 
-    <h2>Ruling out the software, at full power</h2>
+    <h2 id="ruling-out-the-software-at-full-power">Ruling out the software, at full power</h2>
 
-    <p>To find the fault you have to cut the problem in half. So we left the governed firmware behind and flashed a throwaway sketch that does nothing but drive the H-bridge directly at full 255 PWM (forward, pause, reverse, loop) with no serial protocol, no lease, no 60% ceiling, no policy. The maximum a bare L293D channel can deliver.</p>
+    <p>To find the fault you have to cut the problem in half. So we left the governed firmware behind and flashed a throwaway sketch that does nothing but drive the H-bridge directly at full 255 PWM (forward, pause, reverse, loop) with no serial protocol, no lease, no 60% ceiling, no policy. It was the maximum duty cycle available in that setup.</p>
 
     <p>Still nothing. No rotation, no twitch, no hum, in either direction.</p>
 
-    <p>That result is worth more than it looks. Full-power drive in both directions with zero movement eliminates, in one shot, the firmware, the duty ceiling, the startup-torque theory, and the entire command path. Whatever was wrong lived in the copper, not the code. The H-bridge was switching; no motor voltage was reaching the shaft.</p>
+    <p>That result is worth more than it looks. Full-power drive in both directions with zero movement eliminates, in one shot, the governed firmware, the duty ceiling, the startup-torque theory, and the serial command path. Whatever was wrong lived in the copper, not the production control path. The enable signal was switching, but the driver stage was not delivering motor voltage.</p>
 
-    <p>The usual suspects for that are the L293D's motor-supply pin and a missing common ground. A single isolation test settled it: lift the motor leads off the driver outputs and touch them straight across the supply rails. The motor spun instantly. So the motor was good and the supply was good; the fault was entirely inside the driver wiring.</p>
+    <p>The usual suspects for that are the L293D's motor-supply pin, a missing common ground, incorrect input/output wiring, or a bad motor. A single isolation test narrowed it: lift the motor leads off the driver outputs and touch them straight across the supply rails. The motor spun instantly. The motor and supply rails were good; the fault was in the driver stage or its wiring.</p>
 
-    <h2>The root cause was three pins to the left</h2>
+    <h2 id="the-root-cause-was-two-wrong-pins">The root cause was two wrong pins</h2>
 
     <p>The firmware drives three lines: an enable on D5, and two direction inputs on D6 and D7. The bench had the two inputs on <strong>D4 and D3</strong>, pins the firmware never touches. With both direction inputs sitting low, the L293D holds the motor in its brake state. You can put the enable line at full PWM forever; a braked H-bridge produces exactly what we saw: <code>energized: true</code>, and a shaft that will not turn.</p>
 
     <p>Moving two jumpers (D4 to D6, D3 to D7) was the entire fix. No firmware change, no recompile; the wiring was brought to match the pin map the checked-in build already declared, which kept the firmware and capability digests intact. On the next governed command the motor spun, and a human confirmed it. Board-side proof had been real all along; it had simply been proof of the wrong claim.</p>
 
-    <h2>The harder claim: putting a model in the loop</h2>
+    <h2 id="the-harder-claim-putting-a-model-in-the-loop">The harder claim: putting a model in the loop</h2>
 
     <p>A spinning motor driven by a hand-issued command is a wiring result. The experiment wanted more: a real language model, reasoning over sensor state, deciding to cool, and the physical world obeying that decision without the model ever being allowed to touch anything dangerous.</p>
 
@@ -163,21 +179,21 @@
 
     <p>Read that again, because it is the point of the entire project: <strong>the safety property worked by refusing a decision that a well-meaning, correctly-reasoning model had written.</strong> The failure was the feature.</p>
 
-    <h2>The fix is the governance, not the model</h2>
+    <h2 id="the-fix-is-the-governance-not-the-model">The fix is the governance, not the model</h2>
 
     <p>The repair was not to coax the model or swap it. It was to give the cooling action the shape the production experiment already uses: a single writable field, <code>mode</code>, constrained to an enum of <code>hold</code> or <code>bounded_cooling</code>. Nothing else is expressible. The model chooses <em>what mode</em>; it cannot choose <em>how hard</em> or <em>how long</em>. Once the surface was constrained that way, the same model on the same snapshot produced a clean, valid decision (<code>mode: bounded_cooling</code>, and not one PWM digit) and the episode passed.</p>
 
-    <p>From there the bridge is deterministic and dull, which is exactly what you want at an actuation boundary. A fixed policy maps <code>bounded_cooling</code> to a bounded <code>set_pwm_lease</code>, a preset duty and lease drawn from the capability catalog, not from the model. That command crosses into the firmware, the firmware drives the now-correct wiring, and the motor spins for the bounded window before its watchdog returns it to safe state.</p>
+    <p>From there the intended bridge is deterministic and dull, which is exactly what you want at an actuation boundary. Agentic Stream's fixed policy maps <code>bounded_cooling</code> to a bounded <code>set_pwm_lease</code>, using preset duty and lease values from the capability catalog rather than model output. That materialization and the physical command path are tested independently. The remaining integration gap is the reviewed conversion from Tamoz's <code>request_bounded_cooling</code> intent to Agentic Stream's <code>select_thermal_mode</code> action.</p>
 
-    <p>The end-to-end run is honest about its own reliability. The model does not produce a schema-valid governed decision every time; it produces one often enough that a short in-process retry lands a valid one within a couple of attempts, and the pipeline acts only on a decision that actually passed. No valid cooling decision, no command. The system never actuates on a model's good intentions, only on a validated one.</p>
+    <p>The real-model run is honest about its own reliability. The model does not produce a schema-valid governed decision every time; a bounded retry can land a valid one within a couple of attempts, and only a decision that passes validation is eligible to continue. Until the open conversion seam is joined and reviewed, that eligibility is not evidence that the production system issued a physical command.</p>
 
-    <h2>What is proven, and what is a stand-in</h2>
+    <h2 id="what-is-proven-and-what-is-a-stand-in">What is proven, and what is a stand-in</h2>
 
-    <p>Proven, on hardware: a real model's governed reasoning selected a bounded mode; deterministic policy, never the model, set the physical envelope; the real motor energized within that envelope and self-returned to safe state; a human observed rotation. The software layers underneath carry their own weight (the runtime, simulator, and research test suites are green) and the firmware compiles to the digests the runtime allow-lists.</p>
+    <p>Proven in the model run: a real model's governed reasoning selected a bounded mode without owning PWM or timing. Proven independently on hardware: a governed direct-serial command stayed within the catalog envelope, the real motor ran, and an explicit safe-stop returned the board to a safe state; a human observed rotation. The runtime, simulator, and research suites provide separate software evidence, and the firmware booted with the expected firmware and capability digests.</p>
 
-    <p>Not proven, and labeled as such: rotation was seen, not measured. There is no tachometer or current probe in this bench, so physical feedback is operator-grade, not instrumented. And the model-to-motor path ran through a single driver process feeding the supervisor's real episode graph, then bridged to the board by a deterministic preset, not the full production runtime running its three services as one live pipeline. The reasoning is real and the actuation is real; the seam between them, here, is a shim, and it is named as one.</p>
+    <p>Not proven, and labeled as such: rotation was seen, not measured. There is no tachometer or current probe in this bench, so physical feedback is operator-grade, not instrumented. The complete Tamoz-to-Agentic Stream-to-board route has not yet produced one joined physical evidence artifact, and its intent-conversion contract remains open. The reasoning is real and the actuation is real; their production seam is not yet proven.</p>
 
-    <h2>Three rules for anyone wiring a model to the world</h2>
+    <h2 id="three-rules-for-anyone-wiring-a-model-to-the-world">Three rules for anyone wiring a model to the world</h2>
 
     <ol>
       <li><strong>Separate the claim from the effect at every layer, and never promote one.</strong> <code>energized</code> is not spinning; a receipt is not a result; a green trace is not a turning shaft. Most "it works" failures are a promoted claim.</li>
@@ -185,7 +201,7 @@
       <li><strong>When in doubt, drive it at full power with nothing in the loop.</strong> The fastest way to find out whether your problem is code or copper is to remove the code. Ours was three pins to the left the whole time.</li>
     </ol>
 
-    <p>The motor spins now. It spins because a model was allowed to reason and forbidden to actuate, and because, for once, nobody believed the board when it said it was already done.</p>
+    <p>The model reasoned inside its boundary, and the motor ran inside a separately verified physical boundary. Joining those facts safely is the next experiment. Both results are useful because nobody promoted the board's claim into proof that the shaft had moved.</p>
 
     <h3>Related</h3>
     <ul>
@@ -263,6 +279,7 @@
     })();
   </script>
   <script src="/assets/js/articles.js" defer></script>
+  <script src="/assets/js/article-toc.js" defer></script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>

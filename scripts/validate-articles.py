@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -13,6 +14,8 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_DIR = ROOT / "articles"
 ARTICLE_DATA = ARTICLES_DIR / "articles.json"
+SITEMAP = ROOT / "sitemap.xml"
+RSS = ROOT / "rss.xml"
 SITE_ORIGIN = "https://ghassan-alhamoud.com"
 EXCLUDED_ARTICLE_FILES = {"index.html", "article-template.html"}
 
@@ -117,6 +120,18 @@ def local_target(source: Path, href: str) -> tuple[Path | None, str]:
 def validate() -> list[str]:
     errors: list[str] = []
     article_records = json.loads(ARTICLE_DATA.read_text(encoding="utf-8"))
+    sitemap_root = ET.parse(SITEMAP).getroot()
+    sitemap_urls = {
+        element.text
+        for element in sitemap_root.iter()
+        if element.tag.rsplit("}", 1)[-1] == "loc" and element.text
+    }
+    rss_root = ET.parse(RSS).getroot()
+    rss_urls = {
+        link.text
+        for link in rss_root.findall("./channel/item/link")
+        if link.text
+    }
     slugs = [record["slug"] for record in article_records]
     records_by_slug = {record["slug"]: record for record in article_records}
 
@@ -142,6 +157,11 @@ def validate() -> list[str]:
         parser = parse_document(article)
         document_cache[article.resolve()] = parser
         expected_url = f"{SITE_ORIGIN}/articles/{article.name}"
+
+        if expected_url not in sitemap_urls:
+            errors.append(f"{article.relative_to(ROOT)}: missing sitemap entry")
+        if expected_url not in rss_urls:
+            errors.append(f"{article.relative_to(ROOT)}: missing RSS entry")
 
         if parser.h1_count != 1:
             errors.append(f"{article.relative_to(ROOT)}: expected one h1, found {parser.h1_count}")

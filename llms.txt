@@ -23,7 +23,7 @@ Core themes:
 ## Open Source Projects
 
 - [ScaleShop Scalability Lab](https://ghassan-alhamoud.com/projects/scalability-lab.html): Interactive workshop for diagnosing bottlenecks from telemetry and choosing proportionate architecture changes. Live lab: https://lab.ghassan-alhamoud.com Repository: https://github.com/ghassan-ai-projects/scaleshop-scalability-lab
-- [Tamoz](https://ghassan-alhamoud.com/projects/tamoz.html): Ruby-native durable agent framework for checkpointed, interruptible, observable, and evaluation-governed AI workflows. Repository: https://github.com/ghassan-ai-projects/tamoz
+- [Tamoz](https://ghassan-alhamoud.com/projects/tamoz.html): Ruby-native durable agent framework for reviewed, explainable decisions, bounded actions, and crash-safe recovery. It is the supervisory layer of a three-repository stream-to-action system; the complete physical route remains an explicitly open integration seam. Repository: https://github.com/ghassan-ai-projects/tamoz
 - [ALMS](https://ghassan-alhamoud.com/projects/alms.html): Agent Learning Management System. A self-hosted MCP server for shared agent learning, agent registry, knowledge sync, and protocol distribution. Repository: https://github.com/ghassan-ai-projects/alms
 - [SkillLedger](https://ghassan-alhamoud.com/projects/skill-ledger.html): Agent-to-agent skill publishing, discovery, purchase, settlement, and failure incentives with a local ledger. Repository: https://github.com/ghassan-ai-projects/skill-ledger
 - [Film Pipeline](https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html): LangGraph-based film creation pipeline with typed state, human gates, versioned artifacts, validation evidence, and handoff state. Repository: https://github.com/ghassan-ai-projects/film-pipeline-langgraph
@@ -31,6 +31,7 @@ Core themes:
 
 ## High-Signal Articles
 
+- [When an AI Agent Met a Real Motor: Energized Is Not Spinning](https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html): A real-model decision and a separately verified physical actuation expose why receipts, GPIO state, and operator-observed effects must remain distinct—and why the production integration seam is still open.
 - [Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It](https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html): Agent review loop postmortem: what the evidence proved, where nested delegation and monitoring stalled, and a smaller control plane to fix it next time.
 - [Nineteen Agents, One Working Directory, and a Codebase That Finally Got Cleaner](https://ghassan-alhamoud.com/articles/nineteen-agents-one-working-directory.html): Field report on coordinating a large coding-agent fleet through bounded ownership, durable file-based state, independent review, and serialized commits.
 - [Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)](https://ghassan-alhamoud.com/articles/alms-open-source-shared-agent-memory.html): Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.
