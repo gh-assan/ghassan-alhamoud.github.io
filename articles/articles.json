@@ -1,5 +1,19 @@
 [
   {
+    "slug": "agent-spun-the-motor",
+    "title": "When an AI Agent Spun a Real Motor: Energized Is Not Spinning",
+    "date": "2026-09-14",
+    "excerpt": "A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft.",
+    "readingTime": "9 min",
+    "tags": [
+      "AI Agents",
+      "Hardware",
+      "Governance",
+      "Verification",
+      "AI Engineering"
+    ]
+  },
+  {
     "slug": "agent-loop-postmortem",
     "title": "Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It",
     "date": "2026-09-01",

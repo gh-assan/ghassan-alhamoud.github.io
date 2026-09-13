@@ -5,8 +5,20 @@
     <link>https://ghassan-alhamoud.com</link>
     <description>AI architecture, systems engineering, distributed systems, and the hard problems nobody’s solving — by Ghassan Alhamoud.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 31 Aug 2026 22:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 13 Sep 2026 22:00:00 GMT</lastBuildDate>
     <atom:link href="https://ghassan-alhamoud.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>When an AI Agent Spun a Real Motor: Energized Is Not Spinning</title>
+      <link>https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html</link>
+      <guid isPermaLink="true">https://ghassan-alhamoud.com/articles/agent-spun-the-motor.html</guid>
+      <pubDate>Sun, 13 Sep 2026 22:00:00 GMT</pubDate>
+      <description><![CDATA[A supervisory LLM reasoned about a warming cold-box and drove a real motor, choosing the cooling mode but never the PWM. Why a green trace is not a turning shaft.]]></description>
+      <category>AI Agents</category>
+      <category>Hardware</category>
+      <category>Governance</category>
+      <category>Verification</category>
+      <category>AI Engineering</category>
+    </item>
     <item>
       <title>Agent Review Loop Postmortem: Why Delegation Stalled, and How to Fix It</title>
       <link>https://ghassan-alhamoud.com/articles/agent-loop-postmortem.html</link>
