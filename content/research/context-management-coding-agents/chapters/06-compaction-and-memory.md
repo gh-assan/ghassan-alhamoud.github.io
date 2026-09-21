@@ -153,7 +153,7 @@ Six decisions. The recommendations follow from the results above.
 
 ### Decision 3: the summary schema
 
-Worth up to **6.5 accuracy points** [S], this is the highest-leverage prompt in your system. "Summarise the conversation so far" leaves that on the table. Each section below maps to a measured failure.
+Worth up to **6.5 SWE-bench points** (49.0% to 55.5%) [S], this is the highest-leverage prompt in your system. "Summarise the conversation so far" leaves that on the table. Each section below maps to a measured failure.
 
 ```markdown title="compaction-schema.md (excerpt)"
 ## Goal

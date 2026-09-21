@@ -179,7 +179,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | Pattern | Cases | Statement |
 |---|---|---|
 | Isolation succeeds or fails on **composability**, not architecture | CS-1, CS-2 | Same pattern, opposite outcomes; the work decided |
-| The **boundary component** is a first-class quality lever | CS-3, CS-4 | The summariser alone was worth 6.5 points |
+| The **boundary component** is a first-class quality lever | CS-3, CS-4 | The summariser alone was worth 6.5 SWE-bench points |
 | Damage shows up in **variance before the mean** | CS-4 | Single-run measurement cannot see it |
 | **Eliminating a category beats compressing it** | CS-6, CS-8 | 98.7% from removing definitions; 96% from deleting unused tools |
 | **Cache mechanics can flip the sign** of an optimisation | CS-5 | 24% fewer tokens, 6.9× the cost |

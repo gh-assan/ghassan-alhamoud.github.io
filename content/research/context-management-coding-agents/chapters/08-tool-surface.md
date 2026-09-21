@@ -156,7 +156,7 @@ Everything above is about definitions. Tool *results* are larger in a working se
 > [!key] Capability exposure versus capability restriction
 > The MCP ecosystem's design centre is *making things possible*. Context efficiency is *making things cheap*. These pull in opposite directions, and the defaults favour the first. **You have to apply the second yourself.** Nothing in the protocol will do it for you.
 
-## A worked audit
+## A worked audit [C] {#a-worked-audit}
 
 ```chart
 {

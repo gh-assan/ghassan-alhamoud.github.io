@@ -36,7 +36,7 @@
 
   /* 2. Scroll-spy -------------------------------------------------------- */
   var tocLinks = document.querySelectorAll('.rs-toc__list a[href^="#"]');
-  if (tocLinks.length && 'IntersectionObserver' in window) {
+  if (tocLinks.length) {
     var byId = {};
     var targets = [];
     tocLinks.forEach(function (a) {
@@ -44,21 +44,29 @@
       var el = document.getElementById(id);
       if (el) { byId[id] = a; targets.push(el); }
     });
-    var visible = {};
+    /* The active entry is the last heading above the 35vh reading line. Rects
+       are read only inside a rAF tick, so at most one layout pass per frame. */
+    var lastActive = null;
     var setActive = function () {
       var current = null;
       for (var i = 0; i < targets.length; i++) {
         if (targets[i].getBoundingClientRect().top < window.innerHeight * 0.35) current = targets[i].id;
       }
+      /* At the very bottom of the page the final sections can sit entirely
+         below the reading line; pin the last entry so it still activates. */
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 4) {
+        current = targets.length ? targets[targets.length - 1].id : current;
+      }
+      if (current === lastActive) return;
+      lastActive = current;
       tocLinks.forEach(function (a) { a.classList.remove('is-active'); });
       if (current && byId[current]) byId[current].classList.add('is-active');
     };
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
-      setActive();
-    }, { rootMargin: '0px 0px -60% 0px' });
-    targets.forEach(function (t) { io.observe(t); });
-    window.addEventListener('scroll', function () { window.requestAnimationFrame(setActive); }, { passive: true });
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(function () { ticking = false; setActive(); }); }
+    }, { passive: true });
+    window.addEventListener('resize', setActive, { passive: true });
     setActive();
   }
 
@@ -158,6 +166,9 @@
     var form = diag.querySelector('.rs-diag__form');
     var result = diag.querySelector('.rs-diag__result');
     var key = 'rs-diag:' + location.pathname;
+    /* The form is a scoring surface, not a submission: without JS there is no
+       handler, so a stray Enter would reload the page. */
+    if (form) form.addEventListener('submit', function (e) { e.preventDefault(); });
 
     var levelFor = function (score, gated) {
       var lvl = levels[0];

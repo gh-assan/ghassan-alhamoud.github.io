@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -98,6 +99,56 @@ class ChartTests(unittest.TestCase):
         self.assertIn('class="chart-data"', out)
         self.assertIn('role="img"', out)
         self.assertIn("<figcaption>Cap</figcaption>", out)
+
+
+class RegressionGateTests(unittest.TestCase):
+    """R31/R32 catch defect classes that shipped once and must not return:
+    a benchmark figure quoted without its benchmark, and a [C] composite case
+    whose heading is unlabelled."""
+
+    def test_benchmark_figure_without_benchmark_is_caught(self):
+        report = validate_research.Report()
+        validate_research.check_source_benchmark_attribution(
+            "t", "The summariser swap was worth 6.5 points overall.", report)
+        self.assertTrue(any("R32" in e for e in report.errors), report.errors)
+
+    def test_benchmark_figure_with_benchmark_passes(self):
+        report = validate_research.Report()
+        validate_research.check_source_benchmark_attribution(
+            "t", "The swap was worth 6.5 points on SWE-bench (49.0% to 55.5%).", report)
+        self.assertEqual([], report.errors)
+
+    def test_unlabelled_composite_case_heading_is_caught(self):
+        report = validate_research.Report()
+        validate_research.check_composite_labels(
+            "t", "## CS-9: A case\n\nSome [C] construction here.\n", report)
+        self.assertTrue(any("R31" in e for e in report.errors), report.errors)
+
+    def test_labelled_composite_case_heading_passes(self):
+        report = validate_research.Report()
+        validate_research.check_composite_labels(
+            "t", "## CS-9: A case [C]\n\nSome [C] construction here.\n", report)
+        self.assertEqual([], report.errors)
+
+    def test_inline_composite_in_prose_is_not_flagged(self):
+        """A method section may quote a [C] figure inline without being a case."""
+        report = validate_research.Report()
+        validate_research.check_composite_labels(
+            "t", "## M-5: Output shaping\n\nThe worked arithmetic is [C].\n", report)
+        self.assertEqual([], report.errors)
+
+    def test_glossary_dl_has_no_heading_children(self):
+        """<h2> is not a permitted child of <dl> (HTML validity)."""
+        html = (ROOT / "research" / SLUG / "glossary.html").read_text(encoding="utf-8")
+        for inner in re.findall(r"<dl[^>]*>(.*?)</dl>", html, re.S):
+            self.assertNotIn("<h2", inner)
+            self.assertNotIn("<h3", inner)
+
+    def test_no_inline_event_handlers(self):
+        for page in sorted((ROOT / "research" / SLUG).glob("*.html")):
+            with self.subTest(page=page.name):
+                self.assertNotRegex(page.read_text(encoding="utf-8"),
+                                    r"\son(click|change|submit|input|load|mouseover)=")
 
 
 if __name__ == "__main__":

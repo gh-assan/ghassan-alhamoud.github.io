@@ -4,7 +4,7 @@ Context changes have four properties that break the standard playbook. Ignore th
 
 | Property | What it means | Consequence |
 |---|---|---|
-| **1. Small effects** | Model upgrades move benchmarks 10–20 points. Context changes usually move them 2–6. The summariser swap, a *large* one, was 6.5 [S]. | Detecting 3 points takes roughly ten times more trials than detecting 15 |
+| **1. Small effects** | Model upgrades move benchmarks 10–20 points. Context changes usually move them 2–6. The summariser swap, a *large* one, was 6.5 on SWE-bench [S]. | Detecting 3 points takes roughly ten times more trials than detecting 15 |
 | **2. Total harness confound** | Scores depended strongly on which of four [[harness|harnesses]] ran, on identical data [S]. Context lives inside the harness. | Every result is a joint measurement of your strategy *and* your harness |
 | **3. Damage lives in the variance** | Pass@2/Pass² gaps widen under tighter compression while averages barely move [S]. | **Single-run evaluation cannot see the main harm you are looking for** |
 | **4. Costs and benefits in different units** | Tokens, latency, cache hit rate, solve rate, human hours | Picking one number is a decision, not a measurement |
@@ -86,7 +86,7 @@ These come first because the design choices follow from them.
 | Model version | **Yes** | Violated constantly by "we upgraded during the test" |
 | Harness version | **Yes** | E4 |
 | Tool surface | **Yes** | E5 |
-| **Compaction prompt** | **Yes** | E3: 6.5 points hide here |
+| **Compaction prompt** | **Yes** | E3: 6.5 SWE-bench points hide here |
 | Temperature and sampling | **Yes** | Otherwise you measure sampling |
 | Repository commit | **Yes** | Otherwise you measure the repository |
 | Time of day and load | No, but log it | Provider-side variance is real |
@@ -301,5 +301,5 @@ Memory is the hardest thing here to evaluate and the easiest to fool yourself ab
 | A public benchmark as the decision criterion | The harness dominates; wrong distribution (E4) |
 | Ignoring the cache in cost | Can flip the sign of the result |
 | Judging after one session | The interval at n = 1 spans almost everything |
-| Different compaction prompts across arms | 6.5 points of confound (E3) |
+| Different compaction prompts across arms | 6.5 SWE-bench points of confound (E3) |
 | Measuring retrieval recall instead of task outcome | Past a point, recall and outcome move in opposite directions (E6) |

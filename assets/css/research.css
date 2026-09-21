@@ -1296,16 +1296,33 @@ a.rs-prog:hover { border-color: var(--accent); transform: translateY(-3px); }
 @media print {
   .header, .footer, .rs-rail, .rs-toc, .rs-mobile-nav, .rs-progress,
   .rs-breadcrumb, .rs-onepager__actions, .rs-anchor, .chart-data { display: none !important; }
+  /* Print in ink, not in theme tokens: every visible element overrides the
+     inherited colour below, so the palette has to be reset, not just body. */
+  :root, [data-theme], [data-theme="nature"] {
+    --text-primary: #000;
+    --text-secondary: #1a1a1a;
+    --text-muted: #444;
+    --accent: #000;
+    --accent-glow: transparent;
+    --border: #999;
+    --bg-primary: #fff;
+    --bg-secondary: #fff;
+  }
   body { background: #fff; color: #000; }
   .rs-page { padding: 0; }
   .rs-layout { display: block; }
   .rs-print-onepager { font-size: 10.5pt; }
-  .rs-print-onepager .rs-hero__title { font-size: 20pt; margin-bottom: 4pt; }
-  .rs-print-onepager .rs-hero__lede { font-size: 10pt; margin-bottom: 6pt; }
-  .rs-print-onepager .rs-stats { grid-template-columns: repeat(3, 1fr); gap: 6pt; margin-bottom: 10pt; }
-  .rs-print-onepager .rs-stat { padding: 6pt 8pt; }
-  .rs-print-onepager .rs-stat__value { font-size: 14pt; }
-  .rs-print-onepager .rs-stat__label { font-size: 8pt; }
+  .rs-print-onepager .rs-hero__title { font-size: 15pt; margin-bottom: 4pt; }
+  /* The kicker, lede, meta bar and stat tiles are on-screen wayfinding. In print
+     the body already repeats every number (the stat tiles in "The numbers that
+     matter", the title in the running head), so they are dropped to keep the
+     one-pager on one page. */
+  .rs-print-onepager .rs-kicker,
+  .rs-print-onepager .rs-hero__lede,
+  .rs-print-onepager .rs-stats { display: none !important; }
+  .rs-print-onepager .rs-onepager__meta {
+    border-bottom: 0; margin-bottom: 6pt; padding-bottom: 0; font-size: 8.5pt;
+  }
   .rs-print-onepager .rs-body { font-size: 9.5pt; line-height: 1.4; max-width: none; }
   .rs-print-onepager .rs-body h2 { font-size: 11pt; margin: 8pt 0 3pt; }
   .rs-print-onepager .rs-body p, .rs-print-onepager .rs-body li { margin-bottom: 3pt; }

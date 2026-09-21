@@ -136,8 +136,77 @@ def check_rendered_content(prog, rep):
         for word in HYPE:
             if word in low:
                 rep.err("R21", f"{label}: hype word '{word}'")
+        check_composite_labels(label, src, rep)
+        check_source_benchmark_attribution(label, src, rep)
         stats[c["slug"]] = {"words": words, "figures": figures, "avg": avg, "terms": r.terms_used}
+    check_composite_consistency(prog, rep)
     return stats
+
+
+# Figures that are only meaningful with the benchmark they were measured on (bar §5:
+# "A result measured on one benchmark is quoted with that benchmark"). Keyed by the
+# value as it appears in prose; the value must appear within R32_WINDOW chars of the
+# benchmark name. Add entries here when a new load-bearing benchmark figure lands.
+BENCHMARK_BOUND = {
+    "6.5": "SWE-bench",
+    "SWE-bench Verified": "SWE-bench",
+    "AppWorld": "AppWorld",
+}
+R32_WINDOW = 160
+
+
+def check_source_benchmark_attribution(label, src, rep):
+    """R32: a benchmark-specific result is never quoted without its benchmark."""
+    for value, bench in BENCHMARK_BOUND.items():
+        for m in re.finditer(re.escape(value), src):
+            window = src[max(0, m.start() - R32_WINDOW): m.end() + R32_WINDOW]
+            if bench not in window:
+                line = src[:m.start()].count("\n") + 1
+                rep.err("R32", f"{label}:{line}: '{value}' quoted without its benchmark "
+                               f"'{bench}'")
+
+
+def check_composite_labels(label, src, rep):
+    """R31: a [C] composite case is labelled in its heading.
+
+    Bar §5: composites are labelled in the heading of any worked example or case
+    that uses them, not only inline. Only case-style headings are checked (a
+    chapter section may legitimately quote a [C] figure inline); the signal is a
+    heading whose block opens a worked example or case.
+    """
+    blocks = re.split(r"^(#{2,4} .*)$", src, flags=re.M)
+    # blocks = [pre, heading, body, heading, body, ...]
+    for i in range(1, len(blocks) - 1, 2):
+        heading, body = blocks[i], blocks[i + 1]
+        if "[C]" in heading:
+            continue
+        # Case/worked-example headings only: CS-n, "Worked example", "The audit that…".
+        if not re.match(r"^#{2,4}\s*(CS-\d+|Worked example|A worked audit)", heading, re.I):
+            continue
+        if "[C]" in body:
+            clean = re.sub(r"\{#[^}]*\}", "", heading).strip()
+            rep.err("R31", f"{label}: heading '{clean[:60]}' hosts a [C] composite "
+                           f"but is not labelled [C]")
+
+
+def check_composite_consistency(prog, rep):
+    """R31b: the same worked audit quoted across chapters must agree.
+
+    Compares every "<n>K of definitions" / "recovered <n>K" pair found in chapter
+    sources, so one incident cannot be published with several totals.
+    """
+    figures = {}
+    for c in prog["chapters"]:
+        src = (prog["_base"] / c["file"]).read_text(encoding="utf-8")
+        for m in re.finditer(r"([\d,]+)K of definitions", src):
+            figures.setdefault("definitions", {}).setdefault(m.group(1), []).append(c["slug"])
+        for m in re.finditer(r"Recovered: ([\d,.]+)K tokens, (\d+)% of the window", src):
+            figures.setdefault("recovered", {}).setdefault(
+                (m.group(1), m.group(2)), []).append(c["slug"])
+    for kind, seen in figures.items():
+        if len(seen) > 1:
+            detail = "; ".join(f"{k}: {', '.join(v)}" for k, v in seen.items())
+            rep.err("R31", f"{prog['slug']}: worked-audit {kind} figures disagree — {detail}")
 
 
 def check_reference_sources(prog, rep):

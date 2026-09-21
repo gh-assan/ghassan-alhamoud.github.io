@@ -574,7 +574,7 @@ Occurrences of this class in the last month: ______
 | Temperature / sampling | | ☐ |
 | Repository commit | | ☐ |
 
-> The compaction prompt is the most-violated row. It is worth 6.5 points of confound [S].
+> The compaction prompt is the most-violated row. It is worth 6.5 SWE-bench points of confound [S].
 
 ## 4. Task set
 

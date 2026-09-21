@@ -156,7 +156,7 @@ Take a 120K context compacted to 40K (a 25K stable prefix that stays cached, plu
 Two consequences.
 
 1. **Compacting near the end of a session is a pure loss.** You pay the full price and collect none of the saving. With fewer than about five turns left, do not compact.
-2. **The saving is modest because the kept context was already cheap.** Holding 80K extra cached tokens costs 8 units per turn (80 × 0.10), not the 100 units the raw count implies. Meanwhile the *quality* cost is undiminished: the 6.5-point summariser swing, the Pass² drop and the 44.6% termination rate are paid in full [S].
+2. **The saving is modest because the kept context was already cheap.** Holding 80K extra cached tokens costs 8 units per turn (80 × 0.10), not the 100 units the raw count implies. Meanwhile the *quality* cost is undiminished: the 6.5-point SWE-bench summariser swing, the Pass² drop and the 44.6% termination rate are paid in full [S].
 
 > [!key] The corrected framing
 > Compaction is **a quality decision with a modest financial upside**, not a cost optimisation with a quality caveat. That inversion changes when you reach for it, and it strengthens the case for resets, which cost about 500 tokens and carry none of the summarisation damage.

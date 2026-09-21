@@ -129,7 +129,7 @@ Making sessions survivable. This is where quality on long tasks comes from.
 
 1. **Adopt a plan-file convention** with goal, constraints, decisions, **ruled out**, and next step. Cap it at 80 lines; update it at state changes; include "last updated at turn N". *(1 h)*
 2. **Adopt an offload convention** with **self-describing** stubs: `a3f9.log (14KB) — npm ci, exit 0, 2 peer-dep warnings`, never just `a3f9.log (14KB)`. *(30 min)*
-3. **Replace your compaction prompt** with the [explicit schema](ch:templates#4-compaction-schema). Worth up to 6.5 accuracy points [S], and it is a text edit. *(30 min)*
+3. **Replace your compaction prompt** with the [explicit schema](ch:templates#4-compaction-schema). Worth up to 6.5 SWE-bench points [S], and it is a text edit. *(30 min)*
 4. **Set compaction rules:** right after a test passes or a sub-task closes; never mid-debug or when stuck; never more than once per session; never with fewer than five turns left.
 5. **Make the plan-file re-read the first action after any compaction.** It protects the most error-prone step in the session [S].
 6. **Adopt reset triggers:** a second compaction is needed, the same action repeats three times, a poisoned fact appears, the task pivots, or utilisation passes 70% with a lot left.

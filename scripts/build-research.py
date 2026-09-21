@@ -186,7 +186,7 @@ class Renderer:
             f'<div class="rs-diag__legend"><span><strong>0</strong> not done or unknown</span>'
             f'<span><strong>1</strong> partly or inconsistently</span><span><strong>2</strong> done and verified</span>'
             f'<span>⚑ gating item</span></div>'
-            f'<form class="rs-diag__form" onsubmit="return false">{"".join(areas)}</form>'
+            f'<form class="rs-diag__form">{"".join(areas)}</form>'
             f'<div class="rs-diag__result" aria-live="polite"><p class="rs-diag__result-title">Your result</p>'
             f'<p class="rs-diag__empty">Score the items above to see your level and your one next action.</p></div>'
             f'</div>')
@@ -823,9 +823,15 @@ def render_glossary(prog, stats):
     for t in terms:
         L = t["term"][0].upper()
         if L != current:
+            # A new letter closes the previous <dl> and opens its own: <h2> is not a
+            # permitted child of <dl>, and one list per letter keeps the heading
+            # outside the description list while preserving the anchor.
+            if current is not None:
+                items.append("</dl>")
             current = L
             letters.append(L)
-            items.append(f'<h2 class="rs-gloss__letter" id="letter-{L.lower()}">{L}</h2>')
+            items.append(f'<h2 class="rs-gloss__letter" id="letter-{L.lower()}">{L}</h2>'
+                         f'<dl class="rs-gloss__list">')
         note = ""
         if t.get("note"):
             note_html, _ = md_inline(prog, t["note"])
@@ -840,6 +846,8 @@ def render_glossary(prog, stats):
         aliases = (f'<p class="rs-gloss__aliases">Also: {esc(", ".join(t["aliases"]))}</p>' if t.get("aliases") else "")
         items.append(f'<div class="rs-gloss__entry" id="{t["id"]}" data-term="{esc((t["term"] + " " + " ".join(t.get("aliases", []))).lower())}">'
                      f'<dt>{esc(t["term"])}</dt><dd><p>{esc(t["definition"])}</p>{note}{aliases}{intro}</dd></div>')
+    if current is not None:
+        items.append("</dl>")
     stats["_glossary_errors"] = r.errors
     jump = "".join(f'<a href="#letter-{L.lower()}">{L}</a>' for L in letters)
     inner = f"""<div class="rs-gloss">
@@ -847,7 +855,7 @@ def render_glossary(prog, stats):
             <label class="rs-gloss__search"><span class="visually-hidden">Filter terms</span><input type="search" placeholder="Filter {len(terms)} terms…" data-gloss-filter /></label>
             <nav class="rs-gloss__jump" aria-label="Jump to letter">{jump}</nav>
           </div>
-          <dl class="rs-gloss__list">{"".join(items)}</dl>
+          {"".join(items)}
           <p class="rs-gloss__empty" hidden>No term matches that filter.</p>
         </div>"""
     schema = {"@context": "https://schema.org", "@type": "DefinedTermSet", "name": f"{prog['title']} — Glossary",
