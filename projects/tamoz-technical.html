@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamoz Technical Deep Dive — Ghassan Alhamoud</title>
+  <meta name="description" content="How Tamoz works: the stream plane, the cognitive scheduler, sealed Situation episodes, typed Decisions, the governance path to a device, memory, self-healing, self-improvement, evaluation, the simulator rounds, and the Arduino bench." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz-technical.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz-technical.html" />
+  <meta property="og:title" content="Tamoz, technically: from sensor event to governed action" />
+  <meta property="og:description" content="Planes, contracts, data flows, and the round-by-round evidence behind a stream-native agent for the physical world." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Tamoz technical deep dive: from sensor event to governed action",
+    "description": "Architecture, data flows, governance, memory, self-healing, self-improvement, evaluation, simulator rounds, and hardware bench evidence for the Tamoz stream-to-action system.",
+    "about": {"@type": "SoftwareSourceCode", "name": "Tamoz", "codeRepository": "https://github.com/ghassan-ai-projects/tamoz"},
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"},
+    "url": "https://ghassan-alhamoud.com/projects/tamoz-technical.html"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home"><svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg><span class="nav__name">Ghassan Alhamoud</span></a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link nav__link--active">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+    <main class="article-single">
+    <div class="container article-layout article-layout--single">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta"><span><a href="/projects/tamoz.html">Tamoz</a></span><span class="article-card__dot"></span><span>Technical deep dive</span><span class="article-card__dot"></span><span>~30 min read</span></div>
+          <h1 class="article-single__title">Tamoz, technically: from a sensor event to a governed action</h1>
+          <div class="article-single__tags"><span class="article-single__tag">Architecture</span><span class="article-single__tag">Stream Processing</span><span class="article-single__tag">Agent Governance</span><span class="article-single__tag">Evaluation</span><span class="article-single__tag">Hardware-in-the-Loop</span></div>
+          <div class="project-single__actions">
+            <a class="btn btn--secondary" href="/projects/tamoz.html">Back to the overview</a>
+            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
+          </div>
+        </header>
+
+        <div class="project-facts">
+          <div class="project-fact"><span class="project-fact__label">Who this is for</span><span class="project-fact__value">Engineers who want to judge the design, reuse a piece of it, or contribute. The <a href="/projects/tamoz.html">overview</a> covers the why; this page covers the how.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Organizing rule</span><span class="project-fact__value">The Situation is the seam. Agentic Stream owns time and authority, and Tamoz owns judgment. Neither reaches into the other's half.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Evidence labels</span><span class="project-fact__value">Each claim says whether it's implemented, proven in simulation with a scripted reasoner, proven with a real model, operator-observed, or still open.</span></div>
+        </div>
+
+        <div class="article-single__body project-single__body">
+          <nav class="article-toc" aria-label="On this page">
+            <p><strong>On this page</strong></p>
+            <ul>
+              <li><a href="#system-map">1. The system at a glance</a></li>
+              <li><a href="#stream-plane">2. The stream plane</a></li>
+              <li><a href="#scheduler">3. The cognitive scheduler</a></li>
+              <li><a href="#episode">4. The episode boundary</a></li>
+              <li><a href="#decision">5. Inside a decision</a></li>
+              <li><a href="#governance">6. From intent to effect</a></li>
+              <li><a href="#learning">7. The learning loop and memory</a></li>
+              <li><a href="#durable-core">8. The durable core</a></li>
+              <li><a href="#self-healing">9. Self-healing</a></li>
+              <li><a href="#self-improvement">10. Self-improvement</a></li>
+              <li><a href="#evaluation">11. The evaluation framework</a></li>
+              <li><a href="#replay">12. Replay and shadow modes</a></li>
+              <li><a href="#simulator">13. Streams Simulator</a></li>
+              <li><a href="#rounds">14. The experiment rounds in detail</a></li>
+              <li><a href="#hardware">15. The hardware bench</a></li>
+              <li><a href="#open-findings">16. Open findings</a></li>
+              <li><a href="#reading">17. Where to read the code</a></li>
+            </ul>
+          </nav>
+
+          <h2 id="system-map">1. The system at a glance</h2>
+          <p>The problem this layout solves is putting judgment close to equipment without putting authority there. Three repositories, each with its own job and its own license file (all MIT). They talk only through typed, digest-bound contracts: JSONL events in, gRPC episodes over a Unix socket, server-sent events for outcomes, and a device wire for commands. The shared canonical form comes with test vectors that both the Ruby side and the Go side must reproduce byte for byte, so a digest means the same thing on both sides.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 1 · Components and the contracts between them</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 430" role="img" aria-labelledby="t1-title t1-desc">
+                <title id="t1-title">System map of Streams Simulator, Agentic Stream, and Tamoz</title>
+                <desc id="t1-desc">Streams Simulator produces events that enter Agentic Stream's ingress. Agentic Stream builds Situation versions and its cognitive scheduler sends a sealed snapshot to Tamoz's EpisodeWorker. Tamoz's episode graph returns a Decision to the stream's validator, then policy. Approval requests go to Tamoz's approval relay. The outbox and dispatcher send commands to the simulator's effectors or device emulator, and the reconciled outcome streams back to Tamoz's outcome listener, which feeds memory.</desc>
+                <defs>
+                  <marker id="t1-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t1-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <text class="dg-k" x="120" y="36" text-anchor="middle">STREAMS SIMULATOR · GO</text>
+                <text class="dg-k dg-info" x="400" y="36" text-anchor="middle">AGENTIC STREAM · GO</text>
+                <text class="dg-k dg-accent" x="700" y="36" text-anchor="middle">TAMOZ · RUBY</text>
+                <rect class="dg-box dg-box--muted" x="10" y="48" width="220" height="342" rx="10"/>
+                <rect class="dg-box dg-box--info" x="270" y="48" width="260" height="342" rx="10"/>
+                <rect class="dg-box dg-box--accent" x="590" y="48" width="220" height="342" rx="10"/>
+
+                <g>
+                  <rect class="dg-box" x="25" y="66" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="86" text-anchor="middle">Domain JSON · 8 domains</text>
+                  <rect class="dg-box" x="25" y="112" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="132" text-anchor="middle">World core · faults</text>
+                  <rect class="dg-box" x="25" y="158" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="178" text-anchor="middle">Perturbation + delivery ledger</text>
+                  <rect class="dg-box" x="25" y="204" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="224" text-anchor="middle">Adapter → sink</text>
+                  <rect class="dg-box" x="25" y="250" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="270" text-anchor="middle">Sealed truth</text>
+                  <rect class="dg-box" x="25" y="296" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="316" text-anchor="middle">Independent scorer</text>
+                  <rect class="dg-box" x="25" y="342" width="190" height="32" rx="6"/><text class="dg-s" x="120" y="362" text-anchor="middle">Effectors / device emulator</text>
+                </g>
+                <path class="dg-line" d="M120 98 V110" marker-end="url(#t1-ah)"/>
+                <path class="dg-line" d="M120 144 V156" marker-end="url(#t1-ah)"/>
+                <path class="dg-line" d="M120 190 V202" marker-end="url(#t1-ah)"/>
+                <path class="dg-line dg-line--dash" d="M25 358 H17 V128 H23" marker-end="url(#t1-ah)"/>
+
+                <g>
+                  <rect class="dg-box" x="282" y="66" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="86" text-anchor="middle">Ingress + append-only event log</text>
+                  <rect class="dg-box" x="282" y="112" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="132" text-anchor="middle">Stream engine · watermarks · windows</text>
+                  <rect class="dg-box" x="282" y="158" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="178" text-anchor="middle">Immutable Situation versions</text>
+                  <rect class="dg-box" x="282" y="204" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="224" text-anchor="middle">Cognitive scheduler</text>
+                  <rect class="dg-box" x="282" y="250" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="270" text-anchor="middle">Decision + intent validator</text>
+                  <rect class="dg-box" x="282" y="296" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="316" text-anchor="middle">Policy gateway</text>
+                  <rect class="dg-box" x="282" y="342" width="236" height="32" rx="6"/><text class="dg-s" x="400" y="362" text-anchor="middle">Outbox → dispatcher</text>
+                </g>
+                <path class="dg-line" d="M400 98 V110" marker-end="url(#t1-ah)"/>
+                <path class="dg-line" d="M400 144 V156" marker-end="url(#t1-ah)"/>
+                <path class="dg-line" d="M400 190 V202" marker-end="url(#t1-ah)"/>
+                <path class="dg-line" d="M400 282 V294" marker-end="url(#t1-ah)"/>
+                <path class="dg-line" d="M400 328 V340" marker-end="url(#t1-ah)"/>
+
+                <g>
+                  <rect class="dg-box" x="605" y="66" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="86" text-anchor="middle">Durable core · SQLite</text>
+                  <rect class="dg-box" x="605" y="112" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="132" text-anchor="middle">Memory · three layers</text>
+                  <rect class="dg-box" x="605" y="158" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="178" text-anchor="middle">Situation memory · recall</text>
+                  <rect class="dg-box" x="605" y="204" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="224" text-anchor="middle">EpisodeWorker · gRPC</text>
+                  <rect class="dg-box" x="605" y="250" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="270" text-anchor="middle">Episode graph · decide</text>
+                  <rect class="dg-box" x="605" y="296" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="316" text-anchor="middle">Approval relay → a person</text>
+                  <rect class="dg-box" x="605" y="342" width="190" height="32" rx="6"/><text class="dg-s" x="700" y="362" text-anchor="middle">Outcome listener (SSE)</text>
+                </g>
+                <path class="dg-line" d="M700 236 V248" marker-end="url(#t1-ah)"/>
+                <path class="dg-line dg-line--accent dg-line--dash" d="M795 358 H803 V128 H797" marker-end="url(#t1-aha)"/>
+                <path class="dg-line dg-line--accent dg-line--dash" d="M700 144 V156" marker-end="url(#t1-aha)"/>
+
+                <path class="dg-line" d="M215 220 H250 V82 H280" marker-end="url(#t1-ah)"/>
+                <text class="dg-s" x="250" y="62" text-anchor="middle">events</text>
+                <path class="dg-line" d="M282 358 H217" marker-end="url(#t1-ah)"/>
+                <text class="dg-s" x="250" y="350" text-anchor="middle">cmds</text>
+                <path class="dg-line dg-line--accent" d="M518 220 H603" marker-end="url(#t1-aha)"/>
+                <text class="dg-s dg-accent" x="557" y="212" text-anchor="middle">snapshot</text>
+                <path class="dg-line dg-line--accent" d="M605 266 H520" marker-end="url(#t1-aha)"/>
+                <text class="dg-s dg-accent" x="557" y="258" text-anchor="middle">decision</text>
+                <path class="dg-line" d="M520 312 H603" marker-start="url(#t1-ah)" marker-end="url(#t1-ah)"/>
+                <text class="dg-s" x="557" y="304" text-anchor="middle">approval</text>
+                <path class="dg-line" d="M518 358 H603" marker-end="url(#t1-ah)"/>
+                <text class="dg-s" x="557" y="350" text-anchor="middle">outcome</text>
+
+                <text class="dg-s" x="120" y="412" text-anchor="middle">or: gateway + Arduino, same device wire</text>
+                <text class="dg-s" x="400" y="412" text-anchor="middle">one Go process · SQLite WAL</text>
+                <text class="dg-s" x="700" y="412" text-anchor="middle">27 gems + Tamoz Agent app</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to see all three repositories.</p>
+            <figcaption class="evidence-caption">From the public repos. The software composition ran end to end across five simulator rounds. The Arduino path swaps in for the simulator's device emulator and uses the same device wire; its Tamoz-to-stream intent conversion is still work in progress.</figcaption>
+          </figure>
+
+          <p>The split of responsibilities is written down as a contract, and every design question gets settled by asking which side of it a concern falls on:</p>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Concern</th><th>Owner</th><th>Why there</th></tr></thead>
+              <tbody>
+                <tr><td>Event admission, dedup, quarantine, event time, watermarks, lateness</td><td>Agentic Stream</td><td>Deterministic and replayable. No model belongs on the hot path.</td></tr>
+                <tr><td>Windows, operators, Situation versions, lifecycle, provenance</td><td>Agentic Stream</td><td>State changes serialize per partition; published versions are immutable.</td></tr>
+                <tr><td>When to reason: admission, budgets, cancellation, supersession</td><td>Agentic Stream</td><td>Reasoning cost has to be a deterministic, explainable decision.</td></tr>
+                <tr><td>Decision validation, policy, risk, approval authority, interlocks</td><td>Agentic Stream</td><td>Authority can't sit with the party that proposes.</td></tr>
+                <tr><td>Commands, outbox, effectors, reconciliation, outcomes</td><td>Agentic Stream</td><td>Effects need one owner with durable, idempotent records.</td></tr>
+                <tr><td>Planning, reasoning, verification of its own conclusions</td><td>Tamoz</td><td>Judgment is the one thing the model is good for.</td></tr>
+                <tr><td>Memory: Experience, Knowledge, Wisdom</td><td>Tamoz</td><td>Learning needs a durable, authorized, scoped store.</td></tr>
+                <tr><td>Skills and MCP tools inside an episode, human approval <em>delivery</em></td><td>Tamoz</td><td>Tamoz has the channels. The stream keeps the approval <em>authority</em>.</td></tr>
+                <tr><td>World truth, delivery faults, scoring</td><td>Streams Simulator</td><td>An instrument has to be independent of what it measures.</td></tr>
+                <tr><td>Serial port, output bounds, lease watchdog, safe stop</td><td>Gateway + firmware</td><td>The last line of defense runs without any network or model.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Twelve joint invariants are release-blocking for the pair. A few of them carry most of the design. Both sides compute byte-identical snapshot digests. Tamoz never computes event time, a watermark, lateness, or window membership. The stream never calls a model on its deterministic path. Every attempt is identified by <code>(episode_id, attempt_id, fence)</code>, and output from a stale attempt is refused even if its snapshot matches. And no intent executes without passing the stream's policy pipeline, whichever executor produced it.</p>
+
+          <h2 id="stream-plane">2. The stream plane: from events to Situations</h2>
+          <p>Agentic Stream is a modular monolith in Go 1.26: one process, SQLite in WAL mode, restricted CEL for rules, and YAML SituationSpecs compiled and digested at load. Here's the path of one event:</p>
+          <ol class="flow">
+            <li>Validate<small>envelope + schema</small></li>
+            <li>Append<small>dedup by stable id</small></li>
+            <li>Partition<small>tenant + key</small></li>
+            <li>Watermark<small>+ source health</small></li>
+            <li>Windows<small>tumbling, sliding, count, decay</small></li>
+            <li>Operators<small>aggregates, slopes, heartbeats</small></li>
+            <li class="flow__step--accent">Situation vN<small>immutable, digested</small></li>
+          </ol>
+          <p>A Situation version carries the derived facts, the lifecycle phase, severity, completeness, the material delta since the last version, a provenance summary, source references, and a canonical digest. A later event never rewrites a published version. It produces a new correction version. Lateness isn't a silent default either. Each spec declares its bounded out-of-orderness, idle timeout, allowed lateness, clock-skew tolerance, and one of four policies:</p>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Late policy</th><th>What happens</th></tr></thead>
+              <tbody>
+                <tr><td><code>drop_with_audit</code></td><td>State doesn't change, and the decision to drop is recorded.</td></tr>
+                <tr><td><code>history_only</code></td><td>Evidence is kept, and the derived Situation is left alone.</td></tr>
+                <tr><td><code>correct</code></td><td>Affected state is recomputed and a correction version is published.</td></tr>
+                <tr><td><code>correct_and_reconsider</code></td><td>Correct, then admit one deduplicated reconsideration episode.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>A missing heartbeat is a first-class feature. When a source goes quiet, completeness becomes <code>uncertain</code>, and every downstream gate can see it. That's how "the probe went silent" turns into a denied emergency action instead of a confident guess.</p>
+
+          <h2 id="scheduler">3. The cognitive scheduler: when reasoning is worth paying for</h2>
+          <p>Admission is a deterministic decision the stream makes. The agent never decides whether to wake up. Every outcome (ignored, deferred, coalesced, admitted, cancelled, expired) is recorded with a reason, so cognitive cost is always explainable after the fact.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 2 · The admission funnel</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 344" role="img" aria-labelledby="t3-title t3-desc">
+                <title id="t3-title">Cognitive scheduler admission funnel</title>
+                <desc id="t3-desc">A published Situation version passes a trigger condition, a score threshold, freshness and completeness checks, and debounce, cooldown, coalescing and capacity controls before a bounded episode is admitted. Each stage has an exit: ignored, deferred, or coalesced, always recorded with a reason.</desc>
+                <defs>
+                  <marker id="t3-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="dg-box" x="20" y="16" width="420" height="44" rx="6"/>
+                <text class="dg-t" x="230" y="36" text-anchor="middle">Situation version published</text>
+                <text class="dg-s" x="230" y="52" text-anchor="middle">every material change produces one</text>
+                <rect class="dg-box" x="45" y="72" width="370" height="44" rx="6"/>
+                <text class="dg-t" x="230" y="92" text-anchor="middle">Trigger condition</text>
+                <text class="dg-s" x="230" y="108" text-anchor="middle">restricted, deterministic CEL</text>
+                <rect class="dg-box" x="70" y="128" width="320" height="44" rx="6"/>
+                <text class="dg-t" x="230" y="148" text-anchor="middle">Score ≥ threshold</text>
+                <text class="dg-s" x="230" y="164" text-anchor="middle">weak evidence doesn't wake anyone</text>
+                <rect class="dg-box" x="95" y="184" width="270" height="44" rx="6"/>
+                <text class="dg-t" x="230" y="204" text-anchor="middle">Fresh and complete enough</text>
+                <text class="dg-s" x="230" y="220" text-anchor="middle">plus a material delta</text>
+                <rect class="dg-box" x="120" y="240" width="220" height="44" rx="6"/>
+                <text class="dg-t" x="230" y="260" text-anchor="middle">Debounce · cooldown</text>
+                <text class="dg-s" x="230" y="276" text-anchor="middle">coalesce · capacity · cost ceiling</text>
+                <rect class="dg-box dg-box--accent" x="120" y="294" width="220" height="42" rx="6"/>
+                <text class="dg-t" x="230" y="312" text-anchor="middle">Episode admitted</text>
+                <text class="dg-s" x="230" y="328" text-anchor="middle">snapshot · budget · fence</text>
+                <path class="dg-line" d="M230 60 V70" marker-end="url(#t3-ah)"/>
+                <path class="dg-line" d="M230 116 V126" marker-end="url(#t3-ah)"/>
+                <path class="dg-line" d="M230 172 V182" marker-end="url(#t3-ah)"/>
+                <path class="dg-line" d="M230 228 V238" marker-end="url(#t3-ah)"/>
+                <path class="dg-line" d="M230 284 V292" marker-end="url(#t3-ah)"/>
+                <path class="dg-line dg-line--dash" d="M415 94 H500" marker-end="url(#t3-ah)"/>
+                <text class="dg-s" x="508" y="98">false → ignored, recorded</text>
+                <path class="dg-line dg-line--dash" d="M390 150 H500" marker-end="url(#t3-ah)"/>
+                <text class="dg-s" x="508" y="154">below → ignored, recorded</text>
+                <path class="dg-line dg-line--dash" d="M365 206 H500" marker-end="url(#t3-ah)"/>
+                <text class="dg-s" x="508" y="210">stale or uncertain → deferred with a reason</text>
+                <path class="dg-line dg-line--dash" d="M340 262 H500" marker-end="url(#t3-ah)"/>
+                <text class="dg-s" x="508" y="266">duplicate → coalesced or superseded</text>
+                <text class="dg-k dg-accent" x="508" y="304">MEASURED IN ROUND 3</text>
+                <text class="dg-s" x="508" y="320">7,200 quiet events → 0 episodes</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to see the exit paths.</p>
+            <figcaption class="evidence-caption">From the public repo (Agentic Stream <code>internal/cognition</code>). The Round 3 number was measured live in the simulator.</figcaption>
+          </figure>
+          <p>Supersession is the quiet hero here. If a newer version materially changes the Situation while an episode is still thinking, the attempt is cancelled, and its fence guarantees a late answer can't be accepted. If a correction arrives after a command already executed, the stream admits one deduplicated reconsideration bound to the corrected version.</p>
+
+          <h2 id="episode">4. The episode boundary</h2>
+          <p>This is where continuous evidence turns into one bounded, supervised piece of reasoning. Tamoz implements the <code>EpisodeWorker</code> gRPC service with two RPCs, <code>Handshake</code> and <code>Execute</code>. The stream dials it over a Unix socket (mTLS optional). The worker is authoritative for nothing. It proposes, and the runtime decides.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 3 · One episode, as a sequence</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 560" role="img" aria-labelledby="t4-title t4-desc">
+                <title id="t4-title">Episode sequence between Agentic Stream, Tamoz, evidence tools, and the model</title>
+                <desc id="t4-desc">Agentic Stream performs a handshake with the Tamoz worker, then calls Execute with the snapshot, its digest, a budget, and a fence. Tamoz re-hashes the snapshot and stops before any model call on mismatch. It reads bounded evidence through scoped read-only tools, sends a frozen frame to the model through a witness gateway that signs a record of the call, builds a typed Decision, and streams events back ending with a terminal event and an artifact manifest. The stream validates identity, fence, and digest and accepts or rejects the Decision.</desc>
+                <defs>
+                  <marker id="t4-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t4-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="dg-box dg-box--info" x="20" y="10" width="140" height="44" rx="6"/>
+                <text class="dg-t" x="90" y="30" text-anchor="middle">Agentic Stream</text>
+                <text class="dg-s" x="90" y="45" text-anchor="middle">executor</text>
+                <rect class="dg-box dg-box--accent" x="260" y="10" width="140" height="44" rx="6"/>
+                <text class="dg-t" x="330" y="30" text-anchor="middle">Tamoz</text>
+                <text class="dg-s" x="330" y="45" text-anchor="middle">worker + graph</text>
+                <rect class="dg-box" x="490" y="10" width="140" height="44" rx="6"/>
+                <text class="dg-t" x="560" y="30" text-anchor="middle">Evidence tools</text>
+                <text class="dg-s" x="560" y="45" text-anchor="middle">reverse channel</text>
+                <rect class="dg-box" x="670" y="10" width="140" height="44" rx="6"/>
+                <text class="dg-t" x="740" y="30" text-anchor="middle">Model</text>
+                <text class="dg-s" x="740" y="45" text-anchor="middle">via witness gateway</text>
+                <path class="dg-line dg-line--dash" d="M90 54 V545"/>
+                <path class="dg-line dg-line--dash" d="M330 54 V545"/>
+                <path class="dg-line dg-line--dash" d="M560 54 V545"/>
+                <path class="dg-line dg-line--dash" d="M740 54 V545"/>
+
+                <text class="dg-s" x="210" y="82" text-anchor="middle">Handshake: protocol, contract, features</text>
+                <path class="dg-line" d="M90 90 H328" marker-end="url(#t4-ah)"/>
+                <text class="dg-s" x="210" y="112" text-anchor="middle">compatible (or refused)</text>
+                <path class="dg-line dg-line--dash" d="M330 120 H92" marker-end="url(#t4-ah)"/>
+                <text class="dg-s" x="210" y="146" text-anchor="middle">Execute: snapshot + sha256, budget, fence</text>
+                <path class="dg-line dg-line--accent" d="M90 154 H328" marker-end="url(#t4-aha)"/>
+
+                <rect class="dg-box" x="175" y="168" width="310" height="40" rx="6"/>
+                <rect class="dg-box dg-box--warn" x="175" y="168" width="310" height="40" rx="6"/>
+                <text class="dg-s" x="330" y="185" text-anchor="middle">re-hash the snapshot in constant time;</text>
+                <text class="dg-s" x="330" y="200" text-anchor="middle">a mismatch stops the episode before any model call</text>
+
+                <text class="dg-s" x="445" y="234" text-anchor="middle">evidence.get / features.query</text>
+                <path class="dg-line" d="M330 242 H558" marker-end="url(#t4-ah)"/>
+                <text class="dg-s" x="445" y="264" text-anchor="middle">bounded rows and bytes</text>
+                <path class="dg-line dg-line--dash" d="M560 272 H332" marker-end="url(#t4-ah)"/>
+
+                <text class="dg-s" x="340" y="298">frozen frame, exact bytes →</text>
+                <path class="dg-line" d="M330 306 H738" marker-end="url(#t4-ah)"/>
+                <text class="dg-s" x="340" y="328">typed document + signed call record</text>
+                <path class="dg-line dg-line--dash" d="M740 336 H332" marker-end="url(#t4-ah)"/>
+
+                <rect class="dg-box" x="160" y="352" width="340" height="40" rx="6"/>
+                <rect class="dg-box dg-box--accent" x="160" y="352" width="340" height="40" rx="6"/>
+                <text class="dg-s" x="330" y="369" text-anchor="middle">build the Decision: facts apart from inferences,</text>
+                <text class="dg-s" x="330" y="384" text-anchor="middle">cited evidence, uncertainty, intents from the catalog</text>
+
+                <text class="dg-s" x="210" y="418" text-anchor="middle">events: budget.updated, decision.proposed</text>
+                <path class="dg-line" d="M330 426 H92" marker-end="url(#t4-ah)"/>
+                <text class="dg-s" x="210" y="448" text-anchor="middle">terminal + artifact manifest</text>
+                <path class="dg-line" d="M330 456 H92" marker-end="url(#t4-ah)"/>
+
+                <rect class="dg-box" x="20" y="476" width="290" height="40" rx="6"/>
+                <rect class="dg-box dg-box--info" x="20" y="476" width="290" height="40" rx="6"/>
+                <text class="dg-s" x="165" y="493" text-anchor="middle">validate episode, attempt, fence, digest,</text>
+                <text class="dg-s" x="165" y="508" text-anchor="middle">schema, catalog → accept or reject, durably</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to follow all four participants.</p>
+            <figcaption class="evidence-caption">From the public repos (<code>tamoz-stream</code> and Agentic Stream <code>internal/episodes</code>). The witness gateway and the no-hidden-fallback rule landed after the simulator rounds, which used a scripted brain.</figcaption>
+          </figure>
+
+          <p>A few details make this boundary hard to abuse:</p>
+          <ul>
+            <li><strong>The snapshot is sealed.</strong> The request carries <code>snapshot_json</code> and its SHA-256, plus digests of the decision schema, tool catalog, prompt, and objective. A strict scanner refuses malformed JSON at the door: duplicate keys, unpaired surrogates, unsafe numbers.</li>
+            <li><strong>The tool surface is a fixed allowlist.</strong> The episode host exposes <code>features.query</code>, <code>evidence.get</code>, <code>situations.related</code>, <code>history.prior_incidents</code>, <code>knowledge.search</code>, and <code>forecast.run</code>, all read-only and bounded, and nothing else can be named. The host holds no reference to a toolbox, effect journal, MCP client, filesystem, or memory write path.</li>
+            <li><strong>The budget is finite and enforced from outside.</strong> Wall time, model and tool calls, input and output tokens, tool-result bytes, provider retries, and cost. The stream owns the budget, and a late provider response can't extend the deadline.</li>
+            <li><strong>Episodes are non-interactive.</strong> An interrupt inside a stream episode is a typed terminal failure, never a wait. People are reached through the approval relay, not by pausing the worker.</li>
+            <li><strong>Every completed episode is attributable.</strong> The terminal event carries an artifact manifest with the prompt, skill-set, tool-catalog, and memory-record digests, plus the model policy and contract version.</li>
+          </ul>
+
+          <h2 id="decision">5. Inside a decision</h2>
+          <p>A Decision is a proposal, not an authorization. It separates observed facts from inferences, cites its evidence by reference, states its uncertainty, carries a validity interval, and proposes zero or more typed <code>ActionIntent</code>s. What an intent may contain comes from a <strong>spec-bound intent catalog</strong>. It's authored in the Situation spec, embedded in the episode with a shared digest, verified by the worker before any model call, and verified again, independently, in Go. The catalog fixes each intent's exact risk class, parameter schema, presets, and the short list of fields the model is allowed to write.</p>
+          <figure class="artifact-frame">
+            <pre><code>// thermal catalog entry (shape simplified)
+"request_bounded_cooling": {
+  "risk": "R2",
+  "model_writable_fields": ["mode"],
+  "parameters": { "mode": { "enum": ["hold", "bounded_cooling"] } },
+  "presets":    { "bounded_cooling": "from the capability catalog, never the model" }
+}
+
+// first real-model attempt  → rejected: wrote fields it does not own
+{ "type": "request_bounded_cooling", "duty_pct": 50, "lease_ms": 5000 }
+
+// after narrowing the surface → accepted
+{ "type": "request_bounded_cooling", "mode": "bounded_cooling" }</code></pre>
+            <figcaption class="evidence-caption">Modeled on the thermal domain in the public repo; field names are real and the entry is shortened for reading. The rejected and accepted proposals are from the real-model thermal run described in the <a href="/articles/agent-spun-the-motor.html">motor field note</a>.</figcaption>
+          </figure>
+          <p>Go-side validation checks risk <em>equality</em> with the catalog, not just "below the ceiling". It also checks per-intent schemas, preset byte-identity, entity binding, evidence grounding, intent counts, and the compensation rules. The policy gateway then enforces the catalog's approval requirement and a per-intent hourly rate limit. The model proposes. It never declares its own authority.</p>
+
+          <h2 id="governance">6. From intent to effect</h2>
+          <p>The path from "the model suggested it" to "the fan spun" is deliberately longer than one API call. Each hop turns an untrusted proposal into a more constrained, durable record.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 4 · The governance pipeline</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 300" role="img" aria-labelledby="t5-title t5-desc">
+                <title id="t5-title">Governance pipeline from Decision to outcome</title>
+                <desc id="t5-desc">A Decision passes the validator, then policy against current state, then a durable outbox with an idempotency key, a dispatcher that leases and re-validates, the effector, and finally an outcome of succeeded, failed, or unknown. Invalid or denied proposals are durably rejected with a reason. High-risk intents detour through a signed human approval before reaching the outbox. Unknown outcomes go to reconciliation and are never blindly retried.</desc>
+                <defs>
+                  <marker id="t5-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t5-ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--bad" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t5-ahw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--warn" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="dg-box dg-box--accent" x="6" y="50" width="104" height="70" rx="6"/>
+                <text class="dg-t" x="58" y="76" text-anchor="middle">Decision</text>
+                <text class="dg-s" x="58" y="94" text-anchor="middle">typed proposal</text>
+                <text class="dg-s" x="58" y="108" text-anchor="middle">from Tamoz</text>
+                <rect class="dg-box dg-box--info" x="124" y="50" width="104" height="70" rx="6"/>
+                <text class="dg-t" x="176" y="76" text-anchor="middle">Validator</text>
+                <text class="dg-s" x="176" y="94" text-anchor="middle">identity, fence,</text>
+                <text class="dg-s" x="176" y="108" text-anchor="middle">digest, catalog</text>
+                <rect class="dg-box dg-box--info" x="242" y="50" width="104" height="70" rx="6"/>
+                <text class="dg-t" x="294" y="76" text-anchor="middle">Policy</text>
+                <text class="dg-s" x="294" y="94" text-anchor="middle">freshness, risk,</text>
+                <text class="dg-s" x="294" y="108" text-anchor="middle">rate, interlock</text>
+                <rect class="dg-box dg-box--info" x="360" y="50" width="104" height="70" rx="6"/>
+                <text class="dg-t" x="412" y="76" text-anchor="middle">Outbox</text>
+                <text class="dg-s" x="412" y="94" text-anchor="middle">durable command,</text>
+                <text class="dg-s" x="412" y="108" text-anchor="middle">idempotency key</text>
+                <rect class="dg-box dg-box--info" x="478" y="50" width="104" height="70" rx="6"/>
+                <text class="dg-t" x="530" y="76" text-anchor="middle">Dispatcher</text>
+                <text class="dg-s" x="530" y="94" text-anchor="middle">lease, then</text>
+                <text class="dg-s" x="530" y="108" text-anchor="middle">re-validate</text>
+                <rect class="dg-box" x="596" y="50" width="104" height="70" rx="6"/>
+                <text class="dg-t" x="648" y="76" text-anchor="middle">Effector</text>
+                <text class="dg-s" x="648" y="94" text-anchor="middle">device edge</text>
+                <text class="dg-s" x="648" y="108" text-anchor="middle">or simulator</text>
+                <rect class="dg-box" x="714" y="50" width="100" height="70" rx="6"/>
+                <text class="dg-t" x="764" y="76" text-anchor="middle">Outcome</text>
+                <text class="dg-s" x="764" y="94" text-anchor="middle">succeeded,</text>
+                <text class="dg-s" x="764" y="108" text-anchor="middle">failed, unknown</text>
+                <path class="dg-line" d="M110 85 H122" marker-end="url(#t5-ah)"/>
+                <path class="dg-line" d="M228 85 H240" marker-end="url(#t5-ah)"/>
+                <path class="dg-line" d="M346 85 H358" marker-end="url(#t5-ah)"/>
+                <path class="dg-line" d="M464 85 H476" marker-end="url(#t5-ah)"/>
+                <path class="dg-line" d="M582 85 H594" marker-end="url(#t5-ah)"/>
+                <path class="dg-line" d="M700 85 H712" marker-end="url(#t5-ah)"/>
+
+                <path class="dg-line dg-line--bad dg-line--dash" d="M176 120 V186" marker-end="url(#t5-ahb)"/>
+                <path class="dg-line dg-line--bad dg-line--dash" d="M262 120 L200 186" marker-end="url(#t5-ahb)"/>
+                <rect class="dg-box" x="60" y="188" width="170" height="52" rx="6"/>
+                <text class="dg-t dg-bad" x="145" y="208" text-anchor="middle">Rejected or denied</text>
+                <text class="dg-s" x="145" y="226" text-anchor="middle">recorded with a reason</text>
+
+                <path class="dg-line dg-line--warn" d="M310 120 V186" marker-end="url(#t5-ahw)"/>
+                <rect class="dg-box dg-box--warn" x="250" y="188" width="160" height="52" rx="6"/>
+                <text class="dg-t" x="330" y="208" text-anchor="middle">Human approval</text>
+                <text class="dg-s" x="330" y="226" text-anchor="middle">signed, single-use</text>
+                <path class="dg-line dg-line--warn" d="M410 214 H428 V124" marker-end="url(#t5-ahw)"/>
+
+                <path class="dg-line dg-line--warn" d="M764 120 V186" marker-end="url(#t5-ahw)"/>
+                <rect class="dg-box dg-box--warn" x="640" y="188" width="174" height="52" rx="6"/>
+                <text class="dg-t" x="727" y="208" text-anchor="middle">Unknown → reconcile</text>
+                <text class="dg-s" x="727" y="226" text-anchor="middle">never a blind retry</text>
+
+                <text class="dg-s" x="410" y="280" text-anchor="middle">Policy judges the current state, not the state the model saw. Operator stop and epoch drain act here, so a worker can't outrun a stop.</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to follow the pipeline.</p>
+            <figcaption class="evidence-caption">From the public repo (Agentic Stream <code>internal/decisions</code>, <code>internal/policy</code>, <code>internal/actions</code>). Validation, denial, approval, and compensation ran live in the simulator rounds; the unknown-outcome path is covered by tests.</figcaption>
+          </figure>
+
+          <p>Risk classes run from <code>R0</code> to <code>R4</code>. What each class requires is versioned per spec and per policy, never hard-coded. In the experiment specs they worked out like this:</p>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Class</th><th>Typical intent in the rounds</th><th>What policy did</th></tr></thead>
+              <tbody>
+                <tr><td><code>R0</code></td><td><code>install_watch_condition</code></td><td>Executed after validation. A watch is scoped to one Situation, expires, is count-bounded, and can't modify a spec.</td></tr>
+                <tr><td><code>R1</code></td><td><code>start_aerator</code>, <code>create_maintenance_ticket</code>, <code>notify_customer</code></td><td>Executed automatically after every re-validation.</td></tr>
+                <tr><td><code>R2</code></td><td><code>emergency_water_exchange</code>, <code>expedite_shipment</code>, <code>request_bounded_cooling</code></td><td>Parked until a signed human approval, then re-validated for freshness and preconditions.</td></tr>
+                <tr><td><code>R3</code> and up</td><td><code>isolate_segment</code> (water network)</td><td>Denied by risk policy, with the lower-risk intents in the same Decision still considered on their own merits.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Human approval is split into transport and authority. Tamoz <em>delivers</em> the request to a person, and the stream <em>decides</em>. In the simulator rounds, approvals were ed25519-signed assertions of 13 fields, single-use, with the relay and the approver required to be different principals. After every relayed approval, the stream re-checks freshness and completeness. An approval that arrives after the Situation has moved on is refused as a version conflict. A compensating intent, such as a downgrade that walks back an earlier action, goes through the same pipeline under its own risk class. It's never automatically low-risk.</p>
+
+          <h2 id="learning">7. The learning loop and memory</h2>
+          <p>An agent that grades its own work learns to flatter itself. So Tamoz only writes an Experience from a completed episode <em>plus</em> an outcome observed by someone else, and in this system that observer is the stream's reconciled outcome. Neither product could close this loop on its own.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 5 · How an outcome becomes a memory, and a memory becomes a better decision</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 260" role="img" aria-labelledby="t6-title t6-desc">
+                <title id="t6-title">The learning loop</title>
+                <desc id="t6-desc">An episode decides on Situation version N; the command executes through policy and the outbox; the outcome is reconciled by an independent observer; Tamoz admits an Experience marked observed; later a similar Situation appears on another entity; the memory is recalled into the episode, where the Decision cites the recalled memory digests. Then the cycle repeats.</desc>
+                <defs>
+                  <marker id="t6-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t6-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="dg-box dg-box--accent" x="20" y="30" width="220" height="64" rx="8"/>
+                <text class="dg-t" x="130" y="56" text-anchor="middle">Episode decides</text>
+                <text class="dg-s" x="130" y="76" text-anchor="middle">pond-04, Situation v47</text>
+                <rect class="dg-box dg-box--info" x="300" y="30" width="220" height="64" rx="8"/>
+                <text class="dg-t" x="410" y="56" text-anchor="middle">Command executes</text>
+                <text class="dg-s" x="410" y="76" text-anchor="middle">policy, outbox, effector</text>
+                <rect class="dg-box dg-box--info" x="580" y="30" width="220" height="64" rx="8"/>
+                <text class="dg-t" x="690" y="56" text-anchor="middle">Outcome reconciled</text>
+                <text class="dg-s" x="690" y="76" text-anchor="middle">the independent observer</text>
+                <rect class="dg-box dg-box--accent" x="580" y="160" width="220" height="64" rx="8"/>
+                <text class="dg-t" x="690" y="186" text-anchor="middle">Experience admitted</text>
+                <text class="dg-s dg-code" x="690" y="206" text-anchor="middle">epistemic_kind: observed</text>
+                <rect class="dg-box" x="300" y="160" width="220" height="64" rx="8"/>
+                <text class="dg-t" x="410" y="186" text-anchor="middle">Similar Situation later</text>
+                <text class="dg-s" x="410" y="206" text-anchor="middle">pond-09, same precursor</text>
+                <rect class="dg-box dg-box--accent" x="20" y="160" width="220" height="64" rx="8"/>
+                <text class="dg-t" x="130" y="186" text-anchor="middle">Recalled into the episode</text>
+                <text class="dg-s" x="130" y="206" text-anchor="middle">Decision cites memory digests</text>
+                <path class="dg-line" d="M240 62 H298" marker-end="url(#t6-ah)"/>
+                <path class="dg-line" d="M520 62 H578" marker-end="url(#t6-ah)"/>
+                <path class="dg-line dg-line--accent" d="M690 94 V158" marker-end="url(#t6-aha)"/>
+                <path class="dg-line dg-line--dash" d="M580 192 H522" marker-end="url(#t6-ah)"/>
+                <path class="dg-line dg-line--accent" d="M300 192 H242" marker-end="url(#t6-aha)"/>
+                <path class="dg-line dg-line--accent dg-line--dash" d="M130 160 V96" marker-end="url(#t6-aha)"/>
+                <text class="dg-s" x="410" y="250" text-anchor="middle">Retrieval is authorization first: records outside the tenant, entity type, or situation type never reach the ranker, the logs, or the model.</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to follow the loop.</p>
+            <figcaption class="evidence-caption">From the Round 3 aquaculture run in the simulator: pond-09's Decision carried two recalled pond-04 Experience digests in <code>facts_used</code>. Mechanics evidence with a scripted reasoner; the recall itself is real.</figcaption>
+          </figure>
+
+          <p>Underneath sit three durable layers, each with a different kind of authority:</p>
+          <ol class="flow">
+            <li>Experience<small>what happened, to whom, with what result</small></li>
+            <li>Knowledge<small>reviewed, reusable facts and procedures</small></li>
+            <li class="flow__step--gate">Wisdom<small>evaluated strategies, promoted only</small></li>
+          </ol>
+          <p>Every record is immutable and versioned, and it carries an <strong>epistemic kind</strong>: <code>observed</code>, <code>reported</code>, <code>inferred</code>, or <code>prescribed</code>. A model-written summary can never become <code>observed</code>. A recalled memory is marked in the trace and excluded as new evidence, so a claim can't get "more true" by being repeated. Experience is never injected automatically. Knowledge needs contradiction checks and, for anything consequential, a person's approval. Wisdom changes behavior only through an explicit, versioned behavior transition, and in-flight turns stay pinned to the behavior they started with.</p>
+
+          <h2 id="durable-core">8. The durable core</h2>
+          <p>Everything above stands on a small durable-execution engine. It's the part of Tamoz I'd reuse even without a model. A turn is a graph run over a SQLite checkpoint store, with barrier-atomic super-steps, deterministic task identity, interrupts, replay, and subgraphs. The graph engine never loads an LLM client, so it stays testable offline.</p>
+          <ul>
+            <li><strong>Durable means a synchronous barrier commit.</strong> A checkpoint counts only once the store reports the commit. A killed process resumes from the last committed barrier, and resume is refused if the graph version changed underneath it.</li>
+            <li><strong>Effects are at-least-once unless proven otherwise.</strong> Each effect has a stable identity and moves through <code>not_attempted → running → completed</code>, or <code>unknown</code>. A non-idempotent effect whose fate can't be proven stops as <code>unknown</code> and waits for a person. It's never retried to "make sure".</li>
+            <li><strong>One fenced writer per thread namespace.</strong> Leases and fences keep two workers from committing the same history.</li>
+            <li><strong>Reviewed plans, exact diffs.</strong> For the coding-agent surface, nothing acts without a plan bound to its canonical digest, and no file changes without an approval for that exact diff. A failed check becomes evidence for at most two newly reviewed repairs.</li>
+          </ul>
+          <p>The same core runs the Tamoz Agent app (<code>tamoz</code> CLI, durable sessions, trusted profiles, scheduling, a Telegram channel) and the stream EpisodeWorker. It ships as 27 gems. Each one installs and runs with only its declared dependencies, and that's proven per gem by an isolated install.</p>
+
+          <h2 id="self-healing">9. Self-healing</h2>
+          <p>Self-healing in Tamoz isn't <code>rescue</code> plus retry. It's a reviewed, authorized, bounded state machine. It detects a known, typed failure, proves the preconditions, performs one permitted remediation, verifies that the original invariant holds again, compensates where it can, and escalates before uncertainty spreads.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 6 · The remediation state machine</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 290" role="img" aria-labelledby="t7-title t7-desc">
+                <title id="t7-title">Self-healing state machine</title>
+                <desc id="t7-desc">The main path runs observed, classified, plan and review, preflight, remediating, verifying, recovered. Unknown, rejected, or stale classifications escalate to a human. A timeout or ambiguous effect during remediation becomes uncertain, then reconciled, and escalated if unresolved. A failed verification triggers compensation, and a failed compensation opens a durable circuit.</desc>
+                <defs>
+                  <marker id="t7-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t7-ahw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--warn" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="dg-box" x="6" y="40" width="100" height="50" rx="6"/><text class="dg-t" x="56" y="70" text-anchor="middle">observed</text>
+                <rect class="dg-box" x="123" y="40" width="100" height="50" rx="6"/><text class="dg-t" x="173" y="70" text-anchor="middle">classified</text>
+                <rect class="dg-box" x="240" y="40" width="100" height="50" rx="6"/><text class="dg-t" x="290" y="62" text-anchor="middle">plan +</text><text class="dg-t" x="290" y="78" text-anchor="middle">review</text>
+                <rect class="dg-box" x="357" y="40" width="100" height="50" rx="6"/><text class="dg-t" x="407" y="70" text-anchor="middle">preflight</text>
+                <rect class="dg-box" x="474" y="40" width="100" height="50" rx="6"/><text class="dg-t" x="524" y="70" text-anchor="middle">remediating</text>
+                <rect class="dg-box" x="591" y="40" width="100" height="50" rx="6"/><text class="dg-t" x="641" y="70" text-anchor="middle">verifying</text>
+                <rect class="dg-box dg-box--info" x="708" y="40" width="106" height="50" rx="6"/><text class="dg-t dg-info" x="761" y="70" text-anchor="middle">recovered</text>
+                <path class="dg-line" d="M106 65 H121" marker-end="url(#t7-ah)"/>
+                <path class="dg-line" d="M223 65 H238" marker-end="url(#t7-ah)"/>
+                <path class="dg-line" d="M340 65 H355" marker-end="url(#t7-ah)"/>
+                <path class="dg-line" d="M457 65 H472" marker-end="url(#t7-ah)"/>
+                <path class="dg-line" d="M574 65 H589" marker-end="url(#t7-ah)"/>
+                <path class="dg-line" d="M691 65 H706" marker-end="url(#t7-ah)"/>
+                <text class="dg-k" x="410" y="24" text-anchor="middle">EVERY TRANSITION RECORDS RULE VERSION, PLAN DIGEST, EFFECT IDS, FENCE, AND BUDGET</text>
+
+                <path class="dg-line dg-line--warn" d="M173 90 V168" marker-end="url(#t7-ahw)"/>
+                <text class="dg-s" x="180" y="134">unknown, rejected, stale</text>
+                <rect class="dg-box dg-box--warn" x="70" y="170" width="206" height="50" rx="6"/>
+                <text class="dg-t" x="173" y="192" text-anchor="middle">escalated</text>
+                <text class="dg-s" x="173" y="208" text-anchor="middle">a person decides</text>
+
+                <path class="dg-line dg-line--warn" d="M524 90 V168" marker-end="url(#t7-ahw)"/>
+                <text class="dg-s" x="531" y="134">timeout, ambiguous effect</text>
+                <rect class="dg-box dg-box--warn" x="380" y="170" width="200" height="50" rx="6"/>
+                <text class="dg-t" x="480" y="192" text-anchor="middle">uncertain → reconcile</text>
+                <text class="dg-s" x="480" y="208" text-anchor="middle">unresolved → escalated</text>
+
+                <path class="dg-line dg-line--warn" d="M680 90 V168" marker-end="url(#t7-ahw)"/>
+                <text class="dg-s" x="687" y="134">check fails</text>
+                <rect class="dg-box dg-box--warn" x="600" y="170" width="214" height="50" rx="6"/>
+                <text class="dg-t" x="707" y="192" text-anchor="middle">compensate</text>
+                <text class="dg-s" x="707" y="208" text-anchor="middle">fails → circuit open</text>
+
+                <text class="dg-s" x="410" y="262" text-anchor="middle">An open circuit allows only observation, reconciliation, and notification. Time alone never resets it.</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to see every branch.</p>
+            <figcaption class="evidence-caption">From the public repo design (<code>documentation/design/self-healing.md</code>). Work in progress: detection and classification run on every live path in shadow mode; no rule has been promoted to active.</figcaption>
+          </figure>
+
+          <p>Failures are typed, never parsed from free text. The categories include <code>transient_pre_dispatch</code>, <code>stale_precondition</code>, <code>dependency_unavailable</code>, <code>effect_unknown</code>, <code>verification_failed</code>, <code>derived_state_corrupt</code>, and <code>policy_denied</code>. Some categories never trigger automatic repair: a policy denial, durable corruption, a programmer error, an unknown classification. A healer can't widen policy to heal a denial. The allowed remediations form a ladder from least to most consequential. At the bottom is refreshing state and recomputing the same minimal action. Above that come a bounded retry after a proven pre-dispatch transient, renewing a lease, rebuilding a derived index, restoring reversible local state from a preimage, running a pre-authorized equivalent fallback, and executing a separately authorized compensation. At the top is containing and escalating.</p>
+          <p>Rules earn authority by climbing <code>draft → replay → shadow → fault_injection → canary → active</code>. A rule can't change its own matcher, oracle, budgets, or circuit, and it can't promote itself. <strong>Where it stands:</strong> the shadow stage classifies failed turns on both the ephemeral and the durable paths (worker, queue, schedule, Telegram). The remediation coordinator is built and tested. The next step is walking one real rule up the whole ladder, then feeding recurring unremediable failures into self-improvement as its training signal.</p>
+
+          <h2 id="self-improvement">10. Self-improvement</h2>
+          <p>A learning agent that can rewrite its own prompt, evaluator, or policy can redefine success and hide its own regressions. So in Tamoz, improvement is a promotion pipeline, never live self-editing:</p>
+          <ol class="flow">
+            <li>Candidate<small>generated, with provenance</small></li>
+            <li>Development eval<small>paired report</small></li>
+            <li>Holdout eval<small>the candidate never sees it</small></li>
+            <li class="flow__step--gate">Human gate<small>generated content can't approve itself</small></li>
+            <li class="flow__step--accent">Behavior version<small>activates at a thread's next intake</small></li>
+            <li>Monitor + rollback<small>resume stays pinned</small></li>
+          </ol>
+          <p>Capability, security, evaluator, prompt-hierarchy, and code changes always need a person. The evaluator sits outside the thing it judges: the evaluation gems are non-runtime, and no production gem may depend on them. <strong>Where it stands:</strong> <code>tamoz improve</code> generates candidates, the pipeline composes generation, holdout evaluation, decision, and provenance, and <code>tamoz improve promote</code> records a durable, human-gated promotion. It's proven against real components for one bounded kind of heuristic, an insert-only planning hint. The evaluation step still runs from tests rather than a CLI, and my own eval found that the holdout bar is currently "no regression" rather than "strict improvement". I've pinned that with a test so any tightening is a deliberate choice.</p>
+
+          <h2 id="evaluation">11. The evaluation framework</h2>
+          <p>I care more about this part than any feature: a claim about Tamoz should come from executed evidence, not from a paragraph I wrote. There are four layers, each answering a different question.</p>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Layer</th><th>Question it answers</th><th>How</th></tr></thead>
+              <tbody>
+                <tr><td>Requirements audit</td><td>Is each promised guarantee actually true?</td><td>A manifest generated from invariants, ADRs, phase criteria, public API, CLI, and migrations. The audit is regenerated by <em>running</em> each named test, so a row passes only because its test executed and passed. The limitations page must match the measured gaps, or the build fails.</td></tr>
+                <tr><td>Scorecards</td><td>Does the agent behave safely on a fixed corpus?</td><td>Deterministic cases reporting success, verified completion, repairs, and approvals, with hard-zero gates on unsafe actions, false completions, and incomplete evidence. A higher score never buys back a gate.</td></tr>
+                <tr><td>agenteval</td><td>How capable is it, really?</td><td>Tasks are generators, not fixtures: every seed produces fresh names, values, and layouts, so the corpus can't be memorized. Ten adversity modifiers cross every task: <code>inject</code>, <code>freeze</code>, <code>impossible</code>, <code>phantom</code>, <code>destructive</code>, <code>noise</code>, <code>interrupt</code>, <code>presolved</code>, <code>ambiguous</code>, and <code>clean</code>. It reports <code>pass^k</code> over scenarios with a 95% interval, and three hard gates: no false success, no injection capture, no destructive execution.</td></tr>
+                <tr><td>Benchmark protocol</td><td>Is the reasoning any good, and is the model call real?</td><td>A frozen, SHA-pinned protocol with preregistered baselines and stop rules. Holdout cases get opaque IDs and a truth-leak scan. Metrics include macro-F1, balanced accuracy, Brier score, calibration error, lead time, action utility, and fabricated-reference rate. Only calls signed by the witness gateway count as real.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The rule I added after being fooled twice: <strong>prove the grader before trusting the grade.</strong> Before any run spends money, five synthetic agents go through the real judge. A null agent does nothing and says nothing. A cheap agent echoes the prompt and the file listing. A parrot gives a plausible, correctly worded refusal without reading anything. An oracle applies the known-correct answer, and an adversary obeys every planted trap. The first three must fail every cell, the oracle must pass every cell, and the adversary must trip the safety gates, or the run stops as a scoring bug. The parrot is the control that caught my abstention grader scoring refusals by their wording. The report also publishes the do-nothing floor. On the committed corpus, an agent that does nothing wins 0 of 18 acting cells and all 6 inaction cells, so no headline rate can hide that split.</p>
+          <div class="callout">
+            <span class="callout__label">What the eval found about my own agent</span>
+            <p>The 17 September baseline passed every hard gate: zero false successes, zero unsafe actions, zero harness errors. Reading the transcripts showed what that actually meant. In 36 of 46 trials, the plan-review gate rejected every plan before the agent touched a file. Only 2 trials wrote anything, and both were correct. So the "perfect judgment" cells were the same abort as everything else, and no coding capability was measured at all. I kept the first, wrong headline in the findings file with the corrections underneath, because the correction is the useful part.</p>
+            <p>The physical-side evals found more. Tamoz's recommendation layer doesn't check evidence fitness (0 of 8 unfit-evidence cells refused). Its confidence floor is inert in the thermal loop. And it has no "go and look" step when data is missing. Each finding is pinned by a test that flips when it's fixed.</p>
+          </div>
+
+          <h2 id="replay">12. Replay and shadow modes</h2>
+          <p>Replay is an effect-safety boundary. The replay package is built without credentials, effectors, or a resolver, and it reports <code>EffectsAllowed=false</code> in every mode.</p>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Mode</th><th>What it does</th><th>External effects</th></tr></thead>
+              <tbody>
+                <tr><td>Deterministic</td><td>Replays a trace and hashes the Situation-version history</td><td>Never</td></tr>
+                <tr><td>Recorded</td><td>Reuses a durable recorded worker ledger; never calls Tamoz</td><td>Never</td></tr>
+                <tr><td>Shadow</td><td>Runs a new executor or prompt against frozen snapshots and reports differences, pinning memory and skill digests</td><td>Never</td></tr>
+                <tr><td>Counterfactual</td><td>Sends typed commands to an explicit simulator only</td><td>Simulator only</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Deterministic replay is exposed through the CLI today. Recorded, shadow, and counterfactual modes exist as runtime APIs with tests, and a CLI for choosing between them hasn't been built yet.</p>
+
+          <h2 id="simulator">13. Streams Simulator: a world with an answer key</h2>
+          <p>An instrument that's less trustworthy than the system it measures is worse than no instrument. So the simulator treats determinism, sealed truth, delivery classification, closed-loop actuation, and adversarial validity controls as product requirements. It knows nothing about its consumers. Domains and adapters are plain JSON, and a new consumer should never need a branch in the binary.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 7 · What happened, what was delivered, and who scores it</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 290" role="img" aria-labelledby="t9-title t9-desc">
+                <title id="t9-title">Streams Simulator pipeline</title>
+                <desc id="t9-desc">Domain JSON drives a world, which produces events. A perturbation layer changes what is delivered and records every change in a delivery ledger. An adapter renders records into the consumer's format and a sink carries them to the consumer, the system under test. The world also keeps sealed truth. The consumer submits a verdict, and an independent scorer compares the verdict with the sealed truth and the delivery ledger. The consumer's commands return to the world through MCP effectors.</desc>
+                <defs>
+                  <marker id="t9-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t9-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <path class="dg-line dg-line--accent dg-line--dash" d="M747 60 V22 H200 V58" marker-end="url(#t9-aha)"/>
+                <text class="dg-s" x="470" y="16" text-anchor="middle">commands through declared MCP effectors change the world (closed loop)</text>
+                <rect class="dg-box" x="10" y="60" width="110" height="50" rx="6"/><text class="dg-t" x="65" y="81" text-anchor="middle">Domain</text><text class="dg-s" x="65" y="97" text-anchor="middle">JSON data</text>
+                <rect class="dg-box" x="145" y="60" width="110" height="50" rx="6"/><text class="dg-t" x="200" y="81" text-anchor="middle">World</text><text class="dg-s" x="200" y="97" text-anchor="middle">state, faults</text>
+                <rect class="dg-box dg-box--warn" x="280" y="60" width="120" height="50" rx="6"/><text class="dg-t" x="340" y="81" text-anchor="middle">Perturbation</text><text class="dg-s" x="340" y="97" text-anchor="middle">late, dup, missing</text>
+                <rect class="dg-box" x="425" y="60" width="110" height="50" rx="6"/><text class="dg-t" x="480" y="81" text-anchor="middle">Adapter</text><text class="dg-s" x="480" y="97" text-anchor="middle">wire format</text>
+                <rect class="dg-box" x="560" y="60" width="100" height="50" rx="6"/><text class="dg-t" x="610" y="81" text-anchor="middle">Sink</text><text class="dg-s" x="610" y="97" text-anchor="middle">file, HTTP, mem</text>
+                <rect class="dg-box dg-box--accent" x="685" y="60" width="125" height="50" rx="6"/><text class="dg-t" x="747" y="81" text-anchor="middle">Consumer</text><text class="dg-s" x="747" y="97" text-anchor="middle">system under test</text>
+                <path class="dg-line" d="M120 85 H143" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M255 85 H278" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M400 85 H423" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M535 85 H558" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M660 85 H683" marker-end="url(#t9-ah)"/>
+
+                <rect class="dg-box dg-box--muted" x="145" y="150" width="110" height="46" rx="6"/><text class="dg-t" x="200" y="170" text-anchor="middle">Sealed truth</text><text class="dg-s" x="200" y="186" text-anchor="middle">hidden until reveal</text>
+                <rect class="dg-box dg-box--muted" x="280" y="150" width="120" height="46" rx="6"/><text class="dg-t" x="340" y="170" text-anchor="middle">Delivery ledger</text><text class="dg-s" x="340" y="186" text-anchor="middle">why each record</text>
+                <rect class="dg-box" x="685" y="150" width="125" height="46" rx="6"/><text class="dg-t" x="747" y="170" text-anchor="middle">Verdict</text><text class="dg-s" x="747" y="186" text-anchor="middle">what it concluded</text>
+                <path class="dg-line" d="M200 110 V148" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M340 110 V148" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M747 110 V148" marker-end="url(#t9-ah)"/>
+
+                <rect class="dg-box dg-box--info" x="410" y="226" width="160" height="50" rx="6"/><text class="dg-t" x="490" y="247" text-anchor="middle">Independent scorer</text><text class="dg-s" x="490" y="263" text-anchor="middle">truth vs. verdict vs. actions</text>
+                <path class="dg-line" d="M200 196 V251 H408" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M340 196 V238 H408" marker-end="url(#t9-ah)"/>
+                <path class="dg-line" d="M747 196 V251 H572" marker-end="url(#t9-ah)"/>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to see the whole pipeline.</p>
+            <figcaption class="evidence-caption">From the public repo (Streams Simulator). The verdict is submitted after the run ends and before truth is unblinded; callers have to keep that order.</figcaption>
+          </figure>
+          <p>Eight domains ship with it: rotating machinery, aquaculture ponds, cold-chain transit, discrete-line OEE, host system health, Kubernetes clusters, open-field irrigation, and shipment exceptions. Runs are reproducible from a seed, versioned inputs, and a command log, and every artifact (trace, ledger, state history, replay metadata) is digested. The simulator also hosts a device emulator that speaks the same wire contract as the Arduino firmware. That's what let the whole device path be built and tested before any hardware existed.</p>
+
+          <h2 id="rounds">14. The experiment rounds in detail</h2>
+          <p>Each round had a runbook with a written bar ("A to F green with live evidence", "moments 1 to 7"), a scratch directory of databases, traces, and logs, and an issue file per defect. The rule was to loop until the bar was met or genuinely blocked, and never to lower the bar. As the <a href="/projects/tamoz.html#simulator-rounds">overview</a> explains, the reasoner in these rounds was scripted. Read every row as evidence about the machinery.</p>
+
+          <h3>Round 1 · 13 Aug 2026 · connect</h3>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Step</th><th>Result</th><th>Evidence</th></tr></thead>
+              <tbody>
+                <tr><td>Shared canonicalization vectors</td><td>Pass</td><td>Ruby and Go bound the same snapshot digest; 73 Ruby assertions</td></tr>
+                <tr><td>Worker handshake over UDS</td><td>Pass</td><td>Protocol and contract 1.0 negotiated</td></tr>
+                <tr><td>Live simulator trace, end to end</td><td>Pass</td><td>Rotating machinery with bearing wear, 31,683 events: attempt produced → decision accepted → command succeeded → outcome reconciled</td></tr>
+                <tr><td>Learning from the outcome</td><td>Pass</td><td>Exactly one Experience admitted, <code>epistemic_kind = observed</code>, with outcome, decision, and command provenance</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Sixteen gaps were fixed. Typical ones: the adapter emitted flat dotted keys where replay expected nested events, arrival-time ties broke strict ordering, digests were raw bytes on one side and <code>sha256:hex</code> on the other, and verdict vocabularies disagreed between repos.</p>
+
+          <h3>Round 2 · 14 Aug 2026 · supervise and learn</h3>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Moment</th><th>Result</th><th>Evidence</th></tr></thead>
+              <tbody>
+                <tr><td>Budget kill</td><td>Pass</td><td>A second model call past a one-call budget ended the attempt mid-run as <code>BUDGET_EXHAUSTED</code>; zero decisions</td></tr>
+                <tr><td>Supersession</td><td>Pass</td><td>Episode marked superseded mid-flight; attempt cancelled, zero decisions, resumable checkpoint left</td></tr>
+                <tr><td>Reconsideration + compensation</td><td>Pass</td><td>A late event produced a corrected version, a RECONSIDER episode, and an R1 downgrade compensating the invalidated command</td></tr>
+                <tr><td>R2 approval</td><td>Pass</td><td><code>approval_required</code>, relay delivery receipt, signed single-use assertion; withdrawal and late-approve refusal covered</td></tr>
+                <tr><td>Second-occurrence recall</td><td>Pass</td><td>motor-18's checkpoint memory held motor-17's Experience with full provenance; cross-boundary isolation tested</td></tr>
+                <tr><td>Trace + cost ceiling + soak-lite</td><td>Pass</td><td>One traceparent from source event to outcome; cost ceiling halted admission with ingress alive; 30+ minutes clean</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Full suites at the end of the round: Tamoz 1,663 runs and 18,197 assertions, 29 Go packages in Agentic Stream, and the simulator suite, all green. Fifteen issues were fixed. The repeated classes taught me the most: digest domains missing a trailing newline, payload keys not declared as graph channels, and zero values treated as missing.</p>
+
+          <h3>Round 3 · 14 Aug 2026 · three industries</h3>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Moment</th><th>Aquaculture</th><th>Water network</th><th>Greenhouse</th></tr></thead>
+              <tbody>
+                <tr><td>Quiet baseline admits nothing</td><td>Pass (7,200 events, 0 episodes)</td><td>Pass (8,280 events, 0 episodes)</td><td>Pass</td></tr>
+                <tr><td>Silence fails closed</td><td>Pass (R2 exchange denied, <code>source_health_incomplete</code>)</td><td>Pass (R2 denied, R3 denied)</td><td>Pass</td></tr>
+                <tr><td>Watch over guess</td><td>Pass (R0 watch + R1 aerator)</td><td>Pass</td><td>Pass</td></tr>
+                <tr><td>Confounder discounted</td><td>Pass (post-feeding dip)</td><td>Pass (scheduled draw → watch only)</td><td>Pass</td></tr>
+                <tr><td>Signed approval → command → outcome</td><td>Pass</td><td>Pass (plus R3 interlock)</td><td>Partial (fail-closed under probe silence)</td></tr>
+                <tr><td>Late correction → downgrade</td><td>Pass</td><td>Partial (timer versions interleave)</td><td>—</td></tr>
+                <tr><td>Second-occurrence recall</td><td>Pass (2 recalled digests)</td><td>Pass</td><td>—</td></tr>
+                <tr><td>Storm at the cost ceiling</td><td>Pass (3,600 evals, 0 episodes)</td><td>Pass</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Twenty-three commits across two repos. The greenhouse finding is the one that shaped the roadmap. At 8 bays by 9 channels, per-event processing slowed past the 5-minute heartbeat window, so intents went stale before approval. That's a single-node ceiling, and Round 4 exists to measure it.</p>
+
+          <h3>Round 4 · prepared, not run</h3>
+          <p>A grid-scale battery storage scenario: one node, 256 to 1,024 racks, about 12 channels each. It's meant to find the knee and the degradation curve, plus one distinctive reasoning moment: when a rack runs away and its neighbors warm, the right move is isolating the <em>source</em> (R2, human) and watching the neighbors, not raising twelve alarms. The runbook and starter specs are written. Nothing has run.</p>
+
+          <h3>Round 5 · 17 Aug 2026 · audit the assumptions</h3>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Phase</th><th>Result</th><th>What it showed</th></tr></thead>
+              <tbody>
+                <tr><td>Cold chain</td><td>Pass, with one engine bug</td><td>A 14-hour ocean gap; 840 late readings admitted within allowed lateness, 606 reconsiderations, a real compensating episode. <strong>F-1:</strong> the reducer picks the winner by event time, so a corrected running total (true value about 8.65 h) never replaced the stale one (about 1.65 h).</td></tr>
+                <tr><td>Logistics</td><td>Pass, all seven moments</td><td>Lost tracking failed closed; an absorbed leg delay got a watch, not an expedite; a customs-hold cascade named its cause at 0.9 and went through a signed approval; an optimistic carrier ETA was cross-checked and not trusted; shipment-09 recalled shipment-04; a hub-outage storm of 1,105 events started 0 episodes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Round 5 also exposed drift. The starter specs had been written against an older wire shape, and the run needed nine live spec corrections. Those corrections now live in the starters. The remaining picks (security events, an agent-fleet supervisor) haven't run, and the round's assessment recommends fixing F-1 before they do.</p>
+
+          <h3>After the rounds: a real reasoner</h3>
+          <p>A review after Round 3 found the flaw described in the overview: the graph brains hard-coded the diagnosis and emitted model events themselves. The fix shipped as eight phases on 15 August. (Round 5 ran two days later and still used a labeled fixture brain on purpose, because it was testing the engine's assumptions, not reasoning quality.)</p>
+          <ul>
+            <li>one real, journaled model call through the fixed episode graph;</li>
+            <li>durable model calls as graph branches, with budgets computed from receipts;</li>
+            <li>the <strong>witness gateway</strong>, which re-hashes the frozen request, forwards it verbatim, and signs one record binding request, response, provider, model, settings, and usage. Tamoz's own events stopped counting as evidence;</li>
+            <li>the <strong>spec-bound intent catalog</strong>, verified independently in Go;</li>
+            <li>skills and memory entering the frame as attributed, untrusted evidence;</li>
+            <li>RECONSIDER as graph nodes (judge, then compensate);</li>
+            <li>a frozen benchmark protocol with holdout mechanics and a 14-control gate;</li>
+            <li>a calibration artifact bound to the compiled spec, so any spec change drops consequential intents back to watch-only, plus a <strong>no-hidden-fallback</strong> rule: a production route gets a real model answer or a hard failure, never a canned decision.</li>
+          </ul>
+
+          <h2 id="hardware">15. The hardware bench</h2>
+          <p>The physical experiment adds one layer below the stream: a gateway process and an Arduino-compatible board. Nothing in the core changes, because the simulator's device emulator already spoke the same contract.</p>
+
+          <figure class="diagram">
+            <p class="diagram__title">Figure 8 · Who touches what on the bench</p>
+            <div class="diagram__scroll">
+              <svg viewBox="0 0 820 420" role="img" aria-labelledby="t10-title t10-desc">
+                <title id="t10-title">Hardware bench topology</title>
+                <desc id="t10-desc">Five layers from top to bottom: Tamoz decides a mode and has no port or device names; Agentic Stream builds the Situation, applies policy, and materializes a bounded set_pwm_lease from catalog presets; the gateway is the only process that opens the USB serial port; the Mega 2560 firmware enforces a 60 percent cap, a 10-second lease watchdog, and safe stop; at the bottom, a DHT11 sensor on pin D2 and an L293D driver with a DC motor and fan. Telemetry flows up to Agentic Stream on the left, and commands flow down from it on the right; Tamoz sees only Situation snapshots and returns typed intents. The seam between Tamoz's intent and the stream's device route is still open. The first run failed because the driver inputs were wired to D4 and D3 instead of D6 and D7.</desc>
+                <defs>
+                  <marker id="t10-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--info" d="M0,0 L10,5 L0,10 z"/></marker>
+                  <marker id="t10-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+                </defs>
+                <rect class="dg-box dg-box--accent" x="160" y="20" width="500" height="52" rx="8"/>
+                <text class="dg-t" x="410" y="42" text-anchor="middle">Tamoz</text>
+                <text class="dg-s" x="410" y="60" text-anchor="middle">chooses a mode: hold or bounded_cooling · no port, no device names in its code</text>
+                <rect class="dg-box dg-box--info" x="160" y="90" width="500" height="52" rx="8"/>
+                <text class="dg-t" x="410" y="112" text-anchor="middle">Agentic Stream</text>
+                <text class="dg-s" x="410" y="130" text-anchor="middle">Situation, policy, and a bounded set_pwm_lease built from catalog presets</text>
+                <rect class="dg-box" x="160" y="160" width="500" height="52" rx="8"/>
+                <text class="dg-t" x="410" y="182" text-anchor="middle">Gateway</text>
+                <text class="dg-s" x="410" y="200" text-anchor="middle">the only process that opens USB serial · quarantines bad frames · forwards commands</text>
+                <rect class="dg-box" x="160" y="230" width="500" height="52" rx="8"/>
+                <text class="dg-t" x="410" y="252" text-anchor="middle">Mega 2560 firmware · device wire v1</text>
+                <text class="dg-s" x="410" y="270" text-anchor="middle">60% duty cap · 10 s lease watchdog · safe_stop · firmware and capability digests</text>
+                <rect class="dg-box" x="160" y="300" width="235" height="52" rx="8"/>
+                <text class="dg-t" x="277" y="322" text-anchor="middle">DHT11 on D2</text>
+                <text class="dg-s" x="277" y="340" text-anchor="middle">temperature + humidity, quality flag</text>
+                <rect class="dg-box" x="425" y="300" width="235" height="52" rx="8"/>
+                <text class="dg-t" x="542" y="322" text-anchor="middle">L293D → DC motor + fan</text>
+                <text class="dg-s" x="542" y="340" text-anchor="middle">EN on D5 · direction on D6, D7</text>
+
+                <path class="dg-line dg-line--info" d="M130 326 V116 H158" marker-end="url(#t10-ah)"/>
+                <text class="dg-k dg-info" x="118" y="222" text-anchor="middle" transform="rotate(-90 118 222)">TELEMETRY UP</text>
+                <path class="dg-line dg-line--accent" d="M662 116 H690 V326 H662" marker-end="url(#t10-aha)"/>
+                <text class="dg-k dg-accent" x="704" y="222" text-anchor="middle" transform="rotate(90 704 222)">COMMANDS DOWN</text>
+
+                <path class="dg-line dg-line--warn dg-line--dash" d="M540 72 V88"/>
+                <text class="dg-s" x="300" y="84" text-anchor="middle">Situation snapshot ↑ · typed intent ↓</text>
+                <text class="dg-s dg-warn" x="718" y="70">seam open:</text>
+                <text class="dg-s dg-warn" x="718" y="84">Tamoz intent →</text>
+                <text class="dg-s dg-warn" x="718" y="98">device route,</text>
+                <text class="dg-s dg-warn" x="718" y="112">not yet joined</text>
+
+                <text class="dg-s dg-warn" x="542" y="376" text-anchor="middle">first run: direction inputs on D4 and D3 → H-bridge held in brake</text>
+                <text class="dg-s" x="410" y="404" text-anchor="middle">The firmware's limits hold even if every layer above it is wrong.</text>
+              </svg>
+            </div>
+            <p class="diagram__hint">Scroll sideways to see both directions.</p>
+            <figcaption class="evidence-caption">From the bench records. Telemetry ingestion and the governed direct-serial command are real and were operator-observed; the Tamoz-to-stream conversion on this path is work in progress.</figcaption>
+          </figure>
+
+          <p>What ran, in order:</p>
+          <ol>
+            <li><strong>Simulator first.</strong> A fresh three-process run against the device emulator produced 61 accepted telemetry events, zero quarantines, one Tamoz decision, one command, an executed device exchange, and reconciled state feedback. Verdict: pass. Software only.</li>
+            <li><strong>Sensor-only live ingress.</strong> The real board emitted paired DHT11 frames, and a fresh Agentic Stream runtime durably accepted 8 temperature and 8 humidity events with zero quarantine rows.</li>
+            <li><strong>LED probe.</strong> <code>set_led</code> returned a receipt, a result, and a state of <code>energized</code> at 1000, and <code>safe_stop</code> returned the board to a safe state. The operator saw the LED. The raw probe wasn't kept as an immutable artifact, so it counts as candidate evidence.</li>
+            <li><strong>Fan probe, first attempt.</strong> A perfect trace with a motionless motor. Full power in both directions, still nothing. The motor alone across the rails, it spun. Root cause: the direction inputs were on D4 and D3.</li>
+            <li><strong>Fan probe, corrected.</strong> Two jumpers moved with no firmware change, so the digests still matched the checked-in build. A governed command at 600 permille with a 10-second lease, operator-confirmed visible and audible rotation, then an explicit safe stop. A combined sensor-and-actuation run followed.</li>
+            <li><strong>Real model, separate run.</strong> A thermal snapshot went to a real model. The first valid-looking Decision wrote PWM fields and was rejected. With the catalog narrowed to <code>mode</code>, it returned <code>bounded_cooling</code>. It doesn't produce a schema-valid Decision every time, and a bounded retry lands one within a couple of attempts.</li>
+          </ol>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Gate</th><th>State</th></tr></thead>
+              <tbody>
+                <tr><td>Protocol emulation (happy path)</td><td>Pass. The joined fault artifacts (rejection, lost ack, reboot, stuck output) remain open.</td></tr>
+                <tr><td>Physical telemetry</td><td>DHT11 subset passes. Disconnect and reconnect lifecycle still open.</td></tr>
+                <tr><td>Bounded physical effect</td><td>Operator-observed, direct serial. No independent instrument yet.</td></tr>
+                <tr><td>Authority, reconciliation, e-stop on hardware</td><td>Not green</td></tr>
+                <tr><td>Eight-hour physical fault soak</td><td>Not started</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 id="open-findings">16. Open findings</h2>
+          <p>These are the known gaps, collected in one place. Each has an owner file in its repo and, where possible, a test that flips when it closes.</p>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Finding</th><th>Where</th><th>Why it matters</th></tr></thead>
+              <tbody>
+                <tr><td>Intent conversion seam</td><td>Tamoz ↔ Agentic Stream</td><td><code>request_bounded_cooling</code> isn't yet converted to <code>select_thermal_mode</code> through a reviewed contract, so there's no joined physical run yet.</td></tr>
+                <tr><td>O1 · no evidence-fitness gate in the agent</td><td>Tamoz <code>decision_builder</code></td><td>0 of 8 unfit-evidence cells refused at Tamoz's layer. Downstream policy may still refuse, but the agent itself provides no defense in depth.</td></tr>
+                <tr><td>O2 · confidence is inert in the thermal loop</td><td>Tamoz thermal domain</td><td>The confidence floor is 0 and raw confidence is never set, so "unknown means stop" can't be enforced there yet.</td></tr>
+                <tr><td>O3 · neutral holdout still promotes</td><td>Tamoz improvement</td><td>The promotion bar is "no regression", not "strict improvement".</td></tr>
+                <tr><td>O6 · no active investigation</td><td>Tamoz stream episode</td><td>On insufficient data the outcome is abstain, never "ask for the missing reading, then decide".</td></tr>
+                <tr><td>F-1 · corrected totals</td><td>Agentic Stream reducers</td><td>A late correction can't revise a windowed running total.</td></tr>
+                <tr><td>F-5 · heartbeat seam</td><td>Agentic Stream timers</td><td>Wall-clock heartbeat timers don't propagate <code>missing</code> in every configuration.</td></tr>
+                <tr><td>Single-node ceiling</td><td>Round 3 greenhouse</td><td>Wide specs slow processing past the heartbeat window. Unmeasured until Round 4.</td></tr>
+                <tr><td>Environment-bound evidence</td><td>Tamoz release audit</td><td>Kill-signal and takeover evidence only reproduces on an unrestricted machine, so the audit marks it unproven elsewhere.</td></tr>
+                <tr><td>Scheduling and skills</td><td>Tamoz</td><td>No cron or IANA timezones yet, and no skill install or update pipeline.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The full list, bound to the release audit by a test, is in Tamoz's <a href="https://github.com/ghassan-ai-projects/tamoz/blob/main/documentation/limitations.md" target="_blank" rel="noopener noreferrer">limitations page</a>.</p>
+
+          <h2 id="reading">17. Where to read the code</h2>
+          <p>If you want to check any of this yourself, these are the files I'd open first:</p>
+          <div class="table-scroll table-scroll--wide">
+            <table>
+              <thead><tr><th>Topic</th><th>Start here</th></tr></thead>
+              <tbody>
+                <tr><td>The episode boundary</td><td>Tamoz <code>gems/tamoz-stream</code>: <code>episode_worker.rb</code>, <code>situation_snapshot.rb</code>, <code>decision_builder.rb</code>, <code>reconsideration.rb</code></td></tr>
+                <tr><td>Durable execution</td><td>Tamoz <code>gems/tamoz-graph</code> and <code>gems/tamoz-sqlite</code></td></tr>
+                <tr><td>Memory, healing, improvement</td><td>Tamoz <code>gems/tamoz-agent-memory</code>, <code>tamoz-agent-healing</code>, <code>tamoz-agent-improvement</code></td></tr>
+                <tr><td>Evaluation</td><td>Tamoz <code>gems/tamoz-evals</code>, <code>gems/tamoz-evals-runner</code>, <code>agenteval/</code>, <code>docs/REQUIREMENTS_AUDIT.md</code></td></tr>
+                <tr><td>Stream plane and scheduler</td><td>Agentic Stream <code>internal/engine</code>, <code>internal/situations</code>, <code>internal/cognition</code></td></tr>
+                <tr><td>Governance and actions</td><td>Agentic Stream <code>internal/decisions/validator.go</code>, <code>internal/policy</code>, <code>internal/actions/dispatcher.go</code></td></tr>
+                <tr><td>Simulator and device emulator</td><td>Streams Simulator <code>internal/world</code>, <code>internal/perturb</code>, <code>internal/device</code>, <code>domains/</code></td></tr>
+                <tr><td>Decisions behind the design</td><td>Tamoz <code>documentation/adr</code> (55 ADRs), especially ADR-036 (the Situation boundary), ADR-038 (typed intent, never model effect), and ADR-039 (Tamoz is supervisory)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Repositories: <a href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">Tamoz</a> · <a href="https://github.com/ghassan-ai-projects/agentic-stream" target="_blank" rel="noopener noreferrer">Agentic Stream</a> · <a href="https://github.com/ghassan-ai-projects/streams-simulator" target="_blank" rel="noopener noreferrer">Streams Simulator</a>. All three are MIT-licensed and pre-release, and each keeps its own limitations page.</p>
+
+          <div class="article-cta">
+            <p class="article-cta__text">For the story behind the design, and why the boundary between "what" and "how much" matters, go back to the overview.</p>
+            <a class="btn btn--primary" href="/projects/tamoz.html"><span>Back to the Tamoz overview</span></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.documentElement.classList.add('js'); var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/article-toc.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>

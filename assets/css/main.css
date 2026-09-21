@@ -2976,3 +2976,398 @@ html.js .reveal--visible {
   margin-right: 8px;
   flex-shrink: 0;
 }
+
+/* ================================================================
+   SYSTEM DIAGRAMS — inline SVG drawn with theme tokens (Tamoz pages)
+   Every stroke/fill comes from a variable, so diagrams follow both
+   themes. Wide diagrams scroll inside their frame, never the page.
+   ================================================================ */
+
+.diagram {
+  margin: 32px 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.diagram__title {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.diagram__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 600px;
+}
+
+.diagram--compact svg {
+  min-width: 440px;
+}
+
+.diagram__hint {
+  display: none;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .diagram {
+    padding: 14px;
+  }
+
+  .diagram__hint {
+    display: block;
+  }
+}
+
+.dg-box { fill: var(--bg-primary); stroke: var(--border); stroke-width: 1.5; }
+.dg-box--accent { fill: var(--accent-glow); stroke: var(--accent); }
+.dg-box--info { fill: rgba(var(--success-rgb), 0.08); stroke: var(--success); }
+.dg-box--warn { fill: none; stroke: var(--warning); stroke-dasharray: 5 4; }
+.dg-box--muted { fill: var(--bg-tertiary); stroke: var(--border); }
+.dg-box--ghost { fill: none; stroke: var(--border); stroke-dasharray: 4 4; }
+.dg-dot { fill: var(--text-muted); }
+.dg-dot--accent { fill: var(--accent); }
+
+.dg-t { fill: var(--text-primary); font-size: 13px; font-weight: 600; }
+.dg-t--lg { font-size: 15px; font-weight: 700; }
+.dg-s { fill: var(--text-secondary); font-size: 11px; }
+.dg-k { fill: var(--text-muted); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; }
+.dg-code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 10.5px; }
+.dg-accent { fill: var(--accent); }
+.dg-info { fill: var(--success); }
+.dg-warn { fill: var(--warning); }
+.dg-bad { fill: var(--error); }
+
+.dg-line { fill: none; stroke: var(--text-muted); stroke-width: 1.5; }
+.dg-line--accent { stroke: var(--accent); }
+.dg-line--info { stroke: var(--success); }
+.dg-line--warn { stroke: var(--warning); }
+.dg-line--bad { stroke: var(--error); }
+.dg-line--dash { stroke-dasharray: 5 4; }
+.dg-head { fill: var(--text-muted); }
+.dg-head--accent { fill: var(--accent); }
+.dg-head--info { fill: var(--success); }
+.dg-head--warn { fill: var(--warning); }
+.dg-head--bad { fill: var(--error); }
+
+/* Flow — a responsive chain of labeled steps (wraps on small screens) */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 10px 0;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: flow;
+}
+
+.article-single__body .flow {
+  padding-left: 0;
+}
+
+.flow li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 22px 0 0;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.flow li::after {
+  content: '→';
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.flow li:last-child::after {
+  content: none;
+}
+
+.flow li small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.flow li.flow__step--accent {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.flow li.flow__step--gate {
+  border-style: dashed;
+  border-color: var(--warning);
+}
+
+/* Capability grid with honest status chips */
+.cap-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 24px 0 32px;
+}
+
+@media (min-width: 640px) {
+  .cap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cap-card {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.cap-card h3,
+.article-single__body .cap-card h3 {
+  margin: 8px 0 6px;
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.cap-card p,
+.article-single__body .cap-card p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.cap-status {
+  display: inline-block;
+  padding: 2px 9px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cap-status--shipped { color: var(--success); }
+.cap-status--shadow { color: var(--warning); }
+.cap-status--wip { color: var(--text-muted); border-style: dashed; }
+
+.cap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Stat tiles — measured numbers with their source run */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 24px 0 32px;
+}
+
+@media (min-width: 560px) {
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stat {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+
+.stat__value {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.stat__label {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Round timeline — experiment history with verdicts */
+.rounds {
+  margin: 28px 0 32px;
+  padding: 0;
+  list-style: none;
+  border-left: 2px solid var(--border);
+}
+
+.article-single__body .rounds {
+  padding-left: 0;
+}
+
+.rounds > li {
+  position: relative;
+  margin: 0 0 26px;
+  padding-left: 24px;
+}
+
+.rounds > li::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 2px solid var(--accent);
+}
+
+.rounds > li.rounds__item--pending::before {
+  border-style: dashed;
+  border-color: var(--text-muted);
+}
+
+.rounds__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rounds__title {
+  display: block;
+  margin: 4px 0 6px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.rounds > li p {
+  margin: 0 0 8px;
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+/* Callout — the honest-correction register */
+.callout {
+  margin: 28px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+
+.callout__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warning);
+}
+
+.article-single__body .callout p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.article-single__body .callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* Wide scrolling tables for dense technical matrices */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 24px 0;
+}
+
+.article-single__body .table-scroll table {
+  margin: 0;
+}
+
+.article-single__body .table-scroll--wide table {
+  min-width: 620px;
+}
+
+@media (max-width: 600px) {
+  .article-single__body .table-scroll--wide table {
+    table-layout: auto;
+  }
+}
+
+/* Project figure (photo) inside the body */
+.project-figure {
+  margin: 28px 0;
+}
+
+.project-figure img,
+.article-single__body .project-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* Single-column project deep pages: prose stays at reading width,
+   diagrams and dense tables may use the full container width. */
+.article-layout--single,
+.article-layout--single > article {
+  min-width: 0;
+}
+
+.article-layout.article-layout--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.article-layout--single .diagram {
+  width: min(1000px, calc(100vw - 48px));
+  max-width: none;
+}
+
+.article-layout--single .project-facts {
+  max-width: 1000px;
+}
