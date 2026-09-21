@@ -27,24 +27,24 @@
   {
     "slug": "tamoz",
     "title": "Tamoz",
-    "name": "Ruby-Native Durable Agent Framework",
+    "name": "Stream-Native Agent for the Physical World",
     "status": "Public release",
     "highlighted": true,
     "repo": "https://github.com/ghassan-ai-projects/tamoz",
-    "summary": "A Ruby-native durable agent framework that turns changing evidence into reviewed, explainable decisions and bounded actions.",
-    "problem": "Agent frameworks often move quickly on demos while leaving durability, review boundaries, evaluation evidence, and failure recovery as afterthoughts.",
-    "outcome": "Tamoz is the durable supervisory layer of a three-repository stream-to-action system: checkpointed graph execution, SQLite durability, reviewed plan-before-action, and evaluation evidence, all as independently publishable gems.",
+    "summary": "An open-source, stream-native agent that understands sensor-derived situations, decides what should happen, and acts through governed, bounded commands.",
+    "problem": "Agents that act on real equipment must notice change on their own, reason only when it matters, survive crashes, and never own the physical envelope; most frameworks leave all of that for later.",
+    "outcome": "Tamoz is the supervisory layer of a three-repository stream-to-action system: sealed Situation episodes, typed intents that policy bounds, durable execution, memory, self-healing, and evaluation, tested across five simulator rounds and a real Arduino motor bench.",
     "stack": [
       "Ruby",
+      "Go",
       "SQLite",
-      "Durable Runtime",
-      "Governed Agent",
+      "Stream-Native",
       "Evals"
     ],
     "tags": [
+      "Physical-World AI",
+      "Stream-Native",
       "Agent Framework",
-      "Ruby",
-      "Durability",
       "Evaluation"
     ]
   },
