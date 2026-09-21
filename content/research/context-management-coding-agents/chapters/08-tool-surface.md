@@ -47,7 +47,7 @@ Costs: one round trip before a tool's first use; a discoverability risk (a capab
 
 The most radical option and the most effective. Instead of exposing tool schemas, expose a programmatic API and let the agent write code against it. The agent filters, joins and loops over data **before** any of it reaches the context.
 
-Measured: **150,000 → about 2,000 tokens, a 98.7% reduction**, and 99%+ on definitions alone at 112 tools [S]. A production report on a GitHub MCP server independently found a 98% reduction with the code-first pattern [P].
+Vendor-reported, and the best case until someone reproduces it: **150,000 → about 2,000 tokens, a 98.7% reduction**, and 99%+ on definitions alone at 112 tools [P]. A separate production report on a GitHub MCP server found a 98% reduction with the same pattern [P]. Neither has an independent reproduction.
 
 The headline number hides the mechanism. Two things happen:
 

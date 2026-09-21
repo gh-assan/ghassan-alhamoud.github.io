@@ -115,7 +115,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **What was done.** Instead of optimising the definitions, they were **removed as a category.** The agent got a code-execution environment and a programmatic API, and writes code against it instead of choosing among schemas.
 
-**What happened.** **150,000 tokens fell to about 2,000: a 98.7% reduction**, with 99%+ on definitions alone at 112 tools [S]. An independent production report on a GitHub MCP server found a 98% reduction [P].
+**What happened.** **150,000 tokens fell to about 2,000: a 98.7% reduction**, with 99%+ on definitions alone at 112 tools [P]. These are vendor-reported figures and no independent reproduction exists, so treat 98.7% as the upper bound of the effect rather than the expected one. An independent production report on a GitHub MCP server found a 98% reduction [P].
 
 **The mechanism.** Two effects, and the second is larger. Definitions collapse into one tool plus documentation. And results collapse, because code filters data before returning it: `[i.number for i in list_issues() if i.state == "open"][:5]` puts five integers in context instead of 400 issue objects.
 

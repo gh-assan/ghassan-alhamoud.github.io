@@ -30,7 +30,7 @@ So the window is not a bucket to fill. It is an [[attention budget]], and every 
 | 43% → under 14% | Tool-selection accuracy as tool count grows [S] |
 | 77.4% → 53.0% | [[Pass^k|Pass²]] with no compression versus FIFO truncation on AppWorld [S] |
 | +0.108 | Extra errors at the first step after a compaction [S] |
-| 98.7% | Token reduction from code execution instead of tool schemas [S] |
+| 98.7% | Token reduction from code execution instead of tool schemas, vendor-reported [P] |
 | About 4 turns | Before a compaction pays for itself financially [C] |
 
 ## What not to do

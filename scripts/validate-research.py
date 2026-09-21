@@ -270,6 +270,33 @@ def check_glossary_usage(prog, stats, rep):
     for t in prog["glossary"]:
         if t["id"] not in used:
             rep.warn("R15", f"{prog['slug']}: glossary term '{t['term']}' is never linked from a chapter")
+    check_glossary_anchor_term(prog, rep)
+
+
+def check_glossary_anchor_term(prog, rep):
+    """R34: a glossary "introduced in" anchor must resolve to a real section.
+
+    Bar §3.5: each term carries an "introduced in" chapter link. This gate is
+    deliberately conservative: it reports a term only when the term's first
+    alphabetic word appears nowhere in the chapter it points at, which is the
+    signature of a link aimed at the wrong chapter.
+    """
+    for t in prog["glossary"]:
+        target = t.get("chapter", "")
+        if not target.startswith("ch:") or "#" not in target:
+            continue
+        slug = target[3:].split("#", 1)[0]
+        ch = next((c for c in prog["chapters"] if c["slug"] == slug), None)
+        if not ch:
+            continue  # R16 already reports unknown chapters
+        body = (prog["_base"] / ch["file"]).read_text(encoding="utf-8").lower()
+        # Terms may contain punctuation and may appear in link labels, so match
+        # on the first alphabetic word rather than splitting on spaces alone.
+        key = re.match(r"[A-Za-z]+", t["term"])
+        key = key.group(0).lower() if key else ""
+        if key and key not in body:
+            rep.warn("R34", f"{prog['slug']}: glossary '{t['term']}' points at "
+                            f"chapter '{slug}', where the term never appears")
 
 
 # ---------------------------------------------------------------- output gates
