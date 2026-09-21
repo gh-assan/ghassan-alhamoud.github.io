@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sixteen antipatterns — Context Management</title>
+  <meta name="description" content="Sixteen practices that look like context hygiene and are not, each with the legitimate version, the tell, the cost and the fix, plus the three generators beh..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/13-antipatterns.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/13-antipatterns.html" />
+  <meta property="og:title" content="Sixteen antipatterns — Context Management" />
+  <meta property="og:description" content="Sixteen practices that look like context hygiene and are not, each with the legitimate version, the tell, the cost and the fix, plus the three generators beh..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Sixteen antipatterns — Context Management" />
+  <meta property="twitter:description" content="Sixteen practices that look like context hygiene and are not, each with the legitimate version, the tell, the cost and the fix, plus the three generators beh..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Sixteen antipatterns",
+  "description": "Sixteen practices that look like context hygiene and are not, each with the legitimate version, the tell, the cost and the fix, plus the three generators behind them.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/13-antipatterns.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Decide and avoid"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 13",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/13-antipatterns.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html" aria-current="page"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">Decide and avoid</li><li aria-current="page">Chapter 13</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part IV · Decide and avoid</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 13</span></p>
+          <h1 class="rs-hero__title">Sixteen antipatterns</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What looks like good context hygiene but is not, and how do you tell the difference?</p>
+          <div class="rs-meta">
+            <span>7 min read</span><span aria-hidden="true">·</span>
+            <span>Practitioner</span><span aria-hidden="true">·</span>
+            <span>Step 13 of 20</span><span aria-hidden="true">·</span>
+            <span>3/4 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html" aria-current="page"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#hygiene-that-is-not-hygiene">Hygiene that is not hygiene</a></li><li><a class="on-this-page__link" href="#generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container</a></li><li><a class="on-this-page__link" href="#generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting</a></li><li><a class="on-this-page__link" href="#generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome</a></li></ul></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Sixteen practices that imitate good hygiene, each with the tell that separates it from the real thing.</li><li>Three habits of mind generate almost all of them.</li><li>Fix the generator and you prevent the whole family.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Spot each antipattern from its tell</li><li>Replace it with the legitimate version</li><li>Name the three generators and correct them at the source</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="hygiene-that-is-not-hygiene">Hygiene that is not hygiene<a class="rs-anchor" href="#hygiene-that-is-not-hygiene" title="Link to this section">#</a></h2>
+<p>Each antipattern below imitates a legitimate practice. The <strong>tell</strong> is what separates the two. Each entry gives what it looks like, the legitimate version it imitates, the tell, what it costs, and the fix.</p>
+<p>The sixteen are grouped by the habit of mind that produces them. There are only three, and fixing a habit prevents its whole family.</p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Three generators, sixteen antipatterns</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 260" role="img" aria-labelledby="ap-t">
+<title id="ap-t">Treating the window as a container, adding rather than subtracting, and measuring inputs instead of outcomes generate the sixteen antipatterns.</title>
+<rect class="dg-box--accent" x="10" y="10" width="220" height="70" rx="10"/><text class="dg-k" x="24" y="34">GENERATOR 1</text><text class="dg-t" x="24" y="56">The window is a container</text>
+<rect class="dg-box--accent" x="250" y="10" width="220" height="70" rx="10"/><text class="dg-k" x="264" y="34">GENERATOR 2</text><text class="dg-t" x="264" y="56">Adding beats subtracting</text>
+<rect class="dg-box--accent" x="490" y="10" width="220" height="70" rx="10"/><text class="dg-k" x="504" y="34">GENERATOR 3</text><text class="dg-t" x="504" y="56">Measure inputs, not outcomes</text>
+<rect class="dg-box" x="10" y="110" width="220" height="130" rx="8"/>
+<text class="dg-s" x="24" y="136">AP-1 The briefing document</text><text class="dg-s" x="24" y="158">AP-2 Just-in-case tooling</text><text class="dg-s" x="24" y="180">AP-10 Middle truncation</text><text class="dg-s" x="24" y="202">AP-12 Correcting in place</text><text class="dg-s" x="24" y="224">AP-13 The heroic session</text>
+<rect class="dg-box" x="250" y="110" width="220" height="130" rx="8"/>
+<text class="dg-s" x="264" y="136">AP-3 Full-stack adoption</text><text class="dg-s" x="264" y="158">AP-5 Write-only memory</text><text class="dg-s" x="264" y="180">AP-6 The growing instruction file</text><text class="dg-s" x="264" y="202">AP-8 Multi-agent by default</text><text class="dg-s" x="264" y="224">AP-16 The context framework</text>
+<rect class="dg-box" x="490" y="110" width="220" height="130" rx="8"/>
+<text class="dg-s" x="504" y="136">AP-4 Compaction as hygiene</text><text class="dg-s" x="504" y="158">AP-7 Semantic search as the answer</text><text class="dg-s" x="504" y="180">AP-9 Token counting as success</text><text class="dg-s" x="504" y="202">AP-11 The unread dashboard</text><text class="dg-s" x="504" y="224">AP-14 · AP-15 Borrowed answers</text>
+<line class="dg-line" x1="120" y1="80" x2="120" y2="110"/><line class="dg-line" x1="360" y1="80" x2="360" y2="110"/><line class="dg-line" x1="600" y1="80" x2="600" y2="110"/>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> If you catch yourself in one antipattern, check its siblings: the same habit is probably producing them too.</figcaption>
+</figure>
+
+<h2 id="generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container<a class="rs-anchor" href="#generator-1-treating-the-window-as-a-container" title="Link to this section">#</a></h2>
+<p>If context is a bucket, filling it is free until it overflows, and the only question is "does it fit?". Every antipattern here is what that model recommends. The correction is <a href="01-foundations.html#the-wrong-mental-model">chapter 1</a>: the window is an attention budget whose return curve turns negative.</p>
+<h3 id="ap-1-the-briefing-document">AP-1: The briefing document<a class="rs-anchor" href="#ap-1-the-briefing-document" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> a carefully written 40K-token architecture overview loaded at the start of every session, so the agent "understands the system".</li>
+<li><strong>The real version:</strong> a pointer seed under 2,000 tokens: entry points, invariants, landmines, commands.</li>
+<li><strong>Tell:</strong> the document is <em>prose</em> rather than <em>pointers</em>. If it explains instead of locating, this is it.</li>
+<li><strong>Cost:</strong> 5K targeted retrieval beat a 100K summary <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>, and coherent documents retrieve <em>worse</em> than incoherent ones across all 18 models <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. You pay 40K tokens for a well-built distractor that goes stale silently.</li>
+<li><strong>Fix:</strong> convert it to pointers. "Auth lives in <code>src/auth/</code>, entry <code>session.ts</code>; all database access via <code>repo/</code>" replaces four paragraphs at 3% of the cost.</li>
+</ul>
+<h3 id="ap-2-just-in-case-tooling">AP-2: Just-in-case tooling<a class="rs-anchor" href="#ap-2-just-in-case-tooling" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> every plausibly useful MCP server attached, because the agent "might need it".</li>
+<li><strong>The real version:</strong> a curated surface of at most 20 tools matched to the actual work.</li>
+<li><strong>Tell:</strong> more than three tools defined for every tool called.</li>
+<li><strong>Cost:</strong> 42K tokens for a single server <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; selection collapsing from 19 of 20 at 20 tools to failure at 107 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Paid on every call.</li>
+<li><strong>Fix:</strong> delete every tool with zero calls in 20 sessions. Re-adding one takes seconds.</li>
+</ul>
+<h3 id="ap-10-middle-truncation">AP-10: Middle truncation<a class="rs-anchor" href="#ap-10-middle-truncation" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> capping long output by keeping the start and end characters, or worse, only the start.</li>
+<li><strong>The real version:</strong> head-and-tail truncation, roughly 30/70, with a pointer to the full artifact.</li>
+<li><strong>Tell:</strong> the truncation marker sits exactly where the error would have been.</li>
+<li><strong>Cost:</strong> errors and stack traces cluster at the end. The agent reasons about a failure it never saw.</li>
+<li><strong>Fix:</strong> head-and-tail, plus offload so the full text is one <code>cat</code> away.</li>
+</ul>
+<h3 id="ap-12-correcting-in-place">AP-12: Correcting in place<a class="rs-anchor" href="#ap-12-correcting-in-place" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> finding a wrong fact in the agent's context and explaining the correction in the next turn.</li>
+<li><strong>The real version:</strong> resetting to before the poison and restating from clean ground.</li>
+<li><strong>Tell:</strong> the wrong fact comes back later in the same session after you "fixed" it.</li>
+<li><strong>Cost:</strong> the wrong fact stays as a permanent distractor, and a compaction may keep the wrong version.</li>
+<li><strong>Fix:</strong> reset. You cannot delete from a transcript by talking to it.</li>
+</ul>
+<h3 id="ap-13-the-heroic-session">AP-13: The heroic session<a class="rs-anchor" href="#ap-13-the-heroic-session" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> an eight-hour session with four compactions, treated as impressive persistence.</li>
+<li><strong>The real version:</strong> four 90-minute sessions with explicit handoffs.</li>
+<li><strong>Tell:</strong> more than one compaction.</li>
+<li><strong>Cost:</strong> degradation compounds <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, rules fade, distraction dominates, and every turn is priced against a nearly full window. Quality falls just as your sunk-cost commitment rises.</li>
+<li><strong>Fix:</strong> mechanical caps that need no judgment in the moment: one compaction, or two hours.</li>
+</ul>
+<h2 id="generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting<a class="rs-anchor" href="#generator-2-adding-instead-of-subtracting" title="Link to this section">#</a></h2>
+<p>Adding is visible and feels like work. Deleting looks like doing nothing. So instruction files grow, memory accumulates, frameworks get built and stacks get adopted wholesale. The evidence is lopsidedly pro-subtraction: masking beats summarising at equal solve rate <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, fewer tools beat more <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, 5K beats 100K <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. The incentives are lopsidedly pro-addition. <strong>The correction is to make removal a reported result</strong>: an ablation that deletes a component is a finding, not an admission.</p>
+<h3 id="ap-3-full-stack-adoption">AP-3: Full-stack adoption<a class="rs-anchor" href="#ap-3-full-stack-adoption" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> reading a guide, this one included, and implementing all ten methods in a week.</li>
+<li><strong>The real version:</strong> measure, find the binding constraint, fix one thing, measure again.</li>
+<li><strong>Tell:</strong> you cannot say which change produced which effect. Asked what the offload layer bought you, the answer is a shrug.</li>
+<li><strong>Cost:</strong> outcomes nobody can attribute, complexity nobody can revert, and permanent maintenance for parts that may do nothing.</li>
+<li><strong>Fix:</strong> one change at a time. The <a href="04-choosing-methods.html#step-2-route-by-your-binding-constraint-5-minutes">routing table</a> picks the first.</li>
+</ul>
+<h3 id="ap-5-write-only-memory">AP-5: Write-only memory<a class="rs-anchor" href="#ap-5-write-only-memory" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> a memory system with thousands of entries, growing steadily, demoed enthusiastically.</li>
+<li><strong>The real version:</strong> a small curated memory with a measured read path.</li>
+<li><strong>Tell:</strong> you cannot say how many retrievals <em>changed an action</em> last week.</li>
+<li><strong>Cost:</strong> always-loaded prefix tokens, curation time, and stale entries that are confidently wrong without failing loudly.</li>
+<li><strong>Fix:</strong> instrument retrievals that changed an action. Under one a week, delete the system. Move durable knowledge into <a class="rs-term" href="glossary.html#adr" data-def="A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.">ADRs</a>.</li>
+</ul>
+<h3 id="ap-6-the-growing-instruction-file">AP-6: The growing instruction file<a class="rs-anchor" href="#ap-6-the-growing-instruction-file" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> every incident adds a rule; the file reaches 400 lines; nothing is ever removed.</li>
+<li><strong>The real version:</strong> at most 150 lines of rules that cannot be inferred, pruned as often as extended.</li>
+<li><strong>Tell:</strong> monotone growth. If the file's history has no deletions, this is it.</li>
+<li><strong>Cost:</strong> dilution, <a class="rs-term" href="glossary.html#position-decay" data-def="Rules at the start of the window losing effect as a session lengthens, because past about 50% full the early tokens become the least attended.">position decay</a> past about 50% utilisation <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and contradictions between rules written months apart.</li>
+<li><strong>Fix:</strong> the inference test on every line. Turn repeatedly violated rules into hooks, lints or tests. Text that is not followed is not a control.</li>
+</ul>
+<h3 id="ap-8-multi-agent-by-default">AP-8: Multi-agent by default<a class="rs-anchor" href="#ap-8-multi-agent-by-default" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> splitting every non-trivial task across parallel sub-agents.</li>
+<li><strong>The real version:</strong> one linear thread with disposable read-only scouts, delegating only composable work.</li>
+<li><strong>Tell:</strong> you cannot write the sub-agent's output schema in 20 lines.</li>
+<li><strong>Cost:</strong> about 15× the tokens <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; individually coherent, mutually incompatible outputs <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; debugging across fragmented transcripts.</li>
+<li><strong>Fix:</strong> the <a href="07-sub-agents.html#the-composability-test">composability test</a>.</li>
+</ul>
+<h3 id="ap-16-the-context-framework">AP-16: The context framework<a class="rs-anchor" href="#ap-16-the-context-framework" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> building an in-house context-management framework with policies, plugins and configuration before establishing that context is the bottleneck.</li>
+<li><strong>The real version:</strong> four shell scripts, an ignore file, a pruned tool list and a plan-file convention.</li>
+<li><strong>Tell:</strong> the framework has more configuration options than you have measured problems.</li>
+<li><strong>Cost:</strong> maintenance forever, a layer that makes debugging harder, and decisions frozen before you had data.</li>
+<li><strong>Fix:</strong> check whether context is still your binding constraint (<a href="15-optimisation-plan.html#the-stop-rule">the stop rule</a>). Most wins in this research are deletions and shell scripts, not architecture.</li>
+</ul>
+<h2 id="generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome<a class="rs-anchor" href="#generator-3-measuring-the-input-instead-of-the-outcome" title="Link to this section">#</a></h2>
+<p>Tokens, utilisation and index size are easy to measure. Solve rate, stability and cost per solved task are hard. So teams optimise what they can see and are surprised when it does not help. The correction is <a href="09-evaluation.html">chapter 9</a>, and above all the insistence on k ≥ 2, because the harm you are least able to see is the one your measurement design excludes.</p>
+<h3 id="ap-4-compaction-as-hygiene">AP-4: Compaction as hygiene<a class="rs-anchor" href="#ap-4-compaction-as-hygiene" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> compacting often to "keep the context clean", as routine maintenance.</li>
+<li><strong>The real version:</strong> compacting at sub-goal boundaries, at most once per session, after offloading.</li>
+<li><strong>Tell:</strong> compaction is triggered by a token threshold or a timer, not a task event.</li>
+<li><strong>Cost:</strong> mid-task firing <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, termination recognition collapsing to 44.6% <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, +0.108 errors at the next step <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, Pass² damage larger than accuracy damage <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and a financial saving that only breaks even after about four turns.</li>
+<li><strong>Fix:</strong> semantic triggers with suppression rules; cap at one; then reset.</li>
+</ul>
+<h3 id="ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer<a class="rs-anchor" href="#ap-7-semantic-search-as-the-answer" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> an embedding index over the codebase as the primary retriever.</li>
+<li><strong>The real version:</strong> live lexical and structural search first; semantic search as a complement.</li>
+<li><strong>Tell:</strong> grep is treated as the fallback rather than the workhorse.</li>
+<li><strong>Cost:</strong> grep generally won head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; the index is stale about exactly the code you edited; five plausible irrelevant chunks look identical to success.</li>
+<li><strong>Fix:</strong> invert the order. The hybrid result, +12.5% over either alone <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>, says the answer is <em>both</em>, in the right order.</li>
+</ul>
+<h3 id="ap-9-token-counting-as-success">AP-9: Token counting as success<a class="rs-anchor" href="#ap-9-token-counting-as-success" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> a dashboard trending tokens down, celebrated as progress.</li>
+<li><strong>The real version:</strong> cost per solved task, with cache-adjusted cost and Pass².</li>
+<li><strong>Tell:</strong> the reported metric is a cost, not an outcome.</li>
+<li><strong>Cost:</strong> in the <a href="10-metrics-and-economics.html#cost-per-solved-task">worked example</a>, the over-compressed configuration had the lowest total cost and the second-worst cost per solved task.</li>
+<li><strong>Fix:</strong> report tokens per solved task and Pass². Optimising an input is how you get a cheap agent that does not work.</li>
+</ul>
+<h3 id="ap-11-the-unread-dashboard">AP-11: The unread dashboard<a class="rs-anchor" href="#ap-11-the-unread-dashboard" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> forty context metrics, collected, charted and never acted on.</li>
+<li><strong>The real version:</strong> four or five numbers reviewed monthly, each with a decision attached.</li>
+<li><strong>Tell:</strong> nobody can name a decision any given metric has ever changed.</li>
+<li><strong>Cost:</strong> the collection effort, plus the false confidence that "we measure this".</li>
+<li><strong>Fix:</strong> delete every metric with no attached decision. Keep the <a href="10-metrics-and-economics.html#if-you-track-only-five">five</a>.</li>
+</ul>
+<h3 id="ap-14-optimising-someone-elses-bottleneck">AP-14: Optimising someone else's bottleneck<a class="rs-anchor" href="#ap-14-optimising-someone-elses-bottleneck" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> adopting a technique from a blog post whose author had a different binding constraint.</li>
+<li><strong>The real version:</strong> measure, find <em>your</em> largest controllable segment, act on that.</li>
+<li><strong>Tell:</strong> you overhauled retrieval while 25% of your context was unused tool definitions.</li>
+<li><strong>Cost:</strong> effort on a segment that was not the problem, and the opportunity cost of the one that was.</li>
+<li><strong>Fix:</strong> thirty minutes of measurement before any technique.</li>
+</ul>
+<h3 id="ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks<a class="rs-anchor" href="#ap-15-trusting-transferred-benchmarks" title="Link to this section">#</a></h3>
+<ul>
+<li><strong>Looks like:</strong> adopting a retrieval or compaction strategy because a published comparison favoured it.</li>
+<li><strong>The real version:</strong> using published results for the <em>shape</em> of the answer, then re-running on your harness.</li>
+<li><strong>Tell:</strong> you cite a number you have not reproduced.</li>
+<li><strong>Cost:</strong> scores depended strongly on which of four harnesses ran, on identical data <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The published ranking may invert on your setup.</li>
+<li><strong>Fix:</strong> treat external results as hypotheses. The <a href="09-evaluation.html#the-minimum-viable-experiment">minimum viable experiment</a> is 160 runs.</li>
+</ul>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Treating the window as a container produces briefing documents, tool hoarding and token worship.</li><li>Adding feels like work; deleting looks like doing nothing. Make removal a reported result.</li><li>Measuring inputs instead of outcomes hides the harm you most need to see.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#adr"><strong>ADR</strong></a> — A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.</li><li><a href="glossary.html#position-decay"><strong>Position decay</strong></a> — Rules at the start of the window losing effect as a session lengthens, because past about 50% full the early tokens become the least attended.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="12-failure-modes.html"><span class="rs-pn__label">← Previous · Chapter 12</span><span class="rs-pn__title">Forty-four failure modes</span><span class="rs-pn__part">Decide and avoid</span></a><a class="rs-pn__link rs-pn__link--next" href="14-case-studies.html"><span class="rs-pn__label">Next → · Chapter 14</span><span class="rs-pn__title">Eight case studies</span><span class="rs-pn__part">Decide and avoid</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#hygiene-that-is-not-hygiene">Hygiene that is not hygiene</a></li><li><a href="#generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container</a><ul><li><a href="#ap-1-the-briefing-document">AP-1: The briefing document</a></li><li><a href="#ap-2-just-in-case-tooling">AP-2: Just-in-case tooling</a></li><li><a href="#ap-10-middle-truncation">AP-10: Middle truncation</a></li><li><a href="#ap-12-correcting-in-place">AP-12: Correcting in place</a></li><li><a href="#ap-13-the-heroic-session">AP-13: The heroic session</a></li></ul></li><li><a href="#generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting</a><ul><li><a href="#ap-3-full-stack-adoption">AP-3: Full-stack adoption</a></li><li><a href="#ap-5-write-only-memory">AP-5: Write-only memory</a></li><li><a href="#ap-6-the-growing-instruction-file">AP-6: The growing instruction file</a></li><li><a href="#ap-8-multi-agent-by-default">AP-8: Multi-agent by default</a></li><li><a href="#ap-16-the-context-framework">AP-16: The context framework</a></li></ul></li><li><a href="#generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome</a><ul><li><a href="#ap-4-compaction-as-hygiene">AP-4: Compaction as hygiene</a></li><li><a href="#ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer</a></li><li><a href="#ap-9-token-counting-as-success">AP-9: Token counting as success</a></li><li><a href="#ap-11-the-unread-dashboard">AP-11: The unread dashboard</a></li><li><a href="#ap-14-optimising-someone-elses-bottleneck">AP-14: Optimising someone else&#x27;s bottleneck</a></li><li><a href="#ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks</a></li></ul></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

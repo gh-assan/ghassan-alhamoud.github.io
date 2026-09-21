@@ -1,0 +1,568 @@
+{
+  "slug": "context-management-coding-agents",
+  "code": "RSCH-001",
+  "title": "Context Management in Coding Agents",
+  "shortTitle": "Context Management",
+  "thesis": "Context windows grew a hundredfold; agent reliability did not follow. For most teams the binding constraint is not the model or the tools but context discipline: what the agent is allowed to look at, when, and at what cost.",
+  "description": "Why bigger context windows did not make coding agents reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.",
+  "status": "published",
+  "statusLabel": "Published",
+  "version": "1.0",
+  "published": "2026-09-21",
+  "updated": "2026-09-21",
+  "summaryLede": "Everything in this research on one page: the problem, the finding, the first actions, and the numbers behind them. Five minutes.",
+  "sourcesLede": "What each source supports, how much to discount it, which chapters lean on it, and what would prove this research wrong.",
+  "methodLede": "The research question, the design commitments fixed before writing, what is out of scope, and the acceptance bar the work had to pass.",
+  "summaryStats": [
+    {"value": "18 of 18", "label": "frontier models got worse as input grew, at every length tested [S]"},
+    {"value": "5K > 100K", "label": "tokens of targeted retrieval beat a 100K codebase summary [P]"},
+    {"value": "6.5 pts", "label": "SWE-bench swing from changing only the summariser [S]"},
+    {"value": "77% → 53%", "label": "Pass² with no compression vs FIFO truncation on AppWorld [S]"},
+    {"value": "6.9×", "label": "cost increase from a 24% token cut that broke the prompt cache [C]"},
+    {"value": "25–35%", "label": "of the window usually recovered by 2.5 hours of deletion [P]"}
+  ],
+  "finding": [
+    {
+      "claim": "The context window is an attention budget, not a bucket.",
+      "detail": "Every model tested degraded as input grew, at every length step, long before the window was full [S]. Adding correct but irrelevant tokens can make an agent worse."
+    },
+    {
+      "claim": "Subtraction beats addition, and the evidence is lopsided.",
+      "detail": "5K tokens of targeted retrieval beat a 100K summary [P]. Masking matched summarisation at lower cost [S]. Fewer tools beat more tools [S]. The first audit usually finds waste, not trade-offs."
+    },
+    {
+      "claim": "Compression damage shows up as unreliability before it shows up as lower accuracy.",
+      "detail": "Compressed agents become intermittent: they solve a task, then fail the same task on a rerun [S]. Teams measuring single runs conclude compaction is free until production disagrees."
+    },
+    {
+      "claim": "The cache can flip the sign of an optimisation.",
+      "detail": "Tokens in a stable prefix cost about a tenth of tokens that churn. A 24% token cut that made the prefix dynamic raised cost 6.9× in a worked example [C]."
+    },
+    {
+      "claim": "There is a stopping point.",
+      "detail": "About 16 hours of sequenced work, most of it deletion, covers the large majority of the benefit. Past the stop rule, your binding constraint is somewhere else."
+    }
+  ],
+  "paths": [
+    {"time": "5 minutes", "title": "Decide if it matters", "text": "The one-page summary: the problem, the finding, the first actions.", "href": "ref:summary"},
+    {"time": "30 minutes", "title": "Score where you stand", "text": "Run the diagnostic and get exactly one next action.", "href": "ch:diagnostic"},
+    {"time": "An afternoon", "title": "Win back a quarter of the window", "text": "Phase 0 baseline, then Phase 1 deletion. Two hours, no behaviour change.", "href": "ch:optimisation-plan#phase-0-baseline"},
+    {"time": "Mechanism first", "title": "Understand why", "text": "Start at chapter 1 and follow the path: problem, methods, measurement, decisions, action.", "href": "ch:foundations"}
+  ],
+  "parts": [
+    {"id": "understand", "number": "I", "title": "Understand the problem", "intro": "What context is mechanically, why more of it makes agents worse, and where the tokens actually go."},
+    {"id": "methods", "number": "II", "title": "The methods", "intro": "The ten methods that survive scrutiny, how to choose among them, and the four surfaces where context is spent."},
+    {"id": "measure", "number": "III", "title": "Measure it", "intro": "How to prove a context change worked, what to track, and what context really costs once the cache is priced in."},
+    {"id": "decide", "number": "IV", "title": "Decide and avoid", "intro": "The hard calls with no clean answer, the ways context management fails, the traps that look like hygiene, and real cases."},
+    {"id": "act", "number": "V", "title": "Act on it", "intro": "A sequenced 16-hour plan, a scored diagnostic, daily habits and the tooling landscape."},
+    {"id": "reference", "number": "A–B", "title": "Reference", "intro": "Copyable templates and the full list of falsifiable lessons."}
+  ],
+  "chapters": [
+    {
+      "id": 1, "slug": "foundations", "part": "understand", "file": "chapters/01-foundations.md",
+      "title": "Why bigger context windows did not help",
+      "navTitle": "Why bigger windows did not help",
+      "level": "Foundational",
+      "question": "What is context, mechanically, and why does adding more of it make coding agents worse?",
+      "description": "Context is an attention budget, not a container. The evidence for degradation, the five forces acting on every token, and the five ways context fails.",
+      "tldr": [
+        "Every model tested degrades as input grows, at every length, well before the window is full [S].",
+        "Five forces act on every token: dilution, position, recency-as-truth, the cache, and information loss.",
+        "Context fails in five ways. Starvation, the one most teams have, leaves no trace in the transcript."
+      ],
+      "outcomes": [
+        "Explain why the window is a budget with a return curve, not a bucket",
+        "Name the five forces and predict which one a change will affect",
+        "Diagnose poisoning, distraction, confusion, clash and starvation from their tells",
+        "State the four properties of a well-managed context"
+      ],
+      "takeaways": [
+        "The window is an attention budget. Adding correct information can still lower performance.",
+        "Past about half full, the start of the window is the least attended region. Your rules fade because of position, not memory.",
+        "Appending is cheap; editing early context breaks the cache and can cost more than it saves.",
+        "Reversibility is worth more than compression ratio. Prefer operations you can undo.",
+        "You cannot delete from a transcript by talking to it. Reset instead of arguing."
+      ],
+      "see": [
+        {"title": "Where the tokens actually go", "href": "ch:anatomy", "why": "the nine segments of a real context"},
+        {"title": "The ten methods", "href": "ch:ten-methods", "why": "what acts on each force"}
+      ]
+    },
+    {
+      "id": 2, "slug": "anatomy", "part": "understand", "file": "chapters/02-anatomy.md",
+      "title": "Anatomy of a coding agent's context",
+      "navTitle": "Anatomy of the context",
+      "level": "Foundational",
+      "question": "Where do the tokens in a coding agent's context actually go, and which parts can you control?",
+      "description": "Nine segments of a coding agent's context, their typical size, who controls them, how they fail, and a worked audit that recovers 31% of the window.",
+      "tldr": [
+        "A context has nine segments: four stable prefix segments and five growing body segments.",
+        "The prefix is paid on every call; the body is paid repeatedly and read with fading attention.",
+        "First audits usually find the big segment is one nobody was tuning: tool definitions or tool output."
+      ],
+      "outcomes": [
+        "Split any context into prefix and body and explain why that split governs cost",
+        "Estimate the size, owner and failure mode of each of the nine segments",
+        "Rank clean-up actions by size, cost and reversibility",
+        "Track the four numbers that belong on a dashboard"
+      ],
+      "takeaways": [
+        "\"My context is full\" is not actionable. A segment-by-segment breakdown is.",
+        "Tool definitions and tool results are usually the largest controllable segments.",
+        "Optimise the retention integral (tokens × turns kept), not the peak.",
+        "Compaction is the only segment that rewrites the prefix, so it is the most cache-hostile.",
+        "A typical first audit recovers about 30% of the window with no loss of information."
+      ]
+    },
+    {
+      "id": 3, "slug": "ten-methods", "part": "methods", "file": "chapters/03-ten-methods.md",
+      "title": "The ten methods experts actually use",
+      "navTitle": "The ten methods",
+      "level": "Core",
+      "question": "Which context-management methods survive scrutiny, why does each work, and what does each cost?",
+      "description": "Ten context-management methods for coding agents, each with its mechanism, cost, what it loses, how to detect trouble, and a test you can run today.",
+      "tldr": [
+        "Only ten methods passed four tests: a mechanism, evidence, independence from the others, and a test you can run today.",
+        "Each method loses something. The loss mode matters as much as the gain.",
+        "The biggest wins are unglamorous: stable prefixes, fewer tools, and quieter tool output."
+      ],
+      "outcomes": [
+        "Describe each of the ten methods in one sentence and name the force it acts on",
+        "State what each method costs and what it can lose",
+        "Run the decision test for any method on your own workload",
+        "Explain why popular advice such as bigger windows or default multi-agent was benched"
+      ],
+      "takeaways": [
+        "Measure your distribution before choosing any method.",
+        "Static pruning beats dynamic selection, mostly for cache reasons.",
+        "Never delete what you can relocate: redirect, offload, stub.",
+        "A plan file with a ruled-out section is the only deliberate control over what survives a boundary.",
+        "Compact at sub-goal boundaries, at most once, and only after offloading."
+      ],
+      "see": [
+        {"title": "Choosing your methods", "href": "ch:choosing-methods", "why": "the 55-minute procedure that routes you to one"}
+      ]
+    },
+    {
+      "id": 4, "slug": "choosing-methods", "part": "methods", "file": "chapters/04-choosing-methods.md",
+      "title": "Choosing your methods: a 55-minute procedure",
+      "navTitle": "Choosing your methods",
+      "level": "Core",
+      "question": "Given my own agent and workload, which method should I adopt first, and in what order after that?",
+      "description": "An executable procedure with time budgets for choosing context-management methods: measure, route by binding constraint, classify the task, compose the stack.",
+      "tldr": [
+        "Measure four numbers first. Every wrong context decision catalogued here started with a guess.",
+        "Route by your binding constraint and fix exactly one thing, then re-measure.",
+        "Three ordering rules are not optional: offload before compaction, state before resets, cache before everything."
+      ],
+      "outcomes": [
+        "Produce the four routing numbers for your setup in 30 minutes",
+        "Pick your first method from the routing table",
+        "Adjust the stack for the task type in front of you",
+        "Answer the recurring 2 a.m. calls from the decision table"
+      ],
+      "takeaways": [
+        "The procedure is measure, route, classify, compose, then review quarterly.",
+        "Fix one constraint at a time so every effect stays attributable.",
+        "Different task types need different stacks; debugging and delegation do not mix.",
+        "Context management regresses. A 30-minute quarterly re-measure keeps it honest."
+      ]
+    },
+    {
+      "id": 5, "slug": "retrieval", "part": "methods", "file": "chapters/05-retrieval.md",
+      "title": "Retrieval: how code should enter context",
+      "navTitle": "Retrieval",
+      "level": "Deep dive",
+      "question": "Should code enter context by grep, embeddings, the symbol graph or agentic search, and what does the evidence actually say?",
+      "description": "Lexical, structural, semantic and agentic retrieval compared on evidence, the harness confound, a tiered default architecture and nine code-specific pathologies.",
+      "tldr": [
+        "\"Grep versus embeddings\" is the wrong question. Unit, index, timing and agency are separate choices.",
+        "The harness often matters more than the retrieval strategy, so published comparisons do not transfer [S].",
+        "Default: grep and the symbol graph first, semantic search only for unknown vocabulary, escalate rather than run everything."
+      ],
+      "outcomes": [
+        "Decompose any retrieval design into unit, index, timing and agency",
+        "Choose a retrieval tier for a given question shape",
+        "Recognise the nine code-specific retrieval pathologies",
+        "Measure read-utilisation and read-coverage on your own agent"
+      ],
+      "takeaways": [
+        "Code has exact relevance edges. Use the compiler's graph before approximating it.",
+        "A method that fails loudly (zero hits) is safer than one that always returns something.",
+        "Pre-load pointers and invariants, never content, and keep the seed under 2,000 tokens.",
+        "Diagnose starvation versus dilution before changing retrieval volume."
+      ]
+    },
+    {
+      "id": 6, "slug": "compaction-and-memory", "part": "methods", "file": "chapters/06-compaction-and-memory.md",
+      "title": "Compaction, offload and memory",
+      "navTitle": "Compaction, offload, memory",
+      "level": "Deep dive",
+      "question": "How do compaction, offload and memory lose information, what does that cost in measured terms, and what should you do with your wiki?",
+      "description": "Six measured 2026 results on compaction, the design space, offload patterns, cross-session memory, and what a coding agent should do with your wiki, database and graph.",
+      "tldr": [
+        "Changing only the summariser moved SWE-bench by 6.5 points. Compaction is a component, not plumbing [S].",
+        "Compression makes agents intermittent before it makes them worse on average [S].",
+        "Offload first, compact at boundaries, persist only what you would otherwise re-derive, and never bulk-index the wiki."
+      ],
+      "outcomes": [
+        "Distinguish compaction, offload and memory by scope, reversibility and cost",
+        "Configure a compaction trigger, schema and cap from the evidence",
+        "Design self-describing offload stubs",
+        "Decide where a fact should live using its staleness rate"
+      ],
+      "takeaways": [
+        "Offload before you compact, and persist only what you would re-derive.",
+        "Use an explicit summary schema with state, ruled-out approaches and verbatim exact strings.",
+        "Re-read the plan file first after any compaction; that step carries the most errors.",
+        "The repository is the only store with a repair mechanism. Prefer ADRs and tests to memory tools.",
+        "Dereference the wiki by name; never index it."
+      ]
+    },
+    {
+      "id": 7, "slug": "sub-agents", "part": "methods", "file": "chapters/07-sub-agents.md",
+      "title": "Sub-agents and isolation",
+      "navTitle": "Sub-agents and isolation",
+      "level": "Deep dive",
+      "question": "When does splitting work across sub-agents help, when does it destroy the task, and how can you tell in advance?",
+      "description": "The public multi-agent disagreement resolved into a decision rule: the composability test, five topologies, the boundary problem and a sub-agent contract.",
+      "tldr": [
+        "Two credible teams published opposite conclusions. Both are right, on different kinds of work.",
+        "Sub-agents are safe when their outputs combine without negotiation, and dangerous when they do not.",
+        "For coding, the default is one linear thread with disposable read-only scouts."
+      ],
+      "outcomes": [
+        "Apply the four-question composability test before delegating",
+        "Choose a topology for a given task",
+        "Write a sub-agent contract that limits contract loss",
+        "Rank context boundaries by how much control you have over what crosses them"
+      ],
+      "takeaways": [
+        "Delegate read-mostly, additive work. Never delegate interlocking implementation or debugging.",
+        "If you cannot write the output schema in 20 lines, the work is not isolatable.",
+        "Isolation shrinks the parent's context and grows total spend.",
+        "A reset with a written handoff gives you more control than any compaction."
+      ]
+    },
+    {
+      "id": 8, "slug": "tool-surface", "part": "methods", "file": "chapters/08-tool-surface.md",
+      "title": "The tool surface: MCP, skills and progressive disclosure",
+      "navTitle": "The tool surface",
+      "level": "Deep dive",
+      "question": "How much context do tools, MCP servers and skills consume, and what does a healthy tool surface look like?",
+      "description": "Tool definitions are the largest measured waste in most contexts. Degradation curves, three architectures, a 30-minute audit and a worked example recovering 32% of the window.",
+      "tldr": [
+        "Tool count hurts twice: definitions displace work, and more choices mean worse choices [S].",
+        "Deferred definitions fix displacement, not confusion. Only fewer tools fix confusion.",
+        "A 30-minute audit usually finds most tools were never called. Delete them."
+      ],
+      "outcomes": [
+        "Separate displacement from selection confusion and pick the right fix",
+        "Compare eager, progressive and code-execution tool architectures",
+        "Run the six-step tool audit",
+        "Budget skills the same way you budget tools"
+      ],
+      "takeaways": [
+        "Treat about 20 active tools as a soft ceiling and about 40 as a hard one.",
+        "Zero-invocation tools are pure loss and can be restored in seconds.",
+        "Prefer the shell to an MCP server that duplicates it, unless the server is a deliberate security control.",
+        "Code execution removes a whole category of context and shapes results before they arrive."
+      ]
+    },
+    {
+      "id": 9, "slug": "evaluation", "part": "measure", "file": "chapters/09-evaluation.md",
+      "title": "Evaluating a context change",
+      "navTitle": "Evaluating a change",
+      "level": "Advanced",
+      "question": "How do you prove a context-management change helped, with what statistical design, and at what cost?",
+      "description": "Why context effects are hard to measure, twelve results that shape the design, Pass^k worked, sample sizes and a minimum viable experiment.",
+      "tldr": [
+        "Context effects are small, fully tangled with the harness, and show up in variance first.",
+        "Run every task at least twice and report Pass² (solved both times), not single-run accuracy.",
+        "Pair your design and use McNemar's test: it needs roughly a third of the tasks."
+      ],
+      "outcomes": [
+        "Explain why single-run accuracy is blind to compression damage",
+        "Compute Pass@k and Pass^k and read their ratio",
+        "Size an experiment honestly, or say that it is underpowered",
+        "Run a minimum viable paired experiment on your own tickets"
+      ],
+      "takeaways": [
+        "k = 2 is the minimum, because Pass² is the only way to see intermittency.",
+        "68% versus 74% on 50 tasks is not a result; the intervals overlap almost entirely.",
+        "Hold the compaction prompt constant; it alone can move results by 6.5 points.",
+        "Change one thing per experiment, and decide the stop rule before running."
+      ]
+    },
+    {
+      "id": 10, "slug": "metrics-and-economics", "part": "measure", "file": "chapters/10-metrics-and-economics.md",
+      "title": "Metrics and the real cost of context",
+      "navTitle": "Metrics and economics",
+      "level": "Core",
+      "question": "What should you measure, and what does context really cost once the cache, latency and people are counted?",
+      "description": "Twenty-six context metrics with the decision each drives, a four-line cost model, and the arithmetic that overturns two common cost beliefs.",
+      "tldr": [
+        "Every metric should drive a decision. Five cover most of them.",
+        "Cost has four lines: compute, cache writes, latency and people. Most teams track one.",
+        "Cutting tokens can raise cost, and compaction saves far less money than its token count suggests."
+      ],
+      "outcomes": [
+        "Choose the five metrics to track and the decision each drives",
+        "Compute cache-adjusted cost per turn",
+        "Work out when a compaction pays for itself",
+        "Use cost per solved task to compare configurations"
+      ],
+      "takeaways": [
+        "Stable prefix tokens cost about 0.10; churning tokens cost 1.25 every time they re-enter.",
+        "Compaction breaks even after about four turns; near the end of a session it is a pure loss.",
+        "You can over-compress as easily as over-load. Cost per solved task catches both.",
+        "When the next-dollar checklist comes up empty, stop optimising context."
+      ]
+    },
+    {
+      "id": 11, "slug": "hard-calls", "part": "decide", "file": "chapters/11-hard-calls.md",
+      "title": "Twenty-five hard calls",
+      "navTitle": "Hard calls",
+      "level": "Practitioner",
+      "question": "Which context decisions have no clean answer, and how do you decide them for your own situation?",
+      "description": "Twenty-five context-management decisions with the tension, both sides, a recommendation and the conditions that flip it.",
+      "tldr": [
+        "Twenty-five recurring decisions, each with both sides, a recommendation and what would flip it.",
+        "Almost every recommendation leans toward reversibility and explicitness, not cleverness.",
+        "The flip conditions are what make these re-decidable when your setup changes."
+      ],
+      "outcomes": [
+        "Resolve the common trade-offs for your own setup",
+        "Recognise the conditions that flip each recommendation",
+        "Explain the pattern behind the recommendations"
+      ],
+      "takeaways": [
+        "Delete rather than select; redirect rather than filter; reset rather than compact.",
+        "Point rather than copy; keep exact strings verbatim; dereference rather than index.",
+        "When a context problem recurs, fix the repository, not the retriever.",
+        "Tier changes by reversibility: ship pure deletions, monitor structural changes, measure behavioural ones."
+      ]
+    },
+    {
+      "id": 12, "slug": "failure-modes", "part": "decide", "file": "chapters/12-failure-modes.md",
+      "title": "Forty-four failure modes",
+      "navTitle": "Failure modes",
+      "level": "Reference",
+      "question": "How does context management fail, what is the tell for each failure, and how do you contain it?",
+      "description": "Forty-four context-management failures in eight clusters, each with its tell, detection, containment and fix, plus a symptom-to-cause index for incidents.",
+      "tldr": [
+        "Forty-four failures in eight clusters, each with a tell, a detector, a containment and a fix.",
+        "Use the symptom index during an incident; read the clusters to prevent the next one.",
+        "Four questions asked before a long task pre-empt most of the list."
+      ],
+      "outcomes": [
+        "Go from a symptom to its likely causes in under a minute",
+        "Contain a failure in-session and fix it permanently afterwards",
+        "Ask the four pre-emptive questions before a long task"
+      ],
+      "takeaways": [
+        "Starvation is the failure most likely to survive review: the trajectory looks clean.",
+        "When a fact is poisoned, reset to before the poison; do not argue with it.",
+        "Cost rising after an \"optimisation\" usually means the cache broke.",
+        "\"It worked yesterday\" is a variance signal you never measured."
+      ]
+    },
+    {
+      "id": 13, "slug": "antipatterns", "part": "decide", "file": "chapters/13-antipatterns.md",
+      "title": "Sixteen antipatterns",
+      "navTitle": "Antipatterns",
+      "level": "Practitioner",
+      "question": "What looks like good context hygiene but is not, and how do you tell the difference?",
+      "description": "Sixteen practices that look like context hygiene and are not, each with the legitimate version, the tell, the cost and the fix, plus the three generators behind them.",
+      "tldr": [
+        "Sixteen practices that imitate good hygiene, each with the tell that separates it from the real thing.",
+        "Three habits of mind generate almost all of them.",
+        "Fix the generator and you prevent the whole family."
+      ],
+      "outcomes": [
+        "Spot each antipattern from its tell",
+        "Replace it with the legitimate version",
+        "Name the three generators and correct them at the source"
+      ],
+      "takeaways": [
+        "Treating the window as a container produces briefing documents, tool hoarding and token worship.",
+        "Adding feels like work; deleting looks like doing nothing. Make removal a reported result.",
+        "Measuring inputs instead of outcomes hides the harm you most need to see."
+      ]
+    },
+    {
+      "id": 14, "slug": "case-studies", "part": "decide", "file": "chapters/14-case-studies.md",
+      "title": "Eight case studies",
+      "navTitle": "Case studies",
+      "level": "Practitioner",
+      "question": "What do these decisions look like on real, documented incidents, including ones where the change made things worse?",
+      "description": "Eight context-management cases: two multi-agent outcomes, the summariser swing, compression and reliability, a cache disaster, category removal and a first audit.",
+      "tldr": [
+        "Six cases are documented studies or incidents; two are labelled composites.",
+        "One change made things worse (dynamic tool loading) and one win came from removal (code execution).",
+        "Six of eight turned on what to remove or where to draw a boundary, not on a cleverer algorithm."
+      ],
+      "outcomes": [
+        "Recognise the same patterns in your own incidents",
+        "Explain why the same architecture succeeded on research and failed on implementation",
+        "Use the cross-case patterns as a checklist"
+      ],
+      "takeaways": [
+        "Isolation succeeds or fails on composability, not on architecture.",
+        "The boundary component, such as the summariser, is a first-class quality lever.",
+        "Cache mechanics can invert the sign of a token optimisation.",
+        "The first audit finds waste, not trade-offs."
+      ]
+    },
+    {
+      "id": 15, "slug": "optimisation-plan", "part": "act", "file": "chapters/15-optimisation-plan.md",
+      "title": "Your optimisation plan",
+      "navTitle": "The optimisation plan",
+      "level": "Action",
+      "question": "Given everything so far, what exactly should I do, in what order, and when should I stop?",
+      "description": "A sequenced six-phase plan of about 16 hours, ordered by yield per effort, with a measurement gate per phase and an explicit stop rule.",
+      "tldr": [
+        "Seven phases, about 16 hours over six weeks. Phases 0–2 take six hours and carry most of the benefit.",
+        "Every phase has a gate. Do not start the next phase until the gate passes.",
+        "Stop when the six stop-rule conditions hold. Past that, your constraint is elsewhere."
+      ],
+      "outcomes": [
+        "Run the Phase 0 baseline and record eight numbers",
+        "Complete deletion and prevention in about five and a half hours",
+        "Know when a phase has worked and when to stop entirely"
+      ],
+      "takeaways": [
+        "The plan is ordered by yield per effort, not by intellectual interest.",
+        "Deletion first: it is the highest-yield, lowest-risk, most reversible phase.",
+        "Measurement infrastructure is optional unless you will make several more changes.",
+        "Re-audit quarterly. Five of the six maintenance steps are deletions."
+      ]
+    },
+    {
+      "id": 16, "slug": "diagnostic", "part": "act", "file": "chapters/16-diagnostic.md",
+      "title": "The diagnostic: score yourself, get one action",
+      "navTitle": "The diagnostic",
+      "level": "Action",
+      "question": "Where does my team stand on context management today, and what is the single next thing to do?",
+      "description": "A 35-item self-audit across seven areas that produces a maturity level and exactly one next action, with a worked example and a one-question version.",
+      "tldr": [
+        "Thirty-five items across seven areas, each scored 0, 1 or 2. Unknown scores zero.",
+        "Your level is the minimum across areas, not the average. Context fails at its weakest point.",
+        "The lowest area maps to exactly one next action."
+      ],
+      "outcomes": [
+        "Score your setup in about 30 minutes",
+        "Read your level and your one next action",
+        "Recognise the most common failing shape: one strong area, the rest at zero"
+      ],
+      "takeaways": [
+        "Gating items cap an area, so polish cannot hide a missing foundation.",
+        "One action, not a programme. Re-score after it.",
+        "The one-question version covers most readers: what share of your context is tools you never call?"
+      ]
+    },
+    {
+      "id": 17, "slug": "tips", "part": "act", "file": "chapters/17-tips.md",
+      "title": "Sixty-two habits that compound",
+      "navTitle": "Habits and tips",
+      "level": "Action",
+      "question": "What small, daily practices pay for themselves, and when does each one apply?",
+      "description": "Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week.",
+      "tldr": [
+        "Sixty-two habits, ordered by when they apply: setup, opening, retrieval, state, boundaries, delegation, hygiene.",
+        "Eight of them pay for themselves in the first week, and five of those eight cost nothing.",
+        "The wins are mostly deletions and habits, not architecture."
+      ],
+      "outcomes": [
+        "Apply the first-week eight today",
+        "Open, run and end a session with deliberate context habits",
+        "Keep the gains with a quarterly routine"
+      ],
+      "takeaways": [
+        "Spend 200 tokens on the opener: goal, paths, definition of done, what not to do.",
+        "Locate, then inspect, then read.",
+        "Compact after a test passes, never mid-debug; reset on the third repeated action.",
+        "When a context problem recurs, fix the repository."
+      ]
+    },
+    {
+      "id": 18, "slug": "tooling", "part": "act", "file": "chapters/18-tooling.md",
+      "title": "The tooling landscape",
+      "navTitle": "Tooling landscape",
+      "level": "Reference",
+      "question": "Which open-source tools, plugins and local MCP servers improve context use, and which are worth adopting?",
+      "description": "Open-source context tooling for coding agents across six layers, each with mechanism, cost and an adopt, trial, watch or skip verdict, plus a four-week starter stack.",
+      "tldr": [
+        "Tools are grouped by the layer they act on: prevention, retrieval, tool surface, state, compaction, observability.",
+        "Verdicts are about categories. Named projects are examples to verify, not endorsements.",
+        "The highest-value action is often not installing anything."
+      ],
+      "outcomes": [
+        "Pick a tool category for the layer that is your constraint",
+        "Adopt a four-week starter stack in the right order",
+        "Name what the ecosystem is still missing"
+      ],
+      "takeaways": [
+        "Check whether your harness already does it before installing anything.",
+        "Four shell wrappers usually beat any installed output-shaping tool.",
+        "Every memory tool needs a retrieval gate from day one.",
+        "Nothing off the shelf measures post-boundary re-fetch or Pass². You will have to build them."
+      ]
+    },
+    {
+      "id": 19, "label": "A", "slug": "templates", "part": "reference", "file": "chapters/a-templates.md",
+      "title": "Templates you can copy",
+      "navTitle": "Templates",
+      "level": "Reference",
+      "question": "What are the fill-in forms that make this operational, and which field in each carries the value?",
+      "description": "Eight copyable templates for context management: budget audit, tool audit, plan file, compaction schema, handoff, sub-agent contract, postmortem and experiment spec.",
+      "visualExempt": "Appendix of copyable templates; each template is a code block.",
+      "tldr": [
+        "Eight standalone forms, each tied to a measured failure that happens when the decision is made implicitly.",
+        "If eight is too many, three carry most of the value: the budget audit, the compaction schema and the postmortem.",
+        "Every template has a copy button. Fill them in; do not file them."
+      ],
+      "outcomes": [
+        "Copy the right template for the moment you are in",
+        "Know the one field in each that carries the value"
+      ],
+      "takeaways": [
+        "A form is a way to make a decision before you are under pressure to make it badly.",
+        "The compaction schema is the highest measured value per minute of effort in this research.",
+        "The postmortem's single question, was the decisive file ever in context, separates four failure classes."
+      ]
+    },
+    {
+      "id": 20, "label": "B", "slug": "lessons", "part": "reference", "file": "chapters/b-lessons.md",
+      "title": "Fifty-eight lessons, each falsifiable",
+      "navTitle": "Lessons",
+      "level": "Reference",
+      "question": "What are the transferable lessons, why is each true, and what would prove each one wrong?",
+      "description": "Fifty-eight numbered lessons on context management for coding agents, each with its mechanism and the observation that would falsify it.",
+      "visualExempt": "Numbered reference list; the mechanisms are illustrated in the chapters each lesson links to.",
+      "tldr": [
+        "Fifty-eight lessons in seven groups, each with a mechanism and a falsification condition.",
+        "A lesson you cannot falsify is a slogan, so each one says what would refute it.",
+        "Five matter most: budget not bucket, stable prefix, variance first, deletion first, and a stopping point."
+      ],
+      "outcomes": [
+        "Cite a lesson with its mechanism",
+        "Test a lesson against your own workload"
+      ],
+      "takeaways": [
+        "It is a budget, not a bucket. Everything follows from that.",
+        "A large stable prefix beats a small churning one.",
+        "Compression damage is variance first. Measure Pass².",
+        "Deletion is the highest-yield action, and context work has a stopping point."
+      ]
+    }
+  ],
+  "related": [
+    {"title": "Loop Engineering", "status": "upcoming", "statusLabel": "In preparation", "relation": "Designs the agent's repair loop. This research decides what that loop can see; most of its drag term is context drag."},
+    {"title": "Agent Evaluation", "status": "upcoming", "statusLabel": "In preparation", "relation": "Designs the measuring instrument. Chapter 9 here specialises it to small, harness-confounded context effects."},
+    {"title": "Prompt Cache Architecture", "status": "upcoming", "statusLabel": "In preparation", "relation": "The cache annex: what editing a file mid-session costs once invalidation is priced in."},
+    {"title": "Multi-Agent Maturity Model", "status": "upcoming", "statusLabel": "In preparation", "relation": "Organisational readiness for multi-agent systems. Chapter 7 here covers only the context argument."},
+    {"title": "Handbook · Memory and Context Management", "url": "/handbook/chapter-06-memory-context-management.html", "status": "published", "statusLabel": "Handbook", "relation": "The pattern-level introduction: context budgets, governed memory writes and validated compaction."},
+    {"title": "Field note · Agent Memory Architecture", "url": "/articles/every-token-is-rent-memory-architecture.html", "status": "published", "statusLabel": "Field note", "relation": "Admission, retrieval, consolidation and forgetting in a working agent memory system."}
+  ]
+}

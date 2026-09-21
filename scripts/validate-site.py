@@ -11,7 +11,7 @@ Exit code 0 when every gate passes, 1 otherwise.
 Canonical site decisions (single source of truth for the checks below):
 - Origin:        https://ghassan-alhamoud.com
 - Role string:   Senior Software Engineer — AI Agent Enabler, Software Architecture
-- Nav model:     Systems, Field Notes, Handbook, About (Contact is a footer utility)
+- Nav model:     Systems, Field Notes, Handbook, Research, About (Contact is a footer utility)
 """
 
 import json
@@ -38,6 +38,7 @@ NAV_MODEL = [
     ("Systems", "/projects/"),
     ("Field Notes", "/articles/"),
     ("Handbook", "/handbook/"),
+    ("Research", "/research/"),
     ("About", "#about"),
 ]
 
@@ -58,7 +59,7 @@ FORBIDDEN = [
 ]
 
 PUBLISHED_GLOBS = ["*.html", "rss.xml", "sitemap.xml", "llms.txt"]
-PUBLISHED_DIRS = ["", "articles", "projects", "handbook", "connect", "assets"]
+PUBLISHED_DIRS = ["", "articles", "projects", "handbook", "research", "connect", "assets"]
 EXTRA_CODE_GLOBS = ["assets/js/*.js", "assets/css/*.css", "scripts/*.py"]
 
 CV_TIMELINE = [
@@ -83,7 +84,9 @@ def report(gate, ok, message=""):
 
 def published_files():
     files = []
-    for d in PUBLISHED_DIRS:
+    # Research programmes live one level deeper: research/<slug>/*.html
+    research_dirs = [str(p.relative_to(ROOT)) for p in (ROOT / "research").glob("*/") if p.is_dir()]
+    for d in PUBLISHED_DIRS + research_dirs:
         base = ROOT / d if d else ROOT
         for g in PUBLISHED_GLOBS:
             files.extend(base.glob(g))
@@ -359,6 +362,7 @@ def check_content_validators():
         ["python3", "scripts/validate-articles.py"],
         ["python3", "scripts/validate-projects.py"],
         ["python3", "scripts/validate-handbook.py"],
+        ["python3", "scripts/validate-research.py"],
         ["python3", "-m", "unittest", "discover", "-s", "tests", "-q"],
     ]
     problems = []

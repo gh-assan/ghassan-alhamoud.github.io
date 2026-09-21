@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Eight case studies — Context Management</title>
+  <meta name="description" content="Eight context-management cases: two multi-agent outcomes, the summariser swing, compression and reliability, a cache disaster, category removal and a first a..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/14-case-studies.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/14-case-studies.html" />
+  <meta property="og:title" content="Eight case studies — Context Management" />
+  <meta property="og:description" content="Eight context-management cases: two multi-agent outcomes, the summariser swing, compression and reliability, a cache disaster, category removal and a first a..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Eight case studies — Context Management" />
+  <meta property="twitter:description" content="Eight context-management cases: two multi-agent outcomes, the summariser swing, compression and reliability, a cache disaster, category removal and a first a..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Eight case studies",
+  "description": "Eight context-management cases: two multi-agent outcomes, the summariser swing, compression and reliability, a cache disaster, category removal and a first audit.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/14-case-studies.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Decide and avoid"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 14",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/14-case-studies.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html" aria-current="page"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">Decide and avoid</li><li aria-current="page">Chapter 14</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part IV · Decide and avoid</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 14</span></p>
+          <h1 class="rs-hero__title">Eight case studies</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What do these decisions look like on real, documented incidents, including ones where the change made things worse?</p>
+          <div class="rs-meta">
+            <span>9 min read</span><span aria-hidden="true">·</span>
+            <span>Practitioner</span><span aria-hidden="true">·</span>
+            <span>Step 14 of 20</span><span aria-hidden="true">·</span>
+            <span>4/4 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html" aria-current="page"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#how-to-read-these-cases">How to read these cases</a></li><li><a class="on-this-page__link" href="#cs-1-the-sub-agents-that-built-different-games-p">CS-1: The sub-agents that built different games</a></li><li><a class="on-this-page__link" href="#cs-2-the-research-system-that-beat-one-agent-by-90-p">CS-2: The research system that beat one agent by 90%</a></li><li><a class="on-this-page__link" href="#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s">CS-3: Swapping only the summariser moved SWE-bench 6.5 points</a></li><li><a class="on-this-page__link" href="#cs-4-compression-that-hurt-reliability-more-than-accuracy-s">CS-4: Compression that hurt reliability more than accuracy</a></li><li><a class="on-this-page__link" href="#cs-5-dynamic-tool-loading-made-things-worse-c">CS-5: Dynamic tool loading made things worse</a></li><li><a class="on-this-page__link" href="#cs-6-removal-as-the-answer-code-execution-s">CS-6: Removal as the answer: code execution</a></li><li><a class="on-this-page__link" href="#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">CS-7: Grep beat embeddings, and the harness beat both</a></li><li><a class="on-this-page__link" href="#cs-8-the-audit-that-recovered-a-third-of-the-window-c">CS-8: The audit that recovered a third of the window</a></li><li><a class="on-this-page__link" href="#patterns-across-the-cases">Patterns across the cases</a></li></ul></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Six cases are documented studies or incidents; two are labelled composites.</li><li>One change made things worse (dynamic tool loading) and one win came from removal (code execution).</li><li>Six of eight turned on what to remove or where to draw a boundary, not on a cleverer algorithm.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Recognise the same patterns in your own incidents</li><li>Explain why the same architecture succeeded on research and failed on implementation</li><li>Use the cross-case patterns as a checklist</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="how-to-read-these-cases">How to read these cases<a class="rs-anchor" href="#how-to-read-these-cases" title="Link to this section">#</a></h2>
+<p>Eight cases. Six are documented studies or first-party accounts, labelled <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a> or <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Two are <strong>composites</strong> <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>: constructed from documented mechanics and verified arithmetic, because no public write-up of the specific incident exists. Composites are labelled in their headings, not just in a footnote.</p>
+<p>The set deliberately includes <strong>one change that made things worse</strong> (CS-5) and <strong>one win that came from removal</strong> (CS-6).</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Evidence</th>
+<th>Lesson in one line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#cs-1-the-sub-agents-that-built-different-games-p">CS-1 The sub-agents that built different games</a></td>
+<td><a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>Isolation fails when outputs must interlock</td>
+</tr>
+<tr>
+<td><a href="#cs-2-the-research-system-that-beat-one-agent-by-90-p">CS-2 The research system that beat one agent by 90%</a></td>
+<td><a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>The same architecture wins when outputs just add up, and the win is bought</td>
+</tr>
+<tr>
+<td><a href="#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s">CS-3 Swapping only the summariser moved SWE-bench 6.5 points</a></td>
+<td><a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>The boundary component is a first-class quality lever</td>
+</tr>
+<tr>
+<td><a href="#cs-4-compression-that-hurt-reliability-more-than-accuracy-s">CS-4 Compression that hurt reliability more than accuracy</a></td>
+<td><a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Damage appears in variance before the mean</td>
+</tr>
+<tr>
+<td><a href="#cs-5-dynamic-tool-loading-made-things-worse-c">CS-5 Dynamic tool loading made things worse</a></td>
+<td><a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></td>
+<td>The cache can flip the sign of a token optimisation</td>
+</tr>
+<tr>
+<td><a href="#cs-6-removal-as-the-answer-code-execution-s">CS-6 Removal as the answer: code execution</a></td>
+<td><a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Eliminating a category beats compressing it</td>
+</tr>
+<tr>
+<td><a href="#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">CS-7 Grep beat embeddings, and the harness beat both</a></td>
+<td><a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Published retrieval rankings are hypotheses for you</td>
+</tr>
+<tr>
+<td><a href="#cs-8-the-audit-that-recovered-a-third-of-the-window-c">CS-8 The audit that recovered a third of the window</a></td>
+<td><a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></td>
+<td>The first audit finds waste, not trade-offs</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="cs-1-the-sub-agents-that-built-different-games-p">CS-1: The sub-agents that built different games <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a><a class="rs-anchor" href="#cs-1-the-sub-agents-that-built-different-games-p" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> A team building a coding agent tested a parallel multi-agent design on a task with an unambiguous specification: clone Flappy Bird.</p>
+<p><strong>What was done.</strong> The task was split and assigned to parallel sub-agents, each with its own context: the textbook orchestrator-worker pattern.</p>
+<p><strong>What happened.</strong> The sub-agent briefed to build the background produced something in the style of Super Mario Bros. The one briefed to build the bird produced an asset that neither looked like a game sprite nor moved like the target. <strong>Neither sub-agent failed its brief. The combination was unusable</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>The mechanism.</strong> Actions carry implicit decisions. "Build the background" does not specify art style, palette, parallax or scale. Each sub-agent decided independently and reasonably, and independent reasonable decisions did not compose.</p>
+<p><strong>What it establishes.</strong> Isolation is not free even when each isolated context is correct. The boundary destroys the shared implicit state that makes outputs compatible.</p>
+<p><strong>What this research takes from it.</strong> Question 3 of the <a href="07-sub-agents.html#the-composability-test">composability test</a>: list the implicit decisions the sub-agent must make that are not in its brief. For "build the background" the list is long, and that is the signal not to delegate.</p>
+<h2 id="cs-2-the-research-system-that-beat-one-agent-by-90-p">CS-2: The research system that beat one agent by 90% <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a><a class="rs-anchor" href="#cs-2-the-research-system-that-beat-one-agent-by-90-p" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> A frontier lab built a feature that answers open-ended questions needing broad information gathering.</p>
+<p><strong>What was done.</strong> A lead agent plans, spawns three to five parallel sub-agents with their own context windows, synthesises their findings, and runs a separate citation pass.</p>
+<p><strong>What happened.</strong> It beat single-agent Claude Opus 4 by <strong>90.2%</strong> on the lab's internal research evaluation. It also used about <strong>15× the tokens of a chat</strong> (agents generally about 4×), and <strong>token usage alone explained about 80% of the performance variance</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>The mechanism.</strong> Research is additive. Two sub-agents finding two facts yield two facts, combined by union, with almost no implicit decisions to conflict over.</p>
+<p><strong>The honest reading.</strong> If raw spend explains 80% of the variance, the architecture is largely a way to spend more tokens productively. That is a real achievement, but it is not evidence that <em>isolation itself</em> is the active ingredient, and not evidence that the pattern transfers to coding.</p>
+<p><strong>What this research takes from it.</strong> The 15× and the 80% appear next to the 90.2% everywhere the benefit is cited, and <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a> requires topology comparisons at equal token spend.</p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Same architecture, opposite outcomes</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 200" role="img" aria-labelledby="cs-t">
+<title id="cs-t">Parallel sub-agents failed on an interlocking game build and succeeded on additive research. The difference was whether outputs compose.</title>
+<rect class="dg-box--warn" x="10" y="10" width="340" height="180" rx="10"/>
+<text class="dg-k" x="24" y="34">CS-1 · INTERLOCKING</text>
+<text class="dg-t" x="24" y="58">"Clone Flappy Bird", split</text>
+<rect class="dg-box" x="30" y="78" width="130" height="44" rx="6"/><text class="dg-s" x="95" y="105" text-anchor="middle">background: Mario style</text>
+<rect class="dg-box" x="200" y="78" width="130" height="44" rx="6"/><text class="dg-s" x="265" y="105" text-anchor="middle">bird: wrong look, motion</text>
+<text class="dg-t dg-bad" x="180" y="160" text-anchor="middle">✗ combination unusable</text>
+<rect class="dg-box--info" x="370" y="10" width="340" height="180" rx="10"/>
+<text class="dg-k" x="384" y="34">CS-2 · ADDITIVE</text>
+<text class="dg-t" x="384" y="58">Open-ended research, 3–5 workers</text>
+<rect class="dg-box" x="390" y="78" width="90" height="44" rx="6"/><text class="dg-s" x="435" y="105" text-anchor="middle">facts A</text>
+<rect class="dg-box" x="495" y="78" width="90" height="44" rx="6"/><text class="dg-s" x="540" y="105" text-anchor="middle">facts B</text>
+<rect class="dg-box" x="600" y="78" width="90" height="44" rx="6"/><text class="dg-s" x="645" y="105" text-anchor="middle">facts C</text>
+<text class="dg-t dg-info" x="540" y="152" text-anchor="middle">✓ +90.2%, combined by union</text>
+<text class="dg-s" x="540" y="172" text-anchor="middle">at ~15× the tokens</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> The work decided the outcome, not the architecture. Research adds up; implementation must fit together.</figcaption>
+</figure>
+
+<h2 id="cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s">CS-3: Swapping only the summariser moved SWE-bench 6.5 points <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a><a class="rs-anchor" href="#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> Researchers studying compaction in long-horizon agents wanted to know how much compaction quality matters relative to everything else.</p>
+<p><strong>What was done.</strong> The agent, tools, benchmark and harness were all held fixed. <strong>Only the summarising model changed.</strong></p>
+<p><strong>What happened.</strong> SWE-bench accuracy moved from <strong>49.0% to 55.5%</strong>, a 6.5-point swing from the summariser alone. Compaction-aware training then added <strong>+5.5 and +7.0 points</strong> on SWE-bench Verified across two model sizes, and <strong>+6.8 and +3.1</strong> on Terminal-Bench 2.0 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p><strong>The mechanism.</strong> The summariser decides what crosses an irreversible boundary. Everything it drops is gone, and everything it asserts is treated downstream as established. It is a decision-making component in the critical path, not compression infrastructure.</p>
+<p><strong>What it establishes.</strong> Compaction quality is worth about as much as a meaningful model upgrade. A team that has never read its compaction prompt has an unexamined six-point lever.</p>
+<p><strong>What this research takes from it.</strong> The <a href="06-compaction-and-memory.html#decision-3-the-summary-schema">compaction schema</a>, and the rule to hold the compaction prompt constant in every other experiment.</p>
+<h2 id="cs-4-compression-that-hurt-reliability-more-than-accuracy-s">CS-4: Compression that hurt reliability more than accuracy <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a><a class="rs-anchor" href="#cs-4-compression-that-hurt-reliability-more-than-accuracy-s" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> A 2026 study of context compression for long-horizon agents on AppWorld, a 147-task benchmark of stateful API use.</p>
+<p><strong>What was done.</strong> Seven strategies were compared (full context, FIFO truncation, token pruning, two prompt-based compaction schemes, guideline-based approaches, and a verifier-guided method), measuring both single-run accuracy and Pass²: solved on both of two runs.</p>
+<p><strong>What happened.</strong> No compression: <strong>85.7% accuracy, 77.4% Pass²</strong>. Verifier-guided: 77.1% / 67.3%. Prompt-based: 71.4% / 59.5%. FIFO: 63.7% / 53.0%. The gap between Pass@2 and Pass² <strong>widened as budgets tightened</strong>. Correct termination was <strong>44.6%</strong> with summary replacement versus <strong>77.2%</strong> with FIFO at 2K, and the first step after compaction carried <strong>+0.108</strong> extra blocked or error actions <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p><strong>The counterintuitive detail.</strong> FIFO, which loses the <em>most</em> information, preserved the agent's sense of state <em>better</em> than summarisation. Losing information wholesale is less damaging to "where am I?" than replacing it with a fluent narrative that reads as if the state is known.</p>
+<p><strong>What this research takes from it.</strong> k ≥ 2 and Pass² as non-negotiable, the explicit state block in the compaction schema, and the warning that token dashboards cannot see this.</p>
+<h2 id="cs-5-dynamic-tool-loading-made-things-worse-c">CS-5: Dynamic tool loading made things worse <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a><a class="rs-anchor" href="#cs-5-dynamic-tool-loading-made-things-worse-c" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> A team measured a 38K-token tool-definition prefix, 25% of their context, and set out to fix it.</p>
+<p><strong>What was done.</strong> Per-turn dynamic tool selection: infer which tools each turn needs and include only those. Definitions fell from 38K to 9K, and raw tokens per call fell about 24%.</p>
+<p><strong>What happened.</strong> <strong>The bill went up sharply.</strong> Latency got worse. Task quality did not improve.</p>
+<p><strong>The mechanism.</strong> The tool block sits about 10K tokens into the prompt. Changing it every turn invalidates the cache for everything after it. At generic prices, the static setup cost <strong>14.9</strong> units per turn and the dynamic one <strong>102.3</strong>. <strong>A 24% token cut bought a 6.9× cost increase.</strong></p>
+<p><strong>Resolution.</strong> The team reverted to a static, hand-pruned surface: every zero-call tool deleted, the rest deferred. 38K fell to about 4K, the cache hit rate was preserved, and both bills went down.</p>
+<p><strong>What it establishes.</strong> The most counterintuitive rule in this research: <strong>static pruning beats dynamic selection</strong>, because stable prefix tokens cost a tenth of churning ones.</p>
+<p><em>Composite:</em> constructed from documented cache mechanics <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> and the arithmetic in <a href="10-metrics-and-economics.html#belief-1-cutting-tokens-cuts-cost">chapter 10</a>. No public write-up of this exact incident is known.</p>
+<h2 id="cs-6-removal-as-the-answer-code-execution-s">CS-6: Removal as the answer: code execution <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a><a class="rs-anchor" href="#cs-6-removal-as-the-answer-code-execution-s" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> Agents connected to many tools were spending a huge share of context on tool definitions before doing any work.</p>
+<p><strong>What was done.</strong> Instead of optimising the definitions, they were <strong>removed as a category.</strong> The agent got a code-execution environment and a programmatic API, and writes code against it instead of choosing among schemas.</p>
+<p><strong>What happened.</strong> <strong>150,000 tokens fell to about 2,000: a 98.7% reduction</strong>, with 99%+ on definitions alone at 112 tools <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. An independent production report on a GitHub MCP server found a 98% reduction <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>The mechanism.</strong> Two effects, and the second is larger. Definitions collapse into one tool plus documentation. And results collapse, because code filters data before returning it: <code>[i.number for i in list_issues() if i.state == "open"][:5]</code> puts five integers in context instead of 400 issue objects.</p>
+<p><strong>What it establishes.</strong> The largest wins come from <strong>eliminating a category of context</strong>, not compressing it. Progressive disclosure is an order of magnitude; category elimination is two.</p>
+<h2 id="cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">CS-7: Grep beat embeddings, and the harness beat both <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a><a class="rs-anchor" href="#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> A 2026 study asked whether semantic retrieval is necessary for agentic search.</p>
+<p><strong>What was done.</strong> Grep versus vector retrieval on 116 questions derived from LongMemEval, run across <strong>four harnesses</strong> (a custom agent and three widely used CLI agents), with both inline and file-based tool results. A second experiment added unrelated history to measure distractor sensitivity.</p>
+<p><strong>What happened.</strong> Grep generally won. <strong>But overall scores depended strongly on which harness and tool-calling style was used, even on identical data</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p><strong>The mechanism.</strong> Retrieval strategy decides <em>what can be found</em>. The harness decides <em>how the agent iterates, what it sees of the results and when it stops</em>, and for multi-step search the iteration policy dominates any single query.</p>
+<p><strong>What it establishes.</strong> Lexical search is a strong baseline the field skipped past. More importantly, <strong>retrieval comparisons do not transfer between harnesses</strong>, so most published retrieval advice, including the first finding, is a hypothesis for your setup.</p>
+<h2 id="cs-8-the-audit-that-recovered-a-third-of-the-window-c">CS-8: The audit that recovered a third of the window <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a><a class="rs-anchor" href="#cs-8-the-audit-that-recovered-a-third-of-the-window-c" title="Link to this section">#</a></h2>
+<p><strong>Situation.</strong> A five-engineer team using coding agents daily, with rising costs and a feeling that quality dropped on long tasks. Nothing was measured.</p>
+<p><strong>What was done.</strong> The 30-minute audit from <a href="03-ten-methods.html#before-any-method-measure">chapter 3</a>.</p>
+<p><strong>Findings.</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Segment</th>
+<th style="text-align: right;">Tokens</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool definitions</td>
+<td style="text-align: right;">66,000</td>
+<td>61 tools across 4 servers; <strong>9 distinct tools ever called</strong> in 20 sessions</td>
+</tr>
+<tr>
+<td>Tool results</td>
+<td style="text-align: right;">58,000</td>
+<td>One <code>npm ci</code> log was 14,000 of it</td>
+</tr>
+<tr>
+<td>Instruction file</td>
+<td style="text-align: right;">6,500</td>
+<td>380 lines, 8 months of accretion, zero deletions</td>
+</tr>
+<tr>
+<td>Retrieved code</td>
+<td style="text-align: right;">22,000</td>
+<td>Four whole-file reads that should have been symbol reads</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Actions, in the order the routing table gave them:</strong></p>
+<ol>
+<li>Deleted three zero-call servers and moved the fourth to deferred definitions. <strong>66,000 → about 2,500 tokens.</strong></li>
+<li>Routed the four loudest commands through quiet flags and file redirection. <strong>Tool results down about 70%.</strong></li>
+<li>Applied the inference test to the instruction file. <strong>380 → 140 lines.</strong></li>
+<li>Left retrieval behaviour alone: the smallest win, the hardest to sustain, and last in the routing.</li>
+</ol>
+<figure class="diagram rs-chart" id="chart-case-studies-0"><p class="diagram__title">Mid-session context before and after the audit</p><div class="diagram__scroll"><svg viewBox="0 0 720 102" role="img" aria-labelledby="chart-case-studies-0-t" class="chart chart--hbar"><title id="chart-case-studies-0-t">Before: 55% of the window. After: 24%.</title><line class="ch-grid" x1="90.0" y1="4" x2="90.0" y2="80"/><text class="ch-axis" x="90.0" y="96" text-anchor="middle">0%</text><line class="ch-grid" x1="225.0" y1="4" x2="225.0" y2="80"/><text class="ch-axis" x="225.0" y="96" text-anchor="middle">25%</text><line class="ch-grid" x1="360.0" y1="4" x2="360.0" y2="80"/><text class="ch-axis" x="360.0" y="96" text-anchor="middle">50%</text><line class="ch-grid" x1="495.0" y1="4" x2="495.0" y2="80"/><text class="ch-axis" x="495.0" y="96" text-anchor="middle">75%</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="80"/><text class="ch-axis" x="630.0" y="96" text-anchor="middle">100%</text><text class="ch-label" x="80" y="29.0" text-anchor="end">Before</text><path class="ch-mark ch-muted" d="M90.0,16.0 h293.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-293.0 z" data-tip="Share of a 200K window · Before: 55%"/><text class="ch-value" x="393.0" y="29.0">55%</text><text class="ch-label" x="80" y="63.0" text-anchor="end">After</text><path class="ch-mark ch-s1" d="M90.0,50.0 h125.6 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-125.6 z" data-tip="Share of a 200K window · After: 24%"/><text class="ch-value" x="225.6" y="63.0">24%</text><line class="ch-base" x1="90" y1="4" x2="90" y2="80"/></svg></div><figcaption><span class="rs-fignum">Figure 2.</span> 110K → 48K tokens. Median session cost fell about 50% with task success unchanged, and no deleted capability was missed in 20 sessions <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">State</th><th scope="col">Share of a 200K window</th></tr></thead><tbody><tr><th scope="row">Before</th><td>55%</td></tr><tr><th scope="row">After</th><td>24%</td></tr></tbody></table></div></details></figure>
+<p><strong>The under-reported half.</strong> The cost saving was the visible result. The more important one was moving from 55% to 24% utilisation: out of the regime where the instruction file is the least attended region <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, into the one where the prefix is still read. That quality effect appears in no cost number.</p>
+<p><em>Composite:</em> assembled from the figures in <a href="02-anatomy.html#reading-a-whole-budget-a-worked-example">chapter 2</a>, <a href="08-tool-surface.html#a-worked-audit">chapter 8</a> and <a href="10-metrics-and-economics.html#worked-monthly-economics">chapter 10</a>. The individual numbers derive from <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a> and <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> sources; the incident is constructed.</p>
+<h2 id="patterns-across-the-cases">Patterns across the cases<a class="rs-anchor" href="#patterns-across-the-cases" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Cases</th>
+<th>Statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Isolation succeeds or fails on <strong>composability</strong>, not architecture</td>
+<td>CS-1, CS-2</td>
+<td>Same pattern, opposite outcomes; the work decided</td>
+</tr>
+<tr>
+<td>The <strong>boundary component</strong> is a first-class quality lever</td>
+<td>CS-3, CS-4</td>
+<td>The summariser alone was worth 6.5 points</td>
+</tr>
+<tr>
+<td>Damage shows up in <strong>variance before the mean</strong></td>
+<td>CS-4</td>
+<td>Single-run measurement cannot see it</td>
+</tr>
+<tr>
+<td><strong>Eliminating a category beats compressing it</strong></td>
+<td>CS-6, CS-8</td>
+<td>98.7% from removing definitions; 96% from deleting unused tools</td>
+</tr>
+<tr>
+<td><strong>Cache mechanics can flip the sign</strong> of an optimisation</td>
+<td>CS-5</td>
+<td>24% fewer tokens, 6.9× the cost</td>
+</tr>
+<tr>
+<td><strong>The harness confounds everything</strong></td>
+<td>CS-7</td>
+<td>Published rankings are hypotheses</td>
+</tr>
+<tr>
+<td>The first audit finds <strong>waste, not trade-offs</strong></td>
+<td>CS-8</td>
+<td>Most of the win needs no behaviour change</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The through-line</p>
+<p>Six of these eight cases turned on a decision about what to remove or where to draw a boundary. None turned on a cleverer algorithm.</p>
+</aside>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Isolation succeeds or fails on composability, not on architecture.</li><li>The boundary component, such as the summariser, is a first-class quality lever.</li><li>Cache mechanics can invert the sign of a token optimisation.</li><li>The first audit finds waste, not trade-offs.</li></ol>
+        </section>
+        
+        
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="13-antipatterns.html"><span class="rs-pn__label">← Previous · Chapter 13</span><span class="rs-pn__title">Sixteen antipatterns</span><span class="rs-pn__part">Decide and avoid</span></a><a class="rs-pn__link rs-pn__link--next" href="15-optimisation-plan.html"><span class="rs-pn__label">Next → · Chapter 15</span><span class="rs-pn__title">Your optimisation plan</span><span class="rs-pn__part">Act on it</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#how-to-read-these-cases">How to read these cases</a></li><li><a href="#cs-1-the-sub-agents-that-built-different-games-p">CS-1: The sub-agents that built different games</a></li><li><a href="#cs-2-the-research-system-that-beat-one-agent-by-90-p">CS-2: The research system that beat one agent by 90%</a></li><li><a href="#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s">CS-3: Swapping only the summariser moved SWE-bench 6.5 points</a></li><li><a href="#cs-4-compression-that-hurt-reliability-more-than-accuracy-s">CS-4: Compression that hurt reliability more than accuracy</a></li><li><a href="#cs-5-dynamic-tool-loading-made-things-worse-c">CS-5: Dynamic tool loading made things worse</a></li><li><a href="#cs-6-removal-as-the-answer-code-execution-s">CS-6: Removal as the answer: code execution</a></li><li><a href="#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">CS-7: Grep beat embeddings, and the harness beat both</a></li><li><a href="#cs-8-the-audit-that-recovered-a-third-of-the-window-c">CS-8: The audit that recovered a third of the window</a></li><li><a href="#patterns-across-the-cases">Patterns across the cases</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

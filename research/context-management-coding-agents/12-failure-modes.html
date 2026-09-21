@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Forty-four failure modes — Context Management</title>
+  <meta name="description" content="Forty-four context-management failures in eight clusters, each with its tell, detection, containment and fix, plus a symptom-to-cause index for incidents." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/12-failure-modes.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/12-failure-modes.html" />
+  <meta property="og:title" content="Forty-four failure modes — Context Management" />
+  <meta property="og:description" content="Forty-four context-management failures in eight clusters, each with its tell, detection, containment and fix, plus a symptom-to-cause index for incidents." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Forty-four failure modes — Context Management" />
+  <meta property="twitter:description" content="Forty-four context-management failures in eight clusters, each with its tell, detection, containment and fix, plus a symptom-to-cause index for incidents." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Forty-four failure modes",
+  "description": "Forty-four context-management failures in eight clusters, each with its tell, detection, containment and fix, plus a symptom-to-cause index for incidents.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/12-failure-modes.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Decide and avoid"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 12",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/12-failure-modes.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html" aria-current="page"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">Decide and avoid</li><li aria-current="page">Chapter 12</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part IV · Decide and avoid</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 12</span></p>
+          <h1 class="rs-hero__title">Forty-four failure modes</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> How does context management fail, what is the tell for each failure, and how do you contain it?</p>
+          <div class="rs-meta">
+            <span>8 min read</span><span aria-hidden="true">·</span>
+            <span>Reference</span><span aria-hidden="true">·</span>
+            <span>Step 12 of 20</span><span aria-hidden="true">·</span>
+            <span>2/4 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html" aria-current="page"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#use-this-chapter-two-ways">Use this chapter two ways</a></li><li><a class="on-this-page__link" href="#symptom-to-cause-index">Symptom-to-cause index</a></li><li><a class="on-this-page__link" href="#a-dilution-and-displacement">A: Dilution and displacement</a></li><li><a class="on-this-page__link" href="#b-staleness-and-poisoning">B: Staleness and poisoning</a></li><li><a class="on-this-page__link" href="#c-compaction">C: Compaction</a></li><li><a class="on-this-page__link" href="#d-retrieval">D: Retrieval</a></li><li><a class="on-this-page__link" href="#e-isolation">E: Isolation</a></li><li><a class="on-this-page__link" href="#f-cache-and-cost">F: Cache and cost</a></li><li><a class="on-this-page__link" href="#g-session-and-state">G: Session and state</a></li><li><a class="on-this-page__link" href="#h-measurement">H: Measurement</a></li><li><a class="on-this-page__link" href="#four-questions-that-pre-empt-most-of-this">Four questions that pre-empt most of this</a></li></ul></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Forty-four failures in eight clusters, each with a tell, a detector, a containment and a fix.</li><li>Use the symptom index during an incident; read the clusters to prevent the next one.</li><li>Four questions asked before a long task pre-empt most of the list.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Go from a symptom to its likely causes in under a minute</li><li>Contain a failure in-session and fix it permanently afterwards</li><li>Ask the four pre-emptive questions before a long task</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="use-this-chapter-two-ways">Use this chapter two ways<a class="rs-anchor" href="#use-this-chapter-two-ways" title="Link to this section">#</a></h2>
+<p><strong>During an incident</strong>, start with the <a href="#symptom-to-cause-index">symptom index</a>: find what you are seeing, then jump to the likely causes. <strong>Before a long task</strong>, read the <a href="#four-questions-that-pre-empt-most-of-this">four questions</a> at the end.</p>
+<p>Every failure below has the same four fields:</p>
+<ul>
+<li><strong>Tell</strong>: what you notice.</li>
+<li><strong>Detect</strong>: how to confirm it.</li>
+<li><strong>Contain</strong>: what to do right now, in the session.</li>
+<li><strong>Fix</strong>: what to change so it does not happen again.</li>
+</ul>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Forty-four failures in eight clusters</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 230" role="img" aria-labelledby="fm-t">
+<title id="fm-t">Eight clusters: dilution and displacement, staleness and poisoning, compaction, retrieval, isolation, cache and cost, session and state, and measurement.</title>
+<rect class="dg-box" x="10" y="10" width="170" height="96" rx="8"/><text class="dg-k" x="24" y="32">A · 7</text><text class="dg-t" x="24" y="56">Dilution and</text><text class="dg-t" x="24" y="74">displacement</text><text class="dg-s" x="24" y="94">too much, too loud</text>
+<rect class="dg-box--warn" x="190" y="10" width="170" height="96" rx="8"/><text class="dg-k" x="204" y="32">B · 6</text><text class="dg-t" x="204" y="56">Staleness and</text><text class="dg-t" x="204" y="74">poisoning</text><text class="dg-s" x="204" y="94">wrong, and trusted</text>
+<rect class="dg-box" x="370" y="10" width="170" height="96" rx="8"/><text class="dg-k" x="384" y="32">C · 7</text><text class="dg-t" x="384" y="56">Compaction</text><text class="dg-s" x="384" y="94">lost at the boundary</text>
+<rect class="dg-box--accent" x="550" y="10" width="160" height="96" rx="8"/><text class="dg-k" x="564" y="32">D · 7</text><text class="dg-t" x="564" y="56">Retrieval</text><text class="dg-s" x="564" y="94">never arrived</text>
+<rect class="dg-box" x="10" y="120" width="170" height="96" rx="8"/><text class="dg-k" x="24" y="142">E · 5</text><text class="dg-t" x="24" y="166">Isolation</text><text class="dg-s" x="24" y="204">split the wrong work</text>
+<rect class="dg-box" x="190" y="120" width="170" height="96" rx="8"/><text class="dg-k" x="204" y="142">F · 5</text><text class="dg-t" x="204" y="166">Cache and cost</text><text class="dg-s" x="204" y="204">cheaper tokens, bigger bill</text>
+<rect class="dg-box" x="370" y="120" width="170" height="96" rx="8"/><text class="dg-k" x="384" y="142">G · 6</text><text class="dg-t" x="384" y="166">Session and</text><text class="dg-t" x="384" y="184">state</text><text class="dg-s" x="384" y="204">the session outlived itself</text>
+<rect class="dg-box--info" x="550" y="120" width="160" height="96" rx="8"/><text class="dg-k" x="564" y="142">H · 1</text><text class="dg-t" x="564" y="166">Measurement</text><text class="dg-s" x="564" y="204">measured the wrong axis</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> Most real incidents combine two clusters: for example a compaction failure (C) that launders a stale fact (B). That is why the symptom index lists several causes per symptom.</figcaption>
+</figure>
+
+<h2 id="symptom-to-cause-index">Symptom-to-cause index<a class="rs-anchor" href="#symptom-to-cause-index" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>Likely causes, most likely first</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The agent ignores a rule it followed earlier</td>
+<td>F-38, F-2, F-19</td>
+</tr>
+<tr>
+<td>The agent repeats the same action</td>
+<td>F-39, F-18, F-14</td>
+</tr>
+<tr>
+<td>Confidently wrong output, clean-looking transcript</td>
+<td><strong>F-21</strong>, F-9, F-11, F-23</td>
+</tr>
+<tr>
+<td>The agent asks for something already in context</td>
+<td>F-15, F-16, F-18</td>
+</tr>
+<tr>
+<td>Costs rose after an "optimisation"</td>
+<td>F-33, F-35, F-36, F-37</td>
+</tr>
+<tr>
+<td>The agent edits the wrong file</td>
+<td>F-23, F-10, F-8</td>
+</tr>
+<tr>
+<td>The agent uses an odd tool</td>
+<td>F-1, F-24</td>
+</tr>
+<tr>
+<td>The agent cannot tell it is finished</td>
+<td><strong>F-16</strong>, F-41</td>
+</tr>
+<tr>
+<td>Quality falls over a long session</td>
+<td>F-38, F-19, F-43, F-7</td>
+</tr>
+<tr>
+<td>Parallel work produces incompatible pieces</td>
+<td><strong>F-29</strong>, F-28</td>
+</tr>
+<tr>
+<td>The bill tripled with no visible change</td>
+<td>F-37, F-33</td>
+</tr>
+<tr>
+<td>The bug turned out to be in config</td>
+<td>F-24</td>
+</tr>
+<tr>
+<td>It worked yesterday and not today</td>
+<td><strong>F-44</strong>: variance you never measured</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="a-dilution-and-displacement">A: Dilution and displacement<a class="rs-anchor" href="#a-dilution-and-displacement" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-1</td>
+<td><strong>Tool-definition bloat</strong></td>
+<td>Prefix tax over 25K; capabilities never used</td>
+<td>Count schema tokens; count calls over 20 sessions</td>
+<td>Disable the largest unused server</td>
+<td>Tool audit; budget 20 tools, 15K tokens; re-audit quarterly</td>
+</tr>
+<tr>
+<td>F-2</td>
+<td><strong>Instruction-file sprawl</strong></td>
+<td>Over 200 lines; rules ignored late in sessions</td>
+<td>Line count over time; violations per rule</td>
+<td>Move the three most-violated rules to the end</td>
+<td>Inference test; scoped files; turn violated rules into hooks or lints</td>
+</tr>
+<tr>
+<td>F-3</td>
+<td><strong>Tool-output flooding</strong></td>
+<td>One command uses over 10% of the window</td>
+<td>Rank commands by token volume</td>
+<td>Re-run with a quiet flag; do not keep the log</td>
+<td>Output shaping; redirect to a file with a digest</td>
+</tr>
+<tr>
+<td>F-4</td>
+<td><strong>Whole-file reading</strong></td>
+<td>Read-utilisation under 5%; 1,200 lines read to change 4</td>
+<td>Sample 20 reads</td>
+<td>Ask for a range or symbol</td>
+<td>Structural retrieval</td>
+</tr>
+<tr>
+<td>F-5</td>
+<td><strong>Over-broad first search</strong></td>
+<td>A grep returning 3,000+ hits, all loaded</td>
+<td>Result counts in transcripts</td>
+<td>Cap results; narrow before reading</td>
+<td>Search tools with hard caps; openers that name an identifier</td>
+</tr>
+<tr>
+<td>F-6</td>
+<td><strong>Coherent-document distraction</strong></td>
+<td>The agent cites the design doc for behaviour the code contradicts</td>
+<td>Trace wrong beliefs back to a document</td>
+<td>Remove the document; ask again</td>
+<td>Never pre-load design documents</td>
+</tr>
+<tr>
+<td>F-7</td>
+<td><strong>Retention hoarding</strong></td>
+<td>A 12K log from turn 8 still present at turn 60</td>
+<td><a class="rs-term" href="glossary.html#retention-integral" data-def="The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.">Retention integral</a></td>
+<td>Offload or compact it</td>
+<td>Offload after a short delay</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="b-staleness-and-poisoning">B: Staleness and poisoning<a class="rs-anchor" href="#b-staleness-and-poisoning" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-8</td>
+<td><strong>Stale self-read</strong></td>
+<td>The agent cites a line its own edit moved</td>
+<td>Compare the in-context copy with disk</td>
+<td>Re-read the file</td>
+<td>Re-read before re-editing; auto-refresh after edits</td>
+</tr>
+<tr>
+<td>F-9</td>
+<td><strong>Hallucination laundered by compaction</strong></td>
+<td>A fact in the summary that never appeared in a tool result</td>
+<td>Find each summary fact's first appearance</td>
+<td><strong>Reset to before the poison.</strong> Do not argue</td>
+<td>A "verified how" field in the schema; ground claims in tool output</td>
+</tr>
+<tr>
+<td>F-10</td>
+<td><strong>Index staleness</strong></td>
+<td>Semantic search returns pre-refactor code, no error</td>
+<td>Search for a symbol you just renamed</td>
+<td>Fall back to live search</td>
+<td>Prefer live retrieval; rebuild triggers</td>
+</tr>
+<tr>
+<td>F-11</td>
+<td><strong>Stale memory entry</strong></td>
+<td>The agent asserts a fact that was true six months ago</td>
+<td>Sample 20 entries against the repository</td>
+<td>Delete the entry</td>
+<td>Memories only about slow-changing things; prefer ADRs</td>
+</tr>
+<tr>
+<td>F-12</td>
+<td><strong>Stale instruction rule</strong></td>
+<td>A rule describing a refactor that already happened</td>
+<td>Read the file against the code quarterly</td>
+<td>Delete the line</td>
+<td>Review the instruction file in PRs that change what it describes</td>
+</tr>
+<tr>
+<td>F-13</td>
+<td><strong>Prompt injection via retrieved content</strong></td>
+<td>The agent follows an instruction found in a file, log or README</td>
+<td>Tool calls not traceable to a user turn</td>
+<td>Stop the session; audit what was retrieved</td>
+<td>Treat all retrieved content as data; never give tool output authority</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">Poisoning cannot be argued away</p>
+<p>F-9 is the most dangerous failure here. Correcting it inline appends a competing claim and leaves the original in place, and a later compaction may keep the wrong one. See <a class="rs-term" href="glossary.html#poisoning" data-def="A failure mode where a false fact enters the context and is afterwards treated as established. It survives compaction and cannot be removed by appending a correction.">poisoning</a> and <a class="rs-term" href="glossary.html#laundering" data-def="Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.">laundering</a>.</p>
+</aside>
+<h2 id="c-compaction">C: Compaction<a class="rs-anchor" href="#c-compaction" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-14</td>
+<td><strong>Compaction mid-sub-goal</strong></td>
+<td>The agent restarts partly finished work</td>
+<td>Compare compaction times with sub-goal boundaries</td>
+<td>Restate the current sub-goal</td>
+<td>Semantic triggers with suppression rules</td>
+</tr>
+<tr>
+<td>F-15</td>
+<td><strong>Detail loss</strong></td>
+<td>The agent knows "there was an error" but not which</td>
+<td>Exact-string survival rate</td>
+<td>Re-run the command</td>
+<td>A verbatim exact-strings section</td>
+</tr>
+<tr>
+<td>F-16</td>
+<td><strong>Lost sense of state</strong></td>
+<td>The agent cannot tell whether it is done</td>
+<td>Termination recognition: 44.6% versus 77.2% in one study <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Ask "what is done and what remains?"</td>
+<td>A done / in-progress / not-started block; re-read the plan file</td>
+</tr>
+<tr>
+<td>F-17</td>
+<td><strong>Post-compaction error spike</strong></td>
+<td>The turn right after compaction fails more (+0.108 errors <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>)</td>
+<td>Error rate in the 3 turns after each boundary</td>
+<td>Insert a deliberate orientation step</td>
+<td>Make the plan-file re-read the first action</td>
+</tr>
+<tr>
+<td>F-18</td>
+<td><strong>Regressive exploration</strong></td>
+<td>Re-fetching and replaying right after a compaction</td>
+<td>Re-fetch rate in the next 10 turns</td>
+<td>Point at the offloaded artifact</td>
+<td>Offload before compacting</td>
+</tr>
+<tr>
+<td>F-19</td>
+<td><strong>Compaction cascade</strong></td>
+<td>Three or more compactions; a summary of summaries</td>
+<td>Compactions per session</td>
+<td>Reset now</td>
+<td>Cap at one; session discipline</td>
+</tr>
+<tr>
+<td>F-20</td>
+<td><strong>Nondeterministic retention</strong></td>
+<td>The same transcript compacted twice keeps different facts <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Run the compaction twice and diff</td>
+<td>Nothing in-session</td>
+<td>A strict schema; addressable stubs for observations</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d-retrieval">D: Retrieval<a class="rs-anchor" href="#d-retrieval" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-21</td>
+<td><strong><a class="rs-term" href="glossary.html#starvation" data-def="The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.">Starvation</a></strong></td>
+<td>Confidently wrong output; clean transcript; no error</td>
+<td><strong><a class="rs-term" href="glossary.html#read-coverage" data-def="Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.">Read-coverage</a> audit</strong>: was the decisive file ever opened?</td>
+<td>Name the file and re-run</td>
+<td>Better retrieval <em>quality</em>, not more volume</td>
+</tr>
+<tr>
+<td>F-22</td>
+<td><strong><a class="rs-term" href="glossary.html#fragment-blindness" data-def="Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.">Fragment blindness</a></strong></td>
+<td>Reasoning as if code always runs when it sits inside a condition</td>
+<td>Check grep context settings</td>
+<td>Re-read the enclosing function</td>
+<td>At least <code>-C 8</code>; prefer symbol reads</td>
+</tr>
+<tr>
+<td>F-23</td>
+<td><strong>Near-duplicate confusion</strong></td>
+<td>The agent edits <code>UserServiceV2</code> when <code>UserService</code> was live</td>
+<td>Grep for near-duplicate names</td>
+<td>Point at the right one</td>
+<td>Structural retrieval; better, <strong>delete the duplicate</strong></td>
+</tr>
+<tr>
+<td>F-24</td>
+<td><strong>Config blindness</strong></td>
+<td>The agent exhausts the code and never checks YAML, env vars or flags</td>
+<td>Was the cause in a non-code file never searched?</td>
+<td>Search config explicitly</td>
+<td>Keep lexical search; include config globs by default</td>
+</tr>
+<tr>
+<td>F-25</td>
+<td><strong>Silent zero-result</strong></td>
+<td>Five irrelevant chunks returned; the agent proceeds as if it found something</td>
+<td>Relevance-sample 20 queries</td>
+<td>Switch to grep, which fails loudly</td>
+<td>Score thresholds with an explicit "no confident match"</td>
+</tr>
+<tr>
+<td>F-26</td>
+<td><strong>Generated-code pollution</strong></td>
+<td>Hits in <code>node_modules/</code>, <code>dist/</code>, <code>__generated__/</code></td>
+<td>Path distribution of search hits</td>
+<td>Re-run with exclusions</td>
+<td>Ignore files; exclusion defaults</td>
+</tr>
+<tr>
+<td>F-27</td>
+<td><strong>Searching without narrowing</strong></td>
+<td>Search turns over 60% of the session, no edits</td>
+<td>Search-to-edit turn ratio</td>
+<td>State the hypothesis and the file to check</td>
+<td>Better openers; expand along the reference graph</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e-isolation">E: Isolation<a class="rs-anchor" href="#e-isolation" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-28</td>
+<td><strong><a class="rs-term" href="glossary.html#contract-loss" data-def="A sub-agent knew something relevant but did not report it because its output contract did not ask.">Contract loss</a></strong></td>
+<td>The parent re-derives something the sub-agent knew</td>
+<td>Redo rate after delegations</td>
+<td>Read the sub-agent's saved transcript</td>
+<td>A <code>notable_outside_scope</code> field; save transcripts</td>
+</tr>
+<tr>
+<td>F-29</td>
+<td><strong>Conflicting implicit decisions</strong></td>
+<td>Outputs individually coherent, mutually incompatible <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>Conflict rate across parallel delegations</td>
+<td>Reconcile by hand (expensive)</td>
+<td>The composability test; fix decisions in the brief</td>
+</tr>
+<tr>
+<td>F-30</td>
+<td><strong>Prefix tax multiplication</strong></td>
+<td>Total spend rises sharply with no reliability gain</td>
+<td>Total-token multiplier versus one agent</td>
+<td>Delegate coarser units</td>
+<td>Linear thread with disposable scouts</td>
+</tr>
+<tr>
+<td>F-31</td>
+<td><strong>Verbose sub-agent results</strong></td>
+<td>A transcript comes back instead of a result</td>
+<td>Parent growth per delegation</td>
+<td>Ask for the summary of the summary</td>
+<td>Strict output schema with a token cap</td>
+</tr>
+<tr>
+<td>F-32</td>
+<td><strong>Unverifiable delegation</strong></td>
+<td>Checking the output costs as much as producing it</td>
+<td>Time verifying versus doing it directly</td>
+<td>Stop delegating this kind of work</td>
+<td>Delegate only what is cheap to verify</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="f-cache-and-cost">F: Cache and cost<a class="rs-anchor" href="#f-cache-and-cost" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-33</td>
+<td><strong>Cache thrash from a dynamic prefix</strong></td>
+<td>Hit rate under 30%; cost per turn rising faster than tokens</td>
+<td>Cache hit rate per session</td>
+<td>Freeze the tool set and instruction file</td>
+<td>Prefix stability; static, hand-pruned tools</td>
+</tr>
+<tr>
+<td>F-34</td>
+<td><strong>Timestamp in the prefix</strong></td>
+<td>Near-zero hit rate despite a "stable" configuration</td>
+<td>Diff the first 2,000 tokens of two requests</td>
+<td>Remove the injected variable</td>
+<td>No timestamps, session IDs or counters in the prefix</td>
+</tr>
+<tr>
+<td>F-35</td>
+<td><strong>Compaction costing more than it saves</strong></td>
+<td>Cost rises after enabling compaction</td>
+<td>Cache-adjusted cost per turn, before and after</td>
+<td>Raise the threshold</td>
+<td>Compact less often; prefer resets</td>
+</tr>
+<tr>
+<td>F-36</td>
+<td><strong>Optimising raw tokens</strong></td>
+<td>A "20% token saving" that raised the bill</td>
+<td>Separate cached from uncached input</td>
+<td>Revert</td>
+<td>Report <a class="rs-term" href="glossary.html#cache-adjusted-cost" data-def="Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.">cache-adjusted cost</a></td>
+</tr>
+<tr>
+<td>F-37</td>
+<td><strong>Sub-agent cost blindness</strong></td>
+<td>The parent context looks great; the bill tripled</td>
+<td>Total spend across all agents</td>
+<td>Cap delegations per session</td>
+<td>Track the total-token multiplier</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="g-session-and-state">G: Session and state<a class="rs-anchor" href="#g-session-and-state" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-38</td>
+<td><strong><a class="rs-term" href="glossary.html#position-decay" data-def="Rules at the start of the window losing effect as a session lengthens, because past about 50% full the early tokens become the least attended.">Position decay</a> of rules</strong></td>
+<td>Rules followed early, ignored after two hours</td>
+<td>Violation rate by turn depth</td>
+<td>Restate the rule in the current turn</td>
+<td>Session caps; shorter instruction files; constraints next to the action</td>
+</tr>
+<tr>
+<td>F-39</td>
+<td><strong>Distraction loop</strong></td>
+<td>Same tool, same arguments, three or more times</td>
+<td>A <a class="rs-term" href="glossary.html#loop-detector" data-def="A check that flags the same tool called with the same arguments three or more times with no new information in between.">loop detector</a></td>
+<td>Reset or redirect firmly; rephrasing does not work</td>
+<td>Reset triggers; a ruled-out list</td>
+</tr>
+<tr>
+<td>F-40</td>
+<td><strong>Requirement clash</strong></td>
+<td>Output satisfies a requirement withdrawn 20 turns ago</td>
+<td>Count requirement reversals</td>
+<td>Restate the <strong>full</strong> current requirement</td>
+<td>A living plan document as the single source of truth</td>
+</tr>
+<tr>
+<td>F-41</td>
+<td><strong>Plan-file drift</strong></td>
+<td>The plan says step 3; the agent is on step 6</td>
+<td>Compare the plan with recent actions</td>
+<td>Rewrite the plan now</td>
+<td>Update at state changes; a "last updated at turn N" line</td>
+</tr>
+<tr>
+<td>F-42</td>
+<td><strong>Handoff too thin</strong></td>
+<td>The new session spends 20 turns re-establishing context</td>
+<td>Turns to first productive edit after a reset</td>
+<td>Paste in more detail</td>
+<td>A handoff with <code>file:line</code> pointers and verification commands</td>
+</tr>
+<tr>
+<td>F-43</td>
+<td><strong>Sunk-cost session</strong></td>
+<td>Hours into a degrading session, still pushing</td>
+<td>Quality against elapsed time</td>
+<td>Reset</td>
+<td>Mechanical caps: one compaction, or two hours</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="h-measurement">H: Measurement<a class="rs-anchor" href="#h-measurement" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Failure</th>
+<th>Tell</th>
+<th>Detect</th>
+<th>Contain</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F-44</td>
+<td><strong>Measuring the wrong axis</strong></td>
+<td>"Compaction is basically free" from single runs, while users say "it worked yesterday"</td>
+<td>Compute Pass² alongside Pass@2; a widening gap is the signal <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Nothing at runtime: it is a measurement defect</td>
+<td>k ≥ 2, always; track <a class="rs-term" href="glossary.html#passk" data-def="Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).">Pass²</a> ÷ Pass@2</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="four-questions-that-pre-empt-most-of-this">Four questions that pre-empt most of this<a class="rs-anchor" href="#four-questions-that-pre-empt-most-of-this" title="Link to this section">#</a></h2>
+<p>Ask them before any long agent task.</p>
+<ol>
+<li><strong>What is my prefix tax, and how much of it is dead?</strong> (F-1, F-2, F-33)</li>
+<li><strong>What is the largest thing that will enter context, and where will it go afterwards?</strong> (F-3, F-7, F-18)</li>
+<li><strong>If this session is compacted or reset, what must survive, and where is it written down?</strong> (F-14 to F-19, F-42)</li>
+<li><strong>If this fails, will I be able to tell whether the agent was starved or diluted?</strong> (F-21, F-44)</li>
+</ol>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The question teams never ask</p>
+<p>Question 4 decides whether the next six months of context work is directed or random. The <a href="a-templates.html#7-context-postmortem">postmortem template</a> answers it in 15 minutes.</p>
+</aside>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Starvation is the failure most likely to survive review: the trajectory looks clean.</li><li>When a fact is poisoned, reset to before the poison; do not argue with it.</li><li>Cost rising after an "optimisation" usually means the cache broke.</li><li>"It worked yesterday" is a variance signal you never measured.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#retention-integral"><strong>Retention integral</strong></a> — The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.</li><li><a href="glossary.html#poisoning"><strong>Poisoning</strong></a> — A failure mode where a false fact enters the context and is afterwards treated as established. It survives compaction and cannot be removed by appending a correction.</li><li><a href="glossary.html#laundering"><strong>Laundering</strong></a> — Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.</li><li><a href="glossary.html#starvation"><strong>Starvation</strong></a> — The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li><li><a href="glossary.html#fragment-blindness"><strong>Fragment blindness</strong></a> — Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.</li><li><a href="glossary.html#contract-loss"><strong>Contract loss</strong></a> — A sub-agent knew something relevant but did not report it because its output contract did not ask.</li><li><a href="glossary.html#cache-adjusted-cost"><strong>Cache-adjusted cost</strong></a> — Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.</li><li><a href="glossary.html#position-decay"><strong>Position decay</strong></a> — Rules at the start of the window losing effect as a session lengthens, because past about 50% full the early tokens become the least attended.</li><li><a href="glossary.html#loop-detector"><strong>Loop detector</strong></a> — A check that flags the same tool called with the same arguments three or more times with no new information in between.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="11-hard-calls.html"><span class="rs-pn__label">← Previous · Chapter 11</span><span class="rs-pn__title">Twenty-five hard calls</span><span class="rs-pn__part">Decide and avoid</span></a><a class="rs-pn__link rs-pn__link--next" href="13-antipatterns.html"><span class="rs-pn__label">Next → · Chapter 13</span><span class="rs-pn__title">Sixteen antipatterns</span><span class="rs-pn__part">Decide and avoid</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#use-this-chapter-two-ways">Use this chapter two ways</a></li><li><a href="#symptom-to-cause-index">Symptom-to-cause index</a></li><li><a href="#a-dilution-and-displacement">A: Dilution and displacement</a></li><li><a href="#b-staleness-and-poisoning">B: Staleness and poisoning</a></li><li><a href="#c-compaction">C: Compaction</a></li><li><a href="#d-retrieval">D: Retrieval</a></li><li><a href="#e-isolation">E: Isolation</a></li><li><a href="#f-cache-and-cost">F: Cache and cost</a></li><li><a href="#g-session-and-state">G: Session and state</a></li><li><a href="#h-measurement">H: Measurement</a></li><li><a href="#four-questions-that-pre-empt-most-of-this">Four questions that pre-empt most of this</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The ten methods experts actually use — Context Management</title>
+  <meta name="description" content="Ten context-management methods for coding agents, each with its mechanism, cost, what it loses, how to detect trouble, and a test you can run today." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/03-ten-methods.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/03-ten-methods.html" />
+  <meta property="og:title" content="The ten methods experts actually use — Context Management" />
+  <meta property="og:description" content="Ten context-management methods for coding agents, each with its mechanism, cost, what it loses, how to detect trouble, and a test you can run today." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="The ten methods experts actually use — Context Management" />
+  <meta property="twitter:description" content="Ten context-management methods for coding agents, each with its mechanism, cost, what it loses, how to detect trouble, and a test you can run today." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "The ten methods experts actually use",
+  "description": "Ten context-management methods for coding agents, each with its mechanism, cost, what it loses, how to detect trouble, and a test you can run today.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/03-ten-methods.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "The methods"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 3",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/03-ten-methods.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html" aria-current="page"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">The methods</li><li aria-current="page">Chapter 3</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part II · The methods</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 3</span></p>
+          <h1 class="rs-hero__title">The ten methods experts actually use</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> Which context-management methods survive scrutiny, why does each work, and what does each cost?</p>
+          <div class="rs-meta">
+            <span>23 min read</span><span aria-hidden="true">·</span>
+            <span>Core</span><span aria-hidden="true">·</span>
+            <span>Step 3 of 20</span><span aria-hidden="true">·</span>
+            <span>1/6 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html" aria-current="page"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#how-the-ten-were-chosen">How the ten were chosen</a></li><li><a class="on-this-page__link" href="#before-any-method-measure">Before any method: measure</a></li><li><a class="on-this-page__link" href="#the-ten-on-one-page">The ten on one page</a></li><li><a class="on-this-page__link" href="#m-1-prefix-stability">M-1: Prefix stability</a></li><li><a class="on-this-page__link" href="#m-2-tool-surface-minimisation">M-2: Tool surface minimisation</a></li><li><a class="on-this-page__link" href="#m-3-just-in-time-retrieval">M-3: Just-in-time retrieval</a></li><li><a class="on-this-page__link" href="#m-4-structural-retrieval">M-4: Structural retrieval</a></li><li><a class="on-this-page__link" href="#m-5-output-shaping">M-5: Output shaping</a></li><li><a class="on-this-page__link" href="#m-6-reversible-offload">M-6: Reversible offload</a></li><li><a class="on-this-page__link" href="#m-7-externalised-state-the-living-plan">M-7: Externalised state, the living plan</a></li><li><a class="on-this-page__link" href="#m-8-semantic-boundary-compaction">M-8: Semantic-boundary compaction</a></li><li><a class="on-this-page__link" href="#m-9-sub-agent-isolation-with-a-contract">M-9: Sub-agent isolation with a contract</a></li><li><a class="on-this-page__link" href="#m-10-session-lifecycle">M-10: Session lifecycle</a></li><li><a class="on-this-page__link" href="#what-was-benched-and-why">What was benched, and why</a></li></ul></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Only ten methods passed four tests: a mechanism, evidence, independence from the others, and a test you can run today.</li><li>Each method loses something. The loss mode matters as much as the gain.</li><li>The biggest wins are unglamorous: stable prefixes, fewer tools, and quieter tool output.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Describe each of the ten methods in one sentence and name the force it acts on</li><li>State what each method costs and what it can lose</li><li>Run the decision test for any method on your own workload</li><li>Explain why popular advice such as bigger windows or default multi-agent was benched</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="how-the-ten-were-chosen">How the ten were chosen<a class="rs-anchor" href="#how-the-ten-were-chosen" title="Link to this section">#</a></h2>
+<p>Most "context engineering best practices" are restated blog posts. To make this list, a method had to pass <strong>four tests</strong>. Candidates that failed any one were benched, and the <a href="#what-was-benched-and-why">benched list</a> is part of the result.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Question</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T1 Mechanism</strong></td>
+<td>Is there a stated reason, in terms of attention, position, cache or information loss, why it changes agent behaviour?</td>
+<td>"It works for me" is not a mechanism</td>
+</tr>
+<tr>
+<td><strong>T2 Evidence</strong></td>
+<td>Is there at least one measured result: a paper, a controlled comparison, or a credible account with numbers?</td>
+<td>Testimonials alone are benched</td>
+</tr>
+<tr>
+<td><strong>T3 Independence</strong></td>
+<td>Is it more than a special case of a method already on the list?</td>
+<td>Two variants of one idea count once</td>
+</tr>
+<tr>
+<td><strong>T4 Decidability</strong></td>
+<td>Can a reader run a test <em>today</em>, on their own workload, to decide whether to use it?</td>
+<td>Methods adopted on faith cannot be removed later</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every method below uses the same structure: what to do, why it works, what it costs, what it can lose, how to spot trouble, a worked example, and the decision test.</p>
+<h2 id="before-any-method-measure">Before any method: measure<a class="rs-anchor" href="#before-any-method-measure" title="Link to this section">#</a></h2>
+<p>Measure your distribution first. In most first audits, <strong>the segment the team was optimising was not the large one.</strong> Teams hand-tune their instruction file, 4% of the window, while 25% goes to definitions for tools they never call.</p>
+<p>The minimum measurement takes about an hour:</p>
+<ol>
+<li>Fresh session, send <code>.</code>, record the input tokens. That is your <a class="rs-term" href="glossary.html#prefix-tax" data-def="The tokens in segments 1–4, paid on every call before any work. Measured by sending a one-token message in a fresh session.">prefix tax</a>.</li>
+<li>Dump your tool schemas and count their tokens.</li>
+<li>Take your three longest recent sessions and bucket their tokens by segment, using the <a href="a-templates.html#1-context-budget-audit">budget audit template</a>.</li>
+<li>List every tool defined and every tool actually called in those sessions. The difference is free money.</li>
+</ol>
+<p>You are looking for one thing: <strong>the largest segment you control.</strong> Choose methods against that answer. A team whose largest segment is tool definitions should read M-2 and stop. Reading all ten and adopting all ten is itself an <a href="13-antipatterns.html#ap-3-full-stack-adoption">antipattern</a>.</p>
+<h2 id="the-ten-on-one-page">The ten on one page<a class="rs-anchor" href="#the-ten-on-one-page" title="Link to this section">#</a></h2>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Where each method acts, in the order it acts</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 380" role="img" aria-labelledby="m0-t">
+<title id="m0-t">The ten methods arranged from prevention before context exists, through prefix, selection, state, compression and topology, to the session lifecycle.</title>
+<rect class="dg-box--accent" x="10" y="10" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="37">PREVENTION</text>
+<text class="dg-t" x="160" y="37">M-5 Output shaping</text>
+<text class="dg-s" x="700" y="37" text-anchor="end">before context exists</text>
+<rect class="dg-box" x="10" y="62" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="89">PREFIX</text>
+<text class="dg-t" x="160" y="89">M-2 Tool minimisation · M-1 Prefix stability</text>
+<text class="dg-s" x="700" y="89" text-anchor="end">per session, static</text>
+<rect class="dg-box" x="10" y="114" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="141">SELECTION</text>
+<text class="dg-t" x="160" y="141">M-4 Structural retrieval · M-3 Just-in-time</text>
+<text class="dg-s" x="700" y="141" text-anchor="end">what unit, and when</text>
+<rect class="dg-box--info" x="10" y="166" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="193">STATE</text>
+<text class="dg-t" x="160" y="193">M-7 Living plan · M-6 Reversible offload</text>
+<text class="dg-s" x="700" y="193" text-anchor="end">survives every boundary</text>
+<rect class="dg-box" x="10" y="218" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="245">COMPRESSION</text>
+<text class="dg-t" x="160" y="245">M-8 Semantic-boundary compaction</text>
+<text class="dg-s" x="700" y="245" text-anchor="end">only after offload</text>
+<rect class="dg-box" x="10" y="270" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="297">TOPOLOGY</text>
+<text class="dg-t" x="160" y="297">M-9 Sub-agent isolation</text>
+<text class="dg-s" x="700" y="297" text-anchor="end">only for composable work</text>
+<rect class="dg-box--muted" x="10" y="322" width="700" height="44" rx="8"/>
+<text class="dg-k" x="24" y="349">LIFECYCLE</text>
+<text class="dg-t" x="160" y="349">M-10 Session discipline</text>
+<text class="dg-s" x="700" y="349" text-anchor="end">the outer loop</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> The methods layer rather than compete. Three orderings are mandatory: offload (M-6) before compaction (M-8), externalised state (M-7) before resets (M-10), and every method checked against the cache (M-1).</figcaption>
+</figure>
+
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th></th>
+<th>Method</th>
+<th>Core move</th>
+<th>Acts on</th>
+<th>Main loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M-1</td>
+<td>Prefix stability</td>
+<td>Keep the start of the prompt byte-identical; never edit it mid-session</td>
+<td>Cache</td>
+<td>Freshness</td>
+</tr>
+<tr>
+<td>M-2</td>
+<td>Tool surface minimisation</td>
+<td>Delete unused tools; load short descriptions, fetch schemas on demand</td>
+<td>Dilution, confusion</td>
+<td>A rarely used tool</td>
+</tr>
+<tr>
+<td>M-3</td>
+<td>Just-in-time retrieval</td>
+<td>Carry pointers; fetch content at the moment of need</td>
+<td>Dilution</td>
+<td>Starvation</td>
+</tr>
+<tr>
+<td>M-4</td>
+<td>Structural retrieval</td>
+<td>Follow the reference graph the compiler already knows</td>
+<td>Dilution</td>
+<td>Config blind spots</td>
+</tr>
+<tr>
+<td>M-5</td>
+<td>Output shaping</td>
+<td>The cheapest token is the one never generated</td>
+<td>Dilution</td>
+<td>Hiding a line you needed</td>
+</tr>
+<tr>
+<td>M-6</td>
+<td>Reversible offload</td>
+<td>Move it out, leave a self-describing stub</td>
+<td>Information loss</td>
+<td>Pointers never followed</td>
+</tr>
+<tr>
+<td>M-7</td>
+<td>Externalised state</td>
+<td>A short plan file with a <strong>ruled-out</strong> section</td>
+<td>Clash, distraction</td>
+<td>Drift</td>
+</tr>
+<tr>
+<td>M-8</td>
+<td>Semantic-boundary compaction</td>
+<td>Compact when a sub-goal closes, never on a timer or mid-debug</td>
+<td>Information loss</td>
+<td>Anything not in the schema</td>
+</tr>
+<tr>
+<td>M-9</td>
+<td>Sub-agent isolation</td>
+<td>Delegate only composable work, only with a written contract</td>
+<td>Dilution</td>
+<td>Contract loss; total spend</td>
+</tr>
+<tr>
+<td>M-10</td>
+<td>Session lifecycle</td>
+<td>Scope sessions, hand off deliberately, never compact twice</td>
+<td>Position, poisoning</td>
+<td>Tacit understanding</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="m-1-prefix-stability">M-1: Prefix stability<a class="rs-anchor" href="#m-1-prefix-stability" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Put everything stable at the front of the prompt, in a byte-identical order, on every call. Never edit it mid-session.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Split context into a <em>stable prefix</em> (system prompt, tool definitions, instruction files, skill descriptions) and a <em>growing body</em> (retrieval, tool results, messages).</li>
+<li>Make the prefix deterministic: fixed tool order, no timestamps, no session IDs, no "current date" at the top, no dynamically assembled rules.</li>
+<li>Make context changes <strong>append-only</strong> wherever possible.</li>
+<li>Batch all prefix edits (instruction files, tool configuration) to session boundaries.</li>
+<li>Track <a class="rs-term" href="glossary.html#prefix-caching" data-def="Reusing the computed state of an unchanged prompt prefix. Prefix-exact: valid up to the first changed byte.">cache</a> hit rate, and treat a drop like a production incident.</li>
+</ol>
+<p><strong>Why it works.</strong> The cache reuses the computed state of an unchanged prefix, but only up to the first changed byte. A stable prefix turns the largest, most repeated part of your prompt from a per-call cost into a one-time cost. Reported: <strong>85.2% hit rate with about 46,059 tokens reused per request</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. At 90%, time to first token typically drops from seconds to under 200 ms and compute cost per request falls 80–90% <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p>The less obvious half: this <strong>inverts the cost ranking of context operations</strong>. Deleting tokens <em>from the prefix</em> costs money, because it invalidates everything after it for the rest of the session.</p>
+<p><strong>What it costs.</strong> Almost no tokens, but real discipline. It rules out several convenient patterns: dynamic tool selection, per-turn memory rewriting, injected timestamps. That is why it is usually broken by accident.</p>
+<p><strong>What it can lose.</strong> Freshness. A stable prefix is stale by construction. Put volatile facts in the <em>body</em> (a user turn or tool result) instead. Recency gives them more weight there anyway.</p>
+<p><strong>Trouble signs.</strong> Hit rate under about 50% on multi-turn sessions. Cost per turn rising faster than token count. Latency that never improves as a conversation "warms up".</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: the dynamic tool trap <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p>A team adds "dynamic tool loading": only the tools relevant to each turn are included, cutting definitions from 38K to 9K tokens. Raw tokens per call fall about 24%. But the tool block sits about 10K tokens into the prompt and now changes every turn, so everything after it misses the cache. At generic prices (cached read 0.10, new-token write 1.25, per 1K tokens):</p>
+<ul>
+<li><strong>Static:</strong> 120K context, 117.5K cached, 2.5K new: <code>117.5 × 0.10 + 2.5 × 1.25 = 14.9</code> units per turn.</li>
+<li><strong>Dynamic:</strong> 91K context, only the first 10K reusable: <code>10 × 0.10 + 81 × 1.25 = 102.3</code> units per turn.</li>
+</ul>
+<p><strong>A 6.9× cost increase from a 24% token cut.</strong> The team reverts to a static, hand-pruned 14-tool surface, and both bills go down.</p>
+</aside>
+<figure class="diagram rs-chart" id="chart-ten-methods-0"><p class="diagram__title">Cost per turn: fewer tokens, far higher bill</p><div class="diagram__scroll"><svg viewBox="0 0 720 102" role="img" aria-labelledby="chart-ten-methods-0-t" class="chart chart--hbar"><title id="chart-ten-methods-0-t">Static: 14.9 units per turn. Dynamic: 102.3 units per turn.</title><line class="ch-grid" x1="250.0" y1="4" x2="250.0" y2="80"/><text class="ch-axis" x="250.0" y="96" text-anchor="middle">0</text><line class="ch-grid" x1="345.0" y1="4" x2="345.0" y2="80"/><text class="ch-axis" x="345.0" y="96" text-anchor="middle">30</text><line class="ch-grid" x1="440.0" y1="4" x2="440.0" y2="80"/><text class="ch-axis" x="440.0" y="96" text-anchor="middle">60</text><line class="ch-grid" x1="535.0" y1="4" x2="535.0" y2="80"/><text class="ch-axis" x="535.0" y="96" text-anchor="middle">90</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="80"/><text class="ch-axis" x="630.0" y="96" text-anchor="middle">120</text><text class="ch-label" x="240" y="29.0" text-anchor="end">Static 38K tool block (120K context)</text><path class="ch-mark ch-muted" d="M250.0,16.0 h43.2 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-43.2 z" data-tip="Relative cost per turn · Static 38K tool block (120K context): 14.9"/><text class="ch-value" x="303.2" y="29.0">14.9</text><text class="ch-label" x="240" y="63.0" text-anchor="end">Dynamic 9K tool block (91K context)</text><path class="ch-mark ch-s1" d="M250.0,50.0 h319.9 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-319.9 z" data-tip="Relative cost per turn · Dynamic 9K tool block (91K context): 102.3"/><text class="ch-value" x="580.0" y="63.0">102.3</text><line class="ch-base" x1="250" y1="4" x2="250" y2="80"/></svg></div><figcaption><span class="rs-fignum">Figure 2.</span> Static pruning beats dynamic selection, mostly for cache reasons. The dynamic version carries 24% fewer tokens and costs 6.9× more per turn <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Configuration</th><th scope="col">Relative cost per turn</th></tr></thead><tbody><tr><th scope="row">Static 38K tool block (120K context)</th><td>14.9</td></tr><tr><th scope="row">Dynamic 9K tool block (91K context)</th><td>102.3</td></tr></tbody></table></div></details></figure>
+<aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">Decision test</p>
+<p>Run one representative session and record the cache hit rate. If it is below 60%, M-1 is your highest-value method and everything else can wait.</p>
+</aside>
+<h2 id="m-2-tool-surface-minimisation">M-2: Tool surface minimisation<a class="rs-anchor" href="#m-2-tool-surface-minimisation" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Keep as few tool definitions in context as the task allows, and fetch full definitions on demand instead of loading them all upfront.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>List every tool in scope and count its schema tokens.</li>
+<li>Count how often each tool was called in your last 20 sessions.</li>
+<li>Delete every tool with zero calls. Expect to remove 50–70%.</li>
+<li>For what remains, prefer, in order: <strong>built-in tools</strong> over MCP equivalents (the shell already has <code>grep</code>, <code>find</code>, <code>curl</code>); <strong>one general tool</strong> over five narrow ones; <strong>deferred definitions</strong> (short descriptions upfront, schemas on demand); and <strong>code execution</strong> against an API instead of tool schemas at all.</li>
+<li>Scope tools per sub-agent or per task type where the harness allows.</li>
+<li>Set a hard budget, for example 20 active tools and 15K definition tokens, and enforce it in review.</li>
+</ol>
+<p><strong>Why it works.</strong> Tools hurt through two separate channels, and mixing them up leads to the wrong fix.</p>
+<ul>
+<li><strong>Displacement.</strong> Definition tokens are prefix tokens and crowd out work. One popular MCP server measures about <strong>42,000 tokens</strong> of definitions <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
+<li><strong>Selection confusion.</strong> More candidates means worse choices, independent of tokens. Accuracy fell <strong>from 43% to under 14%</strong> as tool count grew <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; <strong>19 of 20 at 20 tools became complete failure at 107</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
+</ul>
+<p><a class="rs-term" href="glossary.html#progressive-disclosure" data-def="Loading short descriptions first and full content only on demand. Applied to tool schemas, skills and file reads.">Progressive disclosure</a> fixes displacement: about <strong>25,000 tokens of definitions became about 2,500 tokens of descriptions</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Code execution fixes both: the agent writes code against a documented API instead of choosing among schemas. Reported: <strong>150,000 → about 2,000 tokens, a 98.7% reduction</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p><strong>What it costs.</strong> A one-time effort, then governance. Tool surfaces grow back, because adding an MCP server is one click and its cost is invisible. Without a recurring audit this regresses within a quarter <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>What it can lose.</strong> A tool the agent needed rarely but decisively. The zero-call rule over 20 sessions guards against this, and removal is reversible in seconds. Over-deferral also adds a round trip before each tool's first use.</p>
+<p><strong>Trouble signs.</strong> Definitions over 20% of the prefix. More than three tools defined for each tool used. The agent choosing an applicable but wrong tool. The agent <em>talking about</em> a capability it never calls.</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p>Three MCP servers: GitHub (42K), a database server (11K) and a browser server (9K): 62K of definitions, 31% of a 200K window, before any work. Over 20 sessions, 9 tools were called, all from GitHub, and 6 of those duplicated the <code>gh</code> command already available. The team drops the browser server (never used), drops the database server (a read-only <code>psql</code> command replaces it), and switches GitHub to deferred definitions. New prefix contribution: <strong>about 4K. Recovered: 58K tokens, 29% of the window.</strong> Task success is unchanged over the next 20 sessions; median session cost falls 34%.</p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>Count definition tokens and the defined-to-called ratio. If definitions exceed 15K tokens or the ratio exceeds 3:1, M-2 is almost certainly your single biggest win, and the most reversible one.</p>
+</aside>
+<p>Details, including the audit procedure, are in <a href="08-tool-surface.html">chapter 8</a>.</p>
+<h2 id="m-3-just-in-time-retrieval">M-3: Just-in-time retrieval<a class="rs-anchor" href="#m-3-just-in-time-retrieval" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Carry lightweight identifiers such as file paths, symbol names and queries. Turn them into content only at the moment of need. This is <a class="rs-term" href="glossary.html#just-in-time-retrieval" data-def="Carrying lightweight identifiers such as paths and symbol names, and fetching content only at the moment it is needed.">just-in-time retrieval</a>.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Pre-load nothing by default. The session opens with the task and the repository, not a briefing document.</li>
+<li>Give the agent tools that return <em>locations</em>, not content: <code>ls</code>, <code>glob</code>, <code>grep -l</code>, a symbol index.</li>
+<li>Give it tools that fetch one location at a time: read a range, read a symbol.</li>
+<li>Encourage narrowing: <strong>locate, then inspect, then read.</strong> Three cheap steps beat one expensive one.</li>
+<li>When information stops being needed, let it fall out or offload it (M-6).</li>
+</ol>
+<p><strong>Why it works.</strong> <a class="rs-term" href="glossary.html#relevance-density" data-def="Tokens that could plausibly be cited in a correct answer, divided by all tokens in context. The working measure of dilution.">Relevance density</a>. Pre-loading maximises recall and pays for it in precision. Just-in-time keeps density high at the cost of a few small round trips. It is especially strong for code, for three reasons: the filesystem is always current (an index can be stale; <code>cat</code> cannot); paths and names carry relevance nearly for free (<code>src/auth/session.ts</code> says a lot in five tokens); and the agent often does not know what it needs until it has looked.</p>
+<p>The evidence: focused ~300-token prompts beat ~113K-token prompts containing the same information <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; 5K of targeted retrieval beat a 100K codebase summary <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; full-context approaches used <strong>2.68×</strong> the tokens of the best managed method <em>and completed fewer tasks</em> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p><strong>What it costs.</strong> More turns and latency. On a small repository, pre-loading may genuinely be cheaper. Just-in-time wins as the repository grows, roughly once it exceeds a few windows' worth <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<p><strong>What it can lose.</strong> <a class="rs-term" href="glossary.html#starvation" data-def="The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.">Starvation</a>, the most dangerous failure in this research because it is silent. The agent never looks at the file that governs the behaviour and produces a confidently wrong change from a clean-looking transcript. That is why read-coverage audits are mandatory alongside this method.</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: "the checkout flow times out under load" <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p><strong>Pre-load:</strong> an architecture document (18K), the checkout module (22K), the payment client (9K) and recent related PRs (14K): 63K tokens before the first thought, at perhaps 4% density. The well-written architecture document is an unusually effective distractor.</p>
+<p><strong>Just-in-time:</strong> <code>grep -rl "checkout"</code> returns 14 paths (200 tokens). A second grep for <code>timeout|deadline</code> in those finds 6 hits (400). Two symbol bodies (1.8K) and the pool config (600). <strong>About 3K tokens at about 40% density.</strong></p>
+<p>The honest trade: if the cause lives in a file that never mentions "checkout" or "timeout", say a middleware holding a lock, just-in-time misses it. The fix is not pre-loading. It is a second search along a different axis, such as the import graph or recent commits: that is M-4.</p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>Take your last three failed tasks. Was the decisive information (a) in context and ignored, or (b) never retrieved? Mostly (a): adopt M-3 aggressively. Mostly (b): fix retrieval quality (M-4) <em>before</em> reducing volume.</p>
+</aside>
+<h2 id="m-4-structural-retrieval">M-4: Structural retrieval<a class="rs-anchor" href="#m-4-structural-retrieval" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Retrieve code by its structure (symbols, references, imports, the call graph) instead of by whole files or by embedding similarity. This is <a class="rs-term" href="glossary.html#structural-retrieval" data-def="Retrieving code by symbol, reference and import graph instead of by whole file or embedding similarity.">structural retrieval</a>.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Expose structure-aware operations: find a symbol, find its references, outline a file, list imports.</li>
+<li>Read symbol bodies by default, not files.</li>
+<li>Expand along the reference graph: found the function, now read <em>its callers</em>, not its neighbours in the file.</li>
+<li>Optionally keep a compact repository map, a per-file outline of top-level symbols. A 10,000-file repository maps to a few thousand tokens.</li>
+<li>Keep grep as the complement, not the competitor.</li>
+</ol>
+<p><strong>Why it works.</strong> A file is a <em>storage</em> unit; a symbol is a <em>meaning</em> unit. Reading files to answer symbol questions wastes, by construction, the part of the file you did not need, typically over 90%.</p>
+<p>More importantly, code has <strong>exact relevance edges that prose lacks</strong>: A calls B, C implements I, <code>test_T</code> tests T. A language server computes them precisely and keeps them current. Using embeddings to guess at "related code" pays for a worse version of something you already own.</p>
+<p>The evidence, stated carefully because it is often misreported: a 2026 study compared grep with vector retrieval across four harnesses on 116 questions. <strong>Grep generally won</strong>, and <strong>the harness mattered more than the retrieval strategy</strong>, on identical data <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A hybrid of semantic search and grep has been reported <strong>12.5% more accurate</strong> than either alone <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. The synthesis: <em>exact beats approximate when exact is available; approximate helps when you do not know the name of what you are looking for.</em></p>
+<p><strong>What it costs.</strong> Minutes to hours of setup for a language-server toolkit, and a running process. Token cost is <em>negative</em>. It adds five to eight tools to your budget, which is usually a good trade.</p>
+<p><strong>What it can lose.</strong> Structural blindness. Much of what matters is not in the symbol graph: configuration values, environment variables, string-keyed dispatch, database schemas, CI files, feature flags. <strong>Always keep grep.</strong></p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: rename <code>UserSession</code> to <code>AuthSession</code> in a 240K-line monorepo <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p><strong>Grep:</strong> 180 hits, including comments, strings, a similarly named <code>UserSessionStore</code> and two unrelated packages. The agent reads about 40 files (~90K tokens) and makes three wrong edits.</p>
+<p><strong>Structural:</strong> one declaration, then 47 exact references with file and line. <strong>About 6K tokens, zero false positives</strong>, and <code>UserSessionStore</code> correctly untouched because it is a different symbol. Fifteen times fewer tokens and better correctness, because the compiler already knew the answer.</p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>Sample 20 recent file reads. For each, what fraction of the file was relevant? If the median is under 20%, M-4 pays immediately. If your stack has poor language-server support or your bugs mostly live in config, deprioritise it.</p>
+</aside>
+<h2 id="m-5-output-shaping">M-5: Output shaping<a class="rs-anchor" href="#m-5-output-shaping" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Reduce tool output <em>before</em> it enters context. This is prevention: the cheapest token is the one never generated.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Rank commands by token volume across recent sessions. Usually three to five commands make up over 70% of tool output.</li>
+<li>For each, apply in order: <strong>quieter flags</strong> (<code>npm ci --silent</code>, <code>pytest -q</code>, <code>git diff --stat</code>); <strong>filtering</strong> (<code>tail</code>, <code>grep -v</code>, <code>jq</code>); <strong>redirection</strong> (full output to a file, path plus a short preview into context); <strong>wrapping</strong> (a small script that returns a structured digest).</li>
+<li>Cap output with <strong>head-and-tail truncation, never middle truncation</strong>. The ends carry the command and the error.</li>
+<li>Add ignore files so lockfiles, <code>dist/</code>, <code>node_modules/</code>, snapshots and fixtures never enter through globs or diffs.</li>
+<li>Make the digest task-aware: a failing test run keeps the trace; a passing one needs one line.</li>
+</ol>
+<p><strong>Why it works.</strong> Pure density gain with <strong>no information loss when done right</strong>, because the discarded text contained nothing. "200 passed in 14.2s" is complete. The 4,000 tokens of dots were noise. Reported: <strong>60–90% reduction</strong> on common dev commands <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> and <strong>98%</strong> by isolating large outputs in an indexed sandbox <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Since input is 99.75–99.87% of agent token usage <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a> and tool results are the largest input, this is where the money is.</p>
+<p><strong>What it costs.</strong> An afternoon of scripting for the top five commands; near zero afterwards. The real cost is a correctness risk.</p>
+<p><strong>What it can lose.</strong> Over-filtering. You hide a warning that mattered, like the peer-dependency warning that explains the bug three hours later. The mitigation that works: <strong>never delete, always redirect.</strong> Full output to a file, digest to context, path included. An irreversible loss becomes a reversible one for about 15 tokens.</p>
+<p><strong>Trouble signs.</strong> The agent re-running a command with different verbosity flags to see more. That signal is clean and worth counting: a rise means you cut too deep.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">before and after, one session</span></div><pre class="highlight"><code>before   npm ci 14K · npm test 9K · git diff 6K · docker build 11K  = 40K tokens
+after    npm ci --silent 2&gt;&amp;1 | tail -5          ~200   (full log in /tmp/npm-ci.log)
+         pytest -q --tb=short                   ~150 passing, ~1.5K failing
+         git diff --stat first                  ~400   (full diff on request)
+         docker build --quiet                   ~150   (full log in a file)
+total    ~1K–2.5K tokens: a 94–97% reduction, with every full log one `cat` away   [C]
+</code></pre></div>
+<aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">Decision test</p>
+<p>Rank your commands by token volume. If the top three exceed 25% of session tokens, M-5 pays for itself in one afternoon and carries the lowest risk of any method here.</p>
+</aside>
+<h2 id="m-6-reversible-offload">M-6: Reversible offload<a class="rs-anchor" href="#m-6-reversible-offload" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Move content out of the window into addressable storage and leave a stub the agent can follow back. Never discard what you can relocate.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Send large tool outputs to files. Return the path, the size and a short head-and-tail preview.</li>
+<li>Give every offloaded item a stable identifier: a path, a content hash, or an ID in a manifest.</li>
+<li>Expose a recall operation: read by ID, read a range, search inside the store.</li>
+<li>At compaction, replace old observations with <strong>citation stubs</strong> (ID, one-line description, preview) instead of a paraphrase.</li>
+<li>Keep a small manifest of what exists and where.</li>
+</ol>
+<p><strong>Why it works.</strong> It converts irreversible loss into reversible loss, decoupling <em>what is in the window</em> from <em>what is available</em>. The measured result is unusually clean. <a class="rs-term" href="glossary.html#addressable-recall" data-def="Compaction that replaces old content with content-addressed stubs the agent can fetch on demand, instead of a paraphrase. Lossless by construction.">Addressable recall</a> compaction (deterministic, no model call, content-addressed, with <code>recall &lt;id&gt;</code>) was compared with five baselines, including sliding window, LLM summary, structured state and RAG <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<figure class="diagram rs-chart" id="chart-ten-methods-2"><p class="diagram__title">Addressable recall versus the best lossy baseline</p><div class="chart-legend" aria-hidden="true"><span class="chart-legend__item"><span class="chart-legend__key ch-s1"></span>Addressable recall</span><span class="chart-legend__item"><span class="chart-legend__key ch-s2"></span>Best baseline</span></div><div class="diagram__scroll"><svg viewBox="0 0 720 218" role="img" aria-labelledby="chart-ten-methods-2-t" class="chart chart--hbar"><title id="chart-ten-methods-2-t">Needle 8B: 99.0% vs 79.57%. Needle 32B: 99.8% vs 96.67%. LongBench-v2 Hard 8B: 27.47% vs 25.83%. 32B: 32.47% vs 30.87%.</title><line class="ch-grid" x1="170.0" y1="4" x2="170.0" y2="196"/><text class="ch-axis" x="170.0" y="212" text-anchor="middle">0%</text><line class="ch-grid" x1="285.0" y1="4" x2="285.0" y2="196"/><text class="ch-axis" x="285.0" y="212" text-anchor="middle">25%</text><line class="ch-grid" x1="400.0" y1="4" x2="400.0" y2="196"/><text class="ch-axis" x="400.0" y="212" text-anchor="middle">50%</text><line class="ch-grid" x1="515.0" y1="4" x2="515.0" y2="196"/><text class="ch-axis" x="515.0" y="212" text-anchor="middle">75%</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="196"/><text class="ch-axis" x="630.0" y="212" text-anchor="middle">100%</text><text class="ch-label" x="160" y="35.0" text-anchor="end">Needle tasks, 8B</text><path class="ch-mark ch-s1" d="M170.0,16.0 h451.4 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-451.4 z" data-tip="Addressable recall · Needle tasks, 8B: 99%"/><text class="ch-value" x="631.4" y="27.0">99%</text><path class="ch-mark ch-s2" d="M170.0,32.0 h362.0 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-362.0 z" data-tip="Best baseline · Needle tasks, 8B: 79.57%"/><text class="ch-value" x="542.0" y="43.0">79.57%</text><text class="ch-label" x="160" y="81.0" text-anchor="end">Needle tasks, 32B</text><path class="ch-mark ch-s1" d="M170.0,62.0 h455.1 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-455.1 z" data-tip="Addressable recall · Needle tasks, 32B: 99.8%"/><text class="ch-value" x="635.1" y="73.0">99.8%</text><path class="ch-mark ch-s2" d="M170.0,78.0 h440.7 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-440.7 z" data-tip="Best baseline · Needle tasks, 32B: 96.67%"/><text class="ch-value" x="620.7" y="89.0">96.67%</text><text class="ch-label" x="160" y="127.0" text-anchor="end">LongBench-v2 Hard, 8B</text><path class="ch-mark ch-s1" d="M170.0,108.0 h122.4 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-122.4 z" data-tip="Addressable recall · LongBench-v2 Hard, 8B: 27.47%"/><text class="ch-value" x="302.4" y="119.0">27.47%</text><path class="ch-mark ch-s2" d="M170.0,124.0 h114.8 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-114.8 z" data-tip="Best baseline · LongBench-v2 Hard, 8B: 25.83%"/><text class="ch-value" x="294.8" y="135.0">25.83%</text><text class="ch-label" x="160" y="173.0" text-anchor="end">LongBench-v2 Hard, 32B</text><path class="ch-mark ch-s1" d="M170.0,154.0 h145.4 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-145.4 z" data-tip="Addressable recall · LongBench-v2 Hard, 32B: 32.47%"/><text class="ch-value" x="325.4" y="165.0">32.47%</text><path class="ch-mark ch-s2" d="M170.0,170.0 h138.0 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-138.0 z" data-tip="Best baseline · LongBench-v2 Hard, 32B: 30.87%"/><text class="ch-value" x="318.0" y="181.0">30.87%</text><line class="ch-base" x1="170" y1="4" x2="170" y2="196"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> A huge gain on retrieval (+19.43 points on 8B) and a modest one on hard reasoning (+1.6). Offload fixes access to information, not thinking. Claiming more would overstate it <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Benchmark</th><th scope="col">Addressable recall</th><th scope="col">Best baseline</th></tr></thead><tbody><tr><th scope="row">Needle tasks, 8B</th><td>99%</td><td>79.57%</td></tr><tr><th scope="row">Needle tasks, 32B</th><td>99.8%</td><td>96.67%</td></tr><tr><th scope="row">LongBench-v2 Hard, 8B</th><td>27.47%</td><td>25.83%</td></tr><tr><th scope="row">LongBench-v2 Hard, 32B</th><td>32.47%</td><td>30.87%</td></tr></tbody></table></div></details></figure>
+<p>It also saved 38.8–80.3% of memory bandwidth versus a sliding window <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The mechanism is not sophistication. Nothing was thrown away.</p>
+<p><strong>What it costs.</strong> Stubs are 20–60 tokens each, plus one round trip when recall is needed.</p>
+<p><strong>What it can lose.</strong> Two things. The manifest can grow until it becomes the problem, one level down. And the agent may never recall something because it cannot tell it is relevant. <strong>A pointer the agent will not follow is equivalent to deletion.</strong> Compare <code>log_a3f9.txt (14KB)</code>, which is nearly useless, with <code>log_a3f9.txt (14KB) — npm ci output, 2 peer-dep warnings, exit 0</code>, which is actionable. Stubs must carry enough to make the recall decision, and nothing more.</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: a flaky test over 60 turns <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p>Twelve test runs at about 8K tokens each would be 96K tokens if kept. With offload, each run writes <code>runs/test-&lt;n&gt;.log</code> and context receives a stub such as <code>runs/test-7.log (8.2KB) — 1 failure: test_checkout_retry, AssertionError line 214, 3 warnings</code>. Twelve stubs are about 500 tokens; the agent recalls two in full when comparing failures. <strong>Peak cost: about 1.7K instead of 96K</strong>, with all twelve logs available. The agent can still answer "did run 4 have the same warning as run 9?", a question lossy summarisation would have destroyed.</p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>After your next compaction, count how often the agent re-fetches something it already had in the following ten turns. More than twice means you are losing recoverable information, and M-6 is a better fix than tuning the summariser.</p>
+</aside>
+<h2 id="m-7-externalised-state-the-living-plan">M-7: Externalised state, the living plan<a class="rs-anchor" href="#m-7-externalised-state-the-living-plan" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Keep one short document with the current plan, decisions, constraints and <strong>ruled-out approaches</strong>. Rewrite it in place. Treat it, not the transcript, as the state.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>At the start of a task, have the agent write a plan file: goal, constraints, approach, open questions, done and not done.</li>
+<li><strong>Rewrite it in place</strong> at each meaningful checkpoint. It is a state document, not a log.</li>
+<li>Include a <strong>ruled-out</strong> section: the most valuable and most often omitted part.</li>
+<li>Re-read it after every compaction, reset or sub-agent return.</li>
+<li>Keep it to 30–80 lines. Longer means the task needed splitting.</li>
+</ol>
+<p><strong>Why it works.</strong> It attacks <a class="rs-term" href="glossary.html#clash" data-def="A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.">clash</a> and <a class="rs-term" href="glossary.html#distraction" data-def="A failure mode where the agent imitates its own transcript instead of reasoning: re-running, re-reading, re-proposing.">distraction</a> at once. The transcript is an append-only log of everything that happened, including everything wrong. A plan file is a <em>mutable</em> statement of what is currently true. Logs can only be appended to, leaving contradictions for the model to resolve by recency. A rewritten document is corrected: the wrong thing is gone, not outvoted.</p>
+<p>It also <strong>survives compaction and resets intact</strong>, because it lives on disk. It is the only structure in this research that gives you <em>deliberate</em> control over what crosses a context boundary. And the ruled-out section counters the most expensive repeated behaviour in agent sessions: trying a failed approach again.</p>
+<p><strong>What it costs.</strong> 300–800 tokens resident, plus a few hundred tokens per rewrite. Read it as a body message, not injected into the prefix, so it stays cache-safe.</p>
+<p><strong>What it can lose.</strong> Drift. The document stops matching reality and becomes a confidently wrong source, which is worse than having none. Update at <em>state changes</em>, not on a timer, and include a "last updated at turn N" line so staleness is visible.</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: a four-hour auth refactor with three compactions <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p><strong>Without a plan file:</strong> after compaction 1, the summary keeps "working on auth refactor" but drops "we decided against the middleware approach because it breaks the WebSocket path". At turn 71 the agent proposes the middleware approach again. The user re-explains. About 20 turns wasted, and that cost appears in no metric.</p>
+<p><strong>With one:</strong> <code>PLAN.md</code> says, under <em>Ruled out</em>: <code>middleware interception — breaks WS upgrade path (see ws/upgrade.ts:88)</code>. After compaction it is re-read, 400 tokens, and the approach is never proposed again.</p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>Review your last long session. After a compaction or reset, did the agent re-derive a conclusion or re-propose a rejected approach? If it happened even once, M-7 pays. For any task over an hour it is close to free.</p>
+</aside>
+<p>The <a href="a-templates.html#3-plan-file">plan-file template</a> is ready to copy.</p>
+<h2 id="m-8-semantic-boundary-compaction">M-8: Semantic-boundary compaction<a class="rs-anchor" href="#m-8-semantic-boundary-compaction" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Compact when a <em>task</em> boundary is reached (a sub-goal closes), not at a token threshold and not on a timer.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Define close boundaries for your work: a test passes, a plan item completes, a hypothesis is confirmed or ruled out, an edit is verified.</li>
+<li>Define suppression conditions: mid-derivation, mid-edit, stuck, just after an error.</li>
+<li>Compact only at boundaries, unless a hard ceiling forces it.</li>
+<li>Compact with an explicit schema, not "summarise the above": goal and state, decisions with reasons, ruled-out approaches with reasons, <strong>exact strings</strong> (errors, versions, paths, line numbers), open questions, and what was verified and how.</li>
+<li><strong>Offload first</strong> (M-6), so anything dropped is recoverable.</li>
+<li>Re-read the plan file (M-7) immediately afterwards.</li>
+</ol>
+<p><strong>Why it works.</strong> Both naive triggers fail, in opposite directions <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. <strong>Threshold</strong> compaction waits until the context is already full of stale and wrong tokens that have been degrading output for many steps. <strong>Periodic</strong> compaction discards indiscriminately and often fires mid-task. <a class="rs-term" href="glossary.html#semantic-triggering" data-def="Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.">Semantic triggering</a> fires when information is genuinely finished. The 2026 self-compaction work gates on closed reasoning units and preserves verified facts that fixed-interval compaction destroys <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p><strong>Why the quality of compaction deserves this attention.</strong> Holding the agent fixed and changing <em>only the summariser</em> moved SWE-bench from <strong>49.0% to 55.5%</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Compaction-aware training added <strong>+5.5 and +7.0</strong> on SWE-bench Verified and <strong>+6.8 and +3.1</strong> on Terminal-Bench 2.0 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. And the damage is mostly variance: on AppWorld, no compression scored <strong>85.7% / 77.4% Pass²</strong>, prompt-based compaction <strong>71.4% / 59.5%</strong>, FIFO <strong>63.7% / 53.0%</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">The first step after a compaction is the most dangerous step in the session</p>
+<p>It carries <strong>+0.108</strong> extra blocked or error actions <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Put the plan-file re-read exactly there.</p>
+</aside>
+<p><strong>What it costs.</strong> A blocking model call per compaction, sometimes tens of seconds <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, plus a full cache invalidation, which is often the bigger cost and almost never counted. See <a href="10-metrics-and-economics.html#belief-2-compaction-saves-money">chapter 10</a>.</p>
+<p><strong>What it can lose.</strong> Anything not in the schema. Compaction is the most lossy operation here and the only one that can <em>invent</em>: a paraphrase can assert what the transcript only hypothesised. That is <a class="rs-term" href="glossary.html#laundering" data-def="Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.">laundering</a>. Mitigate it with a "verified how" field, verbatim exact strings, and offload.</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: bisecting a flaky test <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p><strong>Threshold compaction</strong> fires at 85% full, midway through the bisect. Summary: "investigating a flaky test in the checkout suite; several runs performed." Lost: which four commits were already bisected. The agent restarts. <strong>Ten turns and ~25K tokens wasted</strong>, with no sign anything went wrong.</p>
+<p><strong>Semantic compaction</strong> fires right after the bisect isolates commit <code>a3f9c1</code>. Summary: "Bisected checkout flake to <code>a3f9c1</code> (PR #4412, adds connection pooling). Verified by 20 runs at <code>a3f9c1^</code> (0 failures) and <code>a3f9c1</code> (7/20 failures). Ruled out: test ordering (still fails with <code>-p no:randomly</code>), CI environment (reproduces locally). Next: read the <code>db/pool.ts</code> diff in <code>a3f9c1</code>." Same token cost; the whole result survives.</p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>Count re-fetches in the ten turns after each compaction. Above about two, your trigger or schema is wrong. Check whether compactions land mid-sub-goal; if they do, fix the trigger before the schema.</p>
+</aside>
+<h2 id="m-9-sub-agent-isolation-with-a-contract">M-9: Sub-agent isolation with a contract<a class="rs-anchor" href="#m-9-sub-agent-isolation-with-a-contract" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Delegate bounded, read-mostly work to a <a class="rs-term" href="glossary.html#sub-agent" data-def="A separate agent with its own fresh context, given a bounded task and returning a result to a parent agent.">sub-agent</a> with a fresh context, a narrow tool set and a written contract for what comes back.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li>Identify isolatable work: bounded, verifiable, and producing a small result from a large amount of reading. Search, surveys, log analysis, test triage, dependency audits.</li>
+<li>Write the contract <em>before</em> delegating: inputs, scope, tools, <strong>output schema</strong>, size cap.</li>
+<li>Give the sub-agent only the tools it needs.</li>
+<li>Return a <strong>structured result</strong>, not a transcript: a ranked list of <code>file:line</code> entries with one-line reasons.</li>
+<li>Do <strong>not</strong> delegate work that needs shared judgment or interlocking decisions.</li>
+</ol>
+<p><strong>Why it works.</strong> Isolation converts a large intermediate context into a small result. A search that reads 40 files (60K tokens) to conclude "the retry logic is in <code>client/retry.ts:88</code>" returns 20 tokens to the parent. Reported: about <strong>9K total tokens</strong> for a multi-domain query with isolated sub-agents versus <strong>15K</strong> with an accumulating pattern <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. A parallel research system beat a single agent by <strong>90.2%</strong> on an internal research eval <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>The other half, which most write-ups omit.</strong> That same system used about <strong>15× the tokens of a chat interaction</strong>, and <strong>token usage alone explained about 80% of the performance difference</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. The gain is real, and it is bought.</p>
+<p><strong>What it costs.</strong> The most of any method here. Each sub-agent pays its own prefix tax. <strong>Sub-agents shrink the parent's context at the expense of total spend.</strong> If your constraint is cost, this is often wrong. If it is the parent's attention, it is often right.</p>
+<p><strong>What it can lose.</strong> <a class="rs-term" href="glossary.html#contract-loss" data-def="A sub-agent knew something relevant but did not report it because its output contract did not ask.">Contract loss</a>: the sub-agent saw something decisive and did not report it because the contract did not ask. Add a "notable observations outside scope" field; it is cheap and recovers a surprising amount.</p>
+<aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">Decision test</p>
+<p>Write the sub-agent's output schema <em>before</em> delegating. If it does not fit in 20 lines, the work is not isolatable. Do it in the main thread. This test alone prevents most multi-agent disasters.</p>
+</aside>
+<p>The full treatment, including the public disagreement between two well-known teams, is in <a href="07-sub-agents.html">chapter 7</a>.</p>
+<h2 id="m-10-session-lifecycle">M-10: Session lifecycle<a class="rs-anchor" href="#m-10-session-lifecycle" title="Link to this section">#</a></h2>
+<p><strong>The claim.</strong> Treat a session as a managed resource with a deliberate start, checkpoints and an end, not as an endless chat.</p>
+<p><strong>How to do it.</strong></p>
+<ol>
+<li><strong>One session, one coherent task.</strong> New task, new session.</li>
+<li><strong>Open well.</strong> The first message is the highest-leverage 200 tokens you will write: goal, constraints, relevant paths, definition of done, and what <em>not</em> to do.</li>
+<li><strong>Checkpoint at boundaries.</strong> Commit, and update the plan file.</li>
+<li><strong><a class="rs-term" href="glossary.html#reset" data-def="Ending a session and starting a fresh one seeded with a plan file or handoff note. The only operation that removes poisoned content.">Reset</a> instead of arguing.</strong> When the context is poisoned or the agent loops, start fresh from the plan file.</li>
+<li><strong>Hand off explicitly.</strong> End long sessions with a <a href="a-templates.html#5-session-handoff">handoff note</a>.</li>
+<li><strong>Decide your reset triggers in advance:</strong> a second compaction is needed; the agent repeats the same action three times; you find a poisoned fact; the task pivots; the window is over 70% full with a lot left to do.</li>
+</ol>
+<p><strong>Why it works.</strong> A reset restores the premium position of the prefix, removes every accumulated distractor at once, and is the <strong>only</strong> way to remove poisoned content from an append-only transcript. A good opener replaces exploratory retrieval, the most expensive thing an agent does, with directed retrieval.</p>
+<p>The economics are stark: <strong>a reset costs one plan-file read (about 500 tokens) and buys back everything.</strong> Continuing a degraded session pays full context on every turn <em>and</em> succeeds less often. The instinct to keep a long session alive is a sunk-cost error.</p>
+<p><strong>What it can lose.</strong> Tacit understanding: which approaches feel promising, the codebase's idioms, what the user really meant. Not all of it fits in a plan file. That is the honest argument against resetting aggressively. A better handoff note reduces the loss; the rest is the price.</p>
+<aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example: a six-hour feature <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
+<p><strong>Undisciplined:</strong> one session, four automatic compactions. By hour four the agent contradicts decisions from hour one and re-proposes rejected designs. Every turn carries a near-full window.</p>
+<p><strong>Disciplined:</strong> four sessions of about 90 minutes, each opened with the plan file plus a two-line focus, each closed with a commit and a plan update. Zero compactions. The window never passes about 40% full. Quality is constant, because <strong>every session runs the model in its best regime.</strong></p>
+<p>@@CALLOUT:try:Decision test@@</p>
+<p>Plot quality against elapsed session time for your last ten sessions. If quality falls after some duration, that duration is your session cap. Enforce it mechanically.</p>
+</aside>
+<h2 id="what-was-benched-and-why">What was benched, and why<a class="rs-anchor" href="#what-was-benched-and-why" title="Link to this section">#</a></h2>
+<p>The popular advice that did not make the list. This table is a result, not an omission.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Why it is popular</th>
+<th>Test failed</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>"Use a bigger context window"</strong></td>
+<td>Trivially available</td>
+<td>T1: no mechanism by which more capacity improves attention; the evidence runs the other way</td>
+<td>Not a method. Capacity relieves fitting pressure only</td>
+</tr>
+<tr>
+<td><strong>Embedding-based code search as the primary retriever</strong></td>
+<td>Familiar from document search</td>
+<td>T2: grep generally beat vector retrieval head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; index staleness is a running cost</td>
+<td>A complement (hybrid +12.5% <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>), not the primary. Folded into M-4</td>
+</tr>
+<tr>
+<td><strong>Automatic memory extraction ("remember everything")</strong></td>
+<td>Compelling demos</td>
+<td>T4: no test tells you whether a memory helped</td>
+<td>Bench until you can measure recall value</td>
+</tr>
+<tr>
+<td><strong>"Be concise" instructions</strong></td>
+<td>One line, feels free</td>
+<td>T2: no measured effect on total context</td>
+<td>Marginal. The real fix is M-5</td>
+</tr>
+<tr>
+<td><strong>Per-turn dynamic tool selection</strong></td>
+<td>Obviously right</td>
+<td>T1/T2: cache-hostile, often net-negative</td>
+<td>Bench unless you can prove the cache economics</td>
+</tr>
+<tr>
+<td><strong>Multi-agent by default</strong></td>
+<td>Impressive architecture</td>
+<td>T4: no test separates decomposable from non-decomposable work without M-9's contract</td>
+<td>Folded into M-9 with a decision rule</td>
+</tr>
+<tr>
+<td><strong>Knowledge-graph project memory</strong></td>
+<td>Intellectually attractive</td>
+<td>T2: no coding-specific measured result; high upkeep</td>
+<td>Watch. Promising across repositories, unproven here</td>
+</tr>
+<tr>
+<td><strong>Middle truncation of long output</strong></td>
+<td>Simple to build</td>
+<td>T1: removes the region where errors usually are</td>
+<td>Strictly dominated by head-and-tail</td>
+</tr>
+<tr>
+<td><strong>Priming with a codebase overview</strong></td>
+<td>Feels like onboarding</td>
+<td>T2: the 5K-versus-100K result and the coherence finding both point against it</td>
+<td>A small pointer seed survives as an M-3 setting</td>
+</tr>
+<tr>
+<td><strong>"Focus" reminders sprinkled through a session</strong></td>
+<td>Cheap, feels responsive</td>
+<td>T3: a weaker version of M-7</td>
+<td>Use M-7</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two of these, bigger windows and default multi-agent, absorb a disproportionate share of the field's attention and money. That is worth noticing.</p>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Measure your distribution before choosing any method.</li><li>Static pruning beats dynamic selection, mostly for cache reasons.</li><li>Never delete what you can relocate: redirect, offload, stub.</li><li>A plan file with a ruled-out section is the only deliberate control over what survives a boundary.</li><li>Compact at sub-goal boundaries, at most once, and only after offloading.</li></ol>
+        </section>
+        <section class="rs-endblock rs-see" aria-labelledby="see-h"><h2 id="see-h" class="rs-endblock__title">Go deeper</h2><ul><li><a href="04-choosing-methods.html">Choosing your methods</a> — the 55-minute procedure that routes you to one</li></ul></section>
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#prefix-tax"><strong>Prefix tax</strong></a> — The tokens in segments 1–4, paid on every call before any work. Measured by sending a one-token message in a fresh session.</li><li><a href="glossary.html#prefix-caching"><strong>Prefix caching</strong></a> — Reusing the computed state of an unchanged prompt prefix. Prefix-exact: valid up to the first changed byte.</li><li><a href="glossary.html#progressive-disclosure"><strong>Progressive disclosure</strong></a> — Loading short descriptions first and full content only on demand. Applied to tool schemas, skills and file reads.</li><li><a href="glossary.html#just-in-time-retrieval"><strong>Just-in-time retrieval</strong></a> — Carrying lightweight identifiers such as paths and symbol names, and fetching content only at the moment it is needed.</li><li><a href="glossary.html#relevance-density"><strong>Relevance density</strong></a> — Tokens that could plausibly be cited in a correct answer, divided by all tokens in context. The working measure of dilution.</li><li><a href="glossary.html#starvation"><strong>Starvation</strong></a> — The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.</li><li><a href="glossary.html#structural-retrieval"><strong>Structural retrieval</strong></a> — Retrieving code by symbol, reference and import graph instead of by whole file or embedding similarity.</li><li><a href="glossary.html#addressable-recall"><strong>Addressable recall</strong></a> — Compaction that replaces old content with content-addressed stubs the agent can fetch on demand, instead of a paraphrase. Lossless by construction.</li><li><a href="glossary.html#clash"><strong>Clash</strong></a> — A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.</li><li><a href="glossary.html#distraction"><strong>Distraction</strong></a> — A failure mode where the agent imitates its own transcript instead of reasoning: re-running, re-reading, re-proposing.</li><li><a href="glossary.html#semantic-triggering"><strong>Semantic triggering</strong></a> — Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.</li><li><a href="glossary.html#laundering"><strong>Laundering</strong></a> — Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.</li><li><a href="glossary.html#sub-agent"><strong>Sub-agent</strong></a> — A separate agent with its own fresh context, given a bounded task and returning a result to a parent agent.</li><li><a href="glossary.html#contract-loss"><strong>Contract loss</strong></a> — A sub-agent knew something relevant but did not report it because its output contract did not ask.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="02-anatomy.html"><span class="rs-pn__label">← Previous · Chapter 2</span><span class="rs-pn__title">Anatomy of a coding agent&#x27;s context</span><span class="rs-pn__part">Understand the problem</span></a><a class="rs-pn__link rs-pn__link--next" href="04-choosing-methods.html"><span class="rs-pn__label">Next → · Chapter 4</span><span class="rs-pn__title">Choosing your methods: a 55-minute procedure</span><span class="rs-pn__part">The methods</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#how-the-ten-were-chosen">How the ten were chosen</a></li><li><a href="#before-any-method-measure">Before any method: measure</a></li><li><a href="#the-ten-on-one-page">The ten on one page</a></li><li><a href="#m-1-prefix-stability">M-1: Prefix stability</a></li><li><a href="#m-2-tool-surface-minimisation">M-2: Tool surface minimisation</a></li><li><a href="#m-3-just-in-time-retrieval">M-3: Just-in-time retrieval</a></li><li><a href="#m-4-structural-retrieval">M-4: Structural retrieval</a></li><li><a href="#m-5-output-shaping">M-5: Output shaping</a></li><li><a href="#m-6-reversible-offload">M-6: Reversible offload</a></li><li><a href="#m-7-externalised-state-the-living-plan">M-7: Externalised state, the living plan</a></li><li><a href="#m-8-semantic-boundary-compaction">M-8: Semantic-boundary compaction</a></li><li><a href="#m-9-sub-agent-isolation-with-a-contract">M-9: Sub-agent isolation with a contract</a></li><li><a href="#m-10-session-lifecycle">M-10: Session lifecycle</a></li><li><a href="#what-was-benched-and-why">What was benched, and why</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The tooling landscape — Context Management</title>
+  <meta name="description" content="Open-source context tooling for coding agents across six layers, each with mechanism, cost and an adopt, trial, watch or skip verdict, plus a four-week start..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/18-tooling.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/18-tooling.html" />
+  <meta property="og:title" content="The tooling landscape — Context Management" />
+  <meta property="og:description" content="Open-source context tooling for coding agents across six layers, each with mechanism, cost and an adopt, trial, watch or skip verdict, plus a four-week start..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="The tooling landscape — Context Management" />
+  <meta property="twitter:description" content="Open-source context tooling for coding agents across six layers, each with mechanism, cost and an adopt, trial, watch or skip verdict, plus a four-week start..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "The tooling landscape",
+  "description": "Open-source context tooling for coding agents across six layers, each with mechanism, cost and an adopt, trial, watch or skip verdict, plus a four-week starter stack.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/18-tooling.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Act on it"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 18",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/18-tooling.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html" aria-current="page"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">Act on it</li><li aria-current="page">Chapter 18</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part V · Act on it</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 18</span></p>
+          <h1 class="rs-hero__title">The tooling landscape</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> Which open-source tools, plugins and local MCP servers improve context use, and which are worth adopting?</p>
+          <div class="rs-meta">
+            <span>8 min read</span><span aria-hidden="true">·</span>
+            <span>Reference</span><span aria-hidden="true">·</span>
+            <span>Step 18 of 20</span><span aria-hidden="true">·</span>
+            <span>4/4 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html" aria-current="page"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#read-this-before-the-tables">Read this before the tables</a></li><li><a class="on-this-page__link" href="#layer-0-prevention">Layer 0: Prevention</a></li><li><a class="on-this-page__link" href="#layer-1-retrieval">Layer 1: Retrieval</a></li><li><a class="on-this-page__link" href="#layer-2-tool-surface">Layer 2: Tool surface</a></li><li><a class="on-this-page__link" href="#state-memory-and-offload">Layer 3: State, memory and offload</a></li><li><a class="on-this-page__link" href="#layer-4-compaction">Layer 4: Compaction</a></li><li><a class="on-this-page__link" href="#layer-5-observability">Layer 5: Observability</a></li><li><a class="on-this-page__link" href="#standards-and-conventions">Standards and conventions</a></li><li><a class="on-this-page__link" href="#a-starter-stack-in-order">A starter stack, in order</a></li><li><a class="on-this-page__link" href="#what-the-ecosystem-is-missing">What the ecosystem is missing</a></li></ul></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Tools are grouped by the layer they act on: prevention, retrieval, tool surface, state, compaction, observability.</li><li>Verdicts are about categories. Named projects are examples to verify, not endorsements.</li><li>The highest-value action is often not installing anything.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Pick a tool category for the layer that is your constraint</li><li>Adopt a four-week starter stack in the right order</li><li>Name what the ecosystem is still missing</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="read-this-before-the-tables">Read this before the tables<a class="rs-anchor" href="#read-this-before-the-tables" title="Link to this section">#</a></h2>
+<p><strong>This is the most perishable chapter in the research.</strong> Tooling turns over quarterly, and several capabilities listed here as third-party tools became harness defaults during 2026, deferred tool definitions most clearly <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p>Three rules for using it:</p>
+<ol>
+<li><strong>Verdicts are about the category, not the specific project.</strong> "Adopt a symbol-level retrieval tool" is durable advice. "Adopt this particular one" is not. Treat named projects as examples of a category to search for when you read this.</li>
+<li><strong>Verify before installing.</strong> These details come from project documentation and secondary coverage, not from running every tool. Anything you install runs with access to your code, and MCP servers receive your codebase content by design. Audit them like any dependency.</li>
+<li><strong>Check whether your harness already does it.</strong> The highest-value action here is often <em>installing nothing</em>. A tool that duplicates a built-in capability costs definition tokens to give you what you already had.</li>
+</ol>
+<aside class="callout rs-callout rs-callout--evidence"><p class="rs-callout__title">How to read the numbers here</p>
+<p>Performance figures in this chapter are project claims <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> unless marked <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Self-reported numbers are upper bounds, and none were independently reproduced for this research.</p>
+</aside>
+<p>Verdicts use four levels: <strong>Adopt</strong> (use by default), <strong>Trial</strong> (worth a measured try), <strong>Watch</strong> (promising, unproven here), <strong>Skip</strong> (not for coding agents).</p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Six layers, from before context exists to watching it</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 210" role="img" aria-labelledby="tl-t">
+<title id="tl-t">Tooling layers: prevention, retrieval, tool surface, state and memory, compaction, and observability.</title>
+<rect class="dg-box--accent" x="10" y="10" width="225" height="56" rx="8"/><text class="dg-k" x="24" y="32">LAYER 0</text><text class="dg-t" x="24" y="52">Prevention</text>
+<rect class="dg-box" x="247" y="10" width="225" height="56" rx="8"/><text class="dg-k" x="261" y="32">LAYER 1</text><text class="dg-t" x="261" y="52">Retrieval</text>
+<rect class="dg-box" x="484" y="10" width="226" height="56" rx="8"/><text class="dg-k" x="498" y="32">LAYER 2</text><text class="dg-t" x="498" y="52">Tool surface</text>
+<rect class="dg-box" x="10" y="80" width="225" height="56" rx="8"/><text class="dg-k" x="24" y="102">LAYER 3</text><text class="dg-t" x="24" y="122">State, memory, offload</text>
+<rect class="dg-box" x="247" y="80" width="225" height="56" rx="8"/><text class="dg-k" x="261" y="102">LAYER 4</text><text class="dg-t" x="261" y="122">Compaction</text>
+<rect class="dg-box--info" x="484" y="80" width="226" height="56" rx="8"/><text class="dg-k" x="498" y="102">LAYER 5</text><text class="dg-t" x="498" y="122">Observability</text>
+<text class="dg-s" x="24" y="164">Highest yield, least glamorous</text>
+<text class="dg-s" x="24" y="184">Most crowded, thinnest evidence: layer 3</text>
+<text class="dg-s" x="498" y="164">Thinnest ecosystem: layer 5</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> Start at the layer that matches your binding constraint. For most teams that is layer 0 or layer 2, and the best "tool" is a deletion or a shell script.</figcaption>
+</figure>
+
+<h2 id="layer-0-prevention">Layer 0: Prevention<a class="rs-anchor" href="#layer-0-prevention" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shell primitives</strong> (<code>tail</code>, <code>head</code>, <code>grep -v</code>, <code>jq</code>, <code>cut</code>)</td>
+<td>Filter tool output inline</td>
+<td>Zero</td>
+<td><strong>Adopt.</strong> Already installed; underused because it is invisible</td>
+</tr>
+<tr>
+<td><strong>Quiet flags</strong> (<code>--silent</code>, <code>-q</code>, <code>--tb=short</code>, <code>--stat</code>)</td>
+<td>Reduce output at the source</td>
+<td>Zero</td>
+<td><strong>Adopt</strong></td>
+</tr>
+<tr>
+<td><strong>Ignore files</strong> (<code>.gitignore</code>-style, <code>.claudeignore</code>, <code>.cursorignore</code>)</td>
+<td>Keep dependencies, build output, lockfiles and generated code out of globs and diffs</td>
+<td>Zero</td>
+<td><strong>Adopt.</strong> The first thing to write</td>
+</tr>
+<tr>
+<td><strong>RTK</strong></td>
+<td>A command proxy that rewrites commands and compresses output from <code>git</code>, <code>pytest</code> and cloud CLIs</td>
+<td>Install and configure</td>
+<td><strong>Trial.</strong> Claims 60–90% reduction <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; compare against hand-written wrappers first</td>
+</tr>
+<tr>
+<td><strong>Context Mode</strong></td>
+<td>Keeps large outputs in a local sandbox with SQLite full-text indexing; passes summaries</td>
+<td>Install; local database</td>
+<td><strong>Trial.</strong> Claims 98% reduction <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; effectively packaged shaping plus offload</td>
+</tr>
+<tr>
+<td><strong>Caveman</strong></td>
+<td>Strips filler from model output before it re-enters context</td>
+<td>Install</td>
+<td><strong>Skip for most.</strong> Agent messages are about 8% of context; low ceiling</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">If you do one thing in this chapter</p>
+<p>Write four shell wrappers for your four loudest commands. An afternoon, no dependency, and it usually beats any installed tool on the same problem.</p>
+</aside>
+<h2 id="layer-1-retrieval">Layer 1: Retrieval<a class="rs-anchor" href="#layer-1-retrieval" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ripgrep (<code>rg</code>)</strong></td>
+<td>Fast recursive lexical search with glob filters</td>
+<td>Zero</td>
+<td><strong>Adopt.</strong> The workhorse; grep generally beat vector retrieval head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td><strong>Serena</strong></td>
+<td>MCP toolkit with language-server symbol operations: find symbol, find references, insert after symbol, outlines; 30+ languages <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>A language-server process; 5–8 tool slots</td>
+<td><strong>Adopt</strong> if your stack has LSP support. The clearest drop-in for structural retrieval</td>
+</tr>
+<tr>
+<td><strong>tree-sitter</strong></td>
+<td>Incremental parser producing syntax trees</td>
+<td>Library integration</td>
+<td><strong>Adopt as a building block</strong> for repository maps and outlines</td>
+</tr>
+<tr>
+<td><strong>Aider-style repository map</strong></td>
+<td>Compact per-file outline of top-level symbols, ranked by relevance</td>
+<td>A build step</td>
+<td><strong>Trial.</strong> Good for large unfamiliar repositories; it costs prefix, so budget it</td>
+</tr>
+<tr>
+<td><strong>code-review-graph</strong></td>
+<td>Pre-builds a structural map with tree-sitter into SQLite</td>
+<td>Index build</td>
+<td><strong>Trial</strong> where a language server is unavailable</td>
+</tr>
+<tr>
+<td><strong>claude-context</strong></td>
+<td>Chunks, embeds and serves semantic or hybrid search over MCP</td>
+<td>Vector database; staleness</td>
+<td><strong>Trial as a complement only.</strong> Never primary</td>
+</tr>
+<tr>
+<td><strong>Token Savior</strong></td>
+<td>Progressive file delivery: summaries, then snippets, then full files</td>
+<td>Install</td>
+<td><strong>Trial.</strong> Attacks whole-file reading; check it does not add a round trip per read</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommended stack:</strong> <code>rg</code>, a symbol-level MCP, and ignore files. Add semantic search only after measuring that concept questions are a real share of your work, and point it at <code>docs/</code> and ADRs rather than code.</p>
+<h2 id="layer-2-tool-surface">Layer 2: Tool surface<a class="rs-anchor" href="#layer-2-tool-surface" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Built-in tool search or deferred definitions</strong></td>
+<td>Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>None if built in</td>
+<td><strong>Adopt.</strong> A default in some harnesses as of 2026 <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; check yours first</td>
+</tr>
+<tr>
+<td><strong>Agent skills</strong></td>
+<td>Named capabilities with short triggers and bodies loaded on match</td>
+<td>Authoring effort</td>
+<td><strong>Adopt.</strong> Budget descriptions as one number</td>
+</tr>
+<tr>
+<td><strong>agentgateway</strong></td>
+<td>An MCP proxy that applies progressive disclosure across servers</td>
+<td>Proxy deployment</td>
+<td><strong>Trial</strong> if you run many servers and your harness lacks deferral</td>
+</tr>
+<tr>
+<td><strong>Code-execution patterns for MCP</strong></td>
+<td>Replace tool schemas with code against an API; <strong>150K → ~2K, 98.7%</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>A sandbox</td>
+<td><strong>Adopt if you can sandbox.</strong> The largest single saving in this research</td>
+</tr>
+<tr>
+<td><strong>Schema deduplication proposals</strong> (<code>$ref</code>, adaptive fields, response granularity)</td>
+<td>Structural reduction, 10–30% on similar schemas <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Protocol-level; not universal</td>
+<td><strong>Watch</strong></td>
+</tr>
+<tr>
+<td><strong>Deleting an MCP server</strong></td>
+<td>—</td>
+<td>Negative</td>
+<td><strong>Adopt.</strong> The highest-yield action in the chapter</td>
+</tr>
+</tbody>
+</table></div>
+<p>The MCP ecosystem optimises for <em>capability exposure</em>. Context efficiency is <em>capability restriction</em>. Nothing in the protocol will restrict for you; the <a href="08-tool-surface.html#the-30-minute-audit">30-minute audit</a> is the tool.</p>
+<h2 id="state-memory-and-offload">Layer 3: State, memory and offload<a class="rs-anchor" href="#state-memory-and-offload" title="Link to this section">#</a></h2>
+<p>The most crowded category and the thinnest evidence. Read <a href="06-compaction-and-memory.html#cross-session-memory">the memory section of chapter 6</a> before adopting anything here.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A plan file in the repository</strong></td>
+<td>Goal, decisions, ruled-out approaches, current state</td>
+<td>Zero</td>
+<td><strong>Adopt.</strong> Beats every tool in this table on evidence per unit of effort</td>
+</tr>
+<tr>
+<td><strong>ADRs in the repository</strong></td>
+<td>Versioned, reviewed decision records</td>
+<td>Writing discipline</td>
+<td><strong>Adopt.</strong> The best memory system is the one your PR process already maintains</td>
+</tr>
+<tr>
+<td><strong>A scratch directory</strong> (<code>.agent/</code>, gitignored)</td>
+<td>Offloaded logs and intermediate artifacts</td>
+<td>Zero</td>
+<td><strong>Adopt</strong></td>
+</tr>
+<tr>
+<td><strong>scratch</strong></td>
+<td>A folder plus manifest for agent notes and output, outside the source tree</td>
+<td>Install</td>
+<td><strong>Trial.</strong> Check the manifest stays bounded</td>
+</tr>
+<tr>
+<td><strong>OpenMemory / mem0</strong></td>
+<td>Persistent MCP memory across clients, auto-capturing preferences and patterns</td>
+<td>Service; prefix tokens; curation</td>
+<td><strong>Trial with a gate.</strong> Auto-capture is where write-only memory starts</td>
+</tr>
+<tr>
+<td><strong>mcp-memory-service</strong></td>
+<td>Memory for agent pipelines with an API, a graph and consolidation</td>
+<td>Service</td>
+<td><strong>Trial</strong>, only for multi-agent pipelines</td>
+</tr>
+<tr>
+<td><strong>Official memory MCP server</strong></td>
+<td>Knowledge-graph memory for entities and relations</td>
+<td>Service</td>
+<td><strong>Skip for coding.</strong> Coding facts belong in the repository</td>
+</tr>
+<tr>
+<td><strong>mcp-memory (SQLite FTS5)</strong></td>
+<td>Long-term memory with full-text search</td>
+<td>Local SQLite</td>
+<td><strong>Trial.</strong> The lightest credible option; full-text beats embeddings for exact facts</td>
+</tr>
+<tr>
+<td><strong>cognee</strong></td>
+<td>Knowledge engine with graph-based extraction</td>
+<td>Library</td>
+<td><strong>Watch.</strong> No coding-specific outcome evidence found</td>
+</tr>
+<tr>
+<td><strong>Agentage Memory</strong></td>
+<td>Cross-vendor memory stored as plain Markdown you own</td>
+<td>Service</td>
+<td><strong>Trial.</strong> Plain Markdown is the right instinct</td>
+</tr>
+<tr>
+<td><strong>memsearch</strong></td>
+<td>Decisions as searchable Markdown, indexed for recall across sessions</td>
+<td>Index</td>
+<td><strong>Trial.</strong> Closest to the searchable-tier design</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The gate for every tool here:</strong> if you cannot report <em>retrievals that changed an action, per week</em> after one month, delete it.</p>
+<h3 id="external-knowledge-stores">External knowledge stores<a class="rs-anchor" href="#external-knowledge-stores" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Substrate</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ripgrep over <code>docs/</code></strong></td>
+<td>Filesystem</td>
+<td><strong>Adopt.</strong> The baseline everything else must beat, and most do not</td>
+</tr>
+<tr>
+<td><strong>adr-tools</strong></td>
+<td>Filesystem</td>
+<td><strong>Adopt.</strong> Near-zero cost; the supersede chain is what matters</td>
+</tr>
+<tr>
+<td><strong>Log4brains</strong></td>
+<td>Filesystem</td>
+<td><strong>Trial.</strong> When people also browse the ADRs</td>
+</tr>
+<tr>
+<td><strong>MkDocs or Docusaurus in the repository</strong></td>
+<td>Filesystem</td>
+<td><strong>Adopt</strong> if you need a rendered site; keeps docs in the same PRs as code</td>
+</tr>
+<tr>
+<td><strong>Basic Memory</strong></td>
+<td>Filesystem + MCP</td>
+<td><strong>Trial.</strong> Plain Markdown you own: inspectable, greppable, portable</td>
+</tr>
+<tr>
+<td><strong>sqlite-vec / txtai</strong></td>
+<td>File-backed database</td>
+<td><strong>Trial</strong> only with a measured semantic need; pair with full-text search</td>
+</tr>
+<tr>
+<td><strong>Confluence or Notion MCP servers</strong></td>
+<td>Wiki</td>
+<td><strong>Restricted adopt.</strong> Fetch by name only; disable autonomous search; never index</td>
+</tr>
+<tr>
+<td><strong>GraphRAG / LightRAG</strong></td>
+<td>Graph</td>
+<td><strong>Skip for coding.</strong> Built for prose; over source code the compiler graph wins</td>
+</tr>
+<tr>
+<td><strong>Graphiti</strong></td>
+<td>Graph</td>
+<td><strong>Watch.</strong> Time-aware edges are a real answer to staleness</td>
+</tr>
+<tr>
+<td><strong>Graph database MCP servers</strong></td>
+<td>Graph</td>
+<td><strong>Adopt only for the exception</strong>: cross-system dependency, lineage or ownership graphs you already run</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="layer-4-compaction">Layer 4: Compaction<a class="rs-anchor" href="#layer-4-compaction" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Built-in compaction</strong> (<code>/compact</code> and similar)</td>
+<td>Summarises and restarts, usually on a threshold</td>
+<td><strong>Adopt, but control the timing.</strong> Trigger it at boundaries so the automatic threshold never fires</td>
+</tr>
+<tr>
+<td><strong>Manual <code>/clear</code> plus a handoff note</strong></td>
+<td>A reset with authored state</td>
+<td><strong>Adopt.</strong> The highest-control boundary; preferred wherever a plan file exists</td>
+</tr>
+<tr>
+<td><strong>Observation masking</strong></td>
+<td>Replaces old tool output with placeholders</td>
+<td><strong>Adopt as the baseline.</strong> Comparable to summarisation at lower cost <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td><strong>LangChain DeepAgents</strong></td>
+<td>Filesystem offload plus summarisation middleware</td>
+<td><strong>Trial</strong> if you are building an agent, not using a CLI one</td>
+</tr>
+<tr>
+<td><strong>LLMLingua-style token pruning</strong></td>
+<td>Removes low-information tokens</td>
+<td><strong>Skip for coding.</strong> A mid-pack baseline in the comparison <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; the loss is opaque</td>
+</tr>
+<tr>
+<td><strong>Context-manager and pruning plugins</strong></td>
+<td>Checkpoints that survive compaction; duplicate-call tracking; sub-task marking</td>
+<td><strong>Trial.</strong> Few tools address the post-compaction error spike; these do</td>
+</tr>
+<tr>
+<td><strong>Addressable-recall patterns</strong></td>
+<td>A content-addressed observation store with <code>recall &lt;id&gt;</code>; +19.43 points on needle tasks <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td><strong>Watch, or build.</strong> The strongest result in the category, not yet packaged. Approximate it with a scratch directory and descriptive stubs</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="layer-5-observability">Layer 5: Observability<a class="rs-anchor" href="#layer-5-observability" title="Link to this section">#</a></h2>
+<p>You cannot manage what you cannot see, and this is the thinnest layer.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>claude-hud</strong></td>
+<td>Live context usage, active tools, running agents, to-do progress</td>
+<td><strong>Adopt.</strong> Awareness changes behaviour immediately</td>
+</tr>
+<tr>
+<td><strong>Token-usage CLIs</strong></td>
+<td>Parse local session logs into per-session token and cost reports</td>
+<td><strong>Adopt</strong>, but check it separates cached from uncached input; many do not, which makes them misleading</td>
+</tr>
+<tr>
+<td><strong>Built-in usage reporting</strong></td>
+<td>Per-session accounting</td>
+<td><strong>Adopt first</strong>, before installing anything</td>
+</tr>
+<tr>
+<td><strong>A transcript-grep script</strong></td>
+<td>Counts tool calls, finds repeats, ranks commands by output volume</td>
+<td><strong>Adopt.</strong> <a href="17-tips.html#before-the-session-setup-once">Twenty lines of shell</a> power the metrics that route every decision</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">The gap worth naming</p>
+<p>No widely available tool computes the two metrics that matter most here: <strong>post-boundary re-fetch rate</strong> and <strong>Pass² ÷ Pass@2</strong>. You will have to build both. The gap exists because the field still measures inputs rather than outcomes.</p>
+</aside>
+<h2 id="standards-and-conventions">Standards and conventions<a class="rs-anchor" href="#standards-and-conventions" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Thing</th>
+<th>Status</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AGENTS.md</strong></td>
+<td>Read by 30+ tools; 60,000+ repositories; stewarded by the Agentic AI Foundation under the Linux Foundation <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td><strong>Adopt.</strong> Keep it under 150 lines</td>
+</tr>
+<tr>
+<td><strong>CLAUDE.md</strong></td>
+<td>The same idea under a vendor-specific name</td>
+<td><strong>Adopt.</strong> Link it to <code>AGENTS.md</code> if your tools allow</td>
+</tr>
+<tr>
+<td><strong>MCP</strong></td>
+<td>Broad adoption</td>
+<td><strong>Adopt selectively.</strong> The protocol is fine; attaching many servers by default is the problem</td>
+</tr>
+<tr>
+<td><strong>Agent skills</strong></td>
+<td>Adopted across major vendors <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td><strong>Adopt.</strong> The right shape for procedures</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="a-starter-stack-in-order">A starter stack, in order<a class="rs-anchor" href="#a-starter-stack-in-order" title="Link to this section">#</a></h2>
+<p>For a team using a CLI coding agent on a large repository. Each week is valuable on its own, so stop when the <a href="15-optimisation-plan.html#the-stop-rule">stop rule</a> fires.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">four-week starter stack</span></div><pre class="highlight"><code>Week 1  prevention and deletion (no behaviour change)
+        ignore files
+        four shell wrappers for your loudest commands
+        delete every zero-call MCP server
+        instruction file → inference test → ≤ 150 lines
+        a usage reporter + the transcript-grep script
+
+Week 2  retrieval
+        ripgrep by default, with -C 8 and exclusions
+        a symbol-level MCP (Serena or your stack&#39;s equivalent)
+
+Week 3  state
+        a plan-file convention
+        a .agent/ scratch directory with self-describing stubs
+
+Week 4  boundaries
+        semantic compaction triggers; one compaction per session
+        a handoff template; mechanical session caps
+        a live context display
+
+Later, only if measurement demands it
+        code execution against an API (the largest remaining win)
+        semantic search over docs and ADRs
+        a memory system, with the retrieval gate from day one
+</code></pre></div>
+<p>Weeks 1 and 2 carry most of the value and need almost no ongoing discipline. Weeks 3 and 4 need behaviour change, which is where adoption usually stalls.</p>
+<h2 id="what-the-ecosystem-is-missing">What the ecosystem is missing<a class="rs-anchor" href="#what-the-ecosystem-is-missing" title="Link to this section">#</a></h2>
+<p>These are gaps a builder could fill. Their absence explains several of the field's blind spots.</p>
+<ol>
+<li><strong>Cache-aware accounting.</strong> Nothing widely available reports cache-adjusted cost, so nobody sees regressions like the <a href="14-case-studies.html#cs-5-dynamic-tool-loading-made-things-worse-c">dynamic-tool case</a>.</li>
+<li><strong>Post-boundary instrumentation.</strong> The most error-prone moment in a session is unmonitored everywhere by default.</li>
+<li><strong>Pass^k runners for local workloads.</strong> Running your own tasks k times and computing Pass² should be one command. It is not.</li>
+<li><strong>Read-coverage auditing.</strong> Separating starvation from dilution still means reading transcripts by hand.</li>
+<li><strong>Packaged addressable-recall compaction.</strong> The strongest published compaction result has no widely available implementation.</li>
+</ol>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Check whether your harness already does it before installing anything.</li><li>Four shell wrappers usually beat any installed output-shaping tool.</li><li>Every memory tool needs a retrieval gate from day one.</li><li>Nothing off the shelf measures post-boundary re-fetch or Pass². You will have to build them.</li></ol>
+        </section>
+        
+        
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="17-tips.html"><span class="rs-pn__label">← Previous · Chapter 17</span><span class="rs-pn__title">Sixty-two habits that compound</span><span class="rs-pn__part">Act on it</span></a><a class="rs-pn__link rs-pn__link--next" href="a-templates.html"><span class="rs-pn__label">Next → · Appendix A</span><span class="rs-pn__title">Templates you can copy</span><span class="rs-pn__part">Reference</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#read-this-before-the-tables">Read this before the tables</a></li><li><a href="#layer-0-prevention">Layer 0: Prevention</a></li><li><a href="#layer-1-retrieval">Layer 1: Retrieval</a></li><li><a href="#layer-2-tool-surface">Layer 2: Tool surface</a></li><li><a href="#state-memory-and-offload">Layer 3: State, memory and offload</a><ul><li><a href="#external-knowledge-stores">External knowledge stores</a></li></ul></li><li><a href="#layer-4-compaction">Layer 4: Compaction</a></li><li><a href="#layer-5-observability">Layer 5: Observability</a></li><li><a href="#standards-and-conventions">Standards and conventions</a></li><li><a href="#a-starter-stack-in-order">A starter stack, in order</a></li><li><a href="#what-the-ecosystem-is-missing">What the ecosystem is missing</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The tool surface: MCP, skills and progressive disclosure — Context Management</title>
+  <meta name="description" content="Tool definitions are the largest measured waste in most contexts. Degradation curves, three architectures, a 30-minute audit and a worked example recovering..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/08-tool-surface.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/08-tool-surface.html" />
+  <meta property="og:title" content="The tool surface: MCP, skills and progressive disclosure — Context Management" />
+  <meta property="og:description" content="Tool definitions are the largest measured waste in most contexts. Degradation curves, three architectures, a 30-minute audit and a worked example recovering..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="The tool surface: MCP, skills and progressive disclosure — Context Management" />
+  <meta property="twitter:description" content="Tool definitions are the largest measured waste in most contexts. Degradation curves, three architectures, a 30-minute audit and a worked example recovering..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "The tool surface: MCP, skills and progressive disclosure",
+  "description": "Tool definitions are the largest measured waste in most contexts. Degradation curves, three architectures, a 30-minute audit and a worked example recovering 32% of the window.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/08-tool-surface.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "The methods"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 8",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/08-tool-surface.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html" aria-current="page"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">The methods</li><li aria-current="page">Chapter 8</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part II · The methods</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 8</span></p>
+          <h1 class="rs-hero__title">The tool surface: MCP, skills and progressive disclosure</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> How much context do tools, MCP servers and skills consume, and what does a healthy tool surface look like?</p>
+          <div class="rs-meta">
+            <span>8 min read</span><span aria-hidden="true">·</span>
+            <span>Deep dive</span><span aria-hidden="true">·</span>
+            <span>Step 8 of 20</span><span aria-hidden="true">·</span>
+            <span>6/6 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why bigger windows did not help</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html" aria-current="page"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#why-this-is-usually-where-you-win">Why this is usually where you win</a></li><li><a class="on-this-page__link" href="#the-measured-damage">The measured damage</a></li><li><a class="on-this-page__link" href="#three-architectures">Three architectures</a></li><li><a class="on-this-page__link" href="#the-30-minute-audit">The 30-minute audit</a></li><li><a class="on-this-page__link" href="#the-redundancy-problem">The redundancy problem</a></li><li><a class="on-this-page__link" href="#skills-progressive-disclosure-for-procedures">Skills: progressive disclosure for procedures</a></li><li><a class="on-this-page__link" href="#results-are-the-other-half">Results are the other half</a></li><li><a class="on-this-page__link" href="#a-worked-audit">A worked audit</a></li><li><a class="on-this-page__link" href="#metrics">Metrics</a></li></ul></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Tool count hurts twice: definitions displace work, and more choices mean worse choices <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li><li>Deferred definitions fix displacement, not confusion. Only fewer tools fix confusion.</li><li>A 30-minute audit usually finds most tools were never called. Delete them.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Separate displacement from selection confusion and pick the right fix</li><li>Compare eager, progressive and code-execution tool architectures</li><li>Run the six-step tool audit</li><li>Budget skills the same way you budget tools</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="why-this-is-usually-where-you-win">Why this is usually where you win<a class="rs-anchor" href="#why-this-is-usually-where-you-win" title="Link to this section">#</a></h2>
+<p>In the <a href="02-anatomy.html#reading-a-whole-budget-a-worked-example">worked budget</a>, tool definitions were 25% of the context: <strong>38,000 tokens for 61 tools, of which 11 were ever used.</strong> That is not unusual. It is the typical first finding.</p>
+<p>Three properties make the tool surface the best place to start:</p>
+<ol>
+<li><strong>It is prefix.</strong> You pay for it on every call in every session.</li>
+<li><strong>Unused tools are pure waste.</strong> A tool never called contributed nothing and cost everything.</li>
+<li><strong>The fix is reversible in seconds.</strong> Delete a server; if you were wrong, add it back. No behaviour change, no retraining, no discipline required.</li>
+</ol>
+<p>Compare that with retrieval discipline, which needs sustained behaviour change for a smaller win. <strong>Start here.</strong></p>
+<h2 id="the-measured-damage">The measured damage<a class="rs-anchor" href="#the-measured-damage" title="Link to this section">#</a></h2>
+<p><a class="rs-term" href="glossary.html#tool-bloat" data-def="Tool definitions taking a large share of the prefix. Harms through displacement and through selection confusion.">Tool bloat</a> hurts through two independent channels. Confusing them leads to the wrong fix.</p>
+<p><strong>Channel 1: displacement.</strong> Definition tokens are prefix tokens, and they crowd out work. One popular <a class="rs-term" href="glossary.html#mcp" data-def="The Model Context Protocol: a standard way to expose tools and data to agents through servers.">MCP</a> server consumes about <strong>42,000 tokens of definitions</strong> before anything else <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Three such servers spend over 120K tokens on the <em>possibility</em> of acting, most of a 200K window before the first file is read.</p>
+<p><strong>Channel 2: selection confusion.</strong> Independent of tokens, more candidates mean worse choices.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Number</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool-selection accuracy as tool count grows</td>
+<td><strong>43% baseline → under 14%</strong></td>
+<td><a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>At 20 tools versus 107 tools</td>
+<td><strong>19 of 20 correct → complete failure</strong></td>
+<td><a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Practitioner threshold</td>
+<td>Noticeable damage past <strong>about 20 active tools</strong></td>
+<td><a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>Two independent methods converging near the same threshold is strong evidence for this field. <strong>Treat about 20 active tools as a soft ceiling and about 40 as a hard one</strong> <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">Deferred loading does not fix confusion</p>
+<p>If your problem is displacement, deferred definitions fix it. If your problem is selection confusion, they <strong>do not</strong>: the agent still chooses among the same number of descriptions. Only <em>having fewer tools</em>, or scoping them per task, fixes confusion. Teams that adopt deferred loading and still see wrong-tool picks applied the wrong remedy.</p>
+</aside>
+<h2 id="three-architectures">Three architectures<a class="rs-anchor" href="#three-architectures" title="Link to this section">#</a></h2>
+<h3 id="a-1-eager-definitions-the-default-and-the-problem">A-1: Eager definitions (the default, and the problem)<a class="rs-anchor" href="#a-1-eager-definitions-the-default-and-the-problem" title="Link to this section">#</a></h3>
+<p>Every tool's full schema loaded upfront, every session. Simple, predictable and cache-friendly. It scales badly: 60 tools with rich schemas is 40–60K tokens.</p>
+<h3 id="a-2-progressive-disclosure">A-2: Progressive disclosure<a class="rs-anchor" href="#a-2-progressive-disclosure" title="Link to this section">#</a></h3>
+<p>Short descriptions upfront; full schemas fetched when a tool is chosen. This separates <em>when to use it</em> from <em>how to call it</em>. See <a class="rs-term" href="glossary.html#progressive-disclosure" data-def="Loading short descriptions first and full content only on demand. Applied to tool schemas, skills and file reads.">progressive disclosure</a>.</p>
+<p>Measured: <strong>about 25,000 tokens of definitions became about 2,500 tokens of descriptions</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, an order of magnitude with capability preserved. This is the idea behind agent skills, and the ecosystem has converged on it <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. In 2026 some harnesses made deferred definitions the default <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p>Costs: one round trip before a tool's first use; a discoverability risk (a capability with an unappealing description never gets used); and a recursion trap, because enough descriptions become bloat one level up.</p>
+<h3 id="a-3-code-execution-against-an-api">A-3: Code execution against an API<a class="rs-anchor" href="#a-3-code-execution-against-an-api" title="Link to this section">#</a></h3>
+<p>The most radical option and the most effective. Instead of exposing tool schemas, expose a programmatic API and let the agent write code against it. The agent filters, joins and loops over data <strong>before</strong> any of it reaches the context.</p>
+<p>Measured: <strong>150,000 → about 2,000 tokens, a 98.7% reduction</strong>, and 99%+ on definitions alone at 112 tools <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A production report on a GitHub MCP server independently found a 98% reduction with the code-first pattern <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p>The headline number hides the mechanism. Two things happen:</p>
+<ol>
+<li><strong>Definitions collapse.</strong> One <code>execute_code</code> tool plus documentation replaces N schemas.</li>
+<li><strong>Results collapse, and this is the bigger effect.</strong> A normal tool call returns everything and the model filters in context, paying for data it throws away. Code filters <em>first</em>:</li>
+</ol>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">filtering before the context sees it</span></div><pre class="highlight"><code><span class="c1"># 400 issue objects never enter the context — only five integers do</span>
+<span class="p">[</span><span class="n">issue</span><span class="o">.</span><span class="n">number</span> <span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">list_issues</span><span class="p">()</span> <span class="k">if</span> <span class="n">issue</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;open&quot;</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div>
+<p>That makes A-3 as much a result-shaping architecture as a definition-shaping one, which is why its numbers beat A-2's.</p>
+<p>Costs: a sandbox; an API worth writing against; and a real failure mode where buggy filter code silently drops the rows that mattered.</p>
+<figure class="diagram rs-chart" id="chart-tool-surface-1"><p class="diagram__title">Prefix cost of 60 tools under each architecture</p><div class="diagram__scroll"><svg viewBox="0 0 720 136" role="img" aria-labelledby="chart-tool-surface-1-t" class="chart chart--hbar"><title id="chart-tool-surface-1-t">Eager: about 50,000 tokens. Progressive: about 4,500. Code execution: about 2,000.</title><line class="ch-grid" x1="190.0" y1="4" x2="190.0" y2="114"/><text class="ch-axis" x="190.0" y="130" text-anchor="middle">0</text><line class="ch-grid" x1="300.0" y1="4" x2="300.0" y2="114"/><text class="ch-axis" x="300.0" y="130" text-anchor="middle">12,500</text><line class="ch-grid" x1="410.0" y1="4" x2="410.0" y2="114"/><text class="ch-axis" x="410.0" y="130" text-anchor="middle">25,000</text><line class="ch-grid" x1="520.0" y1="4" x2="520.0" y2="114"/><text class="ch-axis" x="520.0" y="130" text-anchor="middle">37,500</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="114"/><text class="ch-axis" x="630.0" y="130" text-anchor="middle">50,000</text><text class="ch-label" x="180" y="29.0" text-anchor="end">A-1 Eager definitions</text><path class="ch-mark ch-s1" d="M190.0,16.0 h436.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-436.0 z" data-tip="Prefix tokens (midpoint of typical range) · A-1 Eager definitions: 50,000"/><text class="ch-value" x="636.0" y="29.0">50,000</text><text class="ch-label" x="180" y="63.0" text-anchor="end">A-2 Progressive disclosure</text><path class="ch-mark ch-muted" d="M190.0,50.0 h35.6 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-35.6 z" data-tip="Prefix tokens (midpoint of typical range) · A-2 Progressive disclosure: 4,500"/><text class="ch-value" x="235.6" y="63.0">4,500</text><text class="ch-label" x="180" y="97.0" text-anchor="end">A-3 Code execution</text><path class="ch-mark ch-muted" d="M190.0,84.0 h13.6 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-13.6 z" data-tip="Prefix tokens (midpoint of typical range) · A-3 Code execution: 2,000"/><text class="ch-value" x="213.6" y="97.0">2,000</text><line class="ch-base" x1="190" y1="4" x2="190" y2="114"/></svg></div><figcaption><span class="rs-fignum">Figure 1.</span> Progressive disclosure is an order of magnitude; code execution is roughly another. Ranges: eager 40–60K, progressive 3–6K, code execution 1–3K <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Architecture</th><th scope="col">Prefix tokens (midpoint of typical range)</th></tr></thead><tbody><tr><th scope="row">A-1 Eager definitions</th><td>50,000</td></tr><tr><th scope="row">A-2 Progressive disclosure</th><td>4,500</td></tr><tr><th scope="row">A-3 Code execution</th><td>2,000</td></tr></tbody></table></div></details></figure>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th></th>
+<th>A-1 Eager</th>
+<th>A-2 Progressive</th>
+<th>A-3 Code execution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prefix cost (60 tools)</td>
+<td>40–60K</td>
+<td>3–6K</td>
+<td>1–3K</td>
+</tr>
+<tr>
+<td>Shapes results</td>
+<td>No</td>
+<td>No</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td>Round trips</td>
+<td>0</td>
+<td>+1 per new tool</td>
+<td>+1, but batches many operations</td>
+</tr>
+<tr>
+<td>Cache-friendly</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Selection confusion</td>
+<td>High</td>
+<td>Moderate</td>
+<td><strong>Low</strong> (one tool)</td>
+</tr>
+<tr>
+<td>Setup cost</td>
+<td>None</td>
+<td>Low</td>
+<td>Moderate (sandbox)</td>
+</tr>
+<tr>
+<td>Failure mode</td>
+<td>Bloat</td>
+<td>Discoverability</td>
+<td>Buggy filter code</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="the-30-minute-audit">The 30-minute audit<a class="rs-anchor" href="#the-30-minute-audit" title="Link to this section">#</a></h2>
+<p>The highest-yield thirty minutes in this research.</p>
+<ol>
+<li><strong>Count.</strong> Dump every tool schema in scope and count tokens, per server and in total. Most people are off by 3–5×.</li>
+<li><strong>Attribute.</strong> Sort servers by size. One is usually the majority.</li>
+<li><strong>Use-count.</strong> Count calls per tool across your last 20 sessions. Most harnesses log this; otherwise grep the transcripts.</li>
+<li><strong>Classify.</strong></li>
+</ol>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Rule</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dead</strong></td>
+<td>0 calls in 20 sessions</td>
+<td><strong>Delete.</strong> No discussion</td>
+</tr>
+<tr>
+<td><strong>Redundant</strong></td>
+<td>Duplicates something the shell already does</td>
+<td><strong>Delete.</strong> <code>gh</code>, <code>psql</code>, <code>curl</code>, <code>rg</code> exist</td>
+</tr>
+<tr>
+<td><strong>Rare but critical</strong></td>
+<td>Fewer than 3 calls, but decisive</td>
+<td>Defer it, or move it behind code execution</td>
+</tr>
+<tr>
+<td><strong>Core</strong></td>
+<td>Called often</td>
+<td>Keep it eager; trim its description</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="5">
+<li><strong>Trim what remains.</strong> Descriptions and examples are typically 40% trimmable with no behaviour change. Deduplicating repeated schema structures with <code>$ref</code> saves another 10–30% <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
+<li><strong>Set a budget and enforce it.</strong> For example: at most 20 active tools and 15K definition tokens. Adding a server means removing one or writing down the exception. Without this, the surface grows back within a quarter <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
+</ol>
+<p>The <a href="a-templates.html#2-tool-surface-audit">tool audit template</a> walks through it.</p>
+<h2 id="the-redundancy-problem">The redundancy problem<a class="rs-anchor" href="#the-redundancy-problem" title="Link to this section">#</a></h2>
+<p>The most common single waste is <strong>an MCP server that duplicates what the agent can already do through the shell.</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>MCP server</th>
+<th>Shell equivalent</th>
+<th>Tokens saved by deleting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub</td>
+<td><code>gh</code></td>
+<td>~42K <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+</tr>
+<tr>
+<td>Filesystem</td>
+<td><code>ls</code>, <code>cat</code>, <code>find</code>, <code>rg</code></td>
+<td>3–8K</td>
+</tr>
+<tr>
+<td>Database</td>
+<td><code>psql</code>, <code>mysql</code>, <code>sqlite3</code></td>
+<td>5–12K</td>
+</tr>
+<tr>
+<td>HTTP fetch</td>
+<td><code>curl</code></td>
+<td>2–5K</td>
+</tr>
+<tr>
+<td>Git</td>
+<td><code>git</code></td>
+<td>3–6K</td>
+</tr>
+</tbody>
+</table></div>
+<p>The shell version is usually <em>better</em>: it composes with pipes (result shaping for free), it is well represented in training data, it has no schema to load, and it has no version skew between server and command.</p>
+<aside class="callout rs-callout rs-callout--note"><p class="rs-callout__title">The honest counter-argument</p>
+<p>MCP servers can provide structured output, authentication handling and safety rails a raw shell does not. If your agent runs unsupervised in a sensitive environment, a constrained MCP surface is a <strong>security control</strong>, and paying 42K tokens for it may be correct. <strong>Make that trade explicitly.</strong> What is not defensible is paying it by accident because a server was easy to install.</p>
+</aside>
+<h2 id="skills-progressive-disclosure-for-procedures">Skills: progressive disclosure for procedures<a class="rs-anchor" href="#skills-progressive-disclosure-for-procedures" title="Link to this section">#</a></h2>
+<p><a class="rs-term" href="glossary.html#skill" data-def="A named capability with a short trigger description that is always loaded and a full procedure that loads only when it matches.">Skills</a> apply the same idea to <em>procedures</em>: a short trigger description is always loaded, and the full body loads when it matches. The always-loaded cost grows with the <em>number</em> of capabilities, not their complexity. A 3,000-word procedure costs about 15 tokens of description until it is needed.</p>
+<p>Skills fail at <strong>trigger design</strong>, not content.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Too vague</td>
+<td>Fires on everything, or the model cannot tell when it applies</td>
+<td>Name concrete triggers: file types, command names, task phrasings</td>
+</tr>
+<tr>
+<td>Too narrow</td>
+<td>Fires only on the exact phrasing you imagined</td>
+<td>List synonyms and neighbouring phrasings</td>
+</tr>
+<tr>
+<td>Overlapping</td>
+<td>Two skills match and the model picks one arbitrarily</td>
+<td>Make descriptions mutually exclusive; say what each is <em>not</em> for</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The recursion trap.</strong> Forty skills at 40 tokens each is 1,600 tokens: fine. Four hundred is 16,000 tokens and a selection problem like the 107-tool collapse <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Skills move the problem up a level; they do not remove it. <strong>Budget skill descriptions as one number</strong>, exactly like tool definitions.</p>
+<p><strong>Measure them</strong> with trigger precision (fired correctly ÷ fired) and trigger recall (fired correctly ÷ should have fired). A skill with near-zero recall is permanent prefix cost buying nothing. Delete it.</p>
+<h2 id="results-are-the-other-half">Results are the other half<a class="rs-anchor" href="#results-are-the-other-half" title="Link to this section">#</a></h2>
+<p>Everything above is about definitions. Tool <em>results</em> are larger in a working session and follow the same discipline.</p>
+<p><strong>The MCP result problem.</strong> Many servers return verbose JSON: an issue object with 40 fields when the agent needed the title and number. Twenty issues at 500 tokens each is 10,000 tokens where 200 would do. Fixes, in order of preference:</p>
+<ol>
+<li><strong>Code execution (A-3).</strong> Filter before returning. Solves it structurally.</li>
+<li><strong>Server-side field selection.</strong> Request only the fields you need. Under-used because the parameter is buried in the schema.</li>
+<li><strong>A shaping proxy.</strong> Wrap the server, strip fields, and return a digest plus a pointer to the full response.</li>
+<li><strong>Response-granularity controls.</strong> Emerging MCP proposals include adaptive optional fields and flexible response detail so servers can match verbosity to the client's intent <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
+</ol>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">Capability exposure versus capability restriction</p>
+<p>The MCP ecosystem's design centre is <em>making things possible</em>. Context efficiency is <em>making things cheap</em>. These pull in opposite directions, and the defaults favour the first. <strong>You have to apply the second yourself.</strong> Nothing in the protocol will do it for you.</p>
+</aside>
+<h2 id="a-worked-audit">A worked audit<a class="rs-anchor" href="#a-worked-audit" title="Link to this section">#</a></h2>
+<figure class="diagram rs-chart" id="chart-tool-surface-2"><p class="diagram__title">Definition tokens versus tools actually used (20 sessions)</p><div class="diagram__scroll"><svg viewBox="0 0 720 170" role="img" aria-labelledby="chart-tool-surface-2-t" class="chart chart--hbar"><title id="chart-tool-surface-2-t">GitHub 42,000 tokens; database 11,000; browser 9,000; filesystem 4,000.</title><line class="ch-grid" x1="250.0" y1="4" x2="250.0" y2="148"/><text class="ch-axis" x="250.0" y="164" text-anchor="middle">0</text><line class="ch-grid" x1="345.0" y1="4" x2="345.0" y2="148"/><text class="ch-axis" x="345.0" y="164" text-anchor="middle">12,500</text><line class="ch-grid" x1="440.0" y1="4" x2="440.0" y2="148"/><text class="ch-axis" x="440.0" y="164" text-anchor="middle">25,000</text><line class="ch-grid" x1="535.0" y1="4" x2="535.0" y2="148"/><text class="ch-axis" x="535.0" y="164" text-anchor="middle">37,500</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="148"/><text class="ch-axis" x="630.0" y="164" text-anchor="middle">50,000</text><text class="ch-label" x="240" y="29.0" text-anchor="end">GitHub (34 tools, 7 used)</text><path class="ch-mark ch-muted" d="M250.0,16.0 h315.2 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-315.2 z" data-tip="Definition tokens · GitHub (34 tools, 7 used): 42,000"/><text class="ch-value" x="575.2" y="29.0">42,000</text><text class="ch-label" x="240" y="63.0" text-anchor="end">Database (12 tools, 0 used)</text><path class="ch-mark ch-s1" d="M250.0,50.0 h79.6 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-79.6 z" data-tip="Definition tokens · Database (12 tools, 0 used): 11,000"/><text class="ch-value" x="339.6" y="63.0">11,000</text><text class="ch-label" x="240" y="97.0" text-anchor="end">Browser (9 tools, 0 used)</text><path class="ch-mark ch-s1" d="M250.0,84.0 h64.4 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-64.4 z" data-tip="Definition tokens · Browser (9 tools, 0 used): 9,000"/><text class="ch-value" x="324.4" y="97.0">9,000</text><text class="ch-label" x="240" y="131.0" text-anchor="end">Filesystem (6 tools, 2 used, both = cat)</text><path class="ch-mark ch-s1" d="M250.0,118.0 h26.4 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-26.4 z" data-tip="Definition tokens · Filesystem (6 tools, 2 used, both = cat): 4,000"/><text class="ch-value" x="286.4" y="131.0">4,000</text><line class="ch-base" x1="250" y1="4" x2="250" y2="148"/></svg></div><figcaption><span class="rs-fignum">Figure 2.</span> 66,000 tokens, 33% of a 200K window, for nine distinct tools actually used. Highlighted servers were never needed <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Server</th><th scope="col">Definition tokens</th></tr></thead><tbody><tr><th scope="row">GitHub (34 tools, 7 used)</th><td>42,000</td></tr><tr><th scope="row">Database (12 tools, 0 used)</th><td>11,000</td></tr><tr><th scope="row">Browser (9 tools, 0 used)</th><td>9,000</td></tr><tr><th scope="row">Filesystem (6 tools, 2 used, both = cat)</th><td>4,000</td></tr></tbody></table></div></details></figure>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Reason</th>
+<th style="text-align: right;">Tokens saved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delete the browser server</td>
+<td>Zero calls</td>
+<td style="text-align: right;">9,000</td>
+</tr>
+<tr>
+<td>Delete the database server</td>
+<td>Zero calls; <code>psql</code> is in the shell</td>
+<td style="text-align: right;">11,000</td>
+</tr>
+<tr>
+<td>Delete the filesystem server</td>
+<td>Duplicates built-in file tools</td>
+<td style="text-align: right;">4,000</td>
+</tr>
+<tr>
+<td>Switch GitHub to deferred descriptions</td>
+<td>7 of 34 tools used; keep the capability, defer the schemas</td>
+<td style="text-align: right;">~38,000</td>
+</tr>
+<tr>
+<td>Trim the remaining descriptions</td>
+<td>Verbose prose</td>
+<td style="text-align: right;">~1,500</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>End state: about 2,500 tokens. Recovered: 63,500 tokens, 32% of the window, permanently, on every call.</strong> Over the next 20 sessions: task success unchanged, median session cost down 34%, two extra round trips from deferred loading, and <strong>no occasion where a deleted capability was missed</strong> <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
+<h2 id="metrics">Metrics<a class="rs-anchor" href="#metrics" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Detects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Definition tokens</td>
+<td>Count all schemas</td>
+<td>Under 15K</td>
+<td>Bloat</td>
+</tr>
+<tr>
+<td>Active tools</td>
+<td>Tools in scope</td>
+<td>At most 20</td>
+<td>Confusion risk</td>
+</tr>
+<tr>
+<td><strong>Defined : called</strong></td>
+<td>Tools defined ÷ tools ever used</td>
+<td>Under 3:1</td>
+<td>Dead surface</td>
+</tr>
+<tr>
+<td>Prefix share</td>
+<td>Definitions ÷ total prefix</td>
+<td>Under 40%</td>
+<td>Displacement</td>
+</tr>
+<tr>
+<td>Wrong-tool rate</td>
+<td>Wrong picks ÷ tool calls</td>
+<td>Under 2%</td>
+<td>Confusion</td>
+</tr>
+<tr>
+<td>Result waste</td>
+<td>Returned tokens ÷ cited tokens</td>
+<td>Under 10:1</td>
+<td>Need for result shaping</td>
+</tr>
+<tr>
+<td>Skill trigger recall</td>
+<td>Fired correctly ÷ should have fired</td>
+<td>Over 0.7</td>
+<td>Dead skills</td>
+</tr>
+<tr>
+<td>Re-bloat rate</td>
+<td>Change in definition tokens per quarter</td>
+<td>About 0</td>
+<td>Governance failing</td>
+</tr>
+</tbody>
+</table></div>
+<p>If you check one number today, make it <strong>defined : called</strong>. Above 3:1 you have found your largest available win, and it costs nothing to take.</p>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Treat about 20 active tools as a soft ceiling and about 40 as a hard one.</li><li>Zero-invocation tools are pure loss and can be restored in seconds.</li><li>Prefer the shell to an MCP server that duplicates it, unless the server is a deliberate security control.</li><li>Code execution removes a whole category of context and shapes results before they arrive.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#tool-bloat"><strong>Tool bloat</strong></a> — Tool definitions taking a large share of the prefix. Harms through displacement and through selection confusion.</li><li><a href="glossary.html#mcp"><strong>MCP</strong></a> — The Model Context Protocol: a standard way to expose tools and data to agents through servers.</li><li><a href="glossary.html#progressive-disclosure"><strong>Progressive disclosure</strong></a> — Loading short descriptions first and full content only on demand. Applied to tool schemas, skills and file reads.</li><li><a href="glossary.html#skill"><strong>Skill</strong></a> — A named capability with a short trigger description that is always loaded and a full procedure that loads only when it matches.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="07-sub-agents.html"><span class="rs-pn__label">← Previous · Chapter 7</span><span class="rs-pn__title">Sub-agents and isolation</span><span class="rs-pn__part">The methods</span></a><a class="rs-pn__link rs-pn__link--next" href="09-evaluation.html"><span class="rs-pn__label">Next → · Chapter 9</span><span class="rs-pn__title">Evaluating a context change</span><span class="rs-pn__part">Measure it</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#why-this-is-usually-where-you-win">Why this is usually where you win</a></li><li><a href="#the-measured-damage">The measured damage</a></li><li><a href="#three-architectures">Three architectures</a><ul><li><a href="#a-1-eager-definitions-the-default-and-the-problem">A-1: Eager definitions (the default, and the problem)</a></li><li><a href="#a-2-progressive-disclosure">A-2: Progressive disclosure</a></li><li><a href="#a-3-code-execution-against-an-api">A-3: Code execution against an API</a></li></ul></li><li><a href="#the-30-minute-audit">The 30-minute audit</a></li><li><a href="#the-redundancy-problem">The redundancy problem</a></li><li><a href="#skills-progressive-disclosure-for-procedures">Skills: progressive disclosure for procedures</a></li><li><a href="#results-are-the-other-half">Results are the other half</a></li><li><a href="#a-worked-audit">A worked audit</a></li><li><a href="#metrics">Metrics</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>
