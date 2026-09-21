@@ -180,7 +180,7 @@ Weeks 1 and 2 carry most of the value and need almost no ongoing discipline. Wee
 
 These are gaps a builder could fill. Their absence explains several of the field's blind spots.
 
-1. **Cache-aware accounting.** Nothing widely available reports cache-adjusted cost, so nobody sees regressions like the [dynamic-tool case](ch:case-studies#cs-5-dynamic-tool-loading-made-things-worse-c).
+1. **Cache-aware accounting.** Nothing widely available reports cache-adjusted cost, so nobody sees regressions like the [dynamic-tool case](ch:case-studies#cs-5-dynamic-tool-loading-made-things-worse).
 2. **Post-boundary instrumentation.** The most error-prone moment in a session is unmonitored everywhere by default.
 3. **Pass^k runners for local workloads.** Running your own tasks k times and computing Pass² should be one command. It is not.
 4. **Read-coverage auditing.** Separating starvation from dilution still means reading transcripts by hand.

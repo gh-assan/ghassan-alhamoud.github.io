@@ -10,7 +10,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | [CS-2 The research system that beat one agent by 90%](#cs-2-the-research-system-that-beat-one-agent-by-90-p) | [P] | The same architecture wins when outputs just add up, and the win is bought |
 | [CS-3 Swapping only the summariser moved SWE-bench 6.5 points](#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s) | [S] | The boundary component is a first-class quality lever |
 | [CS-4 Compression that hurt reliability more than accuracy](#cs-4-compression-that-hurt-reliability-more-than-accuracy-s) | [S] | Damage appears in variance before the mean |
-| [CS-5 Dynamic tool loading made things worse](#cs-5-dynamic-tool-loading-made-things-worse-c) | [C] | The cache can flip the sign of a token optimisation |
+| [CS-5 Dynamic tool loading made things worse](#cs-5-dynamic-tool-loading-made-things-worse) | [C] | The cache can flip the sign of a token optimisation |
 | [CS-6 Removal as the answer: code execution](#cs-6-removal-as-the-answer-code-execution-s) | [S] | Eliminating a category beats compressing it |
 | [CS-7 Grep beat embeddings, and the harness beat both](#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s) | [S] | Published retrieval rankings are hypotheses for you |
 | [CS-8 The audit that recovered a third of the window](#cs-8-the-audit-that-recovered-a-third-of-the-window-c) | [C] | The first audit finds waste, not trade-offs |
@@ -93,7 +93,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **What this research takes from it.** k ≥ 2 and Pass² as non-negotiable, the explicit state block in the compaction schema, and the warning that token dashboards cannot see this.
 
-## CS-5: Dynamic tool loading made things worse
+## CS-5: Dynamic tool loading made things worse [C] {#cs-5-dynamic-tool-loading-made-things-worse}
 
 **Situation.** A team measured a 38K-token tool-definition prefix, 25% of their context, and set out to fix it.
 
