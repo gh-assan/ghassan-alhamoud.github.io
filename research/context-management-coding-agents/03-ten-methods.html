@@ -121,7 +121,7 @@
           <h1 class="rs-hero__title">The ten methods experts actually use</h1>
           <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> Which context-management methods survive scrutiny, why does each work, and what does each cost?</p>
           <div class="rs-meta">
-            <span>23 min read</span><span aria-hidden="true">·</span>
+            <span>24 min read</span><span aria-hidden="true">·</span>
             <span>Core</span><span aria-hidden="true">·</span>
             <span>Step 3 of 20</span><span aria-hidden="true">·</span>
             <span>1/6 in this part</span>
@@ -353,7 +353,7 @@
 <p><strong>What it can lose.</strong> A tool the agent needed rarely but decisively. The zero-call rule over 20 sessions guards against this, and removal is reversible in seconds. Over-deferral also adds a round trip before each tool's first use.</p>
 <p><strong>Trouble signs.</strong> Definitions over 20% of the prefix. More than three tools defined for each tool used. The agent choosing an applicable but wrong tool. The agent <em>talking about</em> a capability it never calls.</p>
 <aside class="callout rs-callout rs-callout--example"><p class="rs-callout__title">Worked example <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></p>
-<p>Three MCP servers: GitHub (42K), a database server (11K) and a browser server (9K): 62K of definitions, 31% of a 200K window, before any work. Over 20 sessions, 9 tools were called, all from GitHub, and 6 of those duplicated the <code>gh</code> command already available. The team drops the browser server (never used), drops the database server (a read-only <code>psql</code> command replaces it), and switches GitHub to deferred definitions. New prefix contribution: <strong>about 4K. Recovered: 58K tokens, 29% of the window.</strong> Task success is unchanged over the next 20 sessions; median session cost falls 34%.</p>
+<p>Four MCP servers: GitHub (42K), a database server (11K), a browser server (9K) and a filesystem server (4K): 66K of definitions, 33% of a 200K window, before any work. Over 20 sessions, 9 distinct tools were called, all from GitHub, and 6 of those duplicated the <code>gh</code> command already available. The team deletes the browser, database and filesystem servers (never called, or duplicated by <code>psql</code> and the built-in file tools) and switches GitHub to deferred definitions. New prefix contribution: <strong>about 2.5K. Recovered: 63.5K tokens, 32% of the window.</strong> Task success is unchanged over the next 20 sessions; median session cost falls 34%.</p>
 <p>@@CALLOUT:try:Decision test@@</p>
 <p>Count definition tokens and the defined-to-called ratio. If definitions exceed 15K tokens or the ratio exceeds 3:1, M-2 is almost certainly your single biggest win, and the most reversible one.</p>
 </aside>

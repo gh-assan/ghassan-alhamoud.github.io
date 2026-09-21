@@ -113,7 +113,7 @@ The 12.5× spread between a cached read and a new write is why cache behaviour d
 
 ## Two beliefs the arithmetic overturns
 
-### Belief 1: "Cutting tokens cuts cost"
+### Belief 1: "Cutting tokens cuts cost" [C] {#belief-1-cutting-tokens-cuts-cost}
 
 **False whenever the cut is in the prefix.** A team replaces a static 38K tool surface with per-turn dynamic selection, cutting definitions to 9K.
 
@@ -127,7 +127,7 @@ A **24% token cut produced a 6.9× cost increase**, because the tool block sits 
 > [!key] The rule
 > Tokens in a *stable prefix* cost 0.10 per turn. Tokens that *churn* cost 1.25 every time they re-enter. A large stable prefix is cheaper than a small churning one, often by an order of magnitude.
 
-### Belief 2: "Compaction saves money"
+### Belief 2: "Compaction saves money" [C] {#belief-2-compaction-saves-money}
 
 **True, but far less than the token count suggests, and only if the session continues.**
 

@@ -22,7 +22,7 @@ Three rules make it work:
 <text class="dg-t" x="10" y="192">4 State</text><rect class="dg-box--info" x="525" y="176" width="100" height="24" rx="4"/><text class="dg-s" x="632" y="193">3 h + habit</text>
 <text class="dg-t" x="10" y="226">5 Measurement</text><rect class="dg-box--ghost" x="645" y="210" width="130" height="24" rx="4"/><text class="dg-s" x="710" y="227" text-anchor="middle">4 h · optional</text>
 <text class="dg-t" x="10" y="260">6 Advanced</text><rect class="dg-box--ghost" x="785" y="244" width="105" height="24" rx="4"/><text class="dg-s" x="837" y="261" text-anchor="middle">if data demands</text>
-<text class="dg-s" x="165" y="292">Phases 0–2: six hours, most of the benefit, no behaviour change</text>
+<text class="dg-s" x="165" y="292">Phases 0–2: seven hours, most of the benefit, no behaviour change</text>
 </svg>
 </div>
 <p class="diagram__hint">Scroll sideways to see the full timeline.</p>

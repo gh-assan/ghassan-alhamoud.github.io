@@ -94,7 +94,7 @@
       "navTitle": "Anatomy of the context",
       "level": "Foundational",
       "question": "Where do the tokens in a coding agent's context actually go, and which parts can you control?",
-      "description": "Nine segments of a coding agent's context, their typical size, who controls them, how they fail, and a worked audit that recovers 31% of the window.",
+      "description": "Nine segments of a coding agent's context, their typical size, who controls them, how they fail, and a worked audit that recovers 32% of the window.",
       "tldr": [
         "A context has nine segments: four stable prefix segments and five growing body segments.",
         "The prefix is paid on every call; the body is paid repeatedly and read with fading attention.",
@@ -420,9 +420,9 @@
       "navTitle": "The optimisation plan",
       "level": "Action",
       "question": "Given everything so far, what exactly should I do, in what order, and when should I stop?",
-      "description": "A sequenced six-phase plan of about 16 hours, ordered by yield per effort, with a measurement gate per phase and an explicit stop rule.",
+      "description": "A sequenced seven-phase plan of about 16 hours, ordered by yield per effort, with a measurement gate per phase and an explicit stop rule.",
       "tldr": [
-        "Seven phases, about 16 hours over six weeks. Phases 0–2 take six hours and carry most of the benefit.",
+        "Seven phases, about 16 hours over six weeks. Phases 0–2 take about seven hours and carry most of the benefit.",
         "Every phase has a gate. Do not start the next phase until the gate passes.",
         "Stop when the six stop-rule conditions hold. Past that, your constraint is elsewhere."
       ],

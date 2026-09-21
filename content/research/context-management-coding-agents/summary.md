@@ -9,8 +9,8 @@ So the window is not a bucket to fill. It is an [[attention budget]], and every 
 **For most teams in 2026, the binding constraint is not the model or the tools. It is context discipline.** Four results carry that claim:
 
 - **Subtraction wins, and the evidence is lopsided.** Masking matched summarisation at lower cost [S]; fewer tools beat more tools [S]; focused prompts beat full ones containing the same information [S].
-- **Compression damage is unreliability first.** Compressed agents solve a task, then fail it on a rerun. Single-run accuracy barely moves, so teams conclude compaction is free [S].
-- **The summariser is a quality lever.** Changing only the summariser moved SWE-bench 6.5 points [S].
+- **Compression damage is unreliability first.** Compressed agents solve a task, then fail it on a rerun. Reliability degrades faster than mean accuracy, so teams measuring single runs conclude compaction is nearly free [S].
+- **The summariser is a quality lever.** Changing only the summariser moved SWE-bench accuracy from 49.0% to 55.5%, a 6.5-point swing [S].
 - **The cache can flip the sign of an optimisation.** Stable prefix tokens cost about a tenth of churning ones. A 24% token cut that made the prefix dynamic raised cost 6.9× [C].
 
 ## What to do first

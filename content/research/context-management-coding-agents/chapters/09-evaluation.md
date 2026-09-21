@@ -136,7 +136,7 @@ A 32-point spread from one underlying number. Now suppose aggressive compaction 
   "valueFormat": "{v}%",
   "labelWidth": 170,
   "categoryLabel": "Metric",
-  "caption": "Pass@2 falls 5 points; Pass² falls 15. This is the AppWorld pattern: no compression 85.7% / 77.4% Pass², prompt-based compaction 71.4% / 59.5%. The Pass² gap exceeds the accuracy gap [S].",
+  "caption": "Illustrative arithmetic: at p=0.80 a single run succeeds 80% of the time, but Pass² falls to 64%; at p=0.70 it falls to 49%. The same shape appears in measurement — on AppWorld, compression moved single-run accuracy 14.3 points (85.7% to 71.4%) but Pass² 17.9 points (77.4% to 59.5%) [S].",
   "alt": "At p 0.80: Pass@2 96%, Pass² 64%. At p 0.70: Pass@2 91%, Pass² 49%."
 }
 ```
