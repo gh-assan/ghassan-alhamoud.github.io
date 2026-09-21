@@ -130,13 +130,30 @@
     filter.addEventListener('input', function () {
       var q = filter.value.trim().toLowerCase();
       var shown = 0;
+      /* Each letter owns its own <dl>; remember which ones still have a match
+         so a filtered list keeps its A–Z grouping and empty letters vanish. */
+      var letterHit = {};
       entries.forEach(function (el) {
         var hit = !q || el.getAttribute('data-term').indexOf(q) !== -1 ||
           el.textContent.toLowerCase().indexOf(q) !== -1;
         el.hidden = !hit;
-        if (hit) shown++;
+        if (hit) {
+          shown++;
+          var list = el.closest('dl');
+          var head = list && list.previousElementSibling;
+          if (head && head.classList && head.classList.contains('rs-gloss__letter')) {
+            letterHit[head.id] = true;
+          }
+        }
       });
-      letters.forEach(function (h) { h.hidden = !!q; });
+      letters.forEach(function (h) {
+        var keep = !q || !!letterHit[h.id];
+        h.hidden = !keep;
+        /* Hide the letter's whole list too, so empty groups leave no gap. */
+        if (h.nextElementSibling && h.nextElementSibling.tagName === 'DL') {
+          h.nextElementSibling.hidden = !keep;
+        }
+      });
       if (empty) empty.hidden = shown !== 0;
     });
   }

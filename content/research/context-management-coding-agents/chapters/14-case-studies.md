@@ -93,7 +93,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **What this research takes from it.** k ≥ 2 and Pass² as non-negotiable, the explicit state block in the compaction schema, and the warning that token dashboards cannot see this.
 
-## CS-5: Dynamic tool loading made things worse [C]
+## CS-5: Dynamic tool loading made things worse
 
 **Situation.** A team measured a 38K-token tool-definition prefix, 25% of their context, and set out to fix it.
 
