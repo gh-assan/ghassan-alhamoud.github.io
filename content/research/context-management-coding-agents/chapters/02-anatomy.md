@@ -278,7 +278,7 @@ What a practitioner does with this, in priority order:
   "valueFormat": "{v:,}",
   "highlight": [0],
   "categoryLabel": "Action",
-  "caption": "Together about 47,000 tokens, roughly 31% of the window, with no loss of information available to the agent. Three of the four actions are pure waste removal [C].",
+  "caption": "Together about 49,000 tokens, roughly 32% of this 152K context, with no loss of information available to the agent. Three of the four actions are pure waste removal [C].",
   "alt": "Bars: defer or delete unused tools 30,000; filter the npm log 13,000; instruction file 4,000; symbol reads 2,000."
 }
 ```

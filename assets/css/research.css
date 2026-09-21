@@ -282,6 +282,19 @@
   padding: 4px 16px 14px;
 }
 
+/* The disclosure wraps nested <ul>s (H2s with their H3s), so the reset has to
+   reach them too: main.css clears margin/padding but not list-style, and the
+   rail has the equivalent rules at .rs-toc__list ul / ul ul. */
+.rs-disclosure .on-this-page__list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rs-disclosure .on-this-page__list ul ul {
+  padding-left: 12px;
+}
+
 .rs-disclosure .on-this-page__link {
   display: block;
   padding: 8px 0 8px 12px;

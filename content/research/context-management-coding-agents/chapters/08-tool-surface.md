@@ -39,7 +39,7 @@ Every tool's full schema loaded upfront, every session. Simple, predictable and 
 
 Short descriptions upfront; full schemas fetched when a tool is chosen. This separates *when to use it* from *how to call it*. See [[progressive disclosure]].
 
-Measured: **about 25,000 tokens of definitions became about 2,500 tokens of descriptions** [S], an order of magnitude with capability preserved. This is the idea behind agent skills, and the ecosystem has converged on it [P]. In 2026 some harnesses made deferred definitions the default [P].
+Reported, and vendor-reported means best case until someone reproduces it: **about 25,000 tokens of definitions became about 2,500 tokens of descriptions** [P], an order of magnitude with capability preserved. This is the idea behind agent skills, and the ecosystem has converged on it [P]. In 2026 some harnesses made deferred definitions the default [P].
 
 Costs: one round trip before a tool's first use; a discoverability risk (a capability with an unappealing description never gets used); and a recursion trap, because enough descriptions become bloat one level up.
 
@@ -73,7 +73,7 @@ Costs: a sandbox; an API worth writing against; and a real failure mode where bu
   "highlight": [0],
   "labelWidth": 190,
   "categoryLabel": "Architecture",
-  "caption": "Progressive disclosure is an order of magnitude; code execution is roughly another. Ranges: eager 40–60K, progressive 3–6K, code execution 1–3K [S].",
+  "caption": "Progressive disclosure is an order of magnitude; code execution is roughly another. Ranges: eager 40–60K [D]; progressive 3–6K and code execution 1–3K are vendor-reported upper bounds [P].",
   "alt": "Eager: about 50,000 tokens. Progressive: about 4,500. Code execution: about 2,000."
 }
 ```
@@ -104,7 +104,7 @@ The highest-yield thirty minutes in this research.
 | **Rare but critical** | Fewer than 3 calls, but decisive | Defer it, or move it behind code execution |
 | **Core** | Called often | Keep it eager; trim its description |
 
-5. **Trim what remains.** Descriptions and examples are typically 40% trimmable with no behaviour change. Deduplicating repeated schema structures with `$ref` saves another 10–30% [S].
+5. **Trim what remains.** Descriptions and examples are typically 40% trimmable with no behaviour change. Deduplicating repeated schema structures with `$ref` saves another 10–30% [D].
 6. **Set a budget and enforce it.** For example: at most 20 active tools and 15K definition tokens. Adding a server means removing one or writing down the exception. Without this, the surface grows back within a quarter [P].
 
 The [tool audit template](ch:templates#2-tool-surface-audit) walks through it.
@@ -151,7 +151,7 @@ Everything above is about definitions. Tool *results* are larger in a working se
 1. **Code execution (A-3).** Filter before returning. Solves it structurally.
 2. **Server-side field selection.** Request only the fields you need. Under-used because the parameter is buried in the schema.
 3. **A shaping proxy.** Wrap the server, strip fields, and return a digest plus a pointer to the full response.
-4. **Response-granularity controls.** Emerging MCP proposals include adaptive optional fields and flexible response detail so servers can match verbosity to the client's intent [S].
+4. **Response-granularity controls.** Emerging MCP proposals include adaptive optional fields and flexible response detail so servers can match verbosity to the client's intent [P].
 
 > [!key] Capability exposure versus capability restriction
 > The MCP ecosystem's design centre is *making things possible*. Context efficiency is *making things cheap*. These pull in opposite directions, and the defaults favour the first. **You have to apply the second yourself.** Nothing in the protocol will do it for you.

@@ -148,10 +148,10 @@ def check_rendered_content(prog, rep):
 # "A result measured on one benchmark is quoted with that benchmark"). Keyed by the
 # value as it appears in prose; the value must appear within R32_WINDOW chars of the
 # benchmark name. Add entries here when a new load-bearing benchmark figure lands.
+# A key must NOT contain its own benchmark string, or the check can never fire;
+# prefer a bare number over a benchmark name.
 BENCHMARK_BOUND = {
     "6.5": "SWE-bench",
-    "SWE-bench Verified": "SWE-bench",
-    "AppWorld": "AppWorld",
 }
 R32_WINDOW = 160
 
@@ -184,9 +184,11 @@ def check_composite_labels(label, src, rep):
         # Case/worked-example headings only: CS-n, "Worked example", "The audit that…".
         if not re.match(r"^#{2,4}\s*(CS-\d+|Worked example|A worked audit)", heading, re.I):
             continue
-        if "[C]" in body:
+        # A composite can be marked with the literal [C] token or described in
+        # prose ("*Composite:* ..."), and the prose form is the realistic case.
+        if "[C]" in body or re.search(r"\bcomposite\b", body, re.I):
             clean = re.sub(r"\{#[^}]*\}", "", heading).strip()
-            rep.err("R31", f"{label}: heading '{clean[:60]}' hosts a [C] composite "
+            rep.err("R31", f"{label}: heading '{clean[:60]}' hosts a composite "
                            f"but is not labelled [C]")
 
 
@@ -199,9 +201,10 @@ def check_composite_consistency(prog, rep):
     figures = {}
     for c in prog["chapters"]:
         src = (prog["_base"] / c["file"]).read_text(encoding="utf-8")
-        for m in re.finditer(r"([\d,]+)K of definitions", src):
+        for m in re.finditer(r"\*\*?([\d,.]+K?)\*?\*? of definitions", src):
             figures.setdefault("definitions", {}).setdefault(m.group(1), []).append(c["slug"])
-        for m in re.finditer(r"Recovered: ([\d,.]+)K tokens, (\d+)% of the window", src):
+        # Accept both the "63.5K tokens" and "63,500 tokens" forms.
+        for m in re.finditer(r"Recovered: \*{0,2}([\d,.]+)(K?) tokens", src):
             figures.setdefault("recovered", {}).setdefault(
                 (m.group(1), m.group(2)), []).append(c["slug"])
     for kind, seen in figures.items():
@@ -323,8 +326,8 @@ def check_glossary_anchor_term(prog, rep):
         key = re.match(r"[A-Za-z]+", t["term"])
         key = key.group(0).lower() if key else ""
         if key and key not in body:
-            rep.warn("R34", f"{prog['slug']}: glossary '{t['term']}' points at "
-                            f"chapter '{slug}', where the term never appears")
+            rep.err("R34", f"{prog['slug']}: glossary '{t['term']}' points at "
+                           f"chapter '{slug}', where the term never appears")
 
 
 # ---------------------------------------------------------------- output gates

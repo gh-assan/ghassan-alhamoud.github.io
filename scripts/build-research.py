@@ -493,10 +493,16 @@ def breadcrumb(prog, trail):
     items = [("Research", "/research/"), (prog["shortTitle"], prog_url(prog))] + trail
     lis = []
     for i, (label, href) in enumerate(items):
-        if href and i < len(items) - 1:
+        last = i == len(items) - 1
+        if href and not last:
             lis.append(f'<li><a href="{href}">{esc(label)}</a></li>')
-        else:
+        elif last:
+            # Exactly one breadcrumb item may be the current page, and it is the
+            # leaf. An intermediate item without an href (the Part) is the current
+            # section, not the current page, so it carries no aria-current.
             lis.append(f'<li aria-current="page">{esc(label)}</li>')
+        else:
+            lis.append(f'<li>{esc(label)}</li>')
     return f'<nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol>{"".join(lis)}</ol></nav>'
 
 

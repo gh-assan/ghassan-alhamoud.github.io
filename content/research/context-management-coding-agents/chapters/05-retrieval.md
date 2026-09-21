@@ -58,7 +58,7 @@ Most retrieval intuition comes from document search. Code breaks five of its ass
 
 **Weaknesses.** Index staleness, worst on recently edited code. Chunk boundaries that split functions. Approximate answers where exact ones exist. And the one that matters most: **it always returns something.** Grep returning zero hits is information. A vector search returning five irrelevant chunks is misinformation that looks like success.
 
-**Evidence.** Generally less accurate than grep head-to-head [S]. A hybrid of semantic search and grep has been reported **12.5% more accurate** than either alone [P]. Production systems routinely combine semantic, keyword (BM25) and metadata filters [S].
+**Evidence.** Generally less accurate than grep head-to-head [S]. A hybrid of semantic search and grep has been reported **12.5% more accurate** than either alone [P]. Production systems routinely combine semantic, keyword (BM25) and metadata filters [P].
 
 ### Live agentic search: the LLM as navigator
 
