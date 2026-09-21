@@ -150,6 +150,38 @@ class RegressionGateTests(unittest.TestCase):
                 self.assertNotRegex(page.read_text(encoding="utf-8"),
                                     r"\son(click|change|submit|input|load|mouseover)=")
 
+    def test_exactly_one_breadcrumb_item_is_the_current_page(self):
+        """Only the leaf crumb may claim aria-current="page"; the Part is a section."""
+        for page in sorted((ROOT / "research" / SLUG).glob("*.html")):
+            html = page.read_text(encoding="utf-8")
+            crumb = re.search(r'class="rs-breadcrumb".*?</nav>', html, re.S)
+            if not crumb:
+                continue
+            with self.subTest(page=page.name):
+                self.assertEqual(1, crumb.group(0).count('aria-current="page"'))
+
+    def test_vendor_figure_labelled_s_is_caught(self):
+        """A figure sources.md calls unreproduced must not be labelled [S]."""
+        report = self._vendor_report("Reported: 150,000 to about 2,000 tokens, a 98.7% reduction [S].\n")
+        self.assertTrue(any("R35" in e for e in report.errors), report.errors)
+
+    def test_vendor_figure_labelled_p_passes(self):
+        report = self._vendor_report(
+            "Vendor-reported: 150,000 to about 2,000 tokens, a 98.7% reduction [P].\n")
+        self.assertEqual([], report.errors)
+
+    @staticmethod
+    def _vendor_report(text):
+        import tempfile
+        tmp = tempfile.TemporaryDirectory()
+        base = Path(tmp.name)
+        (base / "fixture.md").write_text(text, encoding="utf-8")
+        report = validate_research.Report()
+        validate_research.check_vendor_label_consistency(
+            {"slug": "t", "_base": base, "chapters": [{"slug": "c", "file": "fixture.md"}]}, report)
+        tmp.cleanup()
+        return report
+
     def test_mobile_on_this_page_mirrors_the_rail(self):
         """The mobile disclosure is the desktop rail collapsed (bar section 2)."""
         for page in sorted((ROOT / "research" / SLUG).glob("*.html")):

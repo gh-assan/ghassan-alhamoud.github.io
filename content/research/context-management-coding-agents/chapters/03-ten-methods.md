@@ -143,7 +143,7 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 - **Displacement.** Definition tokens are prefix tokens and crowd out work. One popular MCP server measures about **42,000 tokens** of definitions [P].
 - **Selection confusion.** More candidates means worse choices, independent of tokens. Accuracy fell **from 43% to under 14%** as tool count grew [S]; **19 of 20 at 20 tools became complete failure at 107** [S].
 
-[[Progressive disclosure]] fixes displacement: about **25,000 tokens of definitions became about 2,500 tokens of descriptions** [S]. Code execution fixes both: the agent writes code against a documented API instead of choosing among schemas. Reported: **150,000 → about 2,000 tokens, a 98.7% reduction** [S].
+[[Progressive disclosure]] fixes displacement: about **25,000 tokens of definitions became about 2,500 tokens of descriptions** [S]. Code execution fixes both: the agent writes code against a documented API instead of choosing among schemas. Reported, and vendor-reported means best case: **150,000 → about 2,000 tokens, a 98.7% reduction** [P].
 
 **What it costs.** A one-time effort, then governance. Tool surfaces grow back, because adding an MCP server is one click and its cost is invisible. Without a recurring audit this regresses within a quarter [P].
 

@@ -67,7 +67,7 @@ Verdicts use four levels: **Adopt** (use by default), **Trial** (worth a measure
 | **Built-in tool search or deferred definitions** | Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported [S] | None if built in | **Adopt.** A default in some harnesses as of 2026 [P]; check yours first |
 | **Agent skills** | Named capabilities with short triggers and bodies loaded on match | Authoring effort | **Adopt.** Budget descriptions as one number |
 | **agentgateway** | An MCP proxy that applies progressive disclosure across servers | Proxy deployment | **Trial** if you run many servers and your harness lacks deferral |
-| **Code-execution patterns for MCP** | Replace tool schemas with code against an API; **150K → ~2K, 98.7%** [S] | A sandbox | **Adopt if you can sandbox.** The largest single saving in this research |
+| **Code-execution patterns for MCP** | Replace tool schemas with code against an API; **150K → ~2K, 98.7%** [P] | A sandbox | **Adopt if you can sandbox.** The largest single saving in this research |
 | **Schema deduplication proposals** (`$ref`, adaptive fields, response granularity) | Structural reduction, 10–30% on similar schemas [S] | Protocol-level; not universal | **Watch** |
 | **Deleting an MCP server** | — | Negative | **Adopt.** The highest-yield action in the chapter |
 

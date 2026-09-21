@@ -158,7 +158,7 @@ Do not start these without a measured reason from Phase 5.
 
 | Change | Justified when | Expect |
 |---|---|---|
-| **Code execution against an API** | Tool definitions still over 15K after Phase 1, or result waste over 10:1 | The largest remaining win: 98.7% on definitions [S] |
+| **Code execution against an API** | Tool definitions still over 15K after Phase 1, or result waste over 10:1 | The largest remaining win: 98.7% on definitions, vendor-reported [P] |
 | **Sub-agents with disposable scouts** | Survey work regularly saturates the main context | Parent context flat; total spend up |
 | **Addressable-recall compaction** | Post-boundary re-fetch stays over 2 after Phase 4 | The best published compaction result [S]; you will probably build it |
 | **Semantic search over docs and ADRs** | Concept questions are a measured share of your work | A complement, never primary |

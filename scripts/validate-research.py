@@ -140,6 +140,7 @@ def check_rendered_content(prog, rep):
         check_source_benchmark_attribution(label, src, rep)
         stats[c["slug"]] = {"words": words, "figures": figures, "avg": avg, "terms": r.terms_used}
     check_composite_consistency(prog, rep)
+    check_vendor_label_consistency(prog, rep)
     return stats
 
 
@@ -207,6 +208,33 @@ def check_composite_consistency(prog, rep):
         if len(seen) > 1:
             detail = "; ".join(f"{k}: {', '.join(v)}" for k, v in seen.items())
             rep.err("R31", f"{prog['slug']}: worked-audit {kind} figures disagree — {detail}")
+
+
+# Figures that sources.md records as vendor-reported / not independently reproduced.
+# Any other label for these in a chapter is a bar §5 breach, because a vendor claim
+# must be [P] and described as an upper bound. Keyed by the distinctive numeral;
+# add entries when sources.md records a new unreproduced vendor figure.
+VENDOR_ONLY = {
+    "98.7%": "code-execution reduction (sources.md: first-party, no independent reproduction)",
+}
+
+
+def check_vendor_label_consistency(prog, rep):
+    """R35: a figure sources.md records as vendor-only is never labelled [S].
+
+    Catches the same vendor number carrying [S] in one chapter and [P] in
+    another, which is how an incomplete relabel survives review.
+    """
+    for c in prog["chapters"]:
+        src = (prog["_base"] / c["file"]).read_text(encoding="utf-8")
+        for figure, why in VENDOR_ONLY.items():
+            for m in re.finditer(re.escape(figure), src):
+                tail = src[m.end(): m.end() + 120]
+                head = src[max(0, m.start() - 120): m.start()]
+                if "[S]" in tail or "[S]" in head:
+                    line = src[:m.start()].count("\n") + 1
+                    rep.err("R35", f"{prog['slug']}/{c['slug']}:{line}: vendor figure "
+                                   f"{figure} labelled [S] ({why}); use [P]")
 
 
 def check_reference_sources(prog, rep):
