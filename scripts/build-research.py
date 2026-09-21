@@ -558,11 +558,18 @@ def toc_list(toc_tokens, cls="rs-toc__list"):
 def mobile_nav(prog, current, toc_tokens=None):
     on_page = ""
     if toc_tokens:
-        items = "".join(
-            f'<li><a class="on-this-page__link" href="#{t["id"]}">{esc(clean_toc_name(t["name"]))}</a></li>'
-            for t in toc_tokens)
+        # Mirror the desktop rail exactly: the mobile disclosure is the same map
+        # collapsed, not an H2-only summary of it (bar §2). Walk the same token
+        # tree the rail uses, including nested H3s.
+        def walk_mobile(tokens):
+            lis = []
+            for t in tokens:
+                kids = walk_mobile(t.get("children", []))
+                lis.append(f'<li><a class="on-this-page__link" href="#{t["id"]}">'
+                           f'{esc(clean_toc_name(t["name"]))}</a>{kids}</li>')
+            return f"<ul>{''.join(lis)}</ul>" if lis else ""
         on_page = ('<details class="on-this-page rs-disclosure"><summary>On this page</summary>'
-                   f'<ul class="on-this-page__list">{items}</ul></details>')
+                   f'<div class="on-this-page__list">{walk_mobile(toc_tokens)}</div></details>')
     return (f'<div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure">'
             f'<summary>Research contents</summary>{path_nav(prog, current)}</details>{on_page}</div>')
 

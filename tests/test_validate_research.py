@@ -150,6 +150,18 @@ class RegressionGateTests(unittest.TestCase):
                 self.assertNotRegex(page.read_text(encoding="utf-8"),
                                     r"\son(click|change|submit|input|load|mouseover)=")
 
+    def test_mobile_on_this_page_mirrors_the_rail(self):
+        """The mobile disclosure is the desktop rail collapsed (bar section 2)."""
+        for page in sorted((ROOT / "research" / SLUG).glob("*.html")):
+            html = page.read_text(encoding="utf-8")
+            rail = re.search(r'class="rs-toc__list">(.*?)</div>', html, re.S)
+            mobile = re.search(r'class="on-this-page rs-disclosure".*?</details>', html, re.S)
+            if not (rail and mobile):
+                continue
+            with self.subTest(page=page.name):
+                self.assertEqual(len(re.findall(r'<a href="#', rail.group(1))),
+                                 len(re.findall(r"on-this-page__link", mobile.group(0))))
+
 
 if __name__ == "__main__":
     unittest.main()

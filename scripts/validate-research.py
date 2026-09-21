@@ -349,6 +349,16 @@ def check_page(path, rep, chapter=False):
             rep.err("R26", f"{rel}: missing mobile path or on-this-page disclosure")
         if 'class="rs-pn"' not in page:
             rep.err("R27", f"{rel}: missing prev/next navigation")
+        # R26b: the mobile "On this page" is the desktop rail collapsed, not a
+        # shallower map of the same page (bar §2). Compare entry counts.
+        rail = re.search(r'class="rs-toc__list">(.*?)</div>', page, re.S)
+        mobile = re.search(r'class="on-this-page rs-disclosure".*?</details>', page, re.S)
+        if rail and mobile:
+            n_rail = len(re.findall(r'<a href="#', rail.group(1)))
+            n_mobile = len(re.findall(r"on-this-page__link", mobile.group(0)))
+            if n_mobile < n_rail:
+                rep.err("R26", f"{rel}: mobile on-this-page lists {n_mobile} entries "
+                               f"but the rail lists {n_rail}")
 
 
 def check_outputs(prog, rep):
