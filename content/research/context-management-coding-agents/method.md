@@ -1,13 +1,13 @@
 ## The research question
 
-The context window is the only thing a coding agent can see. The model's weights, the repository on disk, yesterday's conversation, the CI logs, the ticket: each reaches the agent only if some machinery puts it into the token sequence and pays for it. That machinery is almost never designed. It accretes.
+At inference time, a model can act on two sources: patterns encoded in its weights and information placed in the current input. The repository, yesterday's conversation, CI logs and the ticket affect the next action only when the harness retrieves and presents them. That machinery is rarely designed as one system. It accretes.
 
 The question is **not** "how do I fit more into the window?" That has an answer (buy a bigger window), and the answer does not work. It is:
 
 > [!key] The question
 > Given a coding agent working on a real repository over a multi-hour task, **what should be in its context at each step, what should not, who decides, how do you know the decision was right**, and how do you build a system that keeps deciding well as the repository, the model and the harness change underneath you?
 
-The strong claim under test: **for most teams running coding agents in 2026, the binding constraint is neither model capability nor tool availability. It is context discipline.**
+The strong claim under test: **before changing the model or adding tools, teams running long repository tasks should test whether context discipline is their binding constraint.**
 
 Context failures are also the quietest. An agent with a bad loop spins visibly. An agent with bad evaluation reports a number you can argue about. An agent with bad context management quietly gets things wrong, and the transcript looks reasonable the whole way down.
 

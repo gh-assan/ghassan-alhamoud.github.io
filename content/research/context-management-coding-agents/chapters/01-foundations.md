@@ -81,7 +81,7 @@ Where a token sits in the window changes how much attention it gets. The pattern
 }
 ```
 
-The second regime explains a complaint every agent user has made. Your system prompt and instruction file sit at the start of the window. In a fresh session that is a privileged slot. Two hours in, at 70% full, it is the least attended region.
+The second regime explains a familiar complaint: an agent stops following instructions late in a session. The system prompt and instruction file sit at the start of the window. In a fresh session that is a privileged slot. At 70% full, it is the least attended region.
 
 > [!key] Why agents "stop following CLAUDE.md"
 > Your rules do not fade because the model forgot them. They fade because they are now early tokens in a full window. The fix is not a sterner instruction. It is re-stating the rule near the action, or resetting the session. See [[position decay]].
@@ -130,39 +130,20 @@ Every context decision trades off five forces. Naming them turns arguments about
 <figcaption>Every technique in this research pushes on one or more of these forces. When two techniques conflict, it is usually because they push the same force in opposite directions.</figcaption>
 </figure>
 
-### Force 1: dilution
+The five forces are useful only if they change a decision. This matrix is the operating version; later chapters supply the measurements.
 
-A transformer spreads attention across all tokens in context. Adding tokens does not create new attention. It redistributes what exists.
-
-The working measure is [[relevance density]]: tokens that could plausibly be cited in a correct answer, divided by all tokens. An 8K context at 40% density usually beats an 80K context at 3% density, even though the second contains the first. This is the mechanism behind 5K of targeted retrieval beating a 100K codebase summary [P], and behind the focused-versus-full result above [S].
-
-### Force 2: position
-
-Position is a resource, and there are exactly two premium slots. The very start is premium only while the window is under about half full. The very end is premium always, and more so as the window fills.
-
-Anything the model must obey should sit near the end at the moment it matters. That is why "restate the constraint just before the action" works, and "state it once at the top of a long file" does not.
-
-### Force 3: recency as truth
-
-Models resolve contradictions mostly by recency. If turn 4 says a function returns `Result<T>` and turn 40 says `Option<T>`, the model usually acts as if turn 40 is right, whichever is true. That is how correction works at all. It is also how a hallucination becomes canon.
-
-There is an asymmetry. Correcting a wrong fact by *appending* the right one works, but the wrong one stays behind as a permanent distractor. Correcting it by *removing* the wrong one works better, but a transcript only grows.
+| Force | What changes | Engineering response |
+|---|---|---|
+| **Dilution** | More candidates reduce the salience of each one. Track [[relevance density]], not window utilisation. | Prefer a small relevant read to a large complete one. |
+| **Position** | The start is favoured only while the window is relatively empty; the end remains favoured. | Restate a critical constraint next to the action it governs. |
+| **Recency as truth** | When facts conflict, the later one usually wins. The earlier one still remains as a distractor. | Replace the session after a poisoned fact; do not argue with the transcript. |
+| **Cache** | [[Prefix caching]] stops at the first changed byte. A timestamp or reordered tool list can invalidate everything after it. | Keep the prefix stable and price any rewrite before adopting it. See [chapter 10](ch:metrics-and-economics#belief-1-cutting-tokens-cuts-cost). |
+| **Information loss** | Every summary, mask or truncation removes detail; only some removals can be reversed. | Offload first, then compress. Prefer an address to a paraphrase. |
 
 > [!key] A rule worth memorising
 > You cannot delete from a transcript by talking to it. That is why resetting a session beats arguing with it.
 
-### Force 4: the cache
-
-[[Prefix caching]] means an unchanged start of the prompt is not recomputed. For agents this is often the largest term in both cost and latency. One stable-prefix design reported an **85.2% cache hit rate, reusing about 46,059 tokens per request** [P]. At a 90% hit rate, time to first token typically falls from seconds to under 200 ms, and compute cost per request falls 80–90% [P].
-
-The cache has one brutal property: it is **prefix-exact**. One changed character near the front invalidates everything after it. A timestamp in the system prompt, a tool list that reorders, a memory file that rewrites itself each turn: each turns a near-free call into a full-price one, every turn.
-
-> [!warning] Appending is cheap; editing early context is ruinous
-> A technique that rewrites the front of the prompt can cost more than the tokens it saves. Many "optimisation" tools save 20% of tokens and destroy a 70% hit rate, for a net loss. The arithmetic is in [chapter 10](ch:metrics-and-economics#belief-1-cutting-tokens-cuts-cost).
-
-### Force 5: information loss
-
-Every compaction, summary, truncation or mask deletes something. The question is never *whether* you lose information. It is *which* information, and *whether you can get it back*.
+For information loss, the decisive distinction is recoverability:
 
 | Loss type | Recoverable? | Example |
 |---|---|---|
@@ -171,7 +152,7 @@ Every compaction, summary, truncation or mask deletes something. The question is
 | **Hard truncation** | No, unless it was logged elsewhere | Dropping the oldest turns first |
 | **Masking** | Depends: masked-but-kept is recoverable, masked-and-dropped is not | Replacing old tool output with placeholders |
 
-This table is the most useful decision tool in the chapter, because **reversibility is usually worth more than compression ratio**. The 2026 [[addressable recall]] study makes the point with data. It replaced old observations with content-addressed stubs and let the agent call `recall <id>`. On a 1,000-task needle benchmark it scored 99.00% and 99.80% (8B and 32B models). The best baseline, RAG, scored 79.57% and 96.67% [S]. The mechanism was not cleverness. Nothing was thrown away.
+**Reversibility is usually worth more than compression ratio.** The measured addressable-recall comparison is in [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline).
 
 ## Five ways context fails
 
@@ -212,49 +193,15 @@ Drew Breunig's four failure modes have become the field's shared vocabulary. Her
 <figcaption>Four failures leave evidence you can find. Starvation produces a clean-looking trajectory and a wrong answer, which is why it is the one most likely to reach production.</figcaption>
 </figure>
 
-### Poisoning: a false fact becomes established
+The diagram gives the taxonomy. This table gives the diagnostic action.
 
-**How it happens.** The model invents a function signature, a file path or an API behaviour. That output is now in the transcript. On every later turn, the model reads it as prior context, which is exactly what prior context is for. The model is not repeatedly hallucinating. It is faithfully reading its own earlier mistake.
-
-**Why it is the worst.** It compounds, it reinforces itself, and it survives compaction. A summary keeps things that look like established facts more reliably than it keeps open questions. In other words, **compaction launders hallucinations into settled facts**. This is the most dangerous interaction in the whole research. See [[laundering]].
-
-**The tell.** The agent states something confidently with no tool call behind it. Search the transcript for the symbol: its first appearance was in an assistant message, not a tool result.
-
-**Containment.** Ground claims in tool output. When you find a poisoned fact, do not argue. Cut the session back to before the poison and restart from clean ground.
-
-### Distraction: the agent copies its own history
-
-**How it happens.** As the transcript grows, its strongest pattern is *what this agent has been doing*. The model starts extending its own trajectory instead of planning. It re-runs the same test, re-reads the same file, and proposes a variant of the fix that just failed.
-
-**The tell.** The same tool with the same arguments three or more times, with no new information in between. A [[loop detector]] for this is the cheapest high-value instrument in this research, and almost nobody builds one.
-
-**Containment.** Compact, or reset with a note of what has been tried and ruled out. Note the twist: the failed attempts are recent, so they are loud. That is the opposite of what you want.
-
-### Confusion: irrelevant context gets used
-
-**How it happens.** The model assumes everything in context is there because it is relevant. That is a reasonable assumption, and you break it every time you paste a directory listing. The common case is **tool confusion**: too many tools, and the model picks a plausible wrong one.
-
-**The evidence.** One measurement shows tool-selection accuracy falling from a 43% baseline to under 14% as tool count grows [S]. A separate benchmark shows 19 of 20 correct at 20 tools and complete failure at 107 [S]. Practitioners converge on noticeable damage past about 20 active tools [P]. [Chapter 8](ch:tool-surface) has the details.
-
-**The tell.** A tool that is technically applicable and situationally wrong: a web search where a local grep was right. See [[confusion]].
-
-### Clash: the context contradicts itself
-
-**How it happens.** The transcript collects statements from different phases. An early plan says "use the existing `Repository` interface". A later discovery says that interface is deprecated. Both stay in context. The model picks by recency or, worse, blends them into code that half-honours each.
-
-**The tell.** Internally inconsistent output, or output that satisfies a requirement the user withdrew twenty turns ago.
-
-**Containment.** Keep one short, rewritten-in-place statement of current decisions and constraints. Treat the transcript as evidence, not as the state. This is the [living plan document](ch:ten-methods#m-7-externalised-state-the-living-plan) method.
-
-### Starvation: the fact never arrives
-
-This fifth mode is not in the original taxonomy, and it is the one most teams actually have.
-
-**How it happens.** The agent lacks a fact it needs and does not know it is missing. It proceeds on an assumption. There is no error, no loop and no contradiction: just a confidently wrong result. See [[starvation]].
-
-**Why it is invisible.** Every other mode leaves a signal in the transcript. Starvation leaves a clean trajectory.
-
-**The tell.** The agent never opened the file that governs the behaviour it changed. You find it with a [[read-coverage]] audit: after a failure, list what the agent read and ask which decisive file is missing.
+| Failure | The tell | Containment |
+|---|---|---|
+| **Poisoning** | A confident symbol or API claim first appeared in an assistant message, not tool output. Compaction may [[laundering|launder]] it into a settled fact. | Restart from before the false claim and reground it in tool output. |
+| **Distraction** | The same tool and arguments recur three times without new information. | Reset with a short note of what was tried and ruled out; instrument a [[loop detector]]. |
+| **[[confusion|Confusion]]** | The agent chooses something applicable but wrong for the situation, such as web search instead of local grep. | Remove irrelevant material or tools. The measured tool-count effect is in [chapter 8](ch:tool-surface#the-measured-damage). |
+| **Clash** | Output blends current and withdrawn requirements. | Keep one current decision record; treat the transcript as evidence, not state. |
+| **Starvation** | The decisive file was never read, so the trajectory looks clean and ends wrong. | Run a [[read-coverage]] audit and improve retrieval. |
 
 > [!warning] Starvation argues for more context, not less
 > It is the one failure that the subtraction default does not fix. The answer is not "add more". It is "add the right thing", which is a retrieval-quality problem. See [chapter 5](ch:retrieval).
@@ -266,9 +213,9 @@ Four properties separate coding agents from research or browser agents. Each cha
 | Property | What it means | Practical consequence |
 |---|---|---|
 | **The filesystem is task, memory and ground truth at once** | The agent edits the very thing it reads from. A file read at turn 5 and edited at turn 30 is a fact that expired without notice. | Re-read before you re-edit. Just-in-time retrieval is unusually strong because the repository is always current. |
-| **Verification is cheap** | Tests, compilers and linters are a ground-truth oracle that answers in milliseconds. A lost fact usually becomes a failing test, not a plausible falsehood. | The strength of your test suite sets how much compaction risk you can afford. No cleverness compensates for having no tests. |
+| **Verification is executable** | Tests, compilers and linters turn many claims into machine-checkable results. A lost fact may become a failing check rather than a plausible falsehood. | The strength and speed of your test suite set how much compaction risk you can afford. No context technique compensates for missing checks. |
 | **Tool output is huge and mostly disposable** | A `pytest` run, an `npm install`, a lockfile diff: thousands of tokens where one line matters. Input tokens were measured at **99.75–99.87% of total usage** in tool-heavy agents [S]. | Almost all your spend is context, and most of context is tool output and history. Output shaping reports 60–90% reductions on common commands [P]. |
-| **Structure is a free retrieval signal** | Directory layout, import graphs, symbol tables and test-to-source mapping need no embedding model and never go stale. | Structural retrieval competes with, and often beats, semantic retrieval for code. |
+| **Structure is a precise retrieval signal** | Directory layout, import graphs, symbol tables and test-to-source mapping can be recomputed from source without an embedding model. | Start with structural retrieval for code; add semantic retrieval only where vocabulary gaps justify it. |
 
 ## The operations you can perform on context
 

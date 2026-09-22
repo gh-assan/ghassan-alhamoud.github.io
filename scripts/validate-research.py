@@ -2,7 +2,7 @@
 """
 validate-research.py — executable quality bar for /research/.
 
-Implements gates R1–R30 from docs/research-section/00-research-quality-bar.md.
+Implements the executable gates from docs/research-section/00-research-quality-bar.md.
 Run after scripts/build-research.py. Exit 0 when every gate passes.
 
     python3 scripts/validate-research.py
@@ -29,7 +29,7 @@ _spec.loader.exec_module(build)
 
 REQUIRED_PROG = ["slug", "code", "title", "shortTitle", "thesis", "description", "status", "statusLabel",
                  "version", "published", "updated", "summaryLede", "sourcesLede", "methodLede",
-                 "summaryStats", "finding", "paths", "parts", "chapters", "related"]
+                 "audience", "corePath", "summaryStats", "finding", "paths", "parts", "chapters", "related"]
 REQUIRED_CH = ["id", "slug", "part", "file", "title", "question", "tldr", "outcomes", "takeaways"]
 SUMMARY_SECTIONS = ["The problem", "The finding", "What to do first", "The numbers that matter",
                     "What not to do", "Where to go next"]
@@ -74,6 +74,12 @@ def check_programme(slug, rep):
     part_ids = {p["id"] for p in prog["parts"]}
     if not 3 <= len(prog["parts"]) <= 7:
         rep.err("R2", f"{slug}: {len(prog['parts'])} parts (expected 3–6 plus reference)")
+    core = prog.get("corePath", [])
+    if not 3 <= len(core) <= 8 or len(core) != len(set(core)):
+        rep.err("R36", f"{slug}: corePath needs 3–8 unique chapter slugs")
+    unknown_core = [s for s in core if s not in slugs]
+    if unknown_core:
+        rep.err("R36", f"{slug}: corePath contains unknown chapters: {', '.join(unknown_core)}")
     for c in prog["chapters"]:
         label = f"{slug}/{c.get('slug', '?')}"
         for f in REQUIRED_CH:
@@ -139,9 +145,18 @@ def check_rendered_content(prog, rep):
         check_composite_labels(label, src, rep)
         check_source_benchmark_attribution(label, src, rep)
         stats[c["slug"]] = {"words": words, "figures": figures, "avg": avg, "terms": r.terms_used}
+    check_core_path_duration(prog, stats, rep)
     check_composite_consistency(prog, rep)
     check_vendor_label_consistency(prog, rep)
     return stats
+
+
+def check_core_path_duration(prog, stats, rep):
+    """R36: the declared default route stays within the 90-minute promise."""
+    core_minutes = sum(build.reading_minutes(stats[s]["words"], stats[s]["figures"])
+                       for s in prog.get("corePath", []) if s in stats)
+    if core_minutes > 90:
+        rep.err("R36", f"{prog['slug']}: engineer core is {core_minutes} minutes (max 90)")
 
 
 # Figures that are only meaningful with the benchmark they were measured on (bar §5:
@@ -406,6 +421,10 @@ def check_outputs(prog, rep):
                          ('class="rs-refcards"', "reference links"), ('class="rs-related"', "related research")]:
         if marker not in home:
             rep.err("R28", f"{slug}: programme home missing {name}")
+    for marker, name in [('class="rs-home__audience"', "audience"),
+                         ('id="engineer-core"', "engineer core")]:
+        if marker not in home:
+            rep.err("R36", f"{slug}: programme home missing {name}")
     sitemap = SITEMAP.read_text(encoding="utf-8") if SITEMAP.exists() else ""
     for p in pages + [c["_file"] for c in prog["chapters"]]:
         url = f"{BASE_URL}/research/{slug}/{'' if p == 'index.html' else p}"

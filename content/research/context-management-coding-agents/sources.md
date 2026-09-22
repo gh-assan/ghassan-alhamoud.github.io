@@ -139,7 +139,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 - **Supports:** 85.2% hit rate with ~46,059 tokens reused per request; 90% hit rate giving sub-200 ms time to first token and 80–90% compute savings; byte-exact prefix matching.
 - **Discount:** [P], specific to particular serving stacks. The relative prices in chapter 10 are generic shapes, not any provider's rate card.
-- **Used in:** [chapter 1](ch:foundations#force-4-the-cache), [chapter 10](ch:metrics-and-economics).
+- **Used in:** [chapter 1](ch:foundations#five-forces-acting-on-every-token), [chapter 10](ch:metrics-and-economics).
 
 ### AGENTS.md and instruction-file practice
 

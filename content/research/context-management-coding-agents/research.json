@@ -3,19 +3,20 @@
   "code": "RSCH-001",
   "title": "Context Management in Coding Agents",
   "shortTitle": "Context Management",
-  "thesis": "Context windows grew a hundredfold; agent reliability did not follow. For most teams the binding constraint is not the model or the tools but context discipline: what the agent is allowed to look at, when, and at what cost.",
+  "thesis": "Larger context windows did not make coding agents proportionally more reliable. The engineering problem is deciding what the agent should see, when it should see it, and what that context costs.",
+  "audience": "For software and agent engineers working on multi-step repository tasks. Assumes comfort with tests, CI, APIs and production trade-offs.",
   "description": "Why bigger context windows did not make coding agents reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.",
   "status": "published",
   "statusLabel": "Published",
   "version": "1.0",
   "published": "2026-09-21",
-  "updated": "2026-09-21",
+  "updated": "2026-09-22",
   "summaryLede": "Everything in this research on one page: the problem, the finding, the first actions, and the numbers behind them. Five minutes.",
   "sourcesLede": "What each source supports, how much to discount it, which chapters lean on it, and what would prove this research wrong.",
   "methodLede": "The research question, the design commitments fixed before writing, what is out of scope, and the acceptance bar the work had to pass.",
   "summaryStats": [
     {"value": "18 of 18", "label": "frontier models got worse as input grew, at every length tested [S]"},
-    {"value": "5K > 100K", "label": "tokens of targeted retrieval beat a 100K codebase summary [P]"},
+    {"value": "5K > 100K", "label": "targeted retrieval beat a full codebase summary in one practitioner report [P]"},
     {"value": "6.5 pts", "label": "SWE-bench swing from changing only the summariser [S]"},
     {"value": "77% → 53%", "label": "Pass² with no compression vs FIFO truncation on AppWorld [S]"},
     {"value": "6.9×", "label": "cost increase from a 24% token cut that broke the prompt cache [C]"},
@@ -24,7 +25,7 @@
   "finding": [
     {
       "claim": "The context window is an attention budget, not a bucket.",
-      "detail": "Every model tested degraded as input grew, at every length step, long before the window was full [S]. Adding correct but irrelevant tokens can make an agent worse."
+      "detail": "All 18 models in Chroma's controlled study degraded as input grew, well before the window was full [S]. Correct but irrelevant tokens can still reduce performance."
     },
     {
       "claim": "Subtraction beats addition, and the evidence is lopsided.",
@@ -36,7 +37,7 @@
     },
     {
       "claim": "The cache can flip the sign of an optimisation.",
-      "detail": "Tokens in a stable prefix cost about a tenth of tokens that churn. A 24% token cut that made the prefix dynamic raised cost 6.9× in a worked example [C]."
+      "detail": "In the worked price model, a 24% token cut that made the prefix dynamic raised cost 6.9× [C]. Token count alone is not a cost model."
     },
     {
       "claim": "There is a stopping point.",
@@ -47,8 +48,9 @@
     {"time": "5 minutes", "title": "Decide if it matters", "text": "The one-page summary: the problem, the finding, the first actions.", "href": "ref:summary"},
     {"time": "30 minutes", "title": "Score where you stand", "text": "Run the diagnostic and get exactly one next action.", "href": "ch:diagnostic"},
     {"time": "An afternoon", "title": "Win back a quarter of the window", "text": "Phase 0 baseline, then Phase 1 deletion. Two hours, no behaviour change.", "href": "ch:optimisation-plan#phase-0-baseline"},
-    {"time": "Mechanism first", "title": "Understand why", "text": "Start at chapter 1 and follow the path: problem, methods, measurement, decisions, action.", "href": "ch:foundations"}
+    {"time": "~70 minutes", "title": "Take the engineer core", "text": "The shortest complete route from mechanism to an operating plan.", "href": "#engineer-core"}
   ],
+  "corePath": ["foundations", "anatomy", "choosing-methods", "retrieval", "compaction-and-memory", "tool-surface", "evaluation", "optimisation-plan"],
   "parts": [
     {"id": "understand", "number": "I", "title": "Understand the problem", "intro": "What context is mechanically, why more of it makes agents worse, and where the tokens actually go."},
     {"id": "methods", "number": "II", "title": "The methods", "intro": "The ten methods that survive scrutiny, how to choose among them, and the four surfaces where context is spent."},
@@ -66,7 +68,7 @@
       "question": "What is context, mechanically, and why does adding more of it make coding agents worse?",
       "description": "Context is an attention budget, not a container. The evidence for degradation, the five forces acting on every token, and the five ways context fails.",
       "tldr": [
-        "Every model tested degrades as input grows, at every length, well before the window is full [S].",
+        "All 18 models in Chroma's controlled study degraded as input grew, well before the window was full [S].",
         "Five forces act on every token: dilution, position, recency-as-truth, the cache, and information loss.",
         "Context fails in five ways. Starvation, the one most teams have, leaves no trace in the transcript."
       ],
@@ -116,7 +118,7 @@
     },
     {
       "id": 3, "slug": "ten-methods", "part": "methods", "file": "chapters/03-ten-methods.md",
-      "title": "The ten methods experts actually use",
+      "title": "Ten methods that survive scrutiny",
       "navTitle": "The ten methods",
       "level": "Core",
       "question": "Which context-management methods survive scrutiny, why does each work, and what does each cost?",

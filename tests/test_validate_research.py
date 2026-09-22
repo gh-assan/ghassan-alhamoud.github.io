@@ -45,6 +45,11 @@ class ResearchQualityBarTests(unittest.TestCase):
                 html = (ROOT / page).read_text(encoding="utf-8")
                 self.assertIn('href="/research/"', html)
 
+    def test_programme_home_renders_audience_and_engineer_core(self):
+        page = (ROOT / "research" / SLUG / "index.html").read_text(encoding="utf-8")
+        self.assertIn('class="rs-home__audience"', page)
+        self.assertIn('id="engineer-core"', page)
+
 
 class ResearchRendererTests(unittest.TestCase):
     def setUp(self):
@@ -168,6 +173,28 @@ class RegressionGateTests(unittest.TestCase):
     def test_vendor_figure_labelled_p_passes(self):
         report = self._vendor_report(
             "Vendor-reported: 150,000 to about 2,000 tokens, a 98.7% reduction [P].\n")
+        self.assertEqual([], report.errors)
+
+    def test_engineer_core_over_90_minutes_is_caught(self):
+        report = validate_research.Report()
+        validate_research.check_core_path_duration(
+            {"slug": "t", "corePath": ["a", "b", "c"]},
+            {"a": {"words": 7500, "figures": 0},
+             "b": {"words": 7500, "figures": 0},
+             "c": {"words": 7500, "figures": 0}},
+            report)
+        self.assertTrue(any("R36" in e for e in report.errors), report.errors)
+
+    def test_current_engineer_core_is_within_90_minutes(self):
+        prog = build_research.load_programme(SLUG)
+        stats = {}
+        for chapter in prog["chapters"]:
+            renderer = build_research.Renderer(prog, chapter["slug"])
+            body, _ = renderer.convert((prog["_base"] / chapter["file"]).read_text(encoding="utf-8"))
+            stats[chapter["slug"]] = {"words": build_research.word_count(body),
+                                      "figures": body.count("<figure")}
+        report = validate_research.Report()
+        validate_research.check_core_path_duration(prog, stats, report)
         self.assertEqual([], report.errors)
 
     @staticmethod

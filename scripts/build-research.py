@@ -908,6 +908,16 @@ def render_home(prog, stats):
                      f'<span class="rs-entry__title">{esc(p["title"])}</span>'
                      f'<span class="rs-entry__text">{esc(p["text"])}</span><span class="rs-entry__go" aria-hidden="true">→</span></a>')
 
+    by_slug = {c["slug"]: c for c in prog["chapters"]}
+    core = [by_slug[slug] for slug in prog["corePath"]]
+    core_min = sum(stats[c["slug"]]["minutes"] for c in core)
+    core_steps = "".join(
+        f'<li><a href="{c["_file"]}"><span class="rs-core__num">{i}</span>'
+        f'<span class="rs-core__body"><strong>{esc(c["title"])}</strong>'
+        f'<span>{esc(c["question"])}</span></span>'
+        f'<span class="rs-core__min">{stats[c["slug"]]["minutes"]} min</span></a></li>'
+        for i, c in enumerate(core, 1))
+
     parts_html = []
     for part in prog["parts"]:
         chs = [c for c in prog["chapters"] if c["part"] == part["id"]]
@@ -930,7 +940,6 @@ def render_home(prog, stats):
     ref_html = "".join(f'<a class="rs-refcard" href="{REF_PAGES[k]}"><span class="rs-refcard__title">{t}</span>'
                        f'<span class="rs-refcard__text">{d}</span></a>' for k, t, d in refs)
 
-    first = prog["chapters"][0]
     url = prog_url(prog)
     n_app = sum(1 for c in prog["chapters"] if not str(c.get("label", c["id"])).isdigit())
     n_main = len(prog["chapters"]) - n_app
@@ -942,16 +951,18 @@ def render_home(prog, stats):
         <p class="rs-kicker"><span class="rs-badge rs-badge--code">{esc(prog["code"])}</span><span class="rs-badge rs-badge--{esc(prog["status"])}">{esc(prog["statusLabel"])}</span></p>
         <h1 class="rs-home__title">{esc(prog["title"])}</h1>
         <p class="rs-home__thesis">{esc(prog["thesis"])}</p>
+        <p class="rs-home__audience"><strong>Who this is for.</strong> {esc(prog["audience"])}</p>
         <ul class="rs-home__meta">
           <li><strong>{n_main}</strong> chapters in {n_parts} parts{f" + {n_app} appendices" if n_app else ""}</li>
           <li><strong>{round(total_words / 1000)}k</strong> words</li>
           <li><strong>{total_fig}</strong> figures</li>
-          <li><strong>~{round(total_min / 60)} h</strong> end to end</li>
+          <li><strong>{core_min} min</strong> engineer core</li>
+          <li><strong>~{round(total_min / 60)} h</strong> complete archive</li>
           <li>Updated <strong>{esc(prog["updated"])}</strong> · v{esc(prog["version"])}</li>
         </ul>
         <div class="rs-home__cta">
           <a class="btn btn--primary" href="summary.html">Read the one-page summary</a>
-          <a class="btn btn--secondary" href="{first["_file"]}">Start chapter 1</a>
+          <a class="btn btn--secondary" href="#engineer-core">See the engineer core</a>
         </div>
       </header>
 
@@ -964,6 +975,17 @@ def render_home(prog, stats):
         <h2 id="paths-h" class="rs-home__h2">Choose your path</h2>
         <p class="rs-home__sub">Pick the entry point that matches the time you have. Every path ends with something you can do.</p>
         <div class="rs-entries">{"".join(paths)}</div>
+      </section>
+
+      <section id="engineer-core" class="rs-home__section rs-core" aria-labelledby="core-h">
+        <div class="rs-core__head">
+          <div>
+            <p class="rs-core__eyebrow">Recommended for working engineers</p>
+            <h2 id="core-h" class="rs-home__h2">The {core_min}-minute engineer core</h2>
+          </div>
+          <p>{len(core)} chapters carry the complete argument from mechanism to measurement to an operating plan. The remaining chapters are evidence, catalogs and reference material to open when the decision in front of you needs them.</p>
+        </div>
+        <ol class="rs-core__steps">{core_steps}</ol>
       </section>
 
       <section class="rs-home__section rs-home__prose">

@@ -1,17 +1,17 @@
 ## The problem
 
-Context windows grew about a hundredfold. Coding-agent reliability did not follow. Every controlled study found models getting worse as input grows, at every length tested, well before the window is full [S]. Handing an agent a 100K-token codebase summary did *worse* than 5K tokens of targeted retrieval [P].
+Context windows grew about a hundredfold. Coding-agent reliability did not follow. In Chroma's controlled study, all 18 tested models became less reliable as input grew, well before the window was full [S]. A Sourcegraph practitioner report similarly found 5K tokens of targeted retrieval outperforming a 100K-token codebase summary on the same task [P].
 
-So the window is not a bucket to fill. It is an [[attention budget]], and every token dilutes the others. When a coding agent fails on your codebase, it usually did not fail to reason. The fact it needed was lost in a compaction, crowded out by 42,000 tokens of unused tool definitions, or contradicted by a hallucination it wrote itself at turn 12.
+So the window is not a bucket to fill. It is an [[attention budget]]: additional tokens can reduce the salience of the relevant ones. When a coding agent fails, the missing fact may have been lost in compaction, displaced by unused tool definitions, or contradicted by the agent's own earlier claim.
 
 ## The finding
 
-**For most teams in 2026, the binding constraint is not the model or the tools. It is context discipline.** Four results carry that claim:
+**Before changing the model or adding tools, test whether context discipline is the binding constraint.** Four results make that test worth running:
 
 - **Subtraction wins, and the evidence is lopsided.** Masking matched summarisation at lower cost [S]; fewer tools beat more tools [S]; focused prompts beat full ones containing the same information [S].
 - **Compression damage is unreliability first.** Compressed agents solve a task, then fail it on a rerun. Reliability degrades faster than mean accuracy, so teams measuring single runs conclude compaction is nearly free [S].
 - **The summariser is a quality lever.** Changing only the summariser moved SWE-bench accuracy from 49.0% to 55.5%, a 6.5-point swing [S].
-- **The cache can flip the sign of an optimisation.** Stable prefix tokens cost about a tenth of churning ones. A 24% token cut that made the prefix dynamic raised cost 6.9× [C].
+- **The cache can flip the sign of an optimisation.** In the worked price model, a 24% token cut that made the prefix dynamic raised cost 6.9× [C].
 
 ## What to do first
 
