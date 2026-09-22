@@ -131,7 +131,7 @@
         <section class="rs-brief" aria-label="Chapter brief">
           <div class="rs-brief__col">
             <h2 class="rs-brief__title">In 30 seconds</h2>
-            <ul><li>Sixty-two habits, ordered by when they apply: setup, opening, retrieval, state, boundaries, delegation, hygiene.</li><li>Eight of them pay for themselves in the first week, and five of those eight cost nothing.</li><li>The wins are mostly deletions and habits, not architecture.</li></ul>
+            <ul><li>Sixty-two habits, ordered by when they apply: setup, opening, retrieval, state, boundaries, delegation, hygiene.</li><li>Eight habits pay off in week one — five of them free.</li><li>The wins are mostly deletions and habits, not architecture.</li></ul>
           </div>
           <div class="rs-brief__col rs-brief__col--outcomes">
             <h2 class="rs-brief__title">You will be able to</h2>
@@ -139,8 +139,9 @@
           </div>
         </section>
         <div class="article-single__body rs-body">
+<p>Each habit defers to its owning chapter: setup and prevention → <a href="03-ten-methods.html">chapter 3</a> and <a href="08-tool-surface.html">chapter 8</a>; opening and retrieval → <a href="05-retrieval.html">chapter 5</a>; state and boundaries → <a href="06-compaction-and-memory.html">chapter 6</a> and <a href="03-ten-methods.html#m-10-session-lifecycle">M-10</a>; delegation → <a href="07-sub-agents.html">chapter 7</a>; the quarterly loop → <a href="15-optimisation-plan.html#the-maintenance-loop">chapter 15</a>.</p>
 <h2 id="the-eight-that-pay-for-themselves-in-week-one">The eight that pay for themselves in week one<a class="rs-anchor" href="#the-eight-that-pay-for-themselves-in-week-one" title="Link to this section">#</a></h2>
-<p>If you do nothing else from this chapter, do these. Five of the eight cost nothing and need no installation.</p>
+<p>If you do nothing else from this chapter, do these. Three of the eight are free; the rest cost minutes.</p>
 <div class="table-scroll rs-table"><table>
 <thead>
 <tr>
@@ -155,7 +156,7 @@
 <td>6</td>
 <td>Audit MCP servers with zero calls</td>
 <td>10 min</td>
-<td>Candidate recovery when dead or duplicate surface dominates; verify and keep rollback <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>Candidate recovery when dead or duplicate surface dominates; verify and keep rollback</td>
 </tr>
 <tr>
 <td>9</td>
@@ -236,7 +237,7 @@
 <li><strong>Create a gitignored <code>.agent/</code> scratch directory</strong> as the offload target.</li>
 <li><strong>Give <code>rg</code> sane context:</strong> <code>-C 8</code> at least. <a class="rs-term" href="glossary.html#fragment-blindness" data-def="Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.">Fragment blindness</a> is invisible and expensive.</li>
 <li><strong>Install a symbol-level retrieval tool</strong> if your stack has language-server support.</li>
-<li><strong>Get a live context-utilisation display.</strong> Awareness alone changes behaviour.</li>
+<li><strong>Get a live context-utilisation display.</strong> Awareness alone changes behaviour <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</li>
 <li><strong>Measure your prefix tax once and write it down.</strong> Re-measure after every harness update.</li>
 <li><strong>Put context configuration under version control:</strong> instruction files, ignore files, tool config, wrapper scripts.</li>
 <li><strong>Write the transcript-grep script.</strong> Twenty lines of shell that count tool calls, rank commands by output volume and flag repeated calls.</li>
@@ -257,12 +258,6 @@ jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;select
 <ol start="19">
 <li><strong>One session, one coherent task.</strong> New task, new session. The most violated rule here.</li>
 <li><strong>Spend 200 tokens on the opener.</strong> Goal, constraints, relevant paths, definition of done, and what <em>not</em> to do.</li>
-<li><strong>Name a file in the opener,</strong> even as a guess. It turns expensive exploration into cheap directed retrieval.</li>
-<li><strong>State the definition of done:</strong> "Done when <code>pytest tests/checkout</code> passes with no new lint errors." Otherwise the agent invents a stopping condition.</li>
-<li><strong>State what not to do:</strong> "Do not touch <code>legacy/</code>. Do not add dependencies. Do not reformat unrelated files."</li>
-<li><strong>Do not paste the design document.</strong> Pointers, never prose.</li>
-<li><strong>When resuming, open with the plan file, not a narrative.</strong> "Continue from <code>PLAN.md</code>" beats three paragraphs of recap.</li>
-<li><strong>Ask for a plan before edits on anything over about 30 minutes.</strong> The plan becomes the plan file, which survives every boundary.</li>
 </ol>
 <div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">a 200-token opener</span></div><pre class="highlight"><code>Goal: checkout requests time out under load (p95 &gt; 5s since Tuesday).
 Start with: src/checkout/service.ts and src/db/pool.ts.
@@ -270,6 +265,14 @@ Constraints: no new dependencies; do not touch legacy/ or change the public API.
 Done when: `npm test -w checkout` passes and a load test at 200 rps keeps p95 &lt; 800ms.
 First: write PLAN.md with your hypotheses before editing anything.
 </code></pre></div>
+<ol start="21">
+<li><strong>Name a file in the opener,</strong> even as a guess. It turns expensive exploration into cheap directed retrieval.</li>
+<li><strong>State the definition of done:</strong> "Done when <code>pytest tests/checkout</code> passes with no new lint errors." Otherwise the agent invents a stopping condition.</li>
+<li><strong>State what not to do:</strong> "Do not touch <code>legacy/</code>. Do not add dependencies. Do not reformat unrelated files."</li>
+<li><strong>Do not paste the design document.</strong> Pointers, never prose.</li>
+<li><strong>When resuming, open with the plan file, not a narrative.</strong> "Continue from <code>PLAN.md</code>" beats three paragraphs of recap.</li>
+<li><strong>Ask for a plan before edits on anything over about 30 minutes.</strong> The plan becomes the plan file, which survives every boundary.</li>
+</ol>
 <h2 id="during-the-session-retrieval">During the session: retrieval<a class="rs-anchor" href="#during-the-session-retrieval" title="Link to this section">#</a></h2>
 <ol start="27">
 <li><strong>Locate, then inspect, then read:</strong> <code>grep -l</code> → <code>grep -n</code> → read the symbol.</li>
@@ -296,11 +299,11 @@ First: write PLAN.md with your hypotheses before editing anything.
 <ol start="43">
 <li><strong>Compact right after a test passes. Never mid-debug.</strong> <a class="rs-term" href="glossary.html#semantic-triggering" data-def="Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.">Semantic triggering</a> in its simplest form.</li>
 <li><strong>Do not compact when stuck.</strong> Being stuck means you do not yet know what matters, so you cannot choose what to drop.</li>
-<li><strong>Re-read the plan file as the first action after any compaction.</strong> It protects the step with the most errors (+0.108 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>).</li>
+<li><strong>Re-read the plan file as the first action after any compaction.</strong> It protects the step with the most errors (+0.108 on AppWorld <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>).</li>
 <li><strong>Never compact twice.</strong> A second compaction summarises a summary. Reset instead.</li>
 <li><strong>Keep exact strings verbatim in summaries:</strong> errors, versions, paths, line numbers, config keys, IDs.</li>
-<li><strong>Put a done / in-progress / not-started block in every summary.</strong> It counters the 44.6% termination collapse <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
-<li><strong>Do not compact with fewer than five turns left.</strong> It is below breakeven.</li>
+<li><strong>Put a done / in-progress / not-started block in every summary.</strong> It counters the 44.6% termination collapse on AppWorld <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
+<li><strong>Do not compact with fewer than five turns left.</strong> It is below breakeven <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a> (chapter 10).</li>
 <li><strong>Reset instead of arguing.</strong> Correcting a wrong fact appends a competitor and leaves the original.</li>
 <li><strong>Reset on the third repeated action.</strong> Rephrasing will not help; distraction is a property of the context.</li>
 <li><strong>Write the handoff note before you need it.</strong> Two minutes now saves twenty turns later.</li>
@@ -321,6 +324,7 @@ First: write PLAN.md with your hypotheses before editing anything.
 <li><strong>Re-audit quarterly, on the calendar.</strong> Thirty minutes. Without it you are back at baseline within two quarters <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
 <li><strong>When a context problem recurs, fix the repository.</strong> Three functions named <code>parse_config</code> is a repository problem wearing a retrieval problem's clothes.</li>
 </ol>
+<p>Run the <a href="16-diagnostic.html">diagnostic</a> to see which of these you need first; re-audit quarterly.</p>
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>

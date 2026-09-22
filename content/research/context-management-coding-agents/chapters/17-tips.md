@@ -1,10 +1,12 @@
+Each habit defers to its owning chapter: setup and prevention → [chapter 3](ch:ten-methods) and [chapter 8](ch:tool-surface); opening and retrieval → [chapter 5](ch:retrieval); state and boundaries → [chapter 6](ch:compaction-and-memory) and [M-10](ch:ten-methods#m-10-session-lifecycle); delegation → [chapter 7](ch:sub-agents); the quarterly loop → [chapter 15](ch:optimisation-plan#the-maintenance-loop).
+
 ## The eight that pay for themselves in week one
 
-If you do nothing else from this chapter, do these. Five of the eight cost nothing and need no installation.
+If you do nothing else from this chapter, do these. Three of the eight are free; the rest cost minutes.
 
 | # | Habit | Effort | Payoff |
 |---|---|---|---|
-| 6 | Audit MCP servers with zero calls | 10 min | Candidate recovery when dead or duplicate surface dominates; verify and keep rollback [P] |
+| 6 | Audit MCP servers with zero calls | 10 min | Candidate recovery when dead or duplicate surface dominates; verify and keep rollback |
 | 9 | Four shell wrappers for your loudest commands | An afternoon | 60–90% less tool output [P] |
 | 1 | Ignore files | 5 min | Prevents a whole class of failures |
 | 3 | The inference test on the instruction file | 20 min | Smaller *and* more salient |
@@ -49,7 +51,7 @@ That is the shape of this whole field: **the wins are mostly deletions and habit
 12. **Create a gitignored `.agent/` scratch directory** as the offload target.
 13. **Give `rg` sane context:** `-C 8` at least. [[Fragment blindness]] is invisible and expensive.
 14. **Install a symbol-level retrieval tool** if your stack has language-server support.
-15. **Get a live context-utilisation display.** Awareness alone changes behaviour.
+15. **Get a live context-utilisation display.** Awareness alone changes behaviour [D].
 16. **Measure your prefix tax once and write it down.** Re-measure after every harness update.
 17. **Put context configuration under version control:** instruction files, ignore files, tool config, wrapper scripts.
 18. **Write the transcript-grep script.** Twenty lines of shell that count tool calls, rank commands by output volume and flag repeated calls.
@@ -72,12 +74,6 @@ jq -c 'select(.type=="tool_use") | {name, input}' "$f" | sort | uniq -c | awk '$
 
 19. **One session, one coherent task.** New task, new session. The most violated rule here.
 20. **Spend 200 tokens on the opener.** Goal, constraints, relevant paths, definition of done, and what *not* to do.
-21. **Name a file in the opener,** even as a guess. It turns expensive exploration into cheap directed retrieval.
-22. **State the definition of done:** "Done when `pytest tests/checkout` passes with no new lint errors." Otherwise the agent invents a stopping condition.
-23. **State what not to do:** "Do not touch `legacy/`. Do not add dependencies. Do not reformat unrelated files."
-24. **Do not paste the design document.** Pointers, never prose.
-25. **When resuming, open with the plan file, not a narrative.** "Continue from `PLAN.md`" beats three paragraphs of recap.
-26. **Ask for a plan before edits on anything over about 30 minutes.** The plan becomes the plan file, which survives every boundary.
 
 ```text title="a 200-token opener"
 Goal: checkout requests time out under load (p95 > 5s since Tuesday).
@@ -86,6 +82,12 @@ Constraints: no new dependencies; do not touch legacy/ or change the public API.
 Done when: `npm test -w checkout` passes and a load test at 200 rps keeps p95 < 800ms.
 First: write PLAN.md with your hypotheses before editing anything.
 ```
+21. **Name a file in the opener,** even as a guess. It turns expensive exploration into cheap directed retrieval.
+22. **State the definition of done:** "Done when `pytest tests/checkout` passes with no new lint errors." Otherwise the agent invents a stopping condition.
+23. **State what not to do:** "Do not touch `legacy/`. Do not add dependencies. Do not reformat unrelated files."
+24. **Do not paste the design document.** Pointers, never prose.
+25. **When resuming, open with the plan file, not a narrative.** "Continue from `PLAN.md`" beats three paragraphs of recap.
+26. **Ask for a plan before edits on anything over about 30 minutes.** The plan becomes the plan file, which survives every boundary.
 
 ## During the session: retrieval
 
@@ -113,11 +115,11 @@ First: write PLAN.md with your hypotheses before editing anything.
 
 43. **Compact right after a test passes. Never mid-debug.** [[Semantic triggering]] in its simplest form.
 44. **Do not compact when stuck.** Being stuck means you do not yet know what matters, so you cannot choose what to drop.
-45. **Re-read the plan file as the first action after any compaction.** It protects the step with the most errors (+0.108 [S]).
+45. **Re-read the plan file as the first action after any compaction.** It protects the step with the most errors (+0.108 on AppWorld [S]).
 46. **Never compact twice.** A second compaction summarises a summary. Reset instead.
 47. **Keep exact strings verbatim in summaries:** errors, versions, paths, line numbers, config keys, IDs.
-48. **Put a done / in-progress / not-started block in every summary.** It counters the 44.6% termination collapse [S].
-49. **Do not compact with fewer than five turns left.** It is below breakeven.
+48. **Put a done / in-progress / not-started block in every summary.** It counters the 44.6% termination collapse on AppWorld [S].
+49. **Do not compact with fewer than five turns left.** It is below breakeven [C] (chapter 10).
 50. **Reset instead of arguing.** Correcting a wrong fact appends a competitor and leaves the original.
 51. **Reset on the third repeated action.** Rephrasing will not help; distraction is a property of the context.
 52. **Write the handoff note before you need it.** Two minutes now saves twenty turns later.
@@ -137,3 +139,5 @@ First: write PLAN.md with your hypotheses before editing anything.
 
 61. **Re-audit quarterly, on the calendar.** Thirty minutes. Without it you are back at baseline within two quarters [P].
 62. **When a context problem recurs, fix the repository.** Three functions named `parse_config` is a repository problem wearing a retrieval problem's clothes.
+
+Run the [diagnostic](ch:diagnostic) to see which of these you need first; re-audit quarterly.

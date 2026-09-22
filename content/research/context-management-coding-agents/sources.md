@@ -38,7 +38,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** seven compression strategies compared on AppWorld (full context, FIFO truncation, token pruning, two prompt-based compaction schemes, guideline-based approaches, and a verifier-guided method); the AppWorld results table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
 - **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [chapter 12](ch:failure-modes#c-compaction), [chapter 13](ch:antipatterns#ap-4-compaction-as-hygiene), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [chapter 12](ch:failure-modes#c-compaction), [chapter 13](ch:antipatterns#ap-4-compaction-as-hygiene), [chapter 17](ch:tips#during-the-session-boundaries), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
 
 ### "Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)
@@ -148,9 +148,9 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### Progressive disclosure and code-execution reporting
 
-- **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server; the practitioner-landscape convergence on deferred definitions, with some harnesses making them the default by 2026; emerging MCP proposals for adaptive response granularity.
+- **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server; the practitioner-landscape convergence on deferred definitions, with some harnesses making them the default by 2026, and usage reporting / compaction control increasingly built in; emerging MCP proposals for adaptive response granularity.
 - **Discount:** first-party and community reports; no independent reproduction found.
-- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
 
 ### Prefix-caching operational reporting
 
@@ -162,13 +162,13 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 30+ tools reading it; 60,000+ repositories; Agentic AI Foundation stewardship; the ≤150-line guidance; ~4% success improvement from human-written context files.
 - **Discount:** [P] throughout. The 4% figure has no published method.
-- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-6-the-growing-instruction-file).
+- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-6-the-growing-instruction-file), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one).
 
 ### Open-source tooling documentation
 
 - **Supports:** the tooling catalogue; the 60–90% and 98% output-reduction claims; symbol-level operations; language coverage (30+ languages via the Language Server Protocol across the surveyed toolkits).
 - **Discount:** self-reported, none reproduced here. Audit before installing.
-- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 10](ch:metrics-and-economics#where-to-spend-the-next-unit-of-effort), [chapter 16](ch:diagnostic#your-one-next-action), [chapter 18](ch:tooling).
+- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 10](ch:metrics-and-economics#where-to-spend-the-next-unit-of-effort), [chapter 16](ch:diagnostic#your-one-next-action), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [chapter 18](ch:tooling).
 
 ## Verification caveat
 

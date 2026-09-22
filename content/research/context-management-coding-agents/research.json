@@ -472,7 +472,7 @@
       "description": "Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week.",
       "tldr": [
         "Sixty-two habits, ordered by when they apply: setup, opening, retrieval, state, boundaries, delegation, hygiene.",
-        "Eight of them pay for themselves in the first week, and five of those eight cost nothing.",
+        "Eight habits pay off in week one — five of them free.",
         "The wins are mostly deletions and habits, not architecture."
       ],
       "outcomes": [
