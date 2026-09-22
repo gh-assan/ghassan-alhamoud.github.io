@@ -159,7 +159,7 @@
 <ul>
 <li><strong>Supports:</strong> performance generally degrading as input grows across controlled experiments with 18 models, four vendors, 8 input lengths and 11 needle positions; the effect of question–answer similarity; distractors compounding non-uniformly; <strong>coherent text retrieving worse than shuffled text</strong> across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap. The curves are non-uniform and model/task-specific.</li>
 <li><strong>Discount:</strong> static retrieval tasks, not agent trajectories. Rule R3 applies to every use.</li>
-<li><strong>Used in:</strong> <a href="01-foundations.html#what-long-context-studies-actually-show">chapter 1</a>, <a href="03-ten-methods.html#m-3-just-in-time-retrieval">chapter 3</a>, <a href="05-retrieval.html#nine-ways-code-retrieval-goes-wrong">chapter 5</a>, <a href="06-compaction-and-memory.html#the-wiki">chapter 6</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="b-lessons.html">lessons A</a>.</li>
+<li><strong>Used in:</strong> <a href="01-foundations.html#what-long-context-studies-actually-show">chapter 1</a>, <a href="03-ten-methods.html#m-3-just-in-time-retrieval">chapter 3</a>, <a href="05-retrieval.html#nine-ways-code-retrieval-goes-wrong">chapter 5</a>, <a href="06-compaction-and-memory.html#the-wiki">chapter 6</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="11-hard-calls.html#loading-and-retrieval">chapter 11</a>, <a href="b-lessons.html">lessons A</a>.</li>
 <li><strong>Link:</strong> <a href="https://www.trychroma.com/research/context-rot" target="_blank" rel="noopener noreferrer">trychroma.com/research/context-rot</a></li>
 </ul>
 <h3 id="effective-length-caveat">Effective-length caveat<a class="rs-anchor" href="#effective-length-caveat" title="Link to this section">#</a></h3>
@@ -176,7 +176,7 @@
 <ul>
 <li><strong>Supports:</strong> the AppWorld table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); <strong>the Pass@2/Pass² gap widening under tighter budgets</strong>; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.</li>
 <li><strong>Discount:</strong> one benchmark (147 API tasks) and specific model pairings. The <em>direction</em> transfers; the magnitudes may not.</li>
-<li><strong>Used in:</strong> <a href="02-anatomy.html">chapter 2</a>, <a href="03-ten-methods.html#m-8-semantic-boundary-compaction">chapter 3</a>, <a href="06-compaction-and-memory.html#result-2-compression-damages-reliability-before-accuracy">chapter 6</a>, <a href="09-evaluation.html#pass-k-worked">chapter 9</a>, <a href="14-case-studies.html#cs-4-compression-that-hurt-reliability-more-than-accuracy-s">case CS-4</a>.</li>
+<li><strong>Used in:</strong> <a href="02-anatomy.html">chapter 2</a>, <a href="03-ten-methods.html#m-8-semantic-boundary-compaction">chapter 3</a>, <a href="06-compaction-and-memory.html#result-2-compression-damages-reliability-before-accuracy">chapter 6</a>, <a href="09-evaluation.html#pass-k-worked">chapter 9</a>, <a href="11-hard-calls.html#compression-and-state">chapter 11</a>, <a href="14-case-studies.html#cs-4-compression-that-hurt-reliability-more-than-accuracy-s">case CS-4</a>.</li>
 <li><strong>Link:</strong> <a href="https://arxiv.org/abs/2608.06503" target="_blank" rel="noopener noreferrer">arXiv 2608.06503</a></li>
 </ul>
 <h3 id="addressable-recall-compaction-for-long-context-window-control-in-ai-agents-arc">"Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)<a class="rs-anchor" href="#addressable-recall-compaction-for-long-context-window-control-in-ai-agents-arc" title="Link to this section">#</a></h3>
@@ -204,21 +204,21 @@
 <ul>
 <li><strong>Supports:</strong> masking matching LLM summarisation on SWE-bench solve rates across two model sizes at substantially lower cost; preferring simple methods first.</li>
 <li><strong>Discount:</strong> the numeric detail was captured from the paper's summary rather than a full read. <strong>Re-verify before citing externally.</strong></li>
-<li><strong>Used in:</strong> <a href="06-compaction-and-memory.html#result-5-simple-masking-is-competitive-with-summarisation">chapter 6</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>.</li>
+<li><strong>Used in:</strong> <a href="06-compaction-and-memory.html#result-5-simple-masking-is-competitive-with-summarisation">chapter 6</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="11-hard-calls.html#compression-and-state">chapter 11</a>.</li>
 <li><strong>Link:</strong> <a href="https://arxiv.org/abs/2508.21433" target="_blank" rel="noopener noreferrer">arXiv 2508.21433</a></li>
 </ul>
 <h3 id="is-grep-all-you-need-how-agent-harnesses-reshape-agentic-search">"Is Grep All You Need? How Agent Harnesses Reshape Agentic Search"<a class="rs-anchor" href="#is-grep-all-you-need-how-agent-harnesses-reshape-agentic-search" title="Link to this section">#</a></h3>
 <ul>
 <li><strong>Supports:</strong> grep generally beating vector retrieval on 116 LongMemEval-derived questions; <strong>four harnesses</strong> compared, inline versus file-based results; overall scores depending strongly on harness and tool-calling style on identical data; eight surveyed agents using the model as a navigator over shell tools.</li>
 <li><strong>Discount:</strong> the questions are conversational-memory shaped, not repository shaped. The harness finding transfers more confidently than the grep-versus-vector ranking.</li>
-<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-4-structural-retrieval">chapter 3</a>, <a href="05-retrieval.html#the-question-posed-correctly">chapter 5</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="14-case-studies.html#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">case CS-7</a>.</li>
+<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-4-structural-retrieval">chapter 3</a>, <a href="05-retrieval.html#the-question-posed-correctly">chapter 5</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="11-hard-calls.html#loading-and-retrieval">chapter 11</a>, <a href="14-case-studies.html#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">case CS-7</a>.</li>
 <li><strong>Link:</strong> <a href="https://arxiv.org/abs/2605.15184" target="_blank" rel="noopener noreferrer">arXiv 2605.15184</a></li>
 </ul>
 <h3 id="token-economics-of-tool-heavy-agents-including-arxiv-260610209">Token economics of tool-heavy agents (including arXiv 2606.10209)<a class="rs-anchor" href="#token-economics-of-tool-heavy-agents-including-arxiv-260610209" title="Link to this section">#</a></h3>
 <ul>
 <li><strong>Supports:</strong> input tokens at 99.75–99.87% of total usage; full context at 2.68× the tokens of the best managed method with fewer tasks completed.</li>
 <li><strong>Discount:</strong> tool-heavy workloads specifically; ratios differ for chat.</li>
-<li><strong>Used in:</strong> <a href="02-anatomy.html#segment-6-tool-results">chapter 2</a>, <a href="03-ten-methods.html#m-3-just-in-time-retrieval">chapter 3</a>, <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="10-metrics-and-economics.html#the-four-line-cost-model">chapter 10</a>.</li>
+<li><strong>Used in:</strong> <a href="02-anatomy.html#segment-6-tool-results">chapter 2</a>, <a href="03-ten-methods.html#m-3-just-in-time-retrieval">chapter 3</a>, <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="10-metrics-and-economics.html#the-four-line-cost-model">chapter 10</a>, <a href="11-hard-calls.html#loading-and-retrieval">chapter 11</a>.</li>
 <li><strong>Link:</strong> <a href="https://arxiv.org/abs/2606.10209" target="_blank" rel="noopener noreferrer">arXiv 2606.10209</a></li>
 </ul>
 <h2 id="practitioner-engineering-writing">Practitioner engineering writing<a class="rs-anchor" href="#practitioner-engineering-writing" title="Link to this section">#</a></h2>
@@ -232,13 +232,13 @@
 <ul>
 <li><strong>Supports:</strong> the orchestrator-worker architecture; <strong>90.2%</strong> over single-agent Opus 4 on an internal research evaluation; about <strong>15×</strong> chat tokens (agents about 4×); <strong>about 80%</strong> of performance variance explained by token usage.</li>
 <li><strong>Discount:</strong> research tasks, not coding; an internal evaluation; first-party. The 15× and 80% must always be quoted with the 90.2%.</li>
-<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-9-sub-agent-isolation-with-a-contract">chapter 3</a>, <a href="07-sub-agents.html#the-disagreement-stated-fairly">chapter 7</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="14-case-studies.html#cs-2-the-research-system-that-beat-one-agent-by-90-p">case CS-2</a>.</li>
+<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-9-sub-agent-isolation-with-a-contract">chapter 3</a>, <a href="07-sub-agents.html#the-disagreement-stated-fairly">chapter 7</a>, <a href="09-evaluation.html#twelve-results-that-shape-the-design">chapter 9</a>, <a href="11-hard-calls.html#sessions-and-topology">chapter 11</a>, <a href="14-case-studies.html#cs-2-the-research-system-that-beat-one-agent-by-90-p">case CS-2</a>.</li>
 </ul>
 <h3 id="sub-agent-token-efficiency-reporting">Sub-agent token-efficiency reporting<a class="rs-anchor" href="#sub-agent-token-efficiency-reporting" title="Link to this section">#</a></h3>
 <ul>
 <li><strong>Supports:</strong> about <strong>9K total tokens</strong> for a multi-domain query answered through isolated sub-agents versus about <strong>15K</strong> with an accumulating-context pattern.</li>
 <li><strong>Discount:</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. A single practitioner comparison with no published method; no independent reproduction found.</li>
-<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-9-sub-agent-isolation-with-a-contract">chapter 3</a>, <a href="07-sub-agents.html#the-benefit-is-real-and-specific">chapter 7</a>.</li>
+<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-9-sub-agent-isolation-with-a-contract">chapter 3</a>, <a href="07-sub-agents.html#the-benefit-is-real-and-specific">chapter 7</a>, <a href="11-hard-calls.html#sessions-and-topology">chapter 11</a>.</li>
 </ul>
 <h3 id="cognition-dont-build-multi-agents">Cognition, "Don't Build Multi-Agents"<a class="rs-anchor" href="#cognition-dont-build-multi-agents" title="Link to this section">#</a></h3>
 <ul>
@@ -256,7 +256,7 @@
 <ul>
 <li><strong>Supports:</strong> <strong>5K of targeted retrieval beating a 100K codebase summary</strong> on identical coding tasks; the subtraction default; reserving headroom.</li>
 <li><strong>Discount:</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. The comparison's full method was not available, and the page returned HTTP 403 during research, so figures were captured from search summaries. Its direction is corroborated by the focused-versus-full result above. <strong>Re-verify before citing externally.</strong></li>
-<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-3-just-in-time-retrieval">chapter 3</a>, <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>.</li>
+<li><strong>Used in:</strong> <a href="03-ten-methods.html#m-3-just-in-time-retrieval">chapter 3</a>, <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>, <a href="11-hard-calls.html#loading-and-retrieval">chapter 11</a>.</li>
 </ul>
 <h3 id="hybrid-code-retrieval-reporting">Hybrid code-retrieval reporting<a class="rs-anchor" href="#hybrid-code-retrieval-reporting" title="Link to this section">#</a></h3>
 <ul>
@@ -299,7 +299,7 @@
 <ul>
 <li><strong>Supports:</strong> 30+ tools reading it; 60,000+ repositories; Agentic AI Foundation stewardship; the ≤150-line guidance; ~4% success improvement from human-written context files.</li>
 <li><strong>Discount:</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> throughout. The 4% figure has no published method.</li>
-<li><strong>Used in:</strong> <a href="02-anatomy.html#segment-3-project-instruction-files">chapter 2</a>, <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>.</li>
+<li><strong>Used in:</strong> <a href="02-anatomy.html#segment-3-project-instruction-files">chapter 2</a>, <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>, <a href="11-hard-calls.html#loading-and-retrieval">chapter 11</a>.</li>
 </ul>
 <h3 id="open-source-tooling-documentation">Open-source tooling documentation<a class="rs-anchor" href="#open-source-tooling-documentation" title="Link to this section">#</a></h3>
 <ul>

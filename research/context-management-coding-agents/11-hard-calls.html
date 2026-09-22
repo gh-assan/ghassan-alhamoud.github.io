@@ -140,7 +140,7 @@
         </section>
         <div class="article-single__body rs-body">
 <h2 id="how-to-use-this-chapter">How to use this chapter<a class="rs-anchor" href="#how-to-use-this-chapter" title="Link to this section">#</a></h2>
-<p>Twenty-five decisions come up again and again with no clean answer. Each one below gives the tension, the honest case for both sides, a recommendation, and <strong>the conditions that flip it</strong>. The flip conditions are what make these re-decidable when your model, harness or repository changes.</p>
+<p>Twenty-five decisions come up again and again with no clean answer. Most give the tension and the honest case for both sides; all give a recommendation and <strong>the conditions that flip it</strong>. The flip conditions are what make these re-decidable when your model, harness or repository changes.</p>
 <p>Start with the summary table. Open the section for any call you are facing.</p>
 <div class="table-scroll rs-table"><table>
 <thead>
@@ -153,151 +153,151 @@
 </thead>
 <tbody>
 <tr>
-<td>SP-1</td>
+<td class="rs-nowrap">SP-1</td>
 <td>Pre-load or discover?</td>
 <td>Discover, with a pointer seed under 2K tokens</td>
 <td>The repository fits comfortably</td>
 </tr>
 <tr>
-<td>SP-2</td>
+<td class="rs-nowrap">SP-2</td>
 <td>Compact or reset?</td>
 <td>Reset, if you have a plan file</td>
 <td>No person and no handoff mechanism</td>
 </tr>
 <tr>
-<td>SP-3</td>
+<td class="rs-nowrap">SP-3</td>
 <td>Static or dynamic tools?</td>
 <td>Static, hand-pruned; deferred where supported</td>
 <td>No prefix caching, or very short sessions</td>
 </tr>
 <tr>
-<td>SP-4</td>
+<td class="rs-nowrap">SP-4</td>
 <td>Delegate or stay linear?</td>
 <td>Delegate read-only, additive work only</td>
 <td>Cost is no object and latency is</td>
 </tr>
 <tr>
-<td>SP-5</td>
+<td class="rs-nowrap">SP-5</td>
 <td>Semantic index or live search?</td>
 <td>Live lexical and structural first</td>
 <td>Poor naming and no language server</td>
 </tr>
 <tr>
-<td>SP-6</td>
+<td class="rs-nowrap">SP-6</td>
 <td>Summarise or mask?</td>
 <td>Mask observations, summarise reasoning</td>
 <td>The reasoning trace is the artifact</td>
 </tr>
 <tr>
-<td>SP-7</td>
+<td class="rs-nowrap">SP-7</td>
 <td>One instruction file or many?</td>
 <td>Root ≤150 lines, scoped files ≤50</td>
 <td>The harness loads every file anyway</td>
 </tr>
 <tr>
-<td>SP-8</td>
+<td class="rs-nowrap">SP-8</td>
 <td>Filter output or keep it all?</td>
 <td>Filter hard, but redirect, never delete</td>
 <td>You cannot write files</td>
 </tr>
 <tr>
-<td>SP-9</td>
+<td class="rs-nowrap">SP-9</td>
 <td>Optimise tokens or cache?</td>
 <td>Cache first, then tokens</td>
 <td>No prefix caching</td>
 </tr>
 <tr>
-<td>SP-10</td>
+<td class="rs-nowrap">SP-10</td>
 <td>Long sessions or short?</td>
 <td>Short, with strong handoffs</td>
 <td>No checkpointable boundaries</td>
 </tr>
 <tr>
-<td>SP-11</td>
+<td class="rs-nowrap">SP-11</td>
 <td>Memory tool or repository?</td>
 <td>Repository first</td>
 <td>Knowledge spans repositories or environments</td>
 </tr>
 <tr>
-<td>SP-12</td>
+<td class="rs-nowrap">SP-12</td>
 <td>Model-directed or policy compaction?</td>
 <td>Model-directed with a policy backstop</td>
 <td>You cannot expose a compaction tool</td>
 </tr>
 <tr>
-<td>SP-13</td>
+<td class="rs-nowrap">SP-13</td>
 <td>Optimise the common case or the tail?</td>
 <td>Cheap prevention always; heavy machinery on the tail</td>
 <td>All work is long-horizon</td>
 </tr>
 <tr>
-<td>SP-14</td>
+<td class="rs-nowrap">SP-14</td>
 <td>Verbatim or paraphrase in summaries?</td>
 <td>Paraphrase narrative; exact strings verbatim</td>
 <td>Nothing: close to a rule</td>
 </tr>
 <tr>
-<td>SP-15</td>
+<td class="rs-nowrap">SP-15</td>
 <td>Better retrieval or less retrieval?</td>
 <td>Diagnose starvation versus dilution first</td>
 <td>Never: the diagnosis comes first</td>
 </tr>
 <tr>
-<td>SP-16</td>
+<td class="rs-nowrap">SP-16</td>
 <td>Standardise the team or let people tune?</td>
 <td>Standardise repository artifacts; leave session habits personal</td>
 <td>A team of one</td>
 </tr>
 <tr>
-<td>SP-17</td>
+<td class="rs-nowrap">SP-17</td>
 <td>Fresh or inherited context for sub-agents?</td>
 <td>Fresh, plus a brief with fixed decisions</td>
 <td>The sub-task needs a long chain of parent reasoning</td>
 </tr>
 <tr>
-<td>SP-18</td>
+<td class="rs-nowrap">SP-18</td>
 <td>Instrument everything or stay light?</td>
 <td>Four numbers, reviewed monthly</td>
 <td>While running an experiment</td>
 </tr>
 <tr>
-<td>SP-19</td>
+<td class="rs-nowrap">SP-19</td>
 <td>Fix it in the agent or the repository?</td>
 <td>Agent now; repository when it recurs</td>
 <td>You do not own the repository</td>
 </tr>
 <tr>
-<td>SP-20</td>
+<td class="rs-nowrap">SP-20</td>
 <td>Fixed pipeline or agentic search?</td>
 <td>Agentic, over cheap deterministic tools</td>
 <td>A narrow, repetitive task class</td>
 </tr>
 <tr>
-<td>SP-21</td>
+<td class="rs-nowrap">SP-21</td>
 <td>Include the design document?</td>
 <td>Not pre-loaded; fetched for intent questions</td>
 <td>The task <em>is</em> about intent</td>
 </tr>
 <tr>
-<td>SP-22</td>
+<td class="rs-nowrap">SP-22</td>
 <td>Cap utilisation or use the whole window?</td>
 <td>Soft cap 60%, act at 75%</td>
 <td>One task genuinely needs more</td>
 </tr>
 <tr>
-<td>SP-23</td>
+<td class="rs-nowrap">SP-23</td>
 <td>Tune for this model or stay agnostic?</td>
 <td>Agnostic structure, model-specific parameters</td>
 <td>You control a model that will not change</td>
 </tr>
 <tr>
-<td>SP-24</td>
+<td class="rs-nowrap">SP-24</td>
 <td>Ship the improvement or measure first?</td>
 <td>Tier by reversibility</td>
 <td>Measurement is already cheap for you</td>
 </tr>
 <tr>
-<td>SP-25</td>
+<td class="rs-nowrap">SP-25</td>
 <td>Index the wiki or dereference it?</td>
 <td>Dereference, never index</td>
 <td>The wiki is genuinely maintained</td>
@@ -311,7 +311,7 @@
 <li><strong>For pre-loading:</strong> the agent cannot search for a subsystem it does not know exists. Human-written context files improved success by about 4% <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
 <li><strong>For discovery:</strong> 5K targeted beat a 100K summary <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; focused ~300-token prompts beat ~113K full ones <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; full context cost 2.68× and completed fewer tasks <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
 </ul>
-<p><strong>Recommendation.</strong> Discover, with a <strong>pointer seed under 2,000 tokens</strong>: entry points, invariants, landmines, build commands. Pre-load <em>where to look</em>, never <em>what is there</em>.</p>
+<p><strong>Recommendation.</strong> Discover, with a <strong>pointer seed under 2,000 tokens</strong>: entry points, invariants, landmines, build commands. Pre-load <em>where to look</em>, never <em>what is there</em>. The retrieval design is <a href="05-retrieval.html">chapter 5</a>'s subject.</p>
 <p><strong>Flips when</strong> the repository fits comfortably (pre-load it all; the density penalty is small), or the agent has no filesystem access.</p>
 <h3 id="sp-5-semantic-index-or-live-search">SP-5: Semantic index or live search<a class="rs-anchor" href="#sp-5-semantic-index-or-live-search" title="Link to this section">#</a></h3>
 <p><strong>Tension.</strong> Embeddings answer concept questions; they go stale and fail silently.</p>
@@ -319,7 +319,7 @@
 <li><strong>For:</strong> finds code when you do not know the vocabulary; hybrid reported at +12.5% <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
 <li><strong>Against:</strong> grep generally won head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; the index is wrong about the code you just edited; it returns plausible results for questions with no answer.</li>
 </ul>
-<p><strong>Recommendation.</strong> <strong>Live lexical and structural search first; semantic search as an optional complement</strong>, preferably over prose (ADRs, PRs, design documents) rather than code.</p>
+<p><strong>Recommendation.</strong> <strong>Live lexical and structural search first; semantic search as an optional complement</strong>, preferably over prose (ADRs, PRs, design documents) rather than code. The tiered architecture is <a href="05-retrieval.html">chapter 5</a>'s.</p>
 <p><strong>Flips when</strong> the codebase has poor naming and no language-server support, or users mostly ask concept questions ("how do we do auth?") instead of location questions.</p>
 <h3 id="sp-15-better-retrieval-or-less-retrieval">SP-15: Better retrieval or less retrieval<a class="rs-anchor" href="#sp-15-better-retrieval-or-less-retrieval" title="Link to this section">#</a></h3>
 <p><strong>Tension.</strong> Both reduce waste, with opposite failure modes.</p>
@@ -327,7 +327,7 @@
 <li><strong>For quality:</strong> structural retrieval cuts waste without cutting information.</li>
 <li><strong>For volume:</strong> simpler, immediate, and directly attacks dilution.</li>
 </ul>
-<p><strong>Recommendation.</strong> <strong>Diagnose first.</strong> Classify your last 10 failures: decisive file never read (a recall problem: improve quality, do not reduce volume) or read and ignored (a precision problem: reduce volume). Applying the volume fix to a recall problem makes things strictly worse, and it is the most common misdiagnosis in this space.</p>
+<p><strong>Recommendation.</strong> <strong>Diagnose first.</strong> Classify your last 10 failures: decisive file never read (a recall problem: improve quality, do not reduce volume) or read and ignored (a precision problem: reduce volume). Applying the volume fix to a recall problem makes things strictly worse, and it is the most common misdiagnosis in this space; <a href="05-retrieval.html#measure-your-own-retrieval">chapter 5</a> gives the diagnosis procedure.</p>
 <p><strong>Flips:</strong> never. The diagnosis is the recommendation.</p>
 <h3 id="sp-20-fixed-pipeline-or-agentic-search">SP-20: Fixed pipeline or agentic search<a class="rs-anchor" href="#sp-20-fixed-pipeline-or-agentic-search" title="Link to this section">#</a></h3>
 <p><strong>Tension.</strong> Fixed pipelines are predictable and cheap. Agentic search adapts and costs turns.</p>
@@ -353,7 +353,7 @@
 <p><strong>Tension.</strong> Compaction keeps continuity, lossily and cheaply. A reset loses continuity but restores a clean, high-attention context.</p>
 <ul>
 <li><strong>For compaction:</strong> no person needed; the agent keeps going.</li>
-<li><strong>For a reset:</strong> compaction is lossy, breaks the cache, damages state recognition (44.6% versus 77.2% correct termination) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a> and raises errors at the next step (+0.108) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A reset lets you <em>author</em> what crosses the boundary.</li>
+<li><strong>For a reset:</strong> compaction is lossy, breaks the cache, damages state recognition (44.6% versus 77.2% correct termination on AppWorld) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a> and raises errors at the next step (+0.108) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A reset lets you <em>author</em> what crosses the boundary. <a href="06-compaction-and-memory.html">Chapter 6</a> owns the compaction arithmetic.</li>
 </ul>
 <p><strong>Recommendation.</strong> <strong>Reset, if you have externalised state.</strong> At most one compaction per session; needing a second means the session should have ended.</p>
 <p><strong>Flips when</strong> no person is present and no handoff mechanism exists, or session start-up is unusually expensive in your harness.</p>
@@ -362,7 +362,7 @@
 <ul>
 <li><strong>For masking:</strong> comparable solve rates at lower cost <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; no extra model call, no blocking, no laundering of hypotheses into facts.</li>
 </ul>
-<p><strong>Recommendation.</strong> <strong>Mask observations, summarise reasoning.</strong> Masking is the baseline any summariser must beat, and a surprising number do not.</p>
+<p><strong>Recommendation.</strong> <strong>Mask observations, summarise reasoning.</strong> Masking is the baseline any summariser must beat, and a surprising number do not (<a href="06-compaction-and-memory.html#result-5-simple-masking-is-competitive-with-summarisation">chapter 6</a> has the comparison).</p>
 <p><strong>Flips when</strong> the reasoning trace <em>is</em> the artifact, such as a long investigation whose conclusions matter more than its steps. Summarise then, with an explicit schema.</p>
 <h3 id="sp-8-filter-output-hard-or-keep-full-fidelity">SP-8: Filter output hard or keep full fidelity<a class="rs-anchor" href="#sp-8-filter-output-hard-or-keep-full-fidelity" title="Link to this section">#</a></h3>
 <p><strong>Tension.</strong> Filtering saves enormously; it can hide the decisive line.</p>
@@ -370,14 +370,14 @@
 <p><strong>Flips when</strong> you cannot write files. Then filter conservatively and truncate head-and-tail.</p>
 <h3 id="sp-12-model-directed-or-policy-compaction">SP-12: Model-directed or policy compaction<a class="rs-anchor" href="#sp-12-model-directed-or-policy-compaction" title="Link to this section">#</a></h3>
 <p><strong>Tension.</strong> Model-directed compaction adapts. Policy compaction is predictable, and does not depend on the model's judgment late in a long session, which is exactly when compaction is needed.</p>
-<p><strong>Recommendation.</strong> <strong>Model-directed with a policy backstop.</strong> Give the model a compaction tool and an explicit rubric (fire on closure or convergence; hold off mid-derivation or when stuck) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, plus a high threshold that fires only if the model never does.</p>
+<p><strong>Recommendation.</strong> <strong>Model-directed with a policy backstop.</strong> Give the model a compaction tool and an explicit rubric (fire on closure or convergence; hold off mid-derivation or when stuck) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, plus a high threshold that fires only if the model never does. The design space is <a href="06-compaction-and-memory.html#the-compaction-design-space">chapter 6</a>'s.</p>
 <p><strong>Flips when</strong> you cannot expose a compaction tool. Then use a policy triggered by observable boundaries such as a passing test or a commit.</p>
 <h3 id="sp-14-verbatim-or-paraphrase-in-summaries">SP-14: Verbatim or paraphrase in summaries<a class="rs-anchor" href="#sp-14-verbatim-or-paraphrase-in-summaries" title="Link to this section">#</a></h3>
-<p><strong>Tension.</strong> Verbatim keeps precision and costs tokens; paraphrase compresses about 10:1.</p>
-<p><strong>Recommendation.</strong> <strong>Paraphrase narrative aggressively; keep exact strings verbatim, always.</strong> "An assertion error in the checkout tests" cannot be acted on. <code>AssertionError: expected 3, got 0 at test_checkout.py:214</code> can.</p>
+<p><strong>Tension.</strong> Verbatim keeps precision and costs tokens; paraphrase compresses about 10:1 <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<p><strong>Recommendation.</strong> <strong>Paraphrase narrative aggressively; keep exact strings verbatim, always.</strong> "An assertion error in the checkout tests" cannot be acted on. <code>AssertionError: expected 3, got 0 at test_checkout.py:214</code> can. The schema that separates the two is <a href="06-compaction-and-memory.html#the-compaction-design-space">chapter 6</a>'s.</p>
 <p><strong>Flips:</strong> essentially never. The only real question is which fields count as exact.</p>
 <h3 id="sp-11-memory-tool-or-repository">SP-11: Memory tool or repository<a class="rs-anchor" href="#sp-11-memory-tool-or-repository" title="Link to this section">#</a></h3>
-<p><strong>Recommendation.</strong> <strong>Repository first.</strong> An <a class="rs-term" href="glossary.html#adr" data-def="A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.">ADR</a> beats a memory entry: versioned, reviewed, discoverable, repaired with the code. Use a memory system only for facts with no repository home, capped at about 40 always-loaded lines plus a searchable tier.</p>
+<p><strong>Recommendation.</strong> <strong>Repository first.</strong> An <a class="rs-term" href="glossary.html#adr" data-def="A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.">ADR</a> beats a memory entry: versioned, reviewed, discoverable, repaired with the code. Use a memory system only for facts with no repository home, capped at about 40 always-loaded lines plus a searchable tier. The full architecture is <a href="06-compaction-and-memory.html#cross-session-memory">chapter 6</a>'s.</p>
 <p><strong>Flips when</strong> knowledge spans repositories, or the facts are about the <em>environment</em> (staging quirks, VPN requirements, flaky infrastructure) rather than the code.</p>
 <h2 id="sessions-and-topology">Sessions and topology<a class="rs-anchor" href="#sessions-and-topology" title="Link to this section">#</a></h2>
 <h3 id="sp-4-delegate-or-stay-linear">SP-4: Delegate or stay linear<a class="rs-anchor" href="#sp-4-delegate-or-stay-linear" title="Link to this section">#</a></h3>
@@ -396,7 +396,7 @@
 <p><strong>Flips when</strong> the task has no checkpointable boundaries. Usually the better fix is a better handoff.</p>
 <h3 id="sp-17-fresh-or-inherited-context-for-sub-agents">SP-17: Fresh or inherited context for sub-agents<a class="rs-anchor" href="#sp-17-fresh-or-inherited-context-for-sub-agents" title="Link to this section">#</a></h3>
 <p><strong>Tension.</strong> Fresh contexts are clean but pay the prefix tax again. Inherited contexts share understanding and the parent's noise.</p>
-<p><strong>Recommendation.</strong> <strong>Fresh context plus a brief that lists the decisions the sub-agent must not re-make.</strong> It captures most of the benefit of inheritance, and naming the implicit decisions is where the value is.</p>
+<p><strong>Recommendation.</strong> <strong>Fresh context plus a brief that lists the decisions the sub-agent must not re-make.</strong> It captures most of the benefit of inheritance, and naming the implicit decisions is where the value is. The contract pattern is <a href="07-sub-agents.html#the-sub-agent-contract">chapter 7</a>'s.</p>
 <p><strong>Flips when</strong> the sub-task depends on a long chain of parent reasoning that no brief can carry. That is a signal the work is not isolatable.</p>
 <h3 id="sp-22-cap-utilisation-or-use-the-whole-window">SP-22: Cap utilisation or use the whole window<a class="rs-anchor" href="#sp-22-cap-utilisation-or-use-the-whole-window" title="Link to this section">#</a></h3>
 <ul>
@@ -492,6 +492,7 @@
 </figure>
 
 <p>That is not conservatism. It falls out of the mechanics in <a href="01-foundations.html">chapter 1</a>. Every irreversible operation you can turn into a reversible one is worth more than any improvement to how well you perform the irreversible version.</p>
+<p>To find out which of these calls is binding for you, score yourself in <a href="16-diagnostic.html">the diagnostic</a>.</p>
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>

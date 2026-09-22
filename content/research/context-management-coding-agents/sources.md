@@ -18,7 +18,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 - **Supports:** performance generally degrading as input grows across controlled experiments with 18 models, four vendors, 8 input lengths and 11 needle positions; the effect of question–answer similarity; distractors compounding non-uniformly; **coherent text retrieving worse than shuffled text** across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap. The curves are non-uniform and model/task-specific.
 - **Discount:** static retrieval tasks, not agent trajectories. Rule R3 applies to every use.
-- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [chapter 6](ch:compaction-and-memory#the-wiki), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [lessons A](ch:lessons).
+- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [chapter 6](ch:compaction-and-memory#the-wiki), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#loading-and-retrieval), [lessons A](ch:lessons).
 - **Link:** [trychroma.com/research/context-rot](https://www.trychroma.com/research/context-rot)
 
 ### Effective-length caveat
@@ -38,7 +38,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the AppWorld table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
 - **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
 
 ### "Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)
@@ -66,21 +66,21 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** masking matching LLM summarisation on SWE-bench solve rates across two model sizes at substantially lower cost; preferring simple methods first.
 - **Discount:** the numeric detail was captured from the paper's summary rather than a full read. **Re-verify before citing externally.**
-- **Used in:** [chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design).
+- **Used in:** [chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#compression-and-state).
 - **Link:** [arXiv 2508.21433](https://arxiv.org/abs/2508.21433)
 
 ### "Is Grep All You Need? How Agent Harnesses Reshape Agentic Search"
 
 - **Supports:** grep generally beating vector retrieval on 116 LongMemEval-derived questions; **four harnesses** compared, inline versus file-based results; overall scores depending strongly on harness and tool-calling style on identical data; eight surveyed agents using the model as a navigator over shell tools.
 - **Discount:** the questions are conversational-memory shaped, not repository shaped. The harness finding transfers more confidently than the grep-versus-vector ranking.
-- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#loading-and-retrieval), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
 - **Link:** [arXiv 2605.15184](https://arxiv.org/abs/2605.15184)
 
 ### Token economics of tool-heavy agents (including arXiv 2606.10209)
 
 - **Supports:** input tokens at 99.75–99.87% of total usage; full context at 2.68× the tokens of the best managed method with fewer tasks completed.
 - **Discount:** tool-heavy workloads specifically; ratios differ for chat.
-- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
+- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model), [chapter 11](ch:hard-calls#loading-and-retrieval).
 - **Link:** [arXiv 2606.10209](https://arxiv.org/abs/2606.10209)
 
 ## Practitioner engineering writing
@@ -95,13 +95,13 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the orchestrator-worker architecture; **90.2%** over single-agent Opus 4 on an internal research evaluation; about **15×** chat tokens (agents about 4×); **about 80%** of performance variance explained by token usage.
 - **Discount:** research tasks, not coding; an internal evaluation; first-party. The 15× and 80% must always be quoted with the 90.2%.
-- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [case CS-2](ch:case-studies#cs-2-the-research-system-that-beat-one-agent-by-90-p).
+- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#sessions-and-topology), [case CS-2](ch:case-studies#cs-2-the-research-system-that-beat-one-agent-by-90-p).
 
 ### Sub-agent token-efficiency reporting
 
 - **Supports:** about **9K total tokens** for a multi-domain query answered through isolated sub-agents versus about **15K** with an accumulating-context pattern.
 - **Discount:** [P]. A single practitioner comparison with no published method; no independent reproduction found.
-- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-benefit-is-real-and-specific).
+- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-benefit-is-real-and-specific), [chapter 11](ch:hard-calls#sessions-and-topology).
 
 ### Cognition, "Don't Build Multi-Agents"
 
@@ -119,7 +119,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** **5K of targeted retrieval beating a 100K codebase summary** on identical coding tasks; the subtraction default; reserving headroom.
 - **Discount:** [P]. The comparison's full method was not available, and the page returned HTTP 403 during research, so figures were captured from search summaries. Its direction is corroborated by the focused-versus-full result above. **Re-verify before citing externally.**
-- **Used in:** [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview).
+- **Used in:** [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval).
 
 ### Hybrid code-retrieval reporting
 
@@ -162,7 +162,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 30+ tools reading it; 60,000+ repositories; Agentic AI Foundation stewardship; the ≤150-line guidance; ~4% success improvement from human-written context files.
 - **Discount:** [P] throughout. The 4% figure has no published method.
-- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview).
+- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval).
 
 ### Open-source tooling documentation
 

@@ -311,8 +311,16 @@ class Renderer:
                       body)
 
     def _wrap_tables(self, body):
+        def wrap(m):
+            table = m.group(0)
+            # Short IDs (M-1, R-3, SP-12) must never break at the hyphen.
+            table = re.sub(
+                r"<td>(\s*(?:<(?:strong|em)>)?[A-Za-z]{1,4}-\d{1,3}(?:</(?:strong|em)>)?\s*)</td>",
+                lambda mm: '<td class="rs-nowrap">' + mm.group(1).strip() + "</td>",
+                table)
+            return f'<div class="table-scroll rs-table">{table}</div>'
         return re.sub(r"(?<!<div class=\"table-scroll\">)<table>(.*?)</table>",
-                      r'<div class="table-scroll rs-table"><table>\1</table></div>', body, flags=re.S)
+                      wrap, body, flags=re.S)
 
 
 def md_inline(prog, text):

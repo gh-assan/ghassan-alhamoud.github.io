@@ -1,6 +1,6 @@
 ## How to use this chapter
 
-Twenty-five decisions come up again and again with no clean answer. Each one below gives the tension, the honest case for both sides, a recommendation, and **the conditions that flip it**. The flip conditions are what make these re-decidable when your model, harness or repository changes.
+Twenty-five decisions come up again and again with no clean answer. Most give the tension and the honest case for both sides; all give a recommendation and **the conditions that flip it**. The flip conditions are what make these re-decidable when your model, harness or repository changes.
 
 Start with the summary table. Open the section for any call you are facing.
 
@@ -41,7 +41,7 @@ Start with the summary table. Open the section for any call you are facing.
 - **For pre-loading:** the agent cannot search for a subsystem it does not know exists. Human-written context files improved success by about 4% [P].
 - **For discovery:** 5K targeted beat a 100K summary [P]; focused ~300-token prompts beat ~113K full ones [S]; full context cost 2.68× and completed fewer tasks [S].
 
-**Recommendation.** Discover, with a **pointer seed under 2,000 tokens**: entry points, invariants, landmines, build commands. Pre-load *where to look*, never *what is there*.
+**Recommendation.** Discover, with a **pointer seed under 2,000 tokens**: entry points, invariants, landmines, build commands. Pre-load *where to look*, never *what is there*. The retrieval design is [chapter 5](ch:retrieval)'s subject.
 
 **Flips when** the repository fits comfortably (pre-load it all; the density penalty is small), or the agent has no filesystem access.
 
@@ -52,7 +52,7 @@ Start with the summary table. Open the section for any call you are facing.
 - **For:** finds code when you do not know the vocabulary; hybrid reported at +12.5% [P].
 - **Against:** grep generally won head-to-head [S]; the index is wrong about the code you just edited; it returns plausible results for questions with no answer.
 
-**Recommendation.** **Live lexical and structural search first; semantic search as an optional complement**, preferably over prose (ADRs, PRs, design documents) rather than code.
+**Recommendation.** **Live lexical and structural search first; semantic search as an optional complement**, preferably over prose (ADRs, PRs, design documents) rather than code. The tiered architecture is [chapter 5](ch:retrieval)'s.
 
 **Flips when** the codebase has poor naming and no language-server support, or users mostly ask concept questions ("how do we do auth?") instead of location questions.
 
@@ -63,7 +63,7 @@ Start with the summary table. Open the section for any call you are facing.
 - **For quality:** structural retrieval cuts waste without cutting information.
 - **For volume:** simpler, immediate, and directly attacks dilution.
 
-**Recommendation.** **Diagnose first.** Classify your last 10 failures: decisive file never read (a recall problem: improve quality, do not reduce volume) or read and ignored (a precision problem: reduce volume). Applying the volume fix to a recall problem makes things strictly worse, and it is the most common misdiagnosis in this space.
+**Recommendation.** **Diagnose first.** Classify your last 10 failures: decisive file never read (a recall problem: improve quality, do not reduce volume) or read and ignored (a precision problem: reduce volume). Applying the volume fix to a recall problem makes things strictly worse, and it is the most common misdiagnosis in this space; [chapter 5](ch:retrieval#measure-your-own-retrieval) gives the diagnosis procedure.
 
 **Flips:** never. The diagnosis is the recommendation.
 
@@ -103,7 +103,7 @@ Start with the summary table. Open the section for any call you are facing.
 **Tension.** Compaction keeps continuity, lossily and cheaply. A reset loses continuity but restores a clean, high-attention context.
 
 - **For compaction:** no person needed; the agent keeps going.
-- **For a reset:** compaction is lossy, breaks the cache, damages state recognition (44.6% versus 77.2% correct termination) [S] and raises errors at the next step (+0.108) [S]. A reset lets you *author* what crosses the boundary.
+- **For a reset:** compaction is lossy, breaks the cache, damages state recognition (44.6% versus 77.2% correct termination on AppWorld) [S] and raises errors at the next step (+0.108) [S]. A reset lets you *author* what crosses the boundary. [Chapter 6](ch:compaction-and-memory) owns the compaction arithmetic.
 
 **Recommendation.** **Reset, if you have externalised state.** At most one compaction per session; needing a second means the session should have ended.
 
@@ -115,7 +115,7 @@ Start with the summary table. Open the section for any call you are facing.
 
 - **For masking:** comparable solve rates at lower cost [S]; no extra model call, no blocking, no laundering of hypotheses into facts.
 
-**Recommendation.** **Mask observations, summarise reasoning.** Masking is the baseline any summariser must beat, and a surprising number do not.
+**Recommendation.** **Mask observations, summarise reasoning.** Masking is the baseline any summariser must beat, and a surprising number do not ([chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation) has the comparison).
 
 **Flips when** the reasoning trace *is* the artifact, such as a long investigation whose conclusions matter more than its steps. Summarise then, with an explicit schema.
 
@@ -131,21 +131,21 @@ Start with the summary table. Open the section for any call you are facing.
 
 **Tension.** Model-directed compaction adapts. Policy compaction is predictable, and does not depend on the model's judgment late in a long session, which is exactly when compaction is needed.
 
-**Recommendation.** **Model-directed with a policy backstop.** Give the model a compaction tool and an explicit rubric (fire on closure or convergence; hold off mid-derivation or when stuck) [S], plus a high threshold that fires only if the model never does.
+**Recommendation.** **Model-directed with a policy backstop.** Give the model a compaction tool and an explicit rubric (fire on closure or convergence; hold off mid-derivation or when stuck) [S], plus a high threshold that fires only if the model never does. The design space is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
 
 **Flips when** you cannot expose a compaction tool. Then use a policy triggered by observable boundaries such as a passing test or a commit.
 
 ### SP-14: Verbatim or paraphrase in summaries
 
-**Tension.** Verbatim keeps precision and costs tokens; paraphrase compresses about 10:1.
+**Tension.** Verbatim keeps precision and costs tokens; paraphrase compresses about 10:1 [D].
 
-**Recommendation.** **Paraphrase narrative aggressively; keep exact strings verbatim, always.** "An assertion error in the checkout tests" cannot be acted on. `AssertionError: expected 3, got 0 at test_checkout.py:214` can.
+**Recommendation.** **Paraphrase narrative aggressively; keep exact strings verbatim, always.** "An assertion error in the checkout tests" cannot be acted on. `AssertionError: expected 3, got 0 at test_checkout.py:214` can. The schema that separates the two is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
 
 **Flips:** essentially never. The only real question is which fields count as exact.
 
 ### SP-11: Memory tool or repository
 
-**Recommendation.** **Repository first.** An [[ADR]] beats a memory entry: versioned, reviewed, discoverable, repaired with the code. Use a memory system only for facts with no repository home, capped at about 40 always-loaded lines plus a searchable tier.
+**Recommendation.** **Repository first.** An [[ADR]] beats a memory entry: versioned, reviewed, discoverable, repaired with the code. Use a memory system only for facts with no repository home, capped at about 40 always-loaded lines plus a searchable tier. The full architecture is [chapter 6](ch:compaction-and-memory#cross-session-memory)'s.
 
 **Flips when** knowledge spans repositories, or the facts are about the *environment* (staging quirks, VPN requirements, flaky infrastructure) rather than the code.
 
@@ -173,7 +173,7 @@ Start with the summary table. Open the section for any call you are facing.
 
 **Tension.** Fresh contexts are clean but pay the prefix tax again. Inherited contexts share understanding and the parent's noise.
 
-**Recommendation.** **Fresh context plus a brief that lists the decisions the sub-agent must not re-make.** It captures most of the benefit of inheritance, and naming the implicit decisions is where the value is.
+**Recommendation.** **Fresh context plus a brief that lists the decisions the sub-agent must not re-make.** It captures most of the benefit of inheritance, and naming the implicit decisions is where the value is. The contract pattern is [chapter 7](ch:sub-agents#the-sub-agent-contract)'s.
 
 **Flips when** the sub-task depends on a long chain of parent reasoning that no brief can carry. That is a signal the work is not isolatable.
 
@@ -284,3 +284,5 @@ Read the recommendations together and a pattern appears. **Almost all of them le
 </figure>
 
 That is not conservatism. It falls out of the mechanics in [chapter 1](ch:foundations). Every irreversible operation you can turn into a reversible one is worth more than any improvement to how well you perform the irreversible version.
+
+To find out which of these calls is binding for you, score yourself in [the diagnostic](ch:diagnostic).

@@ -221,7 +221,7 @@
 </tr>
 <tr>
 <td>The bug turned out to be in config</td>
-<td>F-24</td>
+<td class="rs-nowrap">F-24</td>
 </tr>
 <tr>
 <td>It worked yesterday and not today</td>
@@ -243,7 +243,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-1</td>
+<td class="rs-nowrap">F-1</td>
 <td><strong>Tool-definition bloat</strong></td>
 <td>Prefix tax over 25K; capabilities never used</td>
 <td>Count schema tokens; count calls over 20 sessions</td>
@@ -251,7 +251,7 @@
 <td>Tool audit; budget 20 tools, 15K tokens; re-audit quarterly</td>
 </tr>
 <tr>
-<td>F-2</td>
+<td class="rs-nowrap">F-2</td>
 <td><strong>Instruction-file sprawl</strong></td>
 <td>Over 200 lines; rules ignored late in sessions</td>
 <td>Line count over time; violations per rule</td>
@@ -259,7 +259,7 @@
 <td>Inference test; scoped files; turn violated rules into hooks or lints</td>
 </tr>
 <tr>
-<td>F-3</td>
+<td class="rs-nowrap">F-3</td>
 <td><strong>Tool-output flooding</strong></td>
 <td>One command uses over 10% of the window</td>
 <td>Rank commands by token volume</td>
@@ -267,7 +267,7 @@
 <td>Output shaping; redirect to a file with a digest</td>
 </tr>
 <tr>
-<td>F-4</td>
+<td class="rs-nowrap">F-4</td>
 <td><strong>Whole-file reading</strong></td>
 <td>Read-utilisation under 5%; 1,200 lines read to change 4</td>
 <td>Sample 20 reads</td>
@@ -275,7 +275,7 @@
 <td>Structural retrieval</td>
 </tr>
 <tr>
-<td>F-5</td>
+<td class="rs-nowrap">F-5</td>
 <td><strong>Over-broad first search</strong></td>
 <td>A grep returning 3,000+ hits, all loaded</td>
 <td>Result counts in transcripts</td>
@@ -283,7 +283,7 @@
 <td>Search tools with hard caps; openers that name an identifier</td>
 </tr>
 <tr>
-<td>F-6</td>
+<td class="rs-nowrap">F-6</td>
 <td><strong>Coherent-document distraction</strong></td>
 <td>The agent cites the design doc for behaviour the code contradicts</td>
 <td>Trace wrong beliefs back to a document</td>
@@ -291,7 +291,7 @@
 <td>Never pre-load design documents</td>
 </tr>
 <tr>
-<td>F-7</td>
+<td class="rs-nowrap">F-7</td>
 <td><strong>Retention hoarding</strong></td>
 <td>A 12K log from turn 8 still present at turn 60</td>
 <td><a class="rs-term" href="glossary.html#retention-integral" data-def="The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.">Retention integral</a></td>
@@ -314,7 +314,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-8</td>
+<td class="rs-nowrap">F-8</td>
 <td><strong>Stale self-read</strong></td>
 <td>The agent cites a line its own edit moved</td>
 <td>Compare the in-context copy with disk</td>
@@ -322,7 +322,7 @@
 <td>Re-read before re-editing; auto-refresh after edits</td>
 </tr>
 <tr>
-<td>F-9</td>
+<td class="rs-nowrap">F-9</td>
 <td><strong>Hallucination laundered by compaction</strong></td>
 <td>A fact in the summary that never appeared in a tool result</td>
 <td>Find each summary fact's first appearance</td>
@@ -330,7 +330,7 @@
 <td>A "verified how" field in the schema; ground claims in tool output</td>
 </tr>
 <tr>
-<td>F-10</td>
+<td class="rs-nowrap">F-10</td>
 <td><strong>Index staleness</strong></td>
 <td>Semantic search returns pre-refactor code, no error</td>
 <td>Search for a symbol you just renamed</td>
@@ -338,7 +338,7 @@
 <td>Prefer live retrieval; rebuild triggers</td>
 </tr>
 <tr>
-<td>F-11</td>
+<td class="rs-nowrap">F-11</td>
 <td><strong>Stale memory entry</strong></td>
 <td>The agent asserts a fact that was true six months ago</td>
 <td>Sample 20 entries against the repository</td>
@@ -346,7 +346,7 @@
 <td>Memories only about slow-changing things; prefer ADRs</td>
 </tr>
 <tr>
-<td>F-12</td>
+<td class="rs-nowrap">F-12</td>
 <td><strong>Stale instruction rule</strong></td>
 <td>A rule describing a refactor that already happened</td>
 <td>Read the file against the code quarterly</td>
@@ -354,7 +354,7 @@
 <td>Review the instruction file in PRs that change what it describes</td>
 </tr>
 <tr>
-<td>F-13</td>
+<td class="rs-nowrap">F-13</td>
 <td><strong>Prompt injection via retrieved content</strong></td>
 <td>The agent follows an instruction found in a file, log or README</td>
 <td>Tool calls not traceable to a user turn</td>
@@ -380,7 +380,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-14</td>
+<td class="rs-nowrap">F-14</td>
 <td><strong>Compaction mid-sub-goal</strong></td>
 <td>The agent restarts partly finished work</td>
 <td>Compare compaction times with sub-goal boundaries</td>
@@ -388,7 +388,7 @@
 <td>Semantic triggers with suppression rules</td>
 </tr>
 <tr>
-<td>F-15</td>
+<td class="rs-nowrap">F-15</td>
 <td><strong>Detail loss</strong></td>
 <td>The agent knows "there was an error" but not which</td>
 <td>Exact-string survival rate</td>
@@ -396,7 +396,7 @@
 <td>A verbatim exact-strings section</td>
 </tr>
 <tr>
-<td>F-16</td>
+<td class="rs-nowrap">F-16</td>
 <td><strong>Lost sense of state</strong></td>
 <td>The agent cannot tell whether it is done</td>
 <td>Termination recognition: 44.6% versus 77.2% in one study <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
@@ -404,7 +404,7 @@
 <td>A done / in-progress / not-started block; re-read the plan file</td>
 </tr>
 <tr>
-<td>F-17</td>
+<td class="rs-nowrap">F-17</td>
 <td><strong>Post-compaction error spike</strong></td>
 <td>The turn right after compaction fails more (+0.108 errors <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>)</td>
 <td>Error rate in the 3 turns after each boundary</td>
@@ -412,7 +412,7 @@
 <td>Make the plan-file re-read the first action</td>
 </tr>
 <tr>
-<td>F-18</td>
+<td class="rs-nowrap">F-18</td>
 <td><strong>Regressive exploration</strong></td>
 <td>Re-fetching and replaying right after a compaction</td>
 <td>Re-fetch rate in the next 10 turns</td>
@@ -420,7 +420,7 @@
 <td>Offload before compacting</td>
 </tr>
 <tr>
-<td>F-19</td>
+<td class="rs-nowrap">F-19</td>
 <td><strong>Compaction cascade</strong></td>
 <td>Three or more compactions; a summary of summaries</td>
 <td>Compactions per session</td>
@@ -428,7 +428,7 @@
 <td>Cap at one; session discipline</td>
 </tr>
 <tr>
-<td>F-20</td>
+<td class="rs-nowrap">F-20</td>
 <td><strong>Nondeterministic retention</strong></td>
 <td>The same transcript compacted twice keeps different facts <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
 <td>Run the compaction twice and diff</td>
@@ -451,7 +451,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-21</td>
+<td class="rs-nowrap">F-21</td>
 <td><strong><a class="rs-term" href="glossary.html#starvation" data-def="The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.">Starvation</a></strong></td>
 <td>Confidently wrong output; clean transcript; no error</td>
 <td><strong><a class="rs-term" href="glossary.html#read-coverage" data-def="Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.">Read-coverage</a> audit</strong>: was the decisive file ever opened?</td>
@@ -459,7 +459,7 @@
 <td>Better retrieval <em>quality</em>, not more volume</td>
 </tr>
 <tr>
-<td>F-22</td>
+<td class="rs-nowrap">F-22</td>
 <td><strong><a class="rs-term" href="glossary.html#fragment-blindness" data-def="Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.">Fragment blindness</a></strong></td>
 <td>Reasoning as if code always runs when it sits inside a condition</td>
 <td>Check grep context settings</td>
@@ -467,7 +467,7 @@
 <td>At least <code>-C 8</code>; prefer symbol reads</td>
 </tr>
 <tr>
-<td>F-23</td>
+<td class="rs-nowrap">F-23</td>
 <td><strong>Near-duplicate confusion</strong></td>
 <td>The agent edits <code>UserServiceV2</code> when <code>UserService</code> was live</td>
 <td>Grep for near-duplicate names</td>
@@ -475,7 +475,7 @@
 <td>Structural retrieval; better, <strong>delete the duplicate</strong></td>
 </tr>
 <tr>
-<td>F-24</td>
+<td class="rs-nowrap">F-24</td>
 <td><strong>Config blindness</strong></td>
 <td>The agent exhausts the code and never checks YAML, env vars or flags</td>
 <td>Was the cause in a non-code file never searched?</td>
@@ -483,7 +483,7 @@
 <td>Keep lexical search; include config globs by default</td>
 </tr>
 <tr>
-<td>F-25</td>
+<td class="rs-nowrap">F-25</td>
 <td><strong>Silent zero-result</strong></td>
 <td>Five irrelevant chunks returned; the agent proceeds as if it found something</td>
 <td>Relevance-sample 20 queries</td>
@@ -491,7 +491,7 @@
 <td>Score thresholds with an explicit "no confident match"</td>
 </tr>
 <tr>
-<td>F-26</td>
+<td class="rs-nowrap">F-26</td>
 <td><strong>Generated-code pollution</strong></td>
 <td>Hits in <code>node_modules/</code>, <code>dist/</code>, <code>__generated__/</code></td>
 <td>Path distribution of search hits</td>
@@ -499,7 +499,7 @@
 <td>Ignore files; exclusion defaults</td>
 </tr>
 <tr>
-<td>F-27</td>
+<td class="rs-nowrap">F-27</td>
 <td><strong>Searching without narrowing</strong></td>
 <td>Search turns over 60% of the session, no edits</td>
 <td>Search-to-edit turn ratio</td>
@@ -522,7 +522,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-28</td>
+<td class="rs-nowrap">F-28</td>
 <td><strong><a class="rs-term" href="glossary.html#contract-loss" data-def="A sub-agent knew something relevant but did not report it because its output contract did not ask.">Contract loss</a></strong></td>
 <td>The parent re-derives something the sub-agent knew</td>
 <td>Redo rate after delegations</td>
@@ -530,7 +530,7 @@
 <td>A <code>notable_outside_scope</code> field; save transcripts</td>
 </tr>
 <tr>
-<td>F-29</td>
+<td class="rs-nowrap">F-29</td>
 <td><strong>Conflicting implicit decisions</strong></td>
 <td>Outputs individually coherent, mutually incompatible <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
 <td>Conflict rate across parallel delegations</td>
@@ -538,7 +538,7 @@
 <td>The composability test; fix decisions in the brief</td>
 </tr>
 <tr>
-<td>F-30</td>
+<td class="rs-nowrap">F-30</td>
 <td><strong>Prefix tax multiplication</strong></td>
 <td>Total spend rises sharply with no reliability gain</td>
 <td>Total-token multiplier versus one agent</td>
@@ -546,7 +546,7 @@
 <td>Linear thread with disposable scouts</td>
 </tr>
 <tr>
-<td>F-31</td>
+<td class="rs-nowrap">F-31</td>
 <td><strong>Verbose sub-agent results</strong></td>
 <td>A transcript comes back instead of a result</td>
 <td>Parent growth per delegation</td>
@@ -554,7 +554,7 @@
 <td>Strict output schema with a token cap</td>
 </tr>
 <tr>
-<td>F-32</td>
+<td class="rs-nowrap">F-32</td>
 <td><strong>Unverifiable delegation</strong></td>
 <td>Checking the output costs as much as producing it</td>
 <td>Time verifying versus doing it directly</td>
@@ -577,7 +577,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-33</td>
+<td class="rs-nowrap">F-33</td>
 <td><strong>Cache thrash from a dynamic prefix</strong></td>
 <td>Hit rate under 30%; cost per turn rising faster than tokens</td>
 <td>Cache hit rate per session</td>
@@ -585,7 +585,7 @@
 <td>Prefix stability; static, hand-pruned tools</td>
 </tr>
 <tr>
-<td>F-34</td>
+<td class="rs-nowrap">F-34</td>
 <td><strong>Timestamp in the prefix</strong></td>
 <td>Near-zero hit rate despite a "stable" configuration</td>
 <td>Diff the first 2,000 tokens of two requests</td>
@@ -593,7 +593,7 @@
 <td>No timestamps, session IDs or counters in the prefix</td>
 </tr>
 <tr>
-<td>F-35</td>
+<td class="rs-nowrap">F-35</td>
 <td><strong>Compaction costing more than it saves</strong></td>
 <td>Cost rises after enabling compaction</td>
 <td>Cache-adjusted cost per turn, before and after</td>
@@ -601,7 +601,7 @@
 <td>Compact less often; prefer resets</td>
 </tr>
 <tr>
-<td>F-36</td>
+<td class="rs-nowrap">F-36</td>
 <td><strong>Optimising raw tokens</strong></td>
 <td>A "20% token saving" that raised the bill</td>
 <td>Separate cached from uncached input</td>
@@ -609,7 +609,7 @@
 <td>Report <a class="rs-term" href="glossary.html#cache-adjusted-cost" data-def="Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.">cache-adjusted cost</a></td>
 </tr>
 <tr>
-<td>F-37</td>
+<td class="rs-nowrap">F-37</td>
 <td><strong>Sub-agent cost blindness</strong></td>
 <td>The parent context looks great; the bill tripled</td>
 <td>Total spend across all agents</td>
@@ -632,7 +632,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-38</td>
+<td class="rs-nowrap">F-38</td>
 <td><strong><a class="rs-term" href="glossary.html#position-decay" data-def="A critical fact becoming harder to use because its position in a long input is less favourable. The size and shape of the effect depend on the model, task and harness <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.">Position decay</a> of rules</strong></td>
 <td>Rules followed early, ignored after two hours</td>
 <td>Violation rate by turn depth</td>
@@ -640,7 +640,7 @@
 <td>Session caps; shorter instruction files; constraints next to the action</td>
 </tr>
 <tr>
-<td>F-39</td>
+<td class="rs-nowrap">F-39</td>
 <td><strong>Distraction loop</strong></td>
 <td>Same tool, same arguments, three or more times</td>
 <td>A <a class="rs-term" href="glossary.html#loop-detector" data-def="A check that flags the same tool called with the same arguments three or more times with no new information in between.">loop detector</a></td>
@@ -648,7 +648,7 @@
 <td>Reset triggers; a ruled-out list</td>
 </tr>
 <tr>
-<td>F-40</td>
+<td class="rs-nowrap">F-40</td>
 <td><strong>Requirement clash</strong></td>
 <td>Output satisfies a requirement withdrawn 20 turns ago</td>
 <td>Count requirement reversals</td>
@@ -656,7 +656,7 @@
 <td>A living plan document as the single source of truth</td>
 </tr>
 <tr>
-<td>F-41</td>
+<td class="rs-nowrap">F-41</td>
 <td><strong>Plan-file drift</strong></td>
 <td>The plan says step 3; the agent is on step 6</td>
 <td>Compare the plan with recent actions</td>
@@ -664,7 +664,7 @@
 <td>Update at state changes; a "last updated at turn N" line</td>
 </tr>
 <tr>
-<td>F-42</td>
+<td class="rs-nowrap">F-42</td>
 <td><strong>Handoff too thin</strong></td>
 <td>The new session spends 20 turns re-establishing context</td>
 <td>Turns to first productive edit after a reset</td>
@@ -672,7 +672,7 @@
 <td>A handoff with <code>file:line</code> pointers and verification commands</td>
 </tr>
 <tr>
-<td>F-43</td>
+<td class="rs-nowrap">F-43</td>
 <td><strong>Sunk-cost session</strong></td>
 <td>Hours into a degrading session, still pushing</td>
 <td>Quality against elapsed time</td>
@@ -695,7 +695,7 @@
 </thead>
 <tbody>
 <tr>
-<td>F-44</td>
+<td class="rs-nowrap">F-44</td>
 <td><strong>Measuring the wrong axis</strong></td>
 <td>"Compaction is basically free" from single runs, while users say "it worked yesterday"</td>
 <td>Compute Pass² alongside Pass@2; a widening gap is the signal <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>

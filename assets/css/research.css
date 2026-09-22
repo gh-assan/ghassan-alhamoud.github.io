@@ -690,6 +690,7 @@ path.ch-mark, rect.ch-mark { stroke: none; }
 .rs-body .rs-table table { max-width: none; margin: 0; font-size: 14.5px; }
 .rs-body .rs-table th { text-transform: none; letter-spacing: 0; font-size: 13px; }
 .rs-body .rs-table td strong { color: var(--text-primary); }
+.rs-body .rs-table td.rs-nowrap { white-space: nowrap; }
 
 @media (max-width: 600px) {
   .rs-body .rs-table table { table-layout: auto; min-width: 520px; }
