@@ -31,14 +31,14 @@ Background: [chapter 10](ch:metrics-and-economics).
 | # | Lesson | Why it is true | Falsified if |
 |---|---|---|---|
 | L9 | **Input tokens are essentially all of your token spend.** | measured at 99.75–99.87% in tool-heavy agent workloads [S]. | output exceeds 1% of total tokens in a normal coding session. |
-| L10 | **Tokens in a stable prefix cost about a tenth of tokens that churn.** | prefix caching; cached reads run ~0.10 versus ~1.25 for new-token writes. | your provider's cached and uncached input prices are within 2×. |
+| L10 | **Tokens in a stable prefix cost about a tenth of tokens that churn.** | prefix caching; cached reads run ~0.10 versus ~1.25 for new-token writes (chapter 10's generic shape, not a rate card). | your provider's cached and uncached input prices are within 2×. |
 | L11 | **A large stable prefix is cheaper than a small churning one.** | L10 applied. Worked: 24% fewer tokens produced a 6.9× cost increase when the reduction made the prefix dynamic (chapter 10). | prefix caching is unavailable, or sessions are single-turn. |
 | L12 | **Compaction's financial saving is much smaller than its token saving suggests.** | the retained context was already cheap (cached); the compaction call is paid at near-full price. Breakeven ≈ 4 turns (chapter 10). | your cached-read discount is small, making retained context genuinely expensive. |
 | L13 | **Compacting near the end of a session is a pure loss.** | L12's breakeven. You pay the cost and collect none of the savings. | compaction has no fixed cost in your setup. |
-| L14 | **Cost per solved task is the only metric that cannot be gamed in both directions.** | under-provisioning lowers cost and lowers solves; over-provisioning raises both. The ratio catches each. | a configuration improves cost-per-solved while worsening both cost and quality. |
+| L14 | **Cost per solved task is the only metric that cannot be gamed in both directions.** | under-provisioning lowers cost and lowers solves; over-provisioning raises both. The ratio catches each. | a team lowers cost-per-solved while excluding failed-task costs from the numerator and easier tasks from the denominator. |
 | L15 | **You can over-compress as easily as you can over-load.** | both are deviations from the density optimum. Worked: the over-compressed configuration had the lowest total cost and the second-worst cost-per-solved (chapter 10). | solve rate is monotone decreasing in context size across the full range. |
 | L16 | **The human line is usually the largest cost in a small team.** | instruction-file upkeep, memory curation, and audits do not appear in any token metric. | a full accounting shows human hours below 10% of total cost at team scale. |
-| L17 | **Multi-agent gains are substantially bought, not free.** | ~15× token cost, with token usage alone explaining ~80% of performance variance [P]. | a token-matched comparison shows multi-agent beating single-agent at equal spend. |
+| L17 | **Multi-agent gains are substantially bought, not free.** | ~15× token cost — the cost side of the 90.2% internal-eval gain — with token usage alone explaining ~80% of performance variance [P]. | a token-matched comparison shows multi-agent beating single-agent at equal spend. |
 
 ## C. Loss and reversibility (L18–L26)
 
@@ -50,11 +50,11 @@ Background: [chapter 6](ch:compaction-and-memory).
 | L19 | **Offload before you compress.** | offloading converts irreversible loss to reversible; compressing first destroys the option. | post-compaction re-fetch rate is zero without an offload layer. |
 | L20 | **Summarisation cannot be inverted.** | omitted or paraphrased details cannot be recovered [S]. | a summariser demonstrably reconstructs dropped exact strings. |
 | L21 | **Compaction launders hallucinations into settled facts.** | summarisation preserves assertions better than hedges; a hypothesis becomes a statement. | summaries reliably preserve epistemic status markers. |
-| L22 | **Losing information wholesale can damage state recognition less than replacing it with fluent prose.** | FIFO preserved 77.2% termination recognition versus 44.6% under summary replacement [S]. A narrative reads as though the state is known. | summarisation matches truncation on termination recognition at equal budget. |
+| L22 | **Losing information wholesale can damage state recognition less than replacing it with fluent prose.** | FIFO preserved 77.2% termination recognition versus 44.6% under summary replacement on AppWorld [S]. A narrative reads as though the state is known. | summarisation matches truncation on termination recognition at equal budget. |
 | L23 | **A pointer the agent will not follow is equivalent to deletion.** | recall requires a relevance decision, which requires a descriptive stub. | bare identifiers produce the same recall rate as descriptive ones. |
 | L24 | **Exact strings are a small fraction of tokens and a large fraction of value.** | error messages, versions, paths and line numbers are unactionable when approximated. | paraphrased error descriptions produce equal fix rates to verbatim ones. |
 | L25 | **You cannot delete from a transcript by talking to it.** | transcripts are append-only; corrections add a competing claim rather than removing the original. | an appended correction reliably eliminates recurrence of the corrected fact. |
-| L26 | **The best boundary is the one you author.** | a handoff note gives you direct control over what crosses; compaction delegates it to a summariser whose retention fluctuates run to run [S]. | automated summaries match hand-written handoffs on post-boundary re-fetch rate. |
+| L26 | **The best boundary is the one you author.** | a handoff note gives you direct control over what crosses; compaction delegates it to a summariser whose retention varies run to run — model calls are stochastic [D]. | automated summaries match hand-written handoffs on post-boundary re-fetch rate. |
 
 ## D. Measurement (L27–L36)
 
@@ -96,7 +96,7 @@ Background: [chapters 7 and 8](ch:sub-agents).
 |---|---|---|---|
 | L45 | **Tool count harms through two independent channels.** | displacement (prefix tokens) and selection confusion (worse choice among more candidates), which respond to different fixes. | deferring definitions eliminates wrong-tool selection as well as token cost. |
 | L46 | **Roughly twenty active tools is a soft ceiling.** | selection accuracy 43% → under 14% with growing count; 19/20 at 20 tools → failure at 107 [S]; practitioner threshold ~20 [P]. | a current model maintains selection accuracy above 90% at 60+ tools. |
-| L47 | **Category elimination beats compression.** | progressive disclosure is an order of magnitude (25K → 2.5K [S]); replacing schemas with code execution is two (150K → 2K [S]). | schema compression achieves comparable ratios to code execution. |
+| L47 | **Category elimination beats compression.** | progressive disclosure is an order of magnitude (25K → 2.5K, vendor-reported [P]); replacing schemas with code execution is two (150K → 2K [P]). | schema compression achieves comparable ratios to code execution. |
 | L48 | **Sub-agents are safe when their outputs compose without negotiation.** | actions carry implicit decisions; independent implicit decisions do not compose [P]. Additive work has no implicit decisions to conflict over. | parallel sub-agents reliably produce compatible interlocking implementations without a shared brief. |
 | L49 | **If you cannot write the output schema in twenty lines, do not delegate.** | an unspecifiable output means the sub-agent's context held something the contract cannot carry. | delegations with prose-only contracts show re-do rates comparable to schema-specified ones. |
 | L50 | **Isolation optimises the parent's context at the expense of total spend.** | each sub-agent re-pays the prefix tax; parent context falls while total rises. | total token spend falls when delegation is introduced. |
