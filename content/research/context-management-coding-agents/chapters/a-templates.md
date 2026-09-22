@@ -4,19 +4,19 @@ Every template here exists because a specific, measured failure happens when the
 
 Use them in a scratch directory, in the repository or in a notes app. The value is in filling them in, not in filing them.
 
-| Template | Use it for | When | Time |
-|---|---|---|---|
-| [Context budget audit](#1-context-budget-audit) | The Phase 0 baseline and the quarterly re-audit | Before any optimisation, then every quarter | 60–90 minutes the first time, 30 after |
-| [Tool surface audit](#2-tool-surface-audit) | Phase 1 deletion and quarterly re-bloat control | After the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment | 30 minutes |
-| [Plan file](#3-plan-file) | The living state document | Any task over about 30 minutes | 5 minutes to start, 1 minute per update |
-| [Compaction schema](#4-compaction-schema) | Replacing your compaction prompt | Before your next long session: it is a text edit | 15 minutes |
-| [Session handoff](#5-session-handoff) | Ending a session deliberately | Every session that will have a successor | 5 minutes |
-| [Sub-agent contract](#6-sub-agent-contract) | Deciding whether and how to delegate | Before every delegation, until the judgment is second nature | 10 minutes |
-| [Context postmortem](#7-context-postmortem) | Understanding a failed or unsatisfying task | After every failure worth understanding | 15 minutes |
-| [Context experiment spec](#8-context-experiment-spec) | Any measured context change | Before running, never after | 20 minutes |
+| Template | Use it for | Time |
+|---|---|---|
+| [Context budget audit](#1-context-budget-audit) | The Phase 0 baseline and the quarterly re-audit | 60–90 minutes the first time, 30 after |
+| [Tool surface audit](#2-tool-surface-audit) | Phase 1 deletion and quarterly re-bloat control | 30 minutes |
+| [Plan file](#3-plan-file) | The living state document | 5 minutes to start, 1 minute per update |
+| [Compaction schema](#4-compaction-schema) | Replacing your compaction prompt | 15 minutes |
+| [Session handoff](#5-session-handoff) | Ending a session deliberately | 5 minutes |
+| [Sub-agent contract](#6-sub-agent-contract) | Deciding whether and how to delegate | 10 minutes |
+| [Context postmortem](#7-context-postmortem) | Understanding a failed or unsatisfying task | 15 minutes |
+| [Context experiment spec](#8-context-experiment-spec) | Any measured context change | 20 minutes |
 
 > [!key] If eight is too many
-> Three carry most of the value: the **context budget audit** (without it you optimise someone else's bottleneck), the **compaction schema** (the highest measured value per minute of effort) and the **context postmortem** (the starvation/dilution split decides every later decision).
+> Three carry most of the value: the [context budget audit](#1-context-budget-audit) (without it you optimise someone else's bottleneck), the [compaction schema](#4-compaction-schema) (the best value-per-minute bet this research offers [D]) and the [context postmortem](#7-context-postmortem) (the starvation/dilution split decides every later decision).
 
 ## 1. Context budget audit
 
@@ -74,7 +74,9 @@ For each sampled session, bucket tokens by segment.
 
 **Median input tokens per sampled session:** ____________________
 
-**Retention integral:** first convert each median share to tokens (`median % × median input tokens ÷ 100`), then multiply by the turns that segment stays in context. Record the before/after totals and rank the largest contributions before choosing a change.
+**Retention integral:** first convert each median share to tokens (`median % × median input tokens ÷ 100`),
+then multiply by the turns that segment stays in context.
+Record the before/after totals and rank the largest contributions before choosing a change.
 
 | Segment | Median % | Median tokens | Turns retained | Before tokens × turns | After tokens × turns |
 |---|---:|---:|---:|---:|---:|
@@ -153,7 +155,7 @@ Re-measure on: ____________ (date)
 | Class | Criterion | Action |
 |---|---|---|
 | Dead | 0 invocations in a representative 20-session sample | **Deletion candidate; verify task coverage and keep rollback.** |
-| Redundant | Duplicates `gh` / `psql` / `curl` / `rg` / `git` | **Deletion candidate; verify task coverage and keep rollback**, unless it is a security control (state why below) |
+| Redundant | Duplicates `gh` / `psql` / `curl` / `rg` / `git` | **Deletion candidate; verify coverage and keep rollback**, unless a security control (state why below) |
 | Rare-critical | < 3 invocations but decisive | Defer definitions, or move behind code execution |
 | Core | Frequent | Keep eager; trim description prose |
 
@@ -275,7 +277,7 @@ verified, say so; do not convert a hypothesis into an assertion.
 <the original task, verbatim where possible>
 
 ## State
-<counters the 44.6% termination-recognition collapse [S]>
+<counters the 44.6% termination-recognition collapse (AppWorld) [S]>
 - **Done:** <item> — verified by: <exact command and result>
 - **In progress:** <the single current sub-goal>
 - **Not started:** <remaining items>
@@ -317,7 +319,7 @@ verified, say so; do not convert a hypothesis into an assertion.
 | Fire on sub-goal closure, test pass, or hypothesis resolution | Semantic triggering beats threshold and periodic [S] |
 | Suppress mid-derivation, mid-edit, when stuck, right after an error | Periodic compaction erases in-use information [S] |
 | Max 1 per session | A second compaction summarises a summary |
-| Not with < 5 turns remaining | Below the cost breakeven of about four turns |
+| Not with < 5 turns remaining | Below the cost breakeven of about four turns [C] (chapter 10) |
 | Offload large artifacts BEFORE compacting | Converts irreversible loss to reversible |
 | **Re-read PLAN.md as the first post-compaction action** | +0.108 errors at that step [S] |
 ````

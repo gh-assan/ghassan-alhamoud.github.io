@@ -121,7 +121,7 @@
           <h1 class="rs-hero__title">Templates you can copy</h1>
           <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What are the fill-in forms that make this operational, and which field in each carries the value?</p>
           <div class="rs-meta">
-            <span>4 min read</span><span aria-hidden="true">·</span>
+            <span>3 min read</span><span aria-hidden="true">·</span>
             <span>Reference</span><span aria-hidden="true">·</span>
             <span>Step 19 of 20</span><span aria-hidden="true">·</span>
             <span>1/2 in this part</span>
@@ -147,7 +147,6 @@
 <tr>
 <th>Template</th>
 <th>Use it for</th>
-<th>When</th>
 <th>Time</th>
 </tr>
 </thead>
@@ -155,55 +154,47 @@
 <tr>
 <td><a href="#1-context-budget-audit">Context budget audit</a></td>
 <td>The Phase 0 baseline and the quarterly re-audit</td>
-<td>Before any optimisation, then every quarter</td>
 <td>60–90 minutes the first time, 30 after</td>
 </tr>
 <tr>
 <td><a href="#2-tool-surface-audit">Tool surface audit</a></td>
 <td>Phase 1 deletion and quarterly re-bloat control</td>
-<td>After the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment</td>
 <td>30 minutes</td>
 </tr>
 <tr>
 <td><a href="#3-plan-file">Plan file</a></td>
 <td>The living state document</td>
-<td>Any task over about 30 minutes</td>
 <td>5 minutes to start, 1 minute per update</td>
 </tr>
 <tr>
 <td><a href="#4-compaction-schema">Compaction schema</a></td>
 <td>Replacing your compaction prompt</td>
-<td>Before your next long session: it is a text edit</td>
 <td>15 minutes</td>
 </tr>
 <tr>
 <td><a href="#5-session-handoff">Session handoff</a></td>
 <td>Ending a session deliberately</td>
-<td>Every session that will have a successor</td>
 <td>5 minutes</td>
 </tr>
 <tr>
 <td><a href="#6-sub-agent-contract">Sub-agent contract</a></td>
 <td>Deciding whether and how to delegate</td>
-<td>Before every delegation, until the judgment is second nature</td>
 <td>10 minutes</td>
 </tr>
 <tr>
 <td><a href="#7-context-postmortem">Context postmortem</a></td>
 <td>Understanding a failed or unsatisfying task</td>
-<td>After every failure worth understanding</td>
 <td>15 minutes</td>
 </tr>
 <tr>
 <td><a href="#8-context-experiment-spec">Context experiment spec</a></td>
 <td>Any measured context change</td>
-<td>Before running, never after</td>
 <td>20 minutes</td>
 </tr>
 </tbody>
 </table></div>
 <aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">If eight is too many</p>
-<p>Three carry most of the value: the <strong>context budget audit</strong> (without it you optimise someone else's bottleneck), the <strong>compaction schema</strong> (the highest measured value per minute of effort) and the <strong>context postmortem</strong> (the starvation/dilution split decides every later decision).</p>
+<p>Three carry most of the value: the <a href="#1-context-budget-audit">context budget audit</a> (without it you optimise someone else's bottleneck), the <a href="#4-compaction-schema">compaction schema</a> (the best value-per-minute bet this research offers <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>) and the <a href="#7-context-postmortem">context postmortem</a> (the starvation/dilution split decides every later decision).</p>
 </aside>
 <h2 id="1-context-budget-audit">1. Context budget audit<a class="rs-anchor" href="#1-context-budget-audit" title="Link to this section">#</a></h2>
 <p><strong>For:</strong> the Phase 0 baseline and the quarterly re-audit. <strong>When:</strong> before any optimisation, then every quarter. <strong>Time:</strong> 60–90 minutes the first time, 30 after.</p>
@@ -257,7 +248,9 @@ For each sampled session, bucket tokens by segment.
 
 <span class="gs">**Median input tokens per sampled session:**</span> ____________________
 
-<span class="gs">**Retention integral:**</span> first convert each median share to tokens (<span class="sb">`median % × median input tokens ÷ 100`</span>), then multiply by the turns that segment stays in context. Record the before/after totals and rank the largest contributions before choosing a change.
+<span class="gs">**Retention integral:**</span> first convert each median share to tokens (<span class="sb">`median % × median input tokens ÷ 100`</span>),
+then multiply by the turns that segment stays in context.
+Record the before/after totals and rank the largest contributions before choosing a change.
 
 | Segment | Median % | Median tokens | Turns retained | Before tokens × turns | After tokens × turns |
 |---|---:|---:|---:|---:|---:|
@@ -331,7 +324,7 @@ Re-measure on: ____________ (date)
 | Class | Criterion | Action |
 |---|---|---|
 | Dead | 0 invocations in a representative 20-session sample | <span class="gs">**Deletion candidate; verify task coverage and keep rollback.**</span> |
-| Redundant | Duplicates <span class="sb">`gh`</span> / <span class="sb">`psql`</span> / <span class="sb">`curl`</span> / <span class="sb">`rg`</span> / <span class="sb">`git`</span> | <span class="gs">**Deletion candidate; verify task coverage and keep rollback**</span>, unless it is a security control (state why below) |
+| Redundant | Duplicates <span class="sb">`gh`</span> / <span class="sb">`psql`</span> / <span class="sb">`curl`</span> / <span class="sb">`rg`</span> / <span class="sb">`git`</span> | <span class="gs">**Deletion candidate; verify coverage and keep rollback**</span>, unless a security control (state why below) |
 | Rare-critical | &lt; 3 invocations but decisive | Defer definitions, or move behind code execution |
 | Core | Frequent | Keep eager; trim description prose |
 
@@ -443,7 +436,7 @@ verified, say so; do not convert a hypothesis into an assertion.
 &lt;the original task, verbatim where possible&gt;
 
 <span class="gu">## State</span>
-&lt;counters the 44.6% termination-recognition collapse [S]&gt;
+&lt;counters the 44.6% termination-recognition collapse (AppWorld) [S]&gt;
 <span class="k">-</span><span class="w"> </span><span class="gs">**Done:**</span> &lt;item&gt; — verified by: &lt;exact command and result&gt;
 <span class="k">-</span><span class="w"> </span><span class="gs">**In progress:**</span> &lt;the single current sub-goal&gt;
 <span class="k">-</span><span class="w"> </span><span class="gs">**Not started:**</span> &lt;remaining items&gt;
@@ -485,7 +478,7 @@ verified, say so; do not convert a hypothesis into an assertion.
 | Fire on sub-goal closure, test pass, or hypothesis resolution | Semantic triggering beats threshold and periodic [S] |
 | Suppress mid-derivation, mid-edit, when stuck, right after an error | Periodic compaction erases in-use information [S] |
 | Max 1 per session | A second compaction summarises a summary |
-| Not with &lt; 5 turns remaining | Below the cost breakeven of about four turns |
+| Not with &lt; 5 turns remaining | Below the cost breakeven of about four turns [C] (chapter 10) |
 | Offload large artifacts BEFORE compacting | Converts irreversible loss to reversible |
 | <span class="gs">**Re-read PLAN.md as the first post-compaction action**</span> | +0.108 errors at that step [S] |
 </code></pre></div>
