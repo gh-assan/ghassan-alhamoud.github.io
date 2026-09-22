@@ -18,7 +18,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 - **Supports:** performance generally degrading as input grows across controlled experiments with 18 models, four vendors, 8 input lengths and 11 needle positions; the effect of question–answer similarity; distractors compounding non-uniformly; **coherent text retrieving worse than shuffled text** across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap. The curves are non-uniform and model/task-specific.
 - **Discount:** static retrieval tasks, not agent trajectories. Rule R3 applies to every use.
-- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [lessons A](ch:lessons).
+- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [chapter 6](ch:compaction-and-memory#the-wiki), [lessons A](ch:lessons).
 - **Link:** [trychroma.com/research/context-rot](https://www.trychroma.com/research/context-rot)
 
 ### Effective-length caveat
@@ -43,7 +43,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### "Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)
 
-- **Supports:** the five-baseline comparison; needle 99.00% / 99.80% versus RAG 79.57% / 96.67%; LongBench-v2 Hard 27.47% / 32.47% versus 25.83% / 30.87%; 38.8–80.3% bandwidth savings; the statement that omitted summary details cannot be recovered.
+- **Supports:** the five-baseline comparison on a 1,000-task needle suite and a 311-task LongBench-v2 Hard subset; needle 99.00% / 99.80% versus RAG 79.57% / 96.67%; LongBench-v2 Hard 27.47% / 32.47% versus 25.83% / 30.87%; 38.8–80.3% bandwidth savings; the statement that omitted summary details cannot be recovered.
 - **Discount:** 8B and 32B models, not frontier scale. The reasoning margin is small; do not overstate it.
 - **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline).
 - **Link:** [arXiv 2607.25066](https://arxiv.org/abs/2607.25066)
@@ -57,7 +57,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
 
-- **Supports:** rubric-gated self-triggered compaction (fire on sub-task resolution or convergence; hold off mid-derivation or when stuck); the failure of both reactive and periodic triggers; preservation of verified facts that fixed-interval compaction destroys; summarisation as a **blocking call that can stall the agent for tens of seconds**.
+- **Supports:** rubric-gated self-triggered compaction (fire on sub-task resolution or convergence; hold off mid-derivation or when stuck); the failure of both reactive and periodic triggers; preservation of verified facts that fixed-interval compaction destroys; summarisation as a **blocking call that can stall the agent for tens of seconds**; prompt instructions about summary length being largely ignored.
 - **Discount:** the rubric is one instantiation.
 - **Used in:** [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-6-semantic-triggering-beats-both-naive-triggers).
 - **Link:** [arXiv 2606.23525](https://arxiv.org/abs/2606.23525)

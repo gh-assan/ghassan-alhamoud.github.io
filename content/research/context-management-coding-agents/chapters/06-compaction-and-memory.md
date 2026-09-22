@@ -42,7 +42,7 @@ The TRACE study compared compression strategies on AppWorld, a 147-task benchmar
     {"name": "Pass² (solved on both runs)", "values": [77.4, 67.3, 59.5, 53.0]}
   ],
   "max": 100,
-  "valueFormat": "{v}%",
+  "valueFormat": "{v:.1f}%",
   "labelWidth": 180,
   "categoryLabel": "Strategy",
   "caption": "As compression tightens, the gap between \"solved once\" and \"solved reliably\" widens. Compressed agents are not uniformly worse; they are intermittent [S].",
@@ -94,14 +94,11 @@ Combined with Result 4, the order is clear, and it is the opposite of what most 
 
 ### Result 6: Semantic triggering beats both naive triggers
 
-Both simple triggers fail, in opposite directions [S].
-
-- **Threshold (reactive)**: fire at X% full. It waits until the context is already full of stale and wrong tokens that have been degrading output for many steps. You compact after the damage.
-- **Periodic**: fire every N turns. It discards indiscriminately and often fires mid-task, erasing information still in use.
+Both simple triggers fail, in opposite directions — threshold too late, periodic mid-task [S]; the design space below picks the policy.
 
 The self-compaction work gates on **closed reasoning units**: fire when a sub-task resolves or the trajectory converges; hold off mid-derivation or when stuck. That preserves verified facts that fixed-interval compaction destroys [S]. See [[semantic triggering]].
 
-The same literature adds three operational notes [S]. Summarisation is a **blocking call that can stall the agent for tens of seconds**. Prompt instructions about summary length are largely ignored. And what the summary keeps **varies substantially from run to run**, which is a direct cause of Result 2.
+The same literature adds two operational notes [S]. Summarisation is a **blocking call that can stall the agent for tens of seconds**. Prompt instructions about summary length are largely ignored. What the summary keeps also **varies substantially from run to run** — model calls are stochastic, and the variation is a direct cause of Result 2 [D].
 
 ## The compaction design space
 
@@ -153,7 +150,7 @@ Six decisions. The recommendations follow from the results above.
 
 ### Decision 3: the summary schema
 
-Worth up to **6.5 SWE-bench points** (49.0% to 55.5%) [S], this is the highest-leverage prompt in your system. "Summarise the conversation so far" leaves that on the table. Each section below maps to a measured failure.
+The highest-leverage prompt in your system (Result 1). "Summarise the conversation so far" leaves that on the table. Each section below maps to a measured failure.
 
 ```markdown title="compaction-schema.md (excerpt)"
 ## Goal
@@ -195,7 +192,7 @@ Research setups cap at **three compactions per run** [S]. The practitioner rule 
 
 ### Decision 6: the cache
 
-Compaction rewrites everything after the stable prefix and invalidates the cache from that point. The [worked arithmetic](ch:metrics-and-economics#belief-2-compaction-saves-money) shows that compacting a 120K context to 40K **breaks even after about four more turns**.
+Compaction rewrites everything after the stable prefix and invalidates the cache from that point. The [worked arithmetic](ch:metrics-and-economics#belief-2-compaction-saves-money) shows that compacting a 120K context to 40K **breaks even after about four more turns** [C].
 
 Two consequences. First, **compacting near the end of a session is a pure loss**: you pay and never collect. Second, because cached tokens were already cheap, **compaction's money saving is much smaller than its token count suggests, while its quality cost is not.** You pay measured reliability damage for a modest, slow saving.
 
@@ -216,7 +213,7 @@ tool returns 14,000 tokens
 
 Three design rules, each learned from a failure:
 
-1. **The [[stub]] must carry enough to decide whether to recall it.** `a3f9.log (14.2KB)` is dead weight. Adding the exit code and a warning summary costs 15 tokens and turns a deleted file into a working pointer.
+1. **The [[stub]] must carry enough to decide whether to recall it** — a bare `a3f9.log (14.2KB)` is dead weight, as [chapter 3's M-6](ch:ten-methods#m-6-reversible-offload) shows. Adding the exit code and a warning summary costs 15 tokens and turns a deleted file into a working pointer.
 2. **Do not offload what is still in use.** Offloading the log from the command that just ran forces an immediate recall. Offload after a few turns or at a sub-goal boundary.
 3. **Keep the manifest bounded.** Past about 30 items, an always-visible manifest becomes the problem it solved. Switch to a searchable store with a one-line index.
 
@@ -304,9 +301,7 @@ Every store can hold a fact. What separates them is **what happens to that fact 
 
 Most organisations' largest knowledge store, and the worst calibrated for agents.
 
-**The asymmetry.** Code that becomes wrong fails a test. A wiki page that becomes wrong fails *nothing*. There is no CI for prose, so a wiki's error rate only rises with age.
-
-**Why it is worse for an agent than for a person.** A person discounts a page by its last-modified date and has been burned before. An agent does neither. Worse, **a stale wiki page about exactly your subsystem is a maximally plausible distractor.** Distractor damage rises with similarity to the query [S], and a page describing the exact module you are working on, in your vocabulary, is at the top of that curve. Bulk-indexing the wiki is therefore not neutral. **It manufactures high-similarity distractors** [D].
+**Worse for an agent than for a person.** Nothing fails when a wiki page rots, so its error rate only rises — and a person discounts a page by its last-modified date and has been burned before; an agent does neither. Worse still, **a stale wiki page about exactly your subsystem is a maximally plausible distractor.** Distractor damage rises with similarity to the query [S], and a page describing the exact module you are working on, in your vocabulary, is at the top of that curve. Bulk-indexing the wiki is therefore not neutral. **It manufactures high-similarity distractors** [D].
 
 | Do | Do not |
 |---|---|
@@ -360,7 +355,7 @@ If you cross one, the order is **SQLite with full-text search first**, then Post
 
 Why knowledge graphs underperform for coding, strongest reason first:
 
-1. **The graph you want already exists and is exact.** A compiler computes it, for free, continuously. An LLM-extracted graph over the same code is a lossy, stale approximation.
+1. **The graph you want already exists, and is exact** (see the table above).
 2. **Extraction is a poisoning surface.** A false edge looks like schema, not opinion, and poisoning cannot be removed by appending a correction.
 3. **Agent questions do not match graph traversal.** "Where is X defined?" and "what calls Y?" are grep and language-server questions. "Why is Z like this?" is not a graph query at all; it is an ADR.
 4. **Ingestion lag is unbounded.** The code changes every merge; the graph changes when the pipeline runs.
@@ -385,7 +380,7 @@ Tools for this layer, with verdicts, are in [chapter 18](ch:tooling#state-memory
 
 ## The complete policy
 
-Everything above as a configuration you could implement this week:
+Everything above as a decision record you could implement from:
 
 ```yaml title="context-policy.yaml"
 prevention:

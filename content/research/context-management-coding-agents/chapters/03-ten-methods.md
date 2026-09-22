@@ -281,6 +281,8 @@ It also saved 38.8–80.3% of memory bandwidth versus a sliding window [S]. The 
 > [!try] Decision test
 > After your next compaction, count how often the agent re-fetches something it already had in the following ten turns. More than twice means you are losing recoverable information, and M-6 is a better fix than tuning the summariser.
 
+The full offload architecture, including where offloaded files should live, is [chapter 6](ch:compaction-and-memory)'s subject.
+
 ## M-7: Externalised state, the living plan
 
 **How to do it.**

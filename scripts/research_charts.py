@@ -15,6 +15,7 @@ Supported types
 import html
 import json
 import math
+import re
 
 TONES = {"1": "ch-s1", "2": "ch-s2", "muted": "ch-muted", "bad": "ch-bad"}
 FONT_W = 6.4  # approx px per char at 11px for label layout
@@ -29,6 +30,12 @@ def fmt(value, spec):
     if isinstance(value, float) and value.is_integer():
         value = int(value)
     return fmt_str.format(v=value)
+
+
+def axis_fmt(spec):
+    """Axis ticks drop series-level precision: general number format, valueFormat's literals kept."""
+    template = re.sub(r"\{v[^}]*\}", "{:g}", spec.get("valueFormat", "{v}"))
+    return lambda t: template.format(t)
 
 
 def nice_max(v):
@@ -115,7 +122,7 @@ def render_hbar(spec):
         tx = plot_x + plot_w * (t / maximum)
         parts.append(f'<line class="ch-grid" x1="{tx:.1f}" y1="{top - 4}" x2="{tx:.1f}" y2="{height - 22}"/>')
         parts.append(
-            f'<text class="ch-axis" x="{tx:.1f}" y="{height - 6}" text-anchor="middle">{esc(fmt(t, spec))}</text>'
+            f'<text class="ch-axis" x="{tx:.1f}" y="{height - 6}" text-anchor="middle">{esc(axis_fmt(spec)(t))}</text>'
         )
     for i, c in enumerate(cats):
         gy = top + i * row_h + 8
@@ -170,7 +177,7 @@ def render_line(spec):
         val = ymin + t
         y = py(val)
         parts.append(f'<line class="ch-grid" x1="{left}" y1="{y:.1f}" x2="{left + pw}" y2="{y:.1f}"/>')
-        parts.append(f'<text class="ch-axis" x="{left - 8}" y="{y + 4:.1f}" text-anchor="end">{esc(fmt(val, spec))}</text>')
+        parts.append(f'<text class="ch-axis" x="{left - 8}" y="{y + 4:.1f}" text-anchor="end">{esc(axis_fmt(spec)(val))}</text>')
     for i, x in enumerate(xs):
         parts.append(
             f'<text class="ch-axis" x="{px(i):.1f}" y="{height - bottom + 18}" text-anchor="middle">{esc(x)}</text>'
