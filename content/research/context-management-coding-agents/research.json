@@ -153,7 +153,7 @@
       "question": "Given my own agent and workload, which method should I adopt first, and in what order after that?",
       "description": "An executable procedure with time budgets for choosing context-management methods: measure, route by binding constraint, classify the task, compose the stack.",
       "tldr": [
-        "Measure four numbers first. Every wrong context decision catalogued here started with a guess.",
+        "Measure four numbers first. Every wrong context decision catalogued in this research started with a guess.",
         "Route by your binding constraint and fix exactly one thing, then re-measure.",
         "Three ordering rules are not optional: offload before compaction, state before resets, cache before everything."
       ],

@@ -105,9 +105,9 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### Cognition, "Don't Build Multi-Agents"
 
-- **Supports:** share full traces, not messages; actions carry implicit decisions; the Flappy Bird failure; single-threaded linear agents.
+- **Supports:** share full traces, not messages; actions carry implicit decisions, which conflict when parallel agents build interlocking parts; the Flappy Bird failure; single-threaded linear agents.
 - **Discount:** first-party, arguing for its own architecture. The failure description is the durable content.
-- **Used in:** [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [case CS-1](ch:case-studies#cs-1-the-sub-agents-that-built-different-games-p).
+- **Used in:** [chapter 4](ch:choosing-methods#step-5-the-decision-table-5-minutes), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [case CS-1](ch:case-studies#cs-1-the-sub-agents-that-built-different-games-p).
 
 ### LangChain, write / select / compress / isolate, and Deep Agents
 
