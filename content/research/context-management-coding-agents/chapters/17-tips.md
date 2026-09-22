@@ -4,7 +4,7 @@ If you do nothing else from this chapter, do these. Five of the eight cost nothi
 
 | # | Habit | Effort | Payoff |
 |---|---|---|---|
-| 6 | Delete MCP servers with zero calls | 10 min | Often 25%+ of the window, permanently |
+| 6 | Audit MCP servers with zero calls | 10 min | Candidate recovery when dead or duplicate surface dominates; verify and keep rollback [P] |
 | 9 | Four shell wrappers for your loudest commands | An afternoon | 60–90% less tool output [P] |
 | 1 | Ignore files | 5 min | Prevents a whole class of failures |
 | 3 | The inference test on the instruction file | 20 min | Smaller *and* more salient |
@@ -40,7 +40,7 @@ That is the shape of this whole field: **the wins are mostly deletions and habit
 3. **Apply the inference test to every instruction line.** Could a competent engineer infer it from the repository in two minutes? If yes, delete it.
 4. **Put the three rules you most need obeyed at the *end* of the instruction file.** The end of a block is more attended than its middle.
 5. **Turn repeatedly violated rules into machinery.** A rule broken in half your sessions is a wish. Make it a lint rule, a hook, a pre-commit check or a test.
-6. **Delete every MCP server with zero calls in your last 20 sessions.** No deprecation period. Restoring takes seconds.
+6. **Audit MCP servers with zero calls in a representative sample.** Delete only after verifying task coverage; keep a rollback.
 7. **Prefer the shell to an MCP server for anything the shell already does:** `gh`, `psql`, `curl`, `rg`, `git`.
 8. **Check whether your harness already does it before installing anything.** Deferred tools, usage reporting and compaction control are increasingly built in [P].
 9. **Write four shell wrappers for your four loudest commands.** Quiet flag, filter, full output to a file, a digest plus the path.

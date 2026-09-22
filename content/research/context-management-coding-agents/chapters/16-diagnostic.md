@@ -27,7 +27,7 @@ Two rules make the result honest.
       {"text": "I can produce a segment-by-segment breakdown of a recent session"}
     ]},
     {"id": "2", "title": "Prefix hygiene", "items": [
-      {"text": "Every MCP server with zero calls in the last 20 sessions has been deleted", "gate": true},
+      {"text": "Zero-call MCP servers were identified from a representative 20-session sample; any deletion was task-coverage verified and remains rollbackable", "gate": true},
       {"text": "Active tool count is 20 or fewer"},
       {"text": "Tool definitions are 15K tokens or fewer, or deferred"},
       {"text": "The instruction file is 150 lines or fewer and passes the inference test"},
@@ -78,7 +78,7 @@ Two rules make the result honest.
   ],
   "actions": {
     "1": {"text": "Run the Phase 0 baseline. Every other action's gate depends on it.", "href": "ch:optimisation-plan#phase-0-baseline"},
-    "2": {"text": "Delete every zero-call MCP server today. The largest, cheapest, most reversible win.", "href": "ch:optimisation-plan#phase-1-deletion"},
+    "2": {"text": "Review zero-call MCP servers from a representative sample; verify task coverage and keep rollback before deleting. Candidate win when definitions dominate.", "href": "ch:optimisation-plan#phase-1-deletion"},
     "3": {"text": "Wrap your three loudest commands. One afternoon, 60–90% less tool output.", "href": "ch:optimisation-plan#phase-2-prevention"},
     "4": {"text": "Classify your last 10 failures as starvation or dilution before changing anything.", "href": "ch:templates#7-context-postmortem"},
     "5": {"text": "Replace your compaction prompt with the explicit schema. A 15-minute edit worth up to 6.5 SWE-bench points.", "href": "ch:templates#4-compaction-schema"},
@@ -109,7 +109,7 @@ Find your **lowest-scoring area**. Break ties toward the earlier area; the order
 | Lowest area | Your next action | Where |
 |---|---|---|
 | **1 Measurement** | Run the Phase 0 baseline. Nothing else is worth doing first. | [Phase 0](ch:optimisation-plan#phase-0-baseline) |
-| **2 Prefix hygiene** | Delete every zero-call MCP server today. | [Phase 1](ch:optimisation-plan#phase-1-deletion) |
+| **2 Prefix hygiene** | Review zero-call MCP servers from a representative sample; verify task coverage and keep rollback before deleting. | [Phase 1](ch:optimisation-plan#phase-1-deletion) |
 | **3 Prevention** | Wrap your three loudest commands: one afternoon, 60–90% less output [P]. | [Phase 2](ch:optimisation-plan#phase-2-prevention) |
 | **4 Retrieval** | Classify your last 10 failures as starvation or dilution *before* changing anything. | [Postmortem template](ch:templates#7-context-postmortem) |
 | **5 State** | Replace your compaction prompt with the explicit schema: a 15-minute edit worth up to 6.5 SWE-bench points [S]. | [Compaction schema](ch:templates#4-compaction-schema) |

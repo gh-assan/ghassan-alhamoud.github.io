@@ -67,9 +67,9 @@ Verdicts use four levels: **Adopt** (use by default), **Trial** (worth a measure
 | **Built-in tool search or deferred definitions** | Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported [S] | None if built in | **Adopt.** A default in some harnesses as of 2026 [P]; check yours first |
 | **Agent skills** | Named capabilities with short triggers and bodies loaded on match | Authoring effort | **Adopt.** Budget descriptions as one number |
 | **agentgateway** | An MCP proxy that applies progressive disclosure across servers | Proxy deployment | **Trial** if you run many servers and your harness lacks deferral |
-| **Code-execution patterns for MCP** | Replace tool schemas with code against an API; **150K → ~2K, 98.7%** [P] | A sandbox | **Adopt if you can sandbox.** The largest single saving in this research |
+| **Code-execution patterns for MCP** | Replace tool schemas with code against an API; **150K → ~2K, 98.7%** [P] | A sandbox | **Adopt if you can sandbox.** The largest reported saving; measure your workload |
 | **Schema deduplication proposals** (`$ref`, adaptive fields, response granularity) | Structural reduction, 10–30% on similar schemas [D] | Protocol-level; not universal | **Watch** |
-| **Deleting an MCP server** | — | Negative | **Adopt.** The highest-yield action in the chapter |
+| **Deleting an MCP server** | — | Negative | **Trial after the audit.** Verify task coverage and keep rollback; the yield is workload-specific |
 
 The MCP ecosystem optimises for *capability exposure*. Context efficiency is *capability restriction*. Nothing in the protocol will restrict for you; the [30-minute audit](ch:tool-surface#the-30-minute-audit) is the tool.
 
@@ -148,10 +148,10 @@ You cannot manage what you cannot see, and this is the thinnest layer.
 For a team using a CLI coding agent on a large repository. Each week is valuable on its own, so stop when the [stop rule](ch:optimisation-plan#the-stop-rule) fires.
 
 ```text title="four-week starter stack"
-Week 1  prevention and deletion (no behaviour change)
+Week 1  prevention and deletion (mostly reversible; verify instruction changes)
         ignore files
         four shell wrappers for your loudest commands
-        delete every zero-call MCP server
+        delete zero-call MCP servers only after a representative sample; verify task coverage and keep rollback
         instruction file → inference test → ≤ 150 lines
         a usage reporter + the transcript-grep script
 
@@ -169,7 +169,7 @@ Week 4  boundaries
         a live context display
 
 Later, only if measurement demands it
-        code execution against an API (the largest remaining win)
+        code execution against an API (a candidate for the largest remaining win; measure first)
         semantic search over docs and ADRs
         a memory system, with the retrieval gate from day one
 ```

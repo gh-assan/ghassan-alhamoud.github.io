@@ -8,7 +8,7 @@ Three rules make it work:
 2. **Pass a phase's gate before starting the next.** Adopting five things at once produces a result nobody can attribute.
 3. **Stop when the stop rule fires.** Context management has a stopping point.
 
-<figure class="diagram diagram--wide">
+<figure class="diagram">
 <p class="diagram__title">Seven phases, about 16 hours over six weeks</p>
 <div class="diagram__scroll">
 <svg viewBox="0 0 900 300" role="img" aria-labelledby="op-t">
@@ -16,17 +16,17 @@ Three rules make it work:
 <text class="dg-k" x="170" y="20">WEEK 1</text><text class="dg-k" x="290" y="20">WEEK 2</text><text class="dg-k" x="410" y="20">WEEK 3</text><text class="dg-k" x="530" y="20">WEEK 4</text><text class="dg-k" x="650" y="20">WEEKS 5–6</text><text class="dg-k" x="790" y="20">LATER</text>
 <line class="dg-line dg-line--dash" x1="160" y1="28" x2="160" y2="270"/><line class="dg-line dg-line--dash" x1="280" y1="28" x2="280" y2="270"/><line class="dg-line dg-line--dash" x1="400" y1="28" x2="400" y2="270"/><line class="dg-line dg-line--dash" x1="520" y1="28" x2="520" y2="270"/><line class="dg-line dg-line--dash" x1="640" y1="28" x2="640" y2="270"/><line class="dg-line dg-line--dash" x1="780" y1="28" x2="780" y2="270"/>
 <text class="dg-t" x="10" y="56">0 Baseline</text><rect class="dg-box--accent" x="165" y="40" width="50" height="24" rx="4"/><text class="dg-s" x="222" y="57">1.5 h · measure 8 numbers</text>
-<text class="dg-t" x="10" y="90">1 Deletion</text><rect class="dg-box--accent" x="215" y="74" width="60" height="24" rx="4"/><text class="dg-s" x="282" y="91">2.5 h · 25–35% of window</text>
-<text class="dg-t" x="10" y="124">2 Prevention</text><rect class="dg-box--accent" x="285" y="108" width="100" height="24" rx="4"/><text class="dg-s" x="392" y="125">3 h · tool output −50–80%</text>
+<text class="dg-t" x="10" y="90">1 Deletion</text><rect class="dg-box--accent" x="215" y="74" width="60" height="24" rx="4"/><text class="dg-s" x="282" y="91">2.5 h · 25–35% if waste dominates</text>
+<text class="dg-t" x="10" y="124">2 Prevention</text><rect class="dg-box--accent" x="285" y="108" width="100" height="24" rx="4"/><text class="dg-s" x="392" y="125">3 h · target −50–80% if output waste dominates</text>
 <text class="dg-t" x="10" y="158">3 Retrieval</text><rect class="dg-box--info" x="405" y="142" width="70" height="24" rx="4"/><text class="dg-s" x="482" y="159">2 h + habit</text>
 <text class="dg-t" x="10" y="192">4 State</text><rect class="dg-box--info" x="525" y="176" width="100" height="24" rx="4"/><text class="dg-s" x="632" y="193">3 h + habit</text>
 <text class="dg-t" x="10" y="226">5 Measurement</text><rect class="dg-box--ghost" x="645" y="210" width="130" height="24" rx="4"/><text class="dg-s" x="710" y="227" text-anchor="middle">4 h · optional</text>
 <text class="dg-t" x="10" y="260">6 Advanced</text><rect class="dg-box--ghost" x="785" y="244" width="105" height="24" rx="4"/><text class="dg-s" x="837" y="261" text-anchor="middle">if data demands</text>
-<text class="dg-s" x="165" y="292">Phases 0–2: seven hours, most of the benefit, no behaviour change</text>
+<text class="dg-s" x="165" y="292">Phases 0–2: seven hours, mostly reversible, verify changes</text>
 </svg>
 </div>
 <p class="diagram__hint">Scroll sideways to see the full timeline.</p>
-<figcaption>Every phase is valuable on its own, and you may stop after any of them. The dark bars need no behaviour change; the lighter ones need new habits, which is where adoption usually stalls.</figcaption>
+<figcaption>Every phase is valuable on its own, and you may stop after any of them. The dark bars are mostly reversible; the lighter ones need new habits, which is where adoption usually stalls.</figcaption>
 </figure>
 
 ## Phase 0: Baseline (1.5 hours, week 1) {#phase-0-baseline}
@@ -56,23 +56,23 @@ Largest segment I control:        ____________________
 
 **Gate:** the numbers are written down somewhere you will find them again. That is the whole gate.
 
-**Why it exists.** In the typical first audit, the largest segment is one nobody was thinking about, and it is mostly waste rather than a trade-off. Skipping this means optimising someone else's bottleneck.
+**Why it exists.** A first audit may reveal that the largest segment is not the one the team was tuning, and that some of it is waste rather than a trade-off. Skipping this means optimising someone else's bottleneck.
 
 ## Phase 1: Deletion (2.5 hours, week 1) {#phase-1-deletion}
 
-**The highest-yield, lowest-risk phase.** Everything here removes waste, needs no behaviour change, and can be undone in seconds.
+**The highest-yield, most reversible phase when the audit finds dead or duplicate surface.** Delete candidate waste first, verify task coverage after each change, and keep rollback. Instruction pruning changes behaviour, so measure it separately.
 
 **Do:**
 
-1. **Delete every MCP server with zero calls** in your 20-session sample. Delete, do not deprecate. *(30 min)*
-2. **Delete every MCP server that duplicates the shell**: GitHub if you have `gh`, filesystem if you have file tools, database if you have `psql`, fetch if you have `curl`. If a server is a *security* control, keep it, but write that decision down. *(30 min)*
+1. **Review MCP servers with zero calls** in a representative 20-session sample. Remove candidates only after task-coverage verification; keep a rollback. *(30 min)*
+2. **Review MCP servers that duplicate the shell**: GitHub if you have `gh`, filesystem if you have file tools, database if you have `psql`, fetch if you have `curl`. If a server is a *security* control, keep it, but write that decision down; otherwise verify coverage before removal. *(30 min)*
 3. **Enable deferred tool definitions** for what survives, if your harness supports them. *(15 min)*
 4. **Write ignore files**: `node_modules/`, `dist/`, `build/`, `*.lock`, `__generated__/`, `vendor/`, snapshots, fixtures. *(15 min)*
 5. **Apply the inference test** to your instruction file: could a competent engineer infer this line from the repository in two minutes? If yes, delete it. Aim for at most 150 lines, and move the three rules you most need obeyed to the **end**. Delete rules that describe refactors already done. *(45 min)*
 
-**Gate:** re-measure prefix tax, tool share and the defined : called ratio. **Expect prefix tax to fall 50–90%.** Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.
+**Gate:** re-measure prefix tax, tool share and the defined : called ratio. **Target a 50–90% prefix-tax reduction when dead or duplicate surface dominates [P]; measure it before treating it as a target.** Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.
 
-**Payoff:** typically **25–35% of the window back**, permanently, on every call. This is the best trade in the research.
+**Payoff:** a practitioner estimate is **25–35% of the window back** when unused or duplicated capabilities dominate [P]; measure your own workload before treating it as a target.
 
 ## Phase 2: Prevention (3 hours, week 2) {#phase-2-prevention}
 
@@ -105,7 +105,7 @@ fi
 
 **Gate:** re-measure tool-result share and cache hit rate. **Expect tool-result tokens down 50–80%** [P] and the cache hit rate flat or up. Then count re-runs with more verbose flags over 10 sessions. A rise means you filtered too hard: loosen that digest; do not abandon the approach.
 
-**Payoff:** typically another 20–30% of session tokens, compounding with Phase 1 because they act on different segments.
+**Payoff:** a practitioner-reported 20–30% when output waste dominates [P]; it can compound with Phase 1 because the phases act on different segments, but measure your own sessions.
 
 ## Phase 3: Retrieval (2 hours plus a habit, week 3) {#phase-3-retrieval}
 
@@ -158,7 +158,7 @@ Do not start these without a measured reason from Phase 5.
 
 | Change | Justified when | Expect |
 |---|---|---|
-| **Code execution against an API** | Tool definitions still over 15K after Phase 1, or result waste over 10:1 | The largest remaining win: 98.7% on definitions, vendor-reported [P] |
+| **Code execution against an API** | Tool definitions still over 15K after Phase 1, or result waste over 10:1 | Candidate for the largest remaining win; 98.7% on definitions is vendor-reported [P] |
 | **Sub-agents with disposable scouts** | Survey work regularly saturates the main context | Parent context flat; total spend up |
 | **Addressable-recall compaction** | Post-boundary re-fetch stays over 2 after Phase 4 | The best published compaction result [S]; you will probably build it |
 | **Semantic search over docs and ADRs** | Concept questions are a measured share of your work | A complement, never primary |
@@ -190,7 +190,7 @@ Context management regresses. Without a recurring audit you are back at baseline
 2. Compare them with last quarter.
 3. For any metric that regressed, re-apply that phase.
 4. Delete any instruction rule that was neither violated nor relevant all quarter.
-5. Delete any tool with zero calls this quarter.
+5. Review any tool with zero calls this quarter; if the sample is representative, verify task coverage and remove it with rollback.
 6. Delete any stale memory entry.
 
 Five of the six steps are deletions. That is not an accident.
@@ -200,12 +200,12 @@ Five of the six steps are deletions. That is not an accident.
 | Phase | Effort | Do | Gate | Typical gain |
 |---|---|---|---|---|
 | **0 Baseline** | 1.5 h | Measure eight numbers | Numbers written down | — |
-| **1 Deletion** | 2.5 h | Delete dead tools; ignore files; prune instructions | Prefix tax −50–90%; nothing missed | 25–35% of the window |
-| **2 Prevention** | 3 h | Wrap loud commands; head-and-tail; `.agent/` | Tool output −50–80%; cache flat or up | 20–30% of the session |
+| **1 Deletion** | 2.5 h | Review dead-tool candidates; ignore files; prune instructions | Prefix tax −50–90%; verify coverage | 25–35% if waste dominates [P] |
+| **2 Prevention** | 3 h | Wrap loud commands; head-and-tail; `.agent/` | Tool output −50–80%; cache flat or up | 20–30% if output waste dominates [P] |
 | **3 Retrieval** | 2 h + habit | Symbol tool; locate → inspect → read; pointer seed | Read-utilisation roughly doubles | Smaller, sustained |
 | **4 State** | 3 h + habit | Plan file, stubs, schema, reset triggers | Re-fetch under 2; at most one compaction | Long-task quality |
 | **5 Measurement** | 4 h | Evaluation set, k = 2, paired A/B | Pass² with an interval | Future changes attributable |
 | **6 Advanced** | Open | Code execution, scouts, addressable recall, memory | Per-change gates | Diminishing |
 
 > [!try] If you have one afternoon
-> Phase 0 steps 1–4, then Phase 1 steps 1–2. Two hours, and it is usually a quarter of your context window back.
+> Phase 0 steps 1–4, then Phase 1 steps 1–2. Two hours; use the recovery estimate only if the audit shows dead or duplicate surface, then verify and keep rollback.

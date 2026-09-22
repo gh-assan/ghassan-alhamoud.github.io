@@ -189,7 +189,7 @@
 <tr>
 <td><a href="#cs-8-the-audit-that-recovered-a-third-of-the-window-c">CS-8 The audit that recovered a third of the window</a></td>
 <td><a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a></td>
-<td>The first audit finds waste, not trade-offs</td>
+<td>The constructed audit separates waste from behaviour changes</td>
 </tr>
 </tbody>
 </table></div>
@@ -257,7 +257,7 @@
 <p><strong>What was done.</strong> Instead of optimising the definitions, they were <strong>removed as a category.</strong> The agent got a code-execution environment and a programmatic API, and writes code against it instead of choosing among schemas.</p>
 <p><strong>What happened.</strong> <strong>150,000 tokens fell to about 2,000: a 98.7% reduction</strong>, with 99%+ on definitions alone at 112 tools <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. These are vendor-reported figures and no independent reproduction exists, so treat 98.7% as the upper bound of the effect rather than the expected one. An independent production report on a GitHub MCP server found a 98% reduction <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
 <p><strong>The mechanism.</strong> Two effects, and the second is larger. Definitions collapse into one tool plus documentation. And results collapse, because code filters data before returning it: <code>[i.number for i in list_issues() if i.state == "open"][:5]</code> puts five integers in context instead of 400 issue objects.</p>
-<p><strong>What it establishes.</strong> The largest wins come from <strong>eliminating a category of context</strong>, not compressing it. Progressive disclosure is an order of magnitude; category elimination is two.</p>
+<p><strong>What it establishes.</strong> In these cases, the largest wins came from <strong>eliminating a category of context</strong>, not compressing it <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>. Progressive disclosure is an order of magnitude; category elimination is two.</p>
 <h2 id="cs-7-grep-beat-embeddings-and-the-harness-beat-both-s">CS-7: Grep beat embeddings, and the harness beat both <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a><a class="rs-anchor" href="#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s" title="Link to this section">#</a></h2>
 <p><strong>Situation.</strong> A 2026 study asked whether semantic retrieval is necessary for agentic search.</p>
 <p><strong>What was done.</strong> Grep versus vector retrieval on 116 questions derived from LongMemEval, run across <strong>four harnesses</strong> (a custom agent and three widely used CLI agents), with both inline and file-based tool results. A second experiment added unrelated history to measure distractor sensitivity.</p>
@@ -350,9 +350,9 @@
 <td>Published rankings are hypotheses</td>
 </tr>
 <tr>
-<td>The first audit finds <strong>waste, not trade-offs</strong></td>
+<td>The constructed audit separates <strong>waste from behaviour changes</strong></td>
 <td>CS-8</td>
-<td>Most of the win needs no behaviour change</td>
+<td>The first two moves remove or defer waste; the latter two need verification</td>
 </tr>
 </tbody>
 </table></div>
@@ -362,7 +362,7 @@
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
-          <ol><li>Isolation succeeds or fails on composability, not on architecture.</li><li>The boundary component, such as the summariser, is a first-class quality lever.</li><li>Cache mechanics can invert the sign of a token optimisation.</li><li>The first audit finds waste, not trade-offs.</li></ol>
+          <ol><li>Isolation succeeds or fails on composability, not on architecture.</li><li>The boundary component, such as the summariser, is a first-class quality lever.</li><li>Cache mechanics can invert the sign of a token optimisation.</li><li>The constructed audit separates waste from behaviour changes.</li></ol>
         </section>
         
         

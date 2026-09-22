@@ -49,7 +49,7 @@ Every failure below has the same four fields:
 
 | # | Failure | Tell | Detect | Contain | Fix |
 |---|---|---|---|---|---|
-| F-1 | **Tool-definition bloat** | Prefix tax over 25K; capabilities never used | Count schema tokens; count calls over 20 sessions | Disable the largest unused server | Tool audit; budget 20 tools, 15K tokens; re-audit quarterly |
+| F-1 | **Tool-definition bloat** | Prefix tax over 25K; capabilities never used | Count schema tokens; count calls over 20 sessions | Review the largest unused server; verify task coverage before disabling | Tool audit; budget 20 tools, 15K tokens; re-audit quarterly |
 | F-2 | **Instruction-file sprawl** | Over 200 lines; rules ignored late in sessions | Line count over time; violations per rule | Move the three most-violated rules to the end | Inference test; scoped files; turn violated rules into hooks or lints |
 | F-3 | **Tool-output flooding** | One command uses over 10% of the window | Rank commands by token volume | Re-run with a quiet flag; do not keep the log | Output shaping; redirect to a file with a digest |
 | F-4 | **Whole-file reading** | Read-utilisation under 5%; 1,200 lines read to change 4 | Sample 20 reads | Ask for a range or symbol | Structural retrieval |

@@ -1,14 +1,14 @@
-## Why this is usually where you win
+## Why measure the tool surface early
 
-In the [worked budget](ch:anatomy#reading-a-whole-budget-a-worked-example), tool definitions were 25% of the context: **38,000 tokens for 61 tools, of which 11 were ever used.** That is not unusual. It is the typical first finding.
+In the [worked budget](ch:anatomy#reading-a-whole-budget-a-worked-example), tool definitions were 25% of the context: **38,000 tokens for 61 tools, of which 11 were ever used.** Treat that as a constructed example, then measure your own first finding [C].
 
-Three properties make the tool surface the best place to start:
+Three properties make the tool surface useful to measure early:
 
-1. **It is prefix.** You pay for it on every call in every session.
-2. **Unused tools are pure waste.** A tool never called contributed nothing and cost everything.
-3. **The fix is reversible in seconds.** Delete a server; if you were wrong, add it back. No behaviour change, no retraining, no discipline required.
+1. **It is prefix.** The definitions are sent on every call; actual billing depends on cache hits and request stability.
+2. **Unused tools consume budget and can confuse selection.** A tool never called contributes no task value in that workload.
+3. **The fix is reversible in seconds.** Delete a server; if you were wrong, add it back. The zero-call case needs no retraining, but verify the task surface after any deletion.
 
-Compare that with retrieval discipline, which needs sustained behaviour change for a smaller win. **Start here.**
+Compare that with retrieval discipline, which needs sustained behaviour change. Let the audit decide which surface to change first.
 
 ## The measured damage
 
@@ -33,7 +33,7 @@ Two independent methods converging near the same threshold is strong evidence fo
 
 ### A-1: Eager definitions (the default, and the problem)
 
-Every tool's full schema loaded upfront, every session. Simple, predictable and cache-friendly. It scales badly: 60 tools with rich schemas is 40–60K tokens.
+Every tool's full schema loaded upfront, every session. Simple and predictable; it is potentially cache-friendly when supported and stable. It scales badly: 60 tools with rich schemas is 40–60K tokens.
 
 ### A-2: Progressive disclosure
 
@@ -83,24 +83,24 @@ Costs: a sandbox; an API worth writing against; and a real failure mode where bu
 | Prefix cost (60 tools) | 40–60K | 3–6K | 1–3K |
 | Shapes results | No | No | **Yes** |
 | Round trips | 0 | +1 per new tool | +1, but batches many operations |
-| Cache-friendly | Yes | Yes | Yes |
+| Cache conditions | Potentially; stable if supported | Potentially; disclosure may churn | Potentially; depends on a stable API block |
 | Selection confusion | High | Moderate | **Low** (one tool) |
 | Setup cost | None | Low | Moderate (sandbox) |
 | Failure mode | Bloat | Discoverability | Buggy filter code |
 
 ## The 30-minute audit
 
-The highest-yield thirty minutes in this research.
+The highest-yield thirty minutes in this research when the audit confirms tool-surface waste.
 
 1. **Count.** Dump every tool schema in scope and count tokens, per server and in total. Most people are off by 3–5×.
-2. **Attribute.** Sort servers by size. One is usually the majority.
+2. **Attribute.** Sort servers by size. One may dominate; measure rather than assume.
 3. **Use-count.** Count calls per tool across your last 20 sessions. Most harnesses log this; otherwise grep the transcripts.
 4. **Classify.**
 
 | Class | Rule | Action |
 |---|---|---|
-| **Dead** | 0 calls in 20 sessions | **Delete.** No discussion |
-| **Redundant** | Duplicates something the shell already does | **Delete.** `gh`, `psql`, `curl`, `rg` exist |
+| **Dead** | 0 calls in a representative 20-session sample | **Deletion candidate; verify task coverage and keep rollback.** |
+| **Redundant** | Duplicates something the shell already does | **Deletion candidate; verify task coverage and keep rollback.** `gh`, `psql`, `curl`, `rg` exist |
 | **Rare but critical** | Fewer than 3 calls, but decisive | Defer it, or move it behind code execution |
 | **Core** | Called often | Keep it eager; trim its description |
 
@@ -196,4 +196,4 @@ Everything above is about definitions. Tool *results* are larger in a working se
 | Skill trigger recall | Fired correctly ÷ should have fired | Over 0.7 | Dead skills |
 | Re-bloat rate | Change in definition tokens per quarter | About 0 | Governance failing |
 
-If you check one number today, make it **defined : called**. Above 3:1 you have found your largest available win, and it costs nothing to take.
+If you check one number today, make it **defined : called**. Above 3:1, inspect the unused surface first; the largest win remains workload-specific.

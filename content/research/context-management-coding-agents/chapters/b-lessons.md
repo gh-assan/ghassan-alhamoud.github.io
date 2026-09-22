@@ -6,7 +6,7 @@ Each lesson is a transferable claim with its **mechanism**, why it is true, and 
 > - **L1**: it is a budget, not a bucket. Everything follows.
 > - **L11**: a large stable prefix beats a small churning one. It inverts most cost intuition.
 > - **L27**: compression damage is variance first. It changes how you measure.
-> - **L54**: deletion is the highest-yield action. It changes what you do first.
+> - **L54**: deletion is often a high-yield, reversible action when the audit finds dead surface. It changes what you do first.
 > - **L57**: there is a stopping point. It prevents building a framework nobody needs.
 
 ## A. The nature of context (L1–L8)
@@ -109,8 +109,8 @@ Background: [chapter 15](ch:optimisation-plan).
 
 | # | Lesson | Why it is true | Falsified if |
 |---|---|---|---|
-| L53 | **Measure before you optimise; the large segment is rarely the one you were tuning.** | tool definitions and tool results dominate, while attention goes to instruction files. | first audits typically confirm the team's prior about which segment is largest. |
-| L54 | **Deletion is the highest-yield, lowest-risk, most reversible action available.** | zero-invocation tools, dead rules, and unfiltered output are pure waste, not tradeoffs. No behaviour change required, restorable in seconds. | removing zero-invocation tools measurably reduces task success. |
+| L53 | **Measure before you optimise; the largest segment may not be the one you were tuning.** | In the constructed budget, tool definitions and tool results dominate while attention goes to instruction files [C]. | first audits consistently confirm the team's prior about which segment is largest. |
+| L54 | **Deletion is often the highest-yield, lowest-risk, most reversible action.** | Dead rules and unfiltered output can be pure waste; zero-invocation tools are high-confidence candidates after a representative sample. Verify task coverage and keep rollback. | a deletion passes the sample but reduces task success. |
 | L55 | **Fix the repository, not the retriever, when the problem recurs.** | a codebase that is hard for an agent to navigate is hard for humans too; deleting `UserServiceV2` beats any retrieval improvement aimed at distinguishing it. | repository clarity improvements show no effect on agent success. |
 | L56 | **Reset more often than feels natural.** | the instinct to preserve a long session is a sunk-cost error, and the transcript being preserved is mostly the reason things are going badly. A reset costs ~500 tokens. | task quality is flat with respect to session duration in your workload. |
 | L57 | **Context management has a stopping point.** | once cache, tool surface, output shaping and retrieval are handled, the binding constraint moves elsewhere — model choice, decomposition, or the verification loop. | marginal context effort continues to yield measurable gains indefinitely. |

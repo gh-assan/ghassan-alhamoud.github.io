@@ -311,7 +311,7 @@
 <td><strong>Code-execution patterns for MCP</strong></td>
 <td>Replace tool schemas with code against an API; <strong>150K → ~2K, 98.7%</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
 <td>A sandbox</td>
-<td><strong>Adopt if you can sandbox.</strong> The largest single saving in this research</td>
+<td><strong>Adopt if you can sandbox.</strong> The largest reported saving; measure your workload</td>
 </tr>
 <tr>
 <td><strong>Schema deduplication proposals</strong> (<code>$ref</code>, adaptive fields, response granularity)</td>
@@ -323,7 +323,7 @@
 <td><strong>Deleting an MCP server</strong></td>
 <td>—</td>
 <td>Negative</td>
-<td><strong>Adopt.</strong> The highest-yield action in the chapter</td>
+<td><strong>Trial after the audit.</strong> Verify task coverage and keep rollback; the yield is workload-specific</td>
 </tr>
 </tbody>
 </table></div>
@@ -588,10 +588,10 @@
 </table></div>
 <h2 id="a-starter-stack-in-order">A starter stack, in order<a class="rs-anchor" href="#a-starter-stack-in-order" title="Link to this section">#</a></h2>
 <p>For a team using a CLI coding agent on a large repository. Each week is valuable on its own, so stop when the <a href="15-optimisation-plan.html#the-stop-rule">stop rule</a> fires.</p>
-<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">four-week starter stack</span></div><pre class="highlight"><code>Week 1  prevention and deletion (no behaviour change)
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">four-week starter stack</span></div><pre class="highlight"><code>Week 1  prevention and deletion (mostly reversible; verify instruction changes)
         ignore files
         four shell wrappers for your loudest commands
-        delete every zero-call MCP server
+        delete zero-call MCP servers only after a representative sample; verify task coverage and keep rollback
         instruction file → inference test → ≤ 150 lines
         a usage reporter + the transcript-grep script
 
@@ -609,7 +609,7 @@ Week 4  boundaries
         a live context display
 
 Later, only if measurement demands it
-        code execution against an API (the largest remaining win)
+        code execution against an API (a candidate for the largest remaining win; measure first)
         semantic search over docs and ADRs
         a memory system, with the retrieval gate from day one
 </code></pre></div>

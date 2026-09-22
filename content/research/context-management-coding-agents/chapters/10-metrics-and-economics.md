@@ -6,7 +6,7 @@ Most metric catalogues list what can be measured. This one adds the column they 
 
 | Metric | What it tells you | Decision it drives |
 |---|---|---|
-| **Prefix tax** | Fixed cost per call, paid forever | Whether to audit the tool surface |
+| **Prefix tax** | Fixed input present on each call; cached billing varies | Whether to audit the tool surface |
 | **Relevance density** | How diluted the context is | Whether dilution is your binding problem |
 | **Post-boundary re-fetch rate** | Whether compaction drops load-bearing content | Whether to fix the summary schema or offload first |
 | **Pass² ÷ Pass@2** | Whether compression is making the agent intermittent | Whether to back off compression |
@@ -233,7 +233,7 @@ This is the arithmetic form of a measured result: full context cost 2.68× the b
 Run this checklist in order. Stop at the first "yes".
 
 1. **Cache hit rate under 60%?** Fix the prefix. Everything else is downstream and may be self-defeating.
-2. **More than 3 tools defined per tool used?** Delete tools. The largest, cheapest, most reversible win.
+2. **More than 3 tools defined per tool used?** Inspect deletion candidates. If a representative sample confirms dead tools, remove them with rollback; the largest win is workload-specific.
 3. **Tool results over 35% of the session?** Output shaping: one afternoon, 60–90% reduction [P].
 4. **Read-utilisation under 5%?** Structural retrieval.
 5. **Post-boundary re-fetch over 2?** Offload before compaction; fix the schema.

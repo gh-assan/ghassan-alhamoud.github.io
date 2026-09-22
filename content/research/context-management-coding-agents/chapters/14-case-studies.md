@@ -13,7 +13,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | [CS-5 Dynamic tool loading made things worse](#cs-5-dynamic-tool-loading-made-things-worse) | [C] | The cache can flip the sign of a token optimisation |
 | [CS-6 Removal as the answer: code execution](#cs-6-removal-as-the-answer-code-execution-s) | [S] | Eliminating a category beats compressing it |
 | [CS-7 Grep beat embeddings, and the harness beat both](#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s) | [S] | Published retrieval rankings are hypotheses for you |
-| [CS-8 The audit that recovered a third of the window](#cs-8-the-audit-that-recovered-a-third-of-the-window-c) | [C] | The first audit finds waste, not trade-offs |
+| [CS-8 The audit that recovered a third of the window](#cs-8-the-audit-that-recovered-a-third-of-the-window-c) | [C] | The constructed audit separates waste from behaviour changes |
 
 ## CS-1: The sub-agents that built different games [P]
 
@@ -119,7 +119,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **The mechanism.** Two effects, and the second is larger. Definitions collapse into one tool plus documentation. And results collapse, because code filters data before returning it: `[i.number for i in list_issues() if i.state == "open"][:5]` puts five integers in context instead of 400 issue objects.
 
-**What it establishes.** The largest wins come from **eliminating a category of context**, not compressing it. Progressive disclosure is an order of magnitude; category elimination is two.
+**What it establishes.** In these cases, the largest wins came from **eliminating a category of context**, not compressing it [D]. Progressive disclosure is an order of magnitude; category elimination is two.
 
 ## CS-7: Grep beat embeddings, and the harness beat both [S]
 
@@ -184,7 +184,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | **Eliminating a category beats compressing it** | CS-6, CS-8 | 98.7% from removing definitions; 96% from deleting unused tools |
 | **Cache mechanics can flip the sign** of an optimisation | CS-5 | 24% fewer tokens, 6.9× the cost |
 | **The harness confounds everything** | CS-7 | Published rankings are hypotheses |
-| The first audit finds **waste, not trade-offs** | CS-8 | Most of the win needs no behaviour change |
+| The constructed audit separates **waste from behaviour changes** | CS-8 | The first two moves remove or defer waste; the latter two need verification |
 
 > [!key] The through-line
 > Six of these eight cases turned on a decision about what to remove or where to draw a boundary. None turned on a cleverer algorithm.

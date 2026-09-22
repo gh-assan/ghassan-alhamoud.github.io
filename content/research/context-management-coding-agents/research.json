@@ -20,7 +20,7 @@
     {"value": "6.5 pts", "label": "SWE-bench swing from changing only the summariser [S]"},
     {"value": "77% → 53%", "label": "Pass² with no compression vs FIFO truncation on AppWorld [S]"},
     {"value": "6.9×", "label": "cost increase from a 24% token cut that broke the prompt cache [C]"},
-    {"value": "25–35%", "label": "of the window usually recovered by 2.5 hours of deletion [P]"}
+    {"value": "25–35%", "label": "practitioner estimate when dead or duplicate capabilities dominate; verify and keep rollback [P]"}
   ],
   "finding": [
     {
@@ -29,7 +29,7 @@
     },
     {
       "claim": "Subtraction beats addition, and the evidence is lopsided.",
-      "detail": "5K tokens of targeted retrieval beat a 100K summary [P]. Masking matched summarisation at lower cost [S]. Fewer tools beat more tools [S]. The first audit usually finds waste, not trade-offs."
+      "detail": "5K tokens of targeted retrieval beat a 100K summary [P]. Masking matched summarisation at lower cost [S]. Fewer tools beat more tools [S]. A first audit should test for waste before changing strategy."
     },
     {
       "claim": "Compression damage shows up as unreliability before it shows up as lower accuracy.",
@@ -47,7 +47,7 @@
   "paths": [
     {"time": "5 minutes", "title": "Decide if it matters", "text": "The one-page summary: the problem, the finding, the first actions.", "href": "ref:summary"},
     {"time": "30 minutes", "title": "Score where you stand", "text": "Run the diagnostic and get exactly one next action.", "href": "ch:diagnostic"},
-    {"time": "An afternoon", "title": "Win back a quarter of the window", "text": "Phase 0 baseline, then Phase 1 deletion. Two hours, no behaviour change.", "href": "ch:optimisation-plan#phase-0-baseline"},
+    {"time": "An afternoon", "title": "Test for a quarter-window recovery", "text": "Phase 0 baseline, then Phase 1 deletion. Verify task coverage and keep rollback.", "href": "ch:optimisation-plan#phase-0-baseline"},
     {"time": "~70 minutes", "title": "Take the engineer core", "text": "The shortest complete route from mechanism to an operating plan.", "href": "#engineer-core"}
   ],
   "corePath": ["foundations", "anatomy", "choosing-methods", "retrieval", "compaction-and-memory", "tool-surface", "evaluation", "optimisation-plan"],
@@ -96,11 +96,11 @@
       "navTitle": "Anatomy of the context",
       "level": "Foundational",
       "question": "Where do the tokens in a coding agent's context actually go, and which parts can you control?",
-      "description": "Nine segments of a coding agent's context, their typical size, who controls them, how they fail, and a worked audit that recovers 32% of the window.",
+      "description": "Nine segments of a coding agent's context, their rough size, who controls them, how they fail, and a constructed worked budget that turns segment size into reversible actions.",
       "tldr": [
-        "A context has nine segments: four stable prefix segments and five growing body segments.",
-        "The prefix is paid on every call; the body is paid repeatedly and read with fading attention.",
-        "First audits usually find the big segment is one nobody was tuning: tool definitions or tool output."
+        "A context has nine segments: four common prefix segments and five growing body segments.",
+        "In this audit model, prefix content is sent on every call; body content grows with the session, and cache billing depends on hits. Compaction or memory policy can rewrite or reposition body context [D].",
+        "The constructed audit finds its largest controllable segments in tool definitions and tool output."
       ],
       "outcomes": [
         "Split any context into prefix and body and explain why that split governs cost",
@@ -110,10 +110,10 @@
       ],
       "takeaways": [
         "\"My context is full\" is not actionable. A segment-by-segment breakdown is.",
-        "Tool definitions and tool results are usually the largest controllable segments.",
+        "In the constructed audit, tool definitions and tool results are the largest controllable segments.",
         "Optimise the retention integral (tokens × turns kept), not the peak.",
-        "Compaction is the only segment that rewrites the prefix, so it is the most cache-hostile.",
-        "A typical first audit recovers about 30% of the window with no loss of information."
+        "Compaction may rewrite earlier context, so treat it as cache-hostile until measured.",
+        "The worked audit ranks recoverable segments before behaviour-changing fixes; validate every change against task coverage [C]."
       ]
     },
     {
@@ -252,11 +252,11 @@
       "navTitle": "The tool surface",
       "level": "Deep dive",
       "question": "How much context do tools, MCP servers and skills consume, and what does a healthy tool surface look like?",
-      "description": "Tool definitions are the largest measured waste in most contexts. Degradation curves, three architectures, a 30-minute audit and a worked example recovering 32% of the window.",
+      "description": "A tool-surface audit can reveal large definition waste. This chapter covers degradation curves, three architectures, a 30-minute audit, and a worked deletion-versus-deferral example.",
       "tldr": [
         "Tool count hurts twice: definitions displace work, and more choices mean worse choices [S].",
         "Deferred definitions fix displacement, not confusion. Only fewer tools fix confusion.",
-        "A 30-minute audit usually finds most tools were never called. Delete them."
+        "A 30-minute audit shows which tools were unused in your sample; delete only after a zero-call check."
       ],
       "outcomes": [
         "Separate displacement from selection confusion and pick the right fix",
@@ -266,7 +266,7 @@
       ],
       "takeaways": [
         "Treat about 20 active tools as a soft ceiling and about 40 as a hard one.",
-        "Zero-invocation tools are pure loss and can be restored in seconds.",
+        "Zero-invocation tools are deletion candidates when the sample is representative; keep rollback.",
         "Prefer the shell to an MCP server that duplicates it, unless the server is a deliberate security control.",
         "Code execution removes a whole category of context and shapes results before they arrive."
       ]
@@ -413,7 +413,7 @@
         "Isolation succeeds or fails on composability, not on architecture.",
         "The boundary component, such as the summariser, is a first-class quality lever.",
         "Cache mechanics can invert the sign of a token optimisation.",
-        "The first audit finds waste, not trade-offs."
+        "The constructed audit separates waste from behaviour changes."
       ]
     },
     {
@@ -435,7 +435,7 @@
       ],
       "takeaways": [
         "The plan is ordered by yield per effort, not by intellectual interest.",
-        "Deletion first: it is the highest-yield, lowest-risk, most reversible phase.",
+        "Start with deletion when the audit finds dead or duplicate surface; keep it measured and reversible.",
         "Measurement infrastructure is optional unless you will make several more changes.",
         "Re-audit quarterly. Five of the six maintenance steps are deletions."
       ]
@@ -555,7 +555,7 @@
         "It is a budget, not a bucket. Everything follows from that.",
         "A large stable prefix beats a small churning one.",
         "Compression damage is variance first. Measure Pass².",
-        "Deletion is the highest-yield action, and context work has a stopping point."
+        "Deletion is often high-yield when the audit finds dead surface; context work has a stopping point."
       ]
     }
   ],

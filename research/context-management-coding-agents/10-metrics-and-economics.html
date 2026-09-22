@@ -153,7 +153,7 @@
 <tbody>
 <tr>
 <td><strong>Prefix tax</strong></td>
-<td>Fixed cost per call, paid forever</td>
+<td>Fixed input present on each call; cached billing varies</td>
 <td>Whether to audit the tool surface</td>
 </tr>
 <tr>
@@ -601,7 +601,7 @@ Cost per month   = 600 × 315                             = 188,800 units
 <p>Run this checklist in order. Stop at the first "yes".</p>
 <ol>
 <li><strong>Cache hit rate under 60%?</strong> Fix the prefix. Everything else is downstream and may be self-defeating.</li>
-<li><strong>More than 3 tools defined per tool used?</strong> Delete tools. The largest, cheapest, most reversible win.</li>
+<li><strong>More than 3 tools defined per tool used?</strong> Inspect deletion candidates. If a representative sample confirms dead tools, remove them with rollback; the largest win is workload-specific.</li>
 <li><strong>Tool results over 35% of the session?</strong> Output shaping: one afternoon, 60–90% reduction <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
 <li><strong>Read-utilisation under 5%?</strong> Structural retrieval.</li>
 <li><strong>Post-boundary re-fetch over 2?</strong> Offload before compaction; fix the schema.</li>

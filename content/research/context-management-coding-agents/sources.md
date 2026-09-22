@@ -38,7 +38,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the AppWorld table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
 - **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
-- **Used in:** [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
 
 ### "Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)
@@ -52,7 +52,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** **the summariser-only swing, SWE-bench 49.0% → 55.5%**; +5.5 / +7.0 on SWE-bench Verified and +6.8 / +3.1 on Terminal-Bench 2.0 from compaction-aware training; operating parameters (10,240-token threshold, at most 3 compactions per run, at most 250 turns).
 - **Discount:** the training results need access most readers lack. The 6.5-point swing at inference time does not.
-- **Used in:** [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
 - **Link:** [arXiv 2607.05378](https://arxiv.org/abs/2607.05378)
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
@@ -126,7 +126,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 43% → under 14% as tool count grows; 19 of 20 at 20 tools → failure at 107; the ~20-tool practitioner threshold; the ~42,000-token single-server figure.
 - **Discount:** mixed [S] and [P]. The strength is two independent methods converging near 20; individual figures are weaker.
-- **Used in:** [chapter 8](ch:tool-surface#the-measured-damage).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 8](ch:tool-surface#the-measured-damage).
 
 ### Progressive disclosure and code-execution reporting
 

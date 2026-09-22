@@ -92,7 +92,7 @@ Your [[binding constraint]] is the one limitation currently capping results. Fin
 <text class="dg-s" x="140" y="67">no</text><text class="dg-s" x="140" y="133">no</text><text class="dg-s" x="140" y="199">no</text><text class="dg-s" x="140" y="265">no</text><text class="dg-s" x="140" y="331">no</text>
 </svg>
 </div>
-<figcaption>Check the cache first because a broken cache can make every other optimisation self-defeating. Check tools second because it is the biggest, cheapest, most reversible win.</figcaption>
+<figcaption>Check the cache first because a broken cache can make every other optimisation self-defeating. Check tools second when the baseline shows tool-surface waste; it is then a cheap, reversible candidate.</figcaption>
 </figure>
 
 > [!key] Fix one constraint, measure, then route again

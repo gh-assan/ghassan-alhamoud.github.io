@@ -41,8 +41,8 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **Looks like:** every plausibly useful MCP server attached, because the agent "might need it".
 - **The real version:** a curated surface of at most 20 tools matched to the actual work.
 - **Tell:** more than three tools defined for every tool called.
-- **Cost:** 42K tokens for a single server [P]; selection collapsing from 19 of 20 at 20 tools to failure at 107 [S]. Paid on every call.
-- **Fix:** delete every tool with zero calls in 20 sessions. Re-adding one takes seconds.
+- **Cost:** 42K tokens for a single server [P]; selection collapsing from 19 of 20 at 20 tools to failure at 107 [S]. Prompt budget is present on every call, but billing depends on cache hits and request stability.
+- **Fix:** delete candidates with zero calls in a representative sample; verify task coverage and keep rollback.
 
 ### AP-10: Middle truncation
 

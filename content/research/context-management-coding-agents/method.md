@@ -113,7 +113,7 @@ The work was not considered done until 27 criteria passed, plus two "anti-bar" c
 
 ### The two anti-bar conditions
 
-1. **If a reader with a real agent cannot, after reading the methods and the diagnostic, name their single largest wasteful segment and the change that would shrink it, the work has failed.** It passes: the [one-question version](ch:diagnostic#the-one-question-version) branches to a named action, and a reader whose largest segment is tool definitions reaches "delete every MCP server with zero calls in 20 sessions" in under fifteen minutes.
+1. **If a reader with a real agent cannot, after reading the methods and the diagnostic, name their single largest wasteful segment and the change that would shrink it, the work has failed.** It passes: the [one-question version](ch:diagnostic#the-one-question-version) branches to a named action, and a reader whose largest segment is tool definitions reaches the representative-sample deletion check in under fifteen minutes.
 2. **If any section could be replaced by "just use a bigger window" or "just run `/compact`" without loss, it is filler.** It passes, and the research argues the opposite of both: more context is not a reliability guarantee, and naive compaction is where the damage is.
 
 ## Relationship to sibling research

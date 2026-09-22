@@ -13,7 +13,7 @@ Every method below uses the same structure: what to do, why it works, what it co
 
 ## Before any method: measure
 
-Measure your distribution first. In most first audits, **the segment the team was optimising was not the large one.** Teams hand-tune their instruction file, 4% of the window, while 25% goes to definitions for tools they never call.
+Measure your distribution first. In the composite budget used here, **the segment the team was optimising was not the large one.** The instruction file is 4% of the window, while 25% goes to definitions for tools they never call [C].
 
 The minimum measurement takes about an hour:
 
@@ -133,7 +133,7 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 
 1. List every tool in scope and count its schema tokens.
 2. Count how often each tool was called in your last 20 sessions.
-3. Delete every tool with zero calls. Expect to remove 50–70%.
+3. Treat zero-call tools as deletion candidates after a representative sample; verify task coverage and keep rollback. Do not assume 50–70%—measure your own surface.
 4. For what remains, prefer, in order: **built-in tools** over MCP equivalents (the shell already has `grep`, `find`, `curl`); **one general tool** over five narrow ones; **deferred definitions** (short descriptions upfront, schemas on demand); and **code execution** against an API instead of tool schemas at all.
 5. Scope tools per sub-agent or per task type where the harness allows.
 6. Set a hard budget, for example 20 active tools and 15K definition tokens, and enforce it in review.
@@ -147,7 +147,7 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 
 **What it costs.** A one-time effort, then governance. Tool surfaces grow back, because adding an MCP server is one click and its cost is invisible. Without a recurring audit this regresses within a quarter [P].
 
-**What it can lose.** A tool the agent needed rarely but decisively. The zero-call rule over 20 sessions guards against this, and removal is reversible in seconds. Over-deferral also adds a round trip before each tool's first use.
+**What it can lose.** A tool the agent needed rarely but decisively. A representative zero-call sample plus task-coverage verification guards against this; keep rollback because removal is reversible. Over-deferral also adds a round trip before each tool's first use.
 
 **Trouble signs.** Definitions over 20% of the prefix. More than three tools defined for each tool used. The agent choosing an applicable but wrong tool. The agent *talking about* a capability it never calls.
 
@@ -155,7 +155,7 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 > Four MCP servers: GitHub (42K), a database server (11K), a browser server (9K) and a filesystem server (4K): 66K of definitions, 33% of a 200K window, before any work. Over 20 sessions, 9 distinct tools were called, all from GitHub, and 6 of those duplicated the `gh` command already available. The team deletes the browser, database and filesystem servers (never called, or duplicated by `psql` and the built-in file tools) and switches GitHub to deferred definitions. New prefix contribution: **about 2,500 tokens. Recovered: 63,500 tokens, 32% of the window.** Task success is unchanged over the next 20 sessions; median session cost falls 34%.
 
 > [!try] Decision test
-> Count definition tokens and the defined-to-called ratio. If definitions exceed 15K tokens or the ratio exceeds 3:1, M-2 is almost certainly your single biggest win, and the most reversible one.
+> Count definition tokens and the defined-to-called ratio. If definitions exceed 15K tokens or the ratio exceeds 3:1, M-2 is a strong candidate; verify that the unused surface is your largest controllable segment before changing it.
 
 Details, including the audit procedure, are in [chapter 8](ch:tool-surface).
 

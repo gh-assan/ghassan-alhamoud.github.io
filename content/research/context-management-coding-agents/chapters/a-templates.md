@@ -7,7 +7,7 @@ Use them in a scratch directory, in the repository or in a notes app. The value 
 | Template | Use it for | When | Time |
 |---|---|---|---|
 | [Context budget audit](#1-context-budget-audit) | The Phase 0 baseline and the quarterly re-audit | Before any optimisation, then every quarter | 60–90 minutes the first time, 30 after |
-| [Tool surface audit](#2-tool-surface-audit) | Phase 1 deletion and quarterly re-bloat control | Immediately: usually the largest available win | 30 minutes |
+| [Tool surface audit](#2-tool-surface-audit) | Phase 1 deletion and quarterly re-bloat control | After the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment | 30 minutes |
 | [Plan file](#3-plan-file) | The living state document | Any task over about 30 minutes | 5 minutes to start, 1 minute per update |
 | [Compaction schema](#4-compaction-schema) | Replacing your compaction prompt | Before your next long session: it is a text edit | 15 minutes |
 | [Session handoff](#5-session-handoff) | Ending a session deliberately | Every session that will have a successor | 5 minutes |
@@ -72,6 +72,23 @@ For each sampled session, bucket tokens by segment.
 
 **Largest segment I control:** ____________________
 
+**Median input tokens per sampled session:** ____________________
+
+**Retention integral:** first convert each median share to tokens (`median % × median input tokens ÷ 100`), then multiply by the turns that segment stays in context. Record the before/after totals and rank the largest contributions before choosing a change.
+
+| Segment | Median % | Median tokens | Turns retained | Before tokens × turns | After tokens × turns |
+|---|---:|---:|---:|---:|---:|
+| 1 System prompt | | | | | |
+| 2 Tool definitions | | | | | |
+| 3 Instruction files | | | | | |
+| 4 Skill descriptors | | | | | |
+| 5 Retrieved code | | | | | |
+| 6 Tool results | | | | | |
+| 7 Agent messages | | | | | |
+| 8 User turns | | | | | |
+| 9 Summaries / memory | | | | | |
+| **Total** | | | | | |
+
 ## 4. Command ranking
 
 | Command | Total output tokens | % of tool output | Wrapped? |
@@ -114,7 +131,7 @@ Re-measure on: ____________ (date)
 
 ## 2. Tool surface audit
 
-**For:** Phase 1 deletion and quarterly re-bloat control. **When:** immediately: usually the largest available win. **Time:** 30 minutes.
+**For:** Phase 1 deletion and quarterly re-bloat control. **When:** after the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment. **Time:** 30 minutes.
 
 **The field that matters: the security exceptions table.** Keeping a server that duplicates the shell is defensible when it is a security control (constrained surface, auth handling, audit trail). It is not defensible when it happened by accident. The table forces the distinction, and most rows come back empty.
 
@@ -135,8 +152,8 @@ Re-measure on: ____________ (date)
 
 | Class | Criterion | Action |
 |---|---|---|
-| Dead | 0 invocations in 20 sessions | **Delete.** No deprecation period |
-| Redundant | Duplicates `gh` / `psql` / `curl` / `rg` / `git` | **Delete**, unless it is a security control (state why below) |
+| Dead | 0 invocations in a representative 20-session sample | **Deletion candidate; verify task coverage and keep rollback.** |
+| Redundant | Duplicates `gh` / `psql` / `curl` / `rg` / `git` | **Deletion candidate; verify task coverage and keep rollback**, unless it is a security control (state why below) |
 | Rare-critical | < 3 invocations but decisive | Defer definitions, or move behind code execution |
 | Core | Frequent | Keep eager; trim description prose |
 

@@ -185,7 +185,7 @@
 <tbody>
 <tr>
 <td><strong>P</strong></td>
-<td><a class="rs-term" href="glossary.html#prefix-tax" data-def="The tokens in segments 1–4, paid on every call before any work. Measured by sending a one-token message in a fresh session.">Prefix tax</a> in tokens</td>
+<td><a class="rs-term" href="glossary.html#prefix-tax" data-def="The tokens present in segments 1–4 on each call before any work. Measure them by sending a one-token message in a fresh session; billing depends on cache hits.">Prefix tax</a> in tokens</td>
 <td>Fresh session, send <code>.</code>, read the input count</td>
 </tr>
 <tr>
@@ -305,7 +305,7 @@
 <text class="dg-s" x="140" y="67">no</text><text class="dg-s" x="140" y="133">no</text><text class="dg-s" x="140" y="199">no</text><text class="dg-s" x="140" y="265">no</text><text class="dg-s" x="140" y="331">no</text>
 </svg>
 </div>
-<figcaption><span class="rs-fignum">Figure 2.</span> Check the cache first because a broken cache can make every other optimisation self-defeating. Check tools second because it is the biggest, cheapest, most reversible win.</figcaption>
+<figcaption><span class="rs-fignum">Figure 2.</span> Check the cache first because a broken cache can make every other optimisation self-defeating. Check tools second when the baseline shows tool-surface waste; it is then a cheap, reversible candidate.</figcaption>
 </figure>
 
 <aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">Fix one constraint, measure, then route again</p>
@@ -477,7 +477,7 @@ Lifecycle    M-10 session discipline ............ the outer loop
           <ol><li>The procedure is measure, route, classify, compose, then review quarterly.</li><li>Fix one constraint at a time so every effect stays attributable.</li><li>Different task types need different stacks; debugging and delegation do not mix.</li><li>Context management regresses. A 30-minute quarterly re-measure keeps it honest.</li></ol>
         </section>
         
-        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#prefix-tax"><strong>Prefix tax</strong></a> — The tokens in segments 1–4, paid on every call before any work. Measured by sending a one-token message in a fresh session.</li><li><a href="glossary.html#binding-constraint"><strong>Binding constraint</strong></a> — The one limitation that currently caps your agent&#x27;s results. Fixing anything else changes little until it moves.</li><li><a href="glossary.html#read-utilisation"><strong>Read-utilisation</strong></a> — The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</li></ul></section>
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#prefix-tax"><strong>Prefix tax</strong></a> — The tokens present in segments 1–4 on each call before any work. Measure them by sending a one-token message in a fresh session; billing depends on cache hits.</li><li><a href="glossary.html#binding-constraint"><strong>Binding constraint</strong></a> — The one limitation that currently caps your agent&#x27;s results. Fixing anything else changes little until it moves.</li><li><a href="glossary.html#read-utilisation"><strong>Read-utilisation</strong></a> — The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</li></ul></section>
         <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="03-ten-methods.html"><span class="rs-pn__label">← Previous · Chapter 3</span><span class="rs-pn__title">Ten methods that survive scrutiny</span><span class="rs-pn__part">The methods</span></a><a class="rs-pn__link rs-pn__link--next" href="05-retrieval.html"><span class="rs-pn__label">Next → · Chapter 5</span><span class="rs-pn__title">Retrieval: how code should enter context</span><span class="rs-pn__part">The methods</span></a></nav>
       </article>
       <aside class="rs-toc" aria-label="On this page">

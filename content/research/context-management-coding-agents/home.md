@@ -4,7 +4,7 @@ When a coding agent fails on a real repository, the transcript often looks reaso
 
 Those failures are quiet, and they are mostly **context failures**. This research asks what should be in a coding agent's context at each step, what should not, who decides, and how you would know the decision was right.
 
-The usual first measurement looks like this:
+One constructed first-measurement example looks like this:
 
 ```chart
 {
@@ -15,8 +15,8 @@ The usual first measurement looks like this:
   "highlight": [1, 5],
   "valueFormat": "{v:,}",
   "categoryLabel": "Segment",
-  "caption": "In this composite, tool definitions and results hold 63% of the window while the instruction file is 4%. The first audit recovers about 30% without deleting information [C].",
-  "alt": "Stacked bar: tool results 38%, tool definitions 25%, retrieved code 15%, agent messages 8%, system prompt 6%, instruction files 4%, summaries 2%, skills 1%, user turns 1%."
+  "caption": "In this constructed composite, tool definitions and results hold 63% of the window while the instruction file is 4%. The worked actions recover about 32%; the first two remove or defer waste, while the latter two require verification [C].",
+  "alt": "Stacked bar: tool results 38%, tool definitions 25%, retrieved code 14%, agent messages 8%, system prompt 6%, instruction files 4%, summaries 2%, skills 1%, user turns 1%."
 }
 ```
 

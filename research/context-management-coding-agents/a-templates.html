@@ -161,7 +161,7 @@
 <tr>
 <td><a href="#2-tool-surface-audit">Tool surface audit</a></td>
 <td>Phase 1 deletion and quarterly re-bloat control</td>
-<td>Immediately: usually the largest available win</td>
+<td>After the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment</td>
 <td>30 minutes</td>
 </tr>
 <tr>
@@ -255,6 +255,23 @@ For each sampled session, bucket tokens by segment.
 
 <span class="gs">**Largest segment I control:**</span> ____________________
 
+<span class="gs">**Median input tokens per sampled session:**</span> ____________________
+
+<span class="gs">**Retention integral:**</span> first convert each median share to tokens (<span class="sb">`median % × median input tokens ÷ 100`</span>), then multiply by the turns that segment stays in context. Record the before/after totals and rank the largest contributions before choosing a change.
+
+| Segment | Median % | Median tokens | Turns retained | Before tokens × turns | After tokens × turns |
+|---|---:|---:|---:|---:|---:|
+| 1 System prompt | | | | | |
+| 2 Tool definitions | | | | | |
+| 3 Instruction files | | | | | |
+| 4 Skill descriptors | | | | | |
+| 5 Retrieved code | | | | | |
+| 6 Tool results | | | | | |
+| 7 Agent messages | | | | | |
+| 8 User turns | | | | | |
+| 9 Summaries / memory | | | | | |
+| <span class="gs">**Total**</span> | | | | | |
+
 <span class="gu">## 4. Command ranking</span>
 
 | Command | Total output tokens | % of tool output | Wrapped? |
@@ -295,7 +312,7 @@ First method to apply: ____________________
 Re-measure on: ____________ (date)
 </code></pre></div>
 <h2 id="2-tool-surface-audit">2. Tool surface audit<a class="rs-anchor" href="#2-tool-surface-audit" title="Link to this section">#</a></h2>
-<p><strong>For:</strong> Phase 1 deletion and quarterly re-bloat control. <strong>When:</strong> immediately: usually the largest available win. <strong>Time:</strong> 30 minutes.</p>
+<p><strong>For:</strong> Phase 1 deletion and quarterly re-bloat control. <strong>When:</strong> after the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment. <strong>Time:</strong> 30 minutes.</p>
 <p><strong>The field that matters: the security exceptions table.</strong> Keeping a server that duplicates the shell is defensible when it is a security control (constrained surface, auth handling, audit trail). It is not defensible when it happened by accident. The table forces the distinction, and most rows come back empty.</p>
 <div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">tool-surface-audit.md</span></div><pre class="highlight"><code><span class="gh"># Tool Surface Audit</span>
 
@@ -313,8 +330,8 @@ Re-measure on: ____________ (date)
 
 | Class | Criterion | Action |
 |---|---|---|
-| Dead | 0 invocations in 20 sessions | <span class="gs">**Delete.**</span> No deprecation period |
-| Redundant | Duplicates <span class="sb">`gh`</span> / <span class="sb">`psql`</span> / <span class="sb">`curl`</span> / <span class="sb">`rg`</span> / <span class="sb">`git`</span> | <span class="gs">**Delete**</span>, unless it is a security control (state why below) |
+| Dead | 0 invocations in a representative 20-session sample | <span class="gs">**Deletion candidate; verify task coverage and keep rollback.**</span> |
+| Redundant | Duplicates <span class="sb">`gh`</span> / <span class="sb">`psql`</span> / <span class="sb">`curl`</span> / <span class="sb">`rg`</span> / <span class="sb">`git`</span> | <span class="gs">**Deletion candidate; verify task coverage and keep rollback**</span>, unless it is a security control (state why below) |
 | Rare-critical | &lt; 3 invocations but decisive | Defer definitions, or move behind code execution |
 | Core | Frequent | Keep eager; trim description prose |
 

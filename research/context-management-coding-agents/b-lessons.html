@@ -146,7 +146,7 @@
 <li><strong>L1</strong>: it is a budget, not a bucket. Everything follows.</li>
 <li><strong>L11</strong>: a large stable prefix beats a small churning one. It inverts most cost intuition.</li>
 <li><strong>L27</strong>: compression damage is variance first. It changes how you measure.</li>
-<li><strong>L54</strong>: deletion is the highest-yield action. It changes what you do first.</li>
+<li><strong>L54</strong>: deletion is often a high-yield, reversible action when the audit finds dead surface. It changes what you do first.</li>
 <li><strong>L57</strong>: there is a stopping point. It prevents building a framework nobody needs.</li>
 </ul>
 </aside>
@@ -560,15 +560,15 @@
 <tbody>
 <tr>
 <td>L53</td>
-<td><strong>Measure before you optimise; the large segment is rarely the one you were tuning.</strong></td>
-<td>tool definitions and tool results dominate, while attention goes to instruction files.</td>
-<td>first audits typically confirm the team's prior about which segment is largest.</td>
+<td><strong>Measure before you optimise; the largest segment may not be the one you were tuning.</strong></td>
+<td>In the constructed budget, tool definitions and tool results dominate while attention goes to instruction files <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</td>
+<td>first audits consistently confirm the team's prior about which segment is largest.</td>
 </tr>
 <tr>
 <td>L54</td>
-<td><strong>Deletion is the highest-yield, lowest-risk, most reversible action available.</strong></td>
-<td>zero-invocation tools, dead rules, and unfiltered output are pure waste, not tradeoffs. No behaviour change required, restorable in seconds.</td>
-<td>removing zero-invocation tools measurably reduces task success.</td>
+<td><strong>Deletion is often the highest-yield, lowest-risk, most reversible action.</strong></td>
+<td>Dead rules and unfiltered output can be pure waste; zero-invocation tools are high-confidence candidates after a representative sample. Verify task coverage and keep rollback.</td>
+<td>a deletion passes the sample but reduces task success.</td>
 </tr>
 <tr>
 <td>L55</td>
@@ -599,7 +599,7 @@
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
-          <ol><li>It is a budget, not a bucket. Everything follows from that.</li><li>A large stable prefix beats a small churning one.</li><li>Compression damage is variance first. Measure Pass².</li><li>Deletion is the highest-yield action, and context work has a stopping point.</li></ol>
+          <ol><li>It is a budget, not a bucket. Everything follows from that.</li><li>A large stable prefix beats a small churning one.</li><li>Compression damage is variance first. Measure Pass².</li><li>Deletion is often high-yield when the audit finds dead surface; context work has a stopping point.</li></ol>
         </section>
         
         

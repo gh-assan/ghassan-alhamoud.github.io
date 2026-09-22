@@ -15,8 +15,8 @@ So the window is not a bucket to fill. It is an [[attention budget]]: additional
 
 ## What to do first
 
-1. **Measure for 30 minutes.** Prefix tax, tool definitions versus tools actually called, tool-output share, cache hit rate. The large segment is rarely the one you were tuning. [How to measure](ch:optimisation-plan#phase-0-baseline).
-2. **Delete.** Remove every [[MCP]] server with zero calls in 20 sessions, write ignore files, and cut the instruction file to what cannot be inferred from the code. A practitioner estimate suggests 25–35% of the window may come back, with no behaviour change [P]. [Phase 1](ch:optimisation-plan#phase-1-deletion).
+1. **Measure for 30 minutes.** Prefix tax, tool definitions versus tools actually called, tool-output share, cache hit rate. The largest controllable segment may not be the one you were tuning. [How to measure](ch:optimisation-plan#phase-0-baseline).
+2. **Audit and delete.** In a representative 20-session sample, remove dead or duplicate [[MCP]] capabilities, write ignore files, and apply the inference test to the instruction file. A practitioner estimate suggests 25–35% of the window may come back when dead or duplicate capabilities dominate; verify task coverage and keep rollback [P]. [Phase 1](ch:optimisation-plan#phase-1-deletion).
 3. **Shape tool output.** Wrap your four loudest commands: one line on success, the full trace on failure, the full log in a file. 60–90% less output [P].
 4. **Keep a plan file with a "ruled out" section**, and re-read it first after any compaction.
 5. **Compact at most once, at a sub-goal boundary, after offloading.** Then reset with a handoff note.
@@ -36,7 +36,7 @@ So the window is not a bucket to fill. It is an [[attention budget]]: additional
 ## What not to do
 
 - Do not assume a bigger window fixes reliability; measure first.
-- Do not add MCP servers "just in case". Unused tools cost on every call and confuse selection.
+- Do not add MCP servers "just in case". Unused tools consume prompt budget on every call; billing depends on cache hits and request stability, and they can confuse selection.
 - Do not preload large architecture documents by default. Coherent text performed worse than shuffled text in the cited retrieval tasks [S]; test the transfer to coding agents [D]. Point to where things live instead.
 - Do not correct a hallucinated fact inline. Reset to before it.
 - Do not delegate interlocking implementation or debugging to parallel sub-agents.

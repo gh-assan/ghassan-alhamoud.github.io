@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Anatomy of a coding agent&#x27;s context — Context Management</title>
-  <meta name="description" content="Nine segments of a coding agent&#x27;s context, their typical size, who controls them, how they fail, and a worked audit that recovers 32% of the window." />
+  <meta name="description" content="Nine segments of a coding agent&#x27;s context, their rough size, who controls them, how they fail, and a constructed worked budget that turns segment size into r..." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/02-anatomy.html" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/02-anatomy.html" />
   <meta property="og:title" content="Anatomy of a coding agent&#x27;s context — Context Management" />
-  <meta property="og:description" content="Nine segments of a coding agent&#x27;s context, their typical size, who controls them, how they fail, and a worked audit that recovers 32% of the window." />
+  <meta property="og:description" content="Nine segments of a coding agent&#x27;s context, their rough size, who controls them, how they fail, and a constructed worked budget that turns segment size into r..." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Anatomy of a coding agent&#x27;s context — Context Management" />
-  <meta property="twitter:description" content="Nine segments of a coding agent&#x27;s context, their typical size, who controls them, how they fail, and a worked audit that recovers 32% of the window." />
+  <meta property="twitter:description" content="Nine segments of a coding agent&#x27;s context, their rough size, who controls them, how they fail, and a constructed worked budget that turns segment size into r..." />
 
   <script type="application/ld+json">
 {
@@ -26,7 +26,7 @@
     "LearningResource"
   ],
   "headline": "Anatomy of a coding agent's context",
-  "description": "Nine segments of a coding agent's context, their typical size, who controls them, how they fail, and a worked audit that recovers 32% of the window.",
+  "description": "Nine segments of a coding agent's context, their rough size, who controls them, how they fail, and a constructed worked budget that turns segment size into reversible actions.",
   "author": {
     "@type": "Person",
     "name": "Ghassan Alhamoud",
@@ -127,11 +127,11 @@
             <span>2/2 in this part</span>
           </div>
         </header>
-        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html" aria-current="page"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#why-break-the-context-down-at-all">Why break the context down at all</a></li><li><a class="on-this-page__link" href="#prefix-and-body">Prefix and body</a></li><li><a class="on-this-page__link" href="#the-nine-segments-at-a-glance">The nine segments at a glance</a></li><li><a class="on-this-page__link" href="#how-to-act-on-each-segment">How to act on each segment</a></li><li><a class="on-this-page__link" href="#reading-a-whole-budget-a-worked-example">Reading a whole budget: a worked example</a></li><li><a class="on-this-page__link" href="#the-four-numbers-for-your-dashboard">The four numbers for your dashboard</a></li></ul></div></details></div>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html" aria-current="page"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#why-break-the-context-down-at-all">Why break the context down at all</a></li><li><a class="on-this-page__link" href="#prefix-and-body">Prefix and body</a></li><li><a class="on-this-page__link" href="#the-nine-segments-at-a-glance">The nine segments at a glance</a></li><li><a class="on-this-page__link" href="#how-to-act-on-each-segment">How to act on each segment</a></li><li><a class="on-this-page__link" href="#reading-a-whole-budget-a-worked-example">Reading a whole budget: a worked example</a></li><li><a class="on-this-page__link" href="#the-four-numbers-for-your-dashboard">The four numbers for your dashboard</a></li><li><a class="on-this-page__link" href="#your-next-action">Your next action</a></li></ul></div></details></div>
         <section class="rs-brief" aria-label="Chapter brief">
           <div class="rs-brief__col">
             <h2 class="rs-brief__title">In 30 seconds</h2>
-            <ul><li>A context has nine segments: four stable prefix segments and five growing body segments.</li><li>The prefix is paid on every call; the body is paid repeatedly and read with fading attention.</li><li>First audits usually find the big segment is one nobody was tuning: tool definitions or tool output.</li></ul>
+            <ul><li>A context has nine segments: four common prefix segments and five growing body segments.</li><li>In this audit model, prefix content is sent on every call; body content grows with the session, and cache billing depends on hits. Compaction or memory policy can rewrite or reposition body context <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</li><li>The constructed audit finds its largest controllable segments in tool definitions and tool output.</li></ul>
           </div>
           <div class="rs-brief__col rs-brief__col--outcomes">
             <h2 class="rs-brief__title">You will be able to</h2>
@@ -140,18 +140,19 @@
         </section>
         <div class="article-single__body rs-body">
 <h2 id="why-break-the-context-down-at-all">Why break the context down at all<a class="rs-anchor" href="#why-break-the-context-down-at-all" title="Link to this section">#</a></h2>
-<p>"My context is full" is not something you can act on. "62% of my context is tool output, and 80% of that is one <code>npm install</code> log I never read" is.</p>
-<p>A first audit is valuable because the segment being tuned is often not the large one. The worked example below spends 4% of its window on instructions and 25% on definitions for tools the agent rarely calls <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
+<p>Chapter 1 gave the constraints; this chapter locates them in the nine segments you can measure and change.</p>
+<p>"My context is full" is not something you can act on. A segment-by-segment audit is.</p>
+<p>In this constructed example, the instruction file is only 4% of the window; tool definitions occupy 25% for tools the agent rarely calls <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
 <p>This chapter splits a coding agent's context into nine segments. For each one it gives the typical size, who controls it, how it fails, how to measure it, and how it behaves in the cache.</p>
 <h2 id="prefix-and-body">Prefix and body<a class="rs-anchor" href="#prefix-and-body" title="Link to this section">#</a></h2>
-<p>The nine segments sit in the prompt in a fixed order. That order decides both their cache behaviour and how much attention they get.</p>
-<figure id="figure-1" class="diagram diagram--wide">
-<p class="diagram__title">The nine segments, in prompt order</p>
+<p>The nine segments sit in a common prompt layout. Exact ordering, cache behaviour and position effects depend on the harness and provider.</p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">The nine segments, in a common prompt layout</p>
 <div class="diagram__scroll">
 <svg viewBox="0 0 900 250" role="img" aria-labelledby="a1-t">
-<title id="a1-t">Segments one to four form the stable, cached prefix. Segments five to nine form the growing body.</title>
+<title id="a1-t">A common layout: segments one to four form a stable prefix, while segments five to nine form a growing body. Cache and position effects depend on the harness.</title>
 <rect class="dg-box--accent" x="10" y="40" width="340" height="120" rx="10"/>
-<text class="dg-k" x="20" y="30">PREFIX · STABLE · CACHED · PAID EVERY CALL</text>
+<text class="dg-k" x="20" y="30">PREFIX · STABLE · CACHE-ELIGIBLE</text>
 <rect class="dg-box" x="20" y="55" width="75" height="90" rx="6"/>
 <text class="dg-t" x="57" y="90" text-anchor="middle">1</text>
 <text class="dg-s" x="57" y="110" text-anchor="middle">System</text>
@@ -169,7 +170,7 @@
 <text class="dg-s" x="303" y="110" text-anchor="middle">Skill</text>
 <text class="dg-s" x="303" y="124" text-anchor="middle">descriptions</text>
 <rect class="dg-box--info" x="365" y="40" width="525" height="120" rx="10"/>
-<text class="dg-k" x="375" y="30">BODY · GROWS EVERY TURN · POSITION EFFECT VARIES</text>
+<text class="dg-k" x="375" y="30">BODY · GROWS WITH SESSION · CHURN VARIES</text>
 <rect class="dg-box" x="375" y="55" width="95" height="90" rx="6"/>
 <text class="dg-t" x="422" y="90" text-anchor="middle">5</text>
 <text class="dg-s" x="422" y="110" text-anchor="middle">Retrieved</text>
@@ -194,25 +195,23 @@
 <polygon class="dg-head" points="880,190 890,195 880,200"/>
 <text class="dg-s" x="10" y="220">start of prompt: placement effect varies by task</text>
 <text class="dg-s" x="890" y="220" text-anchor="end">end of prompt: placement effect varies by task</text>
-<text class="dg-s" x="831" y="176" text-anchor="middle">rewrites the prefix</text>
+<text class="dg-s" x="831" y="176" text-anchor="middle">compaction can rewrite</text>
 </svg>
 </div>
 <p class="diagram__hint">Scroll sideways to see all nine segments.</p>
-<figcaption><span class="rs-fignum">Figure 1.</span> Everything in the prefix is paid once (if you protect the cache) and read on every turn. Everything in the body is paid repeatedly; position effects depend on the model, task and harness. Segment 9 is the odd one out: inserting it rewrites what came before.</figcaption>
+<figcaption><span class="rs-fignum">Figure 1.</span> Prefix segments are sent every call and may be eligible for provider caching; billing depends on cache hits. Body segments grow with the session, and unchanged portions may be reused by some providers while churn drives uncached work. Compaction can rewrite earlier context; cross-session memory placement varies by policy <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</figcaption>
 </figure>
 
-<p><strong>Segments 1–4 are the <a class="rs-term" href="glossary.html#prefix" data-def="Segments 1–4 of the context: system prompt, tool definitions, instruction files and skill descriptions. Stable, cacheable and paid on every call.">prefix</a>.</strong> They are stable across turns, cacheable, and privileged early in a session.</p>
-<p><strong>Segments 5–9 are the <a class="rs-term" href="glossary.html#body" data-def="Segments 5–9 of the context: retrieved code, tool results, agent messages, user turns and summaries. It grows during a session.">body</a>.</strong> They grow, they are partly uncacheable, and they come to dominate as the session goes on.</p>
-<p>This split is the most important structural fact about your context. Cost intuitions built on one side do not transfer to the other.</p>
+<p>Use the <a class="rs-term" href="glossary.html#prefix" data-def="Segments 1–4 of the context: system prompt, tool definitions, instruction files and skill descriptions. Usually stable and sent on each call; it may be reusable when unchanged, while billing depends on cached versus uncached rates.">prefix</a>/<a class="rs-term" href="glossary.html#body" data-def="Segments 5–9 of the context: retrieved code, tool results, agent messages, user turns and summaries. It grows during a session.">body</a> split as an audit model; exact ordering and cache semantics depend on the harness and provider.</p>
 <h2 id="the-nine-segments-at-a-glance">The nine segments at a glance<a class="rs-anchor" href="#the-nine-segments-at-a-glance" title="Link to this section">#</a></h2>
 <div class="table-scroll rs-table"><table>
 <thead>
 <tr>
 <th>#</th>
 <th>Segment</th>
-<th>Typical size</th>
+<th>Typical size <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a></th>
 <th>Controlled by</th>
-<th>Cacheable</th>
+<th>Cache behavior <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a></th>
 <th>Typical failure</th>
 </tr>
 </thead>
@@ -222,7 +221,7 @@
 <td>System prompt and harness</td>
 <td>2K–12K</td>
 <td>Mostly the vendor</td>
-<td>Yes</td>
+<td>Usually stable; provider-cacheable if unchanged</td>
 <td>Invisible; you cannot trim it and often cannot see it</td>
 </tr>
 <tr>
@@ -230,15 +229,15 @@
 <td>Tool definitions</td>
 <td>1K–60K+</td>
 <td>You (which servers and tools)</td>
-<td>Yes, if stable</td>
-<td>Bloat; selection collapses past ~20 tools</td>
+<td>Stable when the tool set is stable</td>
+<td>Bloat; selection degrades as the set grows</td>
 </tr>
 <tr>
 <td>3</td>
 <td>Project instruction files</td>
 <td>0.3K–15K</td>
 <td>Entirely you</td>
-<td>Yes</td>
+<td>Stable when unchanged</td>
 <td>Grows forever; buried by position; contradicts itself</td>
 </tr>
 <tr>
@@ -246,7 +245,7 @@
 <td>Skill descriptions</td>
 <td>0.5K–5K</td>
 <td>You</td>
-<td>Yes</td>
+<td>Stable when unchanged</td>
 <td>Too vague to trigger, or so many they become segment 2</td>
 </tr>
 <tr>
@@ -254,7 +253,7 @@
 <td>Retrieved code and files</td>
 <td>2K–80K</td>
 <td>Agent plus your tooling</td>
-<td>No</td>
+<td>Growing body; often churns</td>
 <td>Whole files read for one function; stale after its own edits</td>
 </tr>
 <tr>
@@ -262,15 +261,15 @@
 <td>Tool results</td>
 <td>5K–150K</td>
 <td>Agent plus output shaping</td>
-<td>No</td>
-<td>Largest, lowest density, mostly disposable</td>
+<td>Growing body; often uncached while changing</td>
+<td>Flooding, truncation and long retention</td>
 </tr>
 <tr>
 <td>7</td>
 <td>Agent reasoning and messages</td>
 <td>3K–60K</td>
 <td>Model verbosity, your prompting</td>
-<td>No</td>
+<td>Growing body; churns each turn</td>
 <td>Self-written distractors; loops</td>
 </tr>
 <tr>
@@ -278,7 +277,7 @@
 <td>User turns</td>
 <td>0.2K–10K</td>
 <td>You</td>
-<td>No</td>
+<td>Growing body; unchanged turns may be reused</td>
 <td>Vague early, contradictory later</td>
 </tr>
 <tr>
@@ -286,18 +285,18 @@
 <td>Summaries and memory</td>
 <td>0.5K–8K</td>
 <td>Your policy</td>
-<td>Rewrites the prefix</td>
+<td>Compaction may rewrite; memory placement varies</td>
 <td>Launders errors; loses the decisive detail</td>
 </tr>
 </tbody>
 </table></div>
 <p>The ranges are order-of-magnitude bands from observed sessions and reported figures. Treat them as a place to start measuring, not as targets <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
 <h2 id="how-to-act-on-each-segment">How to act on each segment<a class="rs-anchor" href="#how-to-act-on-each-segment" title="Link to this section">#</a></h2>
-<p>For each segment, the useful questions are the same: how it fails, how to measure it and what to change first.</p>
+<p>For each segment, the useful questions are the same: how it fails, how to measure it and what to change first. The row number maps to the inventory above.</p>
 <div class="table-scroll rs-table"><table>
 <thead>
 <tr>
-<th>Segment</th>
+<th>#</th>
 <th>Decisive risk</th>
 <th>Measure</th>
 <th>Default action</th>
@@ -305,62 +304,62 @@
 </thead>
 <tbody>
 <tr>
-<td><span id="segment-1-system-prompt-and-harness"><strong>1. System prompt and harness</strong></span></td>
-<td>Fixed <a class="rs-term" href="glossary.html#prefix-tax" data-def="The tokens in segments 1–4, paid on every call before any work. Measured by sending a one-token message in a fresh session.">prefix tax</a> and the largest <a class="rs-term" href="glossary.html#harness" data-def="The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.">harness</a> confound. A scaffold change can look like a model regression.</td>
+<td><span id="segment-1-system-prompt-and-harness"><strong>1 · System</strong></span></td>
+<td>Fixed <a class="rs-term" href="glossary.html#prefix-tax" data-def="The tokens present in segments 1–4 on each call before any work. Measure them by sending a one-token message in a fresh session; billing depends on cache hits.">prefix tax</a> and the largest <a class="rs-term" href="glossary.html#harness" data-def="The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.">harness</a> confound. A scaffold change can look like a model regression.</td>
 <td>In a fresh session, send one token and record input tokens; repeat after harness upgrades.</td>
 <td>Treat it as a versioned dependency and keep it stable.</td>
 </tr>
 <tr>
-<td><span id="segment-2-tool-definitions"><strong>2. Tool definitions</strong></span></td>
+<td><span id="segment-2-tool-definitions"><strong>2 · Tools</strong></span></td>
 <td>Displacement plus selection confusion. Reported examples reach 42K tokens <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; selection degrades as tool count grows <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
 <td>Schema tokens, active tool count and defined-to-called ratio across 20 sessions.</td>
-<td>Delete zero-call tools; defer definitions; use about 20 active tools as a soft ceiling <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
+<td>Treat zero-call tools as deletion candidates; verify task coverage and keep rollback; use about 20 active tools as a soft ceiling <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
 </tr>
 <tr>
-<td><span id="segment-3-project-instruction-files"><strong>3. Project instructions</strong></span></td>
-<td>Growth, contradiction, staleness and position decay.</td>
+<td><span id="segment-3-project-instruction-files"><strong>3 · Instructions</strong></span></td>
+<td>Growth, contradiction, staleness and position effects.</td>
 <td>Lines, tokens and violations per rule.</td>
 <td>Keep under about 150 lines <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; retain only what a competent engineer cannot infer in two minutes; scope specialist rules beside their code.</td>
 </tr>
 <tr>
-<td><span id="segment-4-skill-descriptions"><strong>4. Skill descriptions</strong></span></td>
+<td><span id="segment-4-skill-descriptions"><strong>4 · Skills</strong></span></td>
 <td>Vague triggers never fire; too many descriptions recreate tool bloat.</td>
 <td>Trigger precision, trigger recall and total always-loaded tokens.</td>
 <td>Keep the trigger short; load the procedure on demand.</td>
 </tr>
 <tr>
-<td><span id="segment-5-retrieved-code"><strong>5. Retrieved code</strong></span></td>
+<td><span id="segment-5-retrieved-code"><strong>5 · Retrieved code</strong></span></td>
 <td>Whole-file waste and stale copies after the agent edits the file.</td>
 <td><a class="rs-term" href="glossary.html#read-utilisation" data-def="The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.">Read-utilisation</a> and <a class="rs-term" href="glossary.html#read-coverage" data-def="Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.">read-coverage</a> on failures.</td>
 <td>Read symbols or bounded ranges; re-read before re-editing.</td>
 </tr>
 <tr>
-<td><span id="segment-6-tool-results"><strong>6. Tool results</strong></span></td>
-<td>The largest, lowest-density body segment; flooding, truncation and long retention.</td>
+<td><span id="segment-6-tool-results"><strong>6 · Tool results</strong></span></td>
+<td>Can be the largest, low-density body segment; flooding, truncation and long retention.</td>
 <td>Result tokens, top commands and <a class="rs-term" href="glossary.html#retention-integral" data-def="The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.">retention integral</a>: tokens × turns retained.</td>
 <td>One line on success, full trace on failure, full log offloaded to a file.</td>
 </tr>
 <tr>
-<td><span id="segment-7-agent-reasoning-and-messages"><strong>7. Agent messages</strong></span></td>
+<td><span id="segment-7-agent-reasoning-and-messages"><strong>7 · Agent messages</strong></span></td>
 <td>Narration becomes a plausible self-authored distractor; repeated actions become a loop.</td>
 <td>Assistant-token share and identical tool-call repeats.</td>
 <td>Persist plans, invariants and ruled-out hypotheses; cut narration.</td>
 </tr>
 <tr>
-<td><span id="segment-8-user-turns"><strong>8. User turns</strong></span></td>
+<td><span id="segment-8-user-turns"><strong>8 · User turns</strong></span></td>
 <td>Under-specification causes exploration; later changes create <a class="rs-term" href="glossary.html#clash" data-def="A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.">clash</a>.</td>
 <td>Turns to first productive edit and requirement reversals.</td>
 <td>State scope early; after a change, restate the complete current requirement.</td>
 </tr>
 <tr>
-<td><span id="segment-9-summaries-and-memory"><strong>9. Summaries and memory</strong></span></td>
-<td>Lossy re-encoding that can launder errors and rewrites the prefix.</td>
+<td><span id="segment-9-summaries-and-memory"><strong>9 · Summaries / memory</strong></span></td>
+<td>Lossy re-encoding can launder errors; compaction may rewrite earlier context.</td>
 <td>Compactions, compression ratio, post-compaction re-fetch rate and <a class="rs-term" href="glossary.html#passk" data-def="Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).">Pass²</a>.</td>
 <td>Offload first; compact once at a semantic boundary with an explicit schema.</td>
 </tr>
 </tbody>
 </table></div>
-<p>Three numbers change the default action and are worth keeping here:</p>
+<p>Four evidence results change the default action and are worth keeping here:</p>
 <div class="table-scroll rs-table"><table>
 <thead>
 <tr>
@@ -371,36 +370,36 @@
 <tbody>
 <tr>
 <td>Tool selection fell from 43% to under 14% as tool count grew; another test went from 19/20 correct at 20 tools to failure at 107 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
-<td>Fewer tools solve both displacement and confusion; deferred schemas solve only displacement.</td>
+<td>Fewer tools solve both displacement and confusion; deferred schemas solve only displacement <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
 </tr>
 <tr>
 <td>Input tokens were 99.75–99.87% of usage in tool-heavy agents, and full-context runs used 2.68× the tokens while completing fewer tasks <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
-<td>Shape tool output before tuning model output.</td>
+<td>Shape tool output before tuning model output <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
 </tr>
 <tr>
 <td>Changing only the summariser moved SWE-bench from 49.0% to 55.5% <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
-<td>A compactor is a quality component, not plumbing.</td>
+<td>A compactor is a quality component, not plumbing <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
 </tr>
 <tr>
 <td>On AppWorld, no compression reached 85.7% accuracy / 77.4% Pass²; prompt compaction reached 71.4% / 59.5%; FIFO reached 63.7% / 53.0% <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
-<td>Compression damage appears in repeatability before averages.</td>
+<td>Compression damage appears in repeatability before averages <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
 </tr>
 </tbody>
 </table></div>
 <aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">The inference test for instruction files</p>
 <p>Keep a line only if a competent engineer could not infer it from the repository in two minutes. Move enforceable rules into tests or linters; move specialist rules beside the code they govern.</p>
 </aside>
-<h2 id="reading-a-whole-budget-a-worked-example">Reading a whole budget: a worked example<a class="rs-anchor" href="#reading-a-whole-budget-a-worked-example" title="Link to this section">#</a></h2>
-<p>Here is a representative mid-session snapshot from a large monorepo. It is illustrative <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>, but its shape matches what teams find on first measurement.</p>
-<figure class="diagram rs-chart" id="chart-anatomy-0"><p class="diagram__title">A 152K-token context, by segment</p><div class="diagram__scroll"><svg viewBox="0 0 720 64" role="img" aria-labelledby="chart-anatomy-0-t" class="chart chart--stack"><title id="chart-anatomy-0-t">A stacked bar. Tool results 38%, tool definitions 25%, retrieved code 15%, agent messages 8%, system prompt 6%, instruction files 4%, summaries 2%, skills 1%, user turns 1%.</title><rect class="ch-mark ch-muted" x="1.0" y="4" width="40.6" height="34" rx="3" data-tip="1 System prompt: 9,000 (6%)"/><rect class="ch-mark ch-s1" x="43.6" y="4" width="178.0" height="34" rx="3" data-tip="2 Tool definitions: 38,000 (25%)"/><text class="ch-inbar ch-inbar--on" x="132.6" y="26" text-anchor="middle">25%</text><rect class="ch-mark ch-muted" x="223.6" y="4" width="28.8" height="34" rx="3" data-tip="3 Instruction files: 6,500 (4%)"/><rect class="ch-mark ch-muted" x="254.4" y="4" width="6.5" height="34" rx="3" data-tip="4 Skill descriptions: 1,800 (1%)"/><rect class="ch-mark ch-muted" x="262.9" y="4" width="102.2" height="34" rx="3" data-tip="5 Retrieved code: 22,000 (14%)"/><text class="ch-inbar " x="314.1" y="26" text-anchor="middle">14%</text><rect class="ch-mark ch-s1" x="367.2" y="4" width="272.7" height="34" rx="3" data-tip="6 Tool results: 58,000 (38%)"/><text class="ch-inbar ch-inbar--on" x="503.5" y="26" text-anchor="middle">38%</text><rect class="ch-mark ch-muted" x="641.9" y="4" width="54.8" height="34" rx="3" data-tip="7 Agent messages: 12,000 (8%)"/><text class="ch-inbar " x="669.3" y="26" text-anchor="middle">8%</text><rect class="ch-mark ch-muted" x="698.7" y="4" width="6.1" height="34" rx="3" data-tip="8 User turns: 1,700 (1%)"/><rect class="ch-mark ch-muted" x="706.8" y="4" width="12.2" height="34" rx="3" data-tip="9 Summaries: 3,000 (2%)"/></svg><ol class="chart-stack__legend"><li><span class="chart-legend__key ch-muted"></span><span>1 System prompt</span><span class="chart-stack__v">9,000 · 6%</span></li><li><span class="chart-legend__key ch-s1"></span><span>2 Tool definitions</span><span class="chart-stack__v">38,000 · 25%</span></li><li><span class="chart-legend__key ch-muted"></span><span>3 Instruction files</span><span class="chart-stack__v">6,500 · 4%</span></li><li><span class="chart-legend__key ch-muted"></span><span>4 Skill descriptions</span><span class="chart-stack__v">1,800 · 1%</span></li><li><span class="chart-legend__key ch-muted"></span><span>5 Retrieved code</span><span class="chart-stack__v">22,000 · 14%</span></li><li><span class="chart-legend__key ch-s1"></span><span>6 Tool results</span><span class="chart-stack__v">58,000 · 38%</span></li><li><span class="chart-legend__key ch-muted"></span><span>7 Agent messages</span><span class="chart-stack__v">12,000 · 8%</span></li><li><span class="chart-legend__key ch-muted"></span><span>8 User turns</span><span class="chart-stack__v">1,700 · 1%</span></li><li><span class="chart-legend__key ch-muted"></span><span>9 Summaries</span><span class="chart-stack__v">3,000 · 2%</span></li></ol></div><figcaption><span class="rs-fignum">Figure 2.</span> Two segments hold 63% of the window: tool definitions (3 MCP servers, 61 tools, 11 ever used) and tool results (one <code>npm ci</code> log alone is 14,000 tokens). The instruction file most teams tune is 4% <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Segment</th><th scope="col">Tokens</th></tr></thead><tbody><tr><th scope="row">1 System prompt</th><td>9,000</td></tr><tr><th scope="row">2 Tool definitions</th><td>38,000</td></tr><tr><th scope="row">3 Instruction files</th><td>6,500</td></tr><tr><th scope="row">4 Skill descriptions</th><td>1,800</td></tr><tr><th scope="row">5 Retrieved code</th><td>22,000</td></tr><tr><th scope="row">6 Tool results</th><td>58,000</td></tr><tr><th scope="row">7 Agent messages</th><td>12,000</td></tr><tr><th scope="row">8 User turns</th><td>1,700</td></tr><tr><th scope="row">9 Summaries</th><td>3,000</td></tr></tbody></table></div></details></figure>
+<h2 id="reading-a-whole-budget-a-worked-example">Reading a whole budget: a worked example <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a><a class="rs-anchor" href="#reading-a-whole-budget-a-worked-example" title="Link to this section">#</a></h2>
+<p>Here is a constructed 152K-token mid-session snapshot from a large monorepo. It is illustrative <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>, not a measured incident.</p>
+<figure class="diagram rs-chart" id="chart-anatomy-0"><p class="diagram__title">A 152K-token context, by segment</p><div class="diagram__scroll"><svg viewBox="0 0 720 64" role="img" aria-labelledby="chart-anatomy-0-t" class="chart chart--stack"><title id="chart-anatomy-0-t">A stacked bar. Tool results 38%, tool definitions 25%, retrieved code 14%, agent messages 8%, system prompt 6%, instruction files 4%, summaries 2%, skills 1%, user turns 1%.</title><rect class="ch-mark ch-muted" x="1.0" y="4" width="40.6" height="34" rx="3" data-tip="1 System prompt: 9,000 (6%)"/><rect class="ch-mark ch-s1" x="43.6" y="4" width="178.0" height="34" rx="3" data-tip="2 Tool definitions: 38,000 (25%)"/><text class="ch-inbar ch-inbar--on" x="132.6" y="26" text-anchor="middle">25%</text><rect class="ch-mark ch-muted" x="223.6" y="4" width="28.8" height="34" rx="3" data-tip="3 Instruction files: 6,500 (4%)"/><rect class="ch-mark ch-muted" x="254.4" y="4" width="6.5" height="34" rx="3" data-tip="4 Skill descriptions: 1,800 (1%)"/><rect class="ch-mark ch-muted" x="262.9" y="4" width="102.2" height="34" rx="3" data-tip="5 Retrieved code: 22,000 (14%)"/><text class="ch-inbar " x="314.1" y="26" text-anchor="middle">14%</text><rect class="ch-mark ch-s1" x="367.2" y="4" width="272.7" height="34" rx="3" data-tip="6 Tool results: 58,000 (38%)"/><text class="ch-inbar ch-inbar--on" x="503.5" y="26" text-anchor="middle">38%</text><rect class="ch-mark ch-muted" x="641.9" y="4" width="54.8" height="34" rx="3" data-tip="7 Agent messages: 12,000 (8%)"/><text class="ch-inbar " x="669.3" y="26" text-anchor="middle">8%</text><rect class="ch-mark ch-muted" x="698.7" y="4" width="6.1" height="34" rx="3" data-tip="8 User turns: 1,700 (1%)"/><rect class="ch-mark ch-muted" x="706.8" y="4" width="12.2" height="34" rx="3" data-tip="9 Summaries: 3,000 (2%)"/></svg><ol class="chart-stack__legend"><li><span class="chart-legend__key ch-muted"></span><span>1 System prompt</span><span class="chart-stack__v">9,000 · 6%</span></li><li><span class="chart-legend__key ch-s1"></span><span>2 Tool definitions</span><span class="chart-stack__v">38,000 · 25%</span></li><li><span class="chart-legend__key ch-muted"></span><span>3 Instruction files</span><span class="chart-stack__v">6,500 · 4%</span></li><li><span class="chart-legend__key ch-muted"></span><span>4 Skill descriptions</span><span class="chart-stack__v">1,800 · 1%</span></li><li><span class="chart-legend__key ch-muted"></span><span>5 Retrieved code</span><span class="chart-stack__v">22,000 · 14%</span></li><li><span class="chart-legend__key ch-s1"></span><span>6 Tool results</span><span class="chart-stack__v">58,000 · 38%</span></li><li><span class="chart-legend__key ch-muted"></span><span>7 Agent messages</span><span class="chart-stack__v">12,000 · 8%</span></li><li><span class="chart-legend__key ch-muted"></span><span>8 User turns</span><span class="chart-stack__v">1,700 · 1%</span></li><li><span class="chart-legend__key ch-muted"></span><span>9 Summaries</span><span class="chart-stack__v">3,000 · 2%</span></li></ol></div><figcaption><span class="rs-fignum">Figure 2.</span> Two segments hold 63% of this constructed window: tool definitions (3 MCP servers, 61 tools, 11 ever used) and tool results (one <code>npm ci</code> log alone is 14,000 tokens). The instruction file is 4% <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Segment</th><th scope="col">Tokens</th></tr></thead><tbody><tr><th scope="row">1 System prompt</th><td>9,000</td></tr><tr><th scope="row">2 Tool definitions</th><td>38,000</td></tr><tr><th scope="row">3 Instruction files</th><td>6,500</td></tr><tr><th scope="row">4 Skill descriptions</th><td>1,800</td></tr><tr><th scope="row">5 Retrieved code</th><td>22,000</td></tr><tr><th scope="row">6 Tool results</th><td>58,000</td></tr><tr><th scope="row">7 Agent messages</th><td>12,000</td></tr><tr><th scope="row">8 User turns</th><td>1,700</td></tr><tr><th scope="row">9 Summaries</th><td>3,000</td></tr></tbody></table></div></details></figure>
 <p>What a practitioner does with this, in priority order:</p>
 <ol>
-<li><strong>Tool definitions: 38,000 tokens, 50 unused tools.</strong> Drop to one server or defer definitions. That recovers about 30,000 tokens of <em>prefix</em>, permanently, at no task cost. <strong>Do this first in this example.</strong> It is the largest, cheapest and most reversible win, and it needs no behaviour change.</li>
-<li><strong>Tool results: one command is 14,000 tokens.</strong> Route <code>npm ci</code> through a filter or send it to a file. That recovers about 13,000 tokens and, more importantly, ends its long retention.</li>
-<li><strong>Instruction file: 380 lines.</strong> Apply the inference test and expect about 140 lines. It saves about 4,000 tokens <em>and</em> makes what remains more salient.</li>
-<li><strong>Retrieved code: four unnecessary whole-file reads.</strong> A behaviour change, the hardest to sustain and the smallest win. Do it last.</li>
+<li><strong>Start with unused tool definitions.</strong> In this example, treat zero-call or duplicated capabilities as removal candidates; verify task coverage and keep rollback before deleting, or defer their schemas. This is the largest reversible prefix win in this example.</li>
+<li><strong>Shape the loudest command output.</strong> Filter <code>npm ci</code> on success and offload the full log so it does not remain in the body.</li>
+<li><strong>Prune the instruction file.</strong> Apply the inference test; this changes the rules, so verify the resulting behaviour.</li>
+<li><strong>Change retrieval last.</strong> Symbol reads instead of whole files alter how the agent searches, so measure the trade-off rather than treating the saved tokens as free.</li>
 </ol>
-<figure class="diagram rs-chart" id="chart-anatomy-1"><p class="diagram__title">Tokens recovered by each action</p><div class="diagram__scroll"><svg viewBox="0 0 720 170" role="img" aria-labelledby="chart-anatomy-1-t" class="chart chart--hbar"><title id="chart-anatomy-1-t">Bars: defer or delete unused tools 30,000; filter the npm log 13,000; instruction file 4,000; symbol reads 2,000.</title><line class="ch-grid" x1="240.0" y1="4" x2="240.0" y2="148"/><text class="ch-axis" x="240.0" y="164" text-anchor="middle">0</text><line class="ch-grid" x1="337.5" y1="4" x2="337.5" y2="148"/><text class="ch-axis" x="337.5" y="164" text-anchor="middle">7,500</text><line class="ch-grid" x1="435.0" y1="4" x2="435.0" y2="148"/><text class="ch-axis" x="435.0" y="164" text-anchor="middle">15,000</text><line class="ch-grid" x1="532.5" y1="4" x2="532.5" y2="148"/><text class="ch-axis" x="532.5" y="164" text-anchor="middle">22,500</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="148"/><text class="ch-axis" x="630.0" y="164" text-anchor="middle">30,000</text><text class="ch-label" x="230" y="29.0" text-anchor="end">Defer or delete unused tools</text><path class="ch-mark ch-s1" d="M240.0,16.0 h386.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-386.0 z" data-tip="Tokens recovered · Defer or delete unused tools: 30,000"/><text class="ch-value" x="636.0" y="29.0">30,000</text><text class="ch-label" x="230" y="63.0" text-anchor="end">Filter or offload the npm ci log</text><path class="ch-mark ch-muted" d="M240.0,50.0 h165.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-165.0 z" data-tip="Tokens recovered · Filter or offload the npm ci log: 13,000"/><text class="ch-value" x="415.0" y="63.0">13,000</text><text class="ch-label" x="230" y="97.0" text-anchor="end">Inference test on instruction file</text><path class="ch-mark ch-muted" d="M240.0,84.0 h48.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-48.0 z" data-tip="Tokens recovered · Inference test on instruction file: 4,000"/><text class="ch-value" x="298.0" y="97.0">4,000</text><text class="ch-label" x="230" y="131.0" text-anchor="end">Symbol reads instead of whole files</text><path class="ch-mark ch-muted" d="M240.0,118.0 h22.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-22.0 z" data-tip="Tokens recovered · Symbol reads instead of whole files: 2,000"/><text class="ch-value" x="272.0" y="131.0">2,000</text><line class="ch-base" x1="240" y1="4" x2="240" y2="148"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> Together about 49,000 tokens, roughly 32% of this 152K context, with no loss of information available to the agent. Three of the four actions are pure waste removal <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Action</th><th scope="col">Tokens recovered</th></tr></thead><tbody><tr><th scope="row">Defer or delete unused tools</th><td>30,000</td></tr><tr><th scope="row">Filter or offload the npm ci log</th><td>13,000</td></tr><tr><th scope="row">Inference test on instruction file</th><td>4,000</td></tr><tr><th scope="row">Symbol reads instead of whole files</th><td>2,000</td></tr></tbody></table></div></details></figure>
+<figure class="diagram rs-chart" id="chart-anatomy-1"><p class="diagram__title">Tokens recovered by each action</p><div class="diagram__scroll"><svg viewBox="0 0 720 170" role="img" aria-labelledby="chart-anatomy-1-t" class="chart chart--hbar"><title id="chart-anatomy-1-t">Bars: defer or delete unused tools 30,000; filter the npm log 13,000; instruction file 4,000; symbol reads 2,000.</title><line class="ch-grid" x1="240.0" y1="4" x2="240.0" y2="148"/><text class="ch-axis" x="240.0" y="164" text-anchor="middle">0</text><line class="ch-grid" x1="337.5" y1="4" x2="337.5" y2="148"/><text class="ch-axis" x="337.5" y="164" text-anchor="middle">7,500</text><line class="ch-grid" x1="435.0" y1="4" x2="435.0" y2="148"/><text class="ch-axis" x="435.0" y="164" text-anchor="middle">15,000</text><line class="ch-grid" x1="532.5" y1="4" x2="532.5" y2="148"/><text class="ch-axis" x="532.5" y="164" text-anchor="middle">22,500</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="148"/><text class="ch-axis" x="630.0" y="164" text-anchor="middle">30,000</text><text class="ch-label" x="230" y="29.0" text-anchor="end">Defer or delete unused tools</text><path class="ch-mark ch-s1" d="M240.0,16.0 h386.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-386.0 z" data-tip="Tokens recovered · Defer or delete unused tools: 30,000"/><text class="ch-value" x="636.0" y="29.0">30,000</text><text class="ch-label" x="230" y="63.0" text-anchor="end">Filter or offload the npm ci log</text><path class="ch-mark ch-muted" d="M240.0,50.0 h165.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-165.0 z" data-tip="Tokens recovered · Filter or offload the npm ci log: 13,000"/><text class="ch-value" x="415.0" y="63.0">13,000</text><text class="ch-label" x="230" y="97.0" text-anchor="end">Inference test on instruction file</text><path class="ch-mark ch-muted" d="M240.0,84.0 h48.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-48.0 z" data-tip="Tokens recovered · Inference test on instruction file: 4,000"/><text class="ch-value" x="298.0" y="97.0">4,000</text><text class="ch-label" x="230" y="131.0" text-anchor="end">Symbol reads instead of whole files</text><path class="ch-mark ch-muted" d="M240.0,118.0 h22.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-22.0 z" data-tip="Tokens recovered · Symbol reads instead of whole files: 2,000"/><text class="ch-value" x="272.0" y="131.0">2,000</text><line class="ch-base" x1="240" y1="4" x2="240" y2="148"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> Together about 49,000 tokens, roughly 32% of this constructed 152K context. The first two actions reduce or defer volume; every change remains measurable and reversible, while the latter two also change behaviour and need verification <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Action</th><th scope="col">Tokens recovered</th></tr></thead><tbody><tr><th scope="row">Defer or delete unused tools</th><td>30,000</td></tr><tr><th scope="row">Filter or offload the npm ci log</th><td>13,000</td></tr><tr><th scope="row">Inference test on instruction file</th><td>4,000</td></tr><tr><th scope="row">Symbol reads instead of whole files</th><td>2,000</td></tr></tbody></table></div></details></figure>
 <p>The example shows why the <a href="15-optimisation-plan.html">optimisation plan</a> opens with measurement instead of technique: the highest-leverage segment is workload-specific.</p>
 <h2 id="the-four-numbers-for-your-dashboard">The four numbers for your dashboard<a class="rs-anchor" href="#the-four-numbers-for-your-dashboard" title="Link to this section">#</a></h2>
 <p>If you track nothing else, track these.</p>
@@ -417,14 +416,14 @@
 <tr>
 <td><strong>Prefix tax</strong></td>
 <td>Tokens in segments 1–4</td>
-<td>Fixed cost per call, paid forever</td>
-<td>Under 15K</td>
+<td>Fixed input present on each call; cached billing varies</td>
+<td>Start below 15K; calibrate to provider</td>
 </tr>
 <tr>
 <td><strong>Relevance density</strong></td>
 <td>Plausibly citable tokens ÷ total</td>
 <td>Dilution risk</td>
-<td>Over 15% mid-session</td>
+<td>Start above 15% mid-session; calibrate to workload</td>
 </tr>
 <tr>
 <td><strong>Retention integral</strong></td>
@@ -436,23 +435,25 @@
 <td><strong>Cache hit rate</strong></td>
 <td>Cached prefix tokens ÷ total input</td>
 <td>Whether your optimisations defeat themselves</td>
-<td>Over 70%</td>
+<td>Start above 70%; calibrate to provider</td>
 </tr>
 </tbody>
 </table></div>
-<p>The full catalogue of 26 metrics is in <a href="10-metrics-and-economics.html">chapter 10</a>.</p>
+<p>These are derived starting targets, not universal health values; calibrate them to your provider, harness and workload. The full catalogue of 26 metrics is in <a href="10-metrics-and-economics.html">chapter 10</a>.</p>
+<h2 id="your-next-action">Your next action<a class="rs-anchor" href="#your-next-action" title="Link to this section">#</a></h2>
+<p>Run the <a href="a-templates.html#1-context-budget-audit">context budget audit</a>. Record the nine segments, identify the two largest retention contributors, make one reversible change, and re-measure prefix tax, relevance density, retention integral and cache hit rate.</p>
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
-          <ol><li>"My context is full" is not actionable. A segment-by-segment breakdown is.</li><li>Tool definitions and tool results are usually the largest controllable segments.</li><li>Optimise the retention integral (tokens × turns kept), not the peak.</li><li>Compaction is the only segment that rewrites the prefix, so it is the most cache-hostile.</li><li>A typical first audit recovers about 30% of the window with no loss of information.</li></ol>
+          <ol><li>"My context is full" is not actionable. A segment-by-segment breakdown is.</li><li>In the constructed audit, tool definitions and tool results are the largest controllable segments.</li><li>Optimise the retention integral (tokens × turns kept), not the peak.</li><li>Compaction may rewrite earlier context, so treat it as cache-hostile until measured.</li><li>The worked audit ranks recoverable segments before behaviour-changing fixes; validate every change against task coverage <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</li></ol>
         </section>
         
-        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#prefix"><strong>Prefix</strong></a> — Segments 1–4 of the context: system prompt, tool definitions, instruction files and skill descriptions. Stable, cacheable and paid on every call.</li><li><a href="glossary.html#body"><strong>Body</strong></a> — Segments 5–9 of the context: retrieved code, tool results, agent messages, user turns and summaries. It grows during a session.</li><li><a href="glossary.html#prefix-tax"><strong>Prefix tax</strong></a> — The tokens in segments 1–4, paid on every call before any work. Measured by sending a one-token message in a fresh session.</li><li><a href="glossary.html#harness"><strong>Harness</strong></a> — The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.</li><li><a href="glossary.html#read-utilisation"><strong>Read-utilisation</strong></a> — The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li><li><a href="glossary.html#retention-integral"><strong>Retention integral</strong></a> — The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.</li><li><a href="glossary.html#clash"><strong>Clash</strong></a> — A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li></ul></section>
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#prefix"><strong>Prefix</strong></a> — Segments 1–4 of the context: system prompt, tool definitions, instruction files and skill descriptions. Usually stable and sent on each call; it may be reusable when unchanged, while billing depends on cached versus uncached rates.</li><li><a href="glossary.html#body"><strong>Body</strong></a> — Segments 5–9 of the context: retrieved code, tool results, agent messages, user turns and summaries. It grows during a session.</li><li><a href="glossary.html#prefix-tax"><strong>Prefix tax</strong></a> — The tokens present in segments 1–4 on each call before any work. Measure them by sending a one-token message in a fresh session; billing depends on cache hits.</li><li><a href="glossary.html#harness"><strong>Harness</strong></a> — The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.</li><li><a href="glossary.html#read-utilisation"><strong>Read-utilisation</strong></a> — The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li><li><a href="glossary.html#retention-integral"><strong>Retention integral</strong></a> — The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.</li><li><a href="glossary.html#clash"><strong>Clash</strong></a> — A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li></ul></section>
         <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="01-foundations.html"><span class="rs-pn__label">← Previous · Chapter 1</span><span class="rs-pn__title">Why more context can hurt coding agents</span><span class="rs-pn__part">Understand the problem</span></a><a class="rs-pn__link rs-pn__link--next" href="03-ten-methods.html"><span class="rs-pn__label">Next → · Chapter 3</span><span class="rs-pn__title">Ten methods that survive scrutiny</span><span class="rs-pn__part">The methods</span></a></nav>
       </article>
       <aside class="rs-toc" aria-label="On this page">
         <p class="rs-toc__title">On this page</p>
-        <div class="rs-toc__list"><ul><li><a href="#why-break-the-context-down-at-all">Why break the context down at all</a></li><li><a href="#prefix-and-body">Prefix and body</a></li><li><a href="#the-nine-segments-at-a-glance">The nine segments at a glance</a></li><li><a href="#how-to-act-on-each-segment">How to act on each segment</a></li><li><a href="#reading-a-whole-budget-a-worked-example">Reading a whole budget: a worked example</a></li><li><a href="#the-four-numbers-for-your-dashboard">The four numbers for your dashboard</a></li></ul></div>
+        <div class="rs-toc__list"><ul><li><a href="#why-break-the-context-down-at-all">Why break the context down at all</a></li><li><a href="#prefix-and-body">Prefix and body</a></li><li><a href="#the-nine-segments-at-a-glance">The nine segments at a glance</a></li><li><a href="#how-to-act-on-each-segment">How to act on each segment</a></li><li><a href="#reading-a-whole-budget-a-worked-example">Reading a whole budget: a worked example</a></li><li><a href="#the-four-numbers-for-your-dashboard">The four numbers for your dashboard</a></li><li><a href="#your-next-action">Your next action</a></li></ul></div>
         <a class="rs-toc__top" href="#top">Back to top ↑</a>
       </aside>
     </div>
