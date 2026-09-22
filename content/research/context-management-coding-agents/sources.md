@@ -18,7 +18,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 - **Supports:** performance generally degrading as input grows across controlled experiments with 18 models, four vendors, 8 input lengths and 11 needle positions; the effect of question–answer similarity; distractors compounding non-uniformly; **coherent text retrieving worse than shuffled text** across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap. The curves are non-uniform and model/task-specific.
 - **Discount:** static retrieval tasks, not agent trajectories. Rule R3 applies to every use.
-- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [chapter 6](ch:compaction-and-memory#the-wiki), [lessons A](ch:lessons).
+- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [chapter 6](ch:compaction-and-memory#the-wiki), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [lessons A](ch:lessons).
 - **Link:** [trychroma.com/research/context-rot](https://www.trychroma.com/research/context-rot)
 
 ### Effective-length caveat
@@ -45,14 +45,14 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the five-baseline comparison on a 1,000-task needle suite and a 311-task LongBench-v2 Hard subset; needle 99.00% / 99.80% versus RAG 79.57% / 96.67%; LongBench-v2 Hard 27.47% / 32.47% versus 25.83% / 30.87%; 38.8–80.3% bandwidth savings; the statement that omitted summary details cannot be recovered.
 - **Discount:** 8B and 32B models, not frontier scale. The reasoning margin is small; do not overstate it.
-- **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline).
+- **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design).
 - **Link:** [arXiv 2607.25066](https://arxiv.org/abs/2607.25066)
 
 ### "CompactionRL: Reinforcement Learning with Context Compaction for Long-Horizon Agents"
 
 - **Supports:** **the summariser-only swing, SWE-bench 49.0% → 55.5%**; +5.5 / +7.0 on SWE-bench Verified and +6.8 / +3.1 on Terminal-Bench 2.0 from compaction-aware training; operating parameters (10,240-token threshold, at most 3 compactions per run, at most 250 turns).
 - **Discount:** the training results need access most readers lack. The 6.5-point swing at inference time does not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
 - **Link:** [arXiv 2607.05378](https://arxiv.org/abs/2607.05378)
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
@@ -66,21 +66,21 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** masking matching LLM summarisation on SWE-bench solve rates across two model sizes at substantially lower cost; preferring simple methods first.
 - **Discount:** the numeric detail was captured from the paper's summary rather than a full read. **Re-verify before citing externally.**
-- **Used in:** [chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation).
+- **Used in:** [chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design).
 - **Link:** [arXiv 2508.21433](https://arxiv.org/abs/2508.21433)
 
 ### "Is Grep All You Need? How Agent Harnesses Reshape Agentic Search"
 
 - **Supports:** grep generally beating vector retrieval on 116 LongMemEval-derived questions; **four harnesses** compared, inline versus file-based results; overall scores depending strongly on harness and tool-calling style on identical data; eight surveyed agents using the model as a navigator over shell tools.
 - **Discount:** the questions are conversational-memory shaped, not repository shaped. The harness finding transfers more confidently than the grep-versus-vector ranking.
-- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
 - **Link:** [arXiv 2605.15184](https://arxiv.org/abs/2605.15184)
 
 ### Token economics of tool-heavy agents (including arXiv 2606.10209)
 
 - **Supports:** input tokens at 99.75–99.87% of total usage; full context at 2.68× the tokens of the best managed method with fewer tasks completed.
 - **Discount:** tool-heavy workloads specifically; ratios differ for chat.
-- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
+- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
 - **Link:** [arXiv 2606.10209](https://arxiv.org/abs/2606.10209)
 
 ## Practitioner engineering writing
@@ -95,7 +95,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the orchestrator-worker architecture; **90.2%** over single-agent Opus 4 on an internal research evaluation; about **15×** chat tokens (agents about 4×); **about 80%** of performance variance explained by token usage.
 - **Discount:** research tasks, not coding; an internal evaluation; first-party. The 15× and 80% must always be quoted with the 90.2%.
-- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [case CS-2](ch:case-studies#cs-2-the-research-system-that-beat-one-agent-by-90-p).
+- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [case CS-2](ch:case-studies#cs-2-the-research-system-that-beat-one-agent-by-90-p).
 
 ### Sub-agent token-efficiency reporting
 
@@ -144,7 +144,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 43% → under 14% as tool count grows; 19 of 20 at 20 tools → failure at 107; the ~20-tool practitioner threshold; the ~42,000-token single-server figure; tool surfaces regrowing to their old size within a quarter without a recurring audit [P].
 - **Discount:** mixed [S] and [P]. The strength is two independent methods converging near 20; individual figures are weaker. The 43% → 14% and 19-of-20 figures are published evaluation numbers captured from secondary coverage (see the verification caveat); the ~20-tool threshold and the regrowth observation are practitioner consensus [P].
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#the-measured-damage).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#the-measured-damage), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design).
 
 ### Progressive disclosure and code-execution reporting
 

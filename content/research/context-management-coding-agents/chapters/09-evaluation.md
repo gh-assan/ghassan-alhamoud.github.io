@@ -4,7 +4,7 @@ Context changes have four properties that break the standard playbook. Ignore th
 
 | Property | What it means | Consequence |
 |---|---|---|
-| **1. Small effects** | Model upgrades move benchmarks 10–20 points. Context changes usually move them 2–6. The summariser swap, a *large* one, was 6.5 on SWE-bench [S]. | Detecting 3 points takes roughly ten times more trials than detecting 15 |
+| **1. Small effects** | Model upgrades move benchmarks 10–20 points. Context changes usually move them 2–6. The summariser swap, a *large* one, was 6.5 on SWE-bench [S]. | Detecting 3 points takes roughly twenty-five times more trials than detecting 15 |
 | **2. Total harness confound** | Scores depended strongly on which of four [[harness|harnesses]] ran, on identical data [S]. Context lives inside the harness. | Every result is a joint measurement of your strategy *and* your harness |
 | **3. Damage lives in the variance** | Pass@2/Pass² gaps widen under tighter compression while averages barely move [S]. | **Single-run evaluation cannot see the main harm you are looking for** |
 | **4. Costs and benefits in different units** | Tokens, latency, cache hit rate, solve rate, human hours | Picking one number is a decision, not a measurement |
@@ -26,7 +26,7 @@ These come first because the design choices follow from them.
 | E9 | Simple masking matches LLM summarisation at lower cost [S] | Masking is the baseline any summarisation proposal must beat |
 | E10 | Addressable compaction wins big on retrieval, slightly on reasoning [S] | Choose a benchmark that matches your failure mode |
 | E11 | The first step after compaction is the most error-prone [S] | Instrument the post-boundary window specifically |
-| E12 | Multi-agent gains largely came from spending ~15× the tokens [P] | Compare topologies at **equal token spend**, or you are measuring spend |
+| E12 | Multi-agent gains largely came from spending ~15× the tokens [P] — the cost side of the 90.2% internal-eval gain | Compare topologies at **equal token spend**, or you are measuring spend |
 
 ## Eight design choices
 
