@@ -12,9 +12,9 @@
 "Grep versus embeddings" collapses all four into one. A pre-loaded, file-level vector search and a just-in-time, symbol-level grep differ on *every* axis. Crediting the result to "embeddings" credits the wrong variable.
 
 > [!key] A fifth variable often dominates all four: the harness
-> A 2026 study compared grep with vector retrieval on 116 questions across four [[harness|harnesses]]: a custom agent and three widely used CLI agents. Grep generally won. But **overall scores depended strongly on which harness and tool-calling style was used, on identical data** [S].
+> A 2026 study compared grep with vector retrieval on 116 LongMemEval-derived questions across four [[harness|harnesses]]: a custom agent and three widely used CLI agents. Grep generally won. But **overall scores depended strongly on which harness and tool-calling style was used, on identical data** [S]. The caveat is workload: the questions are conversational-memory shaped, not repository shaped — the harness finding transfers more confidently than the ranking.
 
-The consequence is uncomfortable: **a retrieval comparison run on someone else's harness does not transfer to yours**, including that one. It tells you the *shape* of the answer (lexical search is a strong baseline; do not skip it). It does not tell you the size of the effect on your setup. [Chapter 9](ch:evaluation) shows how to measure it yourself.
+The consequence is uncomfortable: **a retrieval comparison run on someone else's harness does not transfer to yours** — the study above included. It tells you the *shape* of the answer (lexical search is a strong baseline; do not skip it). It does not tell you the size of the effect on your setup. [Chapter 9](ch:evaluation) shows how to measure it yourself.
 
 ## Why code is an unusual corpus
 
@@ -22,7 +22,7 @@ Most retrieval intuition comes from document search. Code breaks five of its ass
 
 | Property of code | Why it matters |
 |---|---|
-| **Exact relevance edges already exist** | In prose, "related" is a fuzzy judgment. In code, A calls B and `test_foo` tests `foo`. These are computed facts. Approximating them with embeddings pays for a worse answer. |
+| **Exact relevance edges already exist** | In prose, "related" is a fuzzy judgment. In code, A calls B and `test_foo` tests `foo`. These are computed facts. Approximating them with embeddings pays for a worse answer to a question the compiler answers exactly, for free. |
 | **Near-duplicates are everywhere, and adversarial** | `parse_config` in three modules, `UserService` beside `UserServiceV2`, vendored libraries, generated clients. Distractors hurt, and *which* distractor matters [S]. A method that cannot tell `UserSession` from `UserSessionStore` fails here. |
 | **The corpus edits itself** | The agent changes what it retrieves from. Every index is stale from the first edit, and wrong about exactly the code most likely to matter. Live retrieval (grep, language server) cannot go stale. |
 | **Names are chosen to be searchable** | `grep -rn "RETRY_LIMIT"` is exact, instant and complete. A vector search returns things *like* it, which is worse when you know the name. Semantic search helps precisely and only when you do not. |
@@ -48,7 +48,7 @@ Most retrieval intuition comes from document search. Code breaks five of its ass
 
 **Weaknesses.** Needs a working language server, with setup, memory and warm-up. It has a silent failure mode: a timeout returns "no results", which looks exactly like "does not exist". It cannot see configuration, string-keyed dispatch, schemas, CI definitions or templates.
 
-**Evidence.** Mostly mechanical rather than benchmarked: the waste argument and the exact-edge argument are both large and derivable. The rename example in [chapter 3](ch:ten-methods#m-4-structural-retrieval) shows about 15× fewer tokens with better precision.
+**Evidence.** Mostly mechanical rather than benchmarked: the waste argument and the exact-edge argument are both large and derivable. The composite rename example in [chapter 3](ch:ten-methods#m-4-structural-retrieval) shows about 15× fewer tokens with better precision [C].
 
 ### Semantic: embeddings and vector search
 
@@ -67,6 +67,8 @@ Most retrieval intuition comes from document search. Code breaks five of its ass
 **Strengths.** The query adapts to what was found. It handles the common case where the first search is wrong because the first hypothesis was wrong.
 
 **Weaknesses.** Turns and latency. Quality depends on the model's search skill, which is exactly where the harness confound bites hardest. Practitioners report agents spending **60%+ of their time searching for context** [P].
+
+**Evidence.** No benchmark isolates the control strategy's contribution; the four-harness spread is the closest signal [D].
 
 ## The comparison
 
@@ -122,7 +124,7 @@ Synthesised from the evidence, as a default to override with your own measuremen
 <text class="dg-s" x="632" y="246" text-anchor="middle">for anything large</text>
 <line class="dg-line dg-line--dash" x1="540" y1="109" x2="540" y2="249"/>
 <polygon class="dg-head" points="535,249 540,258 545,249"/>
-<text class="dg-s" x="270" y="310" text-anchor="middle">escalate only when the tier above returns nothing or the name is unknown</text>
+<text class="dg-s" x="270" y="310" text-anchor="middle">escalate only on empty results or unknown names</text>
 </svg>
 </div>
 <figcaption>Lexical and structural search do most of the work, live and exact. Semantic search is an optional fallback for unknown vocabulary, pointed at prose as much as at code.</figcaption>
@@ -135,25 +137,25 @@ Two rules govern the tiers.
 
 ## Nine ways code retrieval goes wrong
 
-| # | Pathology | Tell | Fix |
-|---|---|---|---|
-| R-1 | **Whole file read for one symbol** | Read tokens far exceed cited tokens; median relevance under 20% | Read the symbol |
-| R-2 | **Fragment blindness** | The agent reasons about code that only runs under a condition it never saw | At least `-C 8`; expand to the enclosing function |
-| R-3 | **Vendored or generated code** | Hits in `node_modules/`, `dist/`, `vendor/`, `__generated__/` | Ignore files; exclusion globs |
-| R-4 | **Near-duplicate confusion** | The agent edits `UserServiceV2` when `UserService` was live | Structural retrieval; mark deprecations in the code |
-| R-5 | **Stale self-read** | The agent cites a line that its own edit moved | Re-read before re-editing; auto-refresh |
-| R-6 | **Silent index staleness** | Semantic search returns pre-refactor code with no error | Prefer live retrieval; rebuild triggers |
-| R-7 | **Coherent-document distraction** | The agent cites the design document for behaviour the code contradicts | Do not pre-load design docs; fetch them for questions about intent |
-| R-8 | **Config blindness** | Structural-only search misses the environment variable that causes the bug | Keep lexical search; search `*.yaml`, `.env*`, `*.toml`, CI files |
-| R-9 | **Over-broad first query** | `grep -r "user"` returns 4,000 hits and 6K tokens of noise | Cap results; start from the most specific token available |
+| Pathology | Tell | Fix |
+|---|---|---|
+| **R-1** Whole file read for one symbol | Read tokens far exceed cited tokens; median relevance under 20% | Read the symbol |
+| **R-2** Fragment blindness | The agent reasons about code that only runs under a condition it never saw | At least `-C 8`; expand to the enclosing function |
+| **R-3** Vendored or generated code | Hits in `node_modules/`, `dist/`, `vendor/`, `__generated__/` | Ignore files; exclusion globs |
+| **R-4** Near-duplicate confusion | The agent edits `UserServiceV2` when `UserService` was live | Structural retrieval; mark deprecations in the code |
+| **R-5** Stale self-read | The agent cites a line that its own edit moved | Re-read before re-editing; auto-refresh |
+| **R-6** Silent index staleness | Semantic search returns pre-refactor code with no error | Prefer live retrieval; rebuild triggers |
+| **R-7** Coherent-document distraction | The agent cites the design document for behaviour the code contradicts | Do not pre-load design docs; fetch them for questions about intent |
+| **R-8** Config blindness | Structural-only search misses the environment variable that causes the bug | Keep lexical search; search `*.yaml`, `.env*`, `*.toml`, CI files |
+| **R-9** Over-broad first query | `grep -r "user"` returns 4,000 hits and 6K tokens of noise | Cap results; start from the most specific token available |
 
 Two of these are counterintuitive. **R-5 is the agent poisoning its own context with its own work**: the more productive the session, the more of what it read is now wrong. **R-7 means good documentation can hurt**. Coherent text retrieves *worse* than shuffled text across all 18 models tested [S]. That does not mean stop writing design documents. It means do not pre-load them into a coding agent. Fetch them on demand for questions about *intent*, and treat the code as the authority on *behaviour*.
 
 ## Should you seed the session with a codebase overview?
 
-**The evidence against.** 5K tokens of targeted retrieval beat a 100K codebase summary [P]. Focused ~300-token prompts beat ~113K full ones [S]. Full context used 2.68× the tokens of the best managed method and completed fewer tasks [S]. Coherent prose retrieves worse [S]. Every result points the same way.
+**The evidence against.** The same three results chapter 3's [M-3](ch:ten-methods#m-3-just-in-time-retrieval) cites: focused beats full on every measured comparison, and full context costs 2.68× for fewer completed tasks [S][P].
 
-**The evidence for a small seed.** Just-in-time retrieval fails by starvation when the agent does not know a subsystem exists. Human-written context files improved success by about 4% [P]: small, positive, real.
+**The evidence for a small seed.** Just-in-time retrieval fails by starvation when the agent does not know a subsystem exists. Human-written context files improved success by about 4% [P] — small and positive, though the figure has no published method.
 
 **The synthesis: pre-load pointers and invariants, never content.**
 
@@ -189,4 +191,4 @@ The harness confound means you cannot inherit the answer. Four cheap measurement
 1. **[[Read-utilisation]].** For 20 reads, what share of retrieved tokens appears in the final diff or explanation? Median under 20%: adopt symbol-level reads. Under 5%: retrieval is your main problem.
 2. **[[Read-coverage]] on failures.** For your last 10 failures, was the decisive file ever read? This splits **starvation** (never read, a recall problem) from **dilution** (read and ignored, a precision problem). They have opposite fixes. Teams that skip this often apply the precision fix to a recall problem and make it worse.
 3. **Search efficiency.** Turns until the first productive edit, and the ratio of search turns to edit turns. If search is over 60% of turns [P], retrieval is the bottleneck.
-4. **A real A/B.** Hold everything else fixed, vary only retrieval, run at least 20 tasks per arm, and report [[Pass^k|Pass@2 and Pass²]]. Anything less is not evidence at these effect sizes.
+4. **A real A/B.** Hold everything else fixed, vary only retrieval, run at least 20 tasks per arm, and report [[Pass^k|Pass@2 and Pass²]] — the full protocol is [chapter 9](ch:evaluation)'s subject. Anything less is not evidence at these effect sizes.

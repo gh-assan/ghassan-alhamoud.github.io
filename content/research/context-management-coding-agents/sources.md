@@ -80,7 +80,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** input tokens at 99.75–99.87% of total usage; full context at 2.68× the tokens of the best managed method with fewer tasks completed.
 - **Discount:** tool-heavy workloads specifically; ratios differ for chat.
-- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
+- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
 - **Link:** [arXiv 2606.10209](https://arxiv.org/abs/2606.10209)
 
 ## Practitioner engineering writing
@@ -127,6 +127,12 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 - **Discount:** [P]. No published method and no independent reproduction found.
 - **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval), [chapter 11](ch:hard-calls), [chapter 13](ch:antipatterns).
 
+### Practitioner search-time reporting
+
+- **Supports:** agents spending **60%+ of their time — and similarly of their turns — locating context** rather than editing.
+- **Discount:** [P]. Single-practitioner reports with no published method; the time-based and turn-based denominators were reported separately.
+- **Used in:** [chapter 5](ch:retrieval#live-agentic-search-the-llm-as-navigator).
+
 ### Drew Breunig, "How Long Contexts Fail"
 
 - **Supports:** the poisoning, distraction, confusion and clash taxonomy, a commonly used taxonomy rather than a measurement.
@@ -156,13 +162,13 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 30+ tools reading it; 60,000+ repositories; Agentic AI Foundation stewardship; the ≤150-line guidance; ~4% success improvement from human-written context files.
 - **Discount:** [P] throughout. The 4% figure has no published method.
-- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files).
+- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview).
 
 ### Open-source tooling documentation
 
-- **Supports:** the tooling catalogue; the 60–90% and 98% output-reduction claims; symbol-level operations; language coverage.
+- **Supports:** the tooling catalogue; the 60–90% and 98% output-reduction claims; symbol-level operations; language coverage (30+ languages via the Language Server Protocol across the surveyed toolkits).
 - **Discount:** self-reported, none reproduced here. Audit before installing.
-- **Used in:** [chapter 18](ch:tooling).
+- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 18](ch:tooling).
 
 ## Verification caveat
 
@@ -176,6 +182,7 @@ Figures in that category:
 - the 43% → 14% and 19/20 → failure tool-count figures
 - the hybrid +12.5% figure
 - the 9K-versus-15K sub-agent token comparison and the within-a-quarter regrowth observation
+- the 60%+ search-time figure
 - the AGENTS.md adoption and ~4% figures
 - the 85.2% / 46,059-token prefix-cache figures
 - every percentage in the tooling chapter
