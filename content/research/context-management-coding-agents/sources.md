@@ -36,7 +36,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### "Toward Reliable Context Compression for Long-Horizon Agents: An Empirical Study of Execution Instability" (TRACE)
 
-- **Supports:** the AppWorld table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
+- **Supports:** seven compression strategies compared on AppWorld (full context, FIFO truncation, token pruning, two prompt-based compaction schemes, guideline-based approaches, and a verifier-guided method); the AppWorld results table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
 - **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
 - **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [chapter 12](ch:failure-modes#c-compaction), [chapter 13](ch:antipatterns#ap-4-compaction-as-hygiene), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
@@ -156,7 +156,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 85.2% hit rate with ~46,059 tokens reused per request; 90% hit rate giving sub-200 ms time to first token and 80–90% compute savings; byte-exact prefix matching.
 - **Discount:** [P], specific to particular serving stacks. The relative prices in chapter 10 are generic shapes, not any provider's rate card.
-- **Used in:** [chapter 1](ch:foundations#five-constraints-around-a-context-decision), [chapter 3](ch:ten-methods#m-1-prefix-stability), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
+- **Used in:** [chapter 1](ch:foundations#five-constraints-around-a-context-decision), [chapter 3](ch:ten-methods#m-1-prefix-stability), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model), [case CS-5](ch:case-studies#cs-5-dynamic-tool-loading-made-things-worse).
 
 ### AGENTS.md and instruction-file practice
 

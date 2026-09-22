@@ -13,7 +13,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | [CS-5 Dynamic tool loading made things worse](#cs-5-dynamic-tool-loading-made-things-worse) | [C] | The cache can flip the sign of a token optimisation |
 | [CS-6 Removal as the answer: code execution](#cs-6-removal-as-the-answer-code-execution-s) | [S] | Eliminating a category beats compressing it |
 | [CS-7 Grep beat embeddings, and the harness beat both](#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s) | [S] | Published retrieval rankings are hypotheses for you |
-| [CS-8 The audit that recovered a third of the window](#cs-8-the-audit-that-recovered-a-third-of-the-window-c) | [C] | The constructed audit separates waste from behaviour changes |
+| [CS-8 The audit that recovered half the window](#cs-8-the-audit-that-recovered-half-the-window-c) | [C] | The constructed audit separates waste from behaviour changes |
 
 ## CS-1: The sub-agents that built different games [P]
 
@@ -91,7 +91,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **The counterintuitive detail.** FIFO, which loses the *most* information, preserved the agent's sense of state *better* than summarisation. Losing information wholesale is less damaging to "where am I?" than replacing it with a fluent narrative that reads as if the state is known.
 
-**What this research takes from it.** k ≥ 2 and Pass² as non-negotiable, the explicit state block in the compaction schema, and the warning that token dashboards cannot see this.
+**What this research takes from it.** k ≥ 2 and Pass² as non-negotiable, the explicit state block in the compaction schema, and the warning that token dashboards cannot see this. ([Chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy) has the study; [chapter 9](ch:evaluation#pass-k-worked) the protocol.)
 
 ## CS-5: Dynamic tool loading made things worse [C] {#cs-5-dynamic-tool-loading-made-things-worse}
 
@@ -119,7 +119,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **The mechanism.** Two effects, and the second is larger. Definitions collapse into one tool plus documentation. And results collapse, because code filters data before returning it: `[i.number for i in list_issues() if i.state == "open"][:5]` puts five integers in context instead of 400 issue objects.
 
-**What it establishes.** In these cases, the largest wins came from **eliminating a category of context**, not compressing it [D]. Progressive disclosure is an order of magnitude; category elimination is two.
+**What it establishes.** In these cases, the largest wins came from **eliminating a category of context**, not compressing it [D]. Progressive disclosure is an order of magnitude; category elimination is two. (The [A-3 architecture](ch:tool-surface#three-architectures) is [chapter 8](ch:tool-surface)'s.)
 
 ## CS-7: Grep beat embeddings, and the harness beat both [S]
 
@@ -131,13 +131,13 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **The mechanism.** Retrieval strategy decides *what can be found*. The harness decides *how the agent iterates, what it sees of the results and when it stops*, and for multi-step search the iteration policy dominates any single query.
 
-**What it establishes.** Lexical search is a strong baseline the field skipped past. More importantly, **retrieval comparisons do not transfer between harnesses**, so most published retrieval advice, including the first finding, is a hypothesis for your setup.
+**What it establishes.** Lexical search is a strong baseline the field skipped past. More importantly, **retrieval comparisons do not transfer between harnesses**, so most published retrieval advice, including the first finding, is a hypothesis for your setup. ([Chapter 5](ch:retrieval) owns the harness confound.)
 
-## CS-8: The audit that recovered a third of the window [C]
+## CS-8: The audit that recovered half the window [C] {#cs-8-the-audit-that-recovered-half-the-window-c}
 
-**Situation.** A five-engineer team using coding agents daily, with rising costs and a feeling that quality dropped on long tasks. Nothing was measured.
+**Situation.** A five-engineer team using coding agents daily, with rising costs and a feeling that quality dropped on long tasks. Nothing was measured. A mid-session snapshot put the context at **152.5K tokens, 76% of a 200K window**.
 
-**What was done.** The 30-minute audit from [chapter 3](ch:ten-methods#before-any-method-measure).
+**What was done.** The [30-minute audit](ch:tool-surface#the-30-minute-audit) from chapter 8.
 
 **Findings.**
 
@@ -147,6 +147,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | Tool results | 58,000 | One `npm ci` log was 14,000 of it |
 | Instruction file | 6,500 | 380 lines, 8 months of accretion, zero deletions |
 | Retrieved code | 22,000 | Four whole-file reads that should have been symbol reads |
+| **Mid-session total** | **152,500** | 76% of a 200K window |
 
 **Actions, in the order the routing table gave them:**
 
@@ -155,24 +156,26 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 3. Applied the inference test to the instruction file. **380 → 140 lines.**
 4. Left retrieval behaviour alone: the smallest win, the hardest to sustain, and last in the routing.
 
+**End state: about 44.3K tokens, 22% of the window** — definitions 2,500, results ~17,400, instruction file ~2,400, retrieved code 22,000.
+
 ```chart
 {
   "type": "hbar",
   "title": "Mid-session context before and after the audit",
   "categories": ["Before", "After"],
-  "series": [{"name": "Share of a 200K window", "values": [55, 24]}],
+  "series": [{"name": "Share of a 200K window", "values": [76, 22]}],
   "max": 100,
   "valueFormat": "{v}%",
   "highlight": [1],
   "categoryLabel": "State",
-  "caption": "110K → 48K tokens. Median session cost fell about 50% with task success unchanged, and no deleted capability was missed in 20 sessions [C].",
-  "alt": "Before: 55% of the window. After: 24%."
+  "caption": "152.5K → 44.3K tokens: the four audit moves cut the mid-session context by about 70%, with task success unchanged and no deleted capability missed in 20 sessions [C].",
+  "alt": "Before: 76% of the window. After: 22%."
 }
 ```
 
-**The under-reported half.** The cost saving was the visible result. The more important comparison was moving from 55% to 24% utilisation: a higher-utilisation condition versus a lower one. Any quality effect belongs in an evaluation, not in the cost number [D].
+**The under-reported half.** The token saving was the visible result. The more important comparison was moving from 76% to 22% utilisation: a high-utilisation condition versus a low one. Any quality effect belongs in an evaluation, not in the token count [D].
 
-*Composite:* assembled from the figures in [chapter 2](ch:anatomy#reading-a-whole-budget-a-worked-example), [chapter 8](ch:tool-surface#a-worked-audit) and [chapter 10](ch:metrics-and-economics#worked-monthly-economics-c). The individual numbers derive from [S] and [P] sources; the incident is constructed.
+*Composite:* assembled from the figures in [chapter 2](ch:anatomy#reading-a-whole-budget-a-worked-example), [chapter 8](ch:tool-surface#a-worked-audit) and [chapter 3](ch:ten-methods#before-any-method-measure)'s measurement procedure. The individual numbers derive from [S] and [P] sources; the incident is constructed.
 
 ## Patterns across the cases
 
@@ -188,3 +191,5 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 > [!key] The through-line
 > Six of these eight cases turned on a decision about what to remove or where to draw a boundary. None turned on a cleverer algorithm.
+>
+> To find your own version of these incidents, run the [audit](ch:tool-surface#the-30-minute-audit) and the [diagnostic](ch:diagnostic).
