@@ -41,10 +41,10 @@ Verdicts use four levels: **Adopt** (use by default), **Trial** (worth a measure
 | **Ignore files** (`.gitignore`-style, `.claudeignore`, `.cursorignore`) | Keep dependencies, build output, lockfiles and generated code out of globs and diffs | Zero | **Adopt.** The first thing to write |
 | **RTK** | A command proxy that rewrites commands and compresses output from `git`, `pytest` and cloud CLIs | Install and configure | **Trial.** Claims 60–90% reduction [P]; compare against hand-written wrappers first |
 | **Context Mode** | Keeps large outputs in a local sandbox with SQLite full-text indexing; passes summaries | Install; local database | **Trial.** Claims 98% reduction [P]; effectively packaged shaping plus offload |
-| **Caveman** | Strips filler from model output before it re-enters context | Install | **Skip for most.** Agent messages are about 8% of context; low ceiling |
+| **Caveman** | Strips filler from model output before it re-enters context | Install | **Skip for most.** Agent messages are about 8% of context [D]; low ceiling |
 
 > [!try] If you do one thing in this chapter
-> Write four shell wrappers for your four loudest commands. An afternoon, no dependency, and it usually beats any installed tool on the same problem.
+> Write four shell wrappers for your four loudest commands. An afternoon, no dependency, and it usually beats any installed tool on the same problem (the pattern is [chapter 3's](ch:ten-methods#m-5-output-shaping) output shaping).
 
 ## Layer 1: Retrieval
 
@@ -64,7 +64,7 @@ Verdicts use four levels: **Adopt** (use by default), **Trial** (worth a measure
 
 | Tool | What it does | Cost | Verdict |
 |---|---|---|---|
-| **Built-in tool search or deferred definitions** | Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported [S] | None if built in | **Adopt.** A default in some harnesses as of 2026 [P]; check yours first |
+| **Built-in tool search or deferred definitions** | Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported [P] — vendor-reported, best case until reproduced | None if built in | **Adopt.** A default in some harnesses as of 2026 [P]; check yours first |
 | **Agent skills** | Named capabilities with short triggers and bodies loaded on match | Authoring effort | **Adopt.** Budget descriptions as one number |
 | **agentgateway** | An MCP proxy that applies progressive disclosure across servers | Proxy deployment | **Trial** if you run many servers and your harness lacks deferral |
 | **Code-execution patterns for MCP** | Replace tool schemas with code against an API; **150K → ~2K, 98.7%** [P] | A sandbox | **Adopt if you can sandbox.** The largest reported saving; measure your workload |
@@ -103,7 +103,7 @@ The most crowded category and the thinnest evidence. Read [the memory section of
 | **MkDocs or Docusaurus in the repository** | Filesystem | **Adopt** if you need a rendered site; keeps docs in the same PRs as code |
 | **Basic Memory** | Filesystem + MCP | **Trial.** Plain Markdown you own: inspectable, greppable, portable |
 | **sqlite-vec / txtai** | File-backed database | **Trial** only with a measured semantic need; pair with full-text search |
-| **Confluence or Notion MCP servers** | Wiki | **Restricted adopt.** Fetch by name only; disable autonomous search; never index |
+| **Confluence or Notion MCP servers** | Wiki | **Adopt, restricted.** Fetch by name only; disable autonomous search; never index |
 | **GraphRAG / LightRAG** | Graph | **Skip for coding.** Built for prose; over source code the compiler graph wins |
 | **Graphiti** | Graph | **Watch.** Time-aware edges are a real answer to staleness |
 | **Graph database MCP servers** | Graph | **Adopt only for the exception**: cross-system dependency, lineage or ownership graphs you already run |
@@ -132,7 +132,7 @@ You cannot manage what you cannot see, and this is the thinnest layer.
 | **A transcript-grep script** | Counts tool calls, finds repeats, ranks commands by output volume | **Adopt.** [Twenty lines of shell](ch:tips#before-the-session-setup-once) power the metrics that route every decision |
 
 > [!warning] The gap worth naming
-> No widely available tool computes the two metrics that matter most here: **post-boundary re-fetch rate** and **Pass² ÷ Pass@2**. You will have to build both. The gap exists because the field still measures inputs rather than outcomes.
+> No widely available tool computes the two metrics that matter most here: **post-boundary re-fetch rate** and **Pass² ÷ Pass@2**. You will have to build both (definitions and healthy thresholds: [chapter 6](ch:compaction-and-memory#measuring-the-compression-layer), [chapter 9](ch:evaluation#pass-k-worked)). The gap exists because the field still measures inputs rather than outcomes.
 
 ## Standards and conventions
 

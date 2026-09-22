@@ -215,12 +215,12 @@
 <td><strong>Caveman</strong></td>
 <td>Strips filler from model output before it re-enters context</td>
 <td>Install</td>
-<td><strong>Skip for most.</strong> Agent messages are about 8% of context; low ceiling</td>
+<td><strong>Skip for most.</strong> Agent messages are about 8% of context <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>; low ceiling</td>
 </tr>
 </tbody>
 </table></div>
 <aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">If you do one thing in this chapter</p>
-<p>Write four shell wrappers for your four loudest commands. An afternoon, no dependency, and it usually beats any installed tool on the same problem.</p>
+<p>Write four shell wrappers for your four loudest commands. An afternoon, no dependency, and it usually beats any installed tool on the same problem (the pattern is <a href="03-ten-methods.html#m-5-output-shaping">chapter 3's</a> output shaping).</p>
 </aside>
 <h2 id="layer-1-retrieval">Layer 1: Retrieval<a class="rs-anchor" href="#layer-1-retrieval" title="Link to this section">#</a></h2>
 <div class="table-scroll rs-table"><table>
@@ -291,7 +291,7 @@
 <tbody>
 <tr>
 <td><strong>Built-in tool search or deferred definitions</strong></td>
-<td>Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Short descriptions upfront, schemas on demand; ~25K → ~2.5K reported <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> — vendor-reported, best case until reproduced</td>
 <td>None if built in</td>
 <td><strong>Adopt.</strong> A default in some harnesses as of 2026 <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; check yours first</td>
 </tr>
@@ -452,7 +452,7 @@
 <tr>
 <td><strong>Confluence or Notion MCP servers</strong></td>
 <td>Wiki</td>
-<td><strong>Restricted adopt.</strong> Fetch by name only; disable autonomous search; never index</td>
+<td><strong>Adopt, restricted.</strong> Fetch by name only; disable autonomous search; never index</td>
 </tr>
 <tr>
 <td><strong>GraphRAG / LightRAG</strong></td>
@@ -552,7 +552,7 @@
 </tbody>
 </table></div>
 <aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">The gap worth naming</p>
-<p>No widely available tool computes the two metrics that matter most here: <strong>post-boundary re-fetch rate</strong> and <strong>Pass² ÷ Pass@2</strong>. You will have to build both. The gap exists because the field still measures inputs rather than outcomes.</p>
+<p>No widely available tool computes the two metrics that matter most here: <strong>post-boundary re-fetch rate</strong> and <strong>Pass² ÷ Pass@2</strong>. You will have to build both (definitions and healthy thresholds: <a href="06-compaction-and-memory.html#measuring-the-compression-layer">chapter 6</a>, <a href="09-evaluation.html#pass-k-worked">chapter 9</a>). The gap exists because the field still measures inputs rather than outcomes.</p>
 </aside>
 <h2 id="standards-and-conventions">Standards and conventions<a class="rs-anchor" href="#standards-and-conventions" title="Link to this section">#</a></h2>
 <div class="table-scroll rs-table"><table>

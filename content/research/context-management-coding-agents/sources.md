@@ -45,7 +45,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the five-baseline comparison on a 1,000-task needle suite and a 311-task LongBench-v2 Hard subset; needle 99.00% / 99.80% versus RAG 79.57% / 96.67%; LongBench-v2 Hard 27.47% / 32.47% versus 25.83% / 30.87%; 38.8–80.3% bandwidth savings; the statement that omitted summary details cannot be recovered.
 - **Discount:** 8B and 32B models, not frontier scale. The reasoning margin is small; do not overstate it.
-- **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 15](ch:optimisation-plan#phase-6-advanced).
+- **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 15](ch:optimisation-plan#phase-6-advanced), [chapter 18](ch:tooling#layer-2-tool-surface).
 - **Link:** [arXiv 2607.25066](https://arxiv.org/abs/2607.25066)
 
 ### "CompactionRL: Reinforcement Learning with Context Compaction for Long-Horizon Agents"
@@ -66,14 +66,14 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** masking matching LLM summarisation on SWE-bench solve rates across two model sizes at substantially lower cost; preferring simple methods first.
 - **Discount:** the numeric detail was captured from the paper's summary rather than a full read. **Re-verify before citing externally.**
-- **Used in:** [chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#compression-and-state), [chapter 13](ch:antipatterns#generator-2-adding-instead-of-subtracting).
+- **Used in:** [chapter 6](ch:compaction-and-memory#result-5-simple-masking-is-competitive-with-summarisation), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#compression-and-state), [chapter 13](ch:antipatterns#generator-2-adding-instead-of-subtracting), [chapter 18](ch:tooling#layer-2-tool-surface).
 - **Link:** [arXiv 2508.21433](https://arxiv.org/abs/2508.21433)
 
 ### "Is Grep All You Need? How Agent Harnesses Reshape Agentic Search"
 
 - **Supports:** grep generally beating vector retrieval on 116 LongMemEval-derived questions; **four harnesses** compared, inline versus file-based results; overall scores depending strongly on harness and tool-calling style on identical data; eight surveyed agents using the model as a navigator over shell tools.
 - **Discount:** the questions are conversational-memory shaped, not repository shaped. The harness finding transfers more confidently than the grep-versus-vector ranking.
-- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-7-semantic-search-as-the-answer), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-7-semantic-search-as-the-answer), [chapter 18](ch:tooling#layer-2-tool-surface), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
 - **Link:** [arXiv 2605.15184](https://arxiv.org/abs/2605.15184)
 
 ### Token economics of tool-heavy agents (including arXiv 2606.10209)
@@ -150,7 +150,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server; the practitioner-landscape convergence on deferred definitions, with some harnesses making them the default by 2026, and usage reporting / compaction control increasingly built in; emerging MCP proposals for adaptive response granularity.
 - **Discount:** first-party and community reports; no independent reproduction found.
-- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [chapter 18](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
 
 ### Prefix-caching operational reporting
 
@@ -162,7 +162,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 30+ tools reading it; 60,000+ repositories; Agentic AI Foundation stewardship; the ≤150-line guidance; ~4% success improvement from human-written context files.
 - **Discount:** [P] throughout. The 4% figure has no published method.
-- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-6-the-growing-instruction-file), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one).
+- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-6-the-growing-instruction-file), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [chapter 18](ch:tooling#standards-and-conventions).
 
 ### Open-source tooling documentation
 
