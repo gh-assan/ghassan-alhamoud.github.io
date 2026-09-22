@@ -26,7 +26,7 @@ The sixteen are grouped by the habit of mind that produces them. There are only 
 
 ## Generator 1: treating the window as a container
 
-If context is a bucket, filling it is free until it overflows, and the only question is "does it fit?". Every antipattern here is what that model recommends. The correction is [chapter 1](ch:foundations#the-wrong-mental-model): the window is an attention budget whose return curve turns negative.
+If context is a bucket, filling it is free until it overflows, and the only question is "does it fit?". Every antipattern here is what that model recommends. The correction is [chapter 1](ch:foundations#start-with-the-right-mental-model): the window is an attention budget whose useful band depends on the task.
 
 ### AP-1: The briefing document
 
@@ -93,7 +93,7 @@ Adding is visible and feels like work. Deleting looks like doing nothing. So ins
 - **Looks like:** every incident adds a rule; the file reaches 400 lines; nothing is ever removed.
 - **The real version:** at most 150 lines of rules that cannot be inferred, pruned as often as extended.
 - **Tell:** monotone growth. If the file's history has no deletions, this is it.
-- **Cost:** dilution, [[position decay]] past about 50% utilisation [S], and contradictions between rules written months apart.
+- **Cost:** dilution, position effects as utilisation rises [S], and contradictions between rules written months apart.
 - **Fix:** the inference test on every line. Turn repeatedly violated rules into hooks, lints or tests. Text that is not followed is not a control.
 
 ### AP-8: Multi-agent by default

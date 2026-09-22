@@ -57,7 +57,7 @@ Core themes:
 
 ## Research
 
-- [Context Management in Coding Agents](https://ghassan-alhamoud.com/research/context-management-coding-agents/): Why bigger context windows did not make coding agents reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.
+- [Context Management in Coding Agents](https://ghassan-alhamoud.com/research/context-management-coding-agents/): Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.
 - [Context Management in Coding Agents: one-page summary](https://ghassan-alhamoud.com/research/context-management-coding-agents/summary.html): The problem, the finding, the first actions and the key numbers on one page.
 
 ## External Profiles

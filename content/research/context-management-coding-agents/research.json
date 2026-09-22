@@ -5,7 +5,7 @@
   "shortTitle": "Context Management",
   "thesis": "Larger context windows did not make coding agents proportionally more reliable. The engineering problem is deciding what the agent should see, when it should see it, and what that context costs.",
   "audience": "For software and agent engineers working on multi-step repository tasks. Assumes comfort with tests, CI, APIs and production trade-offs.",
-  "description": "Why bigger context windows did not make coding agents reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.",
+  "description": "Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.",
   "status": "published",
   "statusLabel": "Published",
   "version": "1.0",
@@ -15,7 +15,7 @@
   "sourcesLede": "What each source supports, how much to discount it, which chapters lean on it, and what would prove this research wrong.",
   "methodLede": "The research question, the design commitments fixed before writing, what is out of scope, and the acceptance bar the work had to pass.",
   "summaryStats": [
-    {"value": "18 of 18", "label": "frontier models got worse as input grew, at every length tested [S]"},
+    {"value": "18 models", "label": "tested across eight lengths; performance generally fell as input grew [S]"},
     {"value": "5K > 100K", "label": "targeted retrieval beat a full codebase summary in one practitioner report [P]"},
     {"value": "6.5 pts", "label": "SWE-bench swing from changing only the summariser [S]"},
     {"value": "77% → 53%", "label": "Pass² with no compression vs FIFO truncation on AppWorld [S]"},
@@ -25,7 +25,7 @@
   "finding": [
     {
       "claim": "The context window is an attention budget, not a bucket.",
-      "detail": "All 18 models in Chroma's controlled study degraded as input grew, well before the window was full [S]. Correct but irrelevant tokens can still reduce performance."
+      "detail": "Chroma tested 18 models across eight lengths and found performance generally degraded as input grew, with non-uniform, model-specific curves [S]. Correct but irrelevant tokens can still reduce performance."
     },
     {
       "claim": "Subtraction beats addition, and the evidence is lopsided.",
@@ -52,7 +52,7 @@
   ],
   "corePath": ["foundations", "anatomy", "choosing-methods", "retrieval", "compaction-and-memory", "tool-surface", "evaluation", "optimisation-plan"],
   "parts": [
-    {"id": "understand", "number": "I", "title": "Understand the problem", "intro": "What context is mechanically, why more of it makes agents worse, and where the tokens actually go."},
+    {"id": "understand", "number": "I", "title": "Understand the problem", "intro": "What context is mechanically, when more of it makes agents less reliable, and where the tokens actually go."},
     {"id": "methods", "number": "II", "title": "The methods", "intro": "The ten methods that survive scrutiny, how to choose among them, and the four surfaces where context is spent."},
     {"id": "measure", "number": "III", "title": "Measure it", "intro": "How to prove a context change worked, what to track, and what context really costs once the cache is priced in."},
     {"id": "decide", "number": "IV", "title": "Decide and avoid", "intro": "The hard calls with no clean answer, the ways context management fails, the traps that look like hygiene, and real cases."},
@@ -62,32 +62,32 @@
   "chapters": [
     {
       "id": 1, "slug": "foundations", "part": "understand", "file": "chapters/01-foundations.md",
-      "title": "Why bigger context windows did not help",
-      "navTitle": "Why bigger windows did not help",
+      "title": "Why more context can hurt coding agents",
+      "navTitle": "Why more context can hurt",
       "level": "Foundational",
-      "question": "What is context, mechanically, and why does adding more of it make coding agents worse?",
-      "description": "Context is an attention budget, not a container. The evidence for degradation, the five forces acting on every token, and the five ways context fails.",
+      "question": "What is context, mechanically, and when does adding more make coding agents less reliable?",
+      "description": "Context is an attention budget, not a container. The evidence for degradation, five constraints around a context decision, and five ways context fails.",
       "tldr": [
-        "All 18 models in Chroma's controlled study degraded as input grew, well before the window was full [S].",
-        "Five forces act on every token: dilution, position, recency-as-truth, the cache, and information loss.",
-        "Context fails in five ways. Starvation, the one most teams have, leaves no trace in the transcript."
+        "Across Chroma's controlled tasks, performance generally fell as input grew, but the curves were model- and task-dependent [S].",
+        "Five constraints shape a context decision: dilution, position, recency bias in conflicts, cache and information loss.",
+        "Context fails in five ways. Starvation can leave no trace in the transcript, so it needs a read-coverage check."
       ],
       "outcomes": [
-        "Explain why the window is a budget with a return curve, not a bucket",
-        "Name the five forces and predict which one a change will affect",
+        "Explain the productive-band model without treating it as a universal curve",
+        "Route an observed symptom to one of five context constraints",
         "Diagnose poisoning, distraction, confusion, clash and starvation from their tells",
         "State the four properties of a well-managed context"
       ],
       "takeaways": [
-        "The window is an attention budget. Adding correct information can still lower performance.",
-        "Past about half full, the start of the window is the least attended region. Your rules fade because of position, not memory.",
-        "Appending is cheap; editing early context breaks the cache and can cost more than it saves.",
-        "Reversibility is worth more than compression ratio. Prefer operations you can undo.",
+        "The window is an operating budget for useful signal. Adding correct information can still lower performance.",
+        "Position can change retrieval reliability, but the size and shape depend on model, task and harness.",
+        "Appending usually preserves the existing prefix; early edits can invalidate cached suffixes and may cost more than they save.",
+        "The programme's operating preference is reversibility over compression ratio: prefer operations you can undo.",
         "You cannot delete from a transcript by talking to it. Reset instead of arguing."
       ],
       "see": [
         {"title": "Where the tokens actually go", "href": "ch:anatomy", "why": "the nine segments of a real context"},
-        {"title": "The ten methods", "href": "ch:ten-methods", "why": "what acts on each force"}
+        {"title": "The ten methods", "href": "ch:ten-methods", "why": "what acts on each constraint"}
       ]
     },
     {
@@ -363,7 +363,7 @@
         "Ask the four pre-emptive questions before a long task"
       ],
       "takeaways": [
-        "Starvation is the failure most likely to survive review: the trajectory looks clean.",
+        "Starvation can survive review because the trajectory may look clean.",
         "When a fact is poisoned, reset to before the poison; do not argue with it.",
         "Cost rising after an \"optimisation\" usually means the cache broke.",
         "\"It worked yesterday\" is a variance signal you never measured."

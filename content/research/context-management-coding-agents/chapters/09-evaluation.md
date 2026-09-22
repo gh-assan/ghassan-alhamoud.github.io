@@ -15,12 +15,12 @@ These come first because the design choices follow from them.
 
 | # | Result | Consequence for your experiment |
 |---|---|---|
-| E1 | All 18 models degraded at every length step [S] | "Does it fit?" is not an acceptance criterion; control length across arms |
+| E1 | Across controlled tasks, performance generally fell as input grew across 18 models, with non-uniform curves [S] | "Does it fit?" is not an acceptance criterion; control length across arms |
 | E2 | Compression hurts stability more than average accuracy [S] | Reporting only single-run accuracy is invalid. Pass^k is mandatory |
 | E3 | The summariser alone moved SWE-bench 49.0% → 55.5% [S] | Hold the compaction prompt constant in every other comparison |
 | E4 | Harness effects can exceed strategy effects [S] | Published retrieval comparisons do not transfer. Re-run them |
 | E5 | Tool-selection accuracy falls 43% to under 14% as tool count grows [S] | Tool count is a controlled variable, not an incidental one |
-| E6 | Focused context beats full context with the same information [S] | Measure task outcomes, not retrieval coverage |
+| E6 | Focused context retains the answer-bearing material while removing surrounding context [S] | Measure task outcomes, not retrieval coverage |
 | E7 | Input is 99.75–99.87% of agent token usage [S] | Tracking output tokens measures noise. Instrument input by segment |
 | E8 | Full context costs 2.68× the best managed method and completes fewer tasks [S] | A full-context arm bounds cost; it is not a quality ceiling |
 | E9 | Simple masking matches LLM summarisation at lower cost [S] | Masking is the baseline any summarisation proposal must beat |

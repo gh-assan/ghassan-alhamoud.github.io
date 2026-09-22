@@ -1,6 +1,6 @@
 ## The problem
 
-Context windows grew about a hundredfold. Coding-agent reliability did not follow. In Chroma's controlled study, all 18 tested models became less reliable as input grew, well before the window was full [S]. A Sourcegraph practitioner report similarly found 5K tokens of targeted retrieval outperforming a 100K-token codebase summary on the same task [P].
+Longer advertised windows add capacity, but they do not guarantee more reliable coding-agent behaviour. In Chroma's controlled study, performance generally became less reliable as input grew, with model- and task-specific variation across 18 models [S]. A Sourcegraph practitioner report similarly found 5K tokens of targeted retrieval outperforming a 100K-token codebase summary on the same task [P].
 
 So the window is not a bucket to fill. It is an [[attention budget]]: additional tokens can reduce the salience of the relevant ones. When a coding agent fails, the missing fact may have been lost in compaction, displaced by unused tool definitions, or contradicted by the agent's own earlier claim.
 
@@ -8,7 +8,7 @@ So the window is not a bucket to fill. It is an [[attention budget]]: additional
 
 **Before changing the model or adding tools, test whether context discipline is the binding constraint.** Four results make that test worth running:
 
-- **Subtraction wins, and the evidence is lopsided.** Masking matched summarisation at lower cost [S]; fewer tools beat more tools [S]; focused prompts beat full ones containing the same information [S].
+- **Subtraction wins, and the evidence is lopsided.** Masking matched summarisation at lower cost [S]; fewer tools beat more tools [S]; focused prompts beat full ones retaining the same answer-bearing material while removing surrounding context [S].
 - **Compression damage is unreliability first.** Compressed agents solve a task, then fail it on a rerun. Reliability degrades faster than mean accuracy, so teams measuring single runs conclude compaction is nearly free [S].
 - **The summariser is a quality lever.** Changing only the summariser moved SWE-bench accuracy from 49.0% to 55.5%, a 6.5-point swing [S].
 - **The cache can flip the sign of an optimisation.** In the worked price model, a 24% token cut that made the prefix dynamic raised cost 6.9× [C].
@@ -16,7 +16,7 @@ So the window is not a bucket to fill. It is an [[attention budget]]: additional
 ## What to do first
 
 1. **Measure for 30 minutes.** Prefix tax, tool definitions versus tools actually called, tool-output share, cache hit rate. The large segment is rarely the one you were tuning. [How to measure](ch:optimisation-plan#phase-0-baseline).
-2. **Delete.** Remove every [[MCP]] server with zero calls in 20 sessions, write ignore files, and cut the instruction file to what cannot be inferred from the code. Usually 25–35% of the window comes back, with no behaviour change. [Phase 1](ch:optimisation-plan#phase-1-deletion).
+2. **Delete.** Remove every [[MCP]] server with zero calls in 20 sessions, write ignore files, and cut the instruction file to what cannot be inferred from the code. A practitioner estimate suggests 25–35% of the window may come back, with no behaviour change [P]. [Phase 1](ch:optimisation-plan#phase-1-deletion).
 3. **Shape tool output.** Wrap your four loudest commands: one line on success, the full trace on failure, the full log in a file. 60–90% less output [P].
 4. **Keep a plan file with a "ruled out" section**, and re-read it first after any compaction.
 5. **Compact at most once, at a sub-goal boundary, after offloading.** Then reset with a handoff note.
@@ -26,7 +26,7 @@ So the window is not a bucket to fill. It is an [[attention budget]]: additional
 
 | Number | What it means |
 |---|---|
-| 18 of 18 models | Degraded as input grew, at every length tested [S] |
+| 18 models | Tested across eight lengths; performance generally fell as input grew [S] |
 | 43% → under 14% | Tool-selection accuracy as tool count grows [S] |
 | 77.4% → 53.0% | [[Pass^k|Pass²]] with no compression versus FIFO truncation on AppWorld [S] |
 | +0.108 | Extra errors at the first step after a compaction [S] |
@@ -35,9 +35,9 @@ So the window is not a bucket to fill. It is an [[attention budget]]: additional
 
 ## What not to do
 
-- Do not buy a bigger window to fix reliability. It enlarges the region where the problem happens.
+- Do not assume a bigger window fixes reliability; measure first.
 - Do not add MCP servers "just in case". Unused tools cost on every call and confuse selection.
-- Do not pre-load architecture documents. Coherent prose is a distractor field; point to where things live instead.
+- Do not preload large architecture documents by default. Coherent text performed worse than shuffled text in the cited retrieval tasks [S]; test the transfer to coding agents [D]. Point to where things live instead.
 - Do not correct a hallucinated fact inline. Reset to before it.
 - Do not delegate interlocking implementation or debugging to parallel sub-agents.
 - Do not bulk-index your wiki. Fetch pages by name and verify them against the code.

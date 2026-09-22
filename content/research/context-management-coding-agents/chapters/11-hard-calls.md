@@ -163,7 +163,7 @@ Start with the summary table. Open the section for any call you are facing.
 ### SP-10: Long sessions or short ones
 
 - **For long:** tacit understanding no handoff captures.
-- **For short:** degradation at every length step [S]; position decay buries your rules; every turn pays for the whole history.
+- **For short:** performance generally falls as input grows [S]; position effects can bury rules; every turn pays for the whole history.
 
 **Recommendation.** **Short sessions with strong handoffs.** Cap at one compaction or about two hours, whichever comes first.
 
@@ -179,10 +179,10 @@ Start with the summary table. Open the section for any call you are facing.
 
 ### SP-22: Cap utilisation or use the whole window
 
-- **For a cap:** degradation is monotone in length [S], and past about 50% full the start of the window becomes the least attended region [S].
+- **For a cap:** performance can degrade as input grows, but the curve and any position effect are model- and task-dependent [S].
 - **For the full window:** you paid for it.
 
-**Recommendation.** **Soft cap at 60%, act at 75%.** Above 60%, prefer offload and resets. This is not about fitting; it is about staying in the regime where the model is good.
+**Recommendation.** **Use 60% as a soft operating cap and 75% as an escalation point.** Above 60%, prefer offload and resets. This is a workload heuristic, not a universal reliability threshold.
 
 **Flips when** one task genuinely needs more, such as a large file that must be read whole. Take the hit deliberately and reset right after.
 

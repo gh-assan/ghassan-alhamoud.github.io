@@ -10,28 +10,27 @@ Five rules were applied to every source. They explain how much weight each numbe
 | **R4: Harness-confounded results are flagged** | Where a result depends on which agent harness ran it, that is stated, because harness effects can exceed the effect under study [S]. |
 | **R5: Numbers are quoted, not rounded into slogans** | "43% → under 14%", not "accuracy collapses". |
 
-Labels are applied to claims that carry a number or could be contested. They are not applied to definitions, to this research's own frameworks (the nine segments, the five forces, starvation as a failure mode), or to conclusions restated from a labelled claim in the same chapter.
+Labels are applied to claims that carry a number or could be contested. They are not applied to definitions, to this research's own frameworks (the nine segments, the five constraints, starvation as a failure mode), or to conclusions restated from a labelled claim in the same chapter.
 
 ## Long-context research
 
 ### Chroma, "Context Rot: How Increasing Input Tokens Impacts LLM Performance"
 
-- **Supports:** degradation on every model tested (18 models, four vendors, 8 input lengths, 11 needle positions); the effect of question–answer similarity; distractors compounding non-uniformly; **coherent text retrieving worse than shuffled text** across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap.
+- **Supports:** performance generally degrading as input grows across controlled experiments with 18 models, four vendors, 8 input lengths and 11 needle positions; the effect of question–answer similarity; distractors compounding non-uniformly; **coherent text retrieving worse than shuffled text** across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap. The curves are non-uniform and model/task-specific.
 - **Discount:** static retrieval tasks, not agent trajectories. Rule R3 applies to every use.
-- **Used in:** [chapter 1](ch:foundations#the-evidence-every-model-degrades-with-length), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [lessons A](ch:lessons).
+- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [lessons A](ch:lessons).
 - **Link:** [trychroma.com/research/context-rot](https://www.trychroma.com/research/context-rot)
 
-### Long-context benchmarks: RULER, LongBench-v2, multi-needle retrieval
+### Effective-length caveat
 
-- **Supports:** the gap between effective and advertised context length; the difficulty of long-context tasks (LongBench-v2 human baseline 53.7%, leading models in the low 60s).
-- **Discount:** constructions vary; scores are not comparable across suites.
-- **Used in:** [chapter 1](ch:foundations#advertised-length-is-not-effective-length).
+Benchmark suites differ in task, model and scoring, so advertised length is not a performance guarantee and Chapter 1 does not compare cross-suite scores.
 
-### Positional-attention ("lost in the middle") research
+### Liu et al., "Lost in the Middle: How Language Models Use Long Contexts"
 
-- **Supports:** the U-shaped attention pattern under ~50% utilisation, its collapse into recency dominance above it, and more than 30% degradation for mid-context placement.
-- **Discount:** the size of the effect depends on model and task.
-- **Used in:** [chapter 1](ch:foundations#position-two-regimes).
+- **Supports:** a U-shaped position effect in controlled retrieval tasks: relevant information near the beginning or end performed better than information in the middle.
+- **Discount:** the study covers specific models and tasks; the size and shape of the effect vary by model, task and harness. It does not establish a universal utilisation threshold.
+- **Used in:** [chapter 1](ch:foundations#position-is-a-task-dependent-risk).
+- **Link:** [MIT Press / TACL](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00638/119630/Lost-in-the-Middle-How-Long)
 
 ## 2026 agent-context papers
 
@@ -118,7 +117,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 ### Drew Breunig, "How Long Contexts Fail"
 
-- **Supports:** the poisoning, distraction, confusion and clash taxonomy, now the field's shared vocabulary.
+- **Supports:** the poisoning, distraction, confusion and clash taxonomy, a commonly used taxonomy rather than a measurement.
 - **Discount:** a taxonomy, not a measurement. This research adds starvation as a fifth mode.
 - **Used in:** [chapter 1](ch:foundations#five-ways-context-fails).
 - **Link:** [dbreunig.com](https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html)
@@ -139,7 +138,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 - **Supports:** 85.2% hit rate with ~46,059 tokens reused per request; 90% hit rate giving sub-200 ms time to first token and 80–90% compute savings; byte-exact prefix matching.
 - **Discount:** [P], specific to particular serving stacks. The relative prices in chapter 10 are generic shapes, not any provider's rate card.
-- **Used in:** [chapter 1](ch:foundations#five-forces-acting-on-every-token), [chapter 10](ch:metrics-and-economics).
+- **Used in:** [chapter 1](ch:foundations#five-constraints-around-a-context-decision), [chapter 10](ch:metrics-and-economics).
 
 ### AGENTS.md and instruction-file practice
 

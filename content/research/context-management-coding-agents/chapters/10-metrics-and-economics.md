@@ -12,7 +12,7 @@ Most metric catalogues list what can be measured. This one adds the column they 
 | **Pass² ÷ Pass@2** | Whether compression is making the agent intermittent | Whether to back off compression |
 | **Cache hit rate** | Whether optimisations are defeating themselves | Whether to stabilise the prefix |
 
-Together they cover the five forces and the one blind spot. Everything else is diagnosis once one of these moves.
+Together they cover the five constraints and the one blind spot. Everything else is diagnosis once one of these moves.
 
 ### The full catalogue
 
@@ -196,7 +196,7 @@ Cost per month   = 600 × 315                             = 188,800 units
 | Maintenance (people, recurring) | ~2 h/month | ~3 h/month | Quarterly audit plus script upkeep |
 | Latency | baseline | slightly better | Smaller contexts prefill faster; just-in-time adds round trips |
 
-**Where the value actually is.** The cost saving is real, but it is not the headline. Mid-session context fell from 110K to 48K, from **55% of a 200K window to 24%**. That moves the agent out of the regime where early tokens are the least attended and into the one where the prefix is still read. **The quality effect of that move is larger than the cost effect**, and it appears in no cost table; measuring it needs [chapter 9](ch:evaluation)'s design.
+**Where the value actually is.** The cost saving is real, but it is not the headline. Mid-session context fell from 110K to 48K, from **55% of a 200K window to 24%**. That gives the workload a lower-utilisation condition to compare with the higher one; any quality effect should be measured with [chapter 9](ch:evaluation)'s design.
 
 > [!try] Presenting this
 > To a budget holder, lead with the cost number. To an engineering team, lead with the utilisation number.

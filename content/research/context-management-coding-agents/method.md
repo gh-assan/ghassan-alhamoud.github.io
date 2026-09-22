@@ -15,7 +15,7 @@ Context failures are also the quietest. An agent with a bad loop spins visibly. 
 
 | Sub-question | Answered in |
 |---|---|
-| What is context mechanically, and why does more of it make agents worse? | [Chapter 1](ch:foundations) |
+| What is context mechanically, and when does adding more make coding agents less reliable? | [Chapter 1](ch:foundations) |
 | What are the segments of a context budget, and which can you control? | [Chapter 2](ch:anatomy) |
 | Which ten methods survive scrutiny, and how do you choose among them? | [Chapters 3](ch:ten-methods) and [4](ch:choosing-methods) |
 | How should code enter context? | [Chapter 5](ch:retrieval) |
@@ -65,7 +65,7 @@ Stated so that the omissions are choices, not oversights.
 
 - **Model internals**: attention variants, kernel-level cache eviction, positional encodings. Referenced only where they explain observable behaviour.
 - **Training-time context**: long-context pretraining and compaction-aware training appear only where they change what an operator should do today.
-- **Non-coding agents**: browser, GUI and research agents appear only where a finding transfers. Coding agents are special because the filesystem is simultaneously the task, the memory and the ground truth.
+- **Non-coding agents**: browser, GUI and research agents appear only where a finding transfers. Coding agents are special because the filesystem is simultaneously the task, persistent memory and a major evidence source; it is not complete ground truth.
 - **Prompt quality**: how to write a good instruction is prompt engineering. How much of it to load, when and at what cost is context engineering.
 - **Security**: context poisoning through prompt injection is named as a failure with containment; the adversarial surface is another research programme's subject.
 
@@ -114,7 +114,7 @@ The work was not considered done until 27 criteria passed, plus two "anti-bar" c
 ### The two anti-bar conditions
 
 1. **If a reader with a real agent cannot, after reading the methods and the diagnostic, name their single largest wasteful segment and the change that would shrink it, the work has failed.** It passes: the [one-question version](ch:diagnostic#the-one-question-version) branches to a named action, and a reader whose largest segment is tool definitions reaches "delete every MCP server with zero calls in 20 sessions" in under fifteen minutes.
-2. **If any section could be replaced by "just use a bigger window" or "just run `/compact`" without loss, it is filler.** It passes, and the research argues the opposite of both: degradation is measured at every length, and naive compaction is where the damage is.
+2. **If any section could be replaced by "just use a bigger window" or "just run `/compact`" without loss, it is filler.** It passes, and the research argues the opposite of both: more context is not a reliability guarantee, and naive compaction is where the damage is.
 
 ## Relationship to sibling research
 

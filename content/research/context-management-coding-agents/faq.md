@@ -2,15 +2,15 @@
 
 ### Why doesn't a bigger context window fix my agent?
 
-Because models degrade as input grows, at every length step, long before the window is full. A study of 18 frontier models found no exception [S]. A bigger window gives you more room to fit things, not more attention to spread across them. It enlarges the region where the problem happens. See [chapter 1](ch:foundations#the-evidence-every-model-degrades-with-length).
+Because performance can become less reliable as input grows, even before the window is full. A study of 18 models from four vendors/model families found the direction across controlled tasks, with model- and task-specific variation [S]. A bigger window gives you more room to fit things, not a guarantee that the model will use them well. See [chapter 1](ch:foundations#what-long-context-studies-actually-show).
 
 ### What is "context rot"?
 
-The everyday name for performance falling as input length grows. It is measurable on every model tested, and it gets worse when the question and answer use different words, when near-duplicate distractors are present, and, surprisingly, when the surrounding text is coherent prose. See [chapter 1](ch:foundations#the-evidence-every-model-degrades-with-length).
+The everyday name for performance becoming less reliable as input length grows. Chroma measured it across 18 models; the size and shape of the effect varied by model and task. It also worsened with vocabulary gaps, near-duplicate distractors and coherent surrounding prose. See [chapter 1](ch:foundations#what-long-context-studies-actually-show).
 
 ### Why does my agent stop following CLAUDE.md or AGENTS.md late in a session?
 
-Position, not memory. Past about 50% utilisation, attention shifts toward recent tokens and the start of the window becomes the least attended region. Your instruction file lives there. Restate critical rules near the action, keep the file short, or reset the session. See [position decay](ch:foundations#position-two-regimes).
+Position, not memory, can matter. In cited retrieval tasks, relevant information in the middle performed worse than information near the beginning or end; the effect depends on model, task and harness [S]. Keep critical rules near the action and verify late-session behavior. See [position decay](ch:foundations#position-is-a-task-dependent-risk).
 
 ### What should I measure first?
 

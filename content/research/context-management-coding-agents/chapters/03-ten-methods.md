@@ -173,7 +173,7 @@ Details, including the audit procedure, are in [chapter 8](ch:tool-surface).
 
 **Why it works.** [[Relevance density]]. Pre-loading maximises recall and pays for it in precision. Just-in-time keeps density high at the cost of a few small round trips. It is especially strong for code, for three reasons: the filesystem is always current (an index can be stale; `cat` cannot); paths and names carry relevance nearly for free (`src/auth/session.ts` says a lot in five tokens); and the agent often does not know what it needs until it has looked.
 
-The evidence: focused ~300-token prompts beat ~113K-token prompts containing the same information [S]; 5K of targeted retrieval beat a 100K codebase summary [P]; full-context approaches used **2.68×** the tokens of the best managed method *and completed fewer tasks* [S].
+The evidence: focused ~300-token prompts beat ~113K-token prompts retaining the same answer-bearing material while removing surrounding context [S]; 5K of targeted retrieval beat a 100K codebase summary [P]; full-context approaches used **2.68×** the tokens of the best managed method *and completed fewer tasks* [S].
 
 **What it costs.** More turns and latency. On a small repository, pre-loading may genuinely be cheaper. Just-in-time wins as the repository grows, roughly once it exceeds a few windows' worth [D].
 

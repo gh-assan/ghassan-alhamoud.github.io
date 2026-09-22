@@ -34,7 +34,7 @@ The nine segments sit in the prompt in a fixed order. That order decides both th
 <text class="dg-s" x="303" y="110" text-anchor="middle">Skill</text>
 <text class="dg-s" x="303" y="124" text-anchor="middle">descriptions</text>
 <rect class="dg-box--info" x="365" y="40" width="525" height="120" rx="10"/>
-<text class="dg-k" x="375" y="30">BODY · GROWS EVERY TURN · READ WITH FADING ATTENTION</text>
+<text class="dg-k" x="375" y="30">BODY · GROWS EVERY TURN · POSITION EFFECT VARIES</text>
 <rect class="dg-box" x="375" y="55" width="95" height="90" rx="6"/>
 <text class="dg-t" x="422" y="90" text-anchor="middle">5</text>
 <text class="dg-s" x="422" y="110" text-anchor="middle">Retrieved</text>
@@ -57,13 +57,13 @@ The nine segments sit in the prompt in a fixed order. That order decides both th
 <text class="dg-s" x="831" y="124" text-anchor="middle">&amp; memory</text>
 <line class="dg-line" x1="10" y1="195" x2="880" y2="195"/>
 <polygon class="dg-head" points="880,190 890,195 880,200"/>
-<text class="dg-s" x="10" y="220">start of prompt: premium only while under ~50% full</text>
-<text class="dg-s" x="890" y="220" text-anchor="end">end of prompt: premium always</text>
+<text class="dg-s" x="10" y="220">start of prompt: placement effect varies by task</text>
+<text class="dg-s" x="890" y="220" text-anchor="end">end of prompt: placement effect varies by task</text>
 <text class="dg-s" x="831" y="176" text-anchor="middle">rewrites the prefix</text>
 </svg>
 </div>
 <p class="diagram__hint">Scroll sideways to see all nine segments.</p>
-<figcaption>Everything in the prefix is paid once (if you protect the cache) and read on every turn. Everything in the body is paid repeatedly and read with falling attention. Segment 9 is the odd one out: inserting it rewrites what came before.</figcaption>
+<figcaption>Everything in the prefix is paid once (if you protect the cache) and read on every turn. Everything in the body is paid repeatedly; position effects depend on the model, task and harness. Segment 9 is the odd one out: inserting it rewrites what came before.</figcaption>
 </figure>
 
 **Segments 1–4 are the [[prefix]].** They are stable across turns, cacheable, and privileged early in a session.
