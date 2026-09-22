@@ -52,7 +52,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** **the summariser-only swing, SWE-bench 49.0% → 55.5%**; +5.5 / +7.0 on SWE-bench Verified and +6.8 / +3.1 on Terminal-Bench 2.0 from compaction-aware training; operating parameters (10,240-token threshold, at most 3 compactions per run, at most 250 turns).
 - **Discount:** the training results need access most readers lack. The 6.5-point swing at inference time does not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 15](ch:optimisation-plan#phase-4-state-and-boundaries), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 15](ch:optimisation-plan#phase-4-state-and-boundaries), [chapter 16](ch:diagnostic#your-one-next-action), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
 - **Link:** [arXiv 2607.05378](https://arxiv.org/abs/2607.05378)
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
@@ -168,7 +168,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the tooling catalogue; the 60–90% and 98% output-reduction claims; symbol-level operations; language coverage (30+ languages via the Language Server Protocol across the surveyed toolkits).
 - **Discount:** self-reported, none reproduced here. Audit before installing.
-- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 10](ch:metrics-and-economics#where-to-spend-the-next-unit-of-effort), [chapter 18](ch:tooling).
+- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 10](ch:metrics-and-economics#where-to-spend-the-next-unit-of-effort), [chapter 16](ch:diagnostic#your-one-next-action), [chapter 18](ch:tooling).
 
 ## Verification caveat
 

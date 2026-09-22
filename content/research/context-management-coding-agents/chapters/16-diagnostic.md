@@ -77,11 +77,11 @@ Two rules make the result honest.
     {"min": 9, "name": "L4 Engineered", "text": "Measured, sequenced, with a stop rule and a maintenance cadence."}
   ],
   "actions": {
-    "1": {"text": "Run the Phase 0 baseline. Every other action's gate depends on it.", "href": "ch:optimisation-plan#phase-0-baseline"},
+    "1": {"text": "Run the Phase 0 baseline. Nothing else is worth doing first.", "href": "ch:optimisation-plan#phase-0-baseline"},
     "2": {"text": "Review zero-call MCP servers from a representative sample; verify task coverage and keep rollback before deleting. Candidate win when definitions dominate.", "href": "ch:optimisation-plan#phase-1-deletion"},
-    "3": {"text": "Wrap your three loudest commands. One afternoon, 60–90% less tool output.", "href": "ch:optimisation-plan#phase-2-prevention"},
+    "3": {"text": "Wrap your three loudest commands: one afternoon, 60–90% less output.", "href": "ch:optimisation-plan#phase-2-prevention"},
     "4": {"text": "Classify your last 10 failures as starvation or dilution before changing anything.", "href": "ch:templates#7-context-postmortem"},
-    "5": {"text": "Replace your compaction prompt with the explicit schema. A 15-minute edit worth up to 6.5 SWE-bench points.", "href": "ch:templates#4-compaction-schema"},
+    "5": {"text": "Replace your compaction prompt with the explicit schema: a 15-minute edit worth up to 6.5 SWE-bench points.", "href": "ch:templates#4-compaction-schema"},
     "6": {"text": "Adopt one mechanical rule: never compact twice. Reset instead.", "href": "ch:ten-methods#m-10-session-lifecycle"},
     "7": {"text": "Build a 30-task replay set you can re-run. Everything else in evaluation depends on it.", "href": "ch:evaluation#the-minimum-viable-experiment"}
   }
@@ -94,13 +94,13 @@ Work out a level per area, then take the minimum.
 
 | Area score | Level | What it looks like |
 |---:|---|---|
-| 0–2 | **L0 Unmanaged** | Context is whatever accumulates. Failures are blamed on "the model". |
+| 0–2 | **L0 Unmanaged** | Context is whatever accumulates. Failures are blamed on the model. |
 | 3–4 | **L1 Aware** | The problem is recognised; responses are ad hoc (`/compact` when it complains). |
 | 5–6 | **L2 Hygienic** | The obvious waste is gone. Deletion has happened. No measurement loop. |
 | 7–8 | **L3 Instrumented** | Numbers exist and drive decisions. Changes are attributable. |
 | 9–10 | **L4 Engineered** | Measured, sequenced, with a stop rule and a maintenance cadence. Removal is routine. |
 
-Most teams that have never audited land at **L0–L1 overall**, often with one area at L3. Usually that area is retrieval, because it is the interesting one to work on. That single high score is diagnostic: effort went where the writing is, not where the tokens are.
+The scoring is calibrated so that unaudited teams land at **L0–L1 on most areas**, often with one area higher — usually retrieval, because it is the interesting one to work on. That single high score is diagnostic: effort went where the writing is, not where the tokens are.
 
 ## Your one next action
 
@@ -130,6 +130,7 @@ A team scores itself:
   "categories": ["1 Measurement (gate at 0)", "2 Prefix hygiene (capped)", "3 Prevention", "4 Retrieval", "5 State", "6 Lifecycle", "7 Evaluation (gate at 0)"],
   "series": [{"name": "Area score", "values": [2, 4, 3, 8, 5, 4, 1]}],
   "max": 10,
+  "tickStep": 2,
   "valueFormat": "{v}",
   "highlight": [0, 6],
   "labelWidth": 200,
