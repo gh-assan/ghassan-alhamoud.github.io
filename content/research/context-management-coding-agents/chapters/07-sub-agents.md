@@ -57,11 +57,7 @@ Apply it before delegating. Four questions; a "no" to any one means do not paral
 
 | Work | Q1 | Q2 | Q3 | Q4 | Delegate? |
 |---|---|---|---|---|---|
-| Find all callers of a symbol | ✓ | ✓ | ✓ | ✓ | **Yes** |
-| Survey how a pattern is used across the repository | ✓ | ✓ | ✓ | ✓ | **Yes** |
-| Triage 40 failing tests into buckets | ✓ | ✓ | ✓ | ✓ | **Yes** |
-| Audit dependencies for a CVE | ✓ | ✓ | ✓ | ✓ | **Yes** |
-| Read a 200K-line log and extract the error pattern | ✓ | ✓ | ✓ | ✓ | **Yes** |
+| Find callers, surveys, test triage, CVE audit, log extraction — the figure's safe panel | ✓ | ✓ | ✓ | ✓ | **Yes** |
 | Review a diff against a checklist | ✓ | ✓ | ✓ | ~ | **Yes**, with spot checks |
 | Apply one fully specified mechanical change to 30 files | ✓ | ✓ | ✓ | ✓ | **Yes** |
 | Write tests for a stable module | ~ | ~ | ~ | ✓ | Cautiously |
@@ -73,7 +69,7 @@ Apply it before delegating. Four questions; a "no" to any one means do not paral
 
 ### The benefit is real and specific
 
-[[Isolation]] turns a *large intermediate context* into a *small result*. A survey that reads 45K tokens and concludes in 350 tokens returns under 1% of its context to the parent. Reported: about **9K total tokens** for a multi-domain query with isolated sub-agents, versus **15K** with an accumulating pattern [P].
+[[Isolation]] turns a *large intermediate context* into a *small result*. A survey that reads 45K tokens and concludes in 350 tokens returns under 1% of its context to the parent — chapter 3's [M-9](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract) numbers: about **9K** total tokens isolated versus **15K** accumulating [P].
 
 The parent's context stays clean and dense. It never sees the 40 files that turned out to be irrelevant, so **they never become distractors** for the rest of the session. The benefit is the dilution avoided, not only the tokens saved.
 
@@ -82,8 +78,8 @@ The parent's context stays clean and dense. It never sees the 40 files that turn
 | Cost | Size | Note |
 |---|---|---|
 | Prefix tax per sub-agent | 10K–40K each | Segments 1–4 are paid again for every agent |
-| Total token multiplier | About 15× a chat for full multi-agent; about 4× for single agents [P] | The number usually quoted without the benefit |
-| How much raw spend explains | Token usage alone explained **about 80%** of performance variance [P] | Read this carefully |
+| Total token multiplier | About 15× a chat for full multi-agent; about 4× for single agents [P] | The cost side of the 90.2% internal-eval gain; usually quoted alone |
+| How much raw spend explains | Token usage alone explained **about 80%** of performance variance [P] | Read this carefully: the gain it explains is the 90.2% research-eval result |
 | Contract loss | Unbounded | The sub-agent knew things it did not report |
 | Latency | Sometimes better (parallel), often worse (round trips) | |
 | Debuggability | Much worse | Failures spread across transcripts you must correlate |
@@ -96,9 +92,9 @@ The 80% figure deserves a moment. If spend explains most of the gain, **the arch
 
 Mitigations, most effective last:
 
-1. **A "notable observations outside scope" field** in the output schema. Cheap, and it recovers a surprising amount.
+1. **The "notable observations outside scope" field** from chapter 3's [M-9](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract). Cheap, and it recovers a surprising amount.
 2. **Return `file:line` pointers instead of conclusions**, so the parent can re-derive cheaply.
-3. **Save the sub-agent's transcript to a file** and give the parent the path. This turns contract loss into offload: the parent can read it if the summary is not enough. It is the best available answer and rarely done.
+3. **Save the sub-agent's transcript to a file** and give the parent the path. This turns contract loss into [offload](ch:compaction-and-memory#offload-the-pattern-to-reach-for-first): the parent can read it if the summary is not enough. It is the best available answer and rarely done.
 
 ## Five topologies
 
@@ -145,7 +141,6 @@ Ordered from least to most isolation.
 <text class="dg-s" x="450" y="232" text-anchor="middle">more isolation →</text>
 </svg>
 </div>
-<p class="diagram__hint">Scroll sideways to see all five.</p>
 <figcaption>For coding, T-2 keeps every decision in one thread (satisfying Position A) while isolating the expensive reading (capturing Position B's benefit). T-5 is listed only because it is proposed so often.</figcaption>
 </figure>
 
@@ -166,13 +161,14 @@ Every isolation boundary is a lossy channel. What crosses it is what survives. T
   "type": "hbar",
   "title": "How much control you have over what crosses each boundary",
   "categories": ["Session reset with a handoff note", "Sub-agent return with a schema", "Compaction", "Context eviction policy"],
-  "series": [{"name": "Control (0 = none, 3 = full)", "values": [3, 2, 1, 0.05]}],
+  "series": [{"name": "Control (0 = none, 3 = full)", "values": [3, 2, 1, 0]}],
   "max": 3,
+  "tickStep": 1,
   "valueFormat": "{v}",
   "highlight": [0],
   "labelWidth": 230,
   "categoryLabel": "Boundary",
-  "caption": "You write a handoff note yourself. You specify a sub-agent's schema. You can only hope a summariser follows yours, and its output varies run to run [S]. An eviction policy firing mid-task gives you no control at all.",
+  "caption": "You write a handoff note yourself. You specify a sub-agent's schema. You can only hope a summariser follows yours, and its output varies run to run [D]. An eviction policy firing mid-task gives you no control at all. Illustrative ordinal, not a measured scale [D].",
   "alt": "Session reset: full control. Sub-agent return: high. Compaction: low. Eviction: none."
 }
 ```
@@ -238,7 +234,7 @@ The last two are the ones people get wrong most often.
 | Parent growth per delegation | Change in parent tokens | Under 2K | Results that are too verbose |
 | **Redo rate** | Delegations the parent redid ÷ delegations | Under 0.1 | Contracts that are too narrow |
 | Conflict rate | Delegations with incompatible outputs | About 0 | Non-composable work was delegated |
-| Total-token multiplier | Total tokens ÷ single-agent baseline | Depends | Whether you bought the 15× without the gain [P] |
+| Total-token multiplier | Total tokens ÷ single-agent baseline | Depends | Whether you bought the 15× without the 90.2%-class gain [P] |
 | Outside-scope yield | Notable observations that mattered ÷ delegations | Over 0.1 | Value of the contract-loss field |
 
 The **redo rate** is the most diagnostic. A high value means you pay the full cost of isolation for a fraction of the benefit, and you can measure it by reading five transcripts.

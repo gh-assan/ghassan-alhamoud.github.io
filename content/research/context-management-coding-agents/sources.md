@@ -101,7 +101,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** about **9K total tokens** for a multi-domain query answered through isolated sub-agents versus about **15K** with an accumulating-context pattern.
 - **Discount:** [P]. A single practitioner comparison with no published method; no independent reproduction found.
-- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents).
+- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-benefit-is-real-and-specific).
 
 ### Cognition, "Don't Build Multi-Agents"
 

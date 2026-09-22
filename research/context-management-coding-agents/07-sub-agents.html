@@ -223,39 +223,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Find all callers of a symbol</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td><strong>Yes</strong></td>
-</tr>
-<tr>
-<td>Survey how a pattern is used across the repository</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td><strong>Yes</strong></td>
-</tr>
-<tr>
-<td>Triage 40 failing tests into buckets</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td><strong>Yes</strong></td>
-</tr>
-<tr>
-<td>Audit dependencies for a CVE</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td><strong>Yes</strong></td>
-</tr>
-<tr>
-<td>Read a 200K-line log and extract the error pattern</td>
+<td>Find callers, surveys, test triage, CVE audit, log extraction — the figure's safe panel</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
@@ -314,7 +282,7 @@
 </table></div>
 <h2 id="what-isolation-buys-and-what-it-costs">What isolation buys, and what it costs<a class="rs-anchor" href="#what-isolation-buys-and-what-it-costs" title="Link to this section">#</a></h2>
 <h3 id="the-benefit-is-real-and-specific">The benefit is real and specific<a class="rs-anchor" href="#the-benefit-is-real-and-specific" title="Link to this section">#</a></h3>
-<p><a class="rs-term" href="glossary.html#isolation" data-def="Splitting context across boundaries such as sub-agents or sessions. It shrinks the parent&#x27;s context at the expense of total spend.">Isolation</a> turns a <em>large intermediate context</em> into a <em>small result</em>. A survey that reads 45K tokens and concludes in 350 tokens returns under 1% of its context to the parent. Reported: about <strong>9K total tokens</strong> for a multi-domain query with isolated sub-agents, versus <strong>15K</strong> with an accumulating pattern <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><a class="rs-term" href="glossary.html#isolation" data-def="Splitting context across boundaries such as sub-agents or sessions. It shrinks the parent&#x27;s context at the expense of total spend.">Isolation</a> turns a <em>large intermediate context</em> into a <em>small result</em>. A survey that reads 45K tokens and concludes in 350 tokens returns under 1% of its context to the parent — chapter 3's <a href="03-ten-methods.html#m-9-sub-agent-isolation-with-a-contract">M-9</a> numbers: about <strong>9K</strong> total tokens isolated versus <strong>15K</strong> accumulating <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
 <p>The parent's context stays clean and dense. It never sees the 40 files that turned out to be irrelevant, so <strong>they never become distractors</strong> for the rest of the session. The benefit is the dilution avoided, not only the tokens saved.</p>
 <h3 id="the-cost-is-larger-than-usually-reported">The cost is larger than usually reported<a class="rs-anchor" href="#the-cost-is-larger-than-usually-reported" title="Link to this section">#</a></h3>
 <div class="table-scroll rs-table"><table>
@@ -334,12 +302,12 @@
 <tr>
 <td>Total token multiplier</td>
 <td>About 15× a chat for full multi-agent; about 4× for single agents <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
-<td>The number usually quoted without the benefit</td>
+<td>The cost side of the 90.2% internal-eval gain; usually quoted alone</td>
 </tr>
 <tr>
 <td>How much raw spend explains</td>
 <td>Token usage alone explained <strong>about 80%</strong> of performance variance <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
-<td>Read this carefully</td>
+<td>Read this carefully: the gain it explains is the 90.2% research-eval result</td>
 </tr>
 <tr>
 <td>Contract loss</td>
@@ -363,9 +331,9 @@
 <p><a class="rs-term" href="glossary.html#contract-loss" data-def="A sub-agent knew something relevant but did not report it because its output contract did not ask.">Contract loss</a> is the failure the parent cannot fix on its own. The sub-agent read a file that revealed the real cause and returned only what was asked. The parent cannot know what it was not told, and when the sub-agent ends, its context is gone.</p>
 <p>Mitigations, most effective last:</p>
 <ol>
-<li><strong>A "notable observations outside scope" field</strong> in the output schema. Cheap, and it recovers a surprising amount.</li>
+<li><strong>The "notable observations outside scope" field</strong> from chapter 3's <a href="03-ten-methods.html#m-9-sub-agent-isolation-with-a-contract">M-9</a>. Cheap, and it recovers a surprising amount.</li>
 <li><strong>Return <code>file:line</code> pointers instead of conclusions</strong>, so the parent can re-derive cheaply.</li>
-<li><strong>Save the sub-agent's transcript to a file</strong> and give the parent the path. This turns contract loss into offload: the parent can read it if the summary is not enough. It is the best available answer and rarely done.</li>
+<li><strong>Save the sub-agent's transcript to a file</strong> and give the parent the path. This turns contract loss into <a href="06-compaction-and-memory.html#offload-the-pattern-to-reach-for-first">offload</a>: the parent can read it if the summary is not enough. It is the best available answer and rarely done.</li>
 </ol>
 <h2 id="five-topologies">Five topologies<a class="rs-anchor" href="#five-topologies" title="Link to this section">#</a></h2>
 <p>Ordered from least to most isolation.</p>
@@ -410,7 +378,6 @@
 <text class="dg-s" x="450" y="232" text-anchor="middle">more isolation →</text>
 </svg>
 </div>
-<p class="diagram__hint">Scroll sideways to see all five.</p>
 <figcaption><span class="rs-fignum">Figure 2.</span> For coding, T-2 keeps every decision in one thread (satisfying Position A) while isolating the expensive reading (capturing Position B's benefit). T-5 is listed only because it is proposed so often.</figcaption>
 </figure>
 
@@ -452,7 +419,7 @@
 </table></div>
 <h2 id="the-boundary-problem">The boundary problem<a class="rs-anchor" href="#the-boundary-problem" title="Link to this section">#</a></h2>
 <p>Every isolation boundary is a lossy channel. What crosses it is what survives. The four kinds of boundary differ in how much control you have.</p>
-<figure class="diagram rs-chart" id="chart-sub-agents-0"><p class="diagram__title">How much control you have over what crosses each boundary</p><div class="diagram__scroll"><svg viewBox="0 0 720 170" role="img" aria-labelledby="chart-sub-agents-0-t" class="chart chart--hbar"><title id="chart-sub-agents-0-t">Session reset: full control. Sub-agent return: high. Compaction: low. Eviction: none.</title><line class="ch-grid" x1="230.0" y1="4" x2="230.0" y2="148"/><text class="ch-axis" x="230.0" y="164" text-anchor="middle">0</text><line class="ch-grid" x1="330.0" y1="4" x2="330.0" y2="148"/><text class="ch-axis" x="330.0" y="164" text-anchor="middle">0.75</text><line class="ch-grid" x1="430.0" y1="4" x2="430.0" y2="148"/><text class="ch-axis" x="430.0" y="164" text-anchor="middle">1.5</text><line class="ch-grid" x1="530.0" y1="4" x2="530.0" y2="148"/><text class="ch-axis" x="530.0" y="164" text-anchor="middle">2.25</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="148"/><text class="ch-axis" x="630.0" y="164" text-anchor="middle">3</text><text class="ch-label" x="220" y="29.0" text-anchor="end">Session reset with a handoff note</text><path class="ch-mark ch-s1" d="M230.0,16.0 h396.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-396.0 z" data-tip="Control (0 = none, 3 = full) · Session reset with a handoff note: 3"/><text class="ch-value" x="636.0" y="29.0">3</text><text class="ch-label" x="220" y="63.0" text-anchor="end">Sub-agent return with a schema</text><path class="ch-mark ch-muted" d="M230.0,50.0 h262.7 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-262.7 z" data-tip="Control (0 = none, 3 = full) · Sub-agent return with a schema: 2"/><text class="ch-value" x="502.7" y="63.0">2</text><text class="ch-label" x="220" y="97.0" text-anchor="end">Compaction</text><path class="ch-mark ch-muted" d="M230.0,84.0 h129.3 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-129.3 z" data-tip="Control (0 = none, 3 = full) · Compaction: 1"/><text class="ch-value" x="369.3" y="97.0">1</text><text class="ch-label" x="220" y="131.0" text-anchor="end">Context eviction policy</text><path class="ch-mark ch-muted" d="M230.0,118.0 h2.7 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-2.7 z" data-tip="Control (0 = none, 3 = full) · Context eviction policy: 0.05"/><text class="ch-value" x="242.7" y="131.0">0.05</text><line class="ch-base" x1="230" y1="4" x2="230" y2="148"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> You write a handoff note yourself. You specify a sub-agent's schema. You can only hope a summariser follows yours, and its output varies run to run <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. An eviction policy firing mid-task gives you no control at all.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Boundary</th><th scope="col">Control (0 = none, 3 = full)</th></tr></thead><tbody><tr><th scope="row">Session reset with a handoff note</th><td>3</td></tr><tr><th scope="row">Sub-agent return with a schema</th><td>2</td></tr><tr><th scope="row">Compaction</th><td>1</td></tr><tr><th scope="row">Context eviction policy</th><td>0.05</td></tr></tbody></table></div></details></figure>
+<figure class="diagram rs-chart" id="chart-sub-agents-0"><p class="diagram__title">How much control you have over what crosses each boundary</p><div class="diagram__scroll"><svg viewBox="0 0 720 170" role="img" aria-labelledby="chart-sub-agents-0-t" class="chart chart--hbar"><title id="chart-sub-agents-0-t">Session reset: full control. Sub-agent return: high. Compaction: low. Eviction: none.</title><line class="ch-grid" x1="230.0" y1="4" x2="230.0" y2="148"/><text class="ch-axis" x="230.0" y="164" text-anchor="middle">0</text><line class="ch-grid" x1="363.3" y1="4" x2="363.3" y2="148"/><text class="ch-axis" x="363.3" y="164" text-anchor="middle">1</text><line class="ch-grid" x1="496.7" y1="4" x2="496.7" y2="148"/><text class="ch-axis" x="496.7" y="164" text-anchor="middle">2</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="148"/><text class="ch-axis" x="630.0" y="164" text-anchor="middle">3</text><text class="ch-label" x="220" y="29.0" text-anchor="end">Session reset with a handoff note</text><path class="ch-mark ch-s1" d="M230.0,16.0 h396.0 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-396.0 z" data-tip="Control (0 = none, 3 = full) · Session reset with a handoff note: 3"/><text class="ch-value" x="636.0" y="29.0">3</text><text class="ch-label" x="220" y="63.0" text-anchor="end">Sub-agent return with a schema</text><path class="ch-mark ch-muted" d="M230.0,50.0 h262.7 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-262.7 z" data-tip="Control (0 = none, 3 = full) · Sub-agent return with a schema: 2"/><text class="ch-value" x="502.7" y="63.0">2</text><text class="ch-label" x="220" y="97.0" text-anchor="end">Compaction</text><path class="ch-mark ch-muted" d="M230.0,84.0 h129.3 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-129.3 z" data-tip="Control (0 = none, 3 = full) · Compaction: 1"/><text class="ch-value" x="369.3" y="97.0">1</text><text class="ch-label" x="220" y="131.0" text-anchor="end">Context eviction policy</text><text class="ch-value" x="236.0" y="131.0">0</text><line class="ch-base" x1="230" y1="4" x2="230" y2="148"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> You write a handoff note yourself. You specify a sub-agent's schema. You can only hope a summariser follows yours, and its output varies run to run <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>. An eviction policy firing mid-task gives you no control at all. Illustrative ordinal, not a measured scale <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Boundary</th><th scope="col">Control (0 = none, 3 = full)</th></tr></thead><tbody><tr><th scope="row">Session reset with a handoff note</th><td>3</td></tr><tr><th scope="row">Sub-agent return with a schema</th><td>2</td></tr><tr><th scope="row">Compaction</th><td>1</td></tr><tr><th scope="row">Context eviction policy</th><td>0</td></tr></tbody></table></div></details></figure>
 <p>This ranking is a strong, under-appreciated reason to prefer resets over compaction that has nothing to do with tokens: <strong>with a reset you author what survives.</strong></p>
 <p>Five principles for designing boundaries:</p>
 <ol>
@@ -539,7 +506,7 @@ max_turns: 25
 <td>Total-token multiplier</td>
 <td>Total tokens ÷ single-agent baseline</td>
 <td>Depends</td>
-<td>Whether you bought the 15× without the gain <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>Whether you bought the 15× without the 90.2%-class gain <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
 </tr>
 <tr>
 <td>Outside-scope yield</td>

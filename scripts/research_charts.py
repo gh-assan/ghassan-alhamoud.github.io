@@ -49,7 +49,10 @@ def nice_max(v):
     return 10 * base
 
 
-def ticks(maximum, n=4):
+def ticks(maximum, n=4, step=None):
+    if step:
+        count = int(round(maximum / step))
+        return [round(step * i, 6) for i in range(count + 1)]
     step = maximum / n
     return [round(step * i, 6) for i in range(n + 1)]
 
@@ -118,7 +121,7 @@ def render_hbar(spec):
         f'<svg viewBox="0 0 {width} {height}" role="img" aria-labelledby="{spec["_id"]}-t" class="chart chart--hbar">',
         f'<title id="{spec["_id"]}-t">{esc(spec.get("alt") or spec["caption"])}</title>',
     ]
-    for t in ticks(maximum):
+    for t in ticks(maximum, step=spec.get("tickStep")):
         tx = plot_x + plot_w * (t / maximum)
         parts.append(f'<line class="ch-grid" x1="{tx:.1f}" y1="{top - 4}" x2="{tx:.1f}" y2="{height - 22}"/>')
         parts.append(
