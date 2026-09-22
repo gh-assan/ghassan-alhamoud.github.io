@@ -109,6 +109,10 @@ def glossary_index(prog):
 # ---------------------------------------------------------------- markdown
 FENCE_RE = re.compile(r"^(`{3,})([^\n`]*)\n(.*?)\n\1[ \t]*$", re.S | re.M)
 CALLOUT_RE = re.compile(r"^> \[!(\w+)\][ \t]*(.*)$", re.M)
+# python-markdown merges adjacent blockquotes separated by a blank line, so a
+# callout directly following another callout shares its <blockquote>. Markers
+# after the first surface as plain paragraphs and must split the aside.
+CALLOUT_MARK_RE = re.compile(r"<p>@@CALLOUT:(\w+):(.*?)@@</p>", re.S)
 
 
 class Renderer:
@@ -215,15 +219,21 @@ class Renderer:
 
     def _callouts(self, body):
         def repl(m):
-            kind, title, inner = m.group(1), m.group(2), m.group(3)
-            if kind not in CALLOUTS:
-                self.errors.append(f"unknown callout type: {kind}")
-            label = title or CALLOUTS.get(kind, "Note")
-            return (f'<aside class="callout rs-callout rs-callout--{kind}">'
-                    f'<p class="rs-callout__title">{label}</p>{inner}</aside>')
-        return re.sub(
-            r"<blockquote>\s*<p>@@CALLOUT:(\w+):(.*?)@@\s*</p>(.*?)</blockquote>",
-            repl, body, flags=re.S)
+            parts = CALLOUT_MARK_RE.split(m.group(1))
+            if len(parts) == 1:
+                return m.group(0)
+            out = []
+            if parts[0].strip():
+                out.append(f"<blockquote>{parts[0]}</blockquote>")
+            for i in range(1, len(parts), 3):
+                kind, title, inner = parts[i], parts[i + 1], parts[i + 2]
+                if kind not in CALLOUTS:
+                    self.errors.append(f"unknown callout type: {kind}")
+                label = title or CALLOUTS.get(kind, "Note")
+                out.append((f'<aside class="callout rs-callout rs-callout--{kind}">'
+                            f'<p class="rs-callout__title">{label}</p>{inner}</aside>'))
+            return "".join(out)
+        return re.sub(r"<blockquote>(.*?)</blockquote>", repl, body, flags=re.S)
 
     def resolve_href(self, href):
         if href.startswith("ch:"):

@@ -18,7 +18,7 @@ Labels are applied to claims that carry a number or could be contested. They are
 
 - **Supports:** performance generally degrading as input grows across controlled experiments with 18 models, four vendors, 8 input lengths and 11 needle positions; the effect of question–answer similarity; distractors compounding non-uniformly; **coherent text retrieving worse than shuffled text** across all 18 models; the focused (~300 tokens) versus full (~113K) LongMemEval gap. The curves are non-uniform and model/task-specific.
 - **Discount:** static retrieval tasks, not agent trajectories. Rule R3 applies to every use.
-- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [lessons A](ch:lessons).
+- **Used in:** [chapter 1](ch:foundations#what-long-context-studies-actually-show), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#nine-ways-code-retrieval-goes-wrong), [lessons A](ch:lessons).
 - **Link:** [trychroma.com/research/context-rot](https://www.trychroma.com/research/context-rot)
 
 ### Effective-length caveat
@@ -38,7 +38,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the AppWorld table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
 - **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
 
 ### "Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)
@@ -52,14 +52,14 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** **the summariser-only swing, SWE-bench 49.0% → 55.5%**; +5.5 / +7.0 on SWE-bench Verified and +6.8 / +3.1 on Terminal-Bench 2.0 from compaction-aware training; operating parameters (10,240-token threshold, at most 3 compactions per run, at most 250 turns).
 - **Discount:** the training results need access most readers lack. The 6.5-point swing at inference time does not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
 - **Link:** [arXiv 2607.05378](https://arxiv.org/abs/2607.05378)
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
 
-- **Supports:** rubric-gated self-triggered compaction (fire on sub-task resolution or convergence; hold off mid-derivation or when stuck); the failure of both reactive and periodic triggers; preservation of verified facts that fixed-interval compaction destroys.
+- **Supports:** rubric-gated self-triggered compaction (fire on sub-task resolution or convergence; hold off mid-derivation or when stuck); the failure of both reactive and periodic triggers; preservation of verified facts that fixed-interval compaction destroys; summarisation as a **blocking call that can stall the agent for tens of seconds**.
 - **Discount:** the rubric is one instantiation.
-- **Used in:** [chapter 6](ch:compaction-and-memory#result-6-semantic-triggering-beats-both-naive-triggers).
+- **Used in:** [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-6-semantic-triggering-beats-both-naive-triggers).
 - **Link:** [arXiv 2606.23525](https://arxiv.org/abs/2606.23525)
 
 ### "The Complexity Trap: Simple Observation Masking Is as Efficient as LLM Summarization for Agent Context Management"
@@ -73,14 +73,14 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** grep generally beating vector retrieval on 116 LongMemEval-derived questions; **four harnesses** compared, inline versus file-based results; overall scores depending strongly on harness and tool-calling style on identical data; eight surveyed agents using the model as a navigator over shell tools.
 - **Discount:** the questions are conversational-memory shaped, not repository shaped. The harness finding transfers more confidently than the grep-versus-vector ranking.
-- **Used in:** [chapter 5](ch:retrieval#the-question-posed-correctly), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval#the-question-posed-correctly), [case CS-7](ch:case-studies#cs-7-grep-beat-embeddings-and-the-harness-beat-both-s).
 - **Link:** [arXiv 2605.15184](https://arxiv.org/abs/2605.15184)
 
 ### Token economics of tool-heavy agents (including arXiv 2606.10209)
 
 - **Supports:** input tokens at 99.75–99.87% of total usage; full context at 2.68× the tokens of the best managed method with fewer tasks completed.
 - **Discount:** tool-heavy workloads specifically; ratios differ for chat.
-- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
+- **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model).
 - **Link:** [arXiv 2606.10209](https://arxiv.org/abs/2606.10209)
 
 ## Practitioner engineering writing
@@ -95,7 +95,13 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the orchestrator-worker architecture; **90.2%** over single-agent Opus 4 on an internal research evaluation; about **15×** chat tokens (agents about 4×); **about 80%** of performance variance explained by token usage.
 - **Discount:** research tasks, not coding; an internal evaluation; first-party. The 15× and 80% must always be quoted with the 90.2%.
-- **Used in:** [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [case CS-2](ch:case-studies#cs-2-the-research-system-that-beat-one-agent-by-90-p).
+- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [case CS-2](ch:case-studies#cs-2-the-research-system-that-beat-one-agent-by-90-p).
+
+### Sub-agent token-efficiency reporting
+
+- **Supports:** about **9K total tokens** for a multi-domain query answered through isolated sub-agents versus about **15K** with an accumulating-context pattern.
+- **Discount:** [P]. A single practitioner comparison with no published method; no independent reproduction found.
+- **Used in:** [chapter 3](ch:ten-methods#m-9-sub-agent-isolation-with-a-contract), [chapter 7](ch:sub-agents).
 
 ### Cognition, "Don't Build Multi-Agents"
 
@@ -115,6 +121,12 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 - **Discount:** [P]. The comparison's full method was not available, and the page returned HTTP 403 during research, so figures were captured from search summaries. Its direction is corroborated by the focused-versus-full result above. **Re-verify before citing externally.**
 - **Used in:** [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview).
 
+### Hybrid code-retrieval reporting
+
+- **Supports:** a hybrid of semantic search and grep reported **12.5% more accurate** than either retrieval strategy alone.
+- **Discount:** [P]. No published method and no independent reproduction found.
+- **Used in:** [chapter 3](ch:ten-methods#m-4-structural-retrieval), [chapter 5](ch:retrieval), [chapter 11](ch:hard-calls), [chapter 13](ch:antipatterns).
+
 ### Drew Breunig, "How Long Contexts Fail"
 
 - **Supports:** the poisoning, distraction, confusion and clash taxonomy, a commonly used taxonomy rather than a measurement.
@@ -124,21 +136,21 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### Tool-count degradation reporting
 
-- **Supports:** 43% → under 14% as tool count grows; 19 of 20 at 20 tools → failure at 107; the ~20-tool practitioner threshold; the ~42,000-token single-server figure.
-- **Discount:** mixed [S] and [P]. The strength is two independent methods converging near 20; individual figures are weaker.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 8](ch:tool-surface#the-measured-damage).
+- **Supports:** 43% → under 14% as tool count grows; 19 of 20 at 20 tools → failure at 107; the ~20-tool practitioner threshold; the ~42,000-token single-server figure; tool surfaces regrowing to their old size within a quarter without a recurring audit [P].
+- **Discount:** mixed [S] and [P]. The strength is two independent methods converging near 20; individual figures are weaker. The 43% → 14% and 19-of-20 figures are published evaluation numbers captured from secondary coverage (see the verification caveat); the ~20-tool threshold and the regrowth observation are practitioner consensus [P].
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#the-measured-damage).
 
 ### Progressive disclosure and code-execution reporting
 
 - **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server.
 - **Discount:** first-party and community reports; no independent reproduction found.
-- **Used in:** [chapter 8](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
 
 ### Prefix-caching operational reporting
 
 - **Supports:** 85.2% hit rate with ~46,059 tokens reused per request; 90% hit rate giving sub-200 ms time to first token and 80–90% compute savings; byte-exact prefix matching.
 - **Discount:** [P], specific to particular serving stacks. The relative prices in chapter 10 are generic shapes, not any provider's rate card.
-- **Used in:** [chapter 1](ch:foundations#five-constraints-around-a-context-decision), [chapter 10](ch:metrics-and-economics).
+- **Used in:** [chapter 1](ch:foundations#five-constraints-around-a-context-decision), [chapter 3](ch:ten-methods#m-1-prefix-stability), [chapter 10](ch:metrics-and-economics).
 
 ### AGENTS.md and instruction-file practice
 
@@ -162,11 +174,13 @@ Figures in that category:
 - the observation-masking numeric detail
 - the ~42,000-token single-server figure
 - the 43% → 14% and 19/20 → failure tool-count figures
+- the hybrid +12.5% figure
+- the 9K-versus-15K sub-agent token comparison and the within-a-quarter regrowth observation
 - the AGENTS.md adoption and ~4% figures
 - the 85.2% / 46,059-token prefix-cache figures
 - every percentage in the tooling chapter
 
-**Re-verify any of these before citing them externally.** None is the only support for a load-bearing conclusion; each is corroborated in direction by at least one [S] source.
+**Re-verify any of these before citing them externally.** Every pre-existing figure in this list is corroborated in direction by at least one [S] source and none is the only support for a load-bearing conclusion. The three figures added during the chapter 3 review — the hybrid +12.5% result, the 9K-versus-15K sub-agent comparison and the within-a-quarter regrowth observation — stand on single practitioner reports and are treated as upper bounds wherever they appear.
 
 ## What would prove this research wrong
 

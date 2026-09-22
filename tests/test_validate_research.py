@@ -64,6 +64,22 @@ class ResearchRendererTests(unittest.TestCase):
         body, renderer = self.render("A [[prefix|stable prefix]] matters.")
         self.assertIn('href="glossary.html#prefix"', body)
         self.assertIn(">stable prefix</a>", body)
+
+    def test_adjacent_callouts_render_as_two_asides(self):
+        """A callout directly following another callout must not be swallowed
+        into the first aside (R37 defect class)."""
+        text = ("> [!example] Worked example [C]\n"
+                "> Content of the example.\n"
+                "\n"
+                "> [!try] Decision test\n"
+                "> Run the test.\n")
+        body, renderer = self.render(text)
+        self.assertNotIn("@@CALLOUT", body)
+        self.assertEqual(2, body.count('<aside class="callout rs-callout'))
+        self.assertIn("rs-callout--example", body)
+        self.assertIn("rs-callout--try", body)
+        self.assertIn("<p>Run the test.</p>", body)
+        self.assertEqual([], renderer.errors)
         self.assertEqual([], renderer.errors)
 
     def test_unknown_glossary_term_is_reported(self):
@@ -208,6 +224,17 @@ class RegressionGateTests(unittest.TestCase):
             {"slug": "t", "_base": base, "chapters": [{"slug": "c", "file": "fixture.md"}]}, report)
         tmp.cleanup()
         return report
+
+    def test_unresolved_build_marker_is_caught(self):
+        """R37: a page carrying an unresolved build marker must fail."""
+        import tempfile
+        tmp = tempfile.TemporaryDirectory(dir=ROOT)
+        page = Path(tmp.name) / "fixture.html"
+        page.write_text("<p>@@CALLOUT:try:Decision test@@</p>\n", encoding="utf-8")
+        report = validate_research.Report()
+        validate_research.check_page(page, report)
+        tmp.cleanup()
+        self.assertTrue(any("R37" in e for e in report.errors), report.errors)
 
     def test_mobile_on_this_page_mirrors_the_rail(self):
         """The mobile disclosure is the desktop rail collapsed (bar section 2)."""

@@ -352,6 +352,8 @@ def check_page(path, rep, chapter=False):
         rep.err("R4", f"{rel}: missing generated page")
         return
     page = path.read_text(encoding="utf-8")
+    if re.search(r"@@(?:CALLOUT|RSBLOCK)", page):
+        rep.err("R37", f"{rel}: unresolved build marker in output")
     if len(re.findall(r"<h1\b", page)) != 1:
         rep.err("R22", f"{rel}: expected exactly one <h1>")
     t = re.search(r"<title>(.*?)</title>", page, re.S)
