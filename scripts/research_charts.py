@@ -33,9 +33,16 @@ def fmt(value, spec):
 
 
 def axis_fmt(spec):
-    """Axis ticks drop series-level precision: general number format, valueFormat's literals kept."""
-    template = re.sub(r"\{v[^}]*\}", "{:g}", spec.get("valueFormat", "{v}"))
-    return lambda t: template.format(t)
+    """Axis ticks drop series-level precision: general number format with thousands
+    separators, valueFormat's literals kept."""
+    template = re.sub(r"\{v[^}]*\}", "{v}", spec.get("valueFormat", "{v}"))
+    def render(t):
+        if isinstance(t, float) and t.is_integer():
+            t = int(t)
+        if isinstance(t, int) and abs(t) >= 1000:
+            t = f"{t:,}"
+        return template.format(v=t)
+    return render
 
 
 def nice_max(v):

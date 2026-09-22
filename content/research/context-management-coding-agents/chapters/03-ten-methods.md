@@ -141,7 +141,7 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 **Trouble signs.** Definitions over 20% of the prefix. More than three tools defined for each tool used. The agent choosing an applicable but wrong tool. The agent *talking about* a capability it never calls.
 
 > [!example] Worked example: four servers, nine tools used [C]
-> Four MCP servers — GitHub (42K), database (11K), browser (9K), filesystem (4K) — put 66K of definitions, 33% of a 200K window, before any work. Over 20 sessions, 9 of the roughly 70 defined tools were called, all from GitHub, and 6 duplicated the `gh` command. The team deletes the three never-called or duplicated servers and switches GitHub to deferred definitions: **about 2,500 prefix tokens. Recovered: 63,500 tokens, 32% of the window.** Task success is unchanged over the next 20 sessions; median session cost falls 34%.
+> Four MCP servers — GitHub (42K), database (11K), browser (9K), filesystem (4K) — put 66K of definitions, 33% of a 200K window, before any work. Over 20 sessions, 9 of the 61 defined tools were called — seven from GitHub (six duplicating the `gh` command) and two filesystem calls that duplicated `cat`. The team deletes the three never-called or duplicated servers and switches GitHub to deferred definitions: **about 2,500 prefix tokens. Recovered: 63,500 tokens, 32% of the window.** Task success is unchanged over the next 20 sessions; median session cost falls 34%.
 
 > [!try] Decision test
 > Count definition tokens and the defined-to-called ratio. If definitions exceed 15K tokens or the ratio exceeds 3:1, M-2 is a strong candidate; verify that the unused surface is your largest controllable segment before changing it.

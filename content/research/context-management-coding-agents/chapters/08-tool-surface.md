@@ -12,11 +12,7 @@ Compare that with retrieval discipline, which needs sustained behaviour change. 
 
 ## The measured damage
 
-[[Tool bloat]] hurts through two independent channels. Confusing them leads to the wrong fix.
-
-**Channel 1: displacement.** Definition tokens are prefix tokens, and they crowd out work. One popular [[MCP]] server consumes about **42,000 tokens of definitions** before anything else [P]. Three such servers spend over 120K tokens on the *possibility* of acting, most of a 200K window before the first file is read.
-
-**Channel 2: selection confusion.** Independent of tokens, more candidates mean worse choices.
+[[Tool bloat]] hurts through chapter 3's [M-2](ch:ten-methods#m-2-tool-surface-minimisation) two channels, and confusing them leads to the wrong fix: **displacement** (definition tokens are prefix tokens — one popular [[MCP]] server consumes about **42,000 tokens of definitions** [P]; three such servers spend over 120K tokens on the *possibility* of acting) and **selection confusion** (more candidates, worse choices — independent of tokens).
 
 | Finding | Number | Source |
 |---|---|---|
@@ -39,7 +35,7 @@ Every tool's full schema loaded upfront, every session. Simple and predictable; 
 
 Short descriptions upfront; full schemas fetched when a tool is chosen. This separates *when to use it* from *how to call it*. See [[progressive disclosure]].
 
-Reported, and vendor-reported means best case until someone reproduces it: **about 25,000 tokens of definitions became about 2,500 tokens of descriptions** [P], an order of magnitude with capability preserved. This is the idea behind agent skills, and the ecosystem has converged on it [P]. In 2026 some harnesses made deferred definitions the default [P].
+Reported, and vendor-reported means best case until someone reproduces it: **about 25,000 tokens of definitions became about 2,500 tokens of descriptions** [P], an order of magnitude with capability preserved. The ecosystem has converged on the idea, and by 2026 some harnesses made deferred definitions the default [P].
 
 Costs: one round trip before a tool's first use; a discoverability risk (a capability with an unappealing description never gets used); and a recursion trap, because enough descriptions become bloat one level up.
 
@@ -92,7 +88,7 @@ Costs: a sandbox; an API worth writing against; and a real failure mode where bu
 
 The highest-yield thirty minutes in this research when the audit confirms tool-surface waste.
 
-1. **Count.** Dump every tool schema in scope and count tokens, per server and in total. Most people are off by 3–5×.
+1. **Count.** Dump every tool schema in scope and count tokens, per server and in total. Most people are off by 3–5× [D].
 2. **Attribute.** Sort servers by size. One may dominate; measure rather than assume.
 3. **Use-count.** Count calls per tool across your last 20 sessions. Most harnesses log this; otherwise grep the transcripts.
 4. **Classify.**
@@ -104,7 +100,7 @@ The highest-yield thirty minutes in this research when the audit confirms tool-s
 | **Rare but critical** | Fewer than 3 calls, but decisive | Defer it, or move it behind code execution |
 | **Core** | Called often | Keep it eager; trim its description |
 
-5. **Trim what remains.** Descriptions and examples are typically 40% trimmable with no behaviour change. Deduplicating repeated schema structures with `$ref` saves another 10–30% [D].
+5. **Trim what remains.** Descriptions and examples are typically 40% trimmable with no behaviour change [D]. Deduplicating repeated schema structures with `$ref` saves another 10–30% [D].
 6. **Set a budget and enforce it.** For example: at most 20 active tools and 15K definition tokens. Adding a server means removing one or writing down the exception. Without this, the surface grows back within a quarter [P].
 
 The [tool audit template](ch:templates#2-tool-surface-audit) walks through it.
@@ -116,10 +112,10 @@ The most common single waste is **an MCP server that duplicates what the agent c
 | MCP server | Shell equivalent | Tokens saved by deleting |
 |---|---|---|
 | GitHub | `gh` | ~42K [P] |
-| Filesystem | `ls`, `cat`, `find`, `rg` | 3–8K |
-| Database | `psql`, `mysql`, `sqlite3` | 5–12K |
-| HTTP fetch | `curl` | 2–5K |
-| Git | `git` | 3–6K |
+| Filesystem | `ls`, `cat`, `find`, `rg` | 3–8K [D] |
+| Database | `psql`, `mysql`, `sqlite3` | 5–12K [D] |
+| HTTP fetch | `curl` | 2–5K [D] |
+| Git | `git` | 3–6K [D] |
 
 The shell version is usually *better*: it composes with pipes (result shaping for free), it is well represented in training data, it has no schema to load, and it has no version skew between server and command.
 

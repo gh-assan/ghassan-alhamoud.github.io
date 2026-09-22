@@ -148,7 +148,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### Progressive disclosure and code-execution reporting
 
-- **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server.
+- **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server; the practitioner-landscape convergence on deferred definitions, with some harnesses making them the default by 2026; emerging MCP proposals for adaptive response granularity.
 - **Discount:** first-party and community reports; no independent reproduction found.
 - **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
 
@@ -183,6 +183,7 @@ Figures in that category:
 - the hybrid +12.5% figure
 - the 9K-versus-15K sub-agent token comparison and the within-a-quarter regrowth observation
 - the 60%+ search-time figure
+- the progressive-disclosure family of figures (25K→2.5K, 150K→2K / 98.7%, 99%+ at 112 tools, the 98% GitHub report)
 - the AGENTS.md adoption and ~4% figures
 - the 85.2% / 46,059-token prefix-cache figures
 - every percentage in the tooling chapter
