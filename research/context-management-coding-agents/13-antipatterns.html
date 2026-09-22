@@ -121,13 +121,13 @@
           <h1 class="rs-hero__title">Sixteen antipatterns</h1>
           <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What looks like good context hygiene but is not, and how do you tell the difference?</p>
           <div class="rs-meta">
-            <span>7 min read</span><span aria-hidden="true">·</span>
+            <span>8 min read</span><span aria-hidden="true">·</span>
             <span>Practitioner</span><span aria-hidden="true">·</span>
             <span>Step 13 of 20</span><span aria-hidden="true">·</span>
             <span>3/4 in this part</span>
           </div>
         </header>
-        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html" aria-current="page"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#hygiene-that-is-not-hygiene">Hygiene that is not hygiene</a></li><li><a class="on-this-page__link" href="#generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container</a><ul><li><a class="on-this-page__link" href="#ap-1-the-briefing-document">AP-1: The briefing document</a></li><li><a class="on-this-page__link" href="#ap-2-just-in-case-tooling">AP-2: Just-in-case tooling</a></li><li><a class="on-this-page__link" href="#ap-10-middle-truncation">AP-10: Middle truncation</a></li><li><a class="on-this-page__link" href="#ap-12-correcting-in-place">AP-12: Correcting in place</a></li><li><a class="on-this-page__link" href="#ap-13-the-heroic-session">AP-13: The heroic session</a></li></ul></li><li><a class="on-this-page__link" href="#generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting</a><ul><li><a class="on-this-page__link" href="#ap-3-full-stack-adoption">AP-3: Full-stack adoption</a></li><li><a class="on-this-page__link" href="#ap-5-write-only-memory">AP-5: Write-only memory</a></li><li><a class="on-this-page__link" href="#ap-6-the-growing-instruction-file">AP-6: The growing instruction file</a></li><li><a class="on-this-page__link" href="#ap-8-multi-agent-by-default">AP-8: Multi-agent by default</a></li><li><a class="on-this-page__link" href="#ap-16-the-context-framework">AP-16: The context framework</a></li></ul></li><li><a class="on-this-page__link" href="#generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome</a><ul><li><a class="on-this-page__link" href="#ap-4-compaction-as-hygiene">AP-4: Compaction as hygiene</a></li><li><a class="on-this-page__link" href="#ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer</a></li><li><a class="on-this-page__link" href="#ap-9-token-counting-as-success">AP-9: Token counting as success</a></li><li><a class="on-this-page__link" href="#ap-11-the-unread-dashboard">AP-11: The unread dashboard</a></li><li><a class="on-this-page__link" href="#ap-14-optimising-someone-elses-bottleneck">AP-14: Optimising someone else&#x27;s bottleneck</a></li><li><a class="on-this-page__link" href="#ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks</a></li></ul></li></ul></div></details></div>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html" aria-current="page"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#hygiene-that-is-not-hygiene">Hygiene that is not hygiene</a></li><li><a class="on-this-page__link" href="#the-tell-index">The tell index</a></li><li><a class="on-this-page__link" href="#generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container</a><ul><li><a class="on-this-page__link" href="#ap-1-the-briefing-document">AP-1: The briefing document</a></li><li><a class="on-this-page__link" href="#ap-2-just-in-case-tooling">AP-2: Just-in-case tooling</a></li><li><a class="on-this-page__link" href="#ap-10-middle-truncation">AP-10: Middle truncation</a></li><li><a class="on-this-page__link" href="#ap-12-correcting-in-place">AP-12: Correcting in place</a></li><li><a class="on-this-page__link" href="#ap-13-the-heroic-session">AP-13: The heroic session</a></li></ul></li><li><a class="on-this-page__link" href="#generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting</a><ul><li><a class="on-this-page__link" href="#ap-3-full-stack-adoption">AP-3: Full-stack adoption</a></li><li><a class="on-this-page__link" href="#ap-5-write-only-memory">AP-5: Write-only memory</a></li><li><a class="on-this-page__link" href="#ap-6-the-growing-instruction-file">AP-6: The growing instruction file</a></li><li><a class="on-this-page__link" href="#ap-8-multi-agent-by-default">AP-8: Multi-agent by default</a></li><li><a class="on-this-page__link" href="#ap-16-the-context-framework">AP-16: The context framework</a></li></ul></li><li><a class="on-this-page__link" href="#generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome</a><ul><li><a class="on-this-page__link" href="#ap-4-compaction-as-hygiene">AP-4: Compaction as hygiene</a></li><li><a class="on-this-page__link" href="#ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer</a></li><li><a class="on-this-page__link" href="#ap-9-token-counting-as-success">AP-9: Token counting as success</a></li><li><a class="on-this-page__link" href="#ap-11-the-unread-dashboard">AP-11: The unread dashboard</a></li><li><a class="on-this-page__link" href="#ap-14-optimising-someone-elses-bottleneck">AP-14: Optimising someone else&#x27;s bottleneck</a></li><li><a class="on-this-page__link" href="#ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks</a></li></ul></li></ul></div></details></div>
         <section class="rs-brief" aria-label="Chapter brief">
           <div class="rs-brief__col">
             <h2 class="rs-brief__title">In 30 seconds</h2>
@@ -162,6 +162,81 @@
 <figcaption><span class="rs-fignum">Figure 1.</span> If you catch yourself in one antipattern, check its siblings: the same habit is probably producing them too.</figcaption>
 </figure>
 
+<h2 id="the-tell-index">The tell index<a class="rs-anchor" href="#the-tell-index" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>AP</th>
+<th>Tell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#ap-1-the-briefing-document">AP-1</a></td>
+<td>The document is prose, not pointers</td>
+</tr>
+<tr>
+<td><a href="#ap-2-just-in-case-tooling">AP-2</a></td>
+<td>More than three tools defined per tool called</td>
+</tr>
+<tr>
+<td><a href="#ap-3-full-stack-adoption">AP-3</a></td>
+<td>You cannot say which change produced which effect</td>
+</tr>
+<tr>
+<td><a href="#ap-4-compaction-as-hygiene">AP-4</a></td>
+<td>Triggered by a threshold or timer, not a task event</td>
+</tr>
+<tr>
+<td><a href="#ap-5-write-only-memory">AP-5</a></td>
+<td>You cannot name a retrieval that changed an action</td>
+</tr>
+<tr>
+<td><a href="#ap-6-the-growing-instruction-file">AP-6</a></td>
+<td>File history shows additions, never deletions</td>
+</tr>
+<tr>
+<td><a href="#ap-7-semantic-search-as-the-answer">AP-7</a></td>
+<td>Grep treated as the fallback, not the workhorse</td>
+</tr>
+<tr>
+<td><a href="#ap-8-multi-agent-by-default">AP-8</a></td>
+<td>No 20-line output schema for the sub-agent</td>
+</tr>
+<tr>
+<td><a href="#ap-9-token-counting-as-success">AP-9</a></td>
+<td>The reported metric is a cost, not an outcome</td>
+</tr>
+<tr>
+<td><a href="#ap-10-middle-truncation">AP-10</a></td>
+<td>The truncation marker sits where the error was</td>
+</tr>
+<tr>
+<td><a href="#ap-11-the-unread-dashboard">AP-11</a></td>
+<td>Nobody can name a decision a metric changed</td>
+</tr>
+<tr>
+<td><a href="#ap-12-correcting-in-place">AP-12</a></td>
+<td>The "fixed" wrong fact returns later in the session</td>
+</tr>
+<tr>
+<td><a href="#ap-13-the-heroic-session">AP-13</a></td>
+<td>More than one compaction</td>
+</tr>
+<tr>
+<td><a href="#ap-14-optimising-someone-elses-bottleneck">AP-14</a></td>
+<td>You overhauled one segment while another was the problem</td>
+</tr>
+<tr>
+<td><a href="#ap-15-trusting-transferred-benchmarks">AP-15</a></td>
+<td>You cite a number you have not reproduced</td>
+</tr>
+<tr>
+<td><a href="#ap-16-the-context-framework">AP-16</a></td>
+<td>More configuration options than measured problems</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container<a class="rs-anchor" href="#generator-1-treating-the-window-as-a-container" title="Link to this section">#</a></h2>
 <p>If context is a bucket, filling it is free until it overflows, and the only question is "does it fit?". Every antipattern here is what that model recommends. The correction is <a href="01-foundations.html#start-with-the-right-mental-model">chapter 1</a>: the window is an attention budget whose useful band depends on the task.</p>
 <h3 id="ap-1-the-briefing-document">AP-1: The briefing document<a class="rs-anchor" href="#ap-1-the-briefing-document" title="Link to this section">#</a></h3>
@@ -170,7 +245,7 @@
 <li><strong>The real version:</strong> a pointer seed under 2,000 tokens: entry points, invariants, landmines, commands.</li>
 <li><strong>Tell:</strong> the document is <em>prose</em> rather than <em>pointers</em>. If it explains instead of locating, this is it.</li>
 <li><strong>Cost:</strong> 5K targeted retrieval beat a 100K summary <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>, and coherent documents retrieve <em>worse</em> than incoherent ones across all 18 models <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. You pay 40K tokens for a well-built distractor that goes stale silently.</li>
-<li><strong>Fix:</strong> convert it to pointers. "Auth lives in <code>src/auth/</code>, entry <code>session.ts</code>; all database access via <code>repo/</code>" replaces four paragraphs at 3% of the cost.</li>
+<li><strong>Fix:</strong> convert it to pointers. "Auth lives in <code>src/auth/</code>, entry <code>session.ts</code>; all database access via <code>repo/</code>" replaces four paragraphs at 3% of the cost. The pointer seed is <a href="05-retrieval.html#should-you-seed-the-session-with-a-codebase-overview">chapter 5</a>'s.</li>
 </ul>
 <h3 id="ap-2-just-in-case-tooling">AP-2: Just-in-case tooling<a class="rs-anchor" href="#ap-2-just-in-case-tooling" title="Link to this section">#</a></h3>
 <ul>
@@ -178,7 +253,7 @@
 <li><strong>The real version:</strong> a curated surface of at most 20 tools matched to the actual work.</li>
 <li><strong>Tell:</strong> more than three tools defined for every tool called.</li>
 <li><strong>Cost:</strong> 42K tokens for a single server <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; selection collapsing from 19 of 20 at 20 tools to failure at 107 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Prompt budget is present on every call, but billing depends on cache hits and request stability.</li>
-<li><strong>Fix:</strong> delete candidates with zero calls in a representative sample; verify task coverage and keep rollback.</li>
+<li><strong>Fix:</strong> delete candidates with zero calls in a representative sample; verify task coverage and keep rollback. The <a href="08-tool-surface.html#the-30-minute-audit">30-minute audit</a> does this systematically.</li>
 </ul>
 <h3 id="ap-10-middle-truncation">AP-10: Middle truncation<a class="rs-anchor" href="#ap-10-middle-truncation" title="Link to this section">#</a></h3>
 <ul>
@@ -186,7 +261,7 @@
 <li><strong>The real version:</strong> head-and-tail truncation, roughly 30/70, with a pointer to the full artifact.</li>
 <li><strong>Tell:</strong> the truncation marker sits exactly where the error would have been.</li>
 <li><strong>Cost:</strong> errors and stack traces cluster at the end. The agent reasons about a failure it never saw.</li>
-<li><strong>Fix:</strong> head-and-tail, plus offload so the full text is one <code>cat</code> away.</li>
+<li><strong>Fix:</strong> head-and-tail, plus offload so the full text is one <code>cat</code> away (<a href="03-ten-methods.html#m-5-output-shaping">chapter 3</a> owns the truncation rule).</li>
 </ul>
 <h3 id="ap-12-correcting-in-place">AP-12: Correcting in place<a class="rs-anchor" href="#ap-12-correcting-in-place" title="Link to this section">#</a></h3>
 <ul>
@@ -194,7 +269,7 @@
 <li><strong>The real version:</strong> resetting to before the poison and restating from clean ground.</li>
 <li><strong>Tell:</strong> the wrong fact comes back later in the same session after you "fixed" it.</li>
 <li><strong>Cost:</strong> the wrong fact stays as a permanent distractor, and a compaction may keep the wrong version.</li>
-<li><strong>Fix:</strong> reset. You cannot delete from a transcript by talking to it.</li>
+<li><strong>Fix:</strong> reset. You cannot delete from a transcript by talking to it (<a href="12-failure-modes.html#b-staleness-and-poisoning">chapter 12</a>'s F-9 carries the containment).</li>
 </ul>
 <h3 id="ap-13-the-heroic-session">AP-13: The heroic session<a class="rs-anchor" href="#ap-13-the-heroic-session" title="Link to this section">#</a></h3>
 <ul>
@@ -202,7 +277,7 @@
 <li><strong>The real version:</strong> four 90-minute sessions with explicit handoffs.</li>
 <li><strong>Tell:</strong> more than one compaction.</li>
 <li><strong>Cost:</strong> degradation compounds <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, rules fade, distraction dominates, and every turn is priced against a nearly full window. Quality falls just as your sunk-cost commitment rises.</li>
-<li><strong>Fix:</strong> mechanical caps that need no judgment in the moment: one compaction, or two hours.</li>
+<li><strong>Fix:</strong> mechanical caps that need no judgment in the moment: one compaction, or two hours (<a href="03-ten-methods.html#m-10-session-lifecycle">chapter 3's M-10</a>).</li>
 </ul>
 <h2 id="generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting<a class="rs-anchor" href="#generator-2-adding-instead-of-subtracting" title="Link to this section">#</a></h2>
 <p>Adding is visible and feels like work. Deleting looks like doing nothing. So instruction files grow, memory accumulates, frameworks get built and stacks get adopted wholesale. The evidence is lopsidedly pro-subtraction: masking beats summarising at equal solve rate <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, fewer tools beat more <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, 5K beats 100K <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. The incentives are lopsidedly pro-addition. <strong>The correction is to make removal a reported result</strong>: an ablation that deletes a component is a finding, not an admission.</p>
@@ -220,7 +295,7 @@
 <li><strong>The real version:</strong> a small curated memory with a measured read path.</li>
 <li><strong>Tell:</strong> you cannot say how many retrievals <em>changed an action</em> last week.</li>
 <li><strong>Cost:</strong> always-loaded prefix tokens, curation time, and stale entries that are confidently wrong without failing loudly.</li>
-<li><strong>Fix:</strong> instrument retrievals that changed an action. Under one a week, delete the system. Move durable knowledge into <a class="rs-term" href="glossary.html#adr" data-def="A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.">ADRs</a>.</li>
+<li><strong>Fix:</strong> instrument retrievals that changed an action. Under one a week, delete the system. Move durable knowledge into <a class="rs-term" href="glossary.html#adr" data-def="A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.">ADRs</a>. The memory architecture is <a href="06-compaction-and-memory.html#cross-session-memory">chapter 6</a>'s.</li>
 </ul>
 <h3 id="ap-6-the-growing-instruction-file">AP-6: The growing instruction file<a class="rs-anchor" href="#ap-6-the-growing-instruction-file" title="Link to this section">#</a></h3>
 <ul>
@@ -228,14 +303,14 @@
 <li><strong>The real version:</strong> at most 150 lines of rules that cannot be inferred, pruned as often as extended.</li>
 <li><strong>Tell:</strong> monotone growth. If the file's history has no deletions, this is it.</li>
 <li><strong>Cost:</strong> dilution, position effects as utilisation rises <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and contradictions between rules written months apart.</li>
-<li><strong>Fix:</strong> the inference test on every line. Turn repeatedly violated rules into hooks, lints or tests. Text that is not followed is not a control.</li>
+<li><strong>Fix:</strong> the <a href="02-anatomy.html#how-to-act-on-each-segment">inference test</a> on every line. Turn repeatedly violated rules into hooks, lints or tests. Text that is not followed is not a control.</li>
 </ul>
 <h3 id="ap-8-multi-agent-by-default">AP-8: Multi-agent by default<a class="rs-anchor" href="#ap-8-multi-agent-by-default" title="Link to this section">#</a></h3>
 <ul>
 <li><strong>Looks like:</strong> splitting every non-trivial task across parallel sub-agents.</li>
 <li><strong>The real version:</strong> one linear thread with disposable read-only scouts, delegating only composable work.</li>
 <li><strong>Tell:</strong> you cannot write the sub-agent's output schema in 20 lines.</li>
-<li><strong>Cost:</strong> about 15× the tokens <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; individually coherent, mutually incompatible outputs <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; debugging across fragmented transcripts.</li>
+<li><strong>Cost:</strong> about 15× the tokens <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> — the cost side of the 90.2% internal-eval gain; individually coherent, mutually incompatible outputs <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; debugging across fragmented transcripts.</li>
 <li><strong>Fix:</strong> the <a href="07-sub-agents.html#the-composability-test">composability test</a>.</li>
 </ul>
 <h3 id="ap-16-the-context-framework">AP-16: The context framework<a class="rs-anchor" href="#ap-16-the-context-framework" title="Link to this section">#</a></h3>
@@ -253,8 +328,8 @@
 <li><strong>Looks like:</strong> compacting often to "keep the context clean", as routine maintenance.</li>
 <li><strong>The real version:</strong> compacting at sub-goal boundaries, at most once per session, after offloading.</li>
 <li><strong>Tell:</strong> compaction is triggered by a token threshold or a timer, not a task event.</li>
-<li><strong>Cost:</strong> mid-task firing <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, termination recognition collapsing to 44.6% <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, +0.108 errors at the next step <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, Pass² damage larger than accuracy damage <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and a financial saving that only breaks even after about four turns.</li>
-<li><strong>Fix:</strong> semantic triggers with suppression rules; cap at one; then reset.</li>
+<li><strong>Cost:</strong> mid-task firing <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, termination recognition collapsing to 44.6% (AppWorld) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, +0.108 errors at the next step <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, Pass² damage larger than accuracy damage <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and a financial saving that only breaks even after about four turns <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a> (chapter 10).</li>
+<li><strong>Fix:</strong> semantic triggers with suppression rules; cap at one; then reset. The trigger design space is <a href="06-compaction-and-memory.html#the-compaction-design-space">chapter 6</a>'s.</li>
 </ul>
 <h3 id="ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer<a class="rs-anchor" href="#ap-7-semantic-search-as-the-answer" title="Link to this section">#</a></h3>
 <ul>
@@ -262,7 +337,7 @@
 <li><strong>The real version:</strong> live lexical and structural search first; semantic search as a complement.</li>
 <li><strong>Tell:</strong> grep is treated as the fallback rather than the workhorse.</li>
 <li><strong>Cost:</strong> grep generally won head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; the index is stale about exactly the code you edited; five plausible irrelevant chunks look identical to success.</li>
-<li><strong>Fix:</strong> invert the order. The hybrid result, +12.5% over either alone <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>, says the answer is <em>both</em>, in the right order.</li>
+<li><strong>Fix:</strong> invert the order. The hybrid result, +12.5% over either alone <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>, says the answer is <em>both</em>, in the right order. The tier architecture is <a href="05-retrieval.html">chapter 5</a>'s.</li>
 </ul>
 <h3 id="ap-9-token-counting-as-success">AP-9: Token counting as success<a class="rs-anchor" href="#ap-9-token-counting-as-success" title="Link to this section">#</a></h3>
 <ul>
@@ -286,7 +361,7 @@
 <li><strong>The real version:</strong> measure, find <em>your</em> largest controllable segment, act on that.</li>
 <li><strong>Tell:</strong> you overhauled retrieval while 25% of your context was unused tool definitions.</li>
 <li><strong>Cost:</strong> effort on a segment that was not the problem, and the opportunity cost of the one that was.</li>
-<li><strong>Fix:</strong> thirty minutes of measurement before any technique.</li>
+<li><strong>Fix:</strong> thirty minutes of measurement before any technique (<a href="04-choosing-methods.html#step-1-measure-30-minutes">chapter 4</a>).</li>
 </ul>
 <h3 id="ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks<a class="rs-anchor" href="#ap-15-trusting-transferred-benchmarks" title="Link to this section">#</a></h3>
 <ul>
@@ -296,6 +371,7 @@
 <li><strong>Cost:</strong> scores depended strongly on which of four harnesses ran, on identical data <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The published ranking may invert on your setup.</li>
 <li><strong>Fix:</strong> treat external results as hypotheses. The <a href="09-evaluation.html#the-minimum-viable-experiment">minimum viable experiment</a> is 160 runs.</li>
 </ul>
+<p>Audit yourself against the sixteen once a quarter; the same three generators produce all of them, and the <a href="16-diagnostic.html">diagnostic</a> tells you which is active.</p>
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
@@ -307,7 +383,7 @@
       </article>
       <aside class="rs-toc" aria-label="On this page">
         <p class="rs-toc__title">On this page</p>
-        <div class="rs-toc__list"><ul><li><a href="#hygiene-that-is-not-hygiene">Hygiene that is not hygiene</a></li><li><a href="#generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container</a><ul><li><a href="#ap-1-the-briefing-document">AP-1: The briefing document</a></li><li><a href="#ap-2-just-in-case-tooling">AP-2: Just-in-case tooling</a></li><li><a href="#ap-10-middle-truncation">AP-10: Middle truncation</a></li><li><a href="#ap-12-correcting-in-place">AP-12: Correcting in place</a></li><li><a href="#ap-13-the-heroic-session">AP-13: The heroic session</a></li></ul></li><li><a href="#generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting</a><ul><li><a href="#ap-3-full-stack-adoption">AP-3: Full-stack adoption</a></li><li><a href="#ap-5-write-only-memory">AP-5: Write-only memory</a></li><li><a href="#ap-6-the-growing-instruction-file">AP-6: The growing instruction file</a></li><li><a href="#ap-8-multi-agent-by-default">AP-8: Multi-agent by default</a></li><li><a href="#ap-16-the-context-framework">AP-16: The context framework</a></li></ul></li><li><a href="#generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome</a><ul><li><a href="#ap-4-compaction-as-hygiene">AP-4: Compaction as hygiene</a></li><li><a href="#ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer</a></li><li><a href="#ap-9-token-counting-as-success">AP-9: Token counting as success</a></li><li><a href="#ap-11-the-unread-dashboard">AP-11: The unread dashboard</a></li><li><a href="#ap-14-optimising-someone-elses-bottleneck">AP-14: Optimising someone else&#x27;s bottleneck</a></li><li><a href="#ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks</a></li></ul></li></ul></div>
+        <div class="rs-toc__list"><ul><li><a href="#hygiene-that-is-not-hygiene">Hygiene that is not hygiene</a></li><li><a href="#the-tell-index">The tell index</a></li><li><a href="#generator-1-treating-the-window-as-a-container">Generator 1: treating the window as a container</a><ul><li><a href="#ap-1-the-briefing-document">AP-1: The briefing document</a></li><li><a href="#ap-2-just-in-case-tooling">AP-2: Just-in-case tooling</a></li><li><a href="#ap-10-middle-truncation">AP-10: Middle truncation</a></li><li><a href="#ap-12-correcting-in-place">AP-12: Correcting in place</a></li><li><a href="#ap-13-the-heroic-session">AP-13: The heroic session</a></li></ul></li><li><a href="#generator-2-adding-instead-of-subtracting">Generator 2: adding instead of subtracting</a><ul><li><a href="#ap-3-full-stack-adoption">AP-3: Full-stack adoption</a></li><li><a href="#ap-5-write-only-memory">AP-5: Write-only memory</a></li><li><a href="#ap-6-the-growing-instruction-file">AP-6: The growing instruction file</a></li><li><a href="#ap-8-multi-agent-by-default">AP-8: Multi-agent by default</a></li><li><a href="#ap-16-the-context-framework">AP-16: The context framework</a></li></ul></li><li><a href="#generator-3-measuring-the-input-instead-of-the-outcome">Generator 3: measuring the input instead of the outcome</a><ul><li><a href="#ap-4-compaction-as-hygiene">AP-4: Compaction as hygiene</a></li><li><a href="#ap-7-semantic-search-as-the-answer">AP-7: Semantic search as the answer</a></li><li><a href="#ap-9-token-counting-as-success">AP-9: Token counting as success</a></li><li><a href="#ap-11-the-unread-dashboard">AP-11: The unread dashboard</a></li><li><a href="#ap-14-optimising-someone-elses-bottleneck">AP-14: Optimising someone else&#x27;s bottleneck</a></li><li><a href="#ap-15-trusting-transferred-benchmarks">AP-15: Trusting transferred benchmarks</a></li></ul></li></ul></div>
         <a class="rs-toc__top" href="#top">Back to top ↑</a>
       </aside>
     </div>

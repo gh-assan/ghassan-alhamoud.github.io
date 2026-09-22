@@ -24,6 +24,27 @@ The sixteen are grouped by the habit of mind that produces them. There are only 
 <figcaption>If you catch yourself in one antipattern, check its siblings: the same habit is probably producing them too.</figcaption>
 </figure>
 
+## The tell index
+
+| AP | Tell |
+|---|---|
+| [AP-1](#ap-1-the-briefing-document) | The document is prose, not pointers |
+| [AP-2](#ap-2-just-in-case-tooling) | More than three tools defined per tool called |
+| [AP-3](#ap-3-full-stack-adoption) | You cannot say which change produced which effect |
+| [AP-4](#ap-4-compaction-as-hygiene) | Triggered by a threshold or timer, not a task event |
+| [AP-5](#ap-5-write-only-memory) | You cannot name a retrieval that changed an action |
+| [AP-6](#ap-6-the-growing-instruction-file) | File history shows additions, never deletions |
+| [AP-7](#ap-7-semantic-search-as-the-answer) | Grep treated as the fallback, not the workhorse |
+| [AP-8](#ap-8-multi-agent-by-default) | No 20-line output schema for the sub-agent |
+| [AP-9](#ap-9-token-counting-as-success) | The reported metric is a cost, not an outcome |
+| [AP-10](#ap-10-middle-truncation) | The truncation marker sits where the error was |
+| [AP-11](#ap-11-the-unread-dashboard) | Nobody can name a decision a metric changed |
+| [AP-12](#ap-12-correcting-in-place) | The "fixed" wrong fact returns later in the session |
+| [AP-13](#ap-13-the-heroic-session) | More than one compaction |
+| [AP-14](#ap-14-optimising-someone-elses-bottleneck) | You overhauled one segment while another was the problem |
+| [AP-15](#ap-15-trusting-transferred-benchmarks) | You cite a number you have not reproduced |
+| [AP-16](#ap-16-the-context-framework) | More configuration options than measured problems |
+
 ## Generator 1: treating the window as a container
 
 If context is a bucket, filling it is free until it overflows, and the only question is "does it fit?". Every antipattern here is what that model recommends. The correction is [chapter 1](ch:foundations#start-with-the-right-mental-model): the window is an attention budget whose useful band depends on the task.
@@ -34,7 +55,7 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **The real version:** a pointer seed under 2,000 tokens: entry points, invariants, landmines, commands.
 - **Tell:** the document is *prose* rather than *pointers*. If it explains instead of locating, this is it.
 - **Cost:** 5K targeted retrieval beat a 100K summary [P], and coherent documents retrieve *worse* than incoherent ones across all 18 models [S]. You pay 40K tokens for a well-built distractor that goes stale silently.
-- **Fix:** convert it to pointers. "Auth lives in `src/auth/`, entry `session.ts`; all database access via `repo/`" replaces four paragraphs at 3% of the cost.
+- **Fix:** convert it to pointers. "Auth lives in `src/auth/`, entry `session.ts`; all database access via `repo/`" replaces four paragraphs at 3% of the cost. The pointer seed is [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview)'s.
 
 ### AP-2: Just-in-case tooling
 
@@ -42,7 +63,7 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **The real version:** a curated surface of at most 20 tools matched to the actual work.
 - **Tell:** more than three tools defined for every tool called.
 - **Cost:** 42K tokens for a single server [P]; selection collapsing from 19 of 20 at 20 tools to failure at 107 [S]. Prompt budget is present on every call, but billing depends on cache hits and request stability.
-- **Fix:** delete candidates with zero calls in a representative sample; verify task coverage and keep rollback.
+- **Fix:** delete candidates with zero calls in a representative sample; verify task coverage and keep rollback. The [30-minute audit](ch:tool-surface#the-30-minute-audit) does this systematically.
 
 ### AP-10: Middle truncation
 
@@ -50,7 +71,7 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **The real version:** head-and-tail truncation, roughly 30/70, with a pointer to the full artifact.
 - **Tell:** the truncation marker sits exactly where the error would have been.
 - **Cost:** errors and stack traces cluster at the end. The agent reasons about a failure it never saw.
-- **Fix:** head-and-tail, plus offload so the full text is one `cat` away.
+- **Fix:** head-and-tail, plus offload so the full text is one `cat` away ([chapter 3](ch:ten-methods#m-5-output-shaping) owns the truncation rule).
 
 ### AP-12: Correcting in place
 
@@ -58,7 +79,7 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **The real version:** resetting to before the poison and restating from clean ground.
 - **Tell:** the wrong fact comes back later in the same session after you "fixed" it.
 - **Cost:** the wrong fact stays as a permanent distractor, and a compaction may keep the wrong version.
-- **Fix:** reset. You cannot delete from a transcript by talking to it.
+- **Fix:** reset. You cannot delete from a transcript by talking to it ([chapter 12](ch:failure-modes#b-staleness-and-poisoning)'s F-9 carries the containment).
 
 ### AP-13: The heroic session
 
@@ -66,7 +87,7 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **The real version:** four 90-minute sessions with explicit handoffs.
 - **Tell:** more than one compaction.
 - **Cost:** degradation compounds [S], rules fade, distraction dominates, and every turn is priced against a nearly full window. Quality falls just as your sunk-cost commitment rises.
-- **Fix:** mechanical caps that need no judgment in the moment: one compaction, or two hours.
+- **Fix:** mechanical caps that need no judgment in the moment: one compaction, or two hours ([chapter 3's M-10](ch:ten-methods#m-10-session-lifecycle)).
 
 ## Generator 2: adding instead of subtracting
 
@@ -86,7 +107,7 @@ Adding is visible and feels like work. Deleting looks like doing nothing. So ins
 - **The real version:** a small curated memory with a measured read path.
 - **Tell:** you cannot say how many retrievals *changed an action* last week.
 - **Cost:** always-loaded prefix tokens, curation time, and stale entries that are confidently wrong without failing loudly.
-- **Fix:** instrument retrievals that changed an action. Under one a week, delete the system. Move durable knowledge into [[ADR|ADRs]].
+- **Fix:** instrument retrievals that changed an action. Under one a week, delete the system. Move durable knowledge into [[ADR|ADRs]]. The memory architecture is [chapter 6](ch:compaction-and-memory#cross-session-memory)'s.
 
 ### AP-6: The growing instruction file
 
@@ -94,14 +115,14 @@ Adding is visible and feels like work. Deleting looks like doing nothing. So ins
 - **The real version:** at most 150 lines of rules that cannot be inferred, pruned as often as extended.
 - **Tell:** monotone growth. If the file's history has no deletions, this is it.
 - **Cost:** dilution, position effects as utilisation rises [S], and contradictions between rules written months apart.
-- **Fix:** the inference test on every line. Turn repeatedly violated rules into hooks, lints or tests. Text that is not followed is not a control.
+- **Fix:** the [inference test](ch:anatomy#how-to-act-on-each-segment) on every line. Turn repeatedly violated rules into hooks, lints or tests. Text that is not followed is not a control.
 
 ### AP-8: Multi-agent by default
 
 - **Looks like:** splitting every non-trivial task across parallel sub-agents.
 - **The real version:** one linear thread with disposable read-only scouts, delegating only composable work.
 - **Tell:** you cannot write the sub-agent's output schema in 20 lines.
-- **Cost:** about 15× the tokens [P]; individually coherent, mutually incompatible outputs [P]; debugging across fragmented transcripts.
+- **Cost:** about 15× the tokens [P] — the cost side of the 90.2% internal-eval gain; individually coherent, mutually incompatible outputs [P]; debugging across fragmented transcripts.
 - **Fix:** the [composability test](ch:sub-agents#the-composability-test).
 
 ### AP-16: The context framework
@@ -121,8 +142,8 @@ Tokens, utilisation and index size are easy to measure. Solve rate, stability an
 - **Looks like:** compacting often to "keep the context clean", as routine maintenance.
 - **The real version:** compacting at sub-goal boundaries, at most once per session, after offloading.
 - **Tell:** compaction is triggered by a token threshold or a timer, not a task event.
-- **Cost:** mid-task firing [S], termination recognition collapsing to 44.6% [S], +0.108 errors at the next step [S], Pass² damage larger than accuracy damage [S], and a financial saving that only breaks even after about four turns.
-- **Fix:** semantic triggers with suppression rules; cap at one; then reset.
+- **Cost:** mid-task firing [S], termination recognition collapsing to 44.6% (AppWorld) [S], +0.108 errors at the next step [S], Pass² damage larger than accuracy damage [S], and a financial saving that only breaks even after about four turns [C] (chapter 10).
+- **Fix:** semantic triggers with suppression rules; cap at one; then reset. The trigger design space is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
 
 ### AP-7: Semantic search as the answer
 
@@ -130,7 +151,7 @@ Tokens, utilisation and index size are easy to measure. Solve rate, stability an
 - **The real version:** live lexical and structural search first; semantic search as a complement.
 - **Tell:** grep is treated as the fallback rather than the workhorse.
 - **Cost:** grep generally won head-to-head [S]; the index is stale about exactly the code you edited; five plausible irrelevant chunks look identical to success.
-- **Fix:** invert the order. The hybrid result, +12.5% over either alone [P], says the answer is *both*, in the right order.
+- **Fix:** invert the order. The hybrid result, +12.5% over either alone [P], says the answer is *both*, in the right order. The tier architecture is [chapter 5](ch:retrieval)'s.
 
 ### AP-9: Token counting as success
 
@@ -154,7 +175,7 @@ Tokens, utilisation and index size are easy to measure. Solve rate, stability an
 - **The real version:** measure, find *your* largest controllable segment, act on that.
 - **Tell:** you overhauled retrieval while 25% of your context was unused tool definitions.
 - **Cost:** effort on a segment that was not the problem, and the opportunity cost of the one that was.
-- **Fix:** thirty minutes of measurement before any technique.
+- **Fix:** thirty minutes of measurement before any technique ([chapter 4](ch:choosing-methods#step-1-measure-30-minutes)).
 
 ### AP-15: Trusting transferred benchmarks
 
@@ -163,3 +184,5 @@ Tokens, utilisation and index size are easy to measure. Solve rate, stability an
 - **Tell:** you cite a number you have not reproduced.
 - **Cost:** scores depended strongly on which of four harnesses ran, on identical data [S]. The published ranking may invert on your setup.
 - **Fix:** treat external results as hypotheses. The [minimum viable experiment](ch:evaluation#the-minimum-viable-experiment) is 160 runs.
+
+Audit yourself against the sixteen once a quarter; the same three generators produce all of them, and the [diagnostic](ch:diagnostic) tells you which is active.
