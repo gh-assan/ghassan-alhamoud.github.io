@@ -147,7 +147,7 @@
 <li><strong>Pass a phase's gate before starting the next.</strong> Adopting five things at once produces a result nobody can attribute.</li>
 <li><strong>Stop when the stop rule fires.</strong> Context management has a stopping point.</li>
 </ol>
-<figure id="figure-1" class="diagram">
+<figure id="figure-1" class="diagram diagram--wide">
 <p class="diagram__title">Seven phases, about 16 hours over six weeks</p>
 <div class="diagram__scroll">
 <svg viewBox="0 0 900 300" role="img" aria-labelledby="op-t">
@@ -156,7 +156,7 @@
 <line class="dg-line dg-line--dash" x1="160" y1="28" x2="160" y2="270"/><line class="dg-line dg-line--dash" x1="280" y1="28" x2="280" y2="270"/><line class="dg-line dg-line--dash" x1="400" y1="28" x2="400" y2="270"/><line class="dg-line dg-line--dash" x1="520" y1="28" x2="520" y2="270"/><line class="dg-line dg-line--dash" x1="640" y1="28" x2="640" y2="270"/><line class="dg-line dg-line--dash" x1="780" y1="28" x2="780" y2="270"/>
 <text class="dg-t" x="10" y="56">0 Baseline</text><rect class="dg-box--accent" x="165" y="40" width="50" height="24" rx="4"/><text class="dg-s" x="222" y="57">1.5 h · measure 8 numbers</text>
 <text class="dg-t" x="10" y="90">1 Deletion</text><rect class="dg-box--accent" x="215" y="74" width="60" height="24" rx="4"/><text class="dg-s" x="282" y="91">2.5 h · 25–35% if waste dominates</text>
-<text class="dg-t" x="10" y="124">2 Prevention</text><rect class="dg-box--accent" x="285" y="108" width="100" height="24" rx="4"/><text class="dg-s" x="392" y="125">3 h · target −50–80% if output waste dominates</text>
+<text class="dg-t" x="10" y="124">2 Prevention</text><rect class="dg-box--accent" x="285" y="108" width="100" height="24" rx="4"/><text class="dg-s" x="392" y="125">3 h · target −60–90% if output waste dominates</text>
 <text class="dg-t" x="10" y="158">3 Retrieval</text><rect class="dg-box--info" x="405" y="142" width="70" height="24" rx="4"/><text class="dg-s" x="482" y="159">2 h + habit</text>
 <text class="dg-t" x="10" y="192">4 State</text><rect class="dg-box--info" x="525" y="176" width="100" height="24" rx="4"/><text class="dg-s" x="632" y="193">3 h + habit</text>
 <text class="dg-t" x="10" y="226">5 Measurement</text><rect class="dg-box--ghost" x="645" y="210" width="130" height="24" rx="4"/><text class="dg-s" x="710" y="227" text-anchor="middle">4 h · optional</text>
@@ -190,7 +190,6 @@ T19  starvation : dilution        _______ : _______
 Largest segment I control:        ____________________
 </code></pre></div>
 <p><strong>Gate:</strong> the numbers are written down somewhere you will find them again. That is the whole gate.</p>
-<p><strong>Why it exists.</strong> A first audit may reveal that the largest segment is not the one the team was tuning, and that some of it is waste rather than a trade-off. Skipping this means optimising someone else's bottleneck.</p>
 <h2 id="phase-1-deletion">Phase 1: Deletion (2.5 hours, week 1)<a class="rs-anchor" href="#phase-1-deletion" title="Link to this section">#</a></h2>
 <p><strong>The highest-yield, most reversible phase when the audit finds dead or duplicate surface.</strong> Delete candidate waste first, verify task coverage after each change, and keep rollback. Instruction pruning changes behaviour, so measure it separately.</p>
 <p><strong>Do:</strong></p>
@@ -201,8 +200,8 @@ Largest segment I control:        ____________________
 <li><strong>Write ignore files</strong>: <code>node_modules/</code>, <code>dist/</code>, <code>build/</code>, <code>*.lock</code>, <code>__generated__/</code>, <code>vendor/</code>, snapshots, fixtures. <em>(15 min)</em></li>
 <li><strong>Apply the inference test</strong> to your instruction file: could a competent engineer infer this line from the repository in two minutes? If yes, delete it. Aim for at most 150 lines, and move the three rules you most need obeyed to the <strong>end</strong>. Delete rules that describe refactors already done. <em>(45 min)</em></li>
 </ol>
-<p><strong>Gate:</strong> re-measure prefix tax, tool share and the defined : called ratio. <strong>Target a 50–90% prefix-tax reduction when dead or duplicate surface dominates <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; measure it before treating it as a target.</strong> Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.</p>
-<p><strong>Payoff:</strong> a practitioner estimate is <strong>25–35% of the window back</strong> when unused or duplicated capabilities dominate <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; measure your own workload before treating it as a target.</p>
+<p><strong>Gate:</strong> re-measure prefix tax, tool share and the defined : called ratio — <a href="08-tool-surface.html#the-30-minute-audit">chapter 8's audit</a> does this systematically. <strong>Target a 50–90% prefix-tax reduction when dead or duplicate surface dominates <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>; measure it before treating it as a target.</strong> Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.</p>
+<p><strong>Payoff:</strong> a planning estimate is <strong>25–35% of the window back</strong> when unused or duplicated capabilities dominate <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
 <h2 id="phase-2-prevention">Phase 2: Prevention (3 hours, week 2)<a class="rs-anchor" href="#phase-2-prevention" title="Link to this section">#</a></h2>
 <p>Shape output before it becomes context.</p>
 <p><strong>Do:</strong></p>
@@ -228,8 +227,8 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 <span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 <span class="k">fi</span>
 </code></pre></div>
-<p><strong>Gate:</strong> re-measure tool-result share and cache hit rate. <strong>Expect tool-result tokens down 50–80%</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> and the cache hit rate flat or up. Then count re-runs with more verbose flags over 10 sessions. A rise means you filtered too hard: loosen that digest; do not abandon the approach.</p>
-<p><strong>Payoff:</strong> a practitioner-reported 20–30% when output waste dominates <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; it can compound with Phase 1 because the phases act on different segments, but measure your own sessions.</p>
+<p><strong>Gate:</strong> re-measure tool-result share and cache hit rate. <strong>Expect tool-result tokens down 60–90%</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> — plan on the conservative half — and the cache hit rate flat or up. Then count re-runs with more verbose flags over 10 sessions. A rise means you filtered too hard: loosen that digest; do not abandon the approach.</p>
+<p><strong>Payoff:</strong> a planning estimate of 20–30% when output waste dominates <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>; it can compound with Phase 1 because the phases act on different segments, but measure your own sessions.</p>
 <h2 id="phase-3-retrieval">Phase 3: Retrieval (2 hours plus a habit, week 3)<a class="rs-anchor" href="#phase-3-retrieval" title="Link to this section">#</a></h2>
 <p>The first phase that needs behaviour change, which is why it is third.</p>
 <p><strong>First, read your Phase 0 failure tally.</strong> It decides what you do.</p>
@@ -243,7 +242,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 <li><strong>Stop pre-loading.</strong> Replace any codebase overview with a pointer seed under 2,000 tokens. <em>(1 h)</em></li>
 <li><strong>Re-read before re-editing.</strong> Your own edits invalidate your own context.</li>
 </ol>
-<p><strong>Gate:</strong> sample 20 reads and compute <a class="rs-term" href="glossary.html#read-utilisation" data-def="The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.">read-utilisation</a>. <strong>Expect the median to roughly double</strong>, typically from under 10% to 15–25%. Re-run the failure tally on the next 10 failures: the balance should move toward dilution. If it moved toward starvation, you cut too much; widen the pointer seed.</p>
+<p><strong>Gate:</strong> sample 20 reads and compute <a class="rs-term" href="glossary.html#read-utilisation" data-def="The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.">read-utilisation</a> — <a href="05-retrieval.html">chapter 5</a> owns the retrieval design. <strong>Expect the median to roughly double</strong>, typically from under 10% to 15–25% <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>. Re-run the failure tally on the next 10 failures: the balance should move toward dilution. If it moved toward starvation, you cut too much; widen the pointer seed.</p>
 <h2 id="phase-4-state-and-boundaries">Phase 4: State and boundaries (3 hours, week 4)<a class="rs-anchor" href="#phase-4-state-and-boundaries" title="Link to this section">#</a></h2>
 <p>Making sessions survivable. This is where quality on long tasks comes from.</p>
 <ol>
@@ -260,7 +259,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 <h2 id="phase-5-measurement">Phase 5: Measurement (4 hours, weeks 5–6, optional)<a class="rs-anchor" href="#phase-5-measurement" title="Link to this section">#</a></h2>
 <p>Only if you intend to keep making context changes. If Phases 1–4 solved your problem, <strong>skip this and go to the stop rule.</strong></p>
 <ol>
-<li><strong>Build a small evaluation set:</strong> 30–40 replayed tickets, repository pinned to the commit before each fix, stratified by size and subsystem. Check for leakage by running one arm with retrieval disabled. <em>(2 h)</em></li>
+<li><strong>Build a small evaluation set:</strong> 30–40 replayed tickets, repository pinned to the commit before each fix, stratified by size and subsystem. Check for leakage by running one arm with retrieval disabled. <em>(2 h)</em> <a href="09-evaluation.html">Chapter 9</a> owns the protocol.</li>
 <li><strong>Build a k = 2 runner</strong> that computes Pass@2 and Pass². <em>(1 h)</em></li>
 <li><strong>Run one paired A/B</strong> on the change you are least sure about, analysed with McNemar. <em>(1 h plus compute)</em></li>
 <li><strong>Add the two missing instruments:</strong> post-boundary re-fetch rate and Pass² ÷ Pass@2. Neither exists off the shelf.</li>
@@ -309,7 +308,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 <p>Instrument <em>retrievals that changed an action, per week</em> from day one. Under one a week after a month: delete the system.</p>
 </aside>
 <h2 id="the-stop-rule">The stop rule<a class="rs-anchor" href="#the-stop-rule" title="Link to this section">#</a></h2>
-<p>Check monthly. <strong>Stop optimising context when all of these hold:</strong></p>
+<p>Check monthly; the thresholds come from <a href="10-metrics-and-economics.html#if-you-track-only-five">chapter 10's</a> catalogue. <strong>Stop optimising context when all of these hold:</strong></p>
 <ul>
 <li>Cache hit rate over 70%</li>
 <li>Defined : called tools under 3:1</li>
@@ -320,7 +319,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 </ul>
 <p>When they all hold, <strong>your binding constraint is elsewhere</strong>: model choice, task decomposition or the verification loop. Investing further in context past this point produces frameworks, not results.</p>
 <h2 id="the-maintenance-loop">The maintenance loop<a class="rs-anchor" href="#the-maintenance-loop" title="Link to this section">#</a></h2>
-<p>Context management regresses. Without a recurring audit you are back at baseline within two quarters <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p>Context management regresses. Tool surfaces regrow within a quarter without a recurring audit <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>; the rest of the prefix follows, so budget that you are back at baseline within two quarters <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
 <p><strong>Quarterly, 30 minutes:</strong></p>
 <ol>
 <li>Re-run Phase 0's measurements.</li>
@@ -330,7 +329,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 <li>Review any tool with zero calls this quarter; if the sample is representative, verify task coverage and remove it with rollback.</li>
 <li>Delete any stale memory entry.</li>
 </ol>
-<p>Five of the six steps are deletions. That is not an accident.</p>
+<p>Three of the six steps are deletions, and the other three exist to catch whatever crept back. That balance is not an accident.</p>
 <h2 id="the-plan-on-one-page">The plan on one page<a class="rs-anchor" href="#the-plan-on-one-page" title="Link to this section">#</a></h2>
 <div class="table-scroll rs-table"><table>
 <thead>
@@ -355,14 +354,14 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
 <td>2.5 h</td>
 <td>Review dead-tool candidates; ignore files; prune instructions</td>
 <td>Prefix tax −50–90%; verify coverage</td>
-<td>25–35% if waste dominates <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>25–35% if waste dominates <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a></td>
 </tr>
 <tr>
 <td><strong>2 Prevention</strong></td>
 <td>3 h</td>
 <td>Wrap loud commands; head-and-tail; <code>.agent/</code></td>
-<td>Tool output −50–80%; cache flat or up</td>
-<td>20–30% if output waste dominates <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+<td>Tool output −60–90%; cache flat or up</td>
+<td>20–30% if output waste dominates <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a></td>
 </tr>
 <tr>
 <td><strong>3 Retrieval</strong></td>
@@ -400,7 +399,7 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>.agent/logs
         </div>
         <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
           <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
-          <ol><li>The plan is ordered by yield per effort, not by intellectual interest.</li><li>Start with deletion when the audit finds dead or duplicate surface; keep it measured and reversible.</li><li>Measurement infrastructure is optional unless you will make several more changes.</li><li>Re-audit quarterly. Five of the six maintenance steps are deletions.</li></ol>
+          <ol><li>The plan is ordered by yield per effort, not by intellectual interest.</li><li>Start with deletion when the audit finds dead or duplicate surface; keep it measured and reversible.</li><li>Measurement infrastructure is optional unless you will make several more changes.</li><li>Re-audit quarterly; the maintenance loop is deletion plus re-measurement.</li></ol>
         </section>
         
         <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#read-utilisation"><strong>Read-utilisation</strong></a> — The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</li></ul></section>

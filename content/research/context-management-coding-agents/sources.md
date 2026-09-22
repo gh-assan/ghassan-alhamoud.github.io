@@ -45,14 +45,14 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the five-baseline comparison on a 1,000-task needle suite and a 311-task LongBench-v2 Hard subset; needle 99.00% / 99.80% versus RAG 79.57% / 96.67%; LongBench-v2 Hard 27.47% / 32.47% versus 25.83% / 30.87%; 38.8–80.3% bandwidth savings; the statement that omitted summary details cannot be recovered.
 - **Discount:** 8B and 32B models, not frontier scale. The reasoning margin is small; do not overstate it.
-- **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design).
+- **Used in:** [chapter 3](ch:ten-methods#m-6-reversible-offload), [chapter 6](ch:compaction-and-memory#result-4-lossless-addressable-compaction-beats-every-lossy-baseline), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 15](ch:optimisation-plan#phase-6-advanced).
 - **Link:** [arXiv 2607.25066](https://arxiv.org/abs/2607.25066)
 
 ### "CompactionRL: Reinforcement Learning with Context Compaction for Long-Horizon Agents"
 
 - **Supports:** **the summariser-only swing, SWE-bench 49.0% → 55.5%**; +5.5 / +7.0 on SWE-bench Verified and +6.8 / +3.1 on Terminal-Bench 2.0 from compaction-aware training; operating parameters (10,240-token threshold, at most 3 compactions per run, at most 250 turns).
 - **Discount:** the training results need access most readers lack. The 6.5-point swing at inference time does not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-1-the-summariser-alone-is-worth-several-points), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 15](ch:optimisation-plan#phase-4-state-and-boundaries), [case CS-3](ch:case-studies#cs-3-swapping-only-the-summariser-moved-swe-bench-65-points-s).
 - **Link:** [arXiv 2607.05378](https://arxiv.org/abs/2607.05378)
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
@@ -144,13 +144,13 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 43% → under 14% as tool count grows; 19 of 20 at 20 tools → failure at 107; the ~20-tool practitioner threshold; the ~42,000-token single-server figure; tool surfaces regrowing to their old size within a quarter without a recurring audit [P].
 - **Discount:** mixed [S] and [P]. The strength is two independent methods converging near 20; individual figures are weaker. The 43% → 14% and 19-of-20 figures are published evaluation numbers captured from secondary coverage (see the verification caveat); the ~20-tool threshold and the regrowth observation are practitioner consensus [P].
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#the-measured-damage), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 13](ch:antipatterns#ap-2-just-in-case-tooling).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#the-measured-damage), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 13](ch:antipatterns#ap-2-just-in-case-tooling), [chapter 15](ch:optimisation-plan#the-maintenance-loop).
 
 ### Progressive disclosure and code-execution reporting
 
 - **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server; the practitioner-landscape convergence on deferred definitions, with some harnesses making them the default by 2026; emerging MCP proposals for adaptive response granularity.
 - **Discount:** first-party and community reports; no independent reproduction found.
-- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
+- **Used in:** [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
 
 ### Prefix-caching operational reporting
 

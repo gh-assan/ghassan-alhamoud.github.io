@@ -8,7 +8,7 @@ Three rules make it work:
 2. **Pass a phase's gate before starting the next.** Adopting five things at once produces a result nobody can attribute.
 3. **Stop when the stop rule fires.** Context management has a stopping point.
 
-<figure class="diagram">
+<figure class="diagram diagram--wide">
 <p class="diagram__title">Seven phases, about 16 hours over six weeks</p>
 <div class="diagram__scroll">
 <svg viewBox="0 0 900 300" role="img" aria-labelledby="op-t">
@@ -17,7 +17,7 @@ Three rules make it work:
 <line class="dg-line dg-line--dash" x1="160" y1="28" x2="160" y2="270"/><line class="dg-line dg-line--dash" x1="280" y1="28" x2="280" y2="270"/><line class="dg-line dg-line--dash" x1="400" y1="28" x2="400" y2="270"/><line class="dg-line dg-line--dash" x1="520" y1="28" x2="520" y2="270"/><line class="dg-line dg-line--dash" x1="640" y1="28" x2="640" y2="270"/><line class="dg-line dg-line--dash" x1="780" y1="28" x2="780" y2="270"/>
 <text class="dg-t" x="10" y="56">0 Baseline</text><rect class="dg-box--accent" x="165" y="40" width="50" height="24" rx="4"/><text class="dg-s" x="222" y="57">1.5 h · measure 8 numbers</text>
 <text class="dg-t" x="10" y="90">1 Deletion</text><rect class="dg-box--accent" x="215" y="74" width="60" height="24" rx="4"/><text class="dg-s" x="282" y="91">2.5 h · 25–35% if waste dominates</text>
-<text class="dg-t" x="10" y="124">2 Prevention</text><rect class="dg-box--accent" x="285" y="108" width="100" height="24" rx="4"/><text class="dg-s" x="392" y="125">3 h · target −50–80% if output waste dominates</text>
+<text class="dg-t" x="10" y="124">2 Prevention</text><rect class="dg-box--accent" x="285" y="108" width="100" height="24" rx="4"/><text class="dg-s" x="392" y="125">3 h · target −60–90% if output waste dominates</text>
 <text class="dg-t" x="10" y="158">3 Retrieval</text><rect class="dg-box--info" x="405" y="142" width="70" height="24" rx="4"/><text class="dg-s" x="482" y="159">2 h + habit</text>
 <text class="dg-t" x="10" y="192">4 State</text><rect class="dg-box--info" x="525" y="176" width="100" height="24" rx="4"/><text class="dg-s" x="632" y="193">3 h + habit</text>
 <text class="dg-t" x="10" y="226">5 Measurement</text><rect class="dg-box--ghost" x="645" y="210" width="130" height="24" rx="4"/><text class="dg-s" x="710" y="227" text-anchor="middle">4 h · optional</text>
@@ -56,7 +56,6 @@ Largest segment I control:        ____________________
 
 **Gate:** the numbers are written down somewhere you will find them again. That is the whole gate.
 
-**Why it exists.** A first audit may reveal that the largest segment is not the one the team was tuning, and that some of it is waste rather than a trade-off. Skipping this means optimising someone else's bottleneck.
 
 ## Phase 1: Deletion (2.5 hours, week 1) {#phase-1-deletion}
 
@@ -70,9 +69,9 @@ Largest segment I control:        ____________________
 4. **Write ignore files**: `node_modules/`, `dist/`, `build/`, `*.lock`, `__generated__/`, `vendor/`, snapshots, fixtures. *(15 min)*
 5. **Apply the inference test** to your instruction file: could a competent engineer infer this line from the repository in two minutes? If yes, delete it. Aim for at most 150 lines, and move the three rules you most need obeyed to the **end**. Delete rules that describe refactors already done. *(45 min)*
 
-**Gate:** re-measure prefix tax, tool share and the defined : called ratio. **Target a 50–90% prefix-tax reduction when dead or duplicate surface dominates [P]; measure it before treating it as a target.** Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.
+**Gate:** re-measure prefix tax, tool share and the defined : called ratio — [chapter 8's audit](ch:tool-surface#the-30-minute-audit) does this systematically. **Target a 50–90% prefix-tax reduction when dead or duplicate surface dominates [D]; measure it before treating it as a target.** Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.
 
-**Payoff:** a practitioner estimate is **25–35% of the window back** when unused or duplicated capabilities dominate [P]; measure your own workload before treating it as a target.
+**Payoff:** a planning estimate is **25–35% of the window back** when unused or duplicated capabilities dominate [D].
 
 ## Phase 2: Prevention (3 hours, week 2) {#phase-2-prevention}
 
@@ -103,9 +102,9 @@ else
 fi
 ```
 
-**Gate:** re-measure tool-result share and cache hit rate. **Expect tool-result tokens down 50–80%** [P] and the cache hit rate flat or up. Then count re-runs with more verbose flags over 10 sessions. A rise means you filtered too hard: loosen that digest; do not abandon the approach.
+**Gate:** re-measure tool-result share and cache hit rate. **Expect tool-result tokens down 60–90%** [P] — plan on the conservative half — and the cache hit rate flat or up. Then count re-runs with more verbose flags over 10 sessions. A rise means you filtered too hard: loosen that digest; do not abandon the approach.
 
-**Payoff:** a practitioner-reported 20–30% when output waste dominates [P]; it can compound with Phase 1 because the phases act on different segments, but measure your own sessions.
+**Payoff:** a planning estimate of 20–30% when output waste dominates [D]; it can compound with Phase 1 because the phases act on different segments, but measure your own sessions.
 
 ## Phase 3: Retrieval (2 hours plus a habit, week 3) {#phase-3-retrieval}
 
@@ -121,7 +120,7 @@ The first phase that needs behaviour change, which is why it is third.
 3. **Stop pre-loading.** Replace any codebase overview with a pointer seed under 2,000 tokens. *(1 h)*
 4. **Re-read before re-editing.** Your own edits invalidate your own context.
 
-**Gate:** sample 20 reads and compute [[read-utilisation]]. **Expect the median to roughly double**, typically from under 10% to 15–25%. Re-run the failure tally on the next 10 failures: the balance should move toward dilution. If it moved toward starvation, you cut too much; widen the pointer seed.
+**Gate:** sample 20 reads and compute [[read-utilisation]] — [chapter 5](ch:retrieval) owns the retrieval design. **Expect the median to roughly double**, typically from under 10% to 15–25% [D]. Re-run the failure tally on the next 10 failures: the balance should move toward dilution. If it moved toward starvation, you cut too much; widen the pointer seed.
 
 ## Phase 4: State and boundaries (3 hours, week 4) {#phase-4-state-and-boundaries}
 
@@ -143,7 +142,7 @@ Making sessions survivable. This is where quality on long tasks comes from.
 
 Only if you intend to keep making context changes. If Phases 1–4 solved your problem, **skip this and go to the stop rule.**
 
-1. **Build a small evaluation set:** 30–40 replayed tickets, repository pinned to the commit before each fix, stratified by size and subsystem. Check for leakage by running one arm with retrieval disabled. *(2 h)*
+1. **Build a small evaluation set:** 30–40 replayed tickets, repository pinned to the commit before each fix, stratified by size and subsystem. Check for leakage by running one arm with retrieval disabled. *(2 h)* [Chapter 9](ch:evaluation) owns the protocol.
 2. **Build a k = 2 runner** that computes Pass@2 and Pass². *(1 h)*
 3. **Run one paired A/B** on the change you are least sure about, analysed with McNemar. *(1 h plus compute)*
 4. **Add the two missing instruments:** post-boundary re-fetch rate and Pass² ÷ Pass@2. Neither exists off the shelf.
@@ -169,7 +168,7 @@ Do not start these without a measured reason from Phase 5.
 
 ## The stop rule
 
-Check monthly. **Stop optimising context when all of these hold:**
+Check monthly; the thresholds come from [chapter 10's](ch:metrics-and-economics#if-you-track-only-five) catalogue. **Stop optimising context when all of these hold:**
 
 - Cache hit rate over 70%
 - Defined : called tools under 3:1
@@ -182,7 +181,7 @@ When they all hold, **your binding constraint is elsewhere**: model choice, task
 
 ## The maintenance loop
 
-Context management regresses. Without a recurring audit you are back at baseline within two quarters [P].
+Context management regresses. Tool surfaces regrow within a quarter without a recurring audit [P]; the rest of the prefix follows, so budget that you are back at baseline within two quarters [D].
 
 **Quarterly, 30 minutes:**
 
@@ -193,15 +192,15 @@ Context management regresses. Without a recurring audit you are back at baseline
 5. Review any tool with zero calls this quarter; if the sample is representative, verify task coverage and remove it with rollback.
 6. Delete any stale memory entry.
 
-Five of the six steps are deletions. That is not an accident.
+Three of the six steps are deletions, and the other three exist to catch whatever crept back. That balance is not an accident.
 
 ## The plan on one page
 
 | Phase | Effort | Do | Gate | Typical gain |
 |---|---|---|---|---|
 | **0 Baseline** | 1.5 h | Measure eight numbers | Numbers written down | — |
-| **1 Deletion** | 2.5 h | Review dead-tool candidates; ignore files; prune instructions | Prefix tax −50–90%; verify coverage | 25–35% if waste dominates [P] |
-| **2 Prevention** | 3 h | Wrap loud commands; head-and-tail; `.agent/` | Tool output −50–80%; cache flat or up | 20–30% if output waste dominates [P] |
+| **1 Deletion** | 2.5 h | Review dead-tool candidates; ignore files; prune instructions | Prefix tax −50–90%; verify coverage | 25–35% if waste dominates [D] |
+| **2 Prevention** | 3 h | Wrap loud commands; head-and-tail; `.agent/` | Tool output −60–90%; cache flat or up | 20–30% if output waste dominates [D] |
 | **3 Retrieval** | 2 h + habit | Symbol tool; locate → inspect → read; pointer seed | Read-utilisation roughly doubles | Smaller, sustained |
 | **4 State** | 3 h + habit | Plan file, stubs, schema, reset triggers | Re-fetch under 2; at most one compaction | Long-task quality |
 | **5 Measurement** | 4 h | Evaluation set, k = 2, paired A/B | Pass² with an interval | Future changes attributable |
