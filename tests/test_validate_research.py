@@ -80,6 +80,17 @@ class ResearchRendererTests(unittest.TestCase):
         self.assertIn("rs-callout--try", body)
         self.assertIn("<p>Run the test.</p>", body)
         self.assertEqual([], renderer.errors)
+
+    def test_glossary_tooltip_definition_stays_plain_text(self):
+        """A glossary definition carrying an evidence label must not leak
+        markup into the tooltip's data-def attribute (R37 defect class)."""
+        body, renderer = self.render("Watch [[position decay]] in long inputs.")
+        defs = re.findall(r'data-def="([^"]*)"', body)
+        self.assertTrue(defs, "expected a data-def tooltip")
+        for d in defs:
+            self.assertNotIn("<", d, f"markup leaked into data-def: {d}")
+        self.assertNotIn('">Position decay of', body)
+        self.assertEqual([], renderer.errors)
         self.assertEqual([], renderer.errors)
 
     def test_unknown_glossary_term_is_reported(self):

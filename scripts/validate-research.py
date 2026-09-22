@@ -354,6 +354,8 @@ def check_page(path, rep, chapter=False):
     page = path.read_text(encoding="utf-8")
     if re.search(r"@@(?:CALLOUT|RSBLOCK)", page):
         rep.err("R37", f"{rel}: unresolved build marker in output")
+    if re.search(r'data-def="[^"]*[<>]', page):
+        rep.err("R37", f"{rel}: markup leaked into a glossary tooltip data-def")
     if len(re.findall(r"<h1\b", page)) != 1:
         rep.err("R22", f"{rel}: expected exactly one <h1>")
     t = re.search(r"<title>(.*?)</title>", page, re.S)

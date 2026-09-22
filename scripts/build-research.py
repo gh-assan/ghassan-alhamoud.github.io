@@ -274,8 +274,8 @@ class Renderer:
             if skip > 0:
                 out.append(token)
                 continue
-            token = re.sub(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", self._gloss_link, token)
             token = re.sub(r"\[([SPDC])\]", self._pill, token)
+            token = re.sub(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", self._gloss_link, token)
             out.append(token)
         return "".join(out)
 
@@ -287,8 +287,12 @@ class Renderer:
             return label
         if term["id"] not in self.terms_used:
             self.terms_used.append(term["id"])
+        # Tooltip definitions are plain text: evidence labels belong to the
+        # glossary page's note, not to this attribute (a pill here would be
+        # rendered by an earlier pass and break out of the attribute).
+        tooltip = re.sub(r"\s*\[[SPDC]\]", "", term["definition"])
         return (f'<a class="rs-term" href="glossary.html#{term["id"]}" '
-                f'data-def="{esc(term["definition"])}">{label}</a>')
+                f'data-def="{esc(tooltip)}">{label}</a>')
 
     def _pill(self, m):
         k = m.group(1)

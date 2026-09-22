@@ -1,6 +1,6 @@
 ## Use this chapter two ways
 
-**During an incident**, start with the [symptom index](#symptom-to-cause-index): find what you are seeing, then jump to the likely causes. **Before a long task**, read the [four questions](#four-questions-that-pre-empt-most-of-this) at the end.
+**During an incident**, start with the [symptom index](#symptom-to-cause-index): find what you are seeing, then jump to the likely causes. **Before a long task**, read the [four questions](#four-questions-that-pre-empt-most-of-this) at the end. The underlying failure taxonomy is [chapter 1](ch:foundations)'s.
 
 Every failure below has the same four fields:
 
@@ -31,18 +31,18 @@ Every failure below has the same four fields:
 
 | What you see | Likely causes, most likely first |
 |---|---|
-| The agent ignores a rule it followed earlier | F-38, F-2, F-19 |
-| The agent repeats the same action | F-39, F-18, F-14 |
+| The agent ignores a rule it followed earlier | **F-38**, F-2, F-19 |
+| The agent repeats the same action | **F-39**, F-18, F-14 |
 | Confidently wrong output, clean-looking transcript | **F-21**, F-9, F-11, F-23 |
-| The agent asks for something already in context | F-15, F-16, F-18 |
-| Costs rose after an "optimisation" | F-33, F-35, F-36, F-37 |
-| The agent edits the wrong file | F-23, F-10, F-8 |
-| The agent uses an odd tool | F-1, F-24 |
+| The agent asks for something already in context | **F-15**, F-16, F-18 |
+| Costs rose after an "optimisation" | **F-33**, F-35, F-36, F-37 |
+| The agent edits the wrong file | **F-23**, F-10, F-8 |
+| The agent uses an odd tool | **F-1**, F-24 |
 | The agent cannot tell it is finished | **F-16**, F-41 |
-| Quality falls over a long session | F-38, F-19, F-43, F-7 |
+| Quality falls over a long session | **F-38**, F-19, F-43, F-7 |
 | Parallel work produces incompatible pieces | **F-29**, F-28 |
-| The bill tripled with no visible change | F-37, F-33 |
-| The bug turned out to be in config | F-24 |
+| The bill tripled with no visible change | **F-37**, F-33 |
+| The bug turned out to be in config | **F-24** |
 | It worked yesterday and not today | **F-44**: variance you never measured |
 
 ## A: Dilution and displacement
@@ -77,11 +77,11 @@ Every failure below has the same four fields:
 |---|---|---|---|---|---|
 | F-14 | **Compaction mid-sub-goal** | The agent restarts partly finished work | Compare compaction times with sub-goal boundaries | Restate the current sub-goal | Semantic triggers with suppression rules |
 | F-15 | **Detail loss** | The agent knows "there was an error" but not which | Exact-string survival rate | Re-run the command | A verbatim exact-strings section |
-| F-16 | **Lost sense of state** | The agent cannot tell whether it is done | Termination recognition: 44.6% versus 77.2% in one study [S] | Ask "what is done and what remains?" | A done / in-progress / not-started block; re-read the plan file |
+| F-16 | **Lost sense of state** | The agent cannot tell whether it is done | Termination recognition: 44.6% versus 77.2% in one study (AppWorld) [S] | Ask "what is done and what remains?" | A done / in-progress / not-started block; re-read the plan file |
 | F-17 | **Post-compaction error spike** | The turn right after compaction fails more (+0.108 errors [S]) | Error rate in the 3 turns after each boundary | Insert a deliberate orientation step | Make the plan-file re-read the first action |
 | F-18 | **Regressive exploration** | Re-fetching and replaying right after a compaction | Re-fetch rate in the next 10 turns | Point at the offloaded artifact | Offload before compacting |
 | F-19 | **Compaction cascade** | Three or more compactions; a summary of summaries | Compactions per session | Reset now | Cap at one; session discipline |
-| F-20 | **Nondeterministic retention** | The same transcript compacted twice keeps different facts [S] | Run the compaction twice and diff | Nothing in-session | A strict schema; addressable stubs for observations |
+| F-20 | **Nondeterministic retention** | The same transcript compacted twice keeps different facts — model calls are stochastic [D] | Run the compaction twice and diff | Nothing in-session | A strict schema; addressable stubs for observations |
 
 ## D: Retrieval
 

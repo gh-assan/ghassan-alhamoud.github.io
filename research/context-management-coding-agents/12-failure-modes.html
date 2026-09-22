@@ -140,7 +140,7 @@
         </section>
         <div class="article-single__body rs-body">
 <h2 id="use-this-chapter-two-ways">Use this chapter two ways<a class="rs-anchor" href="#use-this-chapter-two-ways" title="Link to this section">#</a></h2>
-<p><strong>During an incident</strong>, start with the <a href="#symptom-to-cause-index">symptom index</a>: find what you are seeing, then jump to the likely causes. <strong>Before a long task</strong>, read the <a href="#four-questions-that-pre-empt-most-of-this">four questions</a> at the end.</p>
+<p><strong>During an incident</strong>, start with the <a href="#symptom-to-cause-index">symptom index</a>: find what you are seeing, then jump to the likely causes. <strong>Before a long task</strong>, read the <a href="#four-questions-that-pre-empt-most-of-this">four questions</a> at the end. The underlying failure taxonomy is <a href="01-foundations.html">chapter 1</a>'s.</p>
 <p>Every failure below has the same four fields:</p>
 <ul>
 <li><strong>Tell</strong>: what you notice.</li>
@@ -177,11 +177,11 @@
 <tbody>
 <tr>
 <td>The agent ignores a rule it followed earlier</td>
-<td>F-38, F-2, F-19</td>
+<td><strong>F-38</strong>, F-2, F-19</td>
 </tr>
 <tr>
 <td>The agent repeats the same action</td>
-<td>F-39, F-18, F-14</td>
+<td><strong>F-39</strong>, F-18, F-14</td>
 </tr>
 <tr>
 <td>Confidently wrong output, clean-looking transcript</td>
@@ -189,19 +189,19 @@
 </tr>
 <tr>
 <td>The agent asks for something already in context</td>
-<td>F-15, F-16, F-18</td>
+<td><strong>F-15</strong>, F-16, F-18</td>
 </tr>
 <tr>
 <td>Costs rose after an "optimisation"</td>
-<td>F-33, F-35, F-36, F-37</td>
+<td><strong>F-33</strong>, F-35, F-36, F-37</td>
 </tr>
 <tr>
 <td>The agent edits the wrong file</td>
-<td>F-23, F-10, F-8</td>
+<td><strong>F-23</strong>, F-10, F-8</td>
 </tr>
 <tr>
 <td>The agent uses an odd tool</td>
-<td>F-1, F-24</td>
+<td><strong>F-1</strong>, F-24</td>
 </tr>
 <tr>
 <td>The agent cannot tell it is finished</td>
@@ -209,7 +209,7 @@
 </tr>
 <tr>
 <td>Quality falls over a long session</td>
-<td>F-38, F-19, F-43, F-7</td>
+<td><strong>F-38</strong>, F-19, F-43, F-7</td>
 </tr>
 <tr>
 <td>Parallel work produces incompatible pieces</td>
@@ -217,11 +217,11 @@
 </tr>
 <tr>
 <td>The bill tripled with no visible change</td>
-<td>F-37, F-33</td>
+<td><strong>F-37</strong>, F-33</td>
 </tr>
 <tr>
 <td>The bug turned out to be in config</td>
-<td class="rs-nowrap">F-24</td>
+<td class="rs-nowrap"><strong>F-24</strong></td>
 </tr>
 <tr>
 <td>It worked yesterday and not today</td>
@@ -399,7 +399,7 @@
 <td class="rs-nowrap">F-16</td>
 <td><strong>Lost sense of state</strong></td>
 <td>The agent cannot tell whether it is done</td>
-<td>Termination recognition: 44.6% versus 77.2% in one study <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Termination recognition: 44.6% versus 77.2% in one study (AppWorld) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
 <td>Ask "what is done and what remains?"</td>
 <td>A done / in-progress / not-started block; re-read the plan file</td>
 </tr>
@@ -430,7 +430,7 @@
 <tr>
 <td class="rs-nowrap">F-20</td>
 <td><strong>Nondeterministic retention</strong></td>
-<td>The same transcript compacted twice keeps different facts <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>The same transcript compacted twice keeps different facts — model calls are stochastic <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a></td>
 <td>Run the compaction twice and diff</td>
 <td>Nothing in-session</td>
 <td>A strict schema; addressable stubs for observations</td>
@@ -633,7 +633,7 @@
 <tbody>
 <tr>
 <td class="rs-nowrap">F-38</td>
-<td><strong><a class="rs-term" href="glossary.html#position-decay" data-def="A critical fact becoming harder to use because its position in a long input is less favourable. The size and shape of the effect depend on the model, task and harness <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.">Position decay</a> of rules</strong></td>
+<td><strong><a class="rs-term" href="glossary.html#position-decay" data-def="A critical fact becoming harder to use because its position in a long input is less favourable.">Position decay</a> of rules</strong></td>
 <td>Rules followed early, ignored after two hours</td>
 <td>Violation rate by turn depth</td>
 <td>Restate the rule in the current turn</td>
@@ -721,7 +721,7 @@
           <ol><li>Starvation can survive review because the trajectory may look clean.</li><li>When a fact is poisoned, reset to before the poison; do not argue with it.</li><li>Cost rising after an "optimisation" usually means the cache broke.</li><li>"It worked yesterday" is a variance signal you never measured.</li></ol>
         </section>
         
-        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#retention-integral"><strong>Retention integral</strong></a> — The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.</li><li><a href="glossary.html#poisoning"><strong>Poisoning</strong></a> — A failure mode where a false fact enters the context and is afterwards treated as established. It survives compaction and cannot be removed by appending a correction.</li><li><a href="glossary.html#laundering"><strong>Laundering</strong></a> — Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.</li><li><a href="glossary.html#starvation"><strong>Starvation</strong></a> — The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li><li><a href="glossary.html#fragment-blindness"><strong>Fragment blindness</strong></a> — Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.</li><li><a href="glossary.html#contract-loss"><strong>Contract loss</strong></a> — A sub-agent knew something relevant but did not report it because its output contract did not ask.</li><li><a href="glossary.html#cache-adjusted-cost"><strong>Cache-adjusted cost</strong></a> — Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.</li><li><a href="glossary.html#position-decay"><strong>Position decay</strong></a> — A critical fact becoming harder to use because its position in a long input is less favourable. The size and shape of the effect depend on the model, task and harness [S].</li><li><a href="glossary.html#loop-detector"><strong>Loop detector</strong></a> — A check that flags the same tool called with the same arguments three or more times with no new information in between.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li></ul></section>
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#retention-integral"><strong>Retention integral</strong></a> — The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.</li><li><a href="glossary.html#poisoning"><strong>Poisoning</strong></a> — A failure mode where a false fact enters the context and is afterwards treated as established. It survives compaction and cannot be removed by appending a correction.</li><li><a href="glossary.html#laundering"><strong>Laundering</strong></a> — Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.</li><li><a href="glossary.html#starvation"><strong>Starvation</strong></a> — The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li><li><a href="glossary.html#fragment-blindness"><strong>Fragment blindness</strong></a> — Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.</li><li><a href="glossary.html#contract-loss"><strong>Contract loss</strong></a> — A sub-agent knew something relevant but did not report it because its output contract did not ask.</li><li><a href="glossary.html#cache-adjusted-cost"><strong>Cache-adjusted cost</strong></a> — Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.</li><li><a href="glossary.html#position-decay"><strong>Position decay</strong></a> — A critical fact becoming harder to use because its position in a long input is less favourable.</li><li><a href="glossary.html#loop-detector"><strong>Loop detector</strong></a> — A check that flags the same tool called with the same arguments three or more times with no new information in between.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li></ul></section>
         <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="11-hard-calls.html"><span class="rs-pn__label">← Previous · Chapter 11</span><span class="rs-pn__title">Twenty-five hard calls</span><span class="rs-pn__part">Decide and avoid</span></a><a class="rs-pn__link rs-pn__link--next" href="13-antipatterns.html"><span class="rs-pn__label">Next → · Chapter 13</span><span class="rs-pn__title">Sixteen antipatterns</span><span class="rs-pn__part">Decide and avoid</span></a></nav>
       </article>
       <aside class="rs-toc" aria-label="On this page">

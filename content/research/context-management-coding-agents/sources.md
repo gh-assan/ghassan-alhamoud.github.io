@@ -38,7 +38,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** the AppWorld table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
 - **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
-- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
+- **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [chapter 12](ch:failure-modes#c-compaction), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
 
 ### "Addressable Recall Compaction for Long Context-Window Control in AI Agents" (ARC)
@@ -107,7 +107,7 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** share full traces, not messages; actions carry implicit decisions, which conflict when parallel agents build interlocking parts; the Flappy Bird failure; single-threaded linear agents.
 - **Discount:** first-party, arguing for its own architecture. The failure description is the durable content.
-- **Used in:** [chapter 4](ch:choosing-methods#step-5-the-decision-table-5-minutes), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [case CS-1](ch:case-studies#cs-1-the-sub-agents-that-built-different-games-p).
+- **Used in:** [chapter 4](ch:choosing-methods#step-5-the-decision-table-5-minutes), [chapter 7](ch:sub-agents#the-disagreement-stated-fairly), [chapter 12](ch:failure-modes#e-isolation), [case CS-1](ch:case-studies#cs-1-the-sub-agents-that-built-different-games-p).
 
 ### LangChain, write / select / compress / isolate, and Deep Agents
 
