@@ -115,7 +115,7 @@ The 12.5× spread between a cached read and a new write is why cache behaviour d
 
 ### Belief 1: "Cutting tokens cuts cost" [C] {#belief-1-cutting-tokens-cuts-cost}
 
-**False whenever the cut is in the prefix.** A team replaces a static 38K tool surface with per-turn dynamic selection, cutting definitions to 9K.
+**False whenever the cut is in the prefix.** A team replaces a static 38K tool surface with per-turn dynamic selection, cutting definitions to 9K — chapter 3's [dynamic-tool trap](ch:ten-methods#m-1-prefix-stability) [C].
 
 | | Context | Cached | New | Cost per turn |
 |---|---|---|---|---|
@@ -131,7 +131,7 @@ A **24% token cut produced a 6.9× cost increase**, because the tool block sits 
 
 **True, but far less than the token count suggests, and only if the session continues.**
 
-Take a 120K context compacted to 40K (a 25K stable prefix that stays cached, plus a 15K new summary), with 2.5K added per turn afterwards. The compaction call itself (reading the transcript and writing a ~2K summary) costs about 17.4 units.
+Take a 120K context compacted to 40K (a 25K stable prefix that stays cached, plus a 15K new summary), with 2.5K added per turn afterwards. The compaction call itself — reading the 120K transcript at the cached rate (12.0) and writing the 15K summary at 1.25 (18.75) — costs about 30.8 units.
 
 ```chart
 {
@@ -140,7 +140,7 @@ Take a 120K context compacted to 40K (a 25K stable prefix that stays cached, plu
   "x": [1, 2, 3, 4, 8, 12],
   "series": [
     {"name": "No compaction", "values": [14.9, 30.0, 45.4, 61.0, 126.0, 195.0]},
-    {"name": "Compacted", "values": [38.6, 45.8, 53.1, 60.8, 93.8, 130.8]}
+    {"name": "Compacted", "values": [37.9, 45.3, 52.9, 60.8, 94.8, 132.8]}
   ],
   "min": 0, "max": 200,
   "valueFormat": "{v}",
@@ -148,10 +148,12 @@ Take a 120K context compacted to 40K (a 25K stable prefix that stays cached, plu
   "yLabel": "cumulative cost (relative units)",
   "annotations": [{"x": 4, "text": "breakeven ≈ 4 turns"}],
   "categoryLabel": "Turns after",
-  "caption": "Compaction starts 24 units behind and breaks even after about four turns. Compacting with fewer than about five turns left is a pure loss [C].",
-  "alt": "Two lines. Compacted starts higher at 38.6 versus 14.9 and crosses below the no-compaction line at turn 4; by turn 12 it is 130.8 versus 195."
+  "caption": "Compaction starts about 23 units behind and breaks even after about four turns. Compacting with fewer than about five turns left is a pure loss [C].",
+  "alt": "Two lines. Compacted starts higher at 37.9 versus 14.9 and crosses below the no-compaction line at turn 4; by turn 12 it is 132.8 versus 195."
 }
 ```
+
+Afterwards, each turn costs about 7.1 units (25K prefix and 15K summary re-read cached, 2.5K new written) rising 0.25 per turn as earlier additions re-enter cached — the compacted series above is that arithmetic, cumulative from the 30.8-unit call.
 
 Two consequences.
 
@@ -161,7 +163,7 @@ Two consequences.
 > [!key] The corrected framing
 > Compaction is **a quality decision with a modest financial upside**, not a cost optimisation with a quality caveat. That inversion changes when you reach for it, and it strengthens the case for resets, which cost about 500 tokens and carry none of the summarisation damage.
 
-## Worked monthly economics
+## Worked monthly economics [C]
 
 A five-engineer team, each running about six agent sessions a day, 20 working days a month.
 
@@ -173,8 +175,8 @@ Prefix tax (3 MCP servers, 380-line instruction file)    = 62K
 New tokens per turn                                      = 2.6K
 
 Cost per turn    = (110 − 2.6) × 0.10 + 2.6 × 1.25       = 13.99 units
-Cost per session = 45 × 13.99                            = 630 units
-Cost per month   = 600 × 630                             = 377,900 units
+Cost per session = 45 × 13.99                            = 629.55 units
+Cost per month   = 600 × 629.55                          = 377,730 units
 ```
 
 ```text title="after tool audit, output shaping and just-in-time retrieval"
@@ -183,15 +185,15 @@ Mid-session context  110K → 48K   (shaping + offload + just-in-time)
 New tokens per turn   2.6K → 1.9K (output shaping)
 
 Cost per turn    = (48 − 1.9) × 0.10 + 1.9 × 1.25        = 6.99 units
-Cost per session = 45 × 6.99                             = 315 units
-Cost per month   = 600 × 315                             = 188,800 units
+Cost per session = 45 × 6.99                             = 314.55 units
+Cost per month   = 600 × 314.55                          = 188,730 units
 ```
 
 **Compute saving: 50%.** Now the lines everyone forgets.
 
 | Line | Before | After | Note |
 |---|---:|---:|---|
-| Compute | 377,900 | 188,800 | −50% |
+| Compute | 377,730 | 188,730 | −50% |
 | Setup (people, one-off) | — | ~24 h | Tool audit 4 h, shaping 8 h, offload 8 h, instruction file 4 h |
 | Maintenance (people, recurring) | ~2 h/month | ~3 h/month | Quarterly audit plus script upkeep |
 | Latency | baseline | slightly better | Smaller contexts prefill faster; just-in-time adds round trips |
@@ -215,7 +217,7 @@ It cannot be gamed in either easy direction. Cutting context aggressively lowers
 {
   "type": "hbar",
   "title": "Three configurations over 40 tasks: cost per solved task",
-  "categories": ["Full context, no management (27 solved)", "Managed stack (29 solved)", "Over-compressed, tuned on single runs (21 solved)"],
+  "categories": ["Full context, no management (27 solved)", "Managed stack (29 solved)", "Over-compressed (21 solved)"],
   "series": [{"name": "Cost per solved task", "values": [919, 393, 424]}],
   "valueFormat": "{v}",
   "highlight": [1],

@@ -172,7 +172,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **The under-reported half.** The cost saving was the visible result. The more important comparison was moving from 55% to 24% utilisation: a higher-utilisation condition versus a lower one. Any quality effect belongs in an evaluation, not in the cost number [D].
 
-*Composite:* assembled from the figures in [chapter 2](ch:anatomy#reading-a-whole-budget-a-worked-example), [chapter 8](ch:tool-surface#a-worked-audit) and [chapter 10](ch:metrics-and-economics#worked-monthly-economics). The individual numbers derive from [S] and [P] sources; the incident is constructed.
+*Composite:* assembled from the figures in [chapter 2](ch:anatomy#reading-a-whole-budget-a-worked-example), [chapter 8](ch:tool-surface#a-worked-audit) and [chapter 10](ch:metrics-and-economics#worked-monthly-economics-c). The individual numbers derive from [S] and [P] sources; the incident is constructed.
 
 ## Patterns across the cases
 
