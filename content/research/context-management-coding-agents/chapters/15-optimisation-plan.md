@@ -1,6 +1,8 @@
 ## How to use the plan
 
-**The plan is ordered by yield per effort, not by intellectual interest.** Phase 1 is unglamorous deletion, and it is where most of the value is. Phase 5 is the interesting architecture, and it is where most of the *writing* about this field is. That inversion is the plan's main contribution.
+**The order is an engineering judgment, not a measured payoff curve.** The proposed sequence starts with a baseline and reversible changes, then moves to habits, evaluation and optional architecture. It does not establish that Phase 1 or the first seven hours deliver most of the benefit.
+
+The total of about 16 hours over six weeks is an authored planning estimate. Every phase duration is a proposed budget, not an observed average. Pass a phase's gate before continuing, and stop after any phase once your own measurements satisfy the stop rule.
 
 Three rules make it work:
 
@@ -26,7 +28,7 @@ Three rules make it work:
 </svg>
 </div>
 <p class="diagram__hint">Scroll sideways to see the full timeline.</p>
-<figcaption>Every phase is valuable on its own, and you may stop after any of them. The dark bars are mostly reversible; the lighter ones need new habits, which is where adoption usually stalls.</figcaption>
+<figcaption>Durations are proposed planning estimates. Each phase has a gate; stop after any phase once local measures satisfy the stop rule. The dark bars are mostly reversible; the lighter ones need new habits, which can make adoption harder.</figcaption>
 </figure>
 
 ## Phase 0: Baseline (1.5 hours, week 1) {#phase-0-baseline}
@@ -59,7 +61,7 @@ Largest segment I control:        ____________________
 
 ## Phase 1: Deletion (2.5 hours, week 1) {#phase-1-deletion}
 
-**The highest-yield, most reversible phase when the audit finds dead or duplicate surface.** Delete candidate waste first, verify task coverage after each change, and keep rollback. Instruction pruning changes behaviour, so measure it separately.
+**The first intervention to consider when the audit finds dead or duplicate surface.** Deletion is reversible when coverage is verified and rollback is kept; instruction pruning changes behaviour, so measure it separately. This is a sequencing recommendation, not a measured yield ranking.
 
 **Do:**
 
@@ -71,7 +73,7 @@ Largest segment I control:        ____________________
 
 **Gate:** re-measure prefix tax, tool share and the defined : called ratio — [chapter 8's audit](ch:tool-surface#the-30-minute-audit) does this systematically. **Target a 50–90% prefix-tax reduction when dead or duplicate surface dominates [D]; measure it before treating it as a target.** Then run 10 normal sessions and count occasions where a deleted capability was missed. Expect zero; if more than one, restore that specific server and note why.
 
-**Payoff:** a planning estimate is **25–35% of the window back** when unused or duplicated capabilities dominate [D].
+**Phase-specific estimate:** **25–35% of the window back** when unused or duplicated capabilities dominate [D]. This is a derived planning estimate for that condition, not an observed average or a programme-wide payoff; test it against your baseline.
 
 ## Phase 2: Prevention (3 hours, week 2) {#phase-2-prevention}
 
@@ -80,7 +82,7 @@ Shape output before it becomes context.
 **Do:**
 
 1. **Wrap your four loudest commands.** Each wrapper applies the quiet flag, filters obvious noise, sends the full output to `.agent/logs/`, and returns a digest plus the path. *(2 h)*
-2. **Build in the pass/fail asymmetry.** Passing test runs return one line; failing runs return the full trace. This one rule is most of the value.
+2. **Build in the pass/fail asymmetry.** Passing test runs return one line; failing runs return the full trace. Prioritise this candidate when noisy test output is a measured source of waste.
 3. **Truncate head-and-tail** at 2–8K tokens with a 30/70 split for anything not wrapped. **Never truncate the middle.** *(15 min)*
 4. **Create a gitignored `.agent/` directory.** *(5 min)*
 5. **Set search defaults**: `rg -C 8` plus your standard exclusions. *(15 min)*
@@ -102,9 +104,9 @@ else
 fi
 ```
 
-**Gate:** re-measure tool-result share and cache hit rate. **Expect tool-result tokens down 60–90%** [P] — plan on the conservative half — and the cache hit rate flat or up. Then count re-runs with more verbose flags over 10 sessions. A rise means you filtered too hard: loosen that digest; do not abandon the approach.
+**Gate:** re-measure tool-result share, task outcomes, cache hit rate, and priced input/output costs using your provider's rates. Practitioner reports describe 60–90% less command output [P], a token-volume hypothesis rather than a cost estimate. Keep shaping only if the measured quality and priced-cost results justify setup and maintenance; count re-runs with more verbose flags over 10 sessions, and loosen the digest if they rise.
 
-**Payoff:** a planning estimate of 20–30% when output waste dominates [D]; it can compound with Phase 1 because the phases act on different segments, but measure your own sessions.
+**Phase-specific estimate:** 20–30% context-volume reduction when output waste dominates [D]. This derived planning estimate is conditional, not a cost estimate; measure your sessions and priced costs to see whether it applies and whether it combines with Phase 1.
 
 ## Phase 3: Retrieval (2 hours plus a habit, week 3) {#phase-3-retrieval}
 
@@ -120,17 +122,17 @@ The first phase that needs behaviour change, which is why it is third.
 3. **Stop pre-loading.** Replace any codebase overview with a pointer seed under 2,000 tokens. *(1 h)*
 4. **Re-read before re-editing.** Your own edits invalidate your own context.
 
-**Gate:** sample 20 reads and compute [[read-utilisation]] — [chapter 5](ch:retrieval) owns the retrieval design. **Expect the median to roughly double**, typically from under 10% to 15–25% [D]. Re-run the failure tally on the next 10 failures: the balance should move toward dilution. If it moved toward starvation, you cut too much; widen the pointer seed.
+**Gate:** sample 20 reads and compute [[read-utilisation]] — [chapter 5](ch:retrieval) owns the retrieval design. Compare the median with your Phase 0 baseline; roughly doubling it from under 10% to 15–25% is a derived planning expectation, not a guaranteed result [D]. Re-run the failure tally on the next 10 failures: the balance should move toward dilution. If it moved toward starvation, you cut too much; widen the pointer seed.
 
 ## Phase 4: State and boundaries (3 hours, week 4) {#phase-4-state-and-boundaries}
 
-Making sessions survivable. This is where quality on long tasks comes from.
+Goal: test whether explicit state and boundary practices make long tasks more recoverable.
 
 1. **Adopt a plan-file convention** with goal, constraints, decisions, **ruled out**, and next step. Cap it at 80 lines; update it at state changes; include "last updated at turn N". *(1 h)*
 2. **Adopt an offload convention** with **self-describing** stubs: `a3f9.log (14KB) — npm ci, exit 0, 2 peer-dep warnings`, never just `a3f9.log (14KB)`. *(30 min)*
 3. **Replace your compaction prompt** with the [explicit schema](ch:templates#4-compaction-schema). Worth up to 6.5 SWE-bench points [S], and it is a text edit. *(30 min)*
 4. **Set compaction rules:** right after a test passes or a sub-task closes; never mid-debug or when stuck; never more than once per session; never with fewer than five turns left.
-5. **Make the plan-file re-read the first action after any compaction.** It protects the most error-prone step in the session [S].
+5. **Evaluate a plan-file reread as a possible first orientation action after compaction.** TRACE reports a post-compaction risk in AppWorld but did not test this recovery practice [S].
 6. **Adopt reset triggers:** a second compaction is needed, the same action repeats three times, a poisoned fact appears, the task pivots, or utilisation passes 70% with a lot left.
 7. **Adopt a [handoff template](ch:templates#5-session-handoff)** with `file:line` pointers and verification commands with their results. *(30 min)*
 
@@ -177,7 +179,7 @@ Check monthly; the thresholds come from [chapter 10's](ch:metrics-and-economics#
 - Post-boundary re-fetch under 2
 - Pass² ÷ Pass@2 over 0.85, or you are not compacting
 
-When they all hold, **your binding constraint is elsewhere**: model choice, task decomposition or the verification loop. Investing further in context past this point produces frameworks, not results.
+This is a proposed operating stop rule, not a measured point where context work stops helping. When all six conditions hold, pause this sequence and check whether model choice, task decomposition or verification is the next constraint before investing further.
 
 ## The maintenance loop
 
@@ -196,12 +198,12 @@ Three of the six steps are deletions, and the other three exist to catch whateve
 
 ## The plan on one page
 
-| Phase | Effort | Do | Gate | Typical gain |
+| Phase | Proposed effort | Do | Gate | Phase-specific planning estimate |
 |---|---|---|---|---|
 | **0 Baseline** | 1.5 h | Measure eight numbers | Numbers written down | — |
 | **1 Deletion** | 2.5 h | Review dead-tool candidates; ignore files; prune instructions | Prefix tax −50–90%; verify coverage | 25–35% if waste dominates [D] |
-| **2 Prevention** | 3 h | Wrap loud commands; head-and-tail; `.agent/` | Tool output −60–90%; cache flat or up | 20–30% if output waste dominates [D] |
-| **3 Retrieval** | 2 h + habit | Symbol tool; locate → inspect → read; pointer seed | Read-utilisation roughly doubles | Smaller, sustained |
+| **2 Prevention** | 3 h | Wrap loud commands; head-and-tail; `.agent/` | Measure segment volume, quality, cache status and priced input/output cost | 20–30% context-volume estimate if output waste dominates [D], not a cost estimate |
+| **3 Retrieval** | 2 h + habit | Symbol tool; locate → inspect → read; pointer seed | Compare read-utilisation with baseline; check starvation | Smaller, sustained |
 | **4 State** | 3 h + habit | Plan file, stubs, schema, reset triggers | Re-fetch under 2; at most one compaction | Long-task quality |
 | **5 Measurement** | 4 h | Evaluation set, k = 2, paired A/B | Pass² with an interval | Future changes attributable |
 | **6 Advanced** | Open | Code execution, scouts, addressable recall, memory | Per-change gates | Diminishing |

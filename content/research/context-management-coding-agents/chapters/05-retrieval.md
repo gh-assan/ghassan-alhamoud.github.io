@@ -153,7 +153,7 @@ Two of these are counterintuitive. **R-5 is the agent poisoning its own context 
 
 ## Should you seed the session with a codebase overview?
 
-**The evidence against.** The same three results chapter 3's [M-3](ch:ten-methods#m-3-just-in-time-retrieval) cites: focused beats full on every measured comparison, and full context costs 2.68× for fewer completed tasks [S][P].
+**The evidence against.** The same three results chapter 3's [M-3](ch:ten-methods#m-3-just-in-time-retrieval) cites: focused beats full on every measured comparison. In a 50-task Dynamics 365 hotel-expense benchmark with verbose MCP responses, full-context GPT-5 used 2.68× the total tokens of the best managed configuration and completed fewer tasks [S]; that is a token-volume result for this workflow, not a priced-cost ratio.
 
 **The evidence for a small seed.** Just-in-time retrieval fails by starvation when the agent does not know a subsystem exists. Human-written context files improved success by about 4% [P] — small and positive, though the figure has no published method.
 
@@ -167,7 +167,7 @@ Two of these are counterintuitive. **R-5 is the agent poisoning its own context 
 | Landmines ("`legacy/` is dead; do not edit") | Full file contents |
 | Where things live, one line each | Design rationale |
 
-Keep it **under 2,000 tokens**. For any candidate line, ask: *does this help the agent decide where to look, or does it try to replace looking?* The first is worth its tokens many times over. The second is the 100K summary that lost to 5K.
+Keep it **under 2,000 tokens**. For any candidate line, ask: *does this help the agent decide where to look, or does it try to replace looking?* The first is worth its tokens many times over. Sourcegraph's author reports that 5K-token targeted retrieval outperformed a 100K-token codebase summary on the same task [P] (see [Sourcegraph's post](https://sourcegraph.com/blog/context-engineering)), but names no task, model or comparison protocol; treat it as a practitioner observation to test, not benchmark evidence.
 
 ```markdown title="pointer seed, ~300 tokens"
 ## Where things live

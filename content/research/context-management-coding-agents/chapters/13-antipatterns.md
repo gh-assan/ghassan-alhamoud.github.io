@@ -54,15 +54,15 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 - **Looks like:** a carefully written 40K-token architecture overview loaded at the start of every session, so the agent "understands the system".
 - **The real version:** a pointer seed under 2,000 tokens: entry points, invariants, landmines, commands.
 - **Tell:** the document is *prose* rather than *pointers*. If it explains instead of locating, this is it.
-- **Cost:** 5K targeted retrieval beat a 100K summary [P], and coherent documents retrieve *worse* than incoherent ones across all 18 models [S]. You pay 40K tokens for a well-built distractor that goes stale silently.
+- **Cost:** a Sourcegraph author reports 5K-token targeted retrieval outperforming a 100K summary on the same task [P] (see [Sourcegraph's post](https://sourcegraph.com/blog/context-engineering)), but names no task, model or comparison protocol; treat this vendor/practitioner observation as a prompt to test, not benchmark evidence. Separately, coherent documents retrieved *worse* than incoherent ones in the cited tests [S]. You pay 40K tokens for a well-built distractor that goes stale silently.
 - **Fix:** convert it to pointers. "Auth lives in `src/auth/`, entry `session.ts`; all database access via `repo/`" replaces four paragraphs at 3% of the cost. The pointer seed is [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview)'s.
 
 ### AP-2: Just-in-case tooling
 
 - **Looks like:** every plausibly useful MCP server attached, because the agent "might need it".
-- **The real version:** a curated surface of at most 20 tools matched to the actual work.
+- **The real version:** a curated surface matched to the actual work, validated against representative tasks.
 - **Tell:** more than three tools defined for every tool called.
-- **Cost:** 42K tokens for a single server [P]; selection collapsing from 19 of 20 at 20 tools to failure at 107 [S]. Prompt budget is present on every call, but billing depends on cache hits and request stability.
+- **Cost:** 42K tokens for a single server [P]; a vendor Dog API demonstration found Qwen3 1.7B got 19/20 calls correct at 20 tools, 3/4 at 40, and frequent errors at 107 [P]. It was explicitly non-exhaustive and non-rigorous. Prompt budget is present on every call, but billing depends on cache hits and request stability.
 - **Fix:** delete candidates with zero calls in a representative sample; verify task coverage and keep rollback. The [30-minute audit](ch:tool-surface#the-30-minute-audit) does this systematically.
 
 ### AP-10: Middle truncation
@@ -91,7 +91,7 @@ If context is a bucket, filling it is free until it overflows, and the only ques
 
 ## Generator 2: adding instead of subtracting
 
-Adding is visible and feels like work. Deleting looks like doing nothing. So instruction files grow, memory accumulates, frameworks get built and stacks get adopted wholesale. The evidence is lopsidedly pro-subtraction: masking beats summarising at equal solve rate [S], fewer tools beat more [S], 5K beats 100K [P]. The incentives are lopsidedly pro-addition. **The correction is to make removal a reported result**: an ablation that deletes a component is a finding, not an admission.
+Adding is visible and feels like work. Deleting looks like doing nothing. So instruction files grow, memory accumulates, frameworks get built and stacks get adopted wholesale. The controlled evidence is lopsidedly pro-subtraction: masking matches summarising at equal solve rate [S], and fewer tools beat more [S]. The incentives are lopsidedly pro-addition. **The correction is to make removal a reported result**: an ablation that deletes a component is a finding, not an admission.
 
 ### AP-3: Full-stack adoption
 
@@ -140,10 +140,10 @@ Tokens, utilisation and index size are easy to measure. Solve rate, stability an
 ### AP-4: Compaction as hygiene
 
 - **Looks like:** compacting often to "keep the context clean", as routine maintenance.
-- **The real version:** compacting at sub-goal boundaries, at most once per session, after offloading.
-- **Tell:** compaction is triggered by a token threshold or a timer, not a task event.
-- **Cost:** mid-task firing [S], termination recognition collapsing to 44.6% (AppWorld) [S], +0.108 errors at the next step [S], Pass² damage larger than accuracy damage [S], and a financial saving that only breaks even after about four turns [C] (chapter 10).
-- **Fix:** semantic triggers with suppression rules; cap at one; then reset. The trigger design space is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
+- **Candidate alternative:** test compacting at sub-goal boundaries, at most once per session, after offloading.
+- **Possible tell:** a token threshold or timer fires during an active sub-task; check whether the schedule fits your workload.
+- **Cost:** one BrowseComp example in SelfCompact's Figure 1 shows a fixed-interval summary firing mid-search and dropping four verified facts [S]; this is an illustration, not a measured frequency. TRACE reports termination recognition at 44.6% (AppWorld) [S], +0.108 additional blocked/error actions at the first post-compaction step in AppWorld [S], and greater Pass² damage than accuracy damage [S]. A separate cost model breaks even after about four turns [C] (chapter 10).
+- **Fix:** pilot a task-aware trigger with suppression rules and measure it on your workload; cap at one, then reset. The trigger design space is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
 
 ### AP-7: Semantic search as the answer
 

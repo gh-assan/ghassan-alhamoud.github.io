@@ -67,7 +67,7 @@ Together they cover the five constraints and the one blind spot. Everything else
 | # | Metric | Formula | Healthy | Decision |
 |---|---|---|---|---|
 | T24 | **Cache hit rate** | Cached input ÷ total input | Over 70% | Is an optimisation self-defeating? |
-| T25 | **Cache-adjusted cost per turn** | Σ(cached × p_cached) + Σ(new × p_new) | Trending down | The only honest cost metric |
+| T25 | **Cache-adjusted input cost per turn** | Σ(cached × p_cached) + Σ(new × p_new) | Trending down | Is input cost improving? Add separately priced output and other costs for the total |
 | T26 | Total-token multiplier | All agents' tokens ÷ single-agent baseline | Depends | Is isolation earning its keep? [P] |
 
 </details>
@@ -95,7 +95,7 @@ Agent cost has four lines. Most teams instrument one.
 <figcaption>A memory system that needs weekly curation costs no tokens, which does not make it free. In a small team the people line is usually the largest.</figcaption>
 </figure>
 
-**Line 1: compute.** Input tokens are **99.75–99.87% of agent token usage** [S]. Output is a rounding error. Any cost model that reports "tokens" without splitting input by cache state can be off by an order of magnitude. This chapter uses a generic price shape, in relative units per 1K tokens:
+**Line 1: compute.** One study reports input at **99.75–99.87% of total token volume** across four GPT-5 configurations averaged over five runs on a 50-task Dynamics 365 hotel-expense benchmark using verbose MCP responses [S]. That is not a general agent ratio or a cost share: output rates differ by model/provider, and input cost depends on cache status and provider rates. Treat output shaping as a workload hypothesis. Measure tokens by segment, cached and uncached input, generated output, task outcomes, and priced cost on your workload. The generic table below illustrates input prices only, in relative units per 1K tokens; it is not a provider rate card or a complete cost comparison:
 
 | Token class | Relative price |
 |---|---|
@@ -103,7 +103,7 @@ Agent cost has four lines. Most teams instrument one.
 | New input, written to the cache | **1.25** |
 | Uncached input, no caching | 1.00 |
 
-The 12.5× spread between a cached read and a new write is why cache behaviour dominates.
+The 12.5× spread between a cached read and a new write illustrates why cache status can materially affect input cost. Add generated-output tokens at their separate model/provider rate when calculating total inference spend.
 
 **Line 2: the cache-write premium.** New tokens cost *more* than plain uncached input, because writing them into the cache carries a premium. That is why **churn is expensive**: a token that enters, is invalidated and re-enters is paid at 1.25 twice, instead of 0.10 per turn if it had simply stayed.
 
@@ -122,7 +122,7 @@ The 12.5× spread between a cached read and a new write is why cache behaviour d
 | Static | 120K | 117.5K | 2.5K | `117.5 × 0.10 + 2.5 × 1.25` = **14.9** |
 | Dynamic | 91K | 10K | 81K | `10 × 0.10 + 81 × 1.25` = **102.3** |
 
-A **24% token cut produced a 6.9× cost increase**, because the tool block sits about 10K into the prompt and changing it invalidates everything after it [C].
+A **24% input-token cut produced a 6.9× increase in this illustrative input-cost estimate**, because the tool block sits about 10K into the prompt and changing it invalidates everything after it [C]. The estimate excludes generated-output charges and uses generic cache rates, not a provider's bill.
 
 > [!key] The rule
 > Tokens in a *stable prefix* cost 0.10 per turn. Tokens that *churn* cost 1.25 every time they re-enter. A large stable prefix is cheaper than a small churning one, often by an order of magnitude.
@@ -163,7 +163,9 @@ Two consequences.
 > [!key] The corrected framing
 > Compaction is **a quality decision with a modest financial upside**, not a cost optimisation with a quality caveat. That inversion changes when you reach for it, and it strengthens the case for resets, which cost about 500 tokens and carry none of the summarisation damage.
 
-## Worked monthly economics [C]
+## Worked monthly input-cost model [C]
+
+The following arithmetic prices input tokens only, using the illustrative cache rates above. It excludes generated-output charges and other provider costs; calculate those separately for a real workload.
 
 A five-engineer team, each running about six agent sessions a day, 20 working days a month.
 
@@ -228,7 +230,7 @@ It cannot be gamed in either easy direction. Cutting context aggressively lowers
 }
 ```
 
-This is the arithmetic form of a measured result: full context cost 2.68× the best method while completing fewer tasks [S]. It adds a lesson: **you can over-compress as easily as you can over-load.**
+In the same 50-task Dynamics 365 hotel-expense benchmark, the full-context GPT-5 configuration used 2.68× the total tokens of the best-performing managed configuration while completing fewer tasks [S]. This is a token-volume comparison, not a priced-cost ratio. It adds a lesson: **you can over-compress as easily as you can over-load.**
 
 ## Where to spend the next unit of effort
 
@@ -236,7 +238,7 @@ Run this checklist in order. Stop at the first "yes".
 
 1. **Cache hit rate under 60%?** Fix the prefix. Everything else is downstream and may be self-defeating.
 2. **More than 3 tools defined per tool used?** Inspect deletion candidates. If a representative sample confirms dead tools, remove them with rollback; the largest win is workload-specific.
-3. **Tool results over 35% of the session?** Output shaping: one afternoon, 60–90% reduction [P].
+3. **Tool results over 35% of the session?** Test output shaping on representative commands; practitioner reports describe 60–90% less output [P]. Compare task outcomes and priced input/output cost under your cache and provider rates before treating the reduction as a saving.
 4. **Read-utilisation under 5%?** Structural retrieval.
 5. **Post-boundary re-fetch over 2?** Offload before compaction; fix the schema.
 6. **Pass² ÷ Pass@2 under 0.85?** You are shipping intermittency. Back off compression.

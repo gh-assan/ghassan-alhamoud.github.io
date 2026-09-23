@@ -87,7 +87,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **What was done.** Seven strategies were compared (full context, FIFO truncation, token pruning, two prompt-based compaction schemes, guideline-based approaches, and a verifier-guided method), measuring both single-run accuracy and Pass²: solved on both of two runs.
 
-**What happened.** No compression: **85.7% accuracy, 77.4% Pass²**. Verifier-guided: 77.1% / 67.3%. Prompt-based: 71.4% / 59.5%. FIFO: 63.7% / 53.0%. The gap between Pass@2 and Pass² **widened as budgets tightened**. Correct termination was **44.6%** with summary replacement versus **77.2%** with FIFO at 2K, and the first step after compaction carried **+0.108** extra blocked or error actions [S].
+**What happened.** No compression: **85.7% accuracy, 77.4% Pass²**. Verifier-guided: 77.1% / 67.3%. Prompt-based: 71.4% / 59.5%. FIFO: 63.7% / 53.0%. The gap between Pass@2 and Pass² **widened as budgets tightened**. Correct termination was **44.6%** with summary replacement versus **77.2%** with FIFO at 2K, and TRACE measured **+0.108** additional blocked or error actions at the first post-compaction step in AppWorld [S].
 
 **The counterintuitive detail.** FIFO, which loses the *most* information, preserved the agent's sense of state *better* than summarisation. Losing information wholesale is less damaging to "where am I?" than replacing it with a fluent narrative that reads as if the state is known.
 
@@ -101,7 +101,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 
 **What happened.** **The bill went up sharply.** Latency got worse. Task quality did not improve.
 
-**The mechanism.** The tool block sits about 10K tokens into the prompt. Changing it every turn invalidates the cache for everything after it. At generic prices, the static setup cost **14.9** units per turn and the dynamic one **102.3**. **A 24% token cut bought a 6.9× cost increase.**
+**The mechanism.** The tool block sits about 10K tokens into the prompt. Changing it every turn invalidates the cache for everything after it. Under the illustrative input-only prices in Chapter 10, the static setup costs **14.9** units per turn and the dynamic one **102.3**. **A 24% input-token cut produced a 6.9× increase in modeled input cost.** Generated-output charges and other provider costs are excluded; actual total spend depends on the provider's rates and cache behavior.
 
 **Resolution.** The team reverted to a static, hand-pruned surface: every zero-call tool deleted, the rest deferred. 38K fell to about 4K, the cache hit rate was preserved, and both bills went down.
 
@@ -185,7 +185,7 @@ The set deliberately includes **one change that made things worse** (CS-5) and *
 | The **boundary component** is a first-class quality lever | CS-3, CS-4 | The summariser alone was worth 6.5 SWE-bench points |
 | Damage shows up in **variance before the mean** | CS-4 | Single-run measurement cannot see it |
 | **Eliminating a category beats compressing it** | CS-6, CS-8 | 98.7% from removing definitions; 96% from deleting unused tools |
-| **Cache mechanics can flip the sign** of an optimisation | CS-5 | 24% fewer tokens, 6.9× the cost |
+| **Cache mechanics can flip the sign** of an optimisation | CS-5 | Illustrative input-only model: 24% fewer input tokens, 6.9× modeled input cost |
 | **The harness confounds everything** | CS-7 | Published rankings are hypotheses |
 | The constructed audit separates **waste from behaviour changes** | CS-8 | The first two moves remove or defer waste; the latter two need verification |
 

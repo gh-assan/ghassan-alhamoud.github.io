@@ -39,7 +39,7 @@ Start with the summary table. Open the section for any call you are facing.
 **Tension.** Pre-loading maximises recall and costs density. Discovery maximises density and risks starvation.
 
 - **For pre-loading:** the agent cannot search for a subsystem it does not know exists. Human-written context files improved success by about 4% [P].
-- **For discovery:** 5K targeted beat a 100K summary [P]; focused ~300-token prompts beat ~113K full ones [S]; full context cost 2.68× and completed fewer tasks [S].
+- **For discovery:** a Sourcegraph author reports 5K-token targeted retrieval outperforming a 100K summary on the same task [P] (see [Sourcegraph's post](https://sourcegraph.com/blog/context-engineering)), but names no task, model or comparison protocol; treat it as a vendor/practitioner observation, not benchmark evidence. Focused ~300-token prompts beat ~113K full ones [S]. On a 50-task Dynamics 365 hotel-expense benchmark with verbose MCP responses, full-context GPT-5 used 2.68× the total tokens of the best managed setup and completed fewer tasks [S]; this is not a priced-cost ratio.
 
 **Recommendation.** Discover, with a **pointer seed under 2,000 tokens**: entry points, invariants, landmines, build commands. Pre-load *where to look*, never *what is there*. The retrieval design is [chapter 5](ch:retrieval)'s subject.
 
@@ -103,7 +103,7 @@ Start with the summary table. Open the section for any call you are facing.
 **Tension.** Compaction keeps continuity, lossily and cheaply. A reset loses continuity but restores a clean, high-attention context.
 
 - **For compaction:** no person needed; the agent keeps going.
-- **For a reset:** compaction is lossy, breaks the cache, damages state recognition (44.6% versus 77.2% correct termination on AppWorld) [S] and raises errors at the next step (+0.108) [S]. A reset lets you *author* what crosses the boundary. [Chapter 6](ch:compaction-and-memory) owns the compaction arithmetic.
+- **For a reset:** compaction is lossy, breaks the cache, damages state recognition (44.6% versus 77.2% correct termination on AppWorld) [S], and in TRACE's AppWorld test produced +0.108 additional blocked/error actions at the first post-compaction step [S]. A reset lets you *author* what crosses the boundary. [Chapter 6](ch:compaction-and-memory) owns the compaction arithmetic.
 
 **Recommendation.** **Reset, if you have externalised state.** At most one compaction per session; needing a second means the session should have ended.
 
@@ -129,9 +129,9 @@ Start with the summary table. Open the section for any call you are facing.
 
 ### SP-12: Model-directed or policy compaction
 
-**Tension.** Model-directed compaction adapts. Policy compaction is predictable, and does not depend on the model's judgment late in a long session, which is exactly when compaction is needed.
+**Tension [D].** A model-directed trigger can use task state; a fixed policy is predictable and independent of late-session model judgment. Which trade-off works better depends on the workload and must be measured.
 
-**Recommendation.** **Model-directed with a policy backstop.** Give the model a compaction tool and an explicit rubric (fire on closure or convergence; hold off mid-derivation or when stuck) [S], plus a high threshold that fires only if the model never does. The design space is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
+**Recommendation.** **Model-directed with a policy backstop.** Give the model a compaction tool and a task-specific rubric [S]. SelfCompact tested this scaffold on competition-math and agentic-search benchmarks, not coding-agent workflows; treat transfer here as a pilot to measure [D]. Keep an overflow threshold as a fallback, but tune its cutoff on your workload rather than treating the paper's comparator as a universal setting. The design space is [chapter 6](ch:compaction-and-memory#the-compaction-design-space)'s.
 
 **Flips when** you cannot expose a compaction tool. Then use a policy triggered by observable boundaries such as a passing test or a commit.
 
@@ -191,9 +191,9 @@ Start with the summary table. Open the section for any call you are facing.
 ### SP-3: Static or dynamic tool surface
 
 - **For dynamic:** attacks a 40K+ prefix directly.
-- **For static:** a dynamic set changes the prefix per task and collapses the cache hit rate. The [worked example](ch:ten-methods#m-1-prefix-stability) turned a 24% token cut into a 6.9× cost increase.
+- **For static:** a dynamic set changes the prefix per task and collapses the cache hit rate. In the [worked example](ch:ten-methods#m-1-prefix-stability), a 24% input-token cut produced a 6.9× increase in illustrative input cost; generated-output charges are excluded.
 
-**Recommendation.** **Static and hand-pruned:** reach 20 tools by deletion, not selection logic. Where the harness supports deferred definitions (stable descriptions, schemas fetched on use), that is the best of both.
+**Recommendation.** **Keep a stable, task-relevant surface and evaluate selection logic against hand-pruned candidates.** Where the harness supports deferred definitions (stable descriptions, schemas fetched on use), compare its prompt cost and task outcomes with eager loading. Set the local tool-pool budget from representative task coverage, selection errors and prompt cost.
 
 **Flips when** your provider does not cache, or sessions are too short to amortise it.
 
@@ -205,7 +205,7 @@ Start with the summary table. Open the section for any call you are facing.
 
 ### SP-13: Optimise the common case or the tail
 
-**Recommendation.** **Cheap always-on prevention** (tool minimisation, output shaping) for everything, since it costs nothing on short sessions. **Heavy machinery** (offload, compaction policy, sub-agents) only when a session crosses a length or utilisation threshold.
+**Recommendation.** Use low-overhead prevention (tool minimisation, output shaping) where representative measurements show it reduces priced cost or context pressure without hurting outcomes; include setup and maintenance effort. Use heavier machinery (offload, compaction policy, sub-agents) when a session crosses a measured length or utilisation threshold.
 
 **Flips when** all your work is long-horizon. Then make the heavy machinery the default.
 

@@ -561,9 +561,11 @@ def path_nav(prog, current=None, compact=False):
 
 
 def rail(prog, current):
-    return (f'<nav class="rs-rail" aria-label="{esc(prog["shortTitle"])} contents">'
+    return (f'<details class="rs-rail-panel" open><summary class="rs-panel-toggle">Chapters'
+            f'<span class="rs-panel-toggle__icon" aria-hidden="true"></span></summary>'
+            f'<nav class="rs-rail" aria-label="Programme chapters and references">'
             f'<a class="rs-rail__home" href="index.html"><span class="rs-rail__code">{esc(prog["code"])}</span>'
-            f'<span class="rs-rail__title">{esc(prog["shortTitle"])}</span></a>{path_nav(prog, current)}</nav>')
+            f'<span class="rs-rail__title">{esc(prog["shortTitle"])}</span></a>{path_nav(prog, current)}</nav></details>')
 
 
 def clean_toc_name(name):
@@ -583,10 +585,19 @@ def toc_list(toc_tokens, cls="rs-toc__list"):
     return f'<div class="{cls}">{walk(toc_tokens)}</div>'
 
 
+def toc_rail(toc):
+    if not toc:
+        return ""
+    return (f'<details class="rs-toc-panel" open><summary class="rs-panel-toggle">On this page'
+            f'<span class="rs-panel-toggle__icon" aria-hidden="true"></span></summary>'
+            f'<nav class="rs-toc" aria-label="On this page">{toc_list(toc)}'
+            f'<a class="rs-toc__top" href="#top">Back to top ↑</a></nav></details>')
+
+
 def mobile_nav(prog, current, toc_tokens=None):
     on_page = ""
     if toc_tokens:
-        # Mirror the desktop rail exactly: the mobile disclosure is the same map
+        # Mirror the desktop rail exactly: the compact disclosure is the same map
         # collapsed, not an H2-only summary of it (bar §2). Walk the same token
         # tree the rail uses, including nested H3s.
         def walk_mobile(tokens):
@@ -597,9 +608,11 @@ def mobile_nav(prog, current, toc_tokens=None):
                            f'{esc(clean_toc_name(t["name"]))}</a>{kids}</li>')
             return f"<ul>{''.join(lis)}</ul>" if lis else ""
         on_page = ('<details class="on-this-page rs-disclosure"><summary>On this page</summary>'
-                   f'<div class="on-this-page__list">{walk_mobile(toc_tokens)}</div></details>')
+                   f'<nav class="on-this-page__list" aria-label="On this page">'
+                   f'{walk_mobile(toc_tokens)}</nav></details>')
     return (f'<div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure">'
-            f'<summary>Research contents</summary>{path_nav(prog, current)}</details>{on_page}</div>')
+            f'<summary>Programme path</summary><nav aria-label="Programme path">'
+            f'{path_nav(prog, current)}</nav></details>{on_page}</div>')
 
 
 def related_block(prog):
@@ -707,6 +720,7 @@ def render_chapter(prog, ch, stats):
 
     url = prog_url(prog, ch["_file"])
     trail = [(ch["_part"]["title"], None), (chapter_label(ch), url)]
+    toc_markup = f"      {toc_rail(toc)}" if toc else ""
     part_pos = [c for c in chs if c["part"] == ch["part"]].index(ch) + 1
     part_len = len([c for c in chs if c["part"] == ch["part"]])
     overall = ch["_index"] + 1
@@ -730,14 +744,14 @@ def render_chapter(prog, ch, stats):
         </header>
         {mobile_nav(prog, ch["slug"], toc)}
         <section class="rs-brief" aria-label="Chapter brief">
-          <div class="rs-brief__col">
+          <div class="rs-brief__summary">
             <h2 class="rs-brief__title">In 30 seconds</h2>
             <ul>{tldr}</ul>
           </div>
-          <div class="rs-brief__col rs-brief__col--outcomes">
-            <h2 class="rs-brief__title">You will be able to</h2>
+          <details class="rs-brief__outcomes">
+            <summary>You will be able to</summary>
             <ul>{outcomes}</ul>
-          </div>
+          </details>
         </section>
         <div class="article-single__body rs-body">
 {body}
@@ -750,11 +764,7 @@ def render_chapter(prog, ch, stats):
         {terms_block}
         <nav class="rs-pn" aria-label="Chapter navigation">{pn(prev_ch, "prev")}{pn(next_ch, "next")}</nav>
       </article>
-      <aside class="rs-toc" aria-label="On this page">
-        <p class="rs-toc__title">On this page</p>
-        {toc_list(toc)}
-        <a class="rs-toc__top" href="#top">Back to top ↑</a>
-      </aside>
+{toc_markup}
     </div>
   </main>"""
     desc = ch.get("description") or ch["question"]
@@ -771,6 +781,7 @@ def simple_ref_page(prog, key, title, lede, inner, toc=None, extra_schemas=(), w
     url = prog_url(prog, REF_PAGES[key])
     label = {"summary": "Summary", "faq": "FAQ", "glossary": "Glossary",
              "sources": "Sources", "method": "Method"}[key]
+    toc_markup = f"      {toc_rail(toc)}" if toc else ""
     body_html = f"""  <main id="top" class="rs-page rs-page--ref rs-page--{key}">
     <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
     <div class="rs-container rs-layout{' rs-layout--wide' if wide else ''}">
@@ -785,9 +796,7 @@ def simple_ref_page(prog, key, title, lede, inner, toc=None, extra_schemas=(), w
         {mobile_nav(prog, key, toc)}
         {inner}
       </article>
-      <aside class="rs-toc" aria-label="On this page">
-        {'<p class="rs-toc__title">On this page</p>' + toc_list(toc) if toc else ''}
-      </aside>
+{toc_markup}
     </div>
   </main>"""
     return page(title=f"{title} — {prog['shortTitle']}"[:80], description=re.sub(r"<[^>]+>", "", lede),
@@ -910,6 +919,20 @@ def render_md_ref(prog, key, title, lede, stats, prefix_html=""):
 
 
 # ---------------------------------------------------------------- programme home
+def programme_structure_counts(prog):
+    """Count published main chapters, substantive parts, and appendices."""
+    n_app = sum(1 for c in prog["chapters"] if not str(c.get("label", c["id"])).isdigit())
+    n_main = len(prog["chapters"]) - n_app
+    n_parts = sum(1 for part in prog["parts"] if part["id"] != "reference")
+    return n_main, n_parts, n_app
+
+
+def programme_structure_label(prog):
+    n_main, n_parts, n_app = programme_structure_counts(prog)
+    label = f"{n_main} chapters in {n_parts} parts"
+    return f"{label} + {n_app} appendices" if n_app else label
+
+
 def render_home(prog, stats):
     r = Renderer(prog, "home")
     home_md = (prog["_base"] / "home.md").read_text(encoding="utf-8")
@@ -963,9 +986,7 @@ def render_home(prog, stats):
                        f'<span class="rs-refcard__text">{d}</span></a>' for k, t, d in refs)
 
     url = prog_url(prog)
-    n_app = sum(1 for c in prog["chapters"] if not str(c.get("label", c["id"])).isdigit())
-    n_main = len(prog["chapters"]) - n_app
-    n_parts = sum(1 for p in prog["parts"] if p["id"] != "reference")
+    n_main, n_parts, n_app = programme_structure_counts(prog)
     body_html = f"""  <main id="top" class="rs-page rs-page--home">
     <div class="rs-container rs-home">
       {breadcrumb(prog, [])}
@@ -1053,16 +1074,19 @@ def render_home(prog, stats):
 # ---------------------------------------------------------------- research index
 def render_index(index, progs):
     cards = []
+    published_prog = None
     for entry in index["programmes"]:
         prog = progs.get(entry["slug"])
         if prog:
+            if published_prog is None and prog.get("status") == "published":
+                published_prog = prog
             cards.append(
                 f'<a class="rs-prog" href="/research/{prog["slug"]}/"><span class="rs-prog__top">'
                 f'<span class="rs-badge rs-badge--code">{esc(prog["code"])}</span>'
                 f'<span class="rs-badge rs-badge--{esc(prog["status"])}">{esc(prog["statusLabel"])}</span></span>'
                 f'<span class="rs-prog__title">{esc(prog["title"])}</span>'
                 f'<span class="rs-prog__thesis">{esc(prog["thesis"])}</span>'
-                f'<span class="rs-prog__meta">{len(prog["chapters"])} chapters · {len(prog["parts"])} parts · updated {esc(prog["updated"])}</span>'
+                f'<span class="rs-prog__meta">{esc(programme_structure_label(prog))} · updated {esc(prog["updated"])}</span>'
                 f'<span class="rs-prog__go">Open the research →</span></a>')
         else:
             cards.append(
@@ -1070,19 +1094,26 @@ def render_index(index, progs):
                 f'<span class="rs-badge rs-badge--upcoming">In preparation</span></span>'
                 f'<span class="rs-prog__title">{esc(entry["title"])}</span>'
                 f'<span class="rs-prog__thesis">{esc(entry["question"])}</span></div>')
+    primary_cta = ""
+    if published_prog:
+        primary_cta = (
+            '<div class="rs-index__cta">'
+            f'<a class="btn btn--primary" href="{esc(prog_url(published_prog))}">'
+            'Read the published programme</a></div>')
     body_html = f"""  <main id="top" class="rs-page rs-page--index">
     <div class="rs-container rs-index">
       <header class="rs-index__hero">
         <p class="rs-kicker"><span class="rs-badge rs-badge--code">RSCH</span></p>
         <h1 class="rs-home__title">Research</h1>
         <p class="rs-home__thesis">{esc(index["intro"])}</p>
+        {primary_cta}
       </header>
       <section class="rs-index__how" aria-labelledby="how-h">
         <h2 id="how-h" class="rs-home__h2">What every research programme gives you</h2>
         <ul class="rs-index__promise">
           <li><strong>A one-page summary</strong> to decide in five minutes whether it matters to you.</li>
           <li><strong>A learning path</strong> in parts, from the problem to a plan you can run on Monday.</li>
-          <li><strong>Evidence labels</strong> on every number, and a sources page that says what was not verified.</li>
+          <li><strong>Evidence labels</strong> on non-obvious numeric or contestable claims; a sources page that lists verification limits.</li>
           <li><strong>Diagrams, charts, templates and code</strong> you can copy.</li>
           <li><strong>An FAQ and a glossary</strong> for the questions and terms that come up most.</li>
         </ul>

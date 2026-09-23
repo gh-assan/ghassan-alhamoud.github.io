@@ -28,7 +28,7 @@ Two rules make the result honest.
     ]},
     {"id": "2", "title": "Prefix hygiene", "items": [
       {"text": "Zero-call MCP servers were identified from a representative 20-session sample; any deletion was task-coverage verified and remains rollbackable", "gate": true},
-      {"text": "Active tool count is 20 or fewer"},
+      {"text": "Tool-pool size has been evaluated against representative task coverage, selection errors and prompt cost"},
       {"text": "Tool definitions are 15K tokens or fewer, or deferred"},
       {"text": "The instruction file is 150 lines or fewer and passes the inference test"},
       {"text": "The prefix contains no timestamps, session IDs or per-turn variables"}
@@ -52,7 +52,7 @@ Two rules make the result honest.
       {"text": "Large tool output is offloaded with self-describing stubs"},
       {"text": "Compaction uses an explicit schema, not \"summarise the above\""},
       {"text": "Compaction fires at sub-goal boundaries, not thresholds or timers"},
-      {"text": "The plan file is re-read as the first action after any boundary"}
+      {"text": "I have evaluated whether re-reading the plan after a boundary helps this workload"}
     ]},
     {"id": "6", "title": "Session lifecycle", "items": [
       {"text": "One session is one coherent task", "gate": true},
@@ -79,7 +79,7 @@ Two rules make the result honest.
   "actions": {
     "1": {"text": "Run the Phase 0 baseline. Nothing else is worth doing first.", "href": "ch:optimisation-plan#phase-0-baseline"},
     "2": {"text": "Review zero-call MCP servers from a representative sample; verify task coverage and keep rollback before deleting. Candidate win when definitions dominate.", "href": "ch:optimisation-plan#phase-1-deletion"},
-    "3": {"text": "Wrap your three loudest commands: one afternoon, 60–90% less output.", "href": "ch:optimisation-plan#phase-2-prevention"},
+    "3": {"text": "Test shaping your three loudest commands; measure output volume, task outcomes and priced cost locally.", "href": "ch:optimisation-plan#phase-2-prevention"},
     "4": {"text": "Classify your last 10 failures as starvation or dilution before changing anything.", "href": "ch:templates#7-context-postmortem"},
     "5": {"text": "Replace your compaction prompt with the explicit schema: a 15-minute edit worth up to 6.5 SWE-bench points.", "href": "ch:templates#4-compaction-schema"},
     "6": {"text": "Adopt one mechanical rule: never compact twice. Reset instead.", "href": "ch:ten-methods#m-10-session-lifecycle"},
@@ -110,7 +110,7 @@ Find your **lowest-scoring area**. Break ties toward the earlier area; the order
 |---|---|---|
 | **1 Measurement** | Run the Phase 0 baseline. Nothing else is worth doing first. | [Phase 0](ch:optimisation-plan#phase-0-baseline) |
 | **2 Prefix hygiene** | Review zero-call MCP servers from a representative sample; verify task coverage and keep rollback before deleting. | [Phase 1](ch:optimisation-plan#phase-1-deletion) |
-| **3 Prevention** | Wrap your three loudest commands: one afternoon, 60–90% less output [P]. | [Phase 2](ch:optimisation-plan#phase-2-prevention) |
+| **3 Prevention** | Test wrappers on your loudest commands; practitioner reports describe 60–90% less output [P], but measure task outcomes and priced costs locally. | [Phase 2](ch:optimisation-plan#phase-2-prevention) |
 | **4 Retrieval** | Classify your last 10 failures as starvation or dilution *before* changing anything. | [Postmortem template](ch:templates#7-context-postmortem) |
 | **5 State** | Replace your compaction prompt with the explicit schema: a 15-minute edit worth up to 6.5 SWE-bench points [S]. | [Compaction schema](ch:templates#4-compaction-schema) |
 | **6 Lifecycle** | Adopt one mechanical rule: never compact twice; reset instead. | [Session lifecycle](ch:ten-methods#m-10-session-lifecycle) |

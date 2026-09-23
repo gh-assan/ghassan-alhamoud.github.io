@@ -55,12 +55,12 @@ The paper's own conclusion is the practical takeaway: *compression quality is be
 > [!warning] Why this matters more than the accuracy column
 > A team evaluating compaction with one run per task on a 30-task suite sees a small difference, concludes compaction is nearly free, and ships it. Production then shows exactly the complaint users make most: "it worked yesterday". The variance was always there. The measurement could not see it. [Chapter 9](ch:evaluation#pass-k-worked) makes Pass^k mandatory for this reason.
 
-### Result 3: Compaction breaks "where am I?", and the next step is the worst
+### Result 3: TRACE identifies post-compaction risks in AppWorld
 
 Three measured effects [S]:
 
 - **Correct termination fell to 44.6%** with summary replacement, against **77.2%** for FIFO truncation, at a 2K budget. The agent loses the ability to recognise that it is done.
-- **+0.108 extra blocked or error actions** at the *first step after compaction*.
+- TRACE measured **+0.108 extra blocked or error actions** at the *first step after compaction* in AppWorld [S].
 - **Regressive exploration**: agents re-fetch and replay to recover what the summary dropped.
 
 The mechanism: summaries preserve *what happened* much better than *where we are*. A fluent narrative leaves the agent unsure whether the current sub-goal is open or closed.
@@ -68,7 +68,7 @@ The mechanism: summaries preserve *what happened* much better than *where we are
 Two design consequences follow.
 
 1. **The summary must carry explicit state**, not narrative: a done, in-progress, not-started list, not "we have been working on X".
-2. **Re-read the plan file immediately after compaction.** The most dangerous step in the session is the one you can protect most cheaply.
+2. **Candidate practice to evaluate:** re-read the plan file after compaction as an orientation step. TRACE did not test this action or compare it with another recovery practice.
 
 ### Result 4: Lossless addressable compaction beats every lossy baseline
 
@@ -92,29 +92,31 @@ Combined with Result 4, the order is clear, and it is the opposite of what most 
 > [!key] Masking and addressable stubs first
 > Use LLM summarisation only for what genuinely needs prose, and only after offloading.
 
-### Result 6: Semantic triggering beats both naive triggers
+### Result 6: The tested trigger comparisons
 
-Both simple triggers fail, in opposite directions — threshold too late, periodic mid-task [S]; the design space below picks the policy.
+**Authors' rationale.** SelfCompact argues that fixed token thresholds and fixed intervals ignore trajectory state and can interrupt partial work. This motivates the method; it is not a general experimental finding that all threshold and periodic triggers fail [S].
 
-The self-compaction work gates on **closed reasoning units**: fire when a sub-task resolves or the trajectory converges; hold off mid-derivation or when stuck. That preserves verified facts that fixed-interval compaction destroys [S]. See [[semantic triggering]].
+**Measured comparisons.** On competition math, four Qwen configurations were compared with a 16,000-token fixed interval across IMO-Answerbench, HMMT November 2025 and HMMT February 2026, with average token use matched to SelfCompact. The rubric-gated approach led in 11 of 12 model/benchmark cells; fixed interval led by 1.1 points in the Qwen3-30B-A3B/HMMT February cell. On agentic search, GLM-4.7-Flash, MiniMax-M2.5 and Mimo-V2-Flash were tested on BrowseComp, BrowseComp-Plus and DeepSearchQA. SelfCompact had higher accuracy in all nine cells than the fixed-threshold baseline, which summarized at 30% of maximum context [S]. These comparisons support this task-specific rubric on the reported setups; they do not establish a universal trigger ranking or coding-agent transfer.
+
+**Illustrative trace.** Figure 1 shows one BrowseComp question where fixed-interval compression after every two search trajectories drops four verified facts, while the paper's rubric-gated approach retains them. This example illustrates a possible failure mode; it is not an estimate of how often fixed schedules lose useful information [S]. The paper's rubric fires after a sub-task resolves or a trajectory converges, and suppresses compaction mid-derivation or when stuck. See [[semantic triggering]].
 
 The same literature adds two operational notes [S]. Summarisation is a **blocking call that can stall the agent for tens of seconds**. Prompt instructions about summary length are largely ignored. What the summary keeps also **varies substantially from run to run** — model calls are stochastic, and the variation is a direct cause of Result 2 [D].
 
 ## The compaction design space
 
-Six decisions. The recommendations follow from the results above.
+Six design decisions. The evidence informs these recommendations; each remains a starting point to test on your workload [D].
 
 ### Decision 1: the trigger
 
-| Option | Behaviour | Verdict |
+| Option | Behaviour | Evidence and scope |
 |---|---|---|
-| Threshold | Fire at X% full | A backstop, not a policy [S] |
-| Periodic | Every N turns | **The worst option**: fires mid-task [S] |
-| Semantic | When a sub-goal closes | **The best** [S] |
-| Model-decided | The agent calls a compaction tool under a rubric | Best where supported; needs an explicit rubric [S] |
-| Human-triggered | You compact at boundaries | Excellent when a person is present |
+| Threshold | Fire at X% full | SelfCompact tested a 30%-of-context threshold on named search tasks; this does not establish a universal cutoff [S] |
+| Periodic / fixed interval | Every N turns or tokens | SelfCompact beat the 16,000-token math baseline in 11 of 12 cells; fixed interval won one, so outcomes depend on model and task [S] |
+| Semantic / rubric-gated | The model checks whether a task-specific boundary has closed | This rubric led in the paper's tested comparisons; it is not established as universally best [S] |
+| Model-decided | The agent calls a compaction tool under a rubric | In the paper, the tool without a rubric was an ablation and performed less well; unrestricted self-triggering is not the tested policy [S] |
+| Human-triggered | You compact at boundaries | A design option when a person is present; not compared in SelfCompact [D] |
 
-**Recommendation:** semantic triggering as the policy, with a threshold backstop set *high* (85–90%) so it only fires when the policy failed. If you cannot change your harness's automatic trigger, **compact manually at boundaries so the automatic one never fires.**
+**Recommendation [D].** Pilot a task-aware trigger with explicit suppression rules and retain an overflow fallback. The 85–90% cutoff is a starting heuristic proposed here, not a threshold evaluated by SelfCompact; tune it against your model and workload. If you cannot change your harness's automatic trigger, try compacting manually at boundaries and measure the result.
 
 ### Decision 2: what gets compressed
 
@@ -405,7 +407,7 @@ compaction:
     plan: never                     # lives in PLAN.md
     exact_strings: verbatim
   max_per_session: 1
-  post_compaction: reread PLAN.md   # protects the highest-error step
+  post_compaction: reread PLAN.md   # candidate orientation practice; evaluate locally
 
 memory:
   tier1_max_lines: 40

@@ -12,18 +12,18 @@ Compare that with retrieval discipline, which needs sustained behaviour change. 
 
 ## The measured damage
 
-[[Tool bloat]] hurts through chapter 3's [M-2](ch:ten-methods#m-2-tool-surface-minimisation) two channels, and confusing them leads to the wrong fix: **displacement** (definition tokens are prefix tokens — one popular [[MCP]] server consumes about **42,000 tokens of definitions** [P]; three such servers spend over 120K tokens on the *possibility* of acting) and **selection confusion** (more candidates, worse choices — independent of tokens).
+[[Tool bloat]] can create two distinct pressures, though the cited studies do not isolate them cleanly: **displacement** (definition tokens are prefix tokens — one popular [[MCP]] server consumes about **42,000 tokens of definitions** [P]; three such servers spend over 120K tokens on the *possibility* of acting) and **selection load** (a larger candidate pool can make choosing the right tool harder).
 
-| Finding | Number | Source |
+| Finding | Result and scope | Source |
 |---|---|---|
-| Tool-selection accuracy as tool count grows | **43% baseline → under 14%** | [S] |
-| At 20 tools versus 107 tools | **19 of 20 correct → complete failure** | [S] |
-| Practitioner threshold | Noticeable damage past **about 20 active tools** | [P] |
+| RAG-MCP method comparison | **43.13% versus 13.62%** for blank conditioning on a held-out web-search subset; method comparison, not an increasing-tool-count result. | [S] |
+| Separate increasing-pool stress test | One relevant MCP plus distractors; **20 web-search tasks**, pool size from 1 to 11,100. Results were non-monotonic and degraded markedly at large pool sizes, with residual successes. | [S] |
+| Dog API practitioner demonstration | Qwen3 1.7B: **19/20 calls correct at 20 tools, 3/4 at 40, frequent hallucinations/errors at 107**. The vendor says this was not exhaustive or rigorous. | [P] |
 
-Two independent methods converging near the same threshold is strong evidence for this field. **Treat about 20 active tools as a soft ceiling and about 40 as a hard one** [D].
+These are different experiments with different setups. They show that tool-pool size is worth measuring; they do **not** establish a universal 20-tool or 40-tool ceiling. Choose a local budget from representative tasks, wrong-tool and missed-capability rates, prompt cost, and the model/harness you run.
 
-> [!warning] Deferred loading does not fix confusion
-> If your problem is displacement, deferred definitions fix it. If your problem is selection confusion, they **do not**: the agent still chooses among the same number of descriptions. Only *having fewer tools*, or scoping them per task, fixes confusion. Teams that adopt deferred loading and still see wrong-tool picks applied the wrong remedy.
+> [!warning] Deferred loading may leave the choice set unchanged
+> Short descriptions can reduce displacement while leaving the model to choose among the same options. Per-task scoping or retrieval can reduce the choices shown, but verify that relevant capabilities remain discoverable and measure wrong-tool outcomes.
 
 ## Three architectures
 
@@ -101,7 +101,7 @@ The highest-yield thirty minutes in this research when the audit confirms tool-s
 | **Core** | Called often | Keep it eager; trim its description |
 
 5. **Trim what remains.** Descriptions and examples are typically 40% trimmable with no behaviour change [D]. Deduplicating repeated schema structures with `$ref` saves another 10–30% [D].
-6. **Set a budget and enforce it.** For example: at most 20 active tools and 15K definition tokens. Adding a server means removing one or writing down the exception. Without this, the surface grows back within a quarter [P].
+6. **Set and review a local budget.** Base it on measured schema tokens, representative task coverage and selection outcomes. When adding a server, record what it enables and re-run the evaluation; without a recurring audit, surfaces can grow back within a quarter [P].
 
 The [tool audit template](ch:templates#2-tool-surface-audit) walks through it.
 
@@ -184,7 +184,7 @@ Everything above is about definitions. Tool *results* are larger in a working se
 | Metric | Formula | Healthy | Detects |
 |---|---|---|---|
 | Definition tokens | Count all schemas | Under 15K | Bloat |
-| Active tools | Tools in scope | At most 20 | Confusion risk |
+| Active tools | Tools in scope | Workload-specific; compare before/after | Selection errors and missed capabilities |
 | **Defined : called** | Tools defined ÷ tools ever used | Under 3:1 | Dead surface |
 | Prefix share | Definitions ÷ total prefix | Under 40% | Displacement |
 | Wrong-tool rate | Wrong picks ÷ tool calls | Under 2% | Confusion |

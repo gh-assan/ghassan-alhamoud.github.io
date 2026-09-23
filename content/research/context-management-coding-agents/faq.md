@@ -20,7 +20,7 @@ Four numbers, in about 30 minutes: your prefix tax (send `.` in a fresh session 
 
 ### How many tools or MCP servers is too many?
 
-Treat about 20 active tools as a soft ceiling and 40 as a hard one. Selection accuracy fell from 43% to under 14% as tool count grew in one study, and from 19 of 20 correct at 20 tools to complete failure at 107 in another [S]. See [chapter 8](ch:tool-surface#the-measured-damage).
+There is no well-supported universal cutoff. One RAG-MCP paper reports 43.13% accuracy for retrieval-based selection versus 13.62% for blank conditioning; its separate increasing-pool stress test uses one relevant server plus distractors and reports non-monotonic degradation at large pool sizes [S]. A vendor's small Dog API demonstration reports 19/20 calls correct for Qwen3 1.7B at 20 tools, 3/4 at 40, and frequent errors at 107; the authors say it is not exhaustive or rigorous [P]. Measure wrong-tool rate, task success, prompt cost, and missed capabilities on your own representative tasks before setting a local budget. See [chapter 8](ch:tool-surface#the-measured-damage).
 
 ### Doesn't deferred tool loading solve tool bloat?
 
@@ -32,7 +32,7 @@ Prefer the shell for anything it already does: `gh`, `psql`, `curl`, `rg`, `git`
 
 ### Why did my costs go up after I reduced tokens?
 
-Probably the cache. Prompt caching is prefix-exact: changing anything early in the prompt invalidates everything after it. A worked example cut tokens 24% by loading tools dynamically and raised cost 6.9× [C]. Measure cache-adjusted cost, not raw tokens. See [chapter 10](ch:metrics-and-economics#belief-1-cutting-tokens-cuts-cost).
+Probably the cache. Prompt caching is prefix-exact: changing anything early in the prompt invalidates everything after it. A worked example cut tokens 24% by loading tools dynamically and raised its input-cost estimate 6.9× [C]. Measure cached and uncached input at provider rates, then add generated output at its separate model/provider rate; raw token volume is not total cost. See [chapter 10](ch:metrics-and-economics#belief-1-cutting-tokens-cuts-cost).
 
 ## Compaction and memory
 
@@ -64,7 +64,7 @@ Grep and the symbol graph first. In a four-harness comparison grep generally bea
 
 ### Should I give the agent an architecture overview at the start?
 
-Give it pointers, not prose: entry points, invariants, landmines and commands, under 2,000 tokens. 5K tokens of targeted retrieval beat a 100K codebase summary [P], and coherent documents retrieve worse than fragments [S]. See [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview).
+Give it pointers, not prose: entry points, invariants, landmines and commands, under 2,000 tokens. A Sourcegraph author reports 5K-token targeted retrieval outperforming a 100K-token codebase summary on the same task [P] (see [Sourcegraph's post](https://sourcegraph.com/blog/context-engineering)), but the post names no task, model or comparison protocol; treat this as a vendor/practitioner observation, not benchmark evidence. Separately, coherent documents retrieved worse than fragments in the cited tests [S]. See [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview).
 
 ### When should I use sub-agents?
 
