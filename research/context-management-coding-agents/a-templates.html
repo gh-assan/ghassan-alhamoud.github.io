@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Templates you can copy — Context Management</title>
+  <meta name="description" content="Eight copyable templates for context management: budget audit, tool audit, plan file, compaction schema, handoff, sub-agent contract, postmortem and experime..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/a-templates.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/a-templates.html" />
+  <meta property="og:title" content="Templates you can copy — Context Management" />
+  <meta property="og:description" content="Eight copyable templates for context management: budget audit, tool audit, plan file, compaction schema, handoff, sub-agent contract, postmortem and experime..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Templates you can copy — Context Management" />
+  <meta property="twitter:description" content="Eight copyable templates for context management: budget audit, tool audit, plan file, compaction schema, handoff, sub-agent contract, postmortem and experime..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Templates you can copy",
+  "description": "Eight copyable templates for context management: budget audit, tool audit, plan file, compaction schema, handoff, sub-agent contract, postmortem and experiment spec.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/a-templates.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Reference"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Appendix A",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/a-templates.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html" aria-current="page"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>Reference</li><li aria-current="page">Appendix A</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part A–B · Reference</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Appendix A</span></p>
+          <h1 class="rs-hero__title">Templates you can copy</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What are the fill-in forms that make this operational, and which field in each carries the value?</p>
+          <div class="rs-meta">
+            <span>3 min read</span><span aria-hidden="true">·</span>
+            <span>Reference</span><span aria-hidden="true">·</span>
+            <span>Step 19 of 20</span><span aria-hidden="true">·</span>
+            <span>1/2 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html" aria-current="page"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#why-forms-rather-than-advice">Why forms rather than advice</a></li><li><a class="on-this-page__link" href="#1-context-budget-audit">1. Context budget audit</a></li><li><a class="on-this-page__link" href="#2-tool-surface-audit">2. Tool surface audit</a></li><li><a class="on-this-page__link" href="#3-plan-file">3. Plan file</a></li><li><a class="on-this-page__link" href="#4-compaction-schema">4. Compaction schema</a></li><li><a class="on-this-page__link" href="#5-session-handoff">5. Session handoff</a></li><li><a class="on-this-page__link" href="#6-sub-agent-contract">6. Sub-agent contract</a></li><li><a class="on-this-page__link" href="#7-context-postmortem">7. Context postmortem</a></li><li><a class="on-this-page__link" href="#8-context-experiment-spec">8. Context experiment spec</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Eight standalone forms, each tied to a measured failure that happens when the decision is made implicitly.</li><li>If eight is too many, three carry most of the value: the budget audit, the compaction schema and the postmortem.</li><li>Every template has a copy button. Fill them in; do not file them.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Copy the right template for the moment you are in</li><li>Know the one field in each that carries the value</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="why-forms-rather-than-advice">Why forms rather than advice<a class="rs-anchor" href="#why-forms-rather-than-advice" title="Link to this section">#</a></h2>
+<p>Every template here exists because a specific, measured failure happens when the decision behind it is made implicitly. A form is not bureaucracy. <strong>It is a way to make a decision before you are under pressure to make it badly.</strong></p>
+<p>Use them in a scratch directory, in the repository or in a notes app. The value is in filling them in, not in filing them.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Use it for</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#1-context-budget-audit">Context budget audit</a></td>
+<td>The Phase 0 baseline and the quarterly re-audit</td>
+<td>60–90 minutes the first time, 30 after</td>
+</tr>
+<tr>
+<td><a href="#2-tool-surface-audit">Tool surface audit</a></td>
+<td>Phase 1 deletion and quarterly re-bloat control</td>
+<td>30 minutes</td>
+</tr>
+<tr>
+<td><a href="#3-plan-file">Plan file</a></td>
+<td>The living state document</td>
+<td>5 minutes to start, 1 minute per update</td>
+</tr>
+<tr>
+<td><a href="#4-compaction-schema">Compaction schema</a></td>
+<td>Replacing your compaction prompt</td>
+<td>15 minutes</td>
+</tr>
+<tr>
+<td><a href="#5-session-handoff">Session handoff</a></td>
+<td>Ending a session deliberately</td>
+<td>5 minutes</td>
+</tr>
+<tr>
+<td><a href="#6-sub-agent-contract">Sub-agent contract</a></td>
+<td>Deciding whether and how to delegate</td>
+<td>10 minutes</td>
+</tr>
+<tr>
+<td><a href="#7-context-postmortem">Context postmortem</a></td>
+<td>Understanding a failed or unsatisfying task</td>
+<td>15 minutes</td>
+</tr>
+<tr>
+<td><a href="#8-context-experiment-spec">Context experiment spec</a></td>
+<td>Any measured context change</td>
+<td>20 minutes</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">If eight is too many</p>
+<p>Three carry most of the value: the <a href="#1-context-budget-audit">context budget audit</a> (without it you optimise someone else's bottleneck), the <a href="#4-compaction-schema">compaction schema</a> (the best value-per-minute bet this research offers <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>) and the <a href="#7-context-postmortem">context postmortem</a> (the starvation/dilution split decides every later decision).</p>
+</aside>
+<h2 id="1-context-budget-audit">1. Context budget audit<a class="rs-anchor" href="#1-context-budget-audit" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> the Phase 0 baseline and the quarterly re-audit. <strong>When:</strong> before any optimisation, then every quarter. <strong>Time:</strong> 60–90 minutes the first time, 30 after.</p>
+<p><strong>The field that matters: section 6, the failure split.</strong> Every other number tells you <em>where the tokens are</em>. This one tells you <em>which direction to move</em>. Get it backwards and you apply the volume fix to a recall problem and make things measurably worse.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">context-budget-audit.md</span></div><pre class="highlight"><code><span class="gh"># Context Budget Audit</span>
+
+<span class="gs">**Date:**</span> ____________  <span class="gs">**Harness + version:**</span> ____________  <span class="gs">**Repo:**</span> ____________
+<span class="gs">**Sessions sampled:**</span> ____________ (use your 3 longest recent sessions)
+
+<span class="gu">## 1. Prefix tax (segments 1–4)</span>
+
+Fresh session, send a single <span class="sb">`.`</span>, record reported input tokens.
+
+| Measure | Tokens |
+|---|---:|
+| Total prefix tax (T1) | |
+| — of which tool definitions | |
+| — of which instruction files | |
+| — of which skill descriptors | |
+| — remainder (system prompt, inferred) | |
+
+<span class="gu">## 2. Tool surface</span>
+
+| Server | Tools | Definition tokens | Invocations (20 sessions) | Verdict |
+|---|---:|---:|---:|---|
+| | | | | delete / defer / keep |
+| | | | | |
+| <span class="gs">**Total**</span> | | | | |
+
+<span class="k">-</span><span class="w"> </span>Defined:invoked ratio (T3): ______ : 1   <span class="ge">*(target &lt; 3:1)*</span>
+<span class="k">-</span><span class="w"> </span>Active tool count: ______   <span class="ge">*(target ≤ 20)*</span>
+
+<span class="gu">## 3. Session distribution</span>
+
+For each sampled session, bucket tokens by segment.
+
+| Segment | Session A | Session B | Session C | Median % |
+|---|---:|---:|---:|---:|
+| 1 System prompt | | | | |
+| 2 Tool definitions | | | | |
+| 3 Instruction files | | | | |
+| 4 Skill descriptors | | | | |
+| 5 Retrieved code | | | | |
+| 6 Tool results | | | | |
+| 7 Agent messages | | | | |
+| 8 User turns | | | | |
+| 9 Summaries / memory | | | | |
+| <span class="gs">**Total**</span> | | | | 100% |
+
+<span class="gs">**Largest segment I control:**</span> ____________________
+
+<span class="gs">**Median input tokens per sampled session:**</span> ____________________
+
+<span class="gs">**Retention integral:**</span> first convert each median share to tokens (<span class="sb">`median % × median input tokens ÷ 100`</span>),
+then multiply by the turns that segment stays in context.
+Record the before/after totals and rank the largest contributions before choosing a change.
+
+| Segment | Median % | Median tokens | Turns retained | Before tokens × turns | After tokens × turns |
+|---|---:|---:|---:|---:|---:|
+| 1 System prompt | | | | | |
+| 2 Tool definitions | | | | | |
+| 3 Instruction files | | | | | |
+| 4 Skill descriptors | | | | | |
+| 5 Retrieved code | | | | | |
+| 6 Tool results | | | | | |
+| 7 Agent messages | | | | | |
+| 8 User turns | | | | | |
+| 9 Summaries / memory | | | | | |
+| <span class="gs">**Total**</span> | | | | | |
+
+<span class="gu">## 4. Command ranking</span>
+
+| Command | Total output tokens | % of tool output | Wrapped? |
+|---|---:|---:|---|
+| | | | |
+| | | | |
+| | | | |
+
+Top 3 as % of session tokens: ______%   <span class="ge">*(if &gt; 25%, output shaping pays immediately)*</span>
+
+<span class="gu">## 5. Density and waste</span>
+
+| Metric | Value | Target |
+|---|---:|---|
+| T6 Peak utilisation | % | &lt; 75% |
+| T8 Relevance density (est.) | % | &gt; 15% |
+| T9 Read-utilisation (sample 20 reads) | % | &gt; 15% |
+| T10 Tool-result share | % | &lt; 35% |
+| T24 Cache hit rate | % | &gt; 70% |
+
+<span class="gu">## 6. Failure split (last 10 failures)</span>
+
+For each failure: <span class="gs">**was the decisive file ever read?**</span>
+
+| # | Task | Decisive file | Ever read? | Class |
+|---|---|---|---|---|
+| 1 | | | Y / N | starvation / dilution |
+
+<span class="gs">**Starvation : Dilution = ______ : ______**</span>
+
+<span class="k">&gt; </span><span class="ge">Mostly starvation → fix retrieval *quality*; do NOT reduce volume.</span>
+<span class="k">&gt; </span><span class="ge">Mostly dilution → reduce volume, raise density.</span>
+
+<span class="gu">## 7. Routing decision</span>
+
+From the routing table (choosing your methods, step 2), my binding constraint is: ____________________
+First method to apply: ____________________
+Re-measure on: ____________ (date)
+</code></pre></div>
+<h2 id="2-tool-surface-audit">2. Tool surface audit<a class="rs-anchor" href="#2-tool-surface-audit" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> Phase 1 deletion and quarterly re-bloat control. <strong>When:</strong> after the Phase 0 baseline; a candidate when tool definitions are the largest controllable segment. <strong>Time:</strong> 30 minutes.</p>
+<p><strong>The field that matters: the security exceptions table.</strong> Keeping a server that duplicates the shell is defensible when it is a security control (constrained surface, auth handling, audit trail). It is not defensible when it happened by accident. The table forces the distinction, and most rows come back empty.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">tool-surface-audit.md</span></div><pre class="highlight"><code><span class="gh"># Tool Surface Audit</span>
+
+<span class="gs">**Date:**</span> ____________  <span class="gs">**Budget:**</span> ≤20 active tools, ≤15K definition tokens
+
+<span class="gu">## Inventory</span>
+
+| # | Tool | Server | Schema tokens | Invocations (20 sessions) | Shell equivalent? | Class |
+|---|---|---|---:|---:|---|---|
+| 1 | | | | | | dead / redundant / rare-critical / core |
+
+<span class="gs">**Totals:**</span> ______ tools, ______ tokens, ______ distinct tools invoked
+
+<span class="gu">## Classification rules</span>
+
+| Class | Criterion | Action |
+|---|---|---|
+| Dead | 0 invocations in a representative 20-session sample | <span class="gs">**Deletion candidate; verify task coverage and keep rollback.**</span> |
+| Redundant | Duplicates <span class="sb">`gh`</span> / <span class="sb">`psql`</span> / <span class="sb">`curl`</span> / <span class="sb">`rg`</span> / <span class="sb">`git`</span> | <span class="gs">**Deletion candidate; verify coverage and keep rollback**</span>, unless a security control (state why below) |
+| Rare-critical | &lt; 3 invocations but decisive | Defer definitions, or move behind code execution |
+| Core | Frequent | Keep eager; trim description prose |
+
+<span class="gu">## Security exceptions</span>
+
+Any redundant server kept as a <span class="ge">*security*</span> control rather than a convenience — state it here, or delete it.
+
+| Server | Tokens | Security justification |
+|---|---:|---|
+| | | |
+
+<span class="gu">## Actions taken</span>
+
+| Action | Server / tool | Tokens saved |
+|---|---|---:|
+| | | |
+| <span class="gs">**Total recovered**</span> | | |
+
+Prefix tax before: ______  after: ______  (−____%)
+
+<span class="gu">## Post-change verification (next 20 sessions)</span>
+
+<span class="k">-</span><span class="w"> </span>Capabilities missed: ______  <span class="ge">*(target 0; restore that specific server if &gt; 1)*</span>
+<span class="k">-</span><span class="w"> </span>Extra round trips from deferral: ______
+<span class="k">-</span><span class="w"> </span>Wrong-tool selections: ______  <span class="ge">*(target &lt; 2% of tool calls)*</span>
+<span class="k">-</span><span class="w"> </span>Task success change: ______
+
+<span class="gu">## Next audit due</span>
+
+____________ (quarterly)
+</code></pre></div>
+<h2 id="3-plan-file">3. Plan file<a class="rs-anchor" href="#3-plan-file" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> the living state document. <strong>When:</strong> any task over about 30 minutes. <strong>Time:</strong> 5 minutes to start, 1 minute per update.</p>
+<p><strong>The field that matters: Ruled out, with evidence.</strong> The transcript already records what was tried. What it does not hold, anywhere attended, is <em>why it will not work</em>, and that is exactly what gets re-proposed after a boundary. Runner-up: the <em>last updated</em> line, which makes drift visible.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">plan-file.md</span></div><pre class="highlight"><code><span class="gh"># PLAN.md — living state document</span>
+
+<span class="k">&gt; </span><span class="ge">Rewrite **in place**. This is state, not a log. Cap: 80 lines.</span>
+<span class="k">&gt; </span><span class="ge">If it exceeds 80 lines, the task needed decomposition.</span>
+<span class="k">&gt; </span><span class="ge">Re-read after every compaction, reset, and sub-agent return.</span>
+
+<span class="gs">**Last updated:**</span> turn ____ / after ____________________
+
+<span class="gu">## Goal</span>
+
+&lt;one sentence — the original task, verbatim where possible&gt;
+
+<span class="gu">## Definition of done</span>
+
+&lt;the exact verification that ends this task, e.g. <span class="sb">`pytest tests/checkout -q`</span> passes and lint is clean&gt;
+
+<span class="gu">## Constraints</span>
+
+<span class="k">-</span><span class="w"> </span>&lt;what must not change&gt;
+<span class="k">-</span><span class="w"> </span>&lt;what must not be touched&gt;
+
+<span class="gu">## Decisions</span>
+
+| Decision | Reason | Evidence |
+|---|---|---|
+| | | file:line or command |
+
+<span class="gu">## Ruled out</span>
+
+<span class="k">&gt; </span><span class="ge">The most valuable section. Prevents re-proposing a rejected approach after a boundary.</span>
+
+| Approach | Why it failed | Evidence |
+|---|---|---|
+| | | file:line, command output, or error |
+
+<span class="gu">## State</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Done:**</span> &lt;verified complete, with how verified&gt;
+<span class="k">-</span><span class="w"> </span><span class="gs">**In progress:**</span> &lt;the current sub-goal, explicitly&gt;
+<span class="k">-</span><span class="w"> </span><span class="gs">**Not started:**</span> &lt;remaining&gt;
+
+<span class="gu">## Open questions</span>
+
+<span class="k">-</span><span class="w"> </span>&lt;question&gt; — blocking? Y/N
+
+<span class="gu">## Offloaded artifacts</span>
+
+| ID / path | What it is |
+|---|---|
+| <span class="sb">`.agent/artifacts/____`</span> | |
+
+<span class="gu">## Next action</span>
+
+&lt;one concrete step&gt;
+</code></pre></div>
+<h2 id="4-compaction-schema">4. Compaction schema<a class="rs-anchor" href="#4-compaction-schema" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> replacing your compaction prompt. <strong>When:</strong> before your next long session: it is a text edit. <strong>Time:</strong> 15 minutes.</p>
+<p><strong>The field that matters: exact strings, verbatim.</strong> Paraphrased errors, versions and line numbers cannot be acted on, and they are cheap to keep. Close behind: <em>Uncertain / unverified</em>, the only defence against compaction laundering a hypothesis into a fact. A summariser swap alone moved SWE-bench 6.5 points <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and this is a summariser swap.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">compaction-schema.md</span></div><pre class="highlight"><code><span class="gh"># Compaction Schema</span>
+
+<span class="k">&gt; </span><span class="ge">Replace &quot;summarise the conversation so far&quot; with this.</span>
+<span class="k">&gt; </span><span class="ge">Varying only the summariser moved SWE-bench 49.0% → 55.5% [S].</span>
+<span class="k">&gt; </span><span class="ge">Each section maps to a measured failure mode.</span>
+
+<span class="gu">## Instructions to the summarising model</span>
+
+Produce a summary using EXACTLY the sections below. Do not add narrative.
+Preserve every string in &quot;Exact strings&quot; <span class="gs">**verbatim**</span> — do not paraphrase,
+round, abbreviate, or reformat them. If a fact was hypothesised rather than
+verified, say so; do not convert a hypothesis into an assertion.
+
+---
+
+<span class="gu">## Goal</span>
+&lt;the original task, verbatim where possible&gt;
+
+<span class="gu">## State</span>
+&lt;counters the 44.6% termination-recognition collapse (AppWorld) [S]&gt;
+<span class="k">-</span><span class="w"> </span><span class="gs">**Done:**</span> &lt;item&gt; — verified by: &lt;exact command and result&gt;
+<span class="k">-</span><span class="w"> </span><span class="gs">**In progress:**</span> &lt;the single current sub-goal&gt;
+<span class="k">-</span><span class="w"> </span><span class="gs">**Not started:**</span> &lt;remaining items&gt;
+
+<span class="gu">## Decisions</span>
+&lt;counters requirement clash&gt;
+<span class="k">-</span><span class="w"> </span>&lt;decision&gt; — because &lt;reason&gt; — evidence: &lt;file:line or command&gt;
+
+<span class="gu">## Ruled out</span>
+&lt;counters regressive exploration&gt;
+<span class="k">-</span><span class="w"> </span>&lt;approach&gt; — because &lt;reason&gt; — evidence: &lt;file:line or command output&gt;
+
+<span class="gu">## Exact strings — VERBATIM, DO NOT PARAPHRASE</span>
+&lt;counters detail loss&gt;
+<span class="k">-</span><span class="w"> </span>Errors:
+<span class="k">-</span><span class="w"> </span>Versions:
+<span class="k">-</span><span class="w"> </span>Paths and line numbers:
+<span class="k">-</span><span class="w"> </span>Config keys / IDs:
+<span class="k">-</span><span class="w"> </span>Commands run and their exact results:
+
+<span class="gu">## Open questions</span>
+<span class="k">-</span><span class="w"> </span>&lt;question&gt; — what would answer it
+
+<span class="gu">## Offloaded artifacts</span>
+&lt;counters irrecoverability&gt;
+| ID / path | Contents |
+|---|---|
+
+<span class="gu">## Uncertain / unverified</span>
+&lt;counters hallucination laundering&gt;
+<span class="k">-</span><span class="w"> </span>&lt;claim&gt; — status: hypothesised, not verified
+
+---
+
+<span class="gu">## Operating rules</span>
+
+| Rule | Reason |
+|---|---|
+| Fire on sub-goal closure, test pass, or hypothesis resolution | Semantic triggering beats threshold and periodic [S] |
+| Suppress mid-derivation, mid-edit, when stuck, right after an error | Periodic compaction erases in-use information [S] |
+| Max 1 per session | A second compaction summarises a summary |
+| Not with &lt; 5 turns remaining | Below the cost breakeven of about four turns [C] (chapter 10) |
+| Offload large artifacts BEFORE compacting | Converts irreversible loss to reversible |
+| <span class="gs">**Re-read PLAN.md as the first post-compaction action**</span> | +0.108 errors at that step [S] |
+</code></pre></div>
+<h2 id="5-session-handoff">5. Session handoff<a class="rs-anchor" href="#5-session-handoff" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> ending a session deliberately. <strong>When:</strong> every session that will have a successor. <strong>Time:</strong> 5 minutes.</p>
+<p><strong>The field that matters: key pointers, as <code>file:line</code>, never prose.</strong> A pointer survives compression, paraphrase and re-reading. Runner-up: the pre-written <em>opening line for the next session</em>, which turns the most expensive moment of the next session into a paste.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">session-handoff.md</span></div><pre class="highlight"><code><span class="gh"># Session Handoff</span>
+
+<span class="k">&gt; </span><span class="ge">Written at the END of a session so the next one starts from state, not chatter.</span>
+<span class="k">&gt; </span><span class="ge">This is the **highest-control** context boundary — you author what crosses.</span>
+<span class="k">&gt; </span><span class="ge">Pointers survive compression; descriptions do not.</span>
+
+<span class="gs">**From session:**</span> ____________  <span class="gs">**Date:**</span> ____________
+<span class="gs">**Repo @ commit:**</span> ____________  <span class="gs">**Branch:**</span> ____________
+
+<span class="gu">## Where we are, in one sentence</span>
+
+&lt;...&gt;
+
+<span class="gu">## Goal (unchanged from the original task)</span>
+
+&lt;...&gt;
+
+<span class="gu">## Definition of done</span>
+
+&lt;exact verification command&gt;
+
+<span class="gu">## Completed and verified</span>
+
+| What | Verified by (exact command) | Result |
+|---|---|---|
+| | | |
+
+<span class="gu">## In progress</span>
+
+<span class="gs">**Current sub-goal:**</span> &lt;...&gt;
+<span class="gs">**Next concrete action:**</span> &lt;...&gt;
+<span class="gs">**Files mid-change:**</span> &lt;path — what state they are in, committed or not&gt;
+
+<span class="gu">## Ruled out — do not retry</span>
+
+| Approach | Why | Evidence (file:line / command) |
+|---|---|---|
+| | | |
+
+<span class="gu">## Key pointers</span>
+
+<span class="k">&gt; </span><span class="ge">file:line, never prose descriptions.</span>
+
+| What | Where |
+|---|---|
+| The function that does X | <span class="sb">`path:line`</span> |
+| The config that controls Y | <span class="sb">`path:line`</span> |
+| The failing test | <span class="sb">`path::test_name`</span> |
+
+<span class="gu">## Exact strings that matter</span>
+
+<span class="sb">```</span>
+<span class="sb">&lt;error messages, versions, IDs — verbatim&gt;</span>
+<span class="sb">```</span>
+
+<span class="gu">## Offloaded artifacts</span>
+
+| Path | Contents |
+|---|---|
+| <span class="sb">`.agent/artifacts/____`</span> | |
+
+<span class="gu">## Open questions</span>
+
+<span class="k">-</span><span class="w"> </span>&lt;question&gt; — blocking? Y/N
+
+<span class="gu">## Opening line for the next session</span>
+
+<span class="k">&gt; </span><span class="ge">Paste this as the first message.</span>
+
+<span class="sb">```</span>
+<span class="sb">Continue from HANDOFF.md and PLAN.md. Current sub-goal: &lt;...&gt;.</span>
+<span class="sb">Next action: &lt;...&gt;. Do not &lt;...&gt;.</span>
+<span class="sb">```</span>
+</code></pre></div>
+<h2 id="6-sub-agent-contract">6. Sub-agent contract<a class="rs-anchor" href="#6-sub-agent-contract" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> deciding whether and how to delegate. <strong>When:</strong> before every delegation, until the judgment is second nature. <strong>Time:</strong> 10 minutes.</p>
+<p><strong>The field that matters: Q3 of the pre-check</strong>, listing every implicit decision not in the brief. It is the whole Flappy Bird failure reduced to a 60-second question. Runner-up: <code>notable_outside_scope</code>, the only in-band mitigation for contract loss.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">subagent-contract.md</span></div><pre class="highlight"><code><span class="gh"># Sub-Agent Contract</span>
+
+<span class="k">&gt; </span><span class="ge">Write this BEFORE delegating. If you cannot fill in &quot;Output schema&quot;</span>
+<span class="k">&gt; </span><span class="ge">in under 20 lines, the work is not isolatable — do it linearly.</span>
+
+<span class="gu">## Composability pre-check</span>
+
+| # | Question | Answer |
+|---|---|---|
+| Q1 | Is the composition operator trivial? (state it in one sentence) | |
+| Q2 | Can the output schema fit in &lt; 20 lines? | Y / N |
+| Q3 | List every implicit decision the sub-agent must make that is NOT in its brief | |
+| Q4 | Can the parent verify the result without redoing the work? | Y / N |
+
+<span class="gs">**Any &quot;no&quot; or a non-empty Q3 list → do not delegate, or fix the decisions in the brief.**</span>
+
+---
+
+<span class="gu">## Task</span>
+
+&lt;one sentence&gt;
+
+<span class="gu">## Scope</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**In:**</span> &lt;paths / modules / the question&gt;
+<span class="k">-</span><span class="w"> </span><span class="gs">**Out:**</span> &lt;explicitly excluded&gt;
+
+<span class="gu">## Tools available</span>
+
+&lt;the minimum set — narrow surfaces are the main quality lever&gt;
+
+<span class="gu">## Fixed decisions — do not re-decide</span>
+
+<span class="k">-</span><span class="w"> </span>&lt;convention the parent has already chosen&gt;
+<span class="k">-</span><span class="w"> </span>&lt;error shape / naming / logging convention&gt;
+
+<span class="gu">## Output schema</span>
+
+<span class="sb">```yaml</span>
+<span class="nt">findings</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;file:line&gt;</span>
+<span class="w">    </span><span class="nt">what</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;one line&gt;</span>
+<span class="w">    </span><span class="nt">confidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">high | medium | low</span>
+<span class="nt">notable_outside_scope</span><span class="p">:</span><span class="w">      </span><span class="c1"># contract-loss mitigation — do not omit</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;anything surprising you saw&gt;</span>
+<span class="nt">transcript_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;written on termination, for parent recall&gt;</span>
+<span class="sb">```</span>
+
+<span class="gu">## Limits</span>
+
+<span class="k">-</span><span class="w"> </span><span class="sb">`max_result_tokens:`</span> 1500
+<span class="k">-</span><span class="w"> </span><span class="sb">`max_turns:`</span> 25
+
+---
+
+<span class="gu">## Post-delegation review</span>
+
+| Metric | Value | Healthy |
+|---|---:|---|
+| Isolation ratio (sub-agent tokens / result tokens) | | &gt; 20:1 |
+| Parent context growth | | &lt; 2K |
+| Did the parent re-do any of this work? | Y / N | N |
+| Did <span class="sb">`notable_outside_scope`</span> contain anything useful? | Y / N | — |
+</code></pre></div>
+<h2 id="7-context-postmortem">7. Context postmortem<a class="rs-anchor" href="#7-context-postmortem" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> understanding a failed or unsatisfying task. <strong>When:</strong> after every failure worth understanding. <strong>Time:</strong> 15 minutes.</p>
+<p><strong>The field that matters: section 3, the split.</strong> Starvation, loss, dilution and poisoning look identical from outside and need four different fixes. One question separates them: <em>was the decisive file ever in context?</em> Runner-up: section 5, the first-appearance trace, a five-minute grep that confirms or rules out poisoning.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">context-postmortem.md</span></div><pre class="highlight"><code><span class="gh"># Context Postmortem</span>
+
+<span class="k">&gt; </span><span class="ge">Run after any failed or unsatisfying agent task. 15 minutes.</span>
+<span class="k">&gt; </span><span class="ge">The goal is one question: **starvation or dilution?** They have opposite fixes.</span>
+
+<span class="gs">**Date:**</span> ____________  <span class="gs">**Task:**</span> ____________  <span class="gs">**Session length:**</span> ____ turns
+
+<span class="gu">## 1. What went wrong, in one sentence</span>
+
+&lt;...&gt;
+
+<span class="gu">## 2. The decisive fact</span>
+
+What single piece of information, had the agent had it and attended to it, would have produced the right answer?
+
+<span class="gs">**Fact:**</span> ____________________
+<span class="gs">**Where it lives:**</span> <span class="sb">`path:line`</span> / command output / not in the repo
+
+<span class="gu">## 3. The split</span>
+
+| Question | Answer |
+|---|---|
+| Was the decisive file/output ever in context? | Y / N |
+| If yes — was it still in context at the moment of the wrong decision? | Y / N |
+| If it was dropped, what dropped it? | compaction / eviction / sub-agent boundary / reset / never retrieved |
+
+<span class="gs">**Classification:**</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Never retrieved → STARVATION.**</span> Fix retrieval <span class="ge">*quality*</span> (structural retrieval). Do NOT reduce volume.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Retrieved, dropped at a boundary → LOSS.**</span> Fix offload and the compaction schema.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Present and ignored → DILUTION.**</span> Reduce volume, raise density (just-in-time retrieval, output shaping).
+<span class="k">-</span><span class="w"> </span><span class="gs">**Present but wrong (stale/hallucinated) → POISONING.**</span> Fix re-read discipline or grounding.
+
+<span class="gu">## 4. Context state at the moment of failure</span>
+
+| Measure | Value |
+|---|---:|
+| Utilisation | % |
+| Turns elapsed | |
+| Compactions so far | |
+| Sub-agent returns so far | |
+| Turns since the last boundary | |
+
+<span class="k">&gt; </span><span class="ge">If the failure was within 3 turns of a boundary, suspect the post-compaction error spike.</span>
+
+<span class="gu">## 5. First appearance trace (poisoning check)</span>
+
+For the wrong belief the agent held: find its <span class="gs">**first**</span> appearance in the transcript.
+
+<span class="k">-</span><span class="w"> </span>Appeared first in: tool result / assistant message / user turn / summary
+<span class="k">-</span><span class="w"> </span>If assistant message or summary → <span class="gs">**poisoning confirmed**</span>; it was never grounded.
+
+<span class="gu">## 6. Loop check</span>
+
+<span class="k">-</span><span class="w"> </span>Same tool + same args ≥ 3 times? Y / N
+<span class="k">-</span><span class="w"> </span>If yes, at what turn did it start? ______  <span class="ge">*(that is your reset trigger point)*</span>
+
+<span class="gu">## 7. Action</span>
+
+| Failure class | Action taken | Owner | Due |
+|---|---|---|---|
+| | | | |
+
+<span class="gu">## 8. Is this recurring?</span>
+
+Occurrences of this class in the last month: ______
+
+<span class="k">&gt; </span><span class="ge">If ≥ 3, the fix is probably in the **repository**, not the agent.</span>
+<span class="k">&gt; </span><span class="ge">e.g. near-duplicate symbols, dead code, undocumented invariants.</span>
+</code></pre></div>
+<h2 id="8-context-experiment-spec">8. Context experiment spec<a class="rs-anchor" href="#8-context-experiment-spec" title="Link to this section">#</a></h2>
+<p><strong>For:</strong> any measured context change. <strong>When:</strong> before running, never after. <strong>Time:</strong> 20 minutes.</p>
+<p><strong>The field that matters: section 5, is N sufficient?</strong> Most context experiments are underpowered. The useful response is not to abandon them but to <strong>say so</strong>. "+6 points on 40 tasks; the interval is wide and does not separate a real effect from noise" is a legitimate result. "+6 points" alone is not.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">context-experiment-spec.md</span></div><pre class="highlight"><code><span class="gh"># Context Experiment Spec</span>
+
+<span class="k">&gt; </span><span class="ge">Fill in BEFORE running. An experiment specified afterwards is a story.</span>
+
+<span class="gs">**Date:**</span> ____________  <span class="gs">**Owner:**</span> ____________
+
+<span class="gu">## 1. The question</span>
+
+<span class="k">&gt; </span><span class="ge">One sentence, falsifiable.</span>
+
+&quot;Does &lt;change&gt; improve &lt;metric&gt; on &lt;workload&gt;?&quot;
+
+<span class="gu">## 2. The single change</span>
+
+<span class="gs">**Control (current):**</span> ____________________
+<span class="gs">**Treatment (one change only):**</span> ____________________
+
+<span class="k">&gt; </span><span class="ge">If you cannot state the change in one line, split the experiment.</span>
+
+<span class="gu">## 3. Held constant</span>
+
+| Variable | Value | Verified |
+|---|---|---|
+| Model + version | | ☐ |
+| Harness + version | | ☐ |
+| Tool surface (count + tokens) | | ☐ |
+| <span class="gs">**Compaction prompt**</span> | | ☐ |
+| Temperature / sampling | | ☐ |
+| Repository commit | | ☐ |
+
+<span class="k">&gt; </span><span class="ge">The compaction prompt is the most-violated row. It is worth 6.5 SWE-bench points of confound [S].</span>
+
+<span class="gu">## 4. Task set</span>
+
+<span class="k">-</span><span class="w"> </span>Source: replayed tickets / synthetic / public benchmark
+<span class="k">-</span><span class="w"> </span>N = ______  <span class="ge">*(see section 5: is this enough?)*</span>
+<span class="k">-</span><span class="w"> </span>Stratified by: ____________________
+<span class="k">-</span><span class="w"> </span><span class="gs">**Leakage check:**</span> run one arm with retrieval disabled. Tasks still solved: ______
+  <span class="ge">*(non-zero → the answer is in the ticket text; fix before proceeding)*</span>
+
+<span class="gu">## 5. Statistical design</span>
+
+| Parameter | Value |
+|---|---|
+| Runs per task per arm (k) | ______ <span class="ge">*(minimum 2 — Pass² is mandatory)*</span> |
+| Design | paired (same tasks both arms) |
+| Test | McNemar on discordant pairs |
+| Expected effect size | ______ points |
+| Required N (see the sample-size section of chapter 9) | ______ |
+| <span class="gs">**Is N sufficient?**</span> | Y / N — if N, say so in the writeup |
+
+<span class="gu">## 6. Metrics</span>
+
+| | Metric | Predicted direction |
+|---|---|---|
+| Primary | <span class="gs">**Pass²**</span> | |
+| Secondary | Pass@2 | |
+| Cost | cache-adjusted input tokens per solved task | |
+| Diagnostic | post-boundary re-fetch rate | |
+| Guardrail | cache hit rate | must not fall |
+
+<span class="gu">## 7. Stop rule (decide now)</span>
+
+<span class="k">-</span><span class="w"> </span>Total runs: ______ . <span class="gs">**No peeking-and-extending.**</span>
+<span class="k">-</span><span class="w"> </span>Abandon early if: ____________________
+
+<span class="gu">## 8. Results</span>
+
+| Arm | Pass² | Pass@2 | Ratio | Tokens/solved | Cache hit |
+|---|---:|---:|---:|---:|---:|
+| Control | | | | | |
+| Treatment | | | | | |
+
+Discordant pairs: ______ (favouring treatment: ______)
+McNemar p: ______
+Wilson CI, control: [____, ____]  treatment: [____, ____]
+
+<span class="gu">## 9. Conclusion</span>
+
+☐ Adopt  ☐ Reject  ☐ <span class="gs">**Inconclusive — intervals overlap**</span> (the most common honest outcome)
+
+<span class="gs">**What this does NOT prove:**</span> ____________________
+</code></pre></div>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>A form is a way to make a decision before you are under pressure to make it badly.</li><li>The compaction schema is the highest measured value per minute of effort in this research.</li><li>The postmortem's single question, was the decisive file ever in context, separates four failure classes.</li></ol>
+        </section>
+        
+        
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="18-tooling.html"><span class="rs-pn__label">← Previous · Chapter 18</span><span class="rs-pn__title">The tooling landscape</span><span class="rs-pn__part">Act on it</span></a><a class="rs-pn__link rs-pn__link--next" href="b-lessons.html"><span class="rs-pn__label">Next → · Appendix B</span><span class="rs-pn__title">Fifty-eight lessons, each falsifiable</span><span class="rs-pn__part">Reference</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#why-forms-rather-than-advice">Why forms rather than advice</a></li><li><a href="#1-context-budget-audit">1. Context budget audit</a></li><li><a href="#2-tool-surface-audit">2. Tool surface audit</a></li><li><a href="#3-plan-file">3. Plan file</a></li><li><a href="#4-compaction-schema">4. Compaction schema</a></li><li><a href="#5-session-handoff">5. Session handoff</a></li><li><a href="#6-sub-agent-contract">6. Sub-agent contract</a></li><li><a href="#7-context-postmortem">7. Context postmortem</a></li><li><a href="#8-context-experiment-spec">8. Context experiment spec</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

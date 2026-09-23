@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Fifty-eight lessons, each falsifiable — Context Management</title>
+  <meta name="description" content="Fifty-eight numbered lessons on context management for coding agents, each with its mechanism and the observation that would falsify it." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/b-lessons.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/b-lessons.html" />
+  <meta property="og:title" content="Fifty-eight lessons, each falsifiable — Context Management" />
+  <meta property="og:description" content="Fifty-eight numbered lessons on context management for coding agents, each with its mechanism and the observation that would falsify it." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Fifty-eight lessons, each falsifiable — Context Management" />
+  <meta property="twitter:description" content="Fifty-eight numbered lessons on context management for coding agents, each with its mechanism and the observation that would falsify it." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Fifty-eight lessons, each falsifiable",
+  "description": "Fifty-eight numbered lessons on context management for coding agents, each with its mechanism and the observation that would falsify it.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/b-lessons.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Reference"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Appendix B",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/b-lessons.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html" aria-current="page"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>Reference</li><li aria-current="page">Appendix B</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part A–B · Reference</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Appendix B</span></p>
+          <h1 class="rs-hero__title">Fifty-eight lessons, each falsifiable</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What are the transferable lessons, why is each true, and what would prove each one wrong?</p>
+          <div class="rs-meta">
+            <span>10 min read</span><span aria-hidden="true">·</span>
+            <span>Reference</span><span aria-hidden="true">·</span>
+            <span>Step 20 of 20</span><span aria-hidden="true">·</span>
+            <span>2/2 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html" aria-current="page"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#how-to-use-the-lessons">How to use the lessons</a></li><li><a class="on-this-page__link" href="#a-the-nature-of-context-l1l8">A. The nature of context (L1–L8)</a></li><li><a class="on-this-page__link" href="#b-the-economics-l9l17">B. The economics (L9–L17)</a></li><li><a class="on-this-page__link" href="#c-loss-and-reversibility-l18l26">C. Loss and reversibility (L18–L26)</a></li><li><a class="on-this-page__link" href="#d-measurement-l27l36">D. Measurement (L27–L36)</a></li><li><a class="on-this-page__link" href="#e-retrieval-l37l44">E. Retrieval (L37–L44)</a></li><li><a class="on-this-page__link" href="#f-tools-and-isolation-l45l52">F. Tools and isolation (L45–L52)</a></li><li><a class="on-this-page__link" href="#g-practice-and-organisation-l53l58">G. Practice and organisation (L53–L58)</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Fifty-eight lessons in seven groups, each with a mechanism and a falsification condition.</li><li>A lesson you cannot falsify is a slogan, so each one says what would refute it.</li><li>Five matter most: budget not bucket, stable prefix, variance first, deletion first, and a stopping point.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Cite a lesson with its mechanism</li><li>Test a lesson against your own workload</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="how-to-use-the-lessons">How to use the lessons<a class="rs-anchor" href="#how-to-use-the-lessons" title="Link to this section">#</a></h2>
+<p>Each lesson is a transferable claim with its <strong>mechanism</strong>, why it is true, and its <strong>falsification condition</strong>, the observation that would prove it wrong. A lesson you cannot falsify is a slogan.</p>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The five that matter most</p>
+<ul>
+<li><strong>L1</strong>: it is a budget, not a bucket. Everything follows.</li>
+<li><strong>L11</strong>: a large stable prefix beats a small churning one. It inverts most cost intuition.</li>
+<li><strong>L27</strong>: compression damage is variance first. It changes how you measure.</li>
+<li><strong>L54</strong>: deletion is often a high-yield, reversible action when the audit finds dead surface. It changes what you do first.</li>
+<li><strong>L57</strong>: there is a stopping point. It prevents building a framework nobody needs.</li>
+</ul>
+</aside>
+<h2 id="a-the-nature-of-context-l1l8">A. The nature of context (L1–L8)<a class="rs-anchor" href="#a-the-nature-of-context-l1l8" title="Link to this section">#</a></h2>
+<p>Background: <a href="01-foundations.html">chapter 1</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td><strong>The context window is an attention budget, not a container.</strong></td>
+<td>Adding tokens can redistribute useful signal; Chroma's curves show non-uniform, model- and task-dependent degradation rather than a universal token-level law <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>a controlled study finds task performance monotonically non-decreasing in irrelevant added context.</td>
+</tr>
+<tr>
+<td>L2</td>
+<td><strong>Adding correct information can reduce performance.</strong></td>
+<td>Correctness does not guarantee salience; controlled studies show irrelevant context can reduce retrieval reliability <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>adding verified-correct, task-irrelevant context reliably improves solve rates.</td>
+</tr>
+<tr>
+<td>L3</td>
+<td><strong>Degradation can begin before the window fills.</strong></td>
+<td>In Chroma's tested set, performance generally fell as input grew, but not at every increment or for every model <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>a comparable controlled study finds flat performance across the tested range.</td>
+</tr>
+<tr>
+<td>L4</td>
+<td><strong>Position can change retrieval reliability.</strong></td>
+<td>The cited tasks found a U-shaped position effect, with start/end better than middle; there is no fixed two-slot or 50% rule <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>mid-context placement performs equally to end-context placement in a comparable task.</td>
+</tr>
+<tr>
+<td>L5</td>
+<td><strong>Early rules can become harder to retrieve as context grows.</strong></td>
+<td>This is a model- and harness-dependent transfer from position findings; test it on the actual instruction path <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
+<td>rule-violation rate is flat with respect to session depth at constant instruction-file content.</td>
+</tr>
+<tr>
+<td>L6</td>
+<td><strong>Coherent context can be worse than incoherent context.</strong></td>
+<td>logical flow creates plausible alternative attractors; shuffled haystacks outperformed coherent ones across all 18 models tested <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>well-structured documents retrieve better than shuffled equivalents at equal token count.</td>
+</tr>
+<tr>
+<td>L7</td>
+<td><strong>Effective context length is a workload property, not an advertised constant.</strong></td>
+<td>The length at which performance remains acceptable depends on the model and task; measure it instead of inheriting the provider's limit <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
+<td>repeated workload tests remain equally reliable near the nominal maximum and at shorter lengths.</td>
+</tr>
+<tr>
+<td>L8</td>
+<td><strong>Coding agents are a special case because verification is executable.</strong></td>
+<td>Tests and compilers provide partial, executable evidence, so some lost facts surface as failing checks rather than plausible falsehoods.</td>
+<td>context-management errors in repos with strong test suites produce as many silent wrong answers as in repos without.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="b-the-economics-l9l17">B. The economics (L9–L17)<a class="rs-anchor" href="#b-the-economics-l9l17" title="Link to this section">#</a></h2>
+<p>Background: <a href="10-metrics-and-economics.html">chapter 10</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L9</td>
+<td><strong>Input tokens are essentially all of your token spend.</strong></td>
+<td>measured at 99.75–99.87% in tool-heavy agent workloads <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>output exceeds 1% of total tokens in a normal coding session.</td>
+</tr>
+<tr>
+<td>L10</td>
+<td><strong>Tokens in a stable prefix cost about a tenth of tokens that churn.</strong></td>
+<td>prefix caching; cached reads run ~0.10 versus ~1.25 for new-token writes (chapter 10's generic shape, not a rate card).</td>
+<td>your provider's cached and uncached input prices are within 2×.</td>
+</tr>
+<tr>
+<td>L11</td>
+<td><strong>A large stable prefix is cheaper than a small churning one.</strong></td>
+<td>L10 applied. Worked: 24% fewer tokens produced a 6.9× cost increase when the reduction made the prefix dynamic (chapter 10).</td>
+<td>prefix caching is unavailable, or sessions are single-turn.</td>
+</tr>
+<tr>
+<td>L12</td>
+<td><strong>Compaction's financial saving is much smaller than its token saving suggests.</strong></td>
+<td>the retained context was already cheap (cached); the compaction call is paid at near-full price. Breakeven ≈ 4 turns (chapter 10).</td>
+<td>your cached-read discount is small, making retained context genuinely expensive.</td>
+</tr>
+<tr>
+<td>L13</td>
+<td><strong>Compacting near the end of a session is a pure loss.</strong></td>
+<td>L12's breakeven. You pay the cost and collect none of the savings.</td>
+<td>compaction has no fixed cost in your setup.</td>
+</tr>
+<tr>
+<td>L14</td>
+<td><strong>Cost per solved task is the only metric that cannot be gamed in both directions.</strong></td>
+<td>under-provisioning lowers cost and lowers solves; over-provisioning raises both. The ratio catches each.</td>
+<td>a team lowers cost-per-solved while excluding failed-task costs from the numerator and easier tasks from the denominator.</td>
+</tr>
+<tr>
+<td>L15</td>
+<td><strong>You can over-compress as easily as you can over-load.</strong></td>
+<td>both are deviations from the density optimum. Worked: the over-compressed configuration had the lowest total cost and the second-worst cost-per-solved (chapter 10).</td>
+<td>solve rate is monotone decreasing in context size across the full range.</td>
+</tr>
+<tr>
+<td>L16</td>
+<td><strong>The human line is usually the largest cost in a small team.</strong></td>
+<td>instruction-file upkeep, memory curation, and audits do not appear in any token metric.</td>
+<td>a full accounting shows human hours below 10% of total cost at team scale.</td>
+</tr>
+<tr>
+<td>L17</td>
+<td><strong>Multi-agent gains are substantially bought, not free.</strong></td>
+<td>~15× token cost — the cost side of the 90.2% internal-eval gain — with token usage alone explaining ~80% of performance variance <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</td>
+<td>a token-matched comparison shows multi-agent beating single-agent at equal spend.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="c-loss-and-reversibility-l18l26">C. Loss and reversibility (L18–L26)<a class="rs-anchor" href="#c-loss-and-reversibility-l18l26" title="Link to this section">#</a></h2>
+<p>Background: <a href="06-compaction-and-memory.html">chapter 6</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L18</td>
+<td><strong>The programme prefers reversibility over compression ratio.</strong></td>
+<td>A recoverable reduction preserves a recovery path; an irrecoverable reduction does not.</td>
+<td>recall is never invoked and stub overhead exceeds summarisation savings.</td>
+</tr>
+<tr>
+<td>L19</td>
+<td><strong>Offload before you compress.</strong></td>
+<td>offloading converts irreversible loss to reversible; compressing first destroys the option.</td>
+<td>post-compaction re-fetch rate is zero without an offload layer.</td>
+</tr>
+<tr>
+<td>L20</td>
+<td><strong>Summarisation cannot be inverted.</strong></td>
+<td>omitted or paraphrased details cannot be recovered <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>a summariser demonstrably reconstructs dropped exact strings.</td>
+</tr>
+<tr>
+<td>L21</td>
+<td><strong>Compaction launders hallucinations into settled facts.</strong></td>
+<td>summarisation preserves assertions better than hedges; a hypothesis becomes a statement.</td>
+<td>summaries reliably preserve epistemic status markers.</td>
+</tr>
+<tr>
+<td>L22</td>
+<td><strong>Losing information wholesale can damage state recognition less than replacing it with fluent prose.</strong></td>
+<td>FIFO preserved 77.2% termination recognition versus 44.6% under summary replacement on AppWorld <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A narrative reads as though the state is known.</td>
+<td>summarisation matches truncation on termination recognition at equal budget.</td>
+</tr>
+<tr>
+<td>L23</td>
+<td><strong>A pointer the agent will not follow is equivalent to deletion.</strong></td>
+<td>recall requires a relevance decision, which requires a descriptive stub.</td>
+<td>bare identifiers produce the same recall rate as descriptive ones.</td>
+</tr>
+<tr>
+<td>L24</td>
+<td><strong>Exact strings are a small fraction of tokens and a large fraction of value.</strong></td>
+<td>error messages, versions, paths and line numbers are unactionable when approximated.</td>
+<td>paraphrased error descriptions produce equal fix rates to verbatim ones.</td>
+</tr>
+<tr>
+<td>L25</td>
+<td><strong>You cannot delete from a transcript by talking to it.</strong></td>
+<td>transcripts are append-only; corrections add a competing claim rather than removing the original.</td>
+<td>an appended correction reliably eliminates recurrence of the corrected fact.</td>
+</tr>
+<tr>
+<td>L26</td>
+<td><strong>The best boundary is the one you author.</strong></td>
+<td>a handoff note gives you direct control over what crosses; compaction delegates it to a summariser whose retention varies run to run — model calls are stochastic <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
+<td>automated summaries match hand-written handoffs on post-boundary re-fetch rate.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="d-measurement-l27l36">D. Measurement (L27–L36)<a class="rs-anchor" href="#d-measurement-l27l36" title="Link to this section">#</a></h2>
+<p>Background: <a href="09-evaluation.html">chapter 9</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L27</td>
+<td><strong>Compression damage is a variance phenomenon before it is a mean phenomenon.</strong></td>
+<td>retention varies run to run, producing intermittency; Pass@2/Pass² gaps widen under tighter budgets <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>Pass² degrades no faster than mean accuracy as compression tightens.</td>
+</tr>
+<tr>
+<td>L28</td>
+<td><strong>Single-run evaluation is structurally blind to the primary harm of compression.</strong></td>
+<td>L27. The metric excludes the effect by construction.</td>
+<td>single-run accuracy and Pass² move proportionally across compression settings.</td>
+</tr>
+<tr>
+<td>L29</td>
+<td><strong>The harness can dominate the strategy.</strong></td>
+<td>grep-vs-vector scores depended strongly on which of four harnesses ran the search, on identical data <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>a retrieval ranking replicates across three independent harnesses with similar margins.</td>
+</tr>
+<tr>
+<td>L30</td>
+<td><strong>Published context results are hypotheses for your setup, not conclusions.</strong></td>
+<td>L29 applied.</td>
+<td>your replication reproduces the published ranking and magnitude.</td>
+</tr>
+<tr>
+<td>L31</td>
+<td><strong>Paired designs cut the required sample by roughly three times.</strong></td>
+<td>McNemar uses only discordant pairs. Worked: ~245 paired tasks versus ~712 unpaired for a 10-point effect (chapter 9).</td>
+<td>your task set has near-zero discordance, which would make pairing useless.</td>
+</tr>
+<tr>
+<td>L32</td>
+<td><strong>A 6-point difference on 50 tasks is not a result.</strong></td>
+<td>Wilson intervals for 34/50 and 37/50 are [54.2, 79.2] and [60.4, 84.1] — overlapping across nearly their whole range.</td>
+<td>nothing. This is arithmetic.</td>
+</tr>
+<tr>
+<td>L33</td>
+<td><strong>Detectable effect size scales with the square root of your budget.</strong></td>
+<td>halving the detectable difference costs ~4× the runs (chapter 9).</td>
+<td>nothing. This is arithmetic.</td>
+</tr>
+<tr>
+<td>L34</td>
+<td><strong>Retrieval recall and task outcome anticorrelate past a point.</strong></td>
+<td>more retrieved context raises recall and lowers density; focused prompts retain the answer-bearing material while removing surrounding context <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>solve rate rises monotonically with retrieved-token count.</td>
+</tr>
+<tr>
+<td>L35</td>
+<td><strong>The compaction prompt is a confound in every other experiment.</strong></td>
+<td>varying only the summariser moved SWE-bench 6.5 points <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a> — larger than most effects you are trying to measure.</td>
+<td>summariser variation produces effects below your noise floor.</td>
+</tr>
+<tr>
+<td>L36</td>
+<td><strong>Measuring the input is easier than measuring the outcome, which is why most teams do it.</strong></td>
+<td>tokens and utilisation are directly observable; solve rate and stability require an eval harness.</td>
+<td>most published context-management claims report task outcomes rather than token counts.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="e-retrieval-l37l44">E. Retrieval (L37–L44)<a class="rs-anchor" href="#e-retrieval-l37l44" title="Link to this section">#</a></h2>
+<p>Background: <a href="05-retrieval.html">chapter 5</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L37</td>
+<td><strong>Exact beats approximate when exact is available.</strong></td>
+<td>code has computed relevance edges (calls, implements, tests) that embeddings only approximate.</td>
+<td>semantic retrieval outperforms symbol-graph traversal on "what calls X" queries.</td>
+</tr>
+<tr>
+<td>L38</td>
+<td><strong>Lexical search is a strong baseline, not a fallback.</strong></td>
+<td>identifiers are near-unique and deliberately searchable; grep generally outperformed vector retrieval head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>vector retrieval beats grep on identifier-known queries in your repository.</td>
+</tr>
+<tr>
+<td>L39</td>
+<td><strong>Silent failure is worse than moderate inaccuracy.</strong></td>
+<td>grep returning zero hits redirects the agent; a vector search returning five irrelevant chunks does not.</td>
+<td>agents reliably detect and discard low-relevance semantic results without a score threshold.</td>
+</tr>
+<tr>
+<td>L40</td>
+<td><strong>Structural blindness is real: keep lexical search alongside structural.</strong></td>
+<td>config, env vars, string-keyed dispatch, CI YAML and schemas are outside the symbol graph, and a large class of bugs lives there.</td>
+<td>symbol-graph retrieval alone matches hybrid retrieval on config-caused bugs.</td>
+</tr>
+<tr>
+<td>L41</td>
+<td><strong>Expand along the reference graph, not along file adjacency.</strong></td>
+<td>graph adjacency is a strong relevance signal in code; spatial adjacency is weak.</td>
+<td>reading neighbouring lines retrieves the decisive code as often as reading callers.</td>
+</tr>
+<tr>
+<td>L42</td>
+<td><strong>Pre-load pointers, never content.</strong></td>
+<td>pointers help the agent decide where to look at ~1% of the cost; content substitutes for looking and dilutes. 5K targeted beat 100K summary <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</td>
+<td>a content pre-load outperforms a pointer seed at matched task difficulty.</td>
+</tr>
+<tr>
+<td>L43</td>
+<td><strong>The agent's own edits poison its own retrieved context.</strong></td>
+<td>a file read at turn 5 and edited at turn 30 remains in context as a precise, plausible, obsolete rendering.</td>
+<td>models reliably prefer newer file versions over older ones in context without prompting.</td>
+</tr>
+<tr>
+<td>L44</td>
+<td><strong>Fix retrieval quality before reducing retrieval volume — but diagnose first.</strong></td>
+<td>starvation and dilution have opposite fixes; applying the volume fix to a recall problem makes it strictly worse.</td>
+<td>reducing retrieved context improves outcomes on tasks whose failures were starvation.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="f-tools-and-isolation-l45l52">F. Tools and isolation (L45–L52)<a class="rs-anchor" href="#f-tools-and-isolation-l45l52" title="Link to this section">#</a></h2>
+<p>Background: <a href="07-sub-agents.html">chapters 7 and 8</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L45</td>
+<td><strong>Tool count harms through two independent channels.</strong></td>
+<td>displacement (prefix tokens) and selection confusion (worse choice among more candidates), which respond to different fixes.</td>
+<td>deferring definitions eliminates wrong-tool selection as well as token cost.</td>
+</tr>
+<tr>
+<td>L46</td>
+<td><strong>Roughly twenty active tools is a soft ceiling.</strong></td>
+<td>selection accuracy 43% → under 14% with growing count; 19/20 at 20 tools → failure at 107 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; practitioner threshold ~20 <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</td>
+<td>a current model maintains selection accuracy above 90% at 60+ tools.</td>
+</tr>
+<tr>
+<td>L47</td>
+<td><strong>Category elimination beats compression.</strong></td>
+<td>progressive disclosure is an order of magnitude (25K → 2.5K, vendor-reported <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>); replacing schemas with code execution is two (150K → 2K <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>).</td>
+<td>schema compression achieves comparable ratios to code execution.</td>
+</tr>
+<tr>
+<td>L48</td>
+<td><strong>Sub-agents are safe when their outputs compose without negotiation.</strong></td>
+<td>actions carry implicit decisions; independent implicit decisions do not compose <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Additive work has no implicit decisions to conflict over.</td>
+<td>parallel sub-agents reliably produce compatible interlocking implementations without a shared brief.</td>
+</tr>
+<tr>
+<td>L49</td>
+<td><strong>If you cannot write the output schema in twenty lines, do not delegate.</strong></td>
+<td>an unspecifiable output means the sub-agent's context held something the contract cannot carry.</td>
+<td>delegations with prose-only contracts show re-do rates comparable to schema-specified ones.</td>
+</tr>
+<tr>
+<td>L50</td>
+<td><strong>Isolation optimises the parent's context at the expense of total spend.</strong></td>
+<td>each sub-agent re-pays the prefix tax; parent context falls while total rises.</td>
+<td>total token spend falls when delegation is introduced.</td>
+</tr>
+<tr>
+<td>L51</td>
+<td><strong>Contract loss has no in-session mitigation from the parent's side.</strong></td>
+<td>the sub-agent's context is destroyed on termination; unlike offload, there is nothing to recall — unless you persisted the transcript.</td>
+<td>parents reliably recover unreported sub-agent findings without a persisted trace.</td>
+</tr>
+<tr>
+<td>L52</td>
+<td><strong>Do not delegate debugging.</strong></td>
+<td>debugging is a chain of dependent inferences, and its most valuable product — the ruled-out hypotheses — dies with the sub-agent.</td>
+<td>delegated debugging matches linear debugging on time-to-root-cause.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="g-practice-and-organisation-l53l58">G. Practice and organisation (L53–L58)<a class="rs-anchor" href="#g-practice-and-organisation-l53l58" title="Link to this section">#</a></h2>
+<p>Background: <a href="15-optimisation-plan.html">chapter 15</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lesson</th>
+<th>Why it is true</th>
+<th>Falsified if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L53</td>
+<td><strong>Measure before you optimise; the largest segment may not be the one you were tuning.</strong></td>
+<td>In the constructed budget, tool definitions and tool results dominate while attention goes to instruction files <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</td>
+<td>first audits consistently confirm the team's prior about which segment is largest.</td>
+</tr>
+<tr>
+<td>L54</td>
+<td><strong>Deletion is often the highest-yield, lowest-risk, most reversible action.</strong></td>
+<td>Dead rules and unfiltered output can be pure waste; zero-invocation tools are high-confidence candidates after a representative sample. Verify task coverage and keep rollback.</td>
+<td>a deletion passes the sample but reduces task success.</td>
+</tr>
+<tr>
+<td>L55</td>
+<td><strong>Fix the repository, not the retriever, when the problem recurs.</strong></td>
+<td>a codebase that is hard for an agent to navigate is hard for humans too; deleting <code>UserServiceV2</code> beats any retrieval improvement aimed at distinguishing it.</td>
+<td>repository clarity improvements show no effect on agent success.</td>
+</tr>
+<tr>
+<td>L56</td>
+<td><strong>Reset more often than feels natural.</strong></td>
+<td>the instinct to preserve a long session is a sunk-cost error, and the transcript being preserved is mostly the reason things are going badly. A reset costs ~500 tokens.</td>
+<td>task quality is flat with respect to session duration in your workload.</td>
+</tr>
+<tr>
+<td>L57</td>
+<td><strong>Context management has a stopping point.</strong></td>
+<td>once cache, tool surface, output shaping and retrieval are handled, the binding constraint moves elsewhere — model choice, decomposition, or the verification loop.</td>
+<td>marginal context effort continues to yield measurable gains indefinitely.</td>
+</tr>
+<tr>
+<td>L58</td>
+<td><strong>Adopt one change at a time or you will never be able to remove any of them.</strong></td>
+<td>bundled adoption produces unattributable outcomes; the later ablation finds neutral components that now feel risky to delete.</td>
+<td>teams that adopt stacks wholesale can, on request, name what each component contributes.</td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>It is a budget, not a bucket. Everything follows from that.</li><li>A large stable prefix beats a small churning one.</li><li>Compression damage is variance first. Measure Pass².</li><li>Deletion is often high-yield when the audit finds dead surface; context work has a stopping point.</li></ol>
+        </section>
+        
+        
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="a-templates.html"><span class="rs-pn__label">← Previous · Appendix A</span><span class="rs-pn__title">Templates you can copy</span><span class="rs-pn__part">Reference</span></a><span class="rs-pn__link rs-pn__link--next rs-pn__link--end"><span class="rs-pn__label">Back to</span><a class="rs-pn__title" href="index.html">The overview</a></span></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#how-to-use-the-lessons">How to use the lessons</a></li><li><a href="#a-the-nature-of-context-l1l8">A. The nature of context (L1–L8)</a></li><li><a href="#b-the-economics-l9l17">B. The economics (L9–L17)</a></li><li><a href="#c-loss-and-reversibility-l18l26">C. Loss and reversibility (L18–L26)</a></li><li><a href="#d-measurement-l27l36">D. Measurement (L27–L36)</a></li><li><a href="#e-retrieval-l37l44">E. Retrieval (L37–L44)</a></li><li><a href="#f-tools-and-isolation-l45l52">F. Tools and isolation (L45–L52)</a></li><li><a href="#g-practice-and-organisation-l53l58">G. Practice and organisation (L53–L58)</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

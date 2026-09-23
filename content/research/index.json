@@ -1,0 +1,30 @@
+{
+  "intro": "Long-form investigations into how AI agents behave in real engineering work. Each programme is evidence-labelled, sequenced as a learning path, and ends with something you can do on Monday.",
+  "description": "Evidence-labelled research on AI coding agents: context management, evaluation, loop engineering and multi-agent systems, with summaries, diagrams and plans.",
+  "programmes": [
+    {
+      "slug": "context-management-coding-agents",
+      "title": "Context Management in Coding Agents"
+    },
+    {
+      "slug": "loop-engineering",
+      "title": "Loop Engineering",
+      "question": "How is an agent's iterate-and-repair loop built, and what makes it converge instead of spin?"
+    },
+    {
+      "slug": "agent-evaluation",
+      "title": "Agent Evaluation",
+      "question": "How do you know an agent actually got better, with what design, at what cost?"
+    },
+    {
+      "slug": "prompt-cache-architecture",
+      "title": "Prompt Cache Architecture",
+      "question": "What does editing a file mid-session really cost once the prompt cache is priced in?"
+    },
+    {
+      "slug": "multi-agent-maturity-model",
+      "title": "Multi-Agent Maturity Model",
+      "question": "When is a team actually ready for multi-agent systems, and what has to be true first?"
+    }
+  ]
+}

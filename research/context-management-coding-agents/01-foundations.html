@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Why more context can hurt coding agents — Context Management</title>
+  <meta name="description" content="Context is an attention budget, not a container. The evidence for degradation, five constraints around a context decision, and five ways context fails." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/01-foundations.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/01-foundations.html" />
+  <meta property="og:title" content="Why more context can hurt coding agents — Context Management" />
+  <meta property="og:description" content="Context is an attention budget, not a container. The evidence for degradation, five constraints around a context decision, and five ways context fails." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Why more context can hurt coding agents — Context Management" />
+  <meta property="twitter:description" content="Context is an attention budget, not a container. The evidence for degradation, five constraints around a context decision, and five ways context fails." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Why more context can hurt coding agents",
+  "description": "Context is an attention budget, not a container. The evidence for degradation, five constraints around a context decision, and five ways context fails.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/01-foundations.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Understand the problem"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 1",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/01-foundations.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html" aria-current="page"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>Understand the problem</li><li aria-current="page">Chapter 1</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part I · Understand the problem</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 1</span></p>
+          <h1 class="rs-hero__title">Why more context can hurt coding agents</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What is context, mechanically, and when does adding more make coding agents less reliable?</p>
+          <div class="rs-meta">
+            <span>10 min read</span><span aria-hidden="true">·</span>
+            <span>Foundational</span><span aria-hidden="true">·</span>
+            <span>Step 1 of 20</span><span aria-hidden="true">·</span>
+            <span>1/2 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html" aria-current="page"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#start-with-the-right-mental-model">Start with the right mental model</a></li><li><a class="on-this-page__link" href="#what-long-context-studies-actually-show">What long-context studies actually show</a><ul><li><a class="on-this-page__link" href="#position-is-a-task-dependent-risk">Position is a task-dependent risk</a></li><li><a class="on-this-page__link" href="#advertised-length-is-not-effective-length">Advertised length is not effective length</a></li></ul></li><li><a class="on-this-page__link" href="#five-constraints-around-a-context-decision">Five constraints around a context decision</a></li><li><a class="on-this-page__link" href="#five-ways-context-fails">Five ways context fails</a></li><li><a class="on-this-page__link" href="#why-coding-agent-context-is-distinctive">Why coding-agent context is distinctive</a></li><li><a class="on-this-page__link" href="#the-operations-you-can-perform-on-context">The operations you can perform on context</a></li><li><a class="on-this-page__link" href="#what-good-looks-like">What &quot;good&quot; looks like</a></li><li><a class="on-this-page__link" href="#your-next-action">Your next action</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Across Chroma's controlled tasks, performance generally fell as input grew, but the curves were model- and task-dependent <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li><li>Five constraints shape a context decision: dilution, position, recency bias in conflicts, cache and information loss.</li><li>Context fails in five ways. Starvation can leave no trace in the transcript, so it needs a read-coverage check.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Explain the productive-band model without treating it as a universal curve</li><li>Route an observed symptom to one of five context constraints</li><li>Diagnose poisoning, distraction, confusion, clash and starvation from their tells</li><li>State the four properties of a well-managed context</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="start-with-the-right-mental-model">Start with the right mental model<a class="rs-anchor" href="#start-with-the-right-mental-model" title="Link to this section">#</a></h2>
+<p>Most people picture the context window as a <strong>container</strong>. It has a capacity. You put things in. When it is full, something has to come out. A bigger container means fewer problems.</p>
+<p>That picture is wrong, and it produces most of the bad advice in this field. The contents of a container do not interfere with each other. Adding tokens changes the model's input and can change which evidence it uses.</p>
+<p>A better picture is an <strong>auction for attention</strong>. The currency is not space. It is salience: how much useful signal the model can extract from the current input. Use this as an operating model, not a literal claim that every model exposes one fixed attention pool; the effect depends on model, task and position <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>. Three consequences follow.</p>
+<ol>
+<li><strong>Adding correct information can lower performance.</strong> Distractors and competing interpretations can make the relevant evidence harder to use.</li>
+<li><strong>More capacity is not more reliable use.</strong> The useful set grows until the next token adds more retrieval work or ambiguity than signal.</li>
+<li><strong>"Does it fit?" is necessary, not sufficient.</strong> Measure whether the added material changes the task outcome.</li>
+</ol>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The one-sentence version</p>
+<p>The context window is a budget, not a bucket, and the exchange rate is attention. See <a class="rs-term" href="glossary.html#attention-budget" data-def="The framing that replaces &quot;context window as container&quot;: adding tokens can redistribute useful signal rather than creating more reliable attention.">attention budget</a>.</p>
+</aside>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">A conceptual model: context value has a productive band</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 190" role="img" aria-labelledby="f1-t">
+<title id="f1-t">A conceptual three-zone model: too little context starves the task, a small relevant set is productive, and extra distractors dilute it.</title>
+<rect class="dg-box--muted" x="10" y="35" width="195" height="100" rx="10"/>
+<rect class="dg-box--info" x="263" y="35" width="195" height="100" rx="10"/>
+<rect class="dg-box--warn" x="515" y="35" width="195" height="100" rx="10"/>
+<text class="dg-k" x="107" y="68" text-anchor="middle">STARVED</text>
+<text class="dg-s" x="107" y="91" text-anchor="middle">decisive evidence</text>
+<text class="dg-s" x="107" y="108" text-anchor="middle">has not arrived</text>
+<text class="dg-k" x="360" y="68" text-anchor="middle">PRODUCTIVE</text>
+<text class="dg-s" x="360" y="91" text-anchor="middle">small, relevant set</text>
+<text class="dg-s" x="360" y="108" text-anchor="middle">makes the next action inferable</text>
+<text class="dg-k" x="612" y="68" text-anchor="middle">DILUTED</text>
+<text class="dg-s" x="612" y="91" text-anchor="middle">distractors and</text>
+<text class="dg-s" x="612" y="108" text-anchor="middle">competing interpretations</text>
+<line class="dg-line dg-line--accent" x1="205" y1="85" x2="253" y2="85"/>
+<polygon class="dg-head--accent" points="253,80 263,85 253,90"/>
+<line class="dg-line dg-line--accent" x1="458" y1="85" x2="505" y2="85"/>
+<polygon class="dg-head--accent" points="505,80 515,85 505,90"/>
+<text class="dg-s" x="360" y="165" text-anchor="middle">more material in context →</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> Working model, not a quantitative curve: the productive band depends on the model, task and position. Long-context studies show that irrelevant or competing context can reduce retrieval reliability <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; applying that result to coding agents is an inference <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</figcaption>
+</figure>
+
+<h2 id="what-long-context-studies-actually-show">What long-context studies actually show<a class="rs-anchor" href="#what-long-context-studies-actually-show" title="Link to this section">#</a></h2>
+<p>The claim that models get worse as input grows is not folklore. It has been measured carefully. (The small letters after each number are <a class="rs-term" href="glossary.html#evidence-label" data-def="A tag on a claim saying how it is supported: S (sourced), P (practitioner-reported), D (derived) or C (composite).">evidence labels</a>; S means a sourced study.)</p>
+<p>Chroma's <a class="rs-term" href="glossary.html#context-rot" data-def="The everyday name for performance becoming less reliable as input length grows. Chroma measured the pattern across 18 models, with non-uniform curves that depend on model and task.">context-rot</a> study tested <strong>18 models from four vendors/model families</strong> on controlled long-context tasks. It covered 8 input lengths and 11 needle positions <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Across the experiments, performance generally degraded as input grew, with non-uniform, model- and task-specific curves <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p>The third column below is an engineering inference for repository agents, not a direct coding-agent measurement <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Study result <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></th>
+<th>What was measured</th>
+<th>Engineering implication <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Similarity matters</strong></td>
+<td>When the question and the answer used similar words, models found the answer even in long contexts. When they did not, performance fell much faster <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>You ask "why is checkout slow?" and the answer is a connection-pool setting. Vocabulary mismatch is one source of difficulty; repository size is not the only determinant.</td>
+</tr>
+<tr>
+<td><strong>Distractors compound</strong></td>
+<td>One near-miss distractor hurt; four hurt more; and <em>which</em> distractor mattered <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>Codebases are full of near-duplicates: three <code>parse_config</code> functions, a deprecated <code>AuthService</code> next to the live one.</td>
+</tr>
+<tr>
+<td><strong>Coherent text is harder</strong></td>
+<td>Shuffled haystacks produced <em>better</em> retrieval than coherent ones, across all 18 models <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>A coherent design document may create a similar retrieval risk; test that on your workload. Coherence can create plausible wrong answers.</td>
+</tr>
+<tr>
+<td><strong>Focused beats full</strong></td>
+<td>On LongMemEval, ~300 tokens of relevant text beat the full ~113K-token context retaining the same answer-bearing material plus surrounding context <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>The focused condition retained the answer-bearing material while removing surrounding context. That is a useful subtraction test for your own agent.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The practical lesson is to retrieve by relevance and verify against the repository, not to assume that a coherent document is automatically useful.</p>
+<h3 id="position-is-a-task-dependent-risk">Position is a task-dependent risk<a class="rs-anchor" href="#position-is-a-task-dependent-risk" title="Link to this section">#</a></h3>
+<p>The cited <em>Lost in the Middle</em> study found a U-shaped position effect on its retrieval tasks: relevant information near the beginning or end performed better than information in the middle <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The magnitude varies by model and task, so do not turn it into a universal 50% utilisation threshold.</p>
+<figure id="figure-2" class="diagram">
+<p class="diagram__title">Position can change retrieval reliability (schematic)</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 210" role="img" aria-labelledby="f2-t">
+<title id="f2-t">In the cited long-context retrieval tasks, relevant information near the start or end performed better than information in the middle. The effect varies by model and task.</title>
+<rect class="dg-box--info" x="10" y="45" width="210" height="95" rx="8"/>
+<rect class="dg-box--warn" x="255" y="45" width="210" height="95" rx="8"/>
+<rect class="dg-box--info" x="500" y="45" width="210" height="95" rx="8"/>
+<text class="dg-k" x="115" y="75" text-anchor="middle">START</text>
+<text class="dg-s" x="115" y="101" text-anchor="middle">favoured in the</text>
+<text class="dg-s" x="115" y="119" text-anchor="middle">cited retrieval tasks</text>
+<text class="dg-k" x="360" y="75" text-anchor="middle">MIDDLE</text>
+<text class="dg-s" x="360" y="101" text-anchor="middle">lower retrieval</text>
+<text class="dg-s" x="360" y="119" text-anchor="middle">in the cited tasks</text>
+<text class="dg-k" x="605" y="75" text-anchor="middle">END</text>
+<text class="dg-s" x="605" y="101" text-anchor="middle">favoured in the</text>
+<text class="dg-s" x="605" y="119" text-anchor="middle">cited retrieval tasks</text>
+<line class="dg-line" x1="220" y1="92" x2="250" y2="92"/>
+<polygon class="dg-head" points="250,87 260,92 250,97"/>
+<line class="dg-line" x1="465" y1="92" x2="495" y2="92"/>
+<polygon class="dg-head" points="495,87 505,92 495,97"/>
+<text class="dg-s" x="360" y="177" text-anchor="middle">same fact · different placement · different reliability</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 2.</span> The cited Lost in the Middle tasks found higher retrieval at the beginning and end than in the middle. This is schematic; the effect depends on model, task and harness <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</figcaption>
+</figure>
+
+<p>The practical response is placement plus verification: keep a critical constraint near the action it governs, then test whether late-session behavior actually improves. System-prompt placement is harness-dependent.</p>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">Why agents "stop following CLAUDE.md"</p>
+<p>In some harnesses, an early rule becomes harder to retrieve as the context grows <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>. Test that before adding stronger instructions; re-state the rule near the action or reset the session. See <a class="rs-term" href="glossary.html#position-decay" data-def="A critical fact becoming harder to use because its position in a long input is less favourable.">position decay</a>.</p>
+</aside>
+<h3 id="advertised-length-is-not-effective-length">Advertised length is not effective length<a class="rs-anchor" href="#advertised-length-is-not-effective-length" title="Link to this section">#</a></h3>
+<p>Advertised length is therefore not a promise of task reliability. Suites differ in construction, so their scores are not directly comparable; the detailed benchmark record belongs on the <a href="sources.html">Sources page</a>. See <a class="rs-term" href="glossary.html#effective-context-length" data-def="The length at which a model still performs acceptably on a given task, as opposed to the length it advertises; it may be shorter than the advertised maximum.">effective context length</a>.</p>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">The honest caveat</p>
+<p>All of this was measured on retrieval tasks over mostly static text. An agent's context is different: it is a growing transcript the agent wrote itself, including its own mistakes. Degradation there is plausibly <em>worse</em>, because self-written distractors are maximally plausible. But that transfer is reasoning, not measurement <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+</aside>
+<h2 id="five-constraints-around-a-context-decision">Five constraints around a context decision<a class="rs-anchor" href="#five-constraints-around-a-context-decision" title="Link to this section">#</a></h2>
+<p>These are the research's operating categories, not five literal forces in every model. Use the first signal you can observe to choose what to measure and change.</p>
+<figure id="figure-3" class="diagram">
+<p class="diagram__title">Route the symptom to a first move</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 330" role="img" aria-labelledby="f3-t">
+<title id="f3-t">A diagnostic map from an observed context symptom to one of five constraints and a first engineering move.</title>
+<text class="dg-k" x="20" y="20">OBSERVED SIGNAL</text>
+<text class="dg-k" x="265" y="20">CONSTRAINT</text>
+<text class="dg-k" x="455" y="20">FIRST MOVE</text>
+<rect class="dg-box" x="10" y="35" width="220" height="45" rx="7"/>
+<text class="dg-s" x="20" y="62">Irrelevant material dominates</text>
+<rect class="dg-box--accent" x="255" y="35" width="170" height="45" rx="7"/>
+<text class="dg-t" x="340" y="62" text-anchor="middle">Dilution</text>
+<rect class="dg-box" x="445" y="35" width="265" height="45" rx="7"/>
+<text class="dg-s" x="455" y="62">Narrow retrieval and remove dead context</text>
+<line class="dg-line" x1="230" y1="57" x2="255" y2="57"/>
+<polygon class="dg-head" points="255,52 265,57 255,62"/>
+<line class="dg-line" x1="425" y1="57" x2="445" y2="57"/>
+<polygon class="dg-head" points="445,52 455,57 445,62"/>
+<rect class="dg-box" x="10" y="95" width="220" height="45" rx="7"/>
+<text class="dg-s" x="20" y="122">A rule is ignored late</text>
+<rect class="dg-box--accent" x="255" y="95" width="170" height="45" rx="7"/>
+<text class="dg-t" x="340" y="122" text-anchor="middle">Position</text>
+<rect class="dg-box" x="445" y="95" width="265" height="45" rx="7"/>
+<text class="dg-s" x="455" y="122">Restate it near the action; test again</text>
+<line class="dg-line" x1="230" y1="117" x2="255" y2="117"/>
+<polygon class="dg-head" points="255,112 265,117 255,122"/>
+<line class="dg-line" x1="425" y1="117" x2="445" y2="117"/>
+<polygon class="dg-head" points="445,112 455,117 445,122"/>
+<rect class="dg-box" x="10" y="155" width="220" height="45" rx="7"/>
+<text class="dg-s" x="20" y="182">Two facts conflict</text>
+<rect class="dg-box--accent" x="255" y="155" width="170" height="45" rx="7"/>
+<text class="dg-t" x="340" y="182" text-anchor="middle">Recency bias in conflicts</text>
+<rect class="dg-box" x="445" y="155" width="265" height="45" rx="7"/>
+<text class="dg-s" x="455" y="182">Reset with handoff; save state first</text>
+<line class="dg-line" x1="230" y1="177" x2="255" y2="177"/>
+<polygon class="dg-head" points="255,172 265,177 255,182"/>
+<line class="dg-line" x1="425" y1="177" x2="445" y2="177"/>
+<polygon class="dg-head" points="445,172 455,177 445,182"/>
+<rect class="dg-box" x="10" y="215" width="220" height="45" rx="7"/>
+<text class="dg-s" x="20" y="242">Cost jumps after a prompt edit</text>
+<rect class="dg-box--accent" x="255" y="215" width="170" height="45" rx="7"/>
+<text class="dg-t" x="340" y="242" text-anchor="middle">Cache</text>
+<rect class="dg-box" x="445" y="215" width="265" height="45" rx="7"/>
+<text class="dg-s" x="455" y="242">Stabilise the prefix; price the rewrite</text>
+<line class="dg-line" x1="230" y1="237" x2="255" y2="237"/>
+<polygon class="dg-head" points="255,232 265,237 255,242"/>
+<line class="dg-line" x1="425" y1="237" x2="445" y2="237"/>
+<polygon class="dg-head" points="445,232 455,237 445,242"/>
+<rect class="dg-box" x="10" y="275" width="220" height="45" rx="7"/>
+<text class="dg-s" x="20" y="302">An important detail disappears</text>
+<rect class="dg-box--accent" x="255" y="275" width="170" height="45" rx="7"/>
+<text class="dg-t" x="340" y="302" text-anchor="middle">Information loss</text>
+<rect class="dg-box" x="445" y="275" width="265" height="45" rx="7"/>
+<text class="dg-s" x="455" y="302">Offload first; compress second</text>
+<line class="dg-line" x1="230" y1="297" x2="255" y2="297"/>
+<polygon class="dg-head" points="255,292 265,297 255,302"/>
+<line class="dg-line" x1="425" y1="297" x2="445" y2="297"/>
+<polygon class="dg-head" points="445,292 455,297 445,302"/>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 3.</span> A first-pass routing map. The categories overlap in real failures; choose the most observable signal, then verify the change <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</figcaption>
+</figure>
+
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>What changes</th>
+<th>Measure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dilution</strong></td>
+<td>More candidates compete for relevance. Track <a class="rs-term" href="glossary.html#relevance-density" data-def="Tokens that could plausibly be cited in a correct answer, divided by all tokens in context. The working measure of dilution.">relevance density</a>, not window utilisation.</td>
+<td>Relevant tokens ÷ total tokens; compare a narrow read with a complete one.</td>
+</tr>
+<tr>
+<td><strong>Position</strong></td>
+<td>Retrieval depends on where material lands and on the task.</td>
+<td>Place the same fact at different positions in a small repeat test.</td>
+</tr>
+<tr>
+<td><strong>Recency bias in conflicts</strong></td>
+<td>A later claim can dominate an earlier one when facts conflict; this is model- and harness-dependent <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</td>
+<td>Find whether the first appearance of a claim came from tool output or an assistant message.</td>
+</tr>
+<tr>
+<td><strong>Cache</strong></td>
+<td><a class="rs-term" href="glossary.html#prefix-caching" data-def="Reusing the computed state of an unchanged prompt prefix. Prefix-exact: valid up to the first changed byte.">Prefix caching</a> stops at the first changed byte <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</td>
+<td>Cache hit rate and cache-adjusted cost; see <a href="10-metrics-and-economics.html#belief-1-cutting-tokens-cuts-cost">chapter 10</a>.</td>
+</tr>
+<tr>
+<td><strong>Information loss</strong></td>
+<td>Summaries, masks and truncation remove detail; only some cuts are reversible.</td>
+<td>Re-fetch rate after compaction; record what was offloaded and addressable.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">A rule worth memorising</p>
+<p>You cannot delete from a transcript by talking to it. That is why resetting a session beats arguing with it.</p>
+</aside>
+<p>For information loss, the decisive distinction is recoverability:</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Loss type</th>
+<th>Recoverable?</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reversible offload</strong></td>
+<td>Yes: the content still exists and has an address</td>
+<td>Tool output written to a file, replaced in context by its path</td>
+</tr>
+<tr>
+<td><strong>Lossy compression</strong></td>
+<td>No: a paraphrase cannot be inverted</td>
+<td>An LLM summary of the transcript</td>
+</tr>
+<tr>
+<td><strong>Hard truncation</strong></td>
+<td>No, unless it was logged elsewhere</td>
+<td>Dropping the oldest turns first</td>
+</tr>
+<tr>
+<td><strong>Masking</strong></td>
+<td>Depends: masked-but-kept is recoverable, masked-and-dropped is not</td>
+<td>Replacing old tool output with placeholders</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Reversibility is usually worth more than compression ratio.</strong> The measured addressable-recall comparison is in <a href="06-compaction-and-memory.html#result-4-lossless-addressable-compaction-beats-every-lossy-baseline">chapter 6</a> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p>A reset clears poisoned history, but it also discards unrecorded state; write a handoff before paying that cost.</p>
+<h2 id="five-ways-context-fails">Five ways context fails<a class="rs-anchor" href="#five-ways-context-fails" title="Link to this section">#</a></h2>
+<p>Drew Breunig describes four failure modes. This research adds starvation because a missing file can leave no transcript trace.</p>
+<figure id="figure-4" class="diagram">
+<p class="diagram__title">The five failure modes, and how visible each one is</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 230" role="img" aria-labelledby="f4-t">
+<title id="f4-t">Poisoning, distraction, confusion and clash are usually inspectable in the transcript. Starvation is often silent.</title>
+<rect class="dg-box" x="10" y="20" width="130" height="120" rx="8"/>
+<text class="dg-t" x="75" y="46" text-anchor="middle">Poisoning</text>
+<text class="dg-s" x="75" y="70" text-anchor="middle">a false fact</text>
+<text class="dg-s" x="75" y="86" text-anchor="middle">becomes canon</text>
+<rect class="dg-box" x="152" y="20" width="130" height="120" rx="8"/>
+<text class="dg-t" x="217" y="46" text-anchor="middle">Distraction</text>
+<text class="dg-s" x="217" y="70" text-anchor="middle">the agent copies</text>
+<text class="dg-s" x="217" y="86" text-anchor="middle">its own history</text>
+<rect class="dg-box" x="294" y="20" width="130" height="120" rx="8"/>
+<text class="dg-t" x="359" y="46" text-anchor="middle">Confusion</text>
+<text class="dg-s" x="359" y="70" text-anchor="middle">irrelevant context</text>
+<text class="dg-s" x="359" y="86" text-anchor="middle">gets used</text>
+<rect class="dg-box" x="436" y="20" width="130" height="120" rx="8"/>
+<text class="dg-t" x="501" y="46" text-anchor="middle">Clash</text>
+<text class="dg-s" x="501" y="70" text-anchor="middle">contradictions</text>
+<text class="dg-s" x="501" y="86" text-anchor="middle">get blended</text>
+<rect class="dg-box--accent" x="580" y="20" width="130" height="120" rx="8"/>
+<text class="dg-t" x="645" y="46" text-anchor="middle">Starvation</text>
+<text class="dg-s" x="645" y="70" text-anchor="middle">a needed fact</text>
+<text class="dg-s" x="645" y="86" text-anchor="middle">never arrives</text>
+<line class="dg-line dg-line--info" x1="10" y1="175" x2="566" y2="175"/>
+<text class="dg-k" x="288" y="200" text-anchor="middle">USUALLY INSPECTABLE</text>
+<line class="dg-line dg-line--accent dg-line--dash" x1="580" y1="175" x2="710" y2="175"/>
+<text class="dg-k" x="645" y="200" text-anchor="middle">OFTEN SILENT</text>
+<text class="dg-s" x="645" y="218" text-anchor="middle">survives review</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 4.</span> Four failures are usually inspectable in the transcript. Starvation can leave a clean-looking trajectory and a wrong answer, so it is easy to miss in review.</figcaption>
+</figure>
+
+<p>The diagram gives the taxonomy. This table gives the diagnostic action.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>The tell</th>
+<th>Containment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Poisoning</strong></td>
+<td>A confident symbol or API claim first appeared in an assistant message, not tool output. Compaction may <a class="rs-term" href="glossary.html#laundering" data-def="Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.">launder</a> it into a settled fact.</td>
+<td>Restart from before the false claim and reground it in tool output.</td>
+</tr>
+<tr>
+<td><strong>Distraction</strong></td>
+<td>The same tool and arguments recur without new information.</td>
+<td>Reset with a short note of what was tried and ruled out; instrument a <a class="rs-term" href="glossary.html#loop-detector" data-def="A check that flags the same tool called with the same arguments three or more times with no new information in between.">loop detector</a>.</td>
+</tr>
+<tr>
+<td><strong><a class="rs-term" href="glossary.html#confusion" data-def="A failure mode where irrelevant context is used because it is present. The common case is picking a plausible wrong tool when too many are in scope.">Confusion</a></strong></td>
+<td>The agent chooses something applicable but wrong for the situation, such as web search instead of local grep.</td>
+<td>Remove irrelevant material or tools. The measured tool-count effect is in <a href="08-tool-surface.html#the-measured-damage">chapter 8</a>.</td>
+</tr>
+<tr>
+<td><strong>Clash</strong></td>
+<td>Output blends current and withdrawn requirements.</td>
+<td>Keep one current decision record; treat the transcript as evidence, not state.</td>
+</tr>
+<tr>
+<td><strong>Starvation</strong></td>
+<td>The decisive file was never read, so the trajectory looks clean and ends wrong.</td>
+<td>Run a <a class="rs-term" href="glossary.html#read-coverage" data-def="Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.">read-coverage</a> audit and improve retrieval.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The first diagnostic question</p>
+<p>Did the decisive fact or file ever enter context? If not, investigate starvation. If yes, inspect the trace for poisoning, distraction, confusion or clash.</p>
+<p><strong>Starvation argues for better retrieval, not more context.</strong> It is the one failure that the subtraction default does not fix. The answer is not "add more". It is "add the right thing", which is a retrieval-quality problem. See <a href="05-retrieval.html">chapter 5</a>.</p>
+</aside>
+<p>Constraints describe what pushes context off course. Failure modes describe the resulting symptom. Use the constraint map to choose what to measure, then this table to choose containment. The operations below describe where to intervene.</p>
+<h2 id="why-coding-agent-context-is-distinctive">Why coding-agent context is distinctive<a class="rs-anchor" href="#why-coding-agent-context-is-distinctive" title="Link to this section">#</a></h2>
+<p>The mechanisms above are general. Coding agents make them especially consequential because context contains mutable repository state, executable evidence and large tool outputs.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>What it means</th>
+<th>Practical consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>The repository is the working surface and evidence source</strong></td>
+<td>The agent edits what it reads. A previously read file can become stale after the agent changes it.</td>
+<td>Re-read before you re-edit; use just-in-time retrieval.</td>
+</tr>
+<tr>
+<td><strong>Verification is executable</strong></td>
+<td>Tests, compilers and linters turn many claims into machine-checkable results.</td>
+<td>Let the test suite determine how much compaction risk you can afford.</td>
+</tr>
+<tr>
+<td><strong>Tool output is large and often disposable</strong></td>
+<td>A <code>pytest</code> run or install log may contain thousands of tokens where one line matters.</td>
+<td>Shape output first; detailed measurements belong in <a href="02-anatomy.html">chapter 2</a> and <a href="18-tooling.html">chapter 18</a>.</td>
+</tr>
+<tr>
+<td><strong>Structure is a precise retrieval signal</strong></td>
+<td>Directory layout, import graphs, symbol tables and test-to-source mapping can be recomputed from source.</td>
+<td>Start with structural retrieval; add semantic retrieval where vocabulary gaps justify it.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="the-operations-you-can-perform-on-context">The operations you can perform on context<a class="rs-anchor" href="#the-operations-you-can-perform-on-context" title="Link to this section">#</a></h2>
+<p>A useful operational taxonomy is four transformations plus a prevention gate: write, select, compress and isolate, with prevent stopping waste before it enters. This adapts LangChain's write/select/compress/isolate frame and adds prevention as a preceding gate <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<figure id="figure-5" class="diagram">
+<p class="diagram__title">A common operating order, not a requirement</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 205" role="img" aria-labelledby="f5-t">
+<title id="f5-t">A common, non-mandatory operating order: prevent waste, write recoverable state, select what is needed, compress after offloading, and isolate when a new boundary is useful.</title>
+<rect class="dg-box--accent" x="10" y="35" width="125" height="90" rx="8"/>
+<text class="dg-k" x="72" y="58" text-anchor="middle">PREVENT</text>
+<text class="dg-s" x="72" y="82" text-anchor="middle">stop waste</text>
+<text class="dg-s" x="72" y="100" text-anchor="middle">before it enters</text>
+<line class="dg-line dg-line--accent" x1="135" y1="80" x2="150" y2="80"/>
+<polygon class="dg-head--accent" points="150,75 160,80 150,85"/>
+<rect class="dg-box" x="160" y="35" width="125" height="90" rx="8"/>
+<text class="dg-k" x="222" y="58" text-anchor="middle">WRITE</text>
+<text class="dg-s" x="222" y="82" text-anchor="middle">offload and</text>
+<text class="dg-s" x="222" y="100" text-anchor="middle">leave an address</text>
+<line class="dg-line" x1="285" y1="80" x2="300" y2="80"/>
+<polygon class="dg-head" points="300,75 310,80 300,85"/>
+<rect class="dg-box" x="310" y="35" width="125" height="90" rx="8"/>
+<text class="dg-k" x="372" y="58" text-anchor="middle">SELECT</text>
+<text class="dg-s" x="372" y="82" text-anchor="middle">retrieve only</text>
+<text class="dg-s" x="372" y="100" text-anchor="middle">what is needed</text>
+<line class="dg-line" x1="435" y1="80" x2="450" y2="80"/>
+<polygon class="dg-head" points="450,75 460,80 450,85"/>
+<rect class="dg-box" x="460" y="35" width="125" height="90" rx="8"/>
+<text class="dg-k" x="522" y="58" text-anchor="middle">COMPRESS</text>
+<text class="dg-s" x="522" y="82" text-anchor="middle">reduce after</text>
+<text class="dg-s" x="522" y="100" text-anchor="middle">offloading</text>
+<line class="dg-line" x1="585" y1="80" x2="600" y2="80"/>
+<polygon class="dg-head" points="600,75 610,80 600,85"/>
+<rect class="dg-box" x="610" y="35" width="100" height="90" rx="8"/>
+<text class="dg-k" x="660" y="58" text-anchor="middle">ISOLATE</text>
+<text class="dg-s" x="660" y="82" text-anchor="middle">new scope,</text>
+<text class="dg-s" x="660" y="100" text-anchor="middle">then select</text>
+<path class="dg-line dg-line--accent dg-line--dash" d="M522,130 C522,175 372,180 372,130"/>
+<polygon class="dg-head--accent" points="372,130 367,140 377,140"/>
+<path class="dg-line dg-line--accent dg-line--dash" d="M660,130 C660,166 430,175 372,130"/>
+<polygon class="dg-head--accent" points="372,130 367,140 377,140"/>
+<text class="dg-s" x="360" y="198" text-anchor="middle">compressing can return to selection; isolation starts a new selection scope</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 5.</span> Prevention reduces what enters context; the remaining operations decide what survives, enters, shrinks or is isolated. This is a common order, not a requirement; verify the loop for your harness <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</figcaption>
+</figure>
+
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Coding-agent examples</th>
+<th>Main risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prevent</strong></td>
+<td>Output shaping, ignore files, fewer tools, quiet flags</td>
+<td>Hiding a line you needed</td>
+</tr>
+<tr>
+<td><strong>Write</strong></td>
+<td>Scratch files, plan files, decision logs, memory</td>
+<td>Staleness or memory nobody reads</td>
+</tr>
+<tr>
+<td><strong>Select</strong></td>
+<td>grep, file reads, symbol lookup, recall</td>
+<td>The wrong thing, or too much</td>
+</tr>
+<tr>
+<td><strong>Compress</strong></td>
+<td>Compaction, summaries, masking</td>
+<td>Losing the decisive fact for good</td>
+</tr>
+<tr>
+<td><strong>Isolate</strong></td>
+<td>Sub-agents, session resets, per-task scope</td>
+<td>Losing shared understanding</td>
+</tr>
+</tbody>
+</table></div>
+<p>The loop matters: offload before compressing; after isolation, select again in the new scope. Compression rewrites the prompt and can fight the cache <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<h2 id="what-good-looks-like">What "good" looks like<a class="rs-anchor" href="#what-good-looks-like" title="Link to this section">#</a></h2>
+<p>Here is a definition that later chapters can be checked against.</p>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">A well-managed context</p>
+<p>At each step, the tokens present are the <strong>smallest set</strong> that makes the correct next action <strong>inferable</strong>. Everything absent is <strong>recoverable</strong> on demand. And keeping it that way <strong>costs less</strong> than the errors it prevents.</p>
+</aside>
+<p>Each clause is a testable property.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Violated by</th>
+<th>How to test it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sufficiency</strong>: the next action is inferable</td>
+<td>Starvation</td>
+<td>Read-coverage audits on failures</td>
+</tr>
+<tr>
+<td><strong>Minimality</strong>: the smallest such set</td>
+<td>Distraction, confusion, dilution</td>
+<td>Relevance density; remove a segment and see if the solve rate moves</td>
+</tr>
+<tr>
+<td><strong>Recoverability</strong>: what is missing can be fetched</td>
+<td>Lossy compaction with no offload</td>
+<td>After each compaction, ask: could the agent get that back?</td>
+</tr>
+<tr>
+<td><strong>Economy</strong>: it costs less than it saves</td>
+<td>Elaborate memory nobody queries</td>
+<td>The cost model in <a href="10-metrics-and-economics.html">chapter 10</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>This programme therefore optimises for sufficiency, minimality, recoverability and economy—not completeness for its own sake.</p>
+<h2 id="your-next-action">Your next action<a class="rs-anchor" href="#your-next-action" title="Link to this section">#</a></h2>
+<p>Take one failed coding-agent run. Mark the decisive context as <strong>starvation (missing), distraction or confusion (irrelevant), clash (conflicting), poisoning (false/unverified), or information loss (unrecoverable)</strong>. Record the first observable tell, then choose one response: <strong>retrieve, remove, offload or reset</strong>. Use the <a href="a-templates.html#7-context-postmortem">context postmortem</a>, then carry the diagnosis into <a href="02-anatomy.html">Chapter 2</a> or the <a href="05-retrieval.html">retrieval chapter</a>.</p>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>The window is an operating budget for useful signal. Adding correct information can still lower performance.</li><li>Position can change retrieval reliability, but the size and shape depend on model, task and harness.</li><li>Appending usually preserves the existing prefix; early edits can invalidate cached suffixes and may cost more than they save.</li><li>The programme's operating preference is reversibility over compression ratio: prefer operations you can undo.</li><li>You cannot delete from a transcript by talking to it. Reset instead of arguing.</li></ol>
+        </section>
+        <section class="rs-endblock rs-see" aria-labelledby="see-h"><h2 id="see-h" class="rs-endblock__title">Go deeper</h2><ul><li><a href="02-anatomy.html">Where the tokens actually go</a> — the nine segments of a real context</li><li><a href="03-ten-methods.html">The ten methods</a> — what acts on each constraint</li></ul></section>
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#attention-budget"><strong>Attention budget</strong></a> — The framing that replaces &quot;context window as container&quot;: adding tokens can redistribute useful signal rather than creating more reliable attention.</li><li><a href="glossary.html#evidence-label"><strong>Evidence label</strong></a> — A tag on a claim saying how it is supported: S (sourced), P (practitioner-reported), D (derived) or C (composite).</li><li><a href="glossary.html#context-rot"><strong>Context rot</strong></a> — The everyday name for performance becoming less reliable as input length grows. Chroma measured the pattern across 18 models, with non-uniform curves that depend on model and task [S].</li><li><a href="glossary.html#position-decay"><strong>Position decay</strong></a> — A critical fact becoming harder to use because its position in a long input is less favourable.</li><li><a href="glossary.html#effective-context-length"><strong>Effective context length</strong></a> — The length at which a model still performs acceptably on a given task, as opposed to the length it advertises; it may be shorter than the advertised maximum.</li><li><a href="glossary.html#relevance-density"><strong>Relevance density</strong></a> — Tokens that could plausibly be cited in a correct answer, divided by all tokens in context. The working measure of dilution.</li><li><a href="glossary.html#prefix-caching"><strong>Prefix caching</strong></a> — Reusing the computed state of an unchanged prompt prefix. Prefix-exact: valid up to the first changed byte.</li><li><a href="glossary.html#laundering"><strong>Laundering</strong></a> — Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.</li><li><a href="glossary.html#loop-detector"><strong>Loop detector</strong></a> — A check that flags the same tool called with the same arguments three or more times with no new information in between.</li><li><a href="glossary.html#confusion"><strong>Confusion</strong></a> — A failure mode where irrelevant context is used because it is present. The common case is picking a plausible wrong tool when too many are in scope.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><span class="rs-pn__link rs-pn__link--prev rs-pn__link--end"><span class="rs-pn__label">Start at</span><a class="rs-pn__title" href="index.html">The overview</a></span><a class="rs-pn__link rs-pn__link--next" href="02-anatomy.html"><span class="rs-pn__label">Next → · Chapter 2</span><span class="rs-pn__title">Anatomy of a coding agent&#x27;s context</span><span class="rs-pn__part">Understand the problem</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#start-with-the-right-mental-model">Start with the right mental model</a></li><li><a href="#what-long-context-studies-actually-show">What long-context studies actually show</a><ul><li><a href="#position-is-a-task-dependent-risk">Position is a task-dependent risk</a></li><li><a href="#advertised-length-is-not-effective-length">Advertised length is not effective length</a></li></ul></li><li><a href="#five-constraints-around-a-context-decision">Five constraints around a context decision</a></li><li><a href="#five-ways-context-fails">Five ways context fails</a></li><li><a href="#why-coding-agent-context-is-distinctive">Why coding-agent context is distinctive</a></li><li><a href="#the-operations-you-can-perform-on-context">The operations you can perform on context</a></li><li><a href="#what-good-looks-like">What &quot;good&quot; looks like</a></li><li><a href="#your-next-action">Your next action</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

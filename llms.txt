@@ -19,6 +19,7 @@ Core themes:
 - [Open Source Projects](https://ghassan-alhamoud.com/projects/): Curated project index with durable agent, memory, evaluation, workflow, and knowledge systems that can be inspected through public repositories.
 - [Articles](https://ghassan-alhamoud.com/articles/): Long-form writing on AI architecture, agent systems, automation, reliability, and engineering practice.
 - [AI Agent Architecture Handbook](https://ghassan-alhamoud.com/handbook/): Structured handbook on agentic systems and common AI agent design patterns.
+- [Research](https://ghassan-alhamoud.com/research/): Long-form, evidence-labelled research programmes on AI coding agents, each with a one-page summary, learning path, FAQ and glossary.
 
 ## Open Source Projects
 
@@ -53,6 +54,11 @@ Core themes:
 - [Human-in-the-Loop](https://ghassan-alhamoud.com/handbook/chapter-07-human-in-the-loop.html): Risk-based autonomy, enforceable approval gates, safe escalation, exact authorization, and measurable human oversight.
 - [Observability & Evaluation](https://ghassan-alhamoud.com/handbook/chapter-08-observability-evaluation.html): Correlated agent traces, governed telemetry, representative test sets, calibrated graders, statistical regression gates, canaries, and drift detection.
 - [Safety & Guardrails](https://ghassan-alhamoud.com/handbook/chapter-09-safety-guardrails.html): Complete mediation, task-scoped authority, typed policy decisions, prompt-injection containment, exact approvals, and effect-level safety tests.
+
+## Research
+
+- [Context Management in Coding Agents](https://ghassan-alhamoud.com/research/context-management-coding-agents/): Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.
+- [Context Management in Coding Agents: one-page summary](https://ghassan-alhamoud.com/research/context-management-coding-agents/summary.html): The problem, the finding, the first actions and the key numbers on one page.
 
 ## External Profiles
 

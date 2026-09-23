@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Compaction, offload and memory — Context Management</title>
+  <meta name="description" content="Six measured 2026 results on compaction, the design space, offload patterns, cross-session memory, and what a coding agent should do with your wiki, database..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/06-compaction-and-memory.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/06-compaction-and-memory.html" />
+  <meta property="og:title" content="Compaction, offload and memory — Context Management" />
+  <meta property="og:description" content="Six measured 2026 results on compaction, the design space, offload patterns, cross-session memory, and what a coding agent should do with your wiki, database..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Compaction, offload and memory — Context Management" />
+  <meta property="twitter:description" content="Six measured 2026 results on compaction, the design space, offload patterns, cross-session memory, and what a coding agent should do with your wiki, database..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Compaction, offload and memory",
+  "description": "Six measured 2026 results on compaction, the design space, offload patterns, cross-session memory, and what a coding agent should do with your wiki, database and graph.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/06-compaction-and-memory.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "The methods"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 6",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/06-compaction-and-memory.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html" aria-current="page"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>The methods</li><li aria-current="page">Chapter 6</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part II · The methods</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 6</span></p>
+          <h1 class="rs-hero__title">Compaction, offload and memory</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> How do compaction, offload and memory lose information, what does that cost in measured terms, and what should you do with your wiki?</p>
+          <div class="rs-meta">
+            <span>15 min read</span><span aria-hidden="true">·</span>
+            <span>Deep dive</span><span aria-hidden="true">·</span>
+            <span>Step 6 of 20</span><span aria-hidden="true">·</span>
+            <span>4/6 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html" aria-current="page"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#three-things-people-confuse">Three things people confuse</a></li><li><a class="on-this-page__link" href="#what-the-2026-research-actually-established">What the 2026 research actually established</a><ul><li><a class="on-this-page__link" href="#result-1-the-summariser-alone-is-worth-several-points">Result 1: The summariser alone is worth several points</a></li><li><a class="on-this-page__link" href="#result-2-compression-damages-reliability-before-accuracy">Result 2: Compression damages reliability before accuracy</a></li><li><a class="on-this-page__link" href="#result-3-compaction-breaks-where-am-i-and-the-next-step-is-the-worst">Result 3: Compaction breaks &quot;where am I?&quot;, and the next step is the worst</a></li><li><a class="on-this-page__link" href="#result-4-lossless-addressable-compaction-beats-every-lossy-baseline">Result 4: Lossless addressable compaction beats every lossy baseline</a></li><li><a class="on-this-page__link" href="#result-5-simple-masking-is-competitive-with-summarisation">Result 5: Simple masking is competitive with summarisation</a></li><li><a class="on-this-page__link" href="#result-6-semantic-triggering-beats-both-naive-triggers">Result 6: Semantic triggering beats both naive triggers</a></li></ul></li><li><a class="on-this-page__link" href="#the-compaction-design-space">The compaction design space</a><ul><li><a class="on-this-page__link" href="#decision-1-the-trigger">Decision 1: the trigger</a></li><li><a class="on-this-page__link" href="#decision-2-what-gets-compressed">Decision 2: what gets compressed</a></li><li><a class="on-this-page__link" href="#decision-3-the-summary-schema">Decision 3: the summary schema</a></li><li><a class="on-this-page__link" href="#decision-4-target-size">Decision 4: target size</a></li><li><a class="on-this-page__link" href="#decision-5-how-often">Decision 5: how often</a></li><li><a class="on-this-page__link" href="#decision-6-the-cache">Decision 6: the cache</a></li></ul></li><li><a class="on-this-page__link" href="#offload-the-pattern-to-reach-for-first">Offload: the pattern to reach for first</a></li><li><a class="on-this-page__link" href="#cross-session-memory">Cross-session memory</a><ul><li><a class="on-this-page__link" href="#what-memory-is-for">What memory is for</a></li><li><a class="on-this-page__link" href="#three-ways-memory-fails">Three ways memory fails</a></li><li><a class="on-this-page__link" href="#an-architecture-that-survives-the-objections">An architecture that survives the objections</a></li><li><a class="on-this-page__link" href="#tier-3-the-repository-does-the-most-work">Tier 3: the repository does the most work</a></li></ul></li><li><a class="on-this-page__link" href="#external-knowledge-stores-wiki-database-graph">External knowledge stores: wiki, database, graph</a><ul><li><a class="on-this-page__link" href="#the-governing-variable-is-staleness-rate">The governing variable is staleness rate</a></li><li><a class="on-this-page__link" href="#the-wiki">The wiki</a></li><li><a class="on-this-page__link" href="#when-a-database-beats-the-filesystem">When a database beats the filesystem</a></li><li><a class="on-this-page__link" href="#knowledge-graphs-and-a-disambiguation">Knowledge graphs, and a disambiguation</a></li><li><a class="on-this-page__link" href="#methods-before-tools">Methods before tools</a></li></ul></li><li><a class="on-this-page__link" href="#the-complete-policy">The complete policy</a></li><li><a class="on-this-page__link" href="#measuring-the-compression-layer">Measuring the compression layer</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Changing only the summariser moved SWE-bench by 6.5 points. Compaction is a component, not plumbing <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li><li>Compression makes agents intermittent before it makes them worse on average <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li><li>Offload first, compact at boundaries, persist only what you would otherwise re-derive, and never bulk-index the wiki.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Distinguish compaction, offload and memory by scope, reversibility and cost</li><li>Configure a compaction trigger, schema and cap from the evidence</li><li>Design self-describing offload stubs</li><li>Decide where a fact should live using its staleness rate</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="three-things-people-confuse">Three things people confuse<a class="rs-anchor" href="#three-things-people-confuse" title="Link to this section">#</a></h2>
+<p>Three different mechanisms all get called "memory". Mixing them up leads to bad architecture.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong><a class="rs-term" href="glossary.html#compaction" data-def="Replacing part of a transcript with a summary. Irreversible, within one session, and it invalidates the cache from the point of change.">Compaction</a></strong></th>
+<th><strong><a class="rs-term" href="glossary.html#offload" data-def="Moving content out of the window into addressable storage and leaving a stub the agent can follow back. Reversible.">Offload</a></strong></th>
+<th><strong><a class="rs-term" href="glossary.html#memory" data-def="Information persisted across sessions. Justified only by retrievals that changed an action, not by what was written.">Memory</a></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope</td>
+<td>Within one session</td>
+<td>Within one session</td>
+<td>Across sessions</td>
+</tr>
+<tr>
+<td>Operation</td>
+<td>Compress</td>
+<td>Relocate</td>
+<td>Persist</td>
+</tr>
+<tr>
+<td>Reversible</td>
+<td><strong>No</strong></td>
+<td><strong>Yes</strong></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Triggered by</td>
+<td>Token pressure or a boundary</td>
+<td>A size threshold</td>
+<td>An explicit write</td>
+</tr>
+<tr>
+<td>Typical failure</td>
+<td>Loses the decisive detail</td>
+<td>The pointer is never followed</td>
+<td>Stale, or never read</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>A model call plus a full cache invalidation</td>
+<td>Close to zero</td>
+<td>People's time to maintain</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The rule that governs this chapter</p>
+<p><strong>Offload before you compact, and persist only what you would otherwise have to re-derive.</strong> Most teams do the reverse: they compact aggressively, offload nothing and persist everything.</p>
+</aside>
+<h2 id="what-the-2026-research-actually-established">What the 2026 research actually established<a class="rs-anchor" href="#what-the-2026-research-actually-established" title="Link to this section">#</a></h2>
+<p>Several independent research efforts converged in 2026. Together they should change how you configure compaction today.</p>
+<h3 id="result-1-the-summariser-alone-is-worth-several-points">Result 1: The summariser alone is worth several points<a class="rs-anchor" href="#result-1-the-summariser-alone-is-worth-several-points" title="Link to this section">#</a></h3>
+<p>Holding the agent completely fixed and changing <strong>only the summarising model</strong>, SWE-bench accuracy moved from <strong>49.0% to 55.5%</strong>, a 6.5-point swing <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<p>This is the most decision-relevant number in the chapter. Compaction is not plumbing that either works or does not. It is a component with a quality dimension comparable to a model upgrade. <strong>A team that has never read its compaction prompt is leaving several points on the table.</strong></p>
+<p>Training on compacted trajectories adds more: <strong>+5.5 and +7.0 points</strong> on SWE-bench Verified (two model sizes) and <strong>+6.8 and +3.1</strong> on Terminal-Bench 2.0 <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Most teams cannot train, but the direction is clear: handling compaction is a skill that can be improved.</p>
+<h3 id="result-2-compression-damages-reliability-before-accuracy">Result 2: Compression damages reliability before accuracy<a class="rs-anchor" href="#result-2-compression-damages-reliability-before-accuracy" title="Link to this section">#</a></h3>
+<p>This finding changes practice the most, and almost nobody has absorbed it.</p>
+<p>The TRACE study compared compression strategies on AppWorld, a 147-task benchmark of stateful API use. It measured both single-run accuracy and <strong><a class="rs-term" href="glossary.html#passk" data-def="Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).">Pass²</a></strong>: solved on <em>both</em> of two independent runs <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<figure class="diagram rs-chart" id="chart-compaction-and-memory-0"><p class="diagram__title">AppWorld: accuracy versus Pass² by compression strategy</p><div class="chart-legend" aria-hidden="true"><span class="chart-legend__item"><span class="chart-legend__key ch-s1"></span>Single-run accuracy</span><span class="chart-legend__item"><span class="chart-legend__key ch-s2"></span>Pass² (solved on both runs)</span></div><div class="diagram__scroll"><svg viewBox="0 0 720 218" role="img" aria-labelledby="chart-compaction-and-memory-0-t" class="chart chart--hbar"><title id="chart-compaction-and-memory-0-t">No compression: 85.7% accuracy, 77.4% Pass². Verifier-guided: 77.1%, 67.3%. Prompt-based: 71.4%, 59.5%. FIFO: 63.7%, 53.0%.</title><line class="ch-grid" x1="180.0" y1="4" x2="180.0" y2="196"/><text class="ch-axis" x="180.0" y="212" text-anchor="middle">0%</text><line class="ch-grid" x1="292.5" y1="4" x2="292.5" y2="196"/><text class="ch-axis" x="292.5" y="212" text-anchor="middle">25%</text><line class="ch-grid" x1="405.0" y1="4" x2="405.0" y2="196"/><text class="ch-axis" x="405.0" y="212" text-anchor="middle">50%</text><line class="ch-grid" x1="517.5" y1="4" x2="517.5" y2="196"/><text class="ch-axis" x="517.5" y="212" text-anchor="middle">75%</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="196"/><text class="ch-axis" x="630.0" y="212" text-anchor="middle">100%</text><text class="ch-label" x="170" y="35.0" text-anchor="end">No compression</text><path class="ch-mark ch-s1" d="M180.0,16.0 h381.6 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-381.6 z" data-tip="Single-run accuracy · No compression: 85.7%"/><text class="ch-value" x="571.6" y="27.0">85.7%</text><path class="ch-mark ch-s2" d="M180.0,32.0 h344.3 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-344.3 z" data-tip="Pass² (solved on both runs) · No compression: 77.4%"/><text class="ch-value" x="534.3" y="43.0">77.4%</text><text class="ch-label" x="170" y="81.0" text-anchor="end">Verifier-guided (TRACE)</text><path class="ch-mark ch-s1" d="M180.0,62.0 h342.9 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-342.9 z" data-tip="Single-run accuracy · Verifier-guided (TRACE): 77.1%"/><text class="ch-value" x="532.9" y="73.0">77.1%</text><path class="ch-mark ch-s2" d="M180.0,78.0 h298.8 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-298.8 z" data-tip="Pass² (solved on both runs) · Verifier-guided (TRACE): 67.3%"/><text class="ch-value" x="488.8" y="89.0">67.3%</text><text class="ch-label" x="170" y="127.0" text-anchor="end">Prompt-based compaction</text><path class="ch-mark ch-s1" d="M180.0,108.0 h317.3 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-317.3 z" data-tip="Single-run accuracy · Prompt-based compaction: 71.4%"/><text class="ch-value" x="507.3" y="119.0">71.4%</text><path class="ch-mark ch-s2" d="M180.0,124.0 h263.8 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-263.8 z" data-tip="Pass² (solved on both runs) · Prompt-based compaction: 59.5%"/><text class="ch-value" x="453.8" y="135.0">59.5%</text><text class="ch-label" x="170" y="173.0" text-anchor="end">FIFO truncation</text><path class="ch-mark ch-s1" d="M180.0,154.0 h282.6 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-282.6 z" data-tip="Single-run accuracy · FIFO truncation: 63.7%"/><text class="ch-value" x="472.6" y="165.0">63.7%</text><path class="ch-mark ch-s2" d="M180.0,170.0 h234.5 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-234.5 z" data-tip="Pass² (solved on both runs) · FIFO truncation: 53.0%"/><text class="ch-value" x="424.5" y="181.0">53.0%</text><line class="ch-base" x1="180" y1="4" x2="180" y2="196"/></svg></div><figcaption><span class="rs-fignum">Figure 1.</span> As compression tightens, the gap between "solved once" and "solved reliably" widens. Compressed agents are not uniformly worse; they are intermittent <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Strategy</th><th scope="col">Single-run accuracy</th><th scope="col">Pass² (solved on both runs)</th></tr></thead><tbody><tr><th scope="row">No compression</th><td>85.7%</td><td>77.4%</td></tr><tr><th scope="row">Verifier-guided (TRACE)</th><td>77.1%</td><td>67.3%</td></tr><tr><th scope="row">Prompt-based compaction</th><td>71.4%</td><td>59.5%</td></tr><tr><th scope="row">FIFO truncation</th><td>63.7%</td><td>53.0%</td></tr></tbody></table></div></details></figure>
+<p>The paper's own conclusion is the practical takeaway: <em>compression quality is better reflected by multi-run stability than by single-run performance</em> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">Why this matters more than the accuracy column</p>
+<p>A team evaluating compaction with one run per task on a 30-task suite sees a small difference, concludes compaction is nearly free, and ships it. Production then shows exactly the complaint users make most: "it worked yesterday". The variance was always there. The measurement could not see it. <a href="09-evaluation.html#pass-k-worked">Chapter 9</a> makes Pass^k mandatory for this reason.</p>
+</aside>
+<h3 id="result-3-compaction-breaks-where-am-i-and-the-next-step-is-the-worst">Result 3: Compaction breaks "where am I?", and the next step is the worst<a class="rs-anchor" href="#result-3-compaction-breaks-where-am-i-and-the-next-step-is-the-worst" title="Link to this section">#</a></h3>
+<p>Three measured effects <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>:</p>
+<ul>
+<li><strong>Correct termination fell to 44.6%</strong> with summary replacement, against <strong>77.2%</strong> for FIFO truncation, at a 2K budget. The agent loses the ability to recognise that it is done.</li>
+<li><strong>+0.108 extra blocked or error actions</strong> at the <em>first step after compaction</em>.</li>
+<li><strong>Regressive exploration</strong>: agents re-fetch and replay to recover what the summary dropped.</li>
+</ul>
+<p>The mechanism: summaries preserve <em>what happened</em> much better than <em>where we are</em>. A fluent narrative leaves the agent unsure whether the current sub-goal is open or closed.</p>
+<p>Two design consequences follow.</p>
+<ol>
+<li><strong>The summary must carry explicit state</strong>, not narrative: a done, in-progress, not-started list, not "we have been working on X".</li>
+<li><strong>Re-read the plan file immediately after compaction.</strong> The most dangerous step in the session is the one you can protect most cheaply.</li>
+</ol>
+<h3 id="result-4-lossless-addressable-compaction-beats-every-lossy-baseline">Result 4: Lossless addressable compaction beats every lossy baseline<a class="rs-anchor" href="#result-4-lossless-addressable-compaction-beats-every-lossy-baseline" title="Link to this section">#</a></h3>
+<p><a class="rs-term" href="glossary.html#addressable-recall" data-def="Compaction that replaces old content with content-addressed stubs the agent can fetch on demand, instead of a paraphrase. Lossless by construction.">Addressable recall</a> compaction is deterministic, uses no model call, and is content-addressed. Old observations become citation stubs (an ID plus a head-and-tail preview), and the agent calls <code>recall &lt;id&gt;</code> when it needs one. It was compared against five baselines: full context, sliding window, LLM summary, structured state and RAG memory <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Addressable recall (8B / 32B)</th>
+<th>Best baseline</th>
+<th>Margin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Needle-in-haystack, 1,000 tasks</td>
+<td><strong>99.00% / 99.80%</strong></td>
+<td>79.57% / 96.67% (RAG)</td>
+<td>+19.43 / +3.13 points</td>
+</tr>
+<tr>
+<td>LongBench-v2 Hard, 311 tasks</td>
+<td><strong>27.47% / 32.47%</strong></td>
+<td>25.83% / 30.87%</td>
+<td>+1.64 / +1.60 points</td>
+</tr>
+</tbody>
+</table></div>
+<p>It also saved 38.8–80.3% of memory bandwidth against a sliding window <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The paper states it bluntly: omitted or paraphrased details <em>cannot be recovered</em> from a summary.</p>
+<p>Read the two rows honestly. The margin is <strong>huge on retrieval</strong> and <strong>modest on hard reasoning</strong>. Addressability fixes <em>access</em> to information; it does not make the model reason better with it.</p>
+<h3 id="result-5-simple-masking-is-competitive-with-summarisation">Result 5: Simple masking is competitive with summarisation<a class="rs-anchor" href="#result-5-simple-masking-is-competitive-with-summarisation" title="Link to this section">#</a></h3>
+<p>An independent comparison found that <strong>observation <a class="rs-term" href="glossary.html#masking" data-def="Replacing old tool output with placeholders. Needs no model call.">masking</a> achieves solve rates comparable to LLM summarisation</strong> on SWE-bench across two model sizes, at substantially lower cost, because it needs no extra model call <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Its recommendation: try simple methods before building summarisation infrastructure.</p>
+<p>Combined with Result 4, the order is clear, and it is the opposite of what most teams build:</p>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">Masking and addressable stubs first</p>
+<p>Use LLM summarisation only for what genuinely needs prose, and only after offloading.</p>
+</aside>
+<h3 id="result-6-semantic-triggering-beats-both-naive-triggers">Result 6: Semantic triggering beats both naive triggers<a class="rs-anchor" href="#result-6-semantic-triggering-beats-both-naive-triggers" title="Link to this section">#</a></h3>
+<p>Both simple triggers fail, in opposite directions — threshold too late, periodic mid-task <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>; the design space below picks the policy.</p>
+<p>The self-compaction work gates on <strong>closed reasoning units</strong>: fire when a sub-task resolves or the trajectory converges; hold off mid-derivation or when stuck. That preserves verified facts that fixed-interval compaction destroys <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. See <a class="rs-term" href="glossary.html#semantic-triggering" data-def="Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.">semantic triggering</a>.</p>
+<p>The same literature adds two operational notes <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Summarisation is a <strong>blocking call that can stall the agent for tens of seconds</strong>. Prompt instructions about summary length are largely ignored. What the summary keeps also <strong>varies substantially from run to run</strong> — model calls are stochastic, and the variation is a direct cause of Result 2 <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<h2 id="the-compaction-design-space">The compaction design space<a class="rs-anchor" href="#the-compaction-design-space" title="Link to this section">#</a></h2>
+<p>Six decisions. The recommendations follow from the results above.</p>
+<h3 id="decision-1-the-trigger">Decision 1: the trigger<a class="rs-anchor" href="#decision-1-the-trigger" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Behaviour</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Threshold</td>
+<td>Fire at X% full</td>
+<td>A backstop, not a policy <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Periodic</td>
+<td>Every N turns</td>
+<td><strong>The worst option</strong>: fires mid-task <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Semantic</td>
+<td>When a sub-goal closes</td>
+<td><strong>The best</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Model-decided</td>
+<td>The agent calls a compaction tool under a rubric</td>
+<td>Best where supported; needs an explicit rubric <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Human-triggered</td>
+<td>You compact at boundaries</td>
+<td>Excellent when a person is present</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommendation:</strong> semantic triggering as the policy, with a threshold backstop set <em>high</em> (85–90%) so it only fires when the policy failed. If you cannot change your harness's automatic trigger, <strong>compact manually at boundaries so the automatic one never fires.</strong></p>
+<h3 id="decision-2-what-gets-compressed">Decision 2: what gets compressed<a class="rs-anchor" href="#decision-2-what-gets-compressed" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Reversible</th>
+<th>Cost</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FIFO truncation</td>
+<td>No</td>
+<td>Free</td>
+<td>Worst accuracy, yet it preserved <em>state recognition</em> better than summarisation (77.2% versus 44.6%) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Observation masking</td>
+<td>If kept</td>
+<td>Free</td>
+<td><strong>A strong default</strong>: comparable to summarisation at lower cost <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Citation stubs</td>
+<td><strong>Yes</strong></td>
+<td>Almost free</td>
+<td><strong>Best</strong> where you can build it <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>LLM summary</td>
+<td>No</td>
+<td>Model call and latency</td>
+<td>Use sparingly, for reasoning traces</td>
+</tr>
+<tr>
+<td>Structured state extraction</td>
+<td>Partly</td>
+<td>Model call</td>
+<td>Good for the state block specifically</td>
+</tr>
+</tbody>
+</table></div>
+<figure id="figure-2" class="diagram">
+<p class="diagram__title">A layered compaction policy</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 230" role="img" aria-labelledby="c2-t">
+<title id="c2-t">Tool observations become reversible stubs, reasoning is summarised into a schema, the plan lives in a file and is never compressed, and exact strings are kept verbatim.</title>
+<rect class="dg-box" x="10" y="10" width="300" height="46" rx="8"/><text class="dg-t" x="24" y="38">Old tool observations</text>
+<rect class="dg-box--info" x="400" y="10" width="310" height="46" rx="8"/><text class="dg-t" x="414" y="38">Citation stub · reversible</text>
+<rect class="dg-box" x="10" y="66" width="300" height="46" rx="8"/><text class="dg-t" x="24" y="94">Old reasoning and messages</text>
+<rect class="dg-box--warn" x="400" y="66" width="310" height="46" rx="8"/><text class="dg-t" x="414" y="94">LLM summary into a fixed schema</text>
+<rect class="dg-box" x="10" y="122" width="300" height="46" rx="8"/><text class="dg-t" x="24" y="150">Plan and decisions</text>
+<rect class="dg-box--accent" x="400" y="122" width="310" height="46" rx="8"/><text class="dg-t" x="414" y="150">Never compressed · lives in PLAN.md</text>
+<rect class="dg-box" x="10" y="178" width="300" height="46" rx="8"/><text class="dg-t" x="24" y="206">Errors, versions, paths, line numbers</text>
+<rect class="dg-box--accent" x="400" y="178" width="310" height="46" rx="8"/><text class="dg-t" x="414" y="206">Verbatim · never paraphrased</text>
+<line class="dg-line" x1="310" y1="33" x2="392" y2="33"/><polygon class="dg-head" points="392,28 400,33 392,38"/>
+<line class="dg-line" x1="310" y1="89" x2="392" y2="89"/><polygon class="dg-head" points="392,84 400,89 392,94"/>
+<line class="dg-line" x1="310" y1="145" x2="392" y2="145"/><polygon class="dg-head" points="392,140 400,145 392,150"/>
+<line class="dg-line" x1="310" y1="201" x2="392" y2="201"/><polygon class="dg-head" points="392,196 400,201 392,206"/>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 2.</span> Different content deserves different treatment. Only reasoning traces pay for a model-written summary; everything else is either reversible or untouched.</figcaption>
+</figure>
+
+<h3 id="decision-3-the-summary-schema">Decision 3: the summary schema<a class="rs-anchor" href="#decision-3-the-summary-schema" title="Link to this section">#</a></h3>
+<p>The highest-leverage prompt in your system (Result 1). "Summarise the conversation so far" leaves that on the table. Each section below maps to a measured failure.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">compaction-schema.md (excerpt)</span></div><pre class="highlight"><code><span class="gu">## Goal</span>
+&lt;one sentence: the original task, verbatim where possible&gt;
+
+<span class="gu">## State                          ← counters the 44.6% termination collapse</span>
+<span class="k">-</span><span class="w"> </span>Done: &lt;verified complete, and how it was verified&gt;
+<span class="k">-</span><span class="w"> </span>In progress: &lt;the one current sub-goal&gt;
+<span class="k">-</span><span class="w"> </span>Not started: &lt;what remains&gt;
+
+<span class="gu">## Decisions</span>
+<span class="k">-</span><span class="w"> </span>&lt;decision&gt; — because &lt;reason&gt;
+
+<span class="gu">## Ruled out                      ← counters regressive exploration</span>
+<span class="k">-</span><span class="w"> </span>&lt;approach&gt; — because &lt;reason&gt;, evidence: &lt;file:line or command&gt;
+
+<span class="gu">## Exact strings (verbatim, do not paraphrase)   ← counters detail loss</span>
+<span class="k">-</span><span class="w"> </span>errors, versions, paths, line numbers, config keys, IDs
+
+<span class="gu">## Open questions</span>
+
+<span class="gu">## Offloaded artifacts            ← counters irrecoverability</span>
+<span class="k">-</span><span class="w"> </span>&lt;id or path&gt; — &lt;one-line description&gt;
+</code></pre></div>
+<p>The full version, with operating rules, is in <a href="a-templates.html#4-compaction-schema">the templates appendix</a>.</p>
+<h3 id="decision-4-target-size">Decision 4: target size<a class="rs-anchor" href="#decision-4-target-size" title="Link to this section">#</a></h3>
+<p>Smaller summaries lose more. But FIFO, which loses the <em>most</em>, kept state recognition better than summarisation. So the amount lost is not the only axis; <em>what kind</em> of loss matters more.</p>
+<p><strong>Recommendation:</strong> no fixed token target. Compress narrative aggressively; keep the state block and exact strings in full. A 1,200-token summary with verbatim error strings beats a 400-token one that paraphrased them.</p>
+<h3 id="decision-5-how-often">Decision 5: how often<a class="rs-anchor" href="#decision-5-how-often" title="Link to this section">#</a></h3>
+<p>Research setups cap at <strong>three compactions per run</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The practitioner rule is stricter: <strong>more than one compaction means the session should have ended.</strong></p>
+<p><strong>Recommendation:</strong> cap at one, then reset with a handoff note. A second compaction compresses something already compressed. Errors compound, details are twice removed, and the variance effect of Result 2 stacks.</p>
+<h3 id="decision-6-the-cache">Decision 6: the cache<a class="rs-anchor" href="#decision-6-the-cache" title="Link to this section">#</a></h3>
+<p>Compaction rewrites everything after the stable prefix and invalidates the cache from that point. The <a href="10-metrics-and-economics.html#belief-2-compaction-saves-money">worked arithmetic</a> shows that compacting a 120K context to 40K <strong>breaks even after about four more turns</strong> <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
+<p>Two consequences. First, <strong>compacting near the end of a session is a pure loss</strong>: you pay and never collect. Second, because cached tokens were already cheap, <strong>compaction's money saving is much smaller than its token count suggests, while its quality cost is not.</strong> You pay measured reliability damage for a modest, slow saving.</p>
+<p><strong>Recommendation:</strong> compact less often and more decisively.</p>
+<h2 id="offload-the-pattern-to-reach-for-first">Offload: the pattern to reach for first<a class="rs-anchor" href="#offload-the-pattern-to-reach-for-first" title="Link to this section">#</a></h2>
+<p>Offload beats compaction wherever it applies, because it is reversible.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">the offload pattern</span></div><pre class="highlight"><code>tool returns 14,000 tokens
+  → write to  .agent/artifacts/a3f9.log
+  → context receives:
+      .agent/artifacts/a3f9.log (14.2KB)
+      npm ci — exit 0, 2 peer-dep warnings (react-dom, @types/node)
+  → the agent can `recall a3f9` or grep inside the store at any time
+</code></pre></div>
+<p>Three design rules, each learned from a failure:</p>
+<ol>
+<li><strong>The <a class="rs-term" href="glossary.html#stub" data-def="What stays in context after an offload: an identifier plus just enough description to decide whether to fetch it.">stub</a> must carry enough to decide whether to recall it</strong> — a bare <code>a3f9.log (14.2KB)</code> is dead weight, as <a href="03-ten-methods.html#m-6-reversible-offload">chapter 3's M-6</a> shows. Adding the exit code and a warning summary costs 15 tokens and turns a deleted file into a working pointer.</li>
+<li><strong>Do not offload what is still in use.</strong> Offloading the log from the command that just ran forces an immediate recall. Offload after a few turns or at a sub-goal boundary.</li>
+<li><strong>Keep the manifest bounded.</strong> Past about 30 items, an always-visible manifest becomes the problem it solved. Switch to a searchable store with a one-line index.</li>
+</ol>
+<p><strong>Where to put it.</strong> A gitignored scratch directory outside the source tree (for example <code>.agent/</code>) for logs and intermediate output. In the repository, versioned, for anything a person should review, such as plans and decision records. At this scale the filesystem beats a database: the agent already has file tools, there is no schema, and <code>grep</code> works.</p>
+<h2 id="cross-session-memory">Cross-session memory<a class="rs-anchor" href="#cross-session-memory" title="Link to this section">#</a></h2>
+<p>This is the area with the weakest evidence and the most enthusiastic tooling. It is treated sceptically for that reason.</p>
+<h3 id="what-memory-is-for">What memory is for<a class="rs-anchor" href="#what-memory-is-for" title="Link to this section">#</a></h3>
+<p>Only one use survives scrutiny: <strong>facts that were expensive to learn and stay true.</strong> Everything else belongs in the repository.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Candidate memory</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"The staging database needs the VPN; the symptom is a 30-second hang, not an auth error"</td>
+<td><strong>Keep.</strong> Expensive to learn, stable, not in the repository</td>
+</tr>
+<tr>
+<td>"The <code>orders</code> service owns idempotency keys; do not add them in <code>payments</code>"</td>
+<td><strong>Keep.</strong> Architectural, lasting, not obvious</td>
+</tr>
+<tr>
+<td>"The user prefers 2-space indentation"</td>
+<td><strong>Delete.</strong> It is in the formatter config</td>
+</tr>
+<tr>
+<td>"Last week we fixed a bug in <code>retry.ts</code>"</td>
+<td><strong>Delete.</strong> It is in <code>git log</code></td>
+</tr>
+<tr>
+<td>"The auth module is complex"</td>
+<td><strong>Delete.</strong> No decision follows from it</td>
+</tr>
+</tbody>
+</table></div>
+<p>The test: <strong>would this change a decision, and would re-deriving it cost a lot?</strong> It needs both.</p>
+<h3 id="three-ways-memory-fails">Three ways memory fails<a class="rs-anchor" href="#three-ways-memory-fails" title="Link to this section">#</a></h3>
+<ol>
+<li><strong>Write-only memory.</strong> The system collects thousands of entries and never surfaces a decisive one. Every memory tool demos writing; almost none measure reading. <strong>If you cannot report "memories retrieved that changed an action, per week", you do not know whether your memory works.</strong></li>
+<li><strong>Staleness.</strong> A memory about code that has since been refactored is <em>worse than nothing</em>: confidently wrong and silent. Prefer memories about things that change slowly: infrastructure, conventions, contracts between systems, operational knowledge.</li>
+<li><strong>Prefix cost.</strong> Memory loaded at session start is prefix. A growing memory file is a growing tax on every call. Ten memories is a tool; a thousand is the tool-bloat problem again, with worse selection.</li>
+</ol>
+<h3 id="an-architecture-that-survives-the-objections">An architecture that survives the objections<a class="rs-anchor" href="#an-architecture-that-survives-the-objections" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>What it holds</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Always loaded</strong> (hard cap: 40 lines)</td>
+<td>Invariants that apply to nearly every task; effectively part of the instruction file</td>
+<td>Prefix tokens on every call</td>
+</tr>
+<tr>
+<td><strong>2. Searchable store</strong> (Markdown files, indexed)</td>
+<td>Facts retrieved on demand by explicit query</td>
+<td>Only when used</td>
+</tr>
+<tr>
+<td><strong>3. The repository</strong></td>
+<td>Code, tests, <a class="rs-term" href="glossary.html#adr" data-def="A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.">ADRs</a>, git history</td>
+<td>Already paid</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="tier-3-the-repository-does-the-most-work">Tier 3: the repository does the most work<a class="rs-anchor" href="#tier-3-the-repository-does-the-most-work" title="Link to this section">#</a></h3>
+<p>The repository is the authoritative memory: versioned, reviewed, and repaired by the same process that changes the code. <strong>An ADR committed to the repository is a better memory than a database entry.</strong> It is discoverable by grep, updated alongside the code, and needs no MCP server.</p>
+<p>The honest position on memory tooling: the ecosystem is large, the mechanisms are reasonable, and <strong>published evidence that it improves coding-agent outcomes is thin.</strong> Adopt it with a measurement plan, not on the strength of a demo.</p>
+<h2 id="external-knowledge-stores-wiki-database-graph">External knowledge stores: wiki, database, graph<a class="rs-anchor" href="#external-knowledge-stores-wiki-database-graph" title="Link to this section">#</a></h2>
+<p>Your organisation already has a wiki, probably a database or two, and possibly someone building a knowledge graph. What should the agent do with them?</p>
+<p>The short answer is <strong><a class="rs-term" href="glossary.html#dereference-dont-index" data-def="The policy for external prose such as a wiki: fetch a named page on demand, never bulk-ingest it into a retrieval store.">dereference, never index</a></strong>. The reasoning matters more than the rule, because it generalises to stores that do not exist yet.</p>
+<h3 id="the-governing-variable-is-staleness-rate">The governing variable is staleness rate<a class="rs-anchor" href="#the-governing-variable-is-staleness-rate" title="Link to this section">#</a></h3>
+<p>Every store can hold a fact. What separates them is <strong>what happens to that fact when the code changes underneath it.</strong> See <a class="rs-term" href="glossary.html#staleness-rate" data-def="How fast a fact stops being true. Where a fact should live depends on whether the store&#x27;s repair rate beats it.">staleness rate</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Repository</th>
+<th>Wiki</th>
+<th>Database or memory store</th>
+<th>Knowledge graph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Changes with the code, in the same review</td>
+<td><strong>Yes</strong></td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Something fails when it goes stale</td>
+<td><strong>Yes</strong>: tests, build, review</td>
+<td>Nothing</td>
+<td>Nothing</td>
+<td>Nothing</td>
+</tr>
+<tr>
+<td>Who repairs it</td>
+<td>Whoever changed the code</td>
+<td>Nobody in particular</td>
+<td>A curation process you must staff</td>
+<td>A re-ingestion pipeline</td>
+</tr>
+<tr>
+<td>Readable without tooling</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Usually not</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Searchable by grep</td>
+<td>Yes</td>
+<td>Only if mirrored</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Only the first column has a repair mechanism.</strong> That is the whole argument. It is not that Markdown beats SQL. A fact living next to the code it describes is the only fact with a maintainer.</p>
+<figure id="figure-3" class="diagram">
+<p class="diagram__title">Where a fact should live, by how fast it goes stale</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 200" role="img" aria-labelledby="c3-t">
+<title id="c3-t">Facts that last hours go in the plan file; days to weeks in commits and pull requests; months to years in ADRs; external facts are fetched on demand.</title>
+<line class="dg-line" x1="20" y1="60" x2="700" y2="60"/>
+<polygon class="dg-head" points="700,55 710,60 700,65"/>
+<text class="dg-k" x="20" y="36">FACT HALF-LIFE →</text>
+<circle class="dg-dot--accent" cx="80" cy="60" r="6"/><circle class="dg-dot--accent" cx="230" cy="60" r="6"/><circle class="dg-dot--accent" cx="390" cy="60" r="6"/><circle class="dg-dot--accent" cx="540" cy="60" r="6"/><circle class="dg-dot--accent" cx="660" cy="60" r="6"/>
+<text class="dg-t" x="80" y="92" text-anchor="middle">Hours</text><text class="dg-s" x="80" y="112" text-anchor="middle">the failing test</text><text class="dg-s" x="80" y="140" text-anchor="middle">→ plan file</text>
+<text class="dg-t" x="230" y="92" text-anchor="middle">Days–weeks</text><text class="dg-s" x="230" y="112" text-anchor="middle">"defer the rewrite"</text><text class="dg-s" x="230" y="140" text-anchor="middle">→ commit, PR</text>
+<text class="dg-t" x="390" y="92" text-anchor="middle">Months–years</text><text class="dg-s" x="390" y="112" text-anchor="middle">"orders owns keys"</text><text class="dg-s" x="390" y="140" text-anchor="middle">→ ADR in the repo</text>
+<text class="dg-t" x="540" y="92" text-anchor="middle">Years, external</text><text class="dg-s" x="540" y="112" text-anchor="middle">provider rate limit</text><text class="dg-s" x="540" y="140" text-anchor="middle">→ ADR, or fetch docs</text>
+<text class="dg-t" x="660" y="92" text-anchor="middle">Never</text><text class="dg-s" x="660" y="112" text-anchor="middle">language specs</text><text class="dg-s" x="660" y="140" text-anchor="middle">→ fetch on demand</text>
+<text class="dg-s" x="360" y="186" text-anchor="middle">The common failure is a mismatch: a two-week fact in a store with a two-year repair cycle.</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 3.</span> Ask two questions of any store: how long do these facts stay true, and does this store get repaired faster than that? The dominant failure is not a wrong store but a mismatch between the two.</figcaption>
+</figure>
+
+<h3 id="the-wiki">The wiki<a class="rs-anchor" href="#the-wiki" title="Link to this section">#</a></h3>
+<p>Most organisations' largest knowledge store, and the worst calibrated for agents.</p>
+<p><strong>Worse for an agent than for a person.</strong> Nothing fails when a wiki page rots, so its error rate only rises — and a person discounts a page by its last-modified date and has been burned before; an agent does neither. Worse still, <strong>a stale wiki page about exactly your subsystem is a maximally plausible distractor.</strong> Distractor damage rises with similarity to the query <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, and a page describing the exact module you are working on, in your vocabulary, is at the top of that curve. Bulk-indexing the wiki is therefore not neutral. <strong>It manufactures high-similarity distractors</strong> <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Do not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fetch a specific page when a person names it</td>
+<td>Bulk-index the wiki into a vector store</td>
+</tr>
+<tr>
+<td>Treat a fetched page as a <strong>hypothesis</strong> to check against code</td>
+<td>Pre-load wiki content into the prefix</td>
+</tr>
+<tr>
+<td>Migrate the durable facts out (below)</td>
+<td>Let the agent search the wiki on its own</td>
+</tr>
+<tr>
+<td>Record the page's last-modified date with its content</td>
+<td>Cite the wiki in a summary without the check result</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The migration, the one thing worth doing.</strong> A bounded, one-time extraction. Then stop reading the wiki.</p>
+<ol>
+<li>List the pages the team actually opened last quarter. Ignore the long tail.</li>
+<li>For each, ask: does a decision depend on this, and is it expensive to re-derive?</li>
+<li>For each survivor, ask the harder question: <strong>where in the repository would this fail loudly if it became wrong?</strong> Next to the config it describes, in an ADR beside the decision, as a comment above the workaround, or best of all as a test.</li>
+<li>Move it there, in a reviewed pull request.</li>
+<li><strong>Replace the wiki page with a link to its new home.</strong> This stops the two from drifting apart again.</li>
+</ol>
+<p>Steps 3 and 5 are the ones teams skip, and skipping either turns a clean-up into a duplication.</p>
+<p><strong>What legitimately stays in the wiki:</strong> facts with no code home, such as on-call rotations, escalation paths, vendor contacts and team ownership. These are also, notably, facts a coding agent rarely needs.</p>
+<h3 id="when-a-database-beats-the-filesystem">When a database beats the filesystem<a class="rs-anchor" href="#when-a-database-beats-the-filesystem" title="Link to this section">#</a></h3>
+<p>The question is not <em>whether</em> to use a database. It is <strong>what makes the filesystem stop being enough.</strong></p>
+<p>Markdown files under <code>ripgrep</code> are versioned, diffable, reviewable, searchable with the same tools for people and agents, portable, and free to run. Below roughly ten thousand documents, nothing beats that <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>. A real store earns its place when one of these holds:</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Why files stop working</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Several agents writing at once</td>
+<td>Lost updates; no transactions</td>
+</tr>
+<tr>
+<td>More than about 10⁴–10⁵ entries</td>
+<td>Grep becomes too slow for interactive use</td>
+</tr>
+<tr>
+<td>Structured queries: time ranges, aggregation, expiry</td>
+<td>Grep cannot express them</td>
+</tr>
+<tr>
+<td>A retention or access policy is required</td>
+<td>Files have no enforcement point</td>
+</tr>
+</tbody>
+</table></div>
+<p>If you cross one, the order is <strong>SQLite with full-text search first</strong>, then Postgres, then anything else. SQLite keeps the property that mattered: it is still a file.</p>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">Avoid vector-only memory</p>
+<p>Embeddings are weak at exact recall: version numbers, error strings, flag names, paths. That is exactly what agent memory has to get right. Addressable, exact recall beat every lossy baseline by 19.43 points on needle retrieval <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. If you embed, keep full-text search alongside it and route exact-token queries there.</p>
+</aside>
+<h3 id="knowledge-graphs-and-a-disambiguation">Knowledge graphs, and a disambiguation<a class="rs-anchor" href="#knowledge-graphs-and-a-disambiguation" title="Link to this section">#</a></h3>
+<p>"Graph" means two completely different things in this research. Mixing them up is how graph-memory services get justified with structural retrieval's evidence.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong><a class="rs-term" href="glossary.html#code-graph" data-def="The import, call, reference and type graph of a codebase, computed exactly by a compiler or language server.">Code graph</a></strong></th>
+<th><strong><a class="rs-term" href="glossary.html#knowledge-graph" data-def="Entities and relations extracted from prose by an LLM pipeline. Approximate and as stale as its last ingestion.">Knowledge graph</a></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edges</td>
+<td>Imports, calls, references, types</td>
+<td>Entities and relations extracted from prose</td>
+</tr>
+<tr>
+<td>Built by</td>
+<td>A compiler or language server</td>
+<td>An LLM extraction pipeline</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td><strong>Exact</strong></td>
+<td>Probabilistic; false edges are routine</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>Current by construction</td>
+<td>As fresh as the last ingestion</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Near zero, already computed</td>
+<td>A service, a schema, a pipeline, curation</td>
+</tr>
+<tr>
+<td>Verdict</td>
+<td><strong>Adopt</strong>: it is structural retrieval</td>
+<td><strong>Skip for coding</strong>, with one exception</td>
+</tr>
+</tbody>
+</table></div>
+<p>Why knowledge graphs underperform for coding, strongest reason first:</p>
+<ol>
+<li><strong>The graph you want already exists, and is exact</strong> (see the table above).</li>
+<li><strong>Extraction is a poisoning surface.</strong> A false edge looks like schema, not opinion, and poisoning cannot be removed by appending a correction.</li>
+<li><strong>Agent questions do not match graph traversal.</strong> "Where is X defined?" and "what calls Y?" are grep and language-server questions. "Why is Z like this?" is not a graph query at all; it is an ADR.</li>
+<li><strong>Ingestion lag is unbounded.</strong> The code changes every merge; the graph changes when the pipeline runs.</li>
+</ol>
+<p><strong>The real exception:</strong> relationships <strong>no single compiler can see</strong>, such as service dependencies across repositories, data lineage across systems, ownership and on-call mapping, and API contracts between repositories. If your proposed graph covers one repository's source, the compiler already won.</p>
+<h3 id="methods-before-tools">Methods before tools<a class="rs-anchor" href="#methods-before-tools" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>What it is</th>
+<th>Why it works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ADR as memory</strong></td>
+<td>Decisions as numbered Markdown in <code>docs/decisions/</code>, reviewed in the PR that makes them</td>
+<td>The only memory with a maintainer</td>
+</tr>
+<tr>
+<td><strong>Co-location</strong></td>
+<td>Write the fact where a change would break it</td>
+<td>Turns silent staleness into a review conflict</td>
+</tr>
+<tr>
+<td><strong>Assert it instead</strong></td>
+<td>If a test can assert the fact, write the test</td>
+<td>A test is a memory with CI attached</td>
+</tr>
+<tr>
+<td><strong>Dereference, don't index</strong></td>
+<td>Fetch named pages on demand; never bulk-ingest</td>
+<td>Avoids manufacturing distractors</td>
+</tr>
+<tr>
+<td><strong>Expiry stamps</strong></td>
+<td>Each stored fact has a written-on and review-by date</td>
+<td>Makes rot visible</td>
+</tr>
+<tr>
+<td><strong>The staleness audit</strong></td>
+<td>Quarterly: sample 20 entries, check each against the repository</td>
+<td>Turns "is our memory any good?" into a number. Above ~20% false, delete the store</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The gate for every store</p>
+<p><strong>Retrievals from this store that changed an action, per week.</strong> Instrument it on day one. Under one a week after a month: delete the store. In practice the wiki integration fails this first, because most wiki content answers questions nobody was blocked on.</p>
+</aside>
+<p>Tools for this layer, with verdicts, are in <a href="18-tooling.html#state-memory-and-offload">chapter 18</a>.</p>
+<h2 id="the-complete-policy">The complete policy<a class="rs-anchor" href="#the-complete-policy" title="Link to this section">#</a></h2>
+<p>Everything above as a decision record you could implement from:</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">context-policy.yaml</span></div><pre class="highlight"><code><span class="nt">prevention</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">output_shaping</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">              </span><span class="c1"># do this first</span>
+<span class="w">  </span><span class="nt">ignore_files</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">node_modules</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">dist</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.lock&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">__generated__</span><span class="p p-Indicator">]</span>
+
+<span class="nt">offload</span><span class="p">:</span><span class="w">                            </span><span class="c1"># before any compression</span>
+<span class="w">  </span><span class="nt">threshold_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span>
+<span class="w">  </span><span class="nt">delay_turns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">stub_includes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">path</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">size</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">exit_code</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">one_line_summary</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">store</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.agent/artifacts/</span>
+<span class="w">  </span><span class="nt">manifest_max_items</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+
+<span class="nt">compaction</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">trigger</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">semantic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">subtask_complete</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">hypothesis_resolved</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tests_pass</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">suppress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">mid_edit</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">stuck</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">immediately_after_error</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">backstop_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.88</span>
+<span class="w">  </span><span class="nt">strategy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">observations</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">citation_stub</span><span class="w">     </span><span class="c1"># reversible</span>
+<span class="w">    </span><span class="nt">reasoning</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm_summary</span><span class="w">          </span><span class="c1"># into the fixed schema</span>
+<span class="w">    </span><span class="nt">plan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span><span class="w">                     </span><span class="c1"># lives in PLAN.md</span>
+<span class="w">    </span><span class="nt">exact_strings</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">verbatim</span>
+<span class="w">  </span><span class="nt">max_per_session</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">post_compaction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reread PLAN.md</span><span class="w">   </span><span class="c1"># protects the highest-error step</span>
+
+<span class="nt">memory</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tier1_max_lines</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">  </span><span class="nt">tier2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">searchable_markdown</span>
+<span class="w">  </span><span class="nt">tier3</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the_repository</span><span class="w">             </span><span class="c1"># ADRs, tests, comments</span>
+<span class="w">  </span><span class="nt">metric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">retrievals_that_changed_an_action</span>
+
+<span class="nt">external_stores</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">wiki</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">bulk_index</span><span class="p">:</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="nt"> autonomous_search</span><span class="p">:</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="nt"> fetch_by_name</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> treat_as</span><span class="p">:</span><span class="w"> </span><span class="nv">hypothesis</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="nv">sqlite_fts5</span><span class="p p-Indicator">,</span><span class="nt"> vector_only</span><span class="p">:</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">knowledge_graph</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">over_source_code</span><span class="p">:</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="nt"> cross_system_only</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="nt">staleness_audit</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">cadence</span><span class="p">:</span><span class="w"> </span><span class="nv">quarterly</span><span class="p p-Indicator">,</span><span class="nt"> sample</span><span class="p">:</span><span class="w"> </span><span class="nv">20</span><span class="p p-Indicator">,</span><span class="nt"> delete_above_false_rate</span><span class="p">:</span><span class="w"> </span><span class="nv">0.20</span><span class="p p-Indicator">}</span>
+
+<span class="nt">session</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">reset_after</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">second_compaction_needed</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">loop_detected</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">poison_found</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<h2 id="measuring-the-compression-layer">Measuring the compression layer<a class="rs-anchor" href="#measuring-the-compression-layer" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Detects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Post-compaction re-fetch rate</td>
+<td>Re-fetches in the 10 turns after ÷ compactions</td>
+<td>Under 2</td>
+<td>The summary drops load-bearing content</td>
+</tr>
+<tr>
+<td>Compactions per session</td>
+<td>Count</td>
+<td>At most 1</td>
+<td>Sessions running too long</td>
+</tr>
+<tr>
+<td>Recall rate</td>
+<td>Recalls ÷ stubs created</td>
+<td>0.1–0.4</td>
+<td>Too low: dead pointers. Too high: offloading too early</td>
+</tr>
+<tr>
+<td><strong>Pass² ÷ Pass@2</strong></td>
+<td>On a fixed evaluation set</td>
+<td>Over 0.85</td>
+<td><strong>Compression damage</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Termination recognition</td>
+<td>Tasks correctly ended ÷ tasks completed</td>
+<td>Over 0.9</td>
+<td>Lost state <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>Cache hit rate around compaction</td>
+<td>Before versus after</td>
+<td>Recovers within ~3 turns</td>
+<td>Compaction cost</td>
+</tr>
+<tr>
+<td>Exact-string survival</td>
+<td>Strings kept verbatim ÷ strings present before</td>
+<td>Over 0.95</td>
+<td>Schema adherence</td>
+</tr>
+</tbody>
+</table></div>
+<p>If you add only one, add <strong>Pass² ÷ Pass@2</strong>. It measures Result 2 directly, no single-run evaluation can see it, and it predicts the complaint you are about to get.</p>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Offload before you compact, and persist only what you would re-derive.</li><li>Use an explicit summary schema with state, ruled-out approaches and verbatim exact strings.</li><li>Re-read the plan file first after any compaction; that step carries the most errors.</li><li>The repository is the only store with a repair mechanism. Prefer ADRs and tests to memory tools.</li><li>Dereference the wiki by name; never index it.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#compaction"><strong>Compaction</strong></a> — Replacing part of a transcript with a summary. Irreversible, within one session, and it invalidates the cache from the point of change.</li><li><a href="glossary.html#offload"><strong>Offload</strong></a> — Moving content out of the window into addressable storage and leaving a stub the agent can follow back. Reversible.</li><li><a href="glossary.html#memory"><strong>Memory</strong></a> — Information persisted across sessions. Justified only by retrievals that changed an action, not by what was written.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li><li><a href="glossary.html#addressable-recall"><strong>Addressable recall</strong></a> — Compaction that replaces old content with content-addressed stubs the agent can fetch on demand, instead of a paraphrase. Lossless by construction.</li><li><a href="glossary.html#masking"><strong>Masking</strong></a> — Replacing old tool output with placeholders. Needs no model call.</li><li><a href="glossary.html#semantic-triggering"><strong>Semantic triggering</strong></a> — Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.</li><li><a href="glossary.html#stub"><strong>Stub</strong></a> — What stays in context after an offload: an identifier plus just enough description to decide whether to fetch it.</li><li><a href="glossary.html#adr"><strong>ADR</strong></a> — A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.</li><li><a href="glossary.html#dereference-dont-index"><strong>Dereference, don&#x27;t index</strong></a> — The policy for external prose such as a wiki: fetch a named page on demand, never bulk-ingest it into a retrieval store.</li><li><a href="glossary.html#staleness-rate"><strong>Staleness rate</strong></a> — How fast a fact stops being true. Where a fact should live depends on whether the store&#x27;s repair rate beats it.</li><li><a href="glossary.html#code-graph"><strong>Code graph</strong></a> — The import, call, reference and type graph of a codebase, computed exactly by a compiler or language server.</li><li><a href="glossary.html#knowledge-graph"><strong>Knowledge graph</strong></a> — Entities and relations extracted from prose by an LLM pipeline. Approximate and as stale as its last ingestion.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="05-retrieval.html"><span class="rs-pn__label">← Previous · Chapter 5</span><span class="rs-pn__title">Retrieval: how code should enter context</span><span class="rs-pn__part">The methods</span></a><a class="rs-pn__link rs-pn__link--next" href="07-sub-agents.html"><span class="rs-pn__label">Next → · Chapter 7</span><span class="rs-pn__title">Sub-agents and isolation</span><span class="rs-pn__part">The methods</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#three-things-people-confuse">Three things people confuse</a></li><li><a href="#what-the-2026-research-actually-established">What the 2026 research actually established</a><ul><li><a href="#result-1-the-summariser-alone-is-worth-several-points">Result 1: The summariser alone is worth several points</a></li><li><a href="#result-2-compression-damages-reliability-before-accuracy">Result 2: Compression damages reliability before accuracy</a></li><li><a href="#result-3-compaction-breaks-where-am-i-and-the-next-step-is-the-worst">Result 3: Compaction breaks &quot;where am I?&quot;, and the next step is the worst</a></li><li><a href="#result-4-lossless-addressable-compaction-beats-every-lossy-baseline">Result 4: Lossless addressable compaction beats every lossy baseline</a></li><li><a href="#result-5-simple-masking-is-competitive-with-summarisation">Result 5: Simple masking is competitive with summarisation</a></li><li><a href="#result-6-semantic-triggering-beats-both-naive-triggers">Result 6: Semantic triggering beats both naive triggers</a></li></ul></li><li><a href="#the-compaction-design-space">The compaction design space</a><ul><li><a href="#decision-1-the-trigger">Decision 1: the trigger</a></li><li><a href="#decision-2-what-gets-compressed">Decision 2: what gets compressed</a></li><li><a href="#decision-3-the-summary-schema">Decision 3: the summary schema</a></li><li><a href="#decision-4-target-size">Decision 4: target size</a></li><li><a href="#decision-5-how-often">Decision 5: how often</a></li><li><a href="#decision-6-the-cache">Decision 6: the cache</a></li></ul></li><li><a href="#offload-the-pattern-to-reach-for-first">Offload: the pattern to reach for first</a></li><li><a href="#cross-session-memory">Cross-session memory</a><ul><li><a href="#what-memory-is-for">What memory is for</a></li><li><a href="#three-ways-memory-fails">Three ways memory fails</a></li><li><a href="#an-architecture-that-survives-the-objections">An architecture that survives the objections</a></li><li><a href="#tier-3-the-repository-does-the-most-work">Tier 3: the repository does the most work</a></li></ul></li><li><a href="#external-knowledge-stores-wiki-database-graph">External knowledge stores: wiki, database, graph</a><ul><li><a href="#the-governing-variable-is-staleness-rate">The governing variable is staleness rate</a></li><li><a href="#the-wiki">The wiki</a></li><li><a href="#when-a-database-beats-the-filesystem">When a database beats the filesystem</a></li><li><a href="#knowledge-graphs-and-a-disambiguation">Knowledge graphs, and a disambiguation</a></li><li><a href="#methods-before-tools">Methods before tools</a></li></ul></li><li><a href="#the-complete-policy">The complete policy</a></li><li><a href="#measuring-the-compression-layer">Measuring the compression layer</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

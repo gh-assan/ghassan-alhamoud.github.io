@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Retrieval: how code should enter context — Context Management</title>
+  <meta name="description" content="Lexical, structural, semantic and agentic retrieval compared on evidence, the harness confound, a tiered default architecture and nine code-specific patholog..." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/05-retrieval.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/05-retrieval.html" />
+  <meta property="og:title" content="Retrieval: how code should enter context — Context Management" />
+  <meta property="og:description" content="Lexical, structural, semantic and agentic retrieval compared on evidence, the harness confound, a tiered default architecture and nine code-specific patholog..." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Retrieval: how code should enter context — Context Management" />
+  <meta property="twitter:description" content="Lexical, structural, semantic and agentic retrieval compared on evidence, the harness confound, a tiered default architecture and nine code-specific patholog..." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Retrieval: how code should enter context",
+  "description": "Lexical, structural, semantic and agentic retrieval compared on evidence, the harness confound, a tiered default architecture and nine code-specific pathologies.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/05-retrieval.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "The methods"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 5",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/05-retrieval.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html" aria-current="page"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>The methods</li><li aria-current="page">Chapter 5</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part II · The methods</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 5</span></p>
+          <h1 class="rs-hero__title">Retrieval: how code should enter context</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> Should code enter context by grep, embeddings, the symbol graph or agentic search, and what does the evidence actually say?</p>
+          <div class="rs-meta">
+            <span>9 min read</span><span aria-hidden="true">·</span>
+            <span>Deep dive</span><span aria-hidden="true">·</span>
+            <span>Step 5 of 20</span><span aria-hidden="true">·</span>
+            <span>3/6 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html" aria-current="page"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#the-question-posed-correctly">The question, posed correctly</a></li><li><a class="on-this-page__link" href="#why-code-is-an-unusual-corpus">Why code is an unusual corpus</a></li><li><a class="on-this-page__link" href="#the-four-paradigms">The four paradigms</a><ul><li><a class="on-this-page__link" href="#lexical-grep-and-ripgrep">Lexical: grep and ripgrep</a></li><li><a class="on-this-page__link" href="#structural-lsp-tree-sitter-symbol-index">Structural: LSP, tree-sitter, symbol index</a></li><li><a class="on-this-page__link" href="#semantic-embeddings-and-vector-search">Semantic: embeddings and vector search</a></li><li><a class="on-this-page__link" href="#live-agentic-search-the-llm-as-navigator">Live agentic search: the LLM as navigator</a></li></ul></li><li><a class="on-this-page__link" href="#the-comparison">The comparison</a></li><li><a class="on-this-page__link" href="#the-recommended-architecture">The recommended architecture</a></li><li><a class="on-this-page__link" href="#nine-ways-code-retrieval-goes-wrong">Nine ways code retrieval goes wrong</a></li><li><a class="on-this-page__link" href="#should-you-seed-the-session-with-a-codebase-overview">Should you seed the session with a codebase overview?</a></li><li><a class="on-this-page__link" href="#measure-your-own-retrieval">Measure your own retrieval</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>"Grep versus embeddings" is the wrong question. Unit, index, timing and agency are separate choices.</li><li>The harness often matters more than the retrieval strategy, so published comparisons do not transfer <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li><li>Default: grep and the symbol graph first, semantic search only for unknown vocabulary, escalate rather than run everything.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Decompose any retrieval design into unit, index, timing and agency</li><li>Choose a retrieval tier for a given question shape</li><li>Recognise the nine code-specific retrieval pathologies</li><li>Measure read-utilisation and read-coverage on your own agent</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="the-question-posed-correctly">The question, posed correctly<a class="rs-anchor" href="#the-question-posed-correctly" title="Link to this section">#</a></h2>
+<p>"Semantic search versus grep" is a category error. It compares a technology with a tool and ignores the variables that actually decide the outcome. Retrieval design has four independent axes.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Options</th>
+<th>What it governs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unit</strong></td>
+<td>File, range, symbol, chunk</td>
+<td>How much waste each retrieval carries</td>
+</tr>
+<tr>
+<td><strong>Index</strong></td>
+<td>None (live), lexical, structural, vector, hybrid</td>
+<td>Which questions can be answered</td>
+</tr>
+<tr>
+<td><strong>Timing</strong></td>
+<td>Pre-loaded, just-in-time, small seed plus just-in-time</td>
+<td>Relevance density over the session</td>
+</tr>
+<tr>
+<td><strong>Agency</strong></td>
+<td>Fixed pipeline, or the agent iterating</td>
+<td>Whether the query can adapt</td>
+</tr>
+</tbody>
+</table></div>
+<p>"Grep versus embeddings" collapses all four into one. A pre-loaded, file-level vector search and a just-in-time, symbol-level grep differ on <em>every</em> axis. Crediting the result to "embeddings" credits the wrong variable.</p>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">A fifth variable often dominates all four: the harness</p>
+<p>A 2026 study compared grep with vector retrieval on 116 LongMemEval-derived questions across four <a class="rs-term" href="glossary.html#harness" data-def="The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.">harnesses</a>: a custom agent and three widely used CLI agents. Grep generally won. But <strong>overall scores depended strongly on which harness and tool-calling style was used, on identical data</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. The caveat is workload: the questions are conversational-memory shaped, not repository shaped — the harness finding transfers more confidently than the ranking.</p>
+</aside>
+<p>The consequence is uncomfortable: <strong>a retrieval comparison run on someone else's harness does not transfer to yours</strong> — the study above included. It tells you the <em>shape</em> of the answer (lexical search is a strong baseline; do not skip it). It does not tell you the size of the effect on your setup. <a href="09-evaluation.html">Chapter 9</a> shows how to measure it yourself.</p>
+<h2 id="why-code-is-an-unusual-corpus">Why code is an unusual corpus<a class="rs-anchor" href="#why-code-is-an-unusual-corpus" title="Link to this section">#</a></h2>
+<p>Most retrieval intuition comes from document search. Code breaks five of its assumptions, and each break changes what works.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Property of code</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Exact relevance edges already exist</strong></td>
+<td>In prose, "related" is a fuzzy judgment. In code, A calls B and <code>test_foo</code> tests <code>foo</code>. These are computed facts. Approximating them with embeddings pays for a worse answer to a question the compiler answers exactly, for free.</td>
+</tr>
+<tr>
+<td><strong>Near-duplicates are everywhere, and adversarial</strong></td>
+<td><code>parse_config</code> in three modules, <code>UserService</code> beside <code>UserServiceV2</code>, vendored libraries, generated clients. Distractors hurt, and <em>which</em> distractor matters <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A method that cannot tell <code>UserSession</code> from <code>UserSessionStore</code> fails here.</td>
+</tr>
+<tr>
+<td><strong>The corpus edits itself</strong></td>
+<td>The agent changes what it retrieves from. Every index is stale from the first edit, and wrong about exactly the code most likely to matter. Live retrieval (grep, language server) cannot go stale.</td>
+</tr>
+<tr>
+<td><strong>Names are chosen to be searchable</strong></td>
+<td><code>grep -rn "RETRY_LIMIT"</code> is exact, instant and complete. A vector search returns things <em>like</em> it, which is worse when you know the name. Semantic search helps precisely and only when you do not.</td>
+</tr>
+<tr>
+<td><strong>Structure is a free signal</strong></td>
+<td><code>src/payments/stripe/webhook_handler.ts</code> says in 12 tokens what prose needs a paragraph for, and it never goes stale.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="the-four-paradigms">The four paradigms<a class="rs-anchor" href="#the-four-paradigms" title="Link to this section">#</a></h2>
+<h3 id="lexical-grep-and-ripgrep">Lexical: grep and ripgrep<a class="rs-anchor" href="#lexical-grep-and-ripgrep" title="Link to this section">#</a></h3>
+<p><strong>How it works.</strong> Pattern matching over file contents. No index, no staleness, no build step.</p>
+<p><strong>Strengths.</strong> Exact, complete within its query, fast on any repository size. It finds what lives <em>outside</em> the symbol graph: string literals, config keys, comments, YAML, SQL, environment variables, feature flags.</p>
+<p><strong>Weaknesses.</strong> You have to know or guess the token. It returns line fragments, which causes <a class="rs-term" href="glossary.html#fragment-blindness" data-def="Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.">fragment blindness</a>: a matched line shown with three lines of context, cut off before the <code>if</code> that governs it, read as if it always runs. The fix is trivial: use <code>-C 8</code> or expand to the enclosing function.</p>
+<p><strong>Evidence.</strong> Generally more accurate than vector retrieval in the four-harness study <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Eight surveyed coding agents use the model as a navigator over shell tools such as <code>grep</code>, <code>find</code> and <code>ripgrep</code> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. This is the majority architecture, not a fallback.</p>
+<h3 id="structural-lsp-tree-sitter-symbol-index">Structural: LSP, tree-sitter, symbol index<a class="rs-anchor" href="#structural-lsp-tree-sitter-symbol-index" title="Link to this section">#</a></h3>
+<p><strong>How it works.</strong> Parse the code. Expose symbols, definitions, references and the <a class="rs-term" href="glossary.html#code-graph" data-def="The import, call, reference and type graph of a codebase, computed exactly by a compiler or language server.">code graph</a>. Retrieve symbol bodies and traverse exact edges.</p>
+<p><strong>Strengths.</strong> The retrieval unit matches the meaning unit: a 40-line function instead of a 1,200-line file. Reference traversal has no false positives. It answers questions grep cannot express: what calls this, what implements this interface, what breaks if this signature changes. Mature toolkits cover 30+ languages via the Language Server Protocol <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>Weaknesses.</strong> Needs a working language server, with setup, memory and warm-up. It has a silent failure mode: a timeout returns "no results", which looks exactly like "does not exist". It cannot see configuration, string-keyed dispatch, schemas, CI definitions or templates.</p>
+<p><strong>Evidence.</strong> Mostly mechanical rather than benchmarked: the waste argument and the exact-edge argument are both large and derivable. The composite rename example in <a href="03-ten-methods.html#m-4-structural-retrieval">chapter 3</a> shows about 15× fewer tokens with better precision <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
+<h3 id="semantic-embeddings-and-vector-search">Semantic: embeddings and vector search<a class="rs-anchor" href="#semantic-embeddings-and-vector-search" title="Link to this section">#</a></h3>
+<p><strong>How it works.</strong> Chunk the repository, embed the chunks, embed the query, return nearest neighbours.</p>
+<p><strong>Strengths.</strong> Answers questions when you do not know the vocabulary: "how do we handle rate limiting?" when the code says <code>throttle</code>. Useful over non-code material such as design documents, ADRs and PR discussions.</p>
+<p><strong>Weaknesses.</strong> Index staleness, worst on recently edited code. Chunk boundaries that split functions. Approximate answers where exact ones exist. And the one that matters most: <strong>it always returns something.</strong> Grep returning zero hits is information. A vector search returning five irrelevant chunks is misinformation that looks like success.</p>
+<p><strong>Evidence.</strong> Generally less accurate than grep head-to-head <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A hybrid of semantic search and grep has been reported <strong>12.5% more accurate</strong> than either alone <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Production systems routinely combine semantic, keyword (BM25) and metadata filters <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<h3 id="live-agentic-search-the-llm-as-navigator">Live agentic search: the LLM as navigator<a class="rs-anchor" href="#live-agentic-search-the-llm-as-navigator" title="Link to this section">#</a></h3>
+<p><strong>How it works.</strong> Not a fourth index but a control strategy. The agent iterates: search, read, decide the next query, stop when satisfied. See <a class="rs-term" href="glossary.html#agentic-search" data-def="A retrieval control strategy where the agent iterates: search, read, decide the next query, stop when satisfied.">agentic search</a>.</p>
+<p><strong>Strengths.</strong> The query adapts to what was found. It handles the common case where the first search is wrong because the first hypothesis was wrong.</p>
+<p><strong>Weaknesses.</strong> Turns and latency. Quality depends on the model's search skill, which is exactly where the harness confound bites hardest. Practitioners report agents spending <strong>60%+ of their time searching for context</strong> <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>Evidence.</strong> No benchmark isolates the control strategy's contribution; the four-harness spread is the closest signal <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</p>
+<h2 id="the-comparison">The comparison<a class="rs-anchor" href="#the-comparison" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Lexical</th>
+<th>Structural</th>
+<th>Semantic</th>
+<th>Agentic (control)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup cost</td>
+<td>None</td>
+<td>Moderate</td>
+<td>High</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Goes stale</td>
+<td>No</td>
+<td>No (live)</td>
+<td><strong>Yes</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Exact</td>
+<td>On the pattern</td>
+<td>On the graph</td>
+<td>Approximate</td>
+<td>Inherits</td>
+</tr>
+<tr>
+<td>Concept questions</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes, by iterating</td>
+</tr>
+<tr>
+<td>Covers config, YAML, SQL</td>
+<td>Yes</td>
+<td>No</td>
+<td>Partly</td>
+<td>Inherits</td>
+</tr>
+<tr>
+<td>Waste per retrieval</td>
+<td>Medium (fragments)</td>
+<td>Low</td>
+<td>Medium to high (chunks)</td>
+<td>Falls over turns</td>
+</tr>
+<tr>
+<td><strong>Fails loudly</strong></td>
+<td>Yes (0 hits)</td>
+<td>Yes (not found)</td>
+<td><strong>No</strong></td>
+<td>Depends</td>
+</tr>
+<tr>
+<td>Tokens per useful fact</td>
+<td>Low</td>
+<td><strong>Lowest</strong></td>
+<td>Medium</td>
+<td>Low, but many turns</td>
+</tr>
+<tr>
+<td>Harness sensitivity</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Medium</td>
+<td><strong>Very high</strong></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">"Fails loudly" is the most underrated row</p>
+<p>A method that returns nothing when there is nothing tells the agent to change strategy. A method that always returns its top five tells the agent it succeeded. For an agent that cannot easily judge its own retrieval, silent failure is much worse than moderate inaccuracy.</p>
+</aside>
+<h2 id="the-recommended-architecture">The recommended architecture<a class="rs-anchor" href="#the-recommended-architecture" title="Link to this section">#</a></h2>
+<p>Synthesised from the evidence, as a default to override with your own measurements.</p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Escalate through the tiers; do not run them all</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 330" role="img" aria-labelledby="r1-t">
+<title id="r1-t">Tier zero is free structure, tier one lexical search, tier two structural search, tier three optional semantic search. The agent escalates only when a tier fails.</title>
+<rect class="dg-box--muted" x="10" y="10" width="520" height="58" rx="8"/>
+<text class="dg-k" x="24" y="32">TIER 0 · FREE PRIOR</text>
+<text class="dg-t" x="24" y="54">Directory layout, naming, test-to-source mapping</text>
+<text class="dg-s" x="520" y="54" text-anchor="end">~0 tokens</text>
+<rect class="dg-box--accent" x="10" y="80" width="520" height="58" rx="8"/>
+<text class="dg-k" x="24" y="102">TIER 1 · LEXICAL, LIVE · THE WORKHORSE</text>
+<text class="dg-t" x="24" y="124">ripgrep with -C 8 or symbol expansion</text>
+<text class="dg-s" x="520" y="124" text-anchor="end">"where does X appear?"</text>
+<rect class="dg-box--info" x="10" y="150" width="520" height="58" rx="8"/>
+<text class="dg-k" x="24" y="172">TIER 2 · STRUCTURAL, LIVE · THE PRECISION TOOL</text>
+<text class="dg-t" x="24" y="194">find symbol, find references, outline</text>
+<text class="dg-s" x="520" y="194" text-anchor="end">"what uses X?"</text>
+<rect class="dg-box--ghost" x="10" y="220" width="520" height="58" rx="8"/>
+<text class="dg-k" x="24" y="242">TIER 3 · SEMANTIC, INDEXED · OPTIONAL</text>
+<text class="dg-t" x="24" y="264">over docs, ADRs and PRs at least as much as code</text>
+<text class="dg-s" x="520" y="264" text-anchor="end">"how do we usually…?"</text>
+<rect class="dg-box" x="555" y="10" width="155" height="268" rx="8"/>
+<text class="dg-k" x="632" y="36" text-anchor="middle">CONTROL</text>
+<text class="dg-t" x="632" y="60" text-anchor="middle">Agentic</text>
+<text class="dg-t" x="632" y="78" text-anchor="middle">iteration</text>
+<text class="dg-s" x="632" y="104" text-anchor="middle">just-in-time,</text>
+<text class="dg-s" x="632" y="120" text-anchor="middle">narrowing</text>
+<text class="dg-k" x="632" y="180" text-anchor="middle">SUPPORT</text>
+<text class="dg-t" x="632" y="204" text-anchor="middle">Reversible</text>
+<text class="dg-t" x="632" y="222" text-anchor="middle">offload</text>
+<text class="dg-s" x="632" y="246" text-anchor="middle">for anything large</text>
+<line class="dg-line dg-line--dash" x1="540" y1="109" x2="540" y2="249"/>
+<polygon class="dg-head" points="535,249 540,258 545,249"/>
+<text class="dg-s" x="270" y="310" text-anchor="middle">escalate only on empty results or unknown names</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> Lexical and structural search do most of the work, live and exact. Semantic search is an optional fallback for unknown vocabulary, pointed at prose as much as at code.</figcaption>
+</figure>
+
+<p>Two rules govern the tiers.</p>
+<ol>
+<li><strong>Escalate, do not parallelise.</strong> Try tier 1. If the identifier is unknown or the results are empty, go up a tier. Running every tier on every query multiplies tokens and floods context with three overlapping result sets.</li>
+<li><strong>Expand along the graph, not across the file.</strong> Having found a hit, read its callers, implementers and tests, not the lines above and below it. Spatial adjacency in code is a weak signal; graph adjacency is a strong one. This one habit is worth more than most index choices.</li>
+</ol>
+<h2 id="nine-ways-code-retrieval-goes-wrong">Nine ways code retrieval goes wrong<a class="rs-anchor" href="#nine-ways-code-retrieval-goes-wrong" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Pathology</th>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R-1</strong> Whole file read for one symbol</td>
+<td>Read tokens far exceed cited tokens; median relevance under 20%</td>
+<td>Read the symbol</td>
+</tr>
+<tr>
+<td><strong>R-2</strong> Fragment blindness</td>
+<td>The agent reasons about code that only runs under a condition it never saw</td>
+<td>At least <code>-C 8</code>; expand to the enclosing function</td>
+</tr>
+<tr>
+<td><strong>R-3</strong> Vendored or generated code</td>
+<td>Hits in <code>node_modules/</code>, <code>dist/</code>, <code>vendor/</code>, <code>__generated__/</code></td>
+<td>Ignore files; exclusion globs</td>
+</tr>
+<tr>
+<td><strong>R-4</strong> Near-duplicate confusion</td>
+<td>The agent edits <code>UserServiceV2</code> when <code>UserService</code> was live</td>
+<td>Structural retrieval; mark deprecations in the code</td>
+</tr>
+<tr>
+<td><strong>R-5</strong> Stale self-read</td>
+<td>The agent cites a line that its own edit moved</td>
+<td>Re-read before re-editing; auto-refresh</td>
+</tr>
+<tr>
+<td><strong>R-6</strong> Silent index staleness</td>
+<td>Semantic search returns pre-refactor code with no error</td>
+<td>Prefer live retrieval; rebuild triggers</td>
+</tr>
+<tr>
+<td><strong>R-7</strong> Coherent-document distraction</td>
+<td>The agent cites the design document for behaviour the code contradicts</td>
+<td>Do not pre-load design docs; fetch them for questions about intent</td>
+</tr>
+<tr>
+<td><strong>R-8</strong> Config blindness</td>
+<td>Structural-only search misses the environment variable that causes the bug</td>
+<td>Keep lexical search; search <code>*.yaml</code>, <code>.env*</code>, <code>*.toml</code>, CI files</td>
+</tr>
+<tr>
+<td><strong>R-9</strong> Over-broad first query</td>
+<td><code>grep -r "user"</code> returns 4,000 hits and 6K tokens of noise</td>
+<td>Cap results; start from the most specific token available</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two of these are counterintuitive. <strong>R-5 is the agent poisoning its own context with its own work</strong>: the more productive the session, the more of what it read is now wrong. <strong>R-7 means good documentation can hurt</strong>. Coherent text retrieves <em>worse</em> than shuffled text across all 18 models tested <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. That does not mean stop writing design documents. It means do not pre-load them into a coding agent. Fetch them on demand for questions about <em>intent</em>, and treat the code as the authority on <em>behaviour</em>.</p>
+<h2 id="should-you-seed-the-session-with-a-codebase-overview">Should you seed the session with a codebase overview?<a class="rs-anchor" href="#should-you-seed-the-session-with-a-codebase-overview" title="Link to this section">#</a></h2>
+<p><strong>The evidence against.</strong> The same three results chapter 3's <a href="03-ten-methods.html#m-3-just-in-time-retrieval">M-3</a> cites: focused beats full on every measured comparison, and full context costs 2.68× for fewer completed tasks <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a><a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</p>
+<p><strong>The evidence for a small seed.</strong> Just-in-time retrieval fails by starvation when the agent does not know a subsystem exists. Human-written context files improved success by about 4% <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> — small and positive, though the figure has no published method.</p>
+<p><strong>The synthesis: pre-load pointers and invariants, never content.</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Pre-load</th>
+<th>Do not pre-load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entry points (3–8 paths)</td>
+<td>Architecture prose</td>
+</tr>
+<tr>
+<td>Non-obvious invariants ("all database access goes through <code>repo/</code>")</td>
+<td>Module descriptions</td>
+</tr>
+<tr>
+<td>Build and test commands</td>
+<td>API documentation</td>
+</tr>
+<tr>
+<td>Landmines ("<code>legacy/</code> is dead; do not edit")</td>
+<td>Full file contents</td>
+</tr>
+<tr>
+<td>Where things live, one line each</td>
+<td>Design rationale</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keep it <strong>under 2,000 tokens</strong>. For any candidate line, ask: <em>does this help the agent decide where to look, or does it try to replace looking?</em> The first is worth its tokens many times over. The second is the 100K summary that lost to 5K.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">pointer seed, ~300 tokens</span></div><pre class="highlight"><code><span class="gu">## Where things live</span>
+<span class="k">-</span><span class="w"> </span>API entry: src/api/server.ts · routes in src/api/routes/
+<span class="k">-</span><span class="w"> </span>Auth: src/auth/ (session.ts is the entry point)
+<span class="k">-</span><span class="w"> </span>All database access goes through src/repo/ — never query directly
+
+<span class="gu">## Commands</span>
+<span class="k">-</span><span class="w"> </span>Test: npm test -- --silent   · Lint: npm run lint
+<span class="k">-</span><span class="w"> </span>One package: npm test -w packages/&lt;name&gt;
+
+<span class="gu">## Landmines</span>
+<span class="k">-</span><span class="w"> </span>legacy/ is dead code; do not edit or import from it
+<span class="k">-</span><span class="w"> </span>Migrations need a down-migration; the deploy skips forward-only ones silently
+</code></pre></div>
+<h2 id="measure-your-own-retrieval">Measure your own retrieval<a class="rs-anchor" href="#measure-your-own-retrieval" title="Link to this section">#</a></h2>
+<p>The harness confound means you cannot inherit the answer. Four cheap measurements:</p>
+<ol>
+<li><strong><a class="rs-term" href="glossary.html#read-utilisation" data-def="The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.">Read-utilisation</a>.</strong> For 20 reads, what share of retrieved tokens appears in the final diff or explanation? Median under 20%: adopt symbol-level reads. Under 5%: retrieval is your main problem.</li>
+<li><strong><a class="rs-term" href="glossary.html#read-coverage" data-def="Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.">Read-coverage</a> on failures.</strong> For your last 10 failures, was the decisive file ever read? This splits <strong>starvation</strong> (never read, a recall problem) from <strong>dilution</strong> (read and ignored, a precision problem). They have opposite fixes. Teams that skip this often apply the precision fix to a recall problem and make it worse.</li>
+<li><strong>Search efficiency.</strong> Turns until the first productive edit, and the ratio of search turns to edit turns. If search is over 60% of turns <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>, retrieval is the bottleneck.</li>
+<li><strong>A real A/B.</strong> Hold everything else fixed, vary only retrieval, run at least 20 tasks per arm, and report <a class="rs-term" href="glossary.html#passk" data-def="Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).">Pass@2 and Pass²</a> — the full protocol is <a href="09-evaluation.html">chapter 9</a>'s subject. Anything less is not evidence at these effect sizes.</li>
+</ol>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Code has exact relevance edges. Use the compiler's graph before approximating it.</li><li>A method that fails loudly (zero hits) is safer than one that always returns something.</li><li>Pre-load pointers and invariants, never content, and keep the seed under 2,000 tokens.</li><li>Diagnose starvation versus dilution before changing retrieval volume.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#harness"><strong>Harness</strong></a> — The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.</li><li><a href="glossary.html#fragment-blindness"><strong>Fragment blindness</strong></a> — Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.</li><li><a href="glossary.html#code-graph"><strong>Code graph</strong></a> — The import, call, reference and type graph of a codebase, computed exactly by a compiler or language server.</li><li><a href="glossary.html#agentic-search"><strong>Agentic search</strong></a> — A retrieval control strategy where the agent iterates: search, read, decide the next query, stop when satisfied.</li><li><a href="glossary.html#read-utilisation"><strong>Read-utilisation</strong></a> — The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</li><li><a href="glossary.html#read-coverage"><strong>Read-coverage</strong></a> — Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="04-choosing-methods.html"><span class="rs-pn__label">← Previous · Chapter 4</span><span class="rs-pn__title">Choosing your methods: a 55-minute procedure</span><span class="rs-pn__part">The methods</span></a><a class="rs-pn__link rs-pn__link--next" href="06-compaction-and-memory.html"><span class="rs-pn__label">Next → · Chapter 6</span><span class="rs-pn__title">Compaction, offload and memory</span><span class="rs-pn__part">The methods</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#the-question-posed-correctly">The question, posed correctly</a></li><li><a href="#why-code-is-an-unusual-corpus">Why code is an unusual corpus</a></li><li><a href="#the-four-paradigms">The four paradigms</a><ul><li><a href="#lexical-grep-and-ripgrep">Lexical: grep and ripgrep</a></li><li><a href="#structural-lsp-tree-sitter-symbol-index">Structural: LSP, tree-sitter, symbol index</a></li><li><a href="#semantic-embeddings-and-vector-search">Semantic: embeddings and vector search</a></li><li><a href="#live-agentic-search-the-llm-as-navigator">Live agentic search: the LLM as navigator</a></li></ul></li><li><a href="#the-comparison">The comparison</a></li><li><a href="#the-recommended-architecture">The recommended architecture</a></li><li><a href="#nine-ways-code-retrieval-goes-wrong">Nine ways code retrieval goes wrong</a></li><li><a href="#should-you-seed-the-session-with-a-codebase-overview">Should you seed the session with a codebase overview?</a></li><li><a href="#measure-your-own-retrieval">Measure your own retrieval</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

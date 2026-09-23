@@ -1,6 +1,8 @@
 .DS_Store
 *.docx
 articles/md/
+__pycache__/
+*.pyc
 
 # Planning docs (not part of the site)
 doc/

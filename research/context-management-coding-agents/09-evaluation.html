@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Evaluating a context change — Context Management</title>
+  <meta name="description" content="Why context effects are hard to measure, twelve results that shape the design, Pass^k worked, sample sizes and a minimum viable experiment." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/09-evaluation.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/09-evaluation.html" />
+  <meta property="og:title" content="Evaluating a context change — Context Management" />
+  <meta property="og:description" content="Why context effects are hard to measure, twelve results that shape the design, Pass^k worked, sample sizes and a minimum viable experiment." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Evaluating a context change — Context Management" />
+  <meta property="twitter:description" content="Why context effects are hard to measure, twelve results that shape the design, Pass^k worked, sample sizes and a minimum viable experiment." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Evaluating a context change",
+  "description": "Why context effects are hard to measure, twelve results that shape the design, Pass^k worked, sample sizes and a minimum viable experiment.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/09-evaluation.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Measure it"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 9",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/09-evaluation.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html" aria-current="page"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>Measure it</li><li aria-current="page">Chapter 9</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part III · Measure it</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 9</span></p>
+          <h1 class="rs-hero__title">Evaluating a context change</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> How do you prove a context-management change helped, with what statistical design, and at what cost?</p>
+          <div class="rs-meta">
+            <span>9 min read</span><span aria-hidden="true">·</span>
+            <span>Advanced</span><span aria-hidden="true">·</span>
+            <span>Step 9 of 20</span><span aria-hidden="true">·</span>
+            <span>1/2 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html" aria-current="page"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#why-this-is-harder-than-ordinary-agent-evaluation">Why this is harder than ordinary agent evaluation</a></li><li><a class="on-this-page__link" href="#twelve-results-that-shape-the-design">Twelve results that shape the design</a></li><li><a class="on-this-page__link" href="#eight-design-choices">Eight design choices</a><ul><li><a class="on-this-page__link" href="#1-what-you-measure">1. What you measure</a></li><li><a class="on-this-page__link" href="#2-the-task-set">2. The task set</a></li><li><a class="on-this-page__link" href="#3-how-many-runs-per-task">3. How many runs per task</a></li><li><a class="on-this-page__link" href="#4-comparison-design">4. Comparison design</a></li><li><a class="on-this-page__link" href="#5-what-to-hold-constant">5. What to hold constant</a></li><li><a class="on-this-page__link" href="#6-cost-accounting">6. Cost accounting</a></li><li><a class="on-this-page__link" href="#7-where-you-measure">7. Where you measure</a></li><li><a class="on-this-page__link" href="#8-the-baseline">8. The baseline</a></li></ul></li><li><a class="on-this-page__link" href="#pass-k-worked">Pass^k, worked</a></li><li><a class="on-this-page__link" href="#sample-size-honestly">Sample size, honestly</a><ul><li><a class="on-this-page__link" href="#the-interval-on-one-arm">The interval on one arm</a></li><li><a class="on-this-page__link" href="#how-many-tasks-you-would-need">How many tasks you would need</a></li><li><a class="on-this-page__link" href="#the-paired-design-rescues-this">The paired design rescues this</a></li><li><a class="on-this-page__link" href="#when-you-cannot-afford-even-that">When you cannot afford even that</a></li></ul></li><li><a class="on-this-page__link" href="#the-minimum-viable-experiment">The minimum viable experiment</a></li><li><a class="on-this-page__link" href="#attributing-a-stack-ablation">Attributing a stack: ablation</a></li><li><a class="on-this-page__link" href="#evaluating-a-memory-system">Evaluating a memory system</a></li><li><a class="on-this-page__link" href="#evaluation-mistakes-to-avoid">Evaluation mistakes to avoid</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Context effects are small, fully tangled with the harness, and show up in variance first.</li><li>Run every task at least twice and report Pass² (solved both times), not single-run accuracy.</li><li>Pair your design and use McNemar's test: it needs roughly a third of the tasks.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Explain why single-run accuracy is blind to compression damage</li><li>Compute Pass@k and Pass^k and read their ratio</li><li>Size an experiment honestly, or say that it is underpowered</li><li>Run a minimum viable paired experiment on your own tickets</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="why-this-is-harder-than-ordinary-agent-evaluation">Why this is harder than ordinary agent evaluation<a class="rs-anchor" href="#why-this-is-harder-than-ordinary-agent-evaluation" title="Link to this section">#</a></h2>
+<p>Context changes have four properties that break the standard playbook. Ignore them and you will run experiments that cannot answer your question, which is worse than running none.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>What it means</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Small effects</strong></td>
+<td>Model upgrades move benchmarks 10–20 points. Context changes usually move them 2–6. The summariser swap, a <em>large</em> one, was 6.5 on SWE-bench <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td>Detecting 3 points takes roughly twenty-five times more trials than detecting 15</td>
+</tr>
+<tr>
+<td><strong>2. Total harness confound</strong></td>
+<td>Scores depended strongly on which of four <a class="rs-term" href="glossary.html#harness" data-def="The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.">harnesses</a> ran, on identical data <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Context lives inside the harness.</td>
+<td>Every result is a joint measurement of your strategy <em>and</em> your harness</td>
+</tr>
+<tr>
+<td><strong>3. Damage lives in the variance</strong></td>
+<td>Pass@2/Pass² gaps widen under tighter compression while averages barely move <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</td>
+<td><strong>Single-run evaluation cannot see the main harm you are looking for</strong></td>
+</tr>
+<tr>
+<td><strong>4. Costs and benefits in different units</strong></td>
+<td>Tokens, latency, cache hit rate, solve rate, human hours</td>
+<td>Picking one number is a decision, not a measurement</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="twelve-results-that-shape-the-design">Twelve results that shape the design<a class="rs-anchor" href="#twelve-results-that-shape-the-design" title="Link to this section">#</a></h2>
+<p>These come first because the design choices follow from them.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Result</th>
+<th>Consequence for your experiment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1</td>
+<td>Across controlled tasks, performance generally fell as input grew across 18 models, with non-uniform curves <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>"Does it fit?" is not an acceptance criterion; control length across arms</td>
+</tr>
+<tr>
+<td>E2</td>
+<td>Compression hurts stability more than average accuracy <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Reporting only single-run accuracy is invalid. Pass^k is mandatory</td>
+</tr>
+<tr>
+<td>E3</td>
+<td>The summariser alone moved SWE-bench 49.0% → 55.5% <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Hold the compaction prompt constant in every other comparison</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>Harness effects can exceed strategy effects <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Published retrieval comparisons do not transfer. Re-run them</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>Tool-selection accuracy falls 43% to under 14% as tool count grows <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Tool count is a controlled variable, not an incidental one</td>
+</tr>
+<tr>
+<td>E6</td>
+<td>Focused context retains the answer-bearing material while removing surrounding context <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Measure task outcomes, not retrieval coverage</td>
+</tr>
+<tr>
+<td>E7</td>
+<td>Input is 99.75–99.87% of agent token usage <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Tracking output tokens measures noise. Instrument input by segment</td>
+</tr>
+<tr>
+<td>E8</td>
+<td>Full context costs 2.68× the best managed method and completes fewer tasks <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>A full-context arm bounds cost; it is not a quality ceiling</td>
+</tr>
+<tr>
+<td>E9</td>
+<td>Simple masking matches LLM summarisation at lower cost <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Masking is the baseline any summarisation proposal must beat</td>
+</tr>
+<tr>
+<td>E10</td>
+<td>Addressable compaction wins big on retrieval, slightly on reasoning <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Choose a benchmark that matches your failure mode</td>
+</tr>
+<tr>
+<td>E11</td>
+<td>The first step after compaction is the most error-prone <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+<td>Instrument the post-boundary window specifically</td>
+</tr>
+<tr>
+<td>E12</td>
+<td>Multi-agent gains largely came from spending ~15× the tokens <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a> — the cost side of the 90.2% internal-eval gain</td>
+<td>Compare topologies at <strong>equal token spend</strong>, or you are measuring spend</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="eight-design-choices">Eight design choices<a class="rs-anchor" href="#eight-design-choices" title="Link to this section">#</a></h2>
+<h3 id="1-what-you-measure">1. What you measure<a class="rs-anchor" href="#1-what-you-measure" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Cost</th>
+<th>Fidelity</th>
+<th>Can be gamed by</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Token count</td>
+<td>Free</td>
+<td>Very low</td>
+<td>Anything that moves tokens without moving outcomes</td>
+<td>Never alone</td>
+</tr>
+<tr>
+<td>Context utilisation</td>
+<td>Free</td>
+<td>Low</td>
+<td>Compacting more</td>
+<td>Monitoring, not deciding</td>
+</tr>
+<tr>
+<td>Single-run solve rate</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Variance</td>
+<td>Only with k &gt; 1</td>
+</tr>
+<tr>
+<td><strong>Pass^k (all k runs)</strong></td>
+<td>k×</td>
+<td><strong>High</strong></td>
+<td>Hard to game</td>
+<td><strong>Default for compression changes</strong></td>
+</tr>
+<tr>
+<td>Tokens per solved task</td>
+<td>Medium</td>
+<td>High</td>
+<td>Dropping hard tasks</td>
+<td>Joint cost and quality decisions</td>
+</tr>
+<tr>
+<td>Human rating</td>
+<td>Very high</td>
+<td>High</td>
+<td>Rater drift</td>
+<td>Where there is no oracle</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommendation:</strong> primary metric <strong>Pass^k with k ≥ 2</strong>, reported with <strong>tokens per solved task</strong>.</p>
+<h3 id="2-the-task-set">2. The task set<a class="rs-anchor" href="#2-the-task-set" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Validity for <em>your</em> repository</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Public benchmark</td>
+<td>Low</td>
+<td>Contamination; wrong distribution</td>
+</tr>
+<tr>
+<td><strong>Replayed tickets from your history</strong></td>
+<td><strong>High</strong></td>
+<td>The fix leaking into the repository</td>
+</tr>
+<tr>
+<td>Synthetic tasks in your repository</td>
+<td>Medium</td>
+<td>Unrepresentative difficulty</td>
+</tr>
+<tr>
+<td>Live shadow runs</td>
+<td>Highest</td>
+<td>No ground truth; slow</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommendation:</strong> 30–60 replayed tickets, stratified by size and subsystem, with the repository pinned to the commit before each fix. Use public benchmarks for sanity checks, never for choosing your configuration.</p>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">The replay leakage trap</p>
+<p>If the fix commit is reachable from the pinned commit, or the ticket text quotes the fix, the agent can find the answer. Check by running one arm with retrieval disabled. If it still solves tasks, you have leakage.</p>
+</aside>
+<h3 id="3-how-many-runs-per-task">3. How many runs per task<a class="rs-anchor" href="#3-how-many-runs-per-task" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>k</th>
+<th>Interval width at n = 50 (approx.)</th>
+<th>Cost</th>
+<th>Detects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>±13 points</td>
+<td>1×</td>
+<td>Only large effects</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>±9 points, plus Pass²</td>
+<td>2×</td>
+<td><strong>Compression damage</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>±7 points</td>
+<td>3×</td>
+<td>Moderate effects</td>
+</tr>
+<tr>
+<td>5</td>
+<td>±6 points</td>
+<td>5×</td>
+<td>Small effects; run-level variance</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommendation: k = 2 minimum, always.</strong> Not for the interval, but because Pass² is the only way to see intermittency. k = 1 is not a cheaper version of the experiment. It is a different, less valid one.</p>
+<h3 id="4-comparison-design">4. Comparison design<a class="rs-anchor" href="#4-comparison-design" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Design</th>
+<th>Power</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Independent groups</td>
+<td>Low</td>
+<td>Wastes the pairing that is freely available</td>
+</tr>
+<tr>
+<td><strong>Paired: same tasks in both arms</strong></td>
+<td><strong>High</strong></td>
+<td>The obvious right choice</td>
+</tr>
+<tr>
+<td>Before and after, over time</td>
+<td>Low</td>
+<td>Confounded by model updates and repository drift</td>
+</tr>
+<tr>
+<td>Ablation: remove one component</td>
+<td>High</td>
+<td>Best for attributing a stack</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommendation:</strong> paired, always, analysed with McNemar's test on the tasks where the arms disagree. As shown below, it needs roughly a third of the tasks.</p>
+<h3 id="5-what-to-hold-constant">5. What to hold constant<a class="rs-anchor" href="#5-what-to-hold-constant" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Hold constant?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model version</td>
+<td><strong>Yes</strong></td>
+<td>Violated constantly by "we upgraded during the test"</td>
+</tr>
+<tr>
+<td>Harness version</td>
+<td><strong>Yes</strong></td>
+<td>E4</td>
+</tr>
+<tr>
+<td>Tool surface</td>
+<td><strong>Yes</strong></td>
+<td>E5</td>
+</tr>
+<tr>
+<td><strong>Compaction prompt</strong></td>
+<td><strong>Yes</strong></td>
+<td>E3: 6.5 SWE-bench points hide here</td>
+</tr>
+<tr>
+<td>Temperature and sampling</td>
+<td><strong>Yes</strong></td>
+<td>Otherwise you measure sampling</td>
+</tr>
+<tr>
+<td>Repository commit</td>
+<td><strong>Yes</strong></td>
+<td>Otherwise you measure the repository</td>
+</tr>
+<tr>
+<td>Time of day and load</td>
+<td>No, but log it</td>
+<td>Provider-side variance is real</td>
+</tr>
+</tbody>
+</table></div>
+<p>The most violated row is the compaction prompt. A team comparing retrieval strategies while the summariser differs between arms is measuring the summariser.</p>
+<h3 id="6-cost-accounting">6. Cost accounting<a class="rs-anchor" href="#6-cost-accounting" title="Link to this section">#</a></h3>
+<p>Report <strong><a class="rs-term" href="glossary.html#cache-adjusted-cost" data-def="Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.">cache-adjusted cost</a></strong>. Cached and uncached tokens differ in price by about an order of magnitude, and context changes often move the <em>ratio</em> rather than the total. A change that cuts tokens 20% while halving the cache hit rate is a cost <em>increase</em>, and a raw token count reports it as a win. <a href="10-metrics-and-economics.html">Chapter 10</a> works the numbers.</p>
+<h3 id="7-where-you-measure">7. Where you measure<a class="rs-anchor" href="#7-where-you-measure" title="Link to this section">#</a></h3>
+<p>Always instrument the <strong>10 turns after each compaction, reset or sub-agent return</strong> (E11). Aggregate metrics average this window away. The re-fetch rate inside it is the cheapest high-signal metric in this research.</p>
+<h3 id="8-the-baseline">8. The baseline<a class="rs-anchor" href="#8-the-baseline" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Baseline</th>
+<th>What it proves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full context, no management</td>
+<td>Upper-bound cost; <strong>not</strong> a quality ceiling (E8)</td>
+</tr>
+<tr>
+<td>FIFO truncation</td>
+<td>The floor: did you beat doing nothing clever?</td>
+</tr>
+<tr>
+<td><strong>Observation masking</strong></td>
+<td><strong>The honest bar for any summarisation proposal</strong> (E9)</td>
+</tr>
+<tr>
+<td>Your previous configuration</td>
+<td>Regression check</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Recommendation:</strong> three arms: masking, your proposal, and full context.</p>
+<h2 id="pass-k-worked">Pass^k, worked<a class="rs-anchor" href="#pass-k-worked" title="Link to this section">#</a></h2>
+<p><a class="rs-term" href="glossary.html#passk" data-def="Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).">Pass@k</a> and Pass^k answer opposite questions and diverge sharply. Assume each run succeeds independently with probability <em>p</em> = 0.80.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Formula</th>
+<th>Value</th>
+<th>The question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pass@2</td>
+<td>1 − (1 − p)²</td>
+<td><strong>0.960</strong></td>
+<td>Can it ever do this?</td>
+</tr>
+<tr>
+<td>Pass²</td>
+<td>p²</td>
+<td><strong>0.640</strong></td>
+<td>Can it reliably do this?</td>
+</tr>
+</tbody>
+</table></div>
+<p>A 32-point spread from one underlying number. Now suppose aggressive compaction drops <em>p</em> to 0.70.</p>
+<figure class="diagram rs-chart" id="chart-evaluation-0"><p class="diagram__title">The same compression costs three times more on reliability</p><div class="chart-legend" aria-hidden="true"><span class="chart-legend__item"><span class="chart-legend__key ch-s1"></span>p = 0.80</span><span class="chart-legend__item"><span class="chart-legend__key ch-s2"></span>p = 0.70, after compression</span></div><div class="diagram__scroll"><svg viewBox="0 0 720 126" role="img" aria-labelledby="chart-evaluation-0-t" class="chart chart--hbar"><title id="chart-evaluation-0-t">At p 0.80: Pass@2 96%, Pass² 64%. At p 0.70: Pass@2 91%, Pass² 49%.</title><line class="ch-grid" x1="170.0" y1="4" x2="170.0" y2="104"/><text class="ch-axis" x="170.0" y="120" text-anchor="middle">0%</text><line class="ch-grid" x1="285.0" y1="4" x2="285.0" y2="104"/><text class="ch-axis" x="285.0" y="120" text-anchor="middle">25%</text><line class="ch-grid" x1="400.0" y1="4" x2="400.0" y2="104"/><text class="ch-axis" x="400.0" y="120" text-anchor="middle">50%</text><line class="ch-grid" x1="515.0" y1="4" x2="515.0" y2="104"/><text class="ch-axis" x="515.0" y="120" text-anchor="middle">75%</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="104"/><text class="ch-axis" x="630.0" y="120" text-anchor="middle">100%</text><text class="ch-label" x="160" y="35.0" text-anchor="end">Pass@2 (ever solved)</text><path class="ch-mark ch-s1" d="M170.0,16.0 h437.6 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-437.6 z" data-tip="p = 0.80 · Pass@2 (ever solved): 96%"/><text class="ch-value" x="617.6" y="27.0">96%</text><path class="ch-mark ch-s2" d="M170.0,32.0 h414.6 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-414.6 z" data-tip="p = 0.70, after compression · Pass@2 (ever solved): 91%"/><text class="ch-value" x="594.6" y="43.0">91%</text><text class="ch-label" x="160" y="81.0" text-anchor="end">Pass² (always solved)</text><path class="ch-mark ch-s1" d="M170.0,62.0 h290.4 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-290.4 z" data-tip="p = 0.80 · Pass² (always solved): 64%"/><text class="ch-value" x="470.4" y="73.0">64%</text><path class="ch-mark ch-s2" d="M170.0,78.0 h221.4 a4,4 0 0 1 4,4 v6.0 a4,4 0 0 1 -4,4 h-221.4 z" data-tip="p = 0.70, after compression · Pass² (always solved): 49%"/><text class="ch-value" x="401.4" y="89.0">49%</text><line class="ch-base" x1="170" y1="4" x2="170" y2="104"/></svg></div><figcaption><span class="rs-fignum">Figure 1.</span> Illustrative arithmetic: at p=0.80 a single run succeeds 80% of the time, but Pass² falls to 64%; at p=0.70 it falls to 49%. The same shape appears in measurement — on AppWorld, compression moved single-run accuracy 14.3 points (85.7% to 71.4%) but Pass² 17.9 points (77.4% to 59.5%) <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Metric</th><th scope="col">p = 0.80</th><th scope="col">p = 0.70, after compression</th></tr></thead><tbody><tr><th scope="row">Pass@2 (ever solved)</th><td>96%</td><td>91%</td></tr><tr><th scope="row">Pass² (always solved)</th><td>64%</td><td>49%</td></tr></tbody></table></div></details></figure>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The operating rule</p>
+<p>Report Pass² as primary and Pass@2 as secondary. Treat the ratio <strong>Pass² ÷ Pass@2</strong> as your compression-health indicator. Below about 0.85 you are shipping intermittency.</p>
+</aside>
+<h2 id="sample-size-honestly">Sample size, honestly<a class="rs-anchor" href="#sample-size-honestly" title="Link to this section">#</a></h2>
+<h3 id="the-interval-on-one-arm">The interval on one arm<a class="rs-anchor" href="#the-interval-on-one-arm" title="Link to this section">#</a></h3>
+<p>50 tasks, 34 solved. The <a class="rs-term" href="glossary.html#wilson-interval" data-def="A confidence interval for a success rate that behaves well at small sample sizes.">Wilson interval</a> at 95% (z = 1.96):</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">Wilson score interval, 34 of 50</span></div><pre class="highlight"><code>p̂        = 34/50                        = 0.680
+z²/n     = 3.8416/50                    = 0.076832
+z²/2n    = 0.038416
+z²/4n²   = 3.8416/10000                 = 0.00038416
+p̂q̂/n     = (0.680)(0.320)/50            = 0.0043520
+
+√(0.0043520 + 0.00038416) = √0.0047362  = 0.068819
+1.96 × 0.068819                         = 0.134885
+
+centre = 0.680 + 0.038416               = 0.718416
+lower  = (0.718416 − 0.134885)/1.076832 = 0.5419
+upper  = (0.718416 + 0.134885)/1.076832 = 0.7924
+</code></pre></div>
+<p><strong>68%, with a 95% interval of 54.2% to 79.2%: 25 points wide.</strong> The treatment arm, 37 of 50, gives <strong>74%, interval 60.4% to 84.1%</strong>.</p>
+<figure id="figure-2" class="diagram">
+<p class="diagram__title">Two arms, 50 tasks each: overlapping almost entirely</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 170" role="img" aria-labelledby="e1-t">
+<title id="e1-t">Control 68 percent with interval 54.2 to 79.2; treatment 74 percent with interval 60.4 to 84.1. The intervals overlap across most of their range.</title>
+<line class="dg-line" x1="120" y1="140" x2="700" y2="140"/>
+<text class="dg-s" x="120" y="160" text-anchor="middle">50%</text><text class="dg-s" x="265" y="160" text-anchor="middle">60%</text><text class="dg-s" x="410" y="160" text-anchor="middle">70%</text><text class="dg-s" x="555" y="160" text-anchor="middle">80%</text><text class="dg-s" x="700" y="160" text-anchor="middle">90%</text>
+<rect class="dg-box--info" x="271" y="22" width="272" height="108" rx="4" opacity="0.5"/>
+<text class="dg-s" x="407" y="16" text-anchor="middle">overlap: 60.4% to 79.2%</text>
+<text class="dg-t" x="10" y="55">Control</text><text class="dg-s" x="10" y="72">34/50</text>
+<line class="dg-line" x1="181" y1="60" x2="543" y2="60" stroke-width="3"/>
+<line class="dg-line" x1="181" y1="50" x2="181" y2="70"/><line class="dg-line" x1="543" y1="50" x2="543" y2="70"/>
+<circle class="dg-dot" cx="381" cy="60" r="6"/>
+<text class="dg-s" x="381" y="44" text-anchor="middle">68%</text>
+<text class="dg-t" x="10" y="105">Treatment</text><text class="dg-s" x="10" y="122">37/50</text>
+<line class="dg-line dg-line--accent" x1="271" y1="110" x2="614" y2="110" stroke-width="3"/>
+<line class="dg-line dg-line--accent" x1="271" y1="100" x2="271" y2="120"/><line class="dg-line dg-line--accent" x1="614" y1="100" x2="614" y2="120"/>
+<circle class="dg-dot--accent" cx="468" cy="110" r="6"/>
+<text class="dg-s" x="468" y="94" text-anchor="middle">74%</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 2.</span> 68% versus 74% on 50 tasks is not a result. Teams ship context changes on smaller differences than this every week.</figcaption>
+</figure>
+
+<h3 id="how-many-tasks-you-would-need">How many tasks you would need<a class="rs-anchor" href="#how-many-tasks-you-would-need" title="Link to this section">#</a></h3>
+<p>For an unpaired comparison of 60% versus 65% (a 5-point effect), at α = 0.05 two-sided and 80% power:</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">two-proportion power calculation</span></div><pre class="highlight"><code>p̄ = 0.625, q̄ = 0.375
+z_α/2 · √(2p̄q̄)      = 1.9600 × 0.684653 = 1.34192
+z_β · √(p₁q₁ + p₂q₂) = 0.8416 × 0.683740 = 0.57544
+(1.34192 + 0.57544)² = 3.67627
+n = 3.67627 / 0.05²  = 1470.5   →  about 1,471 tasks per arm
+</code></pre></div>
+<p>At k = 2 that is 5,884 agent runs, for a 5-point effect. For a 10-point effect (60% versus 70%) the same method gives <strong>about 356 per arm</strong>. <strong>The detectable effect shrinks only with the square root of your budget</strong>: halving it costs four times the runs.</p>
+<h3 id="the-paired-design-rescues-this">The paired design rescues this<a class="rs-anchor" href="#the-paired-design-rescues-this" title="Link to this section">#</a></h3>
+<p>McNemar's test uses only the <strong>discordant pairs</strong>, tasks where the two arms disagree. With ψ the share of discordant pairs that favour the treatment:</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">McNemar, required discordant pairs</span></div><pre class="highlight"><code>n_disc ≈ (z_α/2 + z_β)² / (2ψ − 1)²
+       = (1.9600 + 0.8416)² / (2 × 0.70 − 1)²
+       = 7.84896 / 0.16
+       = 49.06   →  about 49 discordant pairs
+</code></pre></div>
+<p>If 20% of tasks are discordant, you need <strong>about 245 tasks in total</strong>, against 712 unpaired for the same 10-point effect.</p>
+<figure class="diagram rs-chart" id="chart-evaluation-4"><p class="diagram__title">Tasks needed to detect a 10-point effect</p><div class="diagram__scroll"><svg viewBox="0 0 720 102" role="img" aria-labelledby="chart-evaluation-4-t" class="chart chart--hbar"><title id="chart-evaluation-4-t">Unpaired: 712 tasks. Paired: 245 tasks.</title><line class="ch-grid" x1="170.0" y1="4" x2="170.0" y2="80"/><text class="ch-axis" x="170.0" y="96" text-anchor="middle">0</text><line class="ch-grid" x1="285.0" y1="4" x2="285.0" y2="80"/><text class="ch-axis" x="285.0" y="96" text-anchor="middle">200</text><line class="ch-grid" x1="400.0" y1="4" x2="400.0" y2="80"/><text class="ch-axis" x="400.0" y="96" text-anchor="middle">400</text><line class="ch-grid" x1="515.0" y1="4" x2="515.0" y2="80"/><text class="ch-axis" x="515.0" y="96" text-anchor="middle">600</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="80"/><text class="ch-axis" x="630.0" y="96" text-anchor="middle">800</text><text class="ch-label" x="160" y="29.0" text-anchor="end">Unpaired (2 × 356)</text><path class="ch-mark ch-muted" d="M170.0,16.0 h405.4 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-405.4 z" data-tip="Total tasks · Unpaired (2 × 356): 712"/><text class="ch-value" x="585.4" y="29.0">712</text><text class="ch-label" x="160" y="63.0" text-anchor="end">Paired with McNemar</text><path class="ch-mark ch-s1" d="M170.0,50.0 h136.9 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-136.9 z" data-tip="Total tasks · Paired with McNemar: 245"/><text class="ch-value" x="316.9" y="63.0">245</text><line class="ch-base" x1="170" y1="4" x2="170" y2="80"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> Roughly a threefold reduction, for free, purely from analysing the right thing. Most teams run unpaired because it is the default in every tutorial <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Design</th><th scope="col">Total tasks</th></tr></thead><tbody><tr><th scope="row">Unpaired (2 × 356)</th><td>712</td></tr><tr><th scope="row">Paired with McNemar</th><td>245</td></tr></tbody></table></div></details></figure>
+<h3 id="when-you-cannot-afford-even-that">When you cannot afford even that<a class="rs-anchor" href="#when-you-cannot-afford-even-that" title="Link to this section">#</a></h3>
+<p>Three honest fallbacks, most valid first:</p>
+<ol>
+<li><strong>Measure a bigger effect.</strong> Do not A/B a 2-point tweak; A/B the whole stack against no management.</li>
+<li><strong>Measure a tighter proxy.</strong> Tokens per solved task varies far less than solve rate; cache hit rate is almost deterministic. Weaker evidence, but measurable.</li>
+<li><strong>Adopt on mechanism, then monitor.</strong> Adopt because the mechanism is sound, and watch a small canary set for regressions. This is what most teams should do for most changes, and it is defensible <strong>only if you say so</strong> instead of presenting it as measured.</li>
+</ol>
+<h2 id="the-minimum-viable-experiment">The minimum viable experiment<a class="rs-anchor" href="#the-minimum-viable-experiment" title="Link to this section">#</a></h2>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">context-experiment.yaml</span></div><pre class="highlight"><code><span class="nt">tasks</span><span class="p">:</span><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">40 replayed tickets from your repository, stratified by size</span>
+<span class="nt">arms</span><span class="p">:</span><span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">   </span><span class="c1"># control = current config, treatment = ONE change</span>
+<span class="nt">runs</span><span class="p">:</span><span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">k = 2 per task per arm</span><span class="w">   </span><span class="c1"># 160 runs in total</span>
+<span class="nt">design</span><span class="p">:</span><span class="w">       </span><span class="l l-Scalar l-Scalar-Plain">paired; identical tasks; identical seeds where possible</span>
+<span class="nt">held_fixed</span><span class="p">:</span><span class="w">   </span><span class="p p-Indicator">[</span><span class="nv">model</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">harness</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">tool_surface</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">compaction_prompt</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">temperature</span><span class="p p-Indicator">]</span>
+<span class="nt">primary</span><span class="p">:</span><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">Pass² per arm; McNemar on discordant pairs</span>
+<span class="nt">secondary</span><span class="p">:</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">cache-adjusted input tokens per solved task</span>
+<span class="nt">diagnostic</span><span class="p">:</span><span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">re-fetch rate in the 10 turns after each boundary</span>
+<span class="nt">stop_rule</span><span class="p">:</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">decided before running; no peeking and extending</span>
+</code></pre></div>
+<aside class="callout rs-callout rs-callout--warning"><p class="rs-callout__title">Change exactly one thing</p>
+<p>Bundling five improvements produces a result you cannot attribute. You will know the stack helped, never which part, and when it regresses you will not know what to revert.</p>
+</aside>
+<p>The <a href="a-templates.html#8-context-experiment-spec">experiment spec template</a> turns this into a form.</p>
+<h2 id="attributing-a-stack-ablation">Attributing a stack: ablation<a class="rs-anchor" href="#attributing-a-stack-ablation" title="Link to this section">#</a></h2>
+<p>Once several methods are adopted, "which one is doing the work?" needs leave-one-out ablation on a fixed task set.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Configuration</th>
+<th>What it tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full stack</td>
+<td>All methods</td>
+<td>The reference</td>
+</tr>
+<tr>
+<td>Minus tool minimisation</td>
+<td>Tool surface restored</td>
+<td>What M-2 contributes</td>
+</tr>
+<tr>
+<td>Minus output shaping</td>
+<td>Shaping off</td>
+<td>What M-5 contributes</td>
+</tr>
+<tr>
+<td>Minus offload</td>
+<td>Offload off</td>
+<td>What M-6 contributes</td>
+</tr>
+<tr>
+<td>Minus semantic compaction</td>
+<td>Threshold compaction instead</td>
+<td>What M-8 contributes</td>
+</tr>
+<tr>
+<td>None</td>
+<td>No management</td>
+<td>Total value of the stack</td>
+</tr>
+</tbody>
+</table></div>
+<p>Expect two things. <strong>Effects are not additive</strong>: semantic compaction's value depends on offload being present. And <strong>some ablations will come out neutral or positive.</strong> A method that does not help on your workload shows up as a wash when removed. That is the point: removal is a legitimate result. Six arms × 40 tasks × k = 2 is 480 runs, so run it quarterly, not weekly.</p>
+<h2 id="evaluating-a-memory-system">Evaluating a memory system<a class="rs-anchor" href="#evaluating-a-memory-system" title="Link to this section">#</a></h2>
+<p>Memory is the hardest thing here to evaluate and the easiest to fool yourself about, because writing works and reading is what matters.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Measurement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Is anything retrieved?</td>
+<td>Retrievals per session. <strong>If about zero, stop: nothing else matters</strong></td>
+</tr>
+<tr>
+<td>Does retrieval change behaviour?</td>
+<td>Sessions where a retrieved memory shaped a later action ÷ sessions with retrievals</td>
+</tr>
+<tr>
+<td>Is what comes back correct?</td>
+<td>Sample 20 retrievals; count stale or wrong ones</td>
+</tr>
+<tr>
+<td>Does it improve outcomes?</td>
+<td>Paired A/B, memory on versus off, on tasks with plausible prior context</td>
+</tr>
+<tr>
+<td>What does it cost?</td>
+<td>Always-loaded prefix tokens, storage and maintenance hours</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The gate:</strong> if retrievals that changed an action are under one per week, the system is decoration. Delete it.</p>
+<h2 id="evaluation-mistakes-to-avoid">Evaluation mistakes to avoid<a class="rs-anchor" href="#evaluation-mistakes-to-avoid" title="Link to this section">#</a></h2>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Why it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reporting token savings as the result</td>
+<td>Tokens are a cost, not an outcome (E6, E8)</td>
+</tr>
+<tr>
+<td>One run per task</td>
+<td>Blind to the main harm (E2)</td>
+</tr>
+<tr>
+<td>Unpaired design</td>
+<td>Wastes about three times the budget</td>
+</tr>
+<tr>
+<td>Changing five things at once</td>
+<td>Cannot be attributed or reverted</td>
+</tr>
+<tr>
+<td>Peeking and extending until significant</td>
+<td>Inflates false positives without limit</td>
+</tr>
+<tr>
+<td>A public benchmark as the decision criterion</td>
+<td>The harness dominates; wrong distribution (E4)</td>
+</tr>
+<tr>
+<td>Ignoring the cache in cost</td>
+<td>Can flip the sign of the result</td>
+</tr>
+<tr>
+<td>Judging after one session</td>
+<td>The interval at n = 1 spans almost everything</td>
+</tr>
+<tr>
+<td>Different compaction prompts across arms</td>
+<td>6.5 SWE-bench points of confound (E3)</td>
+</tr>
+<tr>
+<td>Measuring retrieval recall instead of task outcome</td>
+<td>Past a point, recall and outcome move in opposite directions (E6)</td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>k = 2 is the minimum, because Pass² is the only way to see intermittency.</li><li>68% versus 74% on 50 tasks is not a result; the intervals overlap almost entirely.</li><li>Hold the compaction prompt constant; it alone can move results by 6.5 points.</li><li>Change one thing per experiment, and decide the stop rule before running.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#harness"><strong>Harness</strong></a> — The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.</li><li><a href="glossary.html#cache-adjusted-cost"><strong>Cache-adjusted cost</strong></a> — Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.</li><li><a href="glossary.html#passk"><strong>Pass^k</strong></a> — Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</li><li><a href="glossary.html#wilson-interval"><strong>Wilson interval</strong></a> — A confidence interval for a success rate that behaves well at small sample sizes.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="08-tool-surface.html"><span class="rs-pn__label">← Previous · Chapter 8</span><span class="rs-pn__title">The tool surface: MCP, skills and progressive disclosure</span><span class="rs-pn__part">The methods</span></a><a class="rs-pn__link rs-pn__link--next" href="10-metrics-and-economics.html"><span class="rs-pn__label">Next → · Chapter 10</span><span class="rs-pn__title">Metrics and the real cost of context</span><span class="rs-pn__part">Measure it</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#why-this-is-harder-than-ordinary-agent-evaluation">Why this is harder than ordinary agent evaluation</a></li><li><a href="#twelve-results-that-shape-the-design">Twelve results that shape the design</a></li><li><a href="#eight-design-choices">Eight design choices</a><ul><li><a href="#1-what-you-measure">1. What you measure</a></li><li><a href="#2-the-task-set">2. The task set</a></li><li><a href="#3-how-many-runs-per-task">3. How many runs per task</a></li><li><a href="#4-comparison-design">4. Comparison design</a></li><li><a href="#5-what-to-hold-constant">5. What to hold constant</a></li><li><a href="#6-cost-accounting">6. Cost accounting</a></li><li><a href="#7-where-you-measure">7. Where you measure</a></li><li><a href="#8-the-baseline">8. The baseline</a></li></ul></li><li><a href="#pass-k-worked">Pass^k, worked</a></li><li><a href="#sample-size-honestly">Sample size, honestly</a><ul><li><a href="#the-interval-on-one-arm">The interval on one arm</a></li><li><a href="#how-many-tasks-you-would-need">How many tasks you would need</a></li><li><a href="#the-paired-design-rescues-this">The paired design rescues this</a></li><li><a href="#when-you-cannot-afford-even-that">When you cannot afford even that</a></li></ul></li><li><a href="#the-minimum-viable-experiment">The minimum viable experiment</a></li><li><a href="#attributing-a-stack-ablation">Attributing a stack: ablation</a></li><li><a href="#evaluating-a-memory-system">Evaluating a memory system</a></li><li><a href="#evaluation-mistakes-to-avoid">Evaluation mistakes to avoid</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

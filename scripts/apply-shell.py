@@ -6,7 +6,7 @@ Applies the single navigation model and footer model from
 docs/website-review-2026-08-19/02-review-matrix.md / 07-technical-sanity-check.md
 to every nav-bearing HTML page.
 
-Canonical nav:    Systems · Field Notes · Handbook · About
+Canonical nav:    Systems · Field Notes · Handbook · Research · About
 Canonical footer: Explore · Connect · Legal
 Footer tagline:   canonical role string
 
@@ -27,12 +27,14 @@ ACTIVE = {
     "articles": "Field Notes",
     "projects": "Systems",
     "handbook": "Handbook",
+    "research": "Research",
 }
 
 NAV_ITEMS = [
     ("Systems", "/projects/"),
     ("Field Notes", "/articles/"),
     ("Handbook", "/handbook/"),
+    ("Research", "/research/"),
     ("About", None),  # href decided per page
 ]
 
@@ -42,6 +44,7 @@ FOOTER_COLS = """<nav class="footer__nav" aria-label="Footer navigation">
           <a href="/projects/" class="footer__nav-link">Systems</a>
           <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">

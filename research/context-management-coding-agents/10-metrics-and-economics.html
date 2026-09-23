@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Metrics and the real cost of context — Context Management</title>
+  <meta name="description" content="Twenty-six context metrics with the decision each drives, a four-line cost model, and the arithmetic that overturns two common cost beliefs." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/10-metrics-and-economics.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/10-metrics-and-economics.html" />
+  <meta property="og:title" content="Metrics and the real cost of context — Context Management" />
+  <meta property="og:description" content="Twenty-six context metrics with the decision each drives, a four-line cost model, and the arithmetic that overturns two common cost beliefs." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Metrics and the real cost of context — Context Management" />
+  <meta property="twitter:description" content="Twenty-six context metrics with the decision each drives, a four-line cost model, and the arithmetic that overturns two common cost beliefs." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Metrics and the real cost of context",
+  "description": "Twenty-six context metrics with the decision each drives, a four-line cost model, and the arithmetic that overturns two common cost beliefs.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/10-metrics-and-economics.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Measure it"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 10",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/10-metrics-and-economics.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html" aria-current="page"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>Measure it</li><li aria-current="page">Chapter 10</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part III · Measure it</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 10</span></p>
+          <h1 class="rs-hero__title">Metrics and the real cost of context</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What should you measure, and what does context really cost once the cache, latency and people are counted?</p>
+          <div class="rs-meta">
+            <span>8 min read</span><span aria-hidden="true">·</span>
+            <span>Core</span><span aria-hidden="true">·</span>
+            <span>Step 10 of 20</span><span aria-hidden="true">·</span>
+            <span>2/2 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html" aria-current="page"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#every-metric-should-drive-a-decision">Every metric should drive a decision</a><ul><li><a class="on-this-page__link" href="#if-you-track-only-five">If you track only five</a></li><li><a class="on-this-page__link" href="#the-full-catalogue">The full catalogue</a></li></ul></li><li><a class="on-this-page__link" href="#the-four-line-cost-model">The four-line cost model</a></li><li><a class="on-this-page__link" href="#two-beliefs-the-arithmetic-overturns">Two beliefs the arithmetic overturns</a><ul><li><a class="on-this-page__link" href="#belief-1-cutting-tokens-cuts-cost">Belief 1: &quot;Cutting tokens cuts cost&quot;</a></li><li><a class="on-this-page__link" href="#belief-2-compaction-saves-money">Belief 2: &quot;Compaction saves money&quot;</a></li></ul></li><li><a class="on-this-page__link" href="#worked-monthly-economics-c">Worked monthly economics</a></li><li><a class="on-this-page__link" href="#cost-per-solved-task">Cost per solved task</a></li><li><a class="on-this-page__link" href="#where-to-spend-the-next-unit-of-effort">Where to spend the next unit of effort</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Every metric should drive a decision. Five cover most of them.</li><li>Cost has four lines: compute, cache writes, latency and people. Most teams track one.</li><li>Cutting tokens can raise cost, and compaction saves far less money than its token count suggests.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Choose the five metrics to track and the decision each drives</li><li>Compute cache-adjusted cost per turn</li><li>Work out when a compaction pays for itself</li><li>Use cost per solved task to compare configurations</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<h2 id="every-metric-should-drive-a-decision">Every metric should drive a decision<a class="rs-anchor" href="#every-metric-should-drive-a-decision" title="Link to this section">#</a></h2>
+<p>Most metric catalogues list what can be measured. This one adds the column they omit: <strong>the decision each metric drives.</strong> A metric that drives no decision is decoration, and should be deleted.</p>
+<h3 id="if-you-track-only-five">If you track only five<a class="rs-anchor" href="#if-you-track-only-five" title="Link to this section">#</a></h3>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it tells you</th>
+<th>Decision it drives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prefix tax</strong></td>
+<td>Fixed input present on each call; cached billing varies</td>
+<td>Whether to audit the tool surface</td>
+</tr>
+<tr>
+<td><strong>Relevance density</strong></td>
+<td>How diluted the context is</td>
+<td>Whether dilution is your binding problem</td>
+</tr>
+<tr>
+<td><strong>Post-boundary re-fetch rate</strong></td>
+<td>Whether compaction drops load-bearing content</td>
+<td>Whether to fix the summary schema or offload first</td>
+</tr>
+<tr>
+<td><strong>Pass² ÷ Pass@2</strong></td>
+<td>Whether compression is making the agent intermittent</td>
+<td>Whether to back off compression</td>
+</tr>
+<tr>
+<td><strong>Cache hit rate</strong></td>
+<td>Whether optimisations are defeating themselves</td>
+<td>Whether to stabilise the prefix</td>
+</tr>
+</tbody>
+</table></div>
+<p>Together they cover the five constraints and the one blind spot. Everything else is diagnosis once one of these moves.</p>
+<h3 id="the-full-catalogue">The full catalogue<a class="rs-anchor" href="#the-full-catalogue" title="Link to this section">#</a></h3>
+<details class="rs-disclosure rs-inline-disclosure">
+<summary>All 26 metrics, grouped</summary>
+<p><strong>Budget composition</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td><strong>Prefix tax</strong></td>
+<td>Tokens in segments 1–4</td>
+<td>Under 15K</td>
+<td>Audit the tool surface?</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Tool-definition share</td>
+<td>Tool definitions ÷ prefix</td>
+<td>Under 40%</td>
+<td>Defer or delete tools?</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>Defined : called</td>
+<td>Tools defined ÷ tools ever used</td>
+<td>Under 3:1</td>
+<td>Which tools to delete</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>Instruction-file size</td>
+<td>Lines</td>
+<td>Under 150</td>
+<td>Apply the inference test?</td>
+</tr>
+<tr>
+<td>T5</td>
+<td>Skill-description budget</td>
+<td>Sum of always-loaded descriptions</td>
+<td>Under 3K</td>
+<td>Have skills become bloat?</td>
+</tr>
+<tr>
+<td>T6</td>
+<td>Peak utilisation</td>
+<td>Maximum context ÷ window</td>
+<td>Under 75%</td>
+<td>Reset or offload?</td>
+</tr>
+<tr>
+<td>T7</td>
+<td>Segment distribution</td>
+<td>Tokens per segment ÷ total</td>
+<td>—</td>
+<td>Where to spend effort</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Density and waste</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T8</td>
+<td><strong>Relevance density</strong></td>
+<td>Plausibly citable tokens ÷ total</td>
+<td>Over 15% mid-session</td>
+<td>Is dilution binding?</td>
+</tr>
+<tr>
+<td>T9</td>
+<td><strong>Read-utilisation</strong></td>
+<td>Read tokens cited in output ÷ read tokens</td>
+<td>Over 15%</td>
+<td>Adopt symbol-level reads?</td>
+</tr>
+<tr>
+<td>T10</td>
+<td>Tool-result share</td>
+<td>Tool results ÷ session tokens</td>
+<td>Under 35%</td>
+<td>Invest in output shaping?</td>
+</tr>
+<tr>
+<td>T11</td>
+<td><strong>Retention integral</strong></td>
+<td>Σ (segment tokens × turns retained)</td>
+<td>Trending down</td>
+<td>Offload earlier?</td>
+</tr>
+<tr>
+<td>T12</td>
+<td>Result waste</td>
+<td>Tool tokens returned ÷ tokens cited</td>
+<td>Under 10:1</td>
+<td>Shape results, or move to code execution?</td>
+</tr>
+<tr>
+<td>T13</td>
+<td>Search : edit turns</td>
+<td>Search turns ÷ edit turns</td>
+<td>Under 1.5</td>
+<td>Is retrieval the bottleneck?</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Loss and recovery</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T14</td>
+<td><strong>Post-boundary re-fetch</strong></td>
+<td>Re-fetches in 10 turns after ÷ boundaries</td>
+<td>Under 2</td>
+<td>Is the schema dropping load-bearing content?</td>
+</tr>
+<tr>
+<td>T15</td>
+<td>Compactions per session</td>
+<td>Count</td>
+<td>At most 1</td>
+<td>Shorten sessions?</td>
+</tr>
+<tr>
+<td>T16</td>
+<td>Exact-string survival</td>
+<td>Strings kept verbatim ÷ strings present before</td>
+<td>Over 95%</td>
+<td>Is the schema followed?</td>
+</tr>
+<tr>
+<td>T17</td>
+<td>Recall rate</td>
+<td>Recalls ÷ stubs created</td>
+<td>0.1–0.4</td>
+<td>Are stubs dead, or offload too early?</td>
+</tr>
+<tr>
+<td>T18</td>
+<td>Termination recognition</td>
+<td>Correctly ended ÷ completed tasks</td>
+<td>Over 90%</td>
+<td>Is state surviving boundaries? <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>T19</td>
+<td>Read-coverage on failure</td>
+<td>Failures where the decisive file was read ÷ failures</td>
+<td>—</td>
+<td><strong>Starvation or dilution?</strong> Opposite fixes</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Stability and quality</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T20</td>
+<td><strong>Pass² ÷ Pass@2</strong></td>
+<td>On a fixed evaluation set</td>
+<td>Over 0.85</td>
+<td><strong>The compression-health indicator</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a></td>
+</tr>
+<tr>
+<td>T21</td>
+<td>Loop rate</td>
+<td>Sessions with the same call ×3 ÷ sessions</td>
+<td>Under 5%</td>
+<td>Tighten reset triggers?</td>
+</tr>
+<tr>
+<td>T22</td>
+<td>Rule violations by turn depth</td>
+<td>Violations ÷ opportunities, bucketed by turn</td>
+<td>Flat</td>
+<td>Is position decay biting?</td>
+</tr>
+<tr>
+<td>T23</td>
+<td>Tokens per solved task</td>
+<td>Total tokens ÷ tasks solved</td>
+<td>Trending down</td>
+<td>The joint cost–quality number</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cost</strong></p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Metric</th>
+<th>Formula</th>
+<th>Healthy</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T24</td>
+<td><strong>Cache hit rate</strong></td>
+<td>Cached input ÷ total input</td>
+<td>Over 70%</td>
+<td>Is an optimisation self-defeating?</td>
+</tr>
+<tr>
+<td>T25</td>
+<td><strong>Cache-adjusted cost per turn</strong></td>
+<td>Σ(cached × p_cached) + Σ(new × p_new)</td>
+<td>Trending down</td>
+<td>The only honest cost metric</td>
+</tr>
+<tr>
+<td>T26</td>
+<td>Total-token multiplier</td>
+<td>All agents' tokens ÷ single-agent baseline</td>
+<td>Depends</td>
+<td>Is isolation earning its keep? <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<h2 id="the-four-line-cost-model">The four-line cost model<a class="rs-anchor" href="#the-four-line-cost-model" title="Link to this section">#</a></h2>
+<p>Agent cost has four lines. Most teams instrument one.</p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Total cost = compute + cache writes + latency + people</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 150" role="img" aria-labelledby="k1-t">
+<title id="k1-t">Four cost lines: compute, cache-write premium, latency, and human time. Most teams measure only the first.</title>
+<rect class="dg-box--accent" x="10" y="20" width="165" height="100" rx="10"/>
+<text class="dg-k" x="92" y="44" text-anchor="middle">LINE 1</text><text class="dg-t" x="92" y="68" text-anchor="middle">Compute</text><text class="dg-s" x="92" y="88" text-anchor="middle">input, split by</text><text class="dg-s" x="92" y="104" text-anchor="middle">cache state</text>
+<rect class="dg-box" x="190" y="20" width="165" height="100" rx="10"/>
+<text class="dg-k" x="272" y="44" text-anchor="middle">LINE 2</text><text class="dg-t" x="272" y="68" text-anchor="middle">Cache writes</text><text class="dg-s" x="272" y="88" text-anchor="middle">churn is paid</text><text class="dg-s" x="272" y="104" text-anchor="middle">at a premium</text>
+<rect class="dg-box" x="370" y="20" width="165" height="100" rx="10"/>
+<text class="dg-k" x="452" y="44" text-anchor="middle">LINE 3</text><text class="dg-t" x="452" y="68" text-anchor="middle">Latency</text><text class="dg-s" x="452" y="88" text-anchor="middle">blocking compaction,</text><text class="dg-s" x="452" y="104" text-anchor="middle">round trips</text>
+<rect class="dg-box--warn" x="550" y="20" width="160" height="100" rx="10"/>
+<text class="dg-k" x="630" y="44" text-anchor="middle">LINE 4</text><text class="dg-t" x="630" y="68" text-anchor="middle">People</text><text class="dg-s" x="630" y="88" text-anchor="middle">often the largest,</text><text class="dg-s" x="630" y="104" text-anchor="middle">rarely counted</text>
+<text class="dg-s" x="92" y="142" text-anchor="middle">what most teams measure</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> A memory system that needs weekly curation costs no tokens, which does not make it free. In a small team the people line is usually the largest.</figcaption>
+</figure>
+
+<p><strong>Line 1: compute.</strong> Input tokens are <strong>99.75–99.87% of agent token usage</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Output is a rounding error. Any cost model that reports "tokens" without splitting input by cache state can be off by an order of magnitude. This chapter uses a generic price shape, in relative units per 1K tokens:</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Token class</th>
+<th>Relative price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cached read</td>
+<td><strong>0.10</strong></td>
+</tr>
+<tr>
+<td>New input, written to the cache</td>
+<td><strong>1.25</strong></td>
+</tr>
+<tr>
+<td>Uncached input, no caching</td>
+<td>1.00</td>
+</tr>
+</tbody>
+</table></div>
+<p>The 12.5× spread between a cached read and a new write is why cache behaviour dominates.</p>
+<p><strong>Line 2: the cache-write premium.</strong> New tokens cost <em>more</em> than plain uncached input, because writing them into the cache carries a premium. That is why <strong>churn is expensive</strong>: a token that enters, is invalidated and re-enters is paid at 1.25 twice, instead of 0.10 per turn if it had simply stayed.</p>
+<p><strong>Line 3: latency.</strong> Compaction is a <strong>blocking call that can stall the agent for tens of seconds</strong> <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Deferred tool loading adds a round trip. Sub-agents add orchestration overhead. Latency becomes money through engineers waiting.</p>
+<p><strong>Line 4: people.</strong> Instruction-file upkeep, memory curation, tool audits, shaping scripts, transcript review. A 30-minute quarterly audit is cheap. A memory system that needs weekly curation is not.</p>
+<h2 id="two-beliefs-the-arithmetic-overturns">Two beliefs the arithmetic overturns<a class="rs-anchor" href="#two-beliefs-the-arithmetic-overturns" title="Link to this section">#</a></h2>
+<h3 id="belief-1-cutting-tokens-cuts-cost">Belief 1: "Cutting tokens cuts cost" <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a><a class="rs-anchor" href="#belief-1-cutting-tokens-cuts-cost" title="Link to this section">#</a></h3>
+<p><strong>False whenever the cut is in the prefix.</strong> A team replaces a static 38K tool surface with per-turn dynamic selection, cutting definitions to 9K — chapter 3's <a href="03-ten-methods.html#m-1-prefix-stability">dynamic-tool trap</a> <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th></th>
+<th>Context</th>
+<th>Cached</th>
+<th>New</th>
+<th>Cost per turn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static</td>
+<td>120K</td>
+<td>117.5K</td>
+<td>2.5K</td>
+<td><code>117.5 × 0.10 + 2.5 × 1.25</code> = <strong>14.9</strong></td>
+</tr>
+<tr>
+<td>Dynamic</td>
+<td>91K</td>
+<td>10K</td>
+<td>81K</td>
+<td><code>10 × 0.10 + 81 × 1.25</code> = <strong>102.3</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>A <strong>24% token cut produced a 6.9× cost increase</strong>, because the tool block sits about 10K into the prompt and changing it invalidates everything after it <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</p>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The rule</p>
+<p>Tokens in a <em>stable prefix</em> cost 0.10 per turn. Tokens that <em>churn</em> cost 1.25 every time they re-enter. A large stable prefix is cheaper than a small churning one, often by an order of magnitude.</p>
+</aside>
+<h3 id="belief-2-compaction-saves-money">Belief 2: "Compaction saves money" <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a><a class="rs-anchor" href="#belief-2-compaction-saves-money" title="Link to this section">#</a></h3>
+<p><strong>True, but far less than the token count suggests, and only if the session continues.</strong></p>
+<p>Take a 120K context compacted to 40K (a 25K stable prefix that stays cached, plus a 15K new summary), with 2.5K added per turn afterwards. The compaction call itself — reading the 120K transcript at the cached rate (12.0) and writing the 15K summary at 1.25 (18.75) — costs about 30.8 units.</p>
+<figure class="diagram rs-chart" id="chart-metrics-and-economics-0"><p class="diagram__title">Cumulative cost after a compaction</p><div class="chart-legend" aria-hidden="true"><span class="chart-legend__item"><span class="chart-legend__key ch-s1"></span>No compaction</span><span class="chart-legend__item"><span class="chart-legend__key ch-s2"></span>Compacted</span></div><div class="diagram__scroll"><svg viewBox="0 0 720 300" role="img" aria-labelledby="chart-metrics-and-economics-0-t" class="chart chart--line"><title id="chart-metrics-and-economics-0-t">Two lines. Compacted starts higher at 37.9 versus 14.9 and crosses below the no-compaction line at turn 4; by turn 12 it is 132.8 versus 195.</title><line class="ch-grid" x1="56" y1="260.0" x2="600" y2="260.0"/><text class="ch-axis" x="48" y="264.0" text-anchor="end">0</text><line class="ch-grid" x1="56" y1="202.5" x2="600" y2="202.5"/><text class="ch-axis" x="48" y="206.5" text-anchor="end">50</text><line class="ch-grid" x1="56" y1="145.0" x2="600" y2="145.0"/><text class="ch-axis" x="48" y="149.0" text-anchor="end">100</text><line class="ch-grid" x1="56" y1="87.5" x2="600" y2="87.5"/><text class="ch-axis" x="48" y="91.5" text-anchor="end">150</text><line class="ch-grid" x1="56" y1="30.0" x2="600" y2="30.0"/><text class="ch-axis" x="48" y="34.0" text-anchor="end">200</text><text class="ch-axis" x="56.0" y="278" text-anchor="middle">1</text><text class="ch-axis" x="105.5" y="278" text-anchor="middle">2</text><text class="ch-axis" x="154.9" y="278" text-anchor="middle">3</text><text class="ch-axis" x="204.4" y="278" text-anchor="middle">4</text><text class="ch-axis" x="402.2" y="278" text-anchor="middle">8</text><text class="ch-axis" x="600.0" y="278" text-anchor="middle">12</text><text class="ch-axis ch-axis--title" x="328.0" y="296" text-anchor="middle">turns after compaction</text><text class="ch-axis ch-axis--title" x="48" y="14" text-anchor="start">cumulative cost (relative units)</text><line class="ch-annot" x1="204.4" y1="30" x2="204.4" y2="260"/><text class="ch-annot-text" x="210.4" y="42">breakeven ≈ 4 turns</text><path class="ch-line ch-s1" d="M56.0,242.9 L105.5,225.5 L154.9,207.8 L204.4,189.9 L402.2,115.1 L600.0,35.8"/><circle class="ch-dot ch-s1" cx="56.0" cy="242.9" r="4" data-tip="No compaction · 1: 14.9"/><circle class="ch-dot ch-s1" cx="105.5" cy="225.5" r="4" data-tip="No compaction · 2: 30"/><circle class="ch-dot ch-s1" cx="154.9" cy="207.8" r="4" data-tip="No compaction · 3: 45.4"/><circle class="ch-dot ch-s1" cx="204.4" cy="189.9" r="4" data-tip="No compaction · 4: 61"/><circle class="ch-dot ch-s1" cx="402.2" cy="115.1" r="4" data-tip="No compaction · 8: 126"/><circle class="ch-dot ch-s1" cx="600.0" cy="35.8" r="4" data-tip="No compaction · 12: 195"/><text class="ch-label" x="610.0" y="39.8">No compaction</text><path class="ch-line ch-s2" d="M56.0,216.4 L105.5,207.9 L154.9,199.2 L204.4,190.1 L402.2,151.0 L600.0,107.3"/><circle class="ch-dot ch-s2" cx="56.0" cy="216.4" r="4" data-tip="Compacted · 1: 37.9"/><circle class="ch-dot ch-s2" cx="105.5" cy="207.9" r="4" data-tip="Compacted · 2: 45.3"/><circle class="ch-dot ch-s2" cx="154.9" cy="199.2" r="4" data-tip="Compacted · 3: 52.9"/><circle class="ch-dot ch-s2" cx="204.4" cy="190.1" r="4" data-tip="Compacted · 4: 60.8"/><circle class="ch-dot ch-s2" cx="402.2" cy="151.0" r="4" data-tip="Compacted · 8: 94.8"/><circle class="ch-dot ch-s2" cx="600.0" cy="107.3" r="4" data-tip="Compacted · 12: 132.8"/><text class="ch-label" x="610.0" y="111.3">Compacted</text><line class="ch-base" x1="56" y1="260" x2="600" y2="260"/></svg></div><figcaption><span class="rs-fignum">Figure 2.</span> Compaction starts about 23 units behind and breaks even after about four turns. Compacting with fewer than about five turns left is a pure loss <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Turns after</th><th scope="col">No compaction</th><th scope="col">Compacted</th></tr></thead><tbody><tr><th scope="row">1</th><td>14.9</td><td>37.9</td></tr><tr><th scope="row">2</th><td>30</td><td>45.3</td></tr><tr><th scope="row">3</th><td>45.4</td><td>52.9</td></tr><tr><th scope="row">4</th><td>61</td><td>60.8</td></tr><tr><th scope="row">8</th><td>126</td><td>94.8</td></tr><tr><th scope="row">12</th><td>195</td><td>132.8</td></tr></tbody></table></div></details></figure>
+<p>Afterwards, each turn costs about 7.1 units (25K prefix and 15K summary re-read cached, 2.5K new written) rising 0.25 per turn as earlier additions re-enter cached — the compacted series above is that arithmetic, cumulative from the 30.8-unit call.</p>
+<p>Two consequences.</p>
+<ol>
+<li><strong>Compacting near the end of a session is a pure loss.</strong> You pay the full price and collect none of the saving. With fewer than about five turns left, do not compact.</li>
+<li><strong>The saving is modest because the kept context was already cheap.</strong> Holding 80K extra cached tokens costs 8 units per turn (80 × 0.10), not the 100 units the raw count implies. Meanwhile the <em>quality</em> cost is undiminished: the 6.5-point SWE-bench summariser swing, the Pass² drop and the 44.6% termination rate are paid in full <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
+</ol>
+<aside class="callout rs-callout rs-callout--key"><p class="rs-callout__title">The corrected framing</p>
+<p>Compaction is <strong>a quality decision with a modest financial upside</strong>, not a cost optimisation with a quality caveat. That inversion changes when you reach for it, and it strengthens the case for resets, which cost about 500 tokens and carry none of the summarisation damage.</p>
+</aside>
+<h2 id="worked-monthly-economics-c">Worked monthly economics <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a><a class="rs-anchor" href="#worked-monthly-economics-c" title="Link to this section">#</a></h2>
+<p>A five-engineer team, each running about six agent sessions a day, 20 working days a month.</p>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">baseline, unmanaged</span></div><pre class="highlight"><code>Sessions per month          = 5 × 6 × 20                 = 600
+Turns per session                                        = 45
+Mid-session context                                      = 110K
+Prefix tax (3 MCP servers, 380-line instruction file)    = 62K
+New tokens per turn                                      = 2.6K
+
+Cost per turn    = (110 − 2.6) × 0.10 + 2.6 × 1.25       = 13.99 units
+Cost per session = 45 × 13.99                            = 629.55 units
+Cost per month   = 600 × 629.55                          = 377,730 units
+</code></pre></div>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">after tool audit, output shaping and just-in-time retrieval</span></div><pre class="highlight"><code>Prefix tax            62K → 6K    (tool audit + inference test)
+Mid-session context  110K → 48K   (shaping + offload + just-in-time)
+New tokens per turn   2.6K → 1.9K (output shaping)
+
+Cost per turn    = (48 − 1.9) × 0.10 + 1.9 × 1.25        = 6.99 units
+Cost per session = 45 × 6.99                             = 314.55 units
+Cost per month   = 600 × 314.55                          = 188,730 units
+</code></pre></div>
+<p><strong>Compute saving: 50%.</strong> Now the lines everyone forgets.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>Line</th>
+<th style="text-align: right;">Before</th>
+<th style="text-align: right;">After</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute</td>
+<td style="text-align: right;">377,730</td>
+<td style="text-align: right;">188,730</td>
+<td>−50%</td>
+</tr>
+<tr>
+<td>Setup (people, one-off)</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">~24 h</td>
+<td>Tool audit 4 h, shaping 8 h, offload 8 h, instruction file 4 h</td>
+</tr>
+<tr>
+<td>Maintenance (people, recurring)</td>
+<td style="text-align: right;">~2 h/month</td>
+<td style="text-align: right;">~3 h/month</td>
+<td>Quarterly audit plus script upkeep</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td style="text-align: right;">baseline</td>
+<td style="text-align: right;">slightly better</td>
+<td>Smaller contexts prefill faster; just-in-time adds round trips</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Where the value actually is.</strong> The cost saving is real, but it is not the headline. Mid-session context fell from 110K to 48K, from <strong>55% of a 200K window to 24%</strong>. That gives the workload a lower-utilisation condition to compare with the higher one; any quality effect should be measured with <a href="09-evaluation.html">chapter 9</a>'s design.</p>
+<aside class="callout rs-callout rs-callout--try"><p class="rs-callout__title">Presenting this</p>
+<p>To a budget holder, lead with the cost number. To an engineering team, lead with the utilisation number.</p>
+</aside>
+<h2 id="cost-per-solved-task">Cost per solved task<a class="rs-anchor" href="#cost-per-solved-task" title="Link to this section">#</a></h2>
+<p>The one number that captures cost and quality together:</p>
+<div class="rs-code"><pre class="highlight"><code>cost_per_solved = total_cost / tasks_solved
+</code></pre></div>
+<p>It cannot be gamed in either easy direction. Cutting context aggressively lowers cost and lowers the solve rate; the ratio catches it. Dumping in more context raises solve rate slightly and cost sharply; the ratio catches that too.</p>
+<figure class="diagram rs-chart" id="chart-metrics-and-economics-4"><p class="diagram__title">Three configurations over 40 tasks: cost per solved task</p><div class="diagram__scroll"><svg viewBox="0 0 720 136" role="img" aria-labelledby="chart-metrics-and-economics-4-t" class="chart chart--hbar"><title id="chart-metrics-and-economics-4-t">Full context: 919 per solved task. Managed: 393. Over-compressed: 424.</title><line class="ch-grid" x1="290.0" y1="4" x2="290.0" y2="114"/><text class="ch-axis" x="290.0" y="130" text-anchor="middle">0</text><line class="ch-grid" x1="375.0" y1="4" x2="375.0" y2="114"/><text class="ch-axis" x="375.0" y="130" text-anchor="middle">250</text><line class="ch-grid" x1="460.0" y1="4" x2="460.0" y2="114"/><text class="ch-axis" x="460.0" y="130" text-anchor="middle">500</text><line class="ch-grid" x1="545.0" y1="4" x2="545.0" y2="114"/><text class="ch-axis" x="545.0" y="130" text-anchor="middle">750</text><line class="ch-grid" x1="630.0" y1="4" x2="630.0" y2="114"/><text class="ch-axis" x="630.0" y="130" text-anchor="middle">1,000</text><text class="ch-label" x="280" y="29.0" text-anchor="end">Full context, no management (27 solved)</text><path class="ch-mark ch-muted" d="M290.0,16.0 h308.5 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-308.5 z" data-tip="Cost per solved task · Full context, no management (27 solved): 919"/><text class="ch-value" x="608.5" y="29.0">919</text><text class="ch-label" x="280" y="63.0" text-anchor="end">Managed stack (29 solved)</text><path class="ch-mark ch-s1" d="M290.0,50.0 h129.6 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-129.6 z" data-tip="Cost per solved task · Managed stack (29 solved): 393"/><text class="ch-value" x="429.6" y="63.0">393</text><text class="ch-label" x="280" y="97.0" text-anchor="end">Over-compressed (21 solved)</text><path class="ch-mark ch-muted" d="M290.0,84.0 h140.2 a4,4 0 0 1 4,4 v10.0 a4,4 0 0 1 -4,4 h-140.2 z" data-tip="Cost per solved task · Over-compressed (21 solved): 424"/><text class="ch-value" x="440.2" y="97.0">424</text><line class="ch-base" x1="290" y1="4" x2="290" y2="114"/></svg></div><figcaption><span class="rs-fignum">Figure 3.</span> The over-compressed configuration had the lowest total cost (8,900 versus 11,400 managed and 24,800 full) and is the second-worst choice. The token dashboard would applaud it all the way down <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Configuration</th><th scope="col">Cost per solved task</th></tr></thead><tbody><tr><th scope="row">Full context, no management (27 solved)</th><td>919</td></tr><tr><th scope="row">Managed stack (29 solved)</th><td>393</td></tr><tr><th scope="row">Over-compressed (21 solved)</th><td>424</td></tr></tbody></table></div></details></figure>
+<p>This is the arithmetic form of a measured result: full context cost 2.68× the best method while completing fewer tasks <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. It adds a lesson: <strong>you can over-compress as easily as you can over-load.</strong></p>
+<h2 id="where-to-spend-the-next-unit-of-effort">Where to spend the next unit of effort<a class="rs-anchor" href="#where-to-spend-the-next-unit-of-effort" title="Link to this section">#</a></h2>
+<p>Run this checklist in order. Stop at the first "yes".</p>
+<ol>
+<li><strong>Cache hit rate under 60%?</strong> Fix the prefix. Everything else is downstream and may be self-defeating.</li>
+<li><strong>More than 3 tools defined per tool used?</strong> Inspect deletion candidates. If a representative sample confirms dead tools, remove them with rollback; the largest win is workload-specific.</li>
+<li><strong>Tool results over 35% of the session?</strong> Output shaping: one afternoon, 60–90% reduction <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
+<li><strong>Read-utilisation under 5%?</strong> Structural retrieval.</li>
+<li><strong>Post-boundary re-fetch over 2?</strong> Offload before compaction; fix the schema.</li>
+<li><strong>Pass² ÷ Pass@2 under 0.85?</strong> You are shipping intermittency. Back off compression.</li>
+<li><strong>None of the above?</strong> <strong>Stop optimising context.</strong> Your binding constraint is elsewhere: model choice, task decomposition or the verification loop.</li>
+</ol>
+<p>Step 7 is the one people skip. Context management has a stopping point, and continuing past it is how teams end up maintaining machinery that costs people's time and buys nothing.</p>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Stable prefix tokens cost about 0.10; churning tokens cost 1.25 every time they re-enter.</li><li>Compaction breaks even after about four turns; near the end of a session it is a pure loss.</li><li>You can over-compress as easily as over-load. Cost per solved task catches both.</li><li>When the next-dollar checklist comes up empty, stop optimising context.</li></ol>
+        </section>
+        
+        
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="09-evaluation.html"><span class="rs-pn__label">← Previous · Chapter 9</span><span class="rs-pn__title">Evaluating a context change</span><span class="rs-pn__part">Measure it</span></a><a class="rs-pn__link rs-pn__link--next" href="11-hard-calls.html"><span class="rs-pn__label">Next → · Chapter 11</span><span class="rs-pn__title">Twenty-five hard calls</span><span class="rs-pn__part">Decide and avoid</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#every-metric-should-drive-a-decision">Every metric should drive a decision</a><ul><li><a href="#if-you-track-only-five">If you track only five</a></li><li><a href="#the-full-catalogue">The full catalogue</a></li></ul></li><li><a href="#the-four-line-cost-model">The four-line cost model</a></li><li><a href="#two-beliefs-the-arithmetic-overturns">Two beliefs the arithmetic overturns</a><ul><li><a href="#belief-1-cutting-tokens-cuts-cost">Belief 1: &quot;Cutting tokens cuts cost&quot;</a></li><li><a href="#belief-2-compaction-saves-money">Belief 2: &quot;Compaction saves money&quot;</a></li></ul></li><li><a href="#worked-monthly-economics-c">Worked monthly economics</a></li><li><a href="#cost-per-solved-task">Cost per solved task</a></li><li><a href="#where-to-spend-the-next-unit-of-effort">Where to spend the next unit of effort</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

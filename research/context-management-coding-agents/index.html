@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Context Management in Coding Agents — Research</title>
+  <meta name="description" content="Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/" />
+  <meta property="og:title" content="Context Management in Coding Agents — Research" />
+  <meta property="og:description" content="Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Context Management in Coding Agents — Research" />
+  <meta property="twitter:description" content="Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "Report"
+  ],
+  "headline": "Context Management in Coding Agents",
+  "description": "Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "hasPart": [
+    {
+      "@type": "TechArticle",
+      "name": "Why more context can hurt coding agents",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/01-foundations.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Anatomy of a coding agent's context",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/02-anatomy.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Ten methods that survive scrutiny",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/03-ten-methods.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Choosing your methods: a 55-minute procedure",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/04-choosing-methods.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Retrieval: how code should enter context",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/05-retrieval.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Compaction, offload and memory",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/06-compaction-and-memory.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Sub-agents and isolation",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/07-sub-agents.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "The tool surface: MCP, skills and progressive disclosure",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/08-tool-surface.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Evaluating a context change",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/09-evaluation.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Metrics and the real cost of context",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/10-metrics-and-economics.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Twenty-five hard calls",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/11-hard-calls.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Forty-four failure modes",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/12-failure-modes.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Sixteen antipatterns",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/13-antipatterns.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Eight case studies",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/14-case-studies.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Your optimisation plan",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/15-optimisation-plan.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "The diagnostic: score yourself, get one action",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/16-diagnostic.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Sixty-two habits that compound",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/17-tips.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "The tooling landscape",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/18-tooling.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Templates you can copy",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/a-templates.html"
+    },
+    {
+      "@type": "TechArticle",
+      "name": "Fifty-eight lessons, each falsifiable",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/b-lessons.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--home">
+    <div class="rs-container rs-home">
+      <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li aria-current="page">Context Management</li></ol></nav>
+      <header class="rs-home__hero">
+        <p class="rs-kicker"><span class="rs-badge rs-badge--code">RSCH-001</span><span class="rs-badge rs-badge--published">Published</span></p>
+        <h1 class="rs-home__title">Context Management in Coding Agents</h1>
+        <p class="rs-home__thesis">Larger context windows did not make coding agents proportionally more reliable. The engineering problem is deciding what the agent should see, when it should see it, and what that context costs.</p>
+        <p class="rs-home__audience"><strong>Who this is for.</strong> For software and agent engineers working on multi-step repository tasks. Assumes comfort with tests, CI, APIs and production trade-offs.</p>
+        <ul class="rs-home__meta">
+          <li><strong>18</strong> chapters in 5 parts + 2 appendices</li>
+          <li><strong>38k</strong> words</li>
+          <li><strong>37</strong> figures</li>
+          <li><strong>71 min</strong> engineer core</li>
+          <li><strong>~3 h</strong> complete archive</li>
+          <li>Updated <strong>2026-09-22</strong> · v1.0</li>
+        </ul>
+        <div class="rs-home__cta">
+          <a class="btn btn--primary" href="summary.html">Read the one-page summary</a>
+          <a class="btn btn--secondary" href="#engineer-core">See the engineer core</a>
+        </div>
+      </header>
+
+      <section class="rs-home__section" aria-labelledby="finding-h">
+        <h2 id="finding-h" class="rs-home__h2">The finding in 60 seconds</h2>
+        <ol class="rs-finding"><li><p class="rs-finding__claim">The context window is an attention budget, not a bucket.</p><p class="rs-finding__detail">Chroma tested 18 models across eight lengths and found performance generally degraded as input grew, with non-uniform, model-specific curves <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Correct but irrelevant tokens can still reduce performance.</p></li><li><p class="rs-finding__claim">Subtraction beats addition, and the evidence is lopsided.</p><p class="rs-finding__detail">5K tokens of targeted retrieval beat a 100K summary <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Masking matched summarisation at lower cost <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Fewer tools beat more tools <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. A first audit should test for waste before changing strategy.</p></li><li><p class="rs-finding__claim">Compression damage shows up as unreliability before it shows up as lower accuracy.</p><p class="rs-finding__detail">Compressed agents become intermittent: they solve a task, then fail the same task on a rerun <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>. Teams measuring single runs conclude compaction is free until production disagrees.</p></li><li><p class="rs-finding__claim">The cache can flip the sign of an optimisation.</p><p class="rs-finding__detail">In the worked price model, a 24% token cut that made the prefix dynamic raised cost 6.9× <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>. Token count alone is not a cost model.</p></li><li><p class="rs-finding__claim">There is a stopping point.</p><p class="rs-finding__detail">About 16 hours of sequenced work, most of it deletion, covers the large majority of the benefit. Past the stop rule, your binding constraint is somewhere else.</p></li></ol>
+      </section>
+
+      <section class="rs-home__section" aria-labelledby="paths-h">
+        <h2 id="paths-h" class="rs-home__h2">Choose your path</h2>
+        <p class="rs-home__sub">Pick the entry point that matches the time you have. Every path ends with something you can do.</p>
+        <div class="rs-entries"><a class="rs-entry" href="summary.html"><span class="rs-entry__time">5 minutes</span><span class="rs-entry__title">Decide if it matters</span><span class="rs-entry__text">The one-page summary: the problem, the finding, the first actions.</span><span class="rs-entry__go" aria-hidden="true">→</span></a><a class="rs-entry" href="16-diagnostic.html"><span class="rs-entry__time">30 minutes</span><span class="rs-entry__title">Score where you stand</span><span class="rs-entry__text">Run the diagnostic and get exactly one next action.</span><span class="rs-entry__go" aria-hidden="true">→</span></a><a class="rs-entry" href="15-optimisation-plan.html#phase-0-baseline"><span class="rs-entry__time">An afternoon</span><span class="rs-entry__title">Test for a quarter-window recovery</span><span class="rs-entry__text">Phase 0 baseline, then Phase 1 deletion. Verify task coverage and keep rollback.</span><span class="rs-entry__go" aria-hidden="true">→</span></a><a class="rs-entry" href="#engineer-core"><span class="rs-entry__time">~70 minutes</span><span class="rs-entry__title">Take the engineer core</span><span class="rs-entry__text">The shortest complete route from mechanism to an operating plan.</span><span class="rs-entry__go" aria-hidden="true">→</span></a></div>
+      </section>
+
+      <section id="engineer-core" class="rs-home__section rs-core" aria-labelledby="core-h">
+        <div class="rs-core__head">
+          <div>
+            <p class="rs-core__eyebrow">Recommended for working engineers</p>
+            <h2 id="core-h" class="rs-home__h2">The 71-minute engineer core</h2>
+          </div>
+          <p>8 chapters carry the complete argument from mechanism to measurement to an operating plan. The remaining chapters are evidence, catalogs and reference material to open when the decision in front of you needs them.</p>
+        </div>
+        <ol class="rs-core__steps"><li><a href="01-foundations.html"><span class="rs-core__num">1</span><span class="rs-core__body"><strong>Why more context can hurt coding agents</strong><span>What is context, mechanically, and when does adding more make coding agents less reliable?</span></span><span class="rs-core__min">10 min</span></a></li><li><a href="02-anatomy.html"><span class="rs-core__num">2</span><span class="rs-core__body"><strong>Anatomy of a coding agent&#x27;s context</strong><span>Where do the tokens in a coding agent&#x27;s context actually go, and which parts can you control?</span></span><span class="rs-core__min">6 min</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-core__num">3</span><span class="rs-core__body"><strong>Choosing your methods: a 55-minute procedure</strong><span>Given my own agent and workload, which method should I adopt first, and in what order after that?</span></span><span class="rs-core__min">5 min</span></a></li><li><a href="05-retrieval.html"><span class="rs-core__num">4</span><span class="rs-core__body"><strong>Retrieval: how code should enter context</strong><span>Should code enter context by grep, embeddings, the symbol graph or agentic search, and what does the evidence actually say?</span></span><span class="rs-core__min">9 min</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-core__num">5</span><span class="rs-core__body"><strong>Compaction, offload and memory</strong><span>How do compaction, offload and memory lose information, what does that cost in measured terms, and what should you do with your wiki?</span></span><span class="rs-core__min">15 min</span></a></li><li><a href="08-tool-surface.html"><span class="rs-core__num">6</span><span class="rs-core__body"><strong>The tool surface: MCP, skills and progressive disclosure</strong><span>How much context do tools, MCP servers and skills consume, and what does a healthy tool surface look like?</span></span><span class="rs-core__min">8 min</span></a></li><li><a href="09-evaluation.html"><span class="rs-core__num">7</span><span class="rs-core__body"><strong>Evaluating a context change</strong><span>How do you prove a context-management change helped, with what statistical design, and at what cost?</span></span><span class="rs-core__min">9 min</span></a></li><li><a href="15-optimisation-plan.html"><span class="rs-core__num">8</span><span class="rs-core__body"><strong>Your optimisation plan</strong><span>Given everything so far, what exactly should I do, in what order, and when should I stop?</span></span><span class="rs-core__min">9 min</span></a></li></ol>
+      </section>
+
+      <section class="rs-home__section rs-home__prose">
+        <div class="article-single__body rs-body">
+<h2 id="why-this-research-exists">Why this research exists<a class="rs-anchor" href="#why-this-research-exists" title="Link to this section">#</a></h2>
+<p>When a coding agent fails on a real repository, the transcript often looks reasonable. The decisive fact may be behind a compaction boundary, displaced by unused tool definitions, or contradicted by a signature the agent invented earlier.</p>
+<p>Those failures are quiet, and they are mostly <strong>context failures</strong>. This research asks what should be in a coding agent's context at each step, what should not, who decides, and how you would know the decision was right.</p>
+<p>One constructed first-measurement example looks like this:</p>
+<figure class="diagram rs-chart" id="chart-home-0"><p class="diagram__title">One 152K-token mid-session context (illustrative)</p><div class="diagram__scroll"><svg viewBox="0 0 720 64" role="img" aria-labelledby="chart-home-0-t" class="chart chart--stack"><title id="chart-home-0-t">Stacked bar: tool results 38%, tool definitions 25%, retrieved code 14%, agent messages 8%, system prompt 6%, instruction files 4%, summaries 2%, skills 1%, user turns 1%.</title><rect class="ch-mark ch-muted" x="1.0" y="4" width="40.6" height="34" rx="3" data-tip="System prompt: 9,000 (6%)"/><rect class="ch-mark ch-s1" x="43.6" y="4" width="178.0" height="34" rx="3" data-tip="Tool definitions: 38,000 (25%)"/><text class="ch-inbar ch-inbar--on" x="132.6" y="26" text-anchor="middle">25%</text><rect class="ch-mark ch-muted" x="223.6" y="4" width="28.8" height="34" rx="3" data-tip="Instruction files: 6,500 (4%)"/><rect class="ch-mark ch-muted" x="254.4" y="4" width="6.5" height="34" rx="3" data-tip="Skill descriptions: 1,800 (1%)"/><rect class="ch-mark ch-muted" x="262.9" y="4" width="102.2" height="34" rx="3" data-tip="Retrieved code: 22,000 (14%)"/><text class="ch-inbar " x="314.1" y="26" text-anchor="middle">14%</text><rect class="ch-mark ch-s1" x="367.2" y="4" width="272.7" height="34" rx="3" data-tip="Tool results: 58,000 (38%)"/><text class="ch-inbar ch-inbar--on" x="503.5" y="26" text-anchor="middle">38%</text><rect class="ch-mark ch-muted" x="641.9" y="4" width="54.8" height="34" rx="3" data-tip="Agent messages: 12,000 (8%)"/><text class="ch-inbar " x="669.3" y="26" text-anchor="middle">8%</text><rect class="ch-mark ch-muted" x="698.7" y="4" width="6.1" height="34" rx="3" data-tip="User turns: 1,700 (1%)"/><rect class="ch-mark ch-muted" x="706.8" y="4" width="12.2" height="34" rx="3" data-tip="Summaries: 3,000 (2%)"/></svg><ol class="chart-stack__legend"><li><span class="chart-legend__key ch-muted"></span><span>System prompt</span><span class="chart-stack__v">9,000 · 6%</span></li><li><span class="chart-legend__key ch-s1"></span><span>Tool definitions</span><span class="chart-stack__v">38,000 · 25%</span></li><li><span class="chart-legend__key ch-muted"></span><span>Instruction files</span><span class="chart-stack__v">6,500 · 4%</span></li><li><span class="chart-legend__key ch-muted"></span><span>Skill descriptions</span><span class="chart-stack__v">1,800 · 1%</span></li><li><span class="chart-legend__key ch-muted"></span><span>Retrieved code</span><span class="chart-stack__v">22,000 · 14%</span></li><li><span class="chart-legend__key ch-s1"></span><span>Tool results</span><span class="chart-stack__v">58,000 · 38%</span></li><li><span class="chart-legend__key ch-muted"></span><span>Agent messages</span><span class="chart-stack__v">12,000 · 8%</span></li><li><span class="chart-legend__key ch-muted"></span><span>User turns</span><span class="chart-stack__v">1,700 · 1%</span></li><li><span class="chart-legend__key ch-muted"></span><span>Summaries</span><span class="chart-stack__v">3,000 · 2%</span></li></ol></div><figcaption><span class="rs-fignum">Figure 1.</span> In this constructed composite, tool definitions and results hold 63% of the window while the instruction file is 4%. The worked actions recover about 32%; the first two remove or defer waste, while the latter two require verification <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a>.</figcaption><details class="chart-data"><summary>View data</summary><div class="table-scroll"><table><thead><tr><th scope="col">Segment</th><th scope="col">Tokens</th></tr></thead><tbody><tr><th scope="row">System prompt</th><td>9,000</td></tr><tr><th scope="row">Tool definitions</th><td>38,000</td></tr><tr><th scope="row">Instruction files</th><td>6,500</td></tr><tr><th scope="row">Skill descriptions</th><td>1,800</td></tr><tr><th scope="row">Retrieved code</th><td>22,000</td></tr><tr><th scope="row">Tool results</th><td>58,000</td></tr><tr><th scope="row">Agent messages</th><td>12,000</td></tr><tr><th scope="row">User turns</th><td>1,700</td></tr><tr><th scope="row">Summaries</th><td>3,000</td></tr></tbody></table></div></details></figure>
+<p>Everything else in this research follows from taking that picture seriously: measure first, delete what is dead, shape what is loud, make every loss reversible, and stop when the numbers say your constraint has moved elsewhere.</p>
+        </div>
+      </section>
+
+      <section class="rs-home__section" aria-labelledby="lp-h">
+        <h2 id="lp-h" class="rs-home__h2">The learning path</h2>
+        <p class="rs-home__sub">Five parts, one arc: understand the problem, learn the methods, measure them, make the hard calls, then act. Each chapter answers one question.</p>
+        <ol class="rs-lp"><li class="rs-lp__part"><div class="rs-lp__head"><span class="rs-lp__pnum">Part I</span><h3 class="rs-lp__ptitle">Understand the problem</h3><p class="rs-lp__pintro">What context is mechanically, when more of it makes agents less reliable, and where the tokens actually go.</p><p class="rs-lp__pmeta">2 chapters · 16 min</p></div><ol class="rs-lp__chapters"><li><a class="rs-lp__chapter" href="01-foundations.html"><span class="rs-lp__num">1</span><span class="rs-lp__body"><span class="rs-lp__title">Why more context can hurt coding agents</span><span class="rs-lp__q">What is context, mechanically, and when does adding more make coding agents less reliable?</span></span><span class="rs-lp__min">10 min</span></a></li><li><a class="rs-lp__chapter" href="02-anatomy.html"><span class="rs-lp__num">2</span><span class="rs-lp__body"><span class="rs-lp__title">Anatomy of a coding agent&#x27;s context</span><span class="rs-lp__q">Where do the tokens in a coding agent&#x27;s context actually go, and which parts can you control?</span></span><span class="rs-lp__min">6 min</span></a></li></ol></li><li class="rs-lp__part"><div class="rs-lp__head"><span class="rs-lp__pnum">Part II</span><h3 class="rs-lp__ptitle">The methods</h3><p class="rs-lp__pintro">The ten methods that survive scrutiny, how to choose among them, and the four surfaces where context is spent.</p><p class="rs-lp__pmeta">6 chapters · 68 min</p></div><ol class="rs-lp__chapters"><li><a class="rs-lp__chapter" href="03-ten-methods.html"><span class="rs-lp__num">3</span><span class="rs-lp__body"><span class="rs-lp__title">Ten methods that survive scrutiny</span><span class="rs-lp__q">Which context-management methods survive scrutiny, why does each work, and what does each cost?</span></span><span class="rs-lp__min">23 min</span></a></li><li><a class="rs-lp__chapter" href="04-choosing-methods.html"><span class="rs-lp__num">4</span><span class="rs-lp__body"><span class="rs-lp__title">Choosing your methods: a 55-minute procedure</span><span class="rs-lp__q">Given my own agent and workload, which method should I adopt first, and in what order after that?</span></span><span class="rs-lp__min">5 min</span></a></li><li><a class="rs-lp__chapter" href="05-retrieval.html"><span class="rs-lp__num">5</span><span class="rs-lp__body"><span class="rs-lp__title">Retrieval: how code should enter context</span><span class="rs-lp__q">Should code enter context by grep, embeddings, the symbol graph or agentic search, and what does the evidence actually say?</span></span><span class="rs-lp__min">9 min</span></a></li><li><a class="rs-lp__chapter" href="06-compaction-and-memory.html"><span class="rs-lp__num">6</span><span class="rs-lp__body"><span class="rs-lp__title">Compaction, offload and memory</span><span class="rs-lp__q">How do compaction, offload and memory lose information, what does that cost in measured terms, and what should you do with your wiki?</span></span><span class="rs-lp__min">15 min</span></a></li><li><a class="rs-lp__chapter" href="07-sub-agents.html"><span class="rs-lp__num">7</span><span class="rs-lp__body"><span class="rs-lp__title">Sub-agents and isolation</span><span class="rs-lp__q">When does splitting work across sub-agents help, when does it destroy the task, and how can you tell in advance?</span></span><span class="rs-lp__min">8 min</span></a></li><li><a class="rs-lp__chapter" href="08-tool-surface.html"><span class="rs-lp__num">8</span><span class="rs-lp__body"><span class="rs-lp__title">The tool surface: MCP, skills and progressive disclosure</span><span class="rs-lp__q">How much context do tools, MCP servers and skills consume, and what does a healthy tool surface look like?</span></span><span class="rs-lp__min">8 min</span></a></li></ol></li><li class="rs-lp__part"><div class="rs-lp__head"><span class="rs-lp__pnum">Part III</span><h3 class="rs-lp__ptitle">Measure it</h3><p class="rs-lp__pintro">How to prove a context change worked, what to track, and what context really costs once the cache is priced in.</p><p class="rs-lp__pmeta">2 chapters · 17 min</p></div><ol class="rs-lp__chapters"><li><a class="rs-lp__chapter" href="09-evaluation.html"><span class="rs-lp__num">9</span><span class="rs-lp__body"><span class="rs-lp__title">Evaluating a context change</span><span class="rs-lp__q">How do you prove a context-management change helped, with what statistical design, and at what cost?</span></span><span class="rs-lp__min">9 min</span></a></li><li><a class="rs-lp__chapter" href="10-metrics-and-economics.html"><span class="rs-lp__num">10</span><span class="rs-lp__body"><span class="rs-lp__title">Metrics and the real cost of context</span><span class="rs-lp__q">What should you measure, and what does context really cost once the cache, latency and people are counted?</span></span><span class="rs-lp__min">8 min</span></a></li></ol></li><li class="rs-lp__part"><div class="rs-lp__head"><span class="rs-lp__pnum">Part IV</span><h3 class="rs-lp__ptitle">Decide and avoid</h3><p class="rs-lp__pintro">The hard calls with no clean answer, the ways context management fails, the traps that look like hygiene, and real cases.</p><p class="rs-lp__pmeta">4 chapters · 38 min</p></div><ol class="rs-lp__chapters"><li><a class="rs-lp__chapter" href="11-hard-calls.html"><span class="rs-lp__num">11</span><span class="rs-lp__body"><span class="rs-lp__title">Twenty-five hard calls</span><span class="rs-lp__q">Which context decisions have no clean answer, and how do you decide them for your own situation?</span></span><span class="rs-lp__min">12 min</span></a></li><li><a class="rs-lp__chapter" href="12-failure-modes.html"><span class="rs-lp__num">12</span><span class="rs-lp__body"><span class="rs-lp__title">Forty-four failure modes</span><span class="rs-lp__q">How does context management fail, what is the tell for each failure, and how do you contain it?</span></span><span class="rs-lp__min">8 min</span></a></li><li><a class="rs-lp__chapter" href="13-antipatterns.html"><span class="rs-lp__num">13</span><span class="rs-lp__body"><span class="rs-lp__title">Sixteen antipatterns</span><span class="rs-lp__q">What looks like good context hygiene but is not, and how do you tell the difference?</span></span><span class="rs-lp__min">8 min</span></a></li><li><a class="rs-lp__chapter" href="14-case-studies.html"><span class="rs-lp__num">14</span><span class="rs-lp__body"><span class="rs-lp__title">Eight case studies</span><span class="rs-lp__q">What do these decisions look like on real, documented incidents, including ones where the change made things worse?</span></span><span class="rs-lp__min">10 min</span></a></li></ol></li><li class="rs-lp__part"><div class="rs-lp__head"><span class="rs-lp__pnum">Part V</span><h3 class="rs-lp__ptitle">Act on it</h3><p class="rs-lp__pintro">A sequenced 16-hour plan, a scored diagnostic, daily habits and the tooling landscape.</p><p class="rs-lp__pmeta">4 chapters · 27 min</p></div><ol class="rs-lp__chapters"><li><a class="rs-lp__chapter" href="15-optimisation-plan.html"><span class="rs-lp__num">15</span><span class="rs-lp__body"><span class="rs-lp__title">Your optimisation plan</span><span class="rs-lp__q">Given everything so far, what exactly should I do, in what order, and when should I stop?</span></span><span class="rs-lp__min">9 min</span></a></li><li><a class="rs-lp__chapter" href="16-diagnostic.html"><span class="rs-lp__num">16</span><span class="rs-lp__body"><span class="rs-lp__title">The diagnostic: score yourself, get one action</span><span class="rs-lp__q">Where does my team stand on context management today, and what is the single next thing to do?</span></span><span class="rs-lp__min">4 min</span></a></li><li><a class="rs-lp__chapter" href="17-tips.html"><span class="rs-lp__num">17</span><span class="rs-lp__body"><span class="rs-lp__title">Sixty-two habits that compound</span><span class="rs-lp__q">What small, daily practices pay for themselves, and when does each one apply?</span></span><span class="rs-lp__min">6 min</span></a></li><li><a class="rs-lp__chapter" href="18-tooling.html"><span class="rs-lp__num">18</span><span class="rs-lp__body"><span class="rs-lp__title">The tooling landscape</span><span class="rs-lp__q">Which open-source tools, plugins and local MCP servers improve context use, and which are worth adopting?</span></span><span class="rs-lp__min">8 min</span></a></li></ol></li><li class="rs-lp__part"><div class="rs-lp__head"><span class="rs-lp__pnum">Part A–B</span><h3 class="rs-lp__ptitle">Reference</h3><p class="rs-lp__pintro">Copyable templates and the full list of falsifiable lessons.</p><p class="rs-lp__pmeta">2 chapters · 13 min</p></div><ol class="rs-lp__chapters"><li><a class="rs-lp__chapter" href="a-templates.html"><span class="rs-lp__num">A</span><span class="rs-lp__body"><span class="rs-lp__title">Templates you can copy</span><span class="rs-lp__q">What are the fill-in forms that make this operational, and which field in each carries the value?</span></span><span class="rs-lp__min">3 min</span></a></li><li><a class="rs-lp__chapter" href="b-lessons.html"><span class="rs-lp__num">B</span><span class="rs-lp__body"><span class="rs-lp__title">Fifty-eight lessons, each falsifiable</span><span class="rs-lp__q">What are the transferable lessons, why is each true, and what would prove each one wrong?</span></span><span class="rs-lp__min">10 min</span></a></li></ol></li></ol>
+      </section>
+
+      <section class="rs-home__section" aria-labelledby="ref-h">
+        <h2 id="ref-h" class="rs-home__h2">Reference</h2>
+        <div class="rs-refcards"><a class="rs-refcard" href="summary.html"><span class="rs-refcard__title">One-page summary</span><span class="rs-refcard__text">The whole programme on a page, for a five-minute decision.</span></a><a class="rs-refcard" href="faq.html"><span class="rs-refcard__title">FAQ</span><span class="rs-refcard__text">Short answers to the questions readers ask most.</span></a><a class="rs-refcard" href="glossary.html"><span class="rs-refcard__title">Glossary</span><span class="rs-refcard__text">50 terms, narrowly defined.</span></a><a class="rs-refcard" href="sources.html"><span class="rs-refcard__title">Sources</span><span class="rs-refcard__text">Every source, what it supports, and how much to trust it.</span></a><a class="rs-refcard" href="method.html"><span class="rs-refcard__title">Method & scope</span><span class="rs-refcard__text">The question, the commitments, and the bar this work had to meet.</span></a></div>
+      </section>
+
+      <section class="rs-home__section rs-home__twocol" aria-labelledby="ev-h">
+        <div>
+          <h2 id="ev-h" class="rs-home__h2">How to read the evidence</h2>
+          <p class="rs-home__sub">Every non-obvious number carries a label. Click any label to see its source rules.</p>
+          <ul class="rs-evlegend"><li><span class="rs-ev rs-ev--s" aria-hidden="true">S</span><strong>Sourced</strong> — A study, paper, or first-party engineering write-up with a stated method</li><li><span class="rs-ev rs-ev--p" aria-hidden="true">P</span><strong>Practitioner-reported</strong> — A credible operator or project account without a published method</li><li><span class="rs-ev rs-ev--d" aria-hidden="true">D</span><strong>Derived</strong> — Follows from a labelled claim by stated reasoning, not independently measured</li><li><span class="rs-ev rs-ev--c" aria-hidden="true">C</span><strong>Composite</strong> — A constructed illustration, not a real incident</li></ul>
+        </div>
+        <div>
+          <h2 id="related-h" class="rs-home__h2">Related research</h2>
+          <ul class="rs-related"><li class="rs-related__item"><div class="rs-related__head">Loop Engineering<span class="rs-badge rs-badge--upcoming">In preparation</span></div><p>Designs the agent&#x27;s repair loop. This research decides what that loop can see; most of its drag term is context drag.</p></li><li class="rs-related__item"><div class="rs-related__head">Agent Evaluation<span class="rs-badge rs-badge--upcoming">In preparation</span></div><p>Designs the measuring instrument. Chapter 9 here specialises it to small, harness-confounded context effects.</p></li><li class="rs-related__item"><div class="rs-related__head">Prompt Cache Architecture<span class="rs-badge rs-badge--upcoming">In preparation</span></div><p>The cache annex: what editing a file mid-session costs once invalidation is priced in.</p></li><li class="rs-related__item"><div class="rs-related__head">Multi-Agent Maturity Model<span class="rs-badge rs-badge--upcoming">In preparation</span></div><p>Organisational readiness for multi-agent systems. Chapter 7 here covers only the context argument.</p></li><li class="rs-related__item"><div class="rs-related__head"><a href="/handbook/chapter-06-memory-context-management.html">Handbook · Memory and Context Management</a><span class="rs-badge rs-badge--published">Handbook</span></div><p>The pattern-level introduction: context budgets, governed memory writes and validated compaction.</p></li><li class="rs-related__item"><div class="rs-related__head"><a href="/articles/every-token-is-rent-memory-architecture.html">Field note · Agent Memory Architecture</a><span class="rs-badge rs-badge--published">Field note</span></div><p>Admission, retrieval, consolidation and forgetting in a working agent memory system.</p></li></ul>
+          
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

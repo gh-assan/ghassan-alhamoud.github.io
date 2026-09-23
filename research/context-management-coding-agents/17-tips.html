@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sixty-two habits that compound — Context Management</title>
+  <meta name="description" content="Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/17-tips.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/17-tips.html" />
+  <meta property="og:title" content="Sixty-two habits that compound — Context Management" />
+  <meta property="og:description" content="Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Sixty-two habits that compound — Context Management" />
+  <meta property="twitter:description" content="Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Sixty-two habits that compound",
+  "description": "Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/17-tips.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en",
+  "articleSection": "Act on it"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Chapter 17",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/17-tips.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--chapter">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html" aria-current="page"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li>Act on it</li><li aria-current="page">Chapter 17</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">Part V · Act on it</span><span class="rs-kicker__sep" aria-hidden="true">/</span><span>Chapter 17</span></p>
+          <h1 class="rs-hero__title">Sixty-two habits that compound</h1>
+          <p class="rs-hero__question"><span class="rs-hero__q-label">The question</span> What small, daily practices pay for themselves, and when does each one apply?</p>
+          <div class="rs-meta">
+            <span>6 min read</span><span aria-hidden="true">·</span>
+            <span>Action</span><span aria-hidden="true">·</span>
+            <span>Step 17 of 20</span><span aria-hidden="true">·</span>
+            <span>3/4 in this part</span>
+          </div>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html" aria-current="page"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details><details class="on-this-page rs-disclosure"><summary>On this page</summary><div class="on-this-page__list"><ul><li><a class="on-this-page__link" href="#the-eight-that-pay-for-themselves-in-week-one">The eight that pay for themselves in week one</a></li><li><a class="on-this-page__link" href="#before-the-session-setup-once">Before the session: setup, once</a></li><li><a class="on-this-page__link" href="#opening-a-session">Opening a session</a></li><li><a class="on-this-page__link" href="#during-the-session-retrieval">During the session: retrieval</a></li><li><a class="on-this-page__link" href="#during-the-session-output-and-state">During the session: output and state</a></li><li><a class="on-this-page__link" href="#during-the-session-boundaries">During the session: boundaries</a></li><li><a class="on-this-page__link" href="#delegation">Delegation</a></li><li><a class="on-this-page__link" href="#ongoing-hygiene">Ongoing hygiene</a></li></ul></div></details></div>
+        <section class="rs-brief" aria-label="Chapter brief">
+          <div class="rs-brief__col">
+            <h2 class="rs-brief__title">In 30 seconds</h2>
+            <ul><li>Sixty-two habits, ordered by when they apply: setup, opening, retrieval, state, boundaries, delegation, hygiene.</li><li>Eight habits pay off in week one — five of them free.</li><li>The wins are mostly deletions and habits, not architecture.</li></ul>
+          </div>
+          <div class="rs-brief__col rs-brief__col--outcomes">
+            <h2 class="rs-brief__title">You will be able to</h2>
+            <ul><li>Apply the first-week eight today</li><li>Open, run and end a session with deliberate context habits</li><li>Keep the gains with a quarterly routine</li></ul>
+          </div>
+        </section>
+        <div class="article-single__body rs-body">
+<p>Each habit defers to its owning chapter: setup and prevention → <a href="03-ten-methods.html">chapter 3</a> and <a href="08-tool-surface.html">chapter 8</a>; opening and retrieval → <a href="05-retrieval.html">chapter 5</a>; state and boundaries → <a href="06-compaction-and-memory.html">chapter 6</a> and <a href="03-ten-methods.html#m-10-session-lifecycle">M-10</a>; delegation → <a href="07-sub-agents.html">chapter 7</a>; the quarterly loop → <a href="15-optimisation-plan.html#the-maintenance-loop">chapter 15</a>.</p>
+<h2 id="the-eight-that-pay-for-themselves-in-week-one">The eight that pay for themselves in week one<a class="rs-anchor" href="#the-eight-that-pay-for-themselves-in-week-one" title="Link to this section">#</a></h2>
+<p>If you do nothing else from this chapter, do these. Three of the eight are free; the rest cost minutes.</p>
+<div class="table-scroll rs-table"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Habit</th>
+<th>Effort</th>
+<th>Payoff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td>Audit MCP servers with zero calls</td>
+<td>10 min</td>
+<td>Candidate recovery when dead or duplicate surface dominates; verify and keep rollback</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Four shell wrappers for your loudest commands</td>
+<td>An afternoon</td>
+<td>60–90% less tool output <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Ignore files</td>
+<td>5 min</td>
+<td>Prevents a whole class of failures</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The inference test on the instruction file</td>
+<td>20 min</td>
+<td>Smaller <em>and</em> more salient</td>
+</tr>
+<tr>
+<td>20</td>
+<td>A 200-token opener</td>
+<td>Per session</td>
+<td>Much less exploratory retrieval</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Compact after a test passes, never mid-debug</td>
+<td>Free</td>
+<td>Avoids the worst compaction failures</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Re-read the plan file right after compaction</td>
+<td>Free</td>
+<td>Protects the most error-prone step</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Reset on the third repeated action</td>
+<td>Free</td>
+<td>Ends distraction loops at once</td>
+</tr>
+</tbody>
+</table></div>
+<p>That is the shape of this whole field: <strong>the wins are mostly deletions and habits, not architecture.</strong></p>
+<figure id="figure-1" class="diagram">
+<p class="diagram__title">Where the habits apply in a session's life</p>
+<div class="diagram__scroll">
+<svg viewBox="0 0 720 150" role="img" aria-labelledby="tp-t">
+<title id="tp-t">Habits are grouped by when they apply: setup once, opening a session, during the session for retrieval, state and boundaries, delegation, and ongoing hygiene.</title>
+<rect class="dg-box--accent" x="10" y="30" width="110" height="70" rx="8"/><text class="dg-t" x="65" y="60" text-anchor="middle">Setup</text><text class="dg-s" x="65" y="80" text-anchor="middle">1–18 · once</text>
+<rect class="dg-box" x="130" y="30" width="110" height="70" rx="8"/><text class="dg-t" x="185" y="60" text-anchor="middle">Opening</text><text class="dg-s" x="185" y="80" text-anchor="middle">19–26</text>
+<rect class="dg-box" x="250" y="30" width="110" height="70" rx="8"/><text class="dg-t" x="305" y="60" text-anchor="middle">Retrieval</text><text class="dg-s" x="305" y="80" text-anchor="middle">27–34</text>
+<rect class="dg-box" x="370" y="30" width="110" height="70" rx="8"/><text class="dg-t" x="425" y="60" text-anchor="middle">State</text><text class="dg-s" x="425" y="80" text-anchor="middle">35–42</text>
+<rect class="dg-box" x="490" y="30" width="110" height="70" rx="8"/><text class="dg-t" x="545" y="60" text-anchor="middle">Boundaries</text><text class="dg-s" x="545" y="80" text-anchor="middle">43–54</text>
+<rect class="dg-box--info" x="610" y="30" width="100" height="70" rx="8"/><text class="dg-t" x="660" y="60" text-anchor="middle">Delegation</text><text class="dg-s" x="660" y="80" text-anchor="middle">55–60</text>
+<line class="dg-line dg-line--dash" x1="65" y1="118" x2="660" y2="118"/>
+<text class="dg-s" x="360" y="140" text-anchor="middle">ongoing hygiene, 61–62: re-audit quarterly; fix the repository when problems recur</text>
+</svg>
+</div>
+<figcaption><span class="rs-fignum">Figure 1.</span> The list below follows this order. Read the section for the moment you are in.</figcaption>
+</figure>
+
+<h2 id="before-the-session-setup-once">Before the session: setup, once<a class="rs-anchor" href="#before-the-session-setup-once" title="Link to this section">#</a></h2>
+<ol>
+<li><strong>Write ignore files first.</strong> <code>node_modules/</code>, <code>dist/</code>, <code>build/</code>, <code>*.lock</code>, <code>__generated__/</code>, <code>vendor/</code>, <code>.next/</code>, snapshots, fixtures. The cheapest change in this research.</li>
+<li><strong>Link <code>CLAUDE.md</code> to <code>AGENTS.md</code>.</strong> One file, read by 30+ tools <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>. Two copies guarantee divergence.</li>
+<li><strong>Apply the inference test to every instruction line.</strong> Could a competent engineer infer it from the repository in two minutes? If yes, delete it.</li>
+<li><strong>Put the three rules you most need obeyed at the <em>end</em> of the instruction file.</strong> The end of a block is more attended than its middle.</li>
+<li><strong>Turn repeatedly violated rules into machinery.</strong> A rule broken in half your sessions is a wish. Make it a lint rule, a hook, a pre-commit check or a test.</li>
+<li><strong>Audit MCP servers with zero calls in a representative sample.</strong> Delete only after verifying task coverage; keep a rollback.</li>
+<li><strong>Prefer the shell to an MCP server for anything the shell already does:</strong> <code>gh</code>, <code>psql</code>, <code>curl</code>, <code>rg</code>, <code>git</code>.</li>
+<li><strong>Check whether your harness already does it before installing anything.</strong> Deferred tools, usage reporting and compaction control are increasingly built in <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
+<li><strong>Write four shell wrappers for your four loudest commands.</strong> Quiet flag, filter, full output to a file, a digest plus the path.</li>
+<li><strong>Make the pass/fail asymmetry explicit in your test wrapper.</strong> One line on pass; the full trace on fail.</li>
+<li><strong>Never truncate the middle.</strong> Head and tail, roughly 30/70. Errors cluster at the end.</li>
+<li><strong>Create a gitignored <code>.agent/</code> scratch directory</strong> as the offload target.</li>
+<li><strong>Give <code>rg</code> sane context:</strong> <code>-C 8</code> at least. <a class="rs-term" href="glossary.html#fragment-blindness" data-def="Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.">Fragment blindness</a> is invisible and expensive.</li>
+<li><strong>Install a symbol-level retrieval tool</strong> if your stack has language-server support.</li>
+<li><strong>Get a live context-utilisation display.</strong> Awareness alone changes behaviour <a class="rs-ev rs-ev--d" href="sources.html#evidence-labels" title="Derived: Follows from a labelled claim by stated reasoning, not independently measured" aria-label="Evidence: Derived">D</a>.</li>
+<li><strong>Measure your prefix tax once and write it down.</strong> Re-measure after every harness update.</li>
+<li><strong>Put context configuration under version control:</strong> instruction files, ignore files, tool config, wrapper scripts.</li>
+<li><strong>Write the transcript-grep script.</strong> Twenty lines of shell that count tool calls, rank commands by output volume and flag repeated calls.</li>
+</ol>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">transcript-stats.sh — three routing metrics from a JSONL transcript</span></div><pre class="highlight"><code><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># Usage: transcript-stats.sh session.jsonl</span>
+<span class="c1"># Adjust the jq paths to your harness&#39;s transcript format.</span>
+<span class="nv">f</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Tool calls by name ==&quot;</span>
+jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;select(.type==&quot;tool_use&quot;) | .name&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-rn
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Largest tool results (approx tokens = chars / 4) ==&quot;</span>
+jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;select(.type==&quot;tool_result&quot;) | &quot;\((.content|tostring|length)/4|floor)\t\(.tool // &quot;?&quot;)&quot;&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-rn<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== Repeated identical calls (possible loops) ==&quot;</span>
+jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;select(.type==&quot;tool_use&quot;) | {name, input}&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;$1 &gt;= 3&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-rn
+</code></pre></div>
+<h2 id="opening-a-session">Opening a session<a class="rs-anchor" href="#opening-a-session" title="Link to this section">#</a></h2>
+<ol start="19">
+<li><strong>One session, one coherent task.</strong> New task, new session. The most violated rule here.</li>
+<li><strong>Spend 200 tokens on the opener.</strong> Goal, constraints, relevant paths, definition of done, and what <em>not</em> to do.</li>
+</ol>
+<div class="rs-code"><div class="rs-code__head"><span class="rs-code__title">a 200-token opener</span></div><pre class="highlight"><code>Goal: checkout requests time out under load (p95 &gt; 5s since Tuesday).
+Start with: src/checkout/service.ts and src/db/pool.ts.
+Constraints: no new dependencies; do not touch legacy/ or change the public API.
+Done when: `npm test -w checkout` passes and a load test at 200 rps keeps p95 &lt; 800ms.
+First: write PLAN.md with your hypotheses before editing anything.
+</code></pre></div>
+<ol start="21">
+<li><strong>Name a file in the opener,</strong> even as a guess. It turns expensive exploration into cheap directed retrieval.</li>
+<li><strong>State the definition of done:</strong> "Done when <code>pytest tests/checkout</code> passes with no new lint errors." Otherwise the agent invents a stopping condition.</li>
+<li><strong>State what not to do:</strong> "Do not touch <code>legacy/</code>. Do not add dependencies. Do not reformat unrelated files."</li>
+<li><strong>Do not paste the design document.</strong> Pointers, never prose.</li>
+<li><strong>When resuming, open with the plan file, not a narrative.</strong> "Continue from <code>PLAN.md</code>" beats three paragraphs of recap.</li>
+<li><strong>Ask for a plan before edits on anything over about 30 minutes.</strong> The plan becomes the plan file, which survives every boundary.</li>
+</ol>
+<h2 id="during-the-session-retrieval">During the session: retrieval<a class="rs-anchor" href="#during-the-session-retrieval" title="Link to this section">#</a></h2>
+<ol start="27">
+<li><strong>Locate, then inspect, then read:</strong> <code>grep -l</code> → <code>grep -n</code> → read the symbol.</li>
+<li><strong>Ask for symbols, not files:</strong> "read the <code>handleRetry</code> function", not "read <code>client.ts</code>".</li>
+<li><strong>Expand along the reference graph.</strong> Found the function? Read its <em>callers</em>, not its neighbours.</li>
+<li><strong>Search config explicitly when the code runs out:</strong> <code>*.yaml</code>, <code>*.toml</code>, <code>.env*</code>, CI files, feature flags.</li>
+<li><strong>Cap search results and narrow first.</strong> A 3,000-hit grep is a distractor injection, not a search.</li>
+<li><strong>Re-read before you re-edit.</strong> Your own edits invalidate your own context.</li>
+<li><strong>Treat zero results as information.</strong> They redirect the hypothesis. That is grep's underrated advantage.</li>
+<li><strong>Use <code>git log -S</code> and <code>git blame</code> for "when did this change?"</strong> Agents rarely reach for history unprompted.</li>
+</ol>
+<h2 id="during-the-session-output-and-state">During the session: output and state<a class="rs-anchor" href="#during-the-session-output-and-state" title="Link to this section">#</a></h2>
+<ol start="35">
+<li><strong>Redirect; do not delete.</strong> Full output to a file, digest in context, path included.</li>
+<li><strong>Make every <a class="rs-term" href="glossary.html#stub" data-def="What stays in context after an offload: an identifier plus just enough description to decide whether to fetch it.">stub</a> self-describing.</strong> <code>a3f9.log (14KB) — npm ci, exit 0, 2 peer-dep warnings</code>, not <code>a3f9.log (14KB)</code>.</li>
+<li><strong>Offload after a delay,</strong> not immediately. Offloading the output you are about to read forces a recall.</li>
+<li><strong>Update the plan file at state changes,</strong> not on a timer.</li>
+<li><strong>Keep a "ruled out" section with reasons and evidence.</strong> It prevents re-proposing a rejected approach after a boundary.</li>
+<li><strong>Add "last updated at turn N" to the plan file.</strong> Drift becomes visible.</li>
+<li><strong>Cap the plan file at 80 lines.</strong> Longer means the task needed decomposing.</li>
+<li><strong>Commit at every checkpoint.</strong> Git is offload with review attached, and the cheapest reversibility you own.</li>
+</ol>
+<h2 id="during-the-session-boundaries">During the session: boundaries<a class="rs-anchor" href="#during-the-session-boundaries" title="Link to this section">#</a></h2>
+<ol start="43">
+<li><strong>Compact right after a test passes. Never mid-debug.</strong> <a class="rs-term" href="glossary.html#semantic-triggering" data-def="Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.">Semantic triggering</a> in its simplest form.</li>
+<li><strong>Do not compact when stuck.</strong> Being stuck means you do not yet know what matters, so you cannot choose what to drop.</li>
+<li><strong>Re-read the plan file as the first action after any compaction.</strong> It protects the step with the most errors (+0.108 on AppWorld <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>).</li>
+<li><strong>Never compact twice.</strong> A second compaction summarises a summary. Reset instead.</li>
+<li><strong>Keep exact strings verbatim in summaries:</strong> errors, versions, paths, line numbers, config keys, IDs.</li>
+<li><strong>Put a done / in-progress / not-started block in every summary.</strong> It counters the 44.6% termination collapse on AppWorld <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</li>
+<li><strong>Do not compact with fewer than five turns left.</strong> It is below breakeven <a class="rs-ev rs-ev--c" href="sources.html#evidence-labels" title="Composite: A constructed illustration, not a real incident" aria-label="Evidence: Composite">C</a> (chapter 10).</li>
+<li><strong>Reset instead of arguing.</strong> Correcting a wrong fact appends a competitor and leaves the original.</li>
+<li><strong>Reset on the third repeated action.</strong> Rephrasing will not help; distraction is a property of the context.</li>
+<li><strong>Write the handoff note before you need it.</strong> Two minutes now saves twenty turns later.</li>
+<li><strong>Put <code>file:line</code> pointers in handoffs, not descriptions.</strong></li>
+<li><strong>Put verification commands in handoffs, with their results:</strong> "<code>pytest tests/checkout -q</code> → 47 passed, at <code>a3f9c1</code>".</li>
+</ol>
+<h2 id="delegation">Delegation<a class="rs-anchor" href="#delegation" title="Link to this section">#</a></h2>
+<ol start="55">
+<li><strong>Write the output schema before delegating.</strong> If it does not fit in 20 lines, the work is not isolatable.</li>
+<li><strong>List the implicit decisions the sub-agent will face.</strong> If the list is not empty, fix them in the brief or do not delegate.</li>
+<li><strong>Give sub-agents the minimum tool set.</strong></li>
+<li><strong>Add a <code>notable_outside_scope</code> field to every contract.</strong> The cheapest mitigation for <a class="rs-term" href="glossary.html#contract-loss" data-def="A sub-agent knew something relevant but did not report it because its output contract did not ask.">contract loss</a>.</li>
+<li><strong>Save sub-agent transcripts and give the parent the path.</strong> It turns contract loss into offload.</li>
+<li><strong>Never delegate debugging.</strong> The ruled-out hypotheses are the most valuable product, and they die with the sub-agent.</li>
+</ol>
+<h2 id="ongoing-hygiene">Ongoing hygiene<a class="rs-anchor" href="#ongoing-hygiene" title="Link to this section">#</a></h2>
+<ol start="61">
+<li><strong>Re-audit quarterly, on the calendar.</strong> Thirty minutes. Without it you are back at baseline within two quarters <a class="rs-ev rs-ev--p" href="sources.html#evidence-labels" title="Practitioner-reported: A credible operator or project account without a published method" aria-label="Evidence: Practitioner-reported">P</a>.</li>
+<li><strong>When a context problem recurs, fix the repository.</strong> Three functions named <code>parse_config</code> is a repository problem wearing a retrieval problem's clothes.</li>
+</ol>
+<p>Run the <a href="16-diagnostic.html">diagnostic</a> to see which of these you need first; re-audit quarterly.</p>
+        </div>
+        <section class="rs-endblock rs-takeaways" aria-labelledby="takeaways-h">
+          <h2 id="takeaways-h" class="rs-endblock__title">Key takeaways</h2>
+          <ol><li>Spend 200 tokens on the opener: goal, paths, definition of done, what not to do.</li><li>Locate, then inspect, then read.</li><li>Compact after a test passes, never mid-debug; reset on the third repeated action.</li><li>When a context problem recurs, fix the repository.</li></ol>
+        </section>
+        
+        <section class="rs-endblock rs-terms" aria-labelledby="terms-h"><h2 id="terms-h" class="rs-endblock__title">Terms used in this chapter</h2><ul><li><a href="glossary.html#fragment-blindness"><strong>Fragment blindness</strong></a> — Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.</li><li><a href="glossary.html#stub"><strong>Stub</strong></a> — What stays in context after an offload: an identifier plus just enough description to decide whether to fetch it.</li><li><a href="glossary.html#semantic-triggering"><strong>Semantic triggering</strong></a> — Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.</li><li><a href="glossary.html#contract-loss"><strong>Contract loss</strong></a> — A sub-agent knew something relevant but did not report it because its output contract did not ask.</li></ul></section>
+        <nav class="rs-pn" aria-label="Chapter navigation"><a class="rs-pn__link rs-pn__link--prev" href="16-diagnostic.html"><span class="rs-pn__label">← Previous · Chapter 16</span><span class="rs-pn__title">The diagnostic: score yourself, get one action</span><span class="rs-pn__part">Act on it</span></a><a class="rs-pn__link rs-pn__link--next" href="18-tooling.html"><span class="rs-pn__label">Next → · Chapter 18</span><span class="rs-pn__title">The tooling landscape</span><span class="rs-pn__part">Act on it</span></a></nav>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        <p class="rs-toc__title">On this page</p>
+        <div class="rs-toc__list"><ul><li><a href="#the-eight-that-pay-for-themselves-in-week-one">The eight that pay for themselves in week one</a></li><li><a href="#before-the-session-setup-once">Before the session: setup, once</a></li><li><a href="#opening-a-session">Opening a session</a></li><li><a href="#during-the-session-retrieval">During the session: retrieval</a></li><li><a href="#during-the-session-output-and-state">During the session: output and state</a></li><li><a href="#during-the-session-boundaries">During the session: boundaries</a></li><li><a href="#delegation">Delegation</a></li><li><a href="#ongoing-hygiene">Ongoing hygiene</a></li></ul></div>
+        <a class="rs-toc__top" href="#top">Back to top ↑</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>

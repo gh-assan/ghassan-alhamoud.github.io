@@ -416,6 +416,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
         <li><a href="/projects/" class="nav__link">Systems</a></li>
         <li><a href="/articles/" class="nav__link">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/research/" class="nav__link">Research</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
       </ul>
     </nav>
@@ -480,6 +481,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
           <a href="/projects/" class="footer__nav-link">Systems</a>
           <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
@@ -673,6 +675,7 @@ def render_index(handbook: dict, chapters: list) -> str:
         <li><a href="/projects/" class="nav__link">Systems</a></li>
         <li><a href="/articles/" class="nav__link">Field Notes</a></li>
         <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/research/" class="nav__link">Research</a></li>
         <li><a href="/#about" class="nav__link">About</a></li>
       </ul>
     </nav>
@@ -728,6 +731,7 @@ def render_index(handbook: dict, chapters: list) -> str:
           <a href="/projects/" class="footer__nav-link">Systems</a>
           <a href="/articles/" class="footer__nav-link">Field Notes</a>
           <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">

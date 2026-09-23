@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Glossary — Context Management</title>
+  <meta name="description" content="50 terms, defined narrowly. Hover a dotted term in any chapter to see its definition without leaving the page." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html" />
+  <meta property="og:title" content="Glossary — Context Management" />
+  <meta property="og:description" content="50 terms, defined narrowly. Hover a dotted term in any chapter to see its definition without leaving the page." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Glossary — Context Management" />
+  <meta property="twitter:description" content="50 terms, defined narrowly. Hover a dotted term in any chapter to see its definition without leaving the page." />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Glossary — Context Management in Coding Agents",
+  "description": "50 terms, defined narrowly. Hover a dotted term in any chapter to see its definition without leaving the page.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-22",
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html",
+  "isPartOf": {
+    "@type": "CreativeWorkSeries",
+    "name": "Context Management in Coding Agents",
+    "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+  },
+  "inLanguage": "en"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://ghassan-alhamoud.com/research/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Context Management",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Glossary",
+      "item": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "name": "Context Management in Coding Agents — Glossary",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "name": "Addressable recall",
+      "description": "Compaction that replaces old content with content-addressed stubs the agent can fetch on demand, instead of a paraphrase. Lossless by construction.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#addressable-recall"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ADR",
+      "description": "A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#adr"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Agentic search",
+      "description": "A retrieval control strategy where the agent iterates: search, read, decide the next query, stop when satisfied.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#agentic-search"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Attention budget",
+      "description": "The framing that replaces \"context window as container\": adding tokens can redistribute useful signal rather than creating more reliable attention.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#attention-budget"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Binding constraint",
+      "description": "The one limitation that currently caps your agent's results. Fixing anything else changes little until it moves.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#binding-constraint"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Body",
+      "description": "Segments 5–9 of the context: retrieved code, tool results, agent messages, user turns and summaries. It grows during a session.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#body"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Cache-adjusted cost",
+      "description": "Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#cache-adjusted-cost"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Clash",
+      "description": "A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#clash"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Code graph",
+      "description": "The import, call, reference and type graph of a codebase, computed exactly by a compiler or language server.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#code-graph"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Compaction",
+      "description": "Replacing part of a transcript with a summary. Irreversible, within one session, and it invalidates the cache from the point of change.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#compaction"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Composability",
+      "description": "The property that makes delegation safe: sub-agent outputs combine without negotiation.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#composability"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Confusion",
+      "description": "A failure mode where irrelevant context is used because it is present. The common case is picking a plausible wrong tool when too many are in scope.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#confusion"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Context rot",
+      "description": "The everyday name for performance becoming less reliable as input length grows. Chroma measured the pattern across 18 models, with non-uniform curves that depend on model and task [S].",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#context-rot"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Contract loss",
+      "description": "A sub-agent knew something relevant but did not report it because its output contract did not ask.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#contract-loss"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Dereference, don't index",
+      "description": "The policy for external prose such as a wiki: fetch a named page on demand, never bulk-ingest it into a retrieval store.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#dereference-dont-index"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Distraction",
+      "description": "A failure mode where the agent imitates its own transcript instead of reasoning: re-running, re-reading, re-proposing.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#distraction"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Effective context length",
+      "description": "The length at which a model still performs acceptably on a given task, as opposed to the length it advertises; it may be shorter than the advertised maximum.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#effective-context-length"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Evidence label",
+      "description": "A tag on a claim saying how it is supported: S (sourced), P (practitioner-reported), D (derived) or C (composite).",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#evidence-label"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Fragment blindness",
+      "description": "Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#fragment-blindness"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Harness",
+      "description": "The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#harness"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Isolation",
+      "description": "Splitting context across boundaries such as sub-agents or sessions. It shrinks the parent's context at the expense of total spend.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#isolation"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Just-in-time retrieval",
+      "description": "Carrying lightweight identifiers such as paths and symbol names, and fetching content only at the moment it is needed.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#just-in-time-retrieval"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Knowledge graph",
+      "description": "Entities and relations extracted from prose by an LLM pipeline. Approximate and as stale as its last ingestion.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#knowledge-graph"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Laundering",
+      "description": "Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#laundering"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Loop detector",
+      "description": "A check that flags the same tool called with the same arguments three or more times with no new information in between.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#loop-detector"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Masking",
+      "description": "Replacing old tool output with placeholders. Needs no model call.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#masking"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "MCP",
+      "description": "The Model Context Protocol: a standard way to expose tools and data to agents through servers.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#mcp"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Memory",
+      "description": "Information persisted across sessions. Justified only by retrievals that changed an action, not by what was written.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#memory"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Offload",
+      "description": "Moving content out of the window into addressable storage and leaving a stub the agent can follow back. Reversible.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#offload"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Pass^k",
+      "description": "Pass@k counts a task solved if any of k runs succeed (\"can it ever?\"). Pass^k, written Pass² for k = 2, requires all k runs to succeed (\"can it reliably?\").",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#passk"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Poisoning",
+      "description": "A failure mode where a false fact enters the context and is afterwards treated as established. It survives compaction and cannot be removed by appending a correction.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#poisoning"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Position decay",
+      "description": "A critical fact becoming harder to use because its position in a long input is less favourable.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#position-decay"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Prefix",
+      "description": "Segments 1–4 of the context: system prompt, tool definitions, instruction files and skill descriptions. Usually stable and sent on each call; it may be reusable when unchanged, while billing depends on cached versus uncached rates.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#prefix"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Prefix caching",
+      "description": "Reusing the computed state of an unchanged prompt prefix. Prefix-exact: valid up to the first changed byte.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#prefix-caching"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Prefix tax",
+      "description": "The tokens present in segments 1–4 on each call before any work. Measure them by sending a one-token message in a fresh session; billing depends on cache hits.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#prefix-tax"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Progressive disclosure",
+      "description": "Loading short descriptions first and full content only on demand. Applied to tool schemas, skills and file reads.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#progressive-disclosure"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Read-coverage",
+      "description": "Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#read-coverage"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Read-utilisation",
+      "description": "The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#read-utilisation"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Relevance density",
+      "description": "Tokens that could plausibly be cited in a correct answer, divided by all tokens in context. The working measure of dilution.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#relevance-density"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Reset",
+      "description": "Ending a session and starting a fresh one seeded with a plan file or handoff note. The only operation that removes poisoned content.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#reset"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Retention integral",
+      "description": "The sum of each segment's tokens multiplied by the number of turns it stays in context. The true cost of hoarding.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#retention-integral"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Semantic triggering",
+      "description": "Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#semantic-triggering"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Skill",
+      "description": "A named capability with a short trigger description that is always loaded and a full procedure that loads only when it matches.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#skill"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Staleness rate",
+      "description": "How fast a fact stops being true. Where a fact should live depends on whether the store's repair rate beats it.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#staleness-rate"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Starvation",
+      "description": "The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#starvation"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Structural retrieval",
+      "description": "Retrieving code by symbol, reference and import graph instead of by whole file or embedding similarity.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#structural-retrieval"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stub",
+      "description": "What stays in context after an offload: an identifier plus just enough description to decide whether to fetch it.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#stub"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Sub-agent",
+      "description": "A separate agent with its own fresh context, given a bounded task and returning a result to a parent agent.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#sub-agent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Tool bloat",
+      "description": "Tool definitions taking a large share of the prefix. Harms through displacement and through selection confusion.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#tool-bloat"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Wilson interval",
+      "description": "A confidence interval for a success rate that behaves well at small sample sizes.",
+      "url": "https://ghassan-alhamoud.com/research/context-management-coding-agents/glossary.html#wilson-interval"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/research.css" />
+</head>
+<body class="">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link nav__link--active">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top" class="rs-page rs-page--ref rs-page--glossary">
+    <div class="rs-progress" aria-hidden="true"><span class="rs-progress__bar"></span></div>
+    <div class="rs-container rs-layout">
+      <nav class="rs-rail" aria-label="Context Management contents"><a class="rs-rail__home" href="index.html"><span class="rs-rail__code">RSCH-001</span><span class="rs-rail__title">Context Management</span></a><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html" aria-current="page">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></nav>
+      <article class="rs-article">
+        <nav class="rs-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/research/">Research</a></li><li><a href="/research/context-management-coding-agents/">Context Management</a></li><li aria-current="page">Glossary</li></ol></nav>
+        <header class="rs-hero">
+          <p class="rs-kicker"><span class="rs-kicker__part">RSCH-001 · Reference</span></p>
+          <h1 class="rs-hero__title">Glossary</h1>
+          <p class="rs-hero__lede">50 terms, defined narrowly. Hover a dotted term in any chapter to see its definition without leaving the page.</p>
+        </header>
+        <div class="rs-mobile-nav"><details class="rs-disclosure rs-path-disclosure"><summary>Research contents</summary><ol class="rs-path"><li class="rs-path__part"><span class="rs-path__part-title">Understand the problem</span><ol><li><a href="01-foundations.html"><span class="rs-path__num">1</span><span>Why more context can hurt</span></a></li><li><a href="02-anatomy.html"><span class="rs-path__num">2</span><span>Anatomy of the context</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">The methods</span><ol><li><a href="03-ten-methods.html"><span class="rs-path__num">3</span><span>The ten methods</span></a></li><li><a href="04-choosing-methods.html"><span class="rs-path__num">4</span><span>Choosing your methods</span></a></li><li><a href="05-retrieval.html"><span class="rs-path__num">5</span><span>Retrieval</span></a></li><li><a href="06-compaction-and-memory.html"><span class="rs-path__num">6</span><span>Compaction, offload, memory</span></a></li><li><a href="07-sub-agents.html"><span class="rs-path__num">7</span><span>Sub-agents and isolation</span></a></li><li><a href="08-tool-surface.html"><span class="rs-path__num">8</span><span>The tool surface</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Measure it</span><ol><li><a href="09-evaluation.html"><span class="rs-path__num">9</span><span>Evaluating a change</span></a></li><li><a href="10-metrics-and-economics.html"><span class="rs-path__num">10</span><span>Metrics and economics</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Decide and avoid</span><ol><li><a href="11-hard-calls.html"><span class="rs-path__num">11</span><span>Hard calls</span></a></li><li><a href="12-failure-modes.html"><span class="rs-path__num">12</span><span>Failure modes</span></a></li><li><a href="13-antipatterns.html"><span class="rs-path__num">13</span><span>Antipatterns</span></a></li><li><a href="14-case-studies.html"><span class="rs-path__num">14</span><span>Case studies</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Act on it</span><ol><li><a href="15-optimisation-plan.html"><span class="rs-path__num">15</span><span>The optimisation plan</span></a></li><li><a href="16-diagnostic.html"><span class="rs-path__num">16</span><span>The diagnostic</span></a></li><li><a href="17-tips.html"><span class="rs-path__num">17</span><span>Habits and tips</span></a></li><li><a href="18-tooling.html"><span class="rs-path__num">18</span><span>Tooling landscape</span></a></li></ol></li><li class="rs-path__part"><span class="rs-path__part-title">Reference</span><ol><li><a href="a-templates.html"><span class="rs-path__num">A</span><span>Templates</span></a></li><li><a href="b-lessons.html"><span class="rs-path__num">B</span><span>Lessons</span></a></li></ol></li></ol><p class="rs-path__part-title rs-path__ref-title">Reference</p><ul class="rs-path__refs"><li><a href="index.html">Overview</a></li><li><a href="summary.html">One-page summary</a></li><li><a href="faq.html">FAQ</a></li><li><a href="glossary.html" aria-current="page">Glossary</a></li><li><a href="sources.html">Sources</a></li><li><a href="method.html">Method & scope</a></li></ul></details></div>
+        <div class="rs-gloss">
+          <div class="rs-gloss__tools">
+            <label class="rs-gloss__search"><span class="visually-hidden">Filter terms</span><input type="search" placeholder="Filter 50 terms…" data-gloss-filter /></label>
+            <nav class="rs-gloss__jump" aria-label="Jump to letter"><a href="#letter-a">A</a><a href="#letter-b">B</a><a href="#letter-c">C</a><a href="#letter-d">D</a><a href="#letter-e">E</a><a href="#letter-f">F</a><a href="#letter-h">H</a><a href="#letter-i">I</a><a href="#letter-j">J</a><a href="#letter-k">K</a><a href="#letter-l">L</a><a href="#letter-m">M</a><a href="#letter-o">O</a><a href="#letter-p">P</a><a href="#letter-r">R</a><a href="#letter-s">S</a><a href="#letter-t">T</a><a href="#letter-w">W</a></nav>
+          </div>
+          <h2 class="rs-gloss__letter" id="letter-a">A</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="addressable-recall" data-term="addressable recall addressable recall compaction arc"><dt>Addressable recall</dt><dd><p>Compaction that replaces old content with content-addressed stubs the agent can fetch on demand, instead of a paraphrase. Lossless by construction.</p><p class="rs-gloss__note">Measured at +19.43 points over the best lossy baseline on a 1,000-task needle benchmark <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p><p class="rs-gloss__aliases">Also: addressable recall compaction, ARC</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#result-4-lossless-addressable-compaction-beats-every-lossy-baseline">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="adr" data-term="adr architecture decision record adrs"><dt>ADR</dt><dd><p>A short, numbered Markdown record of a design decision, committed to the repository and reviewed in the pull request that makes the decision.</p><p class="rs-gloss__note">The best memory for coding agents in this research: versioned, greppable and repaired by the same process that changes the code.</p><p class="rs-gloss__aliases">Also: architecture decision record, ADRs</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#tier-3-the-repository-does-the-most-work">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="agentic-search" data-term="agentic search agentic retrieval live agentic search"><dt>Agentic search</dt><dd><p>A retrieval control strategy where the agent iterates: search, read, decide the next query, stop when satisfied.</p><p class="rs-gloss__note">The dominant architecture in shipped coding agents, and the axis where harness differences bite hardest.</p><p class="rs-gloss__aliases">Also: agentic retrieval, live agentic search</p><p class="rs-gloss__see">Introduced in <a href="05-retrieval.html#live-agentic-search-the-llm-as-navigator">Chapter 5: Retrieval: how code should enter context</a></p></dd></div><div class="rs-gloss__entry" id="attention-budget" data-term="attention budget "><dt>Attention budget</dt><dd><p>The framing that replaces &quot;context window as container&quot;: adding tokens can redistribute useful signal rather than creating more reliable attention.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#start-with-the-right-mental-model">Chapter 1: Why more context can hurt coding agents</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-b">B</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="binding-constraint" data-term="binding constraint "><dt>Binding constraint</dt><dd><p>The one limitation that currently caps your agent&#x27;s results. Fixing anything else changes little until it moves.</p><p class="rs-gloss__see">Introduced in <a href="04-choosing-methods.html#step-2-route-by-your-binding-constraint-5-minutes">Chapter 4: Choosing your methods: a 55-minute procedure</a></p></dd></div><div class="rs-gloss__entry" id="body" data-term="body context body"><dt>Body</dt><dd><p>Segments 5–9 of the context: retrieved code, tool results, agent messages, user turns and summaries. It grows during a session.</p><p class="rs-gloss__note">Appended content may be reusable once unchanged; cache hits and billing depend on the provider and request construction. Contrast with the prefix.</p><p class="rs-gloss__aliases">Also: context body</p><p class="rs-gloss__see">Introduced in <a href="02-anatomy.html#prefix-and-body">Chapter 2: Anatomy of a coding agent&#x27;s context</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-c">C</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="cache-adjusted-cost" data-term="cache-adjusted cost "><dt>Cache-adjusted cost</dt><dd><p>Input cost with cached and uncached tokens priced separately, about 0.10 versus 1.25 in relative units.</p><p class="rs-gloss__note">The only honest cost metric, because context changes often move the ratio rather than the total.</p><p class="rs-gloss__see">Introduced in <a href="10-metrics-and-economics.html#the-four-line-cost-model">Chapter 10: Metrics and the real cost of context</a></p></dd></div><div class="rs-gloss__entry" id="clash" data-term="clash "><dt>Clash</dt><dd><p>A failure mode where the context contains contradictions from different phases and the model resolves them by recency or by blending.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="code-graph" data-term="code graph reference graph call graph"><dt>Code graph</dt><dd><p>The import, call, reference and type graph of a codebase, computed exactly by a compiler or language server.</p><p class="rs-gloss__note">Free, always current, and the basis of structural retrieval. Not the same thing as a knowledge graph.</p><p class="rs-gloss__aliases">Also: reference graph, call graph</p><p class="rs-gloss__see">Introduced in <a href="05-retrieval.html#structural-lsp-tree-sitter-symbol-index">Chapter 5: Retrieval: how code should enter context</a></p></dd></div><div class="rs-gloss__entry" id="compaction" data-term="compaction "><dt>Compaction</dt><dd><p>Replacing part of a transcript with a summary. Irreversible, within one session, and it invalidates the cache from the point of change.</p><p class="rs-gloss__note">Distinct from offload (reversible) and memory (across sessions).</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#three-things-people-confuse">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="composability" data-term="composability "><dt>Composability</dt><dd><p>The property that makes delegation safe: sub-agent outputs combine without negotiation.</p><p class="rs-gloss__note">Search and survey work is composable. Interlocking implementation is not.</p><p class="rs-gloss__see">Introduced in <a href="07-sub-agents.html#the-composability-test">Chapter 7: Sub-agents and isolation</a></p></dd></div><div class="rs-gloss__entry" id="confusion" data-term="confusion tool confusion"><dt>Confusion</dt><dd><p>A failure mode where irrelevant context is used because it is present. The common case is picking a plausible wrong tool when too many are in scope.</p><p class="rs-gloss__aliases">Also: tool confusion</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="context-rot" data-term="context rot "><dt>Context rot</dt><dd><p>The everyday name for performance becoming less reliable as input length grows. Chroma measured the pattern across 18 models, with non-uniform curves that depend on model and task [S].</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#what-long-context-studies-actually-show">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="contract-loss" data-term="contract loss "><dt>Contract loss</dt><dd><p>A sub-agent knew something relevant but did not report it because its output contract did not ask.</p><p class="rs-gloss__note">The parent cannot recover it unless the sub-agent's transcript was saved.</p><p class="rs-gloss__see">Introduced in <a href="07-sub-agents.html#contract-loss">Chapter 7: Sub-agents and isolation</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-d">D</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="dereference-dont-index" data-term="dereference, don&#x27;t index dereference"><dt>Dereference, don&#x27;t index</dt><dd><p>The policy for external prose such as a wiki: fetch a named page on demand, never bulk-ingest it into a retrieval store.</p><p class="rs-gloss__aliases">Also: dereference</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#the-wiki">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="distraction" data-term="distraction "><dt>Distraction</dt><dd><p>A failure mode where the agent imitates its own transcript instead of reasoning: re-running, re-reading, re-proposing.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-e">E</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="effective-context-length" data-term="effective context length "><dt>Effective context length</dt><dd><p>The length at which a model still performs acceptably on a given task, as opposed to the length it advertises; it may be shorter than the advertised maximum.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#advertised-length-is-not-effective-length">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="evidence-label" data-term="evidence label evidence labels"><dt>Evidence label</dt><dd><p>A tag on a claim saying how it is supported: S (sourced), P (practitioner-reported), D (derived) or C (composite).</p><p class="rs-gloss__aliases">Also: evidence labels</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#what-long-context-studies-actually-show">Chapter 1: Why more context can hurt coding agents</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-f">F</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="fragment-blindness" data-term="fragment blindness "><dt>Fragment blindness</dt><dd><p>Reasoning about a code fragment without the control flow around it, such as a grep hit shown without the if statement that governs it.</p><p class="rs-gloss__see">Introduced in <a href="05-retrieval.html#nine-ways-code-retrieval-goes-wrong">Chapter 5: Retrieval: how code should enter context</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-h">H</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="harness" data-term="harness agent harness harness confound"><dt>Harness</dt><dd><p>The software wrapping the model: system prompt, tools, loop, compaction and retrieval behaviour.</p><p class="rs-gloss__note">Harness effects can exceed the effect of the strategy under test, so results rarely transfer between harnesses <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p><p class="rs-gloss__aliases">Also: agent harness, harness confound</p><p class="rs-gloss__see">Introduced in <a href="02-anatomy.html#segment-1-system-prompt-and-harness">Chapter 2: Anatomy of a coding agent&#x27;s context</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-i">I</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="isolation" data-term="isolation "><dt>Isolation</dt><dd><p>Splitting context across boundaries such as sub-agents or sessions. It shrinks the parent&#x27;s context at the expense of total spend.</p><p class="rs-gloss__see">Introduced in <a href="07-sub-agents.html">Chapter 7: Sub-agents and isolation</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-j">J</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="just-in-time-retrieval" data-term="just-in-time retrieval jit retrieval just-in-time"><dt>Just-in-time retrieval</dt><dd><p>Carrying lightweight identifiers such as paths and symbol names, and fetching content only at the moment it is needed.</p><p class="rs-gloss__aliases">Also: JIT retrieval, just-in-time</p><p class="rs-gloss__see">Introduced in <a href="03-ten-methods.html#m-3-just-in-time-retrieval">Chapter 3: Ten methods that survive scrutiny</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-k">K</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="knowledge-graph" data-term="knowledge graph "><dt>Knowledge graph</dt><dd><p>Entities and relations extracted from prose by an LLM pipeline. Approximate and as stale as its last ingestion.</p><p class="rs-gloss__note">Skipped for coding work: over source code the code graph answers the same questions exactly. Useful for cross-system relationships.</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#knowledge-graphs-and-a-disambiguation">Chapter 6: Compaction, offload and memory</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-l">L</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="laundering" data-term="laundering hallucination laundering"><dt>Laundering</dt><dd><p>Compaction turning a hedged hypothesis into an asserted fact by stripping the uncertainty around it.</p><p class="rs-gloss__aliases">Also: hallucination laundering</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="loop-detector" data-term="loop detector "><dt>Loop detector</dt><dd><p>A check that flags the same tool called with the same arguments three or more times with no new information in between.</p><p class="rs-gloss__note">The cheapest high-signal instrument available, and rarely built.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-m">M</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="masking" data-term="masking observation masking"><dt>Masking</dt><dd><p>Replacing old tool output with placeholders. Needs no model call.</p><p class="rs-gloss__note">Matched LLM summarisation on solve rate at lower cost <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>, so it is the baseline any summariser must beat.</p><p class="rs-gloss__aliases">Also: observation masking</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#result-5-simple-masking-is-competitive-with-summarisation">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="mcp" data-term="mcp model context protocol mcp server mcp servers"><dt>MCP</dt><dd><p>The Model Context Protocol: a standard way to expose tools and data to agents through servers.</p><p class="rs-gloss__note">The protocol is fine. Attaching many servers by default is the problem.</p><p class="rs-gloss__aliases">Also: Model Context Protocol, MCP server, MCP servers</p><p class="rs-gloss__see">Introduced in <a href="08-tool-surface.html">Chapter 8: The tool surface: MCP, skills and progressive disclosure</a></p></dd></div><div class="rs-gloss__entry" id="memory" data-term="memory cross-session memory"><dt>Memory</dt><dd><p>Information persisted across sessions. Justified only by retrievals that changed an action, not by what was written.</p><p class="rs-gloss__aliases">Also: cross-session memory</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#cross-session-memory">Chapter 6: Compaction, offload and memory</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-o">O</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="offload" data-term="offload reversible offload"><dt>Offload</dt><dd><p>Moving content out of the window into addressable storage and leaving a stub the agent can follow back. Reversible.</p><p class="rs-gloss__aliases">Also: reversible offload</p><p class="rs-gloss__see">Introduced in <a href="03-ten-methods.html#m-6-reversible-offload">Chapter 3: Ten methods that survive scrutiny</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-p">P</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="passk" data-term="pass^k pass² pass@k pass at k pass-hat-k pass@2"><dt>Pass^k</dt><dd><p>Pass@k counts a task solved if any of k runs succeed (&quot;can it ever?&quot;). Pass^k, written Pass² for k = 2, requires all k runs to succeed (&quot;can it reliably?&quot;).</p><p class="rs-gloss__note">Compression damages Pass^k far more than Pass@k, which is why single runs miss it.</p><p class="rs-gloss__aliases">Also: Pass², Pass@k, pass at k, pass-hat-k, Pass@2</p><p class="rs-gloss__see">Introduced in <a href="09-evaluation.html#pass-k-worked">Chapter 9: Evaluating a context change</a></p></dd></div><div class="rs-gloss__entry" id="poisoning" data-term="poisoning "><dt>Poisoning</dt><dd><p>A failure mode where a false fact enters the context and is afterwards treated as established. It survives compaction and cannot be removed by appending a correction.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="position-decay" data-term="position decay "><dt>Position decay</dt><dd><p>A critical fact becoming harder to use because its position in a long input is less favourable.</p><p class="rs-gloss__note">The size and shape of the effect depend on the model, task and harness <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#position-is-a-task-dependent-risk">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="prefix" data-term="prefix prompt prefix stable prefix"><dt>Prefix</dt><dd><p>Segments 1–4 of the context: system prompt, tool definitions, instruction files and skill descriptions. Usually stable and sent on each call; it may be reusable when unchanged, while billing depends on cached versus uncached rates.</p><p class="rs-gloss__aliases">Also: prompt prefix, stable prefix</p><p class="rs-gloss__see">Introduced in <a href="02-anatomy.html#prefix-and-body">Chapter 2: Anatomy of a coding agent&#x27;s context</a></p></dd></div><div class="rs-gloss__entry" id="prefix-caching" data-term="prefix caching kv cache prompt caching cache"><dt>Prefix caching</dt><dd><p>Reusing the computed state of an unchanged prompt prefix. Prefix-exact: valid up to the first changed byte.</p><p class="rs-gloss__aliases">Also: KV cache, prompt caching, cache</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-constraints-around-a-context-decision">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="prefix-tax" data-term="prefix tax "><dt>Prefix tax</dt><dd><p>The tokens present in segments 1–4 on each call before any work. Measure them by sending a one-token message in a fresh session; billing depends on cache hits.</p><p class="rs-gloss__see">Introduced in <a href="02-anatomy.html#segment-1-system-prompt-and-harness">Chapter 2: Anatomy of a coding agent&#x27;s context</a></p></dd></div><div class="rs-gloss__entry" id="progressive-disclosure" data-term="progressive disclosure deferred tool definitions deferred definitions"><dt>Progressive disclosure</dt><dd><p>Loading short descriptions first and full content only on demand. Applied to tool schemas, skills and file reads.</p><p class="rs-gloss__note">About 25,000 tokens of tool definitions became about 2,500 tokens of descriptions <a class="rs-ev rs-ev--s" href="sources.html#evidence-labels" title="Sourced: A study, paper, or first-party engineering write-up with a stated method" aria-label="Evidence: Sourced">S</a>.</p><p class="rs-gloss__aliases">Also: deferred tool definitions, deferred definitions</p><p class="rs-gloss__see">Introduced in <a href="08-tool-surface.html#a-2-progressive-disclosure">Chapter 8: The tool surface: MCP, skills and progressive disclosure</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-r">R</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="read-coverage" data-term="read-coverage "><dt>Read-coverage</dt><dd><p>Whether the decisive file was ever opened during a failed task. It separates starvation from dilution, which need opposite fixes.</p><p class="rs-gloss__see">Introduced in <a href="05-retrieval.html#measure-your-own-retrieval">Chapter 5: Retrieval: how code should enter context</a></p></dd></div><div class="rs-gloss__entry" id="read-utilisation" data-term="read-utilisation "><dt>Read-utilisation</dt><dd><p>The share of retrieved tokens that appear in the final change or explanation. Low values mean retrieval is wasteful.</p><p class="rs-gloss__see">Introduced in <a href="02-anatomy.html#segment-5-retrieved-code">Chapter 2: Anatomy of a coding agent&#x27;s context</a></p></dd></div><div class="rs-gloss__entry" id="relevance-density" data-term="relevance density "><dt>Relevance density</dt><dd><p>Tokens that could plausibly be cited in a correct answer, divided by all tokens in context. The working measure of dilution.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-constraints-around-a-context-decision">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="reset" data-term="reset session reset"><dt>Reset</dt><dd><p>Ending a session and starting a fresh one seeded with a plan file or handoff note. The only operation that removes poisoned content.</p><p class="rs-gloss__aliases">Also: session reset</p><p class="rs-gloss__see">Introduced in <a href="03-ten-methods.html#m-10-session-lifecycle">Chapter 3: Ten methods that survive scrutiny</a></p></dd></div><div class="rs-gloss__entry" id="retention-integral" data-term="retention integral "><dt>Retention integral</dt><dd><p>The sum of each segment&#x27;s tokens multiplied by the number of turns it stays in context. The true cost of hoarding.</p><p class="rs-gloss__see">Introduced in <a href="02-anatomy.html#segment-6-tool-results">Chapter 2: Anatomy of a coding agent&#x27;s context</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-s">S</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="semantic-triggering" data-term="semantic triggering "><dt>Semantic triggering</dt><dd><p>Compacting on task events such as a sub-goal closing or a test passing, instead of at a token threshold or on a timer.</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#result-6-semantic-triggering-beats-both-naive-triggers">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="skill" data-term="skill skills agent skills"><dt>Skill</dt><dd><p>A named capability with a short trigger description that is always loaded and a full procedure that loads only when it matches.</p><p class="rs-gloss__aliases">Also: skills, agent skills</p><p class="rs-gloss__see">Introduced in <a href="08-tool-surface.html#skills-progressive-disclosure-for-procedures">Chapter 8: The tool surface: MCP, skills and progressive disclosure</a></p></dd></div><div class="rs-gloss__entry" id="staleness-rate" data-term="staleness rate "><dt>Staleness rate</dt><dd><p>How fast a fact stops being true. Where a fact should live depends on whether the store&#x27;s repair rate beats it.</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#the-governing-variable-is-staleness-rate">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="starvation" data-term="starvation "><dt>Starvation</dt><dd><p>The agent lacks a fact, does not know it is missing, and proceeds on an assumption. A clean trajectory and a wrong answer.</p><p class="rs-gloss__note">The fifth failure mode this research adds. It can survive review because the transcript may look clean.</p><p class="rs-gloss__see">Introduced in <a href="01-foundations.html#five-ways-context-fails">Chapter 1: Why more context can hurt coding agents</a></p></dd></div><div class="rs-gloss__entry" id="structural-retrieval" data-term="structural retrieval symbol-level retrieval"><dt>Structural retrieval</dt><dd><p>Retrieving code by symbol, reference and import graph instead of by whole file or embedding similarity.</p><p class="rs-gloss__aliases">Also: symbol-level retrieval</p><p class="rs-gloss__see">Introduced in <a href="03-ten-methods.html#m-4-structural-retrieval">Chapter 3: Ten methods that survive scrutiny</a></p></dd></div><div class="rs-gloss__entry" id="stub" data-term="stub stubs citation stub"><dt>Stub</dt><dd><p>What stays in context after an offload: an identifier plus just enough description to decide whether to fetch it.</p><p class="rs-gloss__note">A bare identifier is dead weight; a pointer the agent will not follow is equivalent to deletion.</p><p class="rs-gloss__aliases">Also: stubs, citation stub</p><p class="rs-gloss__see">Introduced in <a href="06-compaction-and-memory.html#offload-the-pattern-to-reach-for-first">Chapter 6: Compaction, offload and memory</a></p></dd></div><div class="rs-gloss__entry" id="sub-agent" data-term="sub-agent sub-agents subagent"><dt>Sub-agent</dt><dd><p>A separate agent with its own fresh context, given a bounded task and returning a result to a parent agent.</p><p class="rs-gloss__aliases">Also: sub-agents, subagent</p><p class="rs-gloss__see">Introduced in <a href="07-sub-agents.html">Chapter 7: Sub-agents and isolation</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-t">T</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="tool-bloat" data-term="tool bloat "><dt>Tool bloat</dt><dd><p>Tool definitions taking a large share of the prefix. Harms through displacement and through selection confusion.</p><p class="rs-gloss__see">Introduced in <a href="08-tool-surface.html#the-measured-damage">Chapter 8: The tool surface: MCP, skills and progressive disclosure</a></p></dd></div></dl><h2 class="rs-gloss__letter" id="letter-w">W</h2><dl class="rs-gloss__list"><div class="rs-gloss__entry" id="wilson-interval" data-term="wilson interval wilson score interval"><dt>Wilson interval</dt><dd><p>A confidence interval for a success rate that behaves well at small sample sizes.</p><p class="rs-gloss__aliases">Also: Wilson score interval</p><p class="rs-gloss__see">Introduced in <a href="09-evaluation.html#the-interval-on-one-arm">Chapter 9: Evaluating a context change</a></p></dd></div></dl>
+          <p class="rs-gloss__empty" hidden>No term matches that filter.</p>
+        </div>
+      </article>
+      <aside class="rs-toc" aria-label="On this page">
+        
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved) { document.documentElement.setAttribute("data-theme", saved); }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/research.js" defer></script>
+</body>
+</html>
