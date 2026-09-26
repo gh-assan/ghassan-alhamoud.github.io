@@ -29,6 +29,7 @@
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
 </head>
 <body>
   <header class="header" id="header">
@@ -49,7 +50,7 @@
   </header>
 
   <main class="article-single">
-    <div class="container article-layout">
+    <div class="container article-layout article-layout--single">
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
@@ -67,6 +68,11 @@
             <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/alms" target="_blank" rel="noopener noreferrer">View Repository</a>
           </div>
         </header>
+
+        <figure class="scene" data-scene="alms" data-requires-js data-label="Animated illustration: six agents orbit ALMS. Agent A hits a vendor API edge case and publishes the learning; ALMS syncs it only to agents with the same tag, which acknowledge it; agent B then passes the same call without rediscovering the failure; while ALMS is offline, the agents keep working.">
+          <div class="scene__stage" style="--aspect: 2.4"></div>
+          <figcaption class="evidence-caption">Illustrative animation of the mechanism, not telemetry. Tags, agents and the vendor API are examples; the sync, acknowledgement and offline behaviour are what the repository implements.</figcaption>
+        </figure>
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">Agents learn useful operational lessons, but other agents never receive them.</span></div>
@@ -155,5 +161,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-alms.js?v=20260926" defer></script>
 </body>
 </html>

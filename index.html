@@ -40,6 +40,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/main.css?v=20260819" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
 
   <!-- JSON-LD Structured Data: one canonical Person entity -->
   <script type="application/ld+json">
@@ -116,23 +117,23 @@
             Every system on this site is public, documented, and inspectable.
             Code, decisions, and limitations included.
           </p>
-          <figure class="hero__signature" aria-label="Compact map of the practice's agent loop: events flow into the runtime, then durable memory, then a human gate.">
+          <figure class="hero__signature" data-loop-strip aria-label="Compact map of the practice's agent loop: events flow into the runtime, then durable memory, then a human gate.">
             <svg viewBox="0 0 316 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
               <defs>
                 <marker id="sig-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/>
                 </marker>
               </defs>
-              <rect x="0" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+              <rect data-hl="s0" x="0" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
               <text x="31" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">events</text>
               <line x1="64" y1="28" x2="78" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
-              <rect x="82" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5" fill="var(--bg-secondary)"/>
+              <rect data-hl="s1" x="82" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5" fill="var(--bg-secondary)"/>
               <text x="113" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">runtime</text>
               <line x1="146" y1="28" x2="160" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
-              <rect x="164" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+              <rect data-hl="s2" x="164" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
               <text x="195" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">memory</text>
               <line x1="228" y1="28" x2="242" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
-              <rect x="246" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+              <rect data-hl="s3" x="246" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
               <text x="277" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">gate</text>
             </svg>
           </figure>
@@ -142,7 +143,7 @@
           </div>
         </div>
 
-        <figure class="hero__artifact" aria-label="Checkpoint loop of the agent runtime behind the public systems on this site: events enter a checkpointed runtime that cycles plan, act, observe; every step is written to SQLite checkpoints and artifacts; a human gate approves or denies consequential actions; and an eval harness records an evidence log that feeds the next run.">
+        <figure class="hero__artifact" data-loop aria-label="Checkpoint loop of the agent runtime behind the public systems on this site: events enter a checkpointed runtime that cycles plan, act, observe; every step is written to SQLite checkpoints and artifacts, which the eval harness replays; a human gate approves or denies consequential actions; and an eval harness records an evidence log that feeds the next run.">
           <svg viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
             <defs>
               <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -151,30 +152,30 @@
             </defs>
 
             <!-- events -->
-            <rect x="16" y="146" width="84" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect data-hl="events" x="16" y="146" width="84" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="58" y="173" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-family="Inter, sans-serif">events</text>
 
             <!-- checkpointed runtime -->
-            <rect x="148" y="104" width="216" height="92" rx="8" stroke="var(--accent)" stroke-width="2" fill="var(--bg-secondary)"/>
+            <rect data-hl="runtime" x="148" y="104" width="216" height="92" rx="8" stroke="var(--accent)" stroke-width="2" fill="var(--bg-secondary)"/>
             <text x="256" y="140" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="600" font-family="Inter, sans-serif">checkpointed runtime</text>
-            <text x="256" y="164" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-family="Inter, sans-serif">plan → act → observe</text>
+            <text x="256" y="164" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-family="Inter, sans-serif"><tspan data-hl="plan">plan</tspan> → <tspan data-hl="act">act</tspan> → <tspan data-hl="observe">observe</tspan></text>
 
             <!-- sqlite durability -->
-            <rect x="148" y="236" width="216" height="56" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect data-hl="sqlite" x="148" y="236" width="216" height="56" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="256" y="262" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="600" font-family="Inter, sans-serif">sqlite</text>
             <text x="256" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif">checkpoints + artifacts</text>
 
             <!-- human gate -->
-            <rect x="404" y="104" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect data-hl="gate" x="404" y="104" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="454" y="126" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">human gate</text>
-            <text x="454" y="144" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif">approve / deny</text>
+            <text x="454" y="144" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif"><tspan data-hl="approve">approve</tspan> / deny</text>
 
             <!-- eval harness -->
-            <rect x="404" y="196" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect data-hl="eval" x="404" y="196" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="454" y="225" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">eval harness</text>
 
             <!-- evidence log -->
-            <rect x="404" y="288" width="100" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect data-hl="evidence" x="404" y="288" width="100" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="454" y="315" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">evidence log</text>
 
             <!-- flows -->
@@ -184,10 +185,11 @@
             <line x1="256" y1="196" x2="256" y2="228" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
             <line x1="236" y1="228" x2="236" y2="196" stroke="var(--accent)" stroke-width="1.2" opacity="0.4" marker-end="url(#arrow)"/>
             <line x1="454" y1="248" x2="454" y2="280" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <path d="M 404 322 C 280 352 100 352 66 334 C 50 320 56 240 58 196" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" marker-end="url(#arrow)"/>
-            <text x="180" y="346" fill="var(--text-muted)" font-size="10" font-family="Inter, sans-serif">evidence feeds the next run</text>
+            <path d="M 364 262 C 384 262 382 232 398 228" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.5" marker-end="url(#arrow)"/>
+            <path data-hl="return" d="M 404 322 C 280 352 100 352 66 334 C 50 320 56 240 58 196" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" marker-end="url(#arrow)"/>
+            <text data-hl="return-label" x="180" y="346" fill="var(--text-muted)" font-size="10" font-family="Inter, sans-serif">evidence feeds the next run</text>
           </svg>
-          <figcaption class="evidence-caption">Illustrative. The checkpoint loop behind Tamoz and ALMS. Inspect the public repos.</figcaption>
+          <figcaption class="evidence-caption loop-caption"><span>Illustrative. The checkpoint loop behind Tamoz and ALMS. Inspect the public repos.</span></figcaption>
         </figure>
       </div>
     </section>
@@ -621,5 +623,6 @@
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/counters.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/hero-loop.js?v=20260926" defer></script>
 </body>
 </html>
