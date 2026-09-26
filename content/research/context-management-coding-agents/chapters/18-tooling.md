@@ -174,14 +174,14 @@ Later, only if measurement demands it
         a memory system, with the retrieval gate from day one
 ```
 
-Weeks 1 and 2 carry most of the value and need almost no ongoing discipline. Weeks 3 and 4 need behaviour change, which is where adoption usually stalls.
+The proposed sequence places low-dependency checks in weeks 1 and 2. Weeks 3 and 4 add behaviour change, which can make adoption harder. These time blocks are planning estimates; the phases do not have a measured share of programme benefit.
 
 ## What the ecosystem is missing
 
 These are gaps a builder could fill. Their absence explains several of the field's blind spots.
 
 1. **Cache-aware accounting.** Nothing widely available reports cache-adjusted cost, so nobody sees regressions like the [dynamic-tool case](ch:case-studies#cs-5-dynamic-tool-loading-made-things-worse).
-2. **Post-boundary instrumentation.** The most error-prone moment in a session is unmonitored everywhere by default.
+2. **Post-boundary instrumentation.** TRACE reports +0.108 additional blocked/error actions at the first post-compaction step in its AppWorld evaluation [S]. Local tools rarely expose those boundary-level outcomes by default.
 3. **Pass^k runners for local workloads.** Running your own tasks k times and computing Pass² should be one command. It is not.
 4. **Read-coverage auditing.** Separating starvation from dilution still means reading transcripts by hand.
 5. **Packaged addressable-recall compaction.** The strongest published compaction result has no widely available implementation.

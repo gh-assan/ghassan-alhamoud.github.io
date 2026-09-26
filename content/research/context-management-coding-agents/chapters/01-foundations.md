@@ -42,9 +42,11 @@ A better picture is an **auction for attention**. The currency is not space. It 
 
 ## What long-context studies actually show
 
-The claim that models get worse as input grows is not folklore. It has been measured carefully. (The small letters after each number are [[evidence label|evidence labels]]; S means a sourced study.)
+Input length can affect performance, but the effect depends on the model, task and prompt. (The small letters after each number are [[evidence label|evidence labels]]; S means a sourced study.)
 
-Chroma's [[context rot|context-rot]] study tested **18 models from four vendors/model families** on controlled long-context tasks. It covered 8 input lengths and 11 needle positions [S]. Across the experiments, performance generally degraded as input grew, with non-uniform, model- and task-specific curves [S].
+Chroma's [[context rot|context-rot]] study tested **18 models from four vendors/model families** on controlled retrieval and question-answer tasks. It varied 8 input lengths and 11 needle positions [S]. Across those tests, performance generally fell as input grew, with non-uniform, model- and task-specific curves [S]. The study did not test coding-agent trajectories or estimate a universal context-window size.
+
+Agent studies answer a different question: they compare particular compression and compaction strategies, such as the AppWorld experiments in [Chapter 6](ch:compaction-and-memory). They do not isolate advertised window size as a cause of coding-agent reliability.
 
 The third column below is an engineering inference for repository agents, not a direct coding-agent measurement [D].
 

@@ -1,8 +1,9 @@
 /* ================================================================
    RESEARCH.CSS — long-form research programmes (/research/)
    Extends main.css. Every colour is a token, so both themes work.
-   Layout: path rail · article · on-page TOC (≥1200px); disclosures below.
-   Contract: docs/research-section/00-research-quality-bar.md
+   Layout: compact wayfinding by default; persistent rails only when the
+   viewport can preserve a full-width reading column.
+   Contract: docs/research-section/04-fresh-design-quality-bar.md
    ================================================================ */
 
 :root {
@@ -11,7 +12,7 @@
   --chart-muted: #3a3a3a;
   --rs-rail-w: 248px;
   --rs-toc-w: 216px;
-  --rs-read-w: 740px;
+  --rs-read-w: 840px;
   --rs-code-bg: #111111;
 }
 
@@ -41,21 +42,27 @@
   padding: 0 24px;
 }
 
+.rs-container.rs-layout { max-width: 1504px; }
+
 .rs-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 40px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1368px) {
   .rs-layout {
-    grid-template-columns: var(--rs-rail-w) minmax(0, var(--rs-read-w)) var(--rs-toc-w);
+    grid-template-columns: fit-content(var(--rs-rail-w)) minmax(760px, var(--rs-read-w)) fit-content(var(--rs-toc-w));
     justify-content: center;
     gap: 48px;
   }
 }
 
-.rs-article { min-width: 0; }
+.rs-article {
+  width: min(100%, var(--rs-read-w));
+  min-width: 0;
+  margin-inline: auto;
+}
 
 /* ----- Reading progress ----- */
 .rs-progress {
@@ -75,22 +82,73 @@
   background: var(--accent);
 }
 
-/* ----- Left rail: the learning path ----- */
-.rs-rail {
-  display: none;
-}
+/* ----- Independently collapsible desktop wayfinding rails ----- */
+.rs-rail-panel,
+.rs-toc-panel { display: none; }
 
-@media (min-width: 1200px) {
-  .rs-rail {
+@media (min-width: 1368px) {
+  .rs-rail-panel,
+  .rs-toc-panel {
     display: block;
     position: sticky;
     top: calc(var(--nav-height) + 24px);
     align-self: start;
     max-height: calc(100vh - var(--nav-height) - 48px);
     overflow-y: auto;
-    padding-right: 8px;
     scrollbar-width: thin;
   }
+
+  .rs-rail-panel,
+  .rs-rail-panel[open] { width: var(--rs-rail-w); }
+
+  .rs-toc-panel,
+  .rs-toc-panel[open] { width: var(--rs-toc-w); }
+
+  .rs-rail-panel:not([open]),
+  .rs-toc-panel:not([open]) { width: max-content; }
+
+  .rs-panel-toggle {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 40px;
+    padding: 8px 10px;
+    margin: 0 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.2;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .rs-panel-toggle::-webkit-details-marker { display: none; }
+  .rs-panel-toggle:hover { border-color: var(--accent); color: var(--text-primary); }
+  .rs-panel-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .rs-panel-toggle__icon {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  .rs-rail-panel:not([open]) .rs-panel-toggle__icon,
+  .rs-toc-panel:not([open]) .rs-panel-toggle__icon {
+    transform: rotate(-45deg);
+  }
+
+  .rs-rail { display: block; padding: 0 8px 0 0; }
+  .rs-toc-panel .rs-toc { display: block; }
 }
 
 .rs-rail__home {
@@ -175,27 +233,6 @@
 /* ----- Right rail: on this page ----- */
 .rs-toc { display: none; }
 
-@media (min-width: 1200px) {
-  .rs-toc {
-    display: block;
-    position: sticky;
-    top: calc(var(--nav-height) + 24px);
-    align-self: start;
-    max-height: calc(100vh - var(--nav-height) - 48px);
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
-}
-
-.rs-toc__title {
-  margin: 0 0 10px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
 .rs-toc__list ul { list-style: none; margin: 0; padding: 0; }
 .rs-toc__list ul ul { padding-left: 12px; }
 
@@ -226,14 +263,20 @@
   color: var(--text-muted);
 }
 
-/* ----- Mobile / tablet disclosures ----- */
+/* ----- Compact, on-demand wayfinding ----- */
 .rs-mobile-nav {
   display: grid;
   gap: 10px;
   margin: 0 0 32px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 760px) {
+  .rs-mobile-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rs-mobile-nav > details:only-child { grid-column: 1 / -1; }
+  .rs-mobile-nav > details[open] { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1368px) {
   .rs-mobile-nav { display: none; }
 }
 
@@ -267,14 +310,14 @@
 
 .rs-disclosure[open] > summary::after { transform: rotate(90deg); }
 
-.rs-disclosure > .rs-path,
-.rs-disclosure > .rs-path__refs,
-.rs-disclosure > .rs-path__ref-title {
+.rs-disclosure > nav > .rs-path,
+.rs-disclosure > nav > .rs-path__refs,
+.rs-disclosure > nav > .rs-path__ref-title {
   padding: 0 16px;
 }
 
-.rs-disclosure > .rs-path { padding-top: 6px; }
-.rs-disclosure > .rs-path__refs { padding-bottom: 14px; }
+.rs-disclosure > nav > .rs-path { padding-top: 6px; }
+.rs-disclosure > nav > .rs-path__refs { padding-bottom: 14px; }
 
 .rs-disclosure .on-this-page__list {
   list-style: none;
@@ -382,33 +425,13 @@
 
 /* ----- Chapter brief (tl;dr + outcomes) ----- */
 .rs-brief {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0;
-  margin: 0 0 44px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--bg-secondary);
-  overflow: hidden;
-}
-
-@media (min-width: 720px) {
-  .rs-brief { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
-}
-
-.rs-brief__col { padding: 22px 24px; }
-
-.rs-brief__col--outcomes {
-  border-top: 1px solid var(--border);
-  background: var(--bg-primary);
-}
-
-@media (min-width: 720px) {
-  .rs-brief__col--outcomes { border-top: 0; border-left: 1px solid var(--border); }
+  margin: 0 0 20px;
+  padding: 8px 16px;
+  border-left: 3px solid var(--accent);
 }
 
 .rs-brief__title {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -420,13 +443,39 @@
   margin: 0;
   padding-left: 18px;
   font-size: 15.5px;
-  line-height: 1.6;
+  line-height: 1.45;
   color: var(--text-primary);
 }
 
-.rs-brief li { margin-bottom: 8px; }
+.rs-brief li { margin-bottom: 3px; }
 .rs-brief li:last-child { margin-bottom: 0; }
-.rs-brief__col--outcomes ul { color: var(--text-secondary); }
+
+.rs-brief__outcomes {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.rs-brief__outcomes > summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rs-brief__outcomes > summary::marker { color: var(--accent); }
+
+.rs-brief__outcomes > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.rs-brief__outcomes[open] ul {
+  margin-top: 10px;
+  color: var(--text-secondary);
+}
 
 /* ----- Body ----- */
 .rs-body { max-width: var(--rs-read-w); }
@@ -587,10 +636,6 @@ a.rs-term {
 .rs-fignum {
   font-weight: 700;
   color: var(--text-primary);
-}
-
-@media (min-width: 1200px) {
-  .rs-body .diagram--wide { margin-right: calc(-1 * (var(--rs-toc-w) + 24px)); }
 }
 
 .chart { min-width: 560px; }
@@ -881,6 +926,8 @@ a.rs-pn__link:hover { border-color: var(--accent); transform: translateY(-2px); 
   letter-spacing: -0.035em;
   color: var(--text-primary);
 }
+
+.rs-home__hero .rs-home__title { text-wrap: balance; }
 
 .rs-home__thesis {
   margin: 0 0 28px;

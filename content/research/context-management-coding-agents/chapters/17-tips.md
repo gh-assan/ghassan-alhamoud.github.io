@@ -1,18 +1,18 @@
 Each habit defers to its owning chapter: setup and prevention → [chapter 3](ch:ten-methods) and [chapter 8](ch:tool-surface); opening and retrieval → [chapter 5](ch:retrieval); state and boundaries → [chapter 6](ch:compaction-and-memory) and [M-10](ch:ten-methods#m-10-session-lifecycle); delegation → [chapter 7](ch:sub-agents); the quarterly loop → [chapter 15](ch:optimisation-plan#the-maintenance-loop).
 
-## The eight that pay for themselves in week one
+## Eight practices to trial in week one
 
 If you do nothing else from this chapter, do these. Three of the eight are free; the rest cost minutes.
 
 | # | Habit | Effort | Payoff |
 |---|---|---|---|
 | 6 | Audit MCP servers with zero calls | 10 min | Candidate recovery when dead or duplicate surface dominates; verify and keep rollback |
-| 9 | Four shell wrappers for your loudest commands | An afternoon | 60–90% less tool output [P] |
+| 9 | Four shell wrappers for your loudest commands | An afternoon | Practitioner reports describe 60–90% less output [P]; measure priced cost and task outcomes on your own commands before treating it as a saving |
 | 1 | Ignore files | 5 min | Prevents a whole class of failures |
 | 3 | The inference test on the instruction file | 20 min | Smaller *and* more salient |
 | 20 | A 200-token opener | Per session | Much less exploratory retrieval |
 | 43 | Compact after a test passes, never mid-debug | Free | Avoids the worst compaction failures |
-| 45 | Re-read the plan file right after compaction | Free | Protects the most error-prone step |
+| 45 | Test a plan-file reread as an orientation step after compaction | Free | Candidate practice; TRACE did not evaluate it |
 | 51 | Reset on the third repeated action | Free | Ends distraction loops at once |
 
 That is the shape of this whole field: **the wins are mostly deletions and habits, not architecture.**
@@ -115,7 +115,7 @@ First: write PLAN.md with your hypotheses before editing anything.
 
 43. **Compact right after a test passes. Never mid-debug.** [[Semantic triggering]] in its simplest form.
 44. **Do not compact when stuck.** Being stuck means you do not yet know what matters, so you cannot choose what to drop.
-45. **Re-read the plan file as the first action after any compaction.** It protects the step with the most errors (+0.108 on AppWorld [S]).
+45. **Consider testing a plan-file reread as the first action after compaction.** TRACE measured +0.108 extra blocked/error actions at the first post-compaction step in AppWorld, but did not test this practice [S].
 46. **Never compact twice.** A second compaction summarises a summary. Reset instead.
 47. **Keep exact strings verbatim in summaries:** errors, versions, paths, line numbers, config keys, IDs.
 48. **Put a done / in-progress / not-started block in every summary.** It counters the 44.6% termination collapse on AppWorld [S].

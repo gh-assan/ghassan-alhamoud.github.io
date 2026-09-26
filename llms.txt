@@ -57,7 +57,7 @@ Core themes:
 
 ## Research
 
-- [Context Management in Coding Agents](https://ghassan-alhamoud.com/research/context-management-coding-agents/): Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.
+- [Context Management in Coding Agents](https://ghassan-alhamoud.com/research/context-management-coding-agents/): Evidence synthesis for context management in coding agents: controlled retrieval and question-answer input-length tests, agent studies of specific compaction strategies, ten methods, an evaluation design and a sequenced plan.
 - [Context Management in Coding Agents: one-page summary](https://ghassan-alhamoud.com/research/context-management-coding-agents/summary.html): The problem, the finding, the first actions and the key numbers on one page.
 
 ## External Profiles

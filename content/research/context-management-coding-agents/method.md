@@ -2,7 +2,7 @@
 
 At inference time, a model can act on two sources: patterns encoded in its weights and information placed in the current input. The repository, yesterday's conversation, CI logs and the ticket affect the next action only when the harness retrieves and presents them. That machinery is rarely designed as one system. It accretes.
 
-The question is **not** "how do I fit more into the window?" That has an answer (buy a bigger window), and the answer does not work. It is:
+The question is **not** "how do I fit more into the window?" Buying a bigger window increases capacity, but capacity alone does not guarantee reliable use of relevant context. The question is:
 
 > [!key] The question
 > Given a coding agent working on a real repository over a multi-hour task, **what should be in its context at each step, what should not, who decides, how do you know the decision was right**, and how do you build a system that keeps deciding well as the repository, the model and the harness change underneath you?
@@ -30,7 +30,7 @@ Context failures are also the quietest. An agent with a bad loop spins visibly. 
 | What do these decisions look like on documented incidents? | [Chapter 14](ch:case-studies) |
 | What is a concrete, sequenced plan? | [Chapter 15](ch:optimisation-plan) |
 | How does a team score itself and get one next action? | [Chapter 16](ch:diagnostic) |
-| What small habits pay for themselves? | [Chapter 17](ch:tips) |
+| What small habits are worth testing? | [Chapter 17](ch:tips) |
 | Which open-source tools are worth adopting? | [Chapter 18](ch:tooling) |
 | Which forms make this operational? | [Appendix A](ch:templates) |
 | What are the transferable, falsifiable lessons? | [Appendix B](ch:lessons) |
@@ -52,6 +52,8 @@ Fixed before writing, to avoid the usual failure of "context engineering best pr
 
 ## Method
 
+This publication is an **author-led, evidence-informed narrative synthesis and practitioner framework**. It brings selected empirical studies and practitioner reports together to develop an operating framework and recommendations. It does **not** report a reproducible systematic-search and inclusion protocol or an independent peer or research-method review; it therefore does not claim systematic or exhaustive coverage.
+
 1. **Ground truth.** Three bodies of work read against each other: empirical long-context research (for the *shape* of the degradation curve), the 2026 agent-context papers (for measured changes at compaction boundaries) and practitioner engineering writing (for mechanism, discounted for product claims). Vendor numbers about vendor products are upper bounds.
 2. **Derive the frame.** A segment entered the [anatomy](ch:anatomy) only if a documented class of failure is exactly "this segment was too large, too small, stale or in the wrong place".
 3. **Catalogue.** Ten methods chosen by four tests (mechanism, evidence, independence, decidability), with a published benched list. See [how the ten were chosen](ch:ten-methods#how-the-ten-were-chosen).
@@ -69,14 +71,16 @@ Stated so that the omissions are choices, not oversights.
 - **Prompt quality**: how to write a good instruction is prompt engineering. How much of it to load, when and at what cost is context engineering.
 - **Security**: context poisoning through prompt injection is named as a failure with containment; the adversarial surface is another research programme's subject.
 
-## The acceptance bar
+## Internal completion check
 
-The work was not considered done until 27 criteria passed, plus two "anti-bar" conditions that fail the work even if every criterion passes. **Result: 27 of 27 passed. Three passed with stated caveats. Both anti-bar conditions passed.**
+I used 27 criteria and two "anti-bar" questions to track the planned scope. In my own assessment, **27 of 27 criteria and both anti-bar questions passed; three criteria have stated caveats.** This is my self-assessment, not an empirical result or a score reviewed by an independent peer or research-method reviewer; the tally is not externally reproducible.
+
+**The criteria below are condensed summaries.** They omit full operational definitions and criterion-by-criterion evidence and verification records; readers cannot independently reproduce the tally from this table. No independent peer or research-method reviewer scored the checklist.
 
 <details class="rs-disclosure rs-inline-disclosure" markdown="1">
-<summary>The 27 criteria, condensed</summary>
+<summary>Condensed criteria: 27-item author self-check</summary>
 
-| Area | Criterion | Delivered |
+| Area | Criterion | Author's recorded check |
 |---|---|---|
 | Foundations | Context defined mechanically; degradation backed by a multi-model study | 18 models, four vendors |
 | Anatomy | Segments with size, owner, failure mode and measurement | 9 segments |
@@ -111,10 +115,10 @@ The work was not considered done until 27 criteria passed, plus two "anti-bar" c
 - **Derived claims are under-labelled.** Rule R3 (long-context findings transfer to agents only by inference) applies far more widely than the explicit [D] labels suggest. Treat every application of static-text research to a live agent as derived, whether or not it carries the label.
 - **One of the central empirical claims is under-verified.** The observation-masking result was captured from the paper's summary. It is corroborated in direction and is not the sole support for any conclusion, but re-read it before citing. The [sources page](ref:sources#verification-caveat) lists every figure in this category.
 
-### The two anti-bar conditions
+### The two anti-bar questions: author's self-assessment
 
-1. **If a reader with a real agent cannot, after reading the methods and the diagnostic, name their single largest wasteful segment and the change that would shrink it, the work has failed.** It passes: the [one-question version](ch:diagnostic#the-one-question-version) branches to a named action, and a reader whose largest segment is tool definitions reaches the representative-sample deletion check in under fifteen minutes.
-2. **If any section could be replaced by "just use a bigger window" or "just run `/compact`" without loss, it is filler.** It passes, and the research argues the opposite of both: more context is not a reliability guarantee, and naive compaction is where the damage is.
+1. **If a reader with a real agent cannot, after reading the methods and the diagnostic, name their single largest wasteful segment and the change that would shrink it, the work has failed.** My self-assessment marked this as passed because the [one-question version](ch:diagnostic#the-one-question-version) branches to a named action, and a reader whose largest segment is tool definitions reaches the representative-sample deletion check in under fifteen minutes. This is a design rationale, not an observed reader study.
+2. **If any section could be replaced by "just use a bigger window" or "just run `/compact`" without loss, it is filler.** My self-assessment marked this as passed: the research treats larger windows as added capacity rather than a complete reliability solution, and discusses losses from naive compaction. No independent peer or research-method reviewer scored this checklist.
 
 ## Relationship to sibling research
 
@@ -130,7 +134,7 @@ The work was not considered done until 27 criteria passed, plus two "anti-bar" c
 
 ## About this edition
 
-This web edition was rewritten from the original research package (about 72,000 words across 32 files, locked 2026-09-05) for readability and navigation: plain language, one question per chapter, a learning path in five parts, figures and charts, a one-page summary, an FAQ and a glossary. Numbers, evidence labels, caveats and falsifiers are carried over unchanged. Where the original used internal section references, this edition uses links.
+This web edition was rewritten from the original research package (about 72,000 words across 32 files, locked 2026-09-05) for readability and navigation: plain language, one question per chapter, a learning path in five parts, figures and charts, a one-page summary, an FAQ and a glossary. Claim wording, numeric attribution, evidence labels and caveats were edited in this edition; it is not a verbatim transfer, and readers should not assume those details were carried over unchanged. The current [sources page](ref:sources) lists this edition's citations and known verification limits. This edition does not claim a full-package peer or research-method review.
 
 ## How to cite
 

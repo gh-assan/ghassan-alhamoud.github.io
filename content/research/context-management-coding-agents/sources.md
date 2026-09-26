@@ -8,7 +8,7 @@ Five rules were applied to every source. They explain how much weight each numbe
 | **R2: Papers carry their benchmark** | A compaction result on a 147-task API benchmark is not automatically a result on your monorepo. Every [S] figure is quoted with its benchmark; transfer to other workloads is stated as inference. |
 | **R3: Long-context findings transfer to agents only by inference** | Almost all long-context research uses static text. An agent's context is a growing transcript containing its own reasoning and errors, plausibly worse, but not measured. |
 | **R4: Harness-confounded results are flagged** | Where a result depends on which agent harness ran it, that is stated, because harness effects can exceed the effect under study [S]. |
-| **R5: Numbers are quoted, not rounded into slogans** | "43% → under 14%", not "accuracy collapses". |
+| **R5: Numbers are quoted, not rounded into slogans** | "RAG-MCP 43.13% vs blank conditioning 13.62%", not "accuracy collapses as tool count grows". |
 
 Labels are applied to claims that carry a number or could be contested. They are not applied to definitions, to this research's own frameworks (the nine segments, the five constraints, starvation as a failure mode), or to conclusions restated from a labelled claim in the same chapter.
 
@@ -36,8 +36,8 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### "Toward Reliable Context Compression for Long-Horizon Agents: An Empirical Study of Execution Instability" (TRACE)
 
-- **Supports:** seven compression strategies compared on AppWorld (full context, FIFO truncation, token pruning, two prompt-based compaction schemes, guideline-based approaches, and a verifier-guided method); the AppWorld results table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 blocked or error actions at the first step after compaction.
-- **Discount:** one benchmark (147 API tasks) and specific model pairings. The *direction* transfers; the magnitudes may not.
+- **Supports:** seven compression strategies compared on AppWorld (full context, FIFO truncation, token pruning, two prompt-based compaction schemes, guideline-based approaches, and a verifier-guided method); the AppWorld results table (no compression 85.7% / 77.4% Pass²; verifier-guided 77.1% / 67.3%; prompt-based 71.4% / 59.5%; FIFO 63.7% / 53.0%); **the Pass@2/Pass² gap widening under tighter budgets**; correct termination 44.6% versus 77.2% at 2K; +0.108 marginal POST-minus-PRE increase in blocked/error-action probability at the first post-compaction action in AppWorld.
+- **Discount:** one benchmark (147 API tasks) and specific model pairings; transfer beyond this setting is unverified. The +0.108 result is a marginal effect at that action step, not an absolute count; it identifies a risk at the tested post-compaction boundary. TRACE did not test re-reading a plan file or compare recovery actions.
 - **Used in:** [lessons B](ch:lessons#c-loss-and-reversibility-l18l26), [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-2-compression-damages-reliability-before-accuracy), [chapter 9](ch:evaluation#pass-k-worked), [chapter 11](ch:hard-calls#compression-and-state), [chapter 12](ch:failure-modes#c-compaction), [chapter 13](ch:antipatterns#ap-4-compaction-as-hygiene), [chapter 17](ch:tips#during-the-session-boundaries), [case CS-4](ch:case-studies#cs-4-compression-that-hurt-reliability-more-than-accuracy-s).
 - **Link:** [arXiv 2608.06503](https://arxiv.org/abs/2608.06503)
 
@@ -57,9 +57,9 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### "Self-Compacting Language Model Agents" (SelfCompact)
 
-- **Supports:** rubric-gated self-triggered compaction (fire on sub-task resolution or convergence; hold off mid-derivation or when stuck); the failure of both reactive and periodic triggers; preservation of verified facts that fixed-interval compaction destroys; summarisation as a **blocking call that can stall the agent for tens of seconds**; prompt instructions about summary length being largely ignored.
-- **Discount:** the rubric is one instantiation.
-- **Used in:** [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-6-semantic-triggering-beats-both-naive-triggers).
+- **Supports:** the authors' rationale that fixed thresholds and intervals can ignore trajectory structure; their task-specific rubric (compact after a sub-task resolves or the trajectory converges; suppress mid-derivation or when stuck); and measured comparisons on competition math and agentic search. Across four Qwen configurations and three math benchmarks, the rubric beat a 16,000-token fixed schedule in 11/12 similarly budgeted cells, with one 1.1-point fixed-interval win. Across three deployed search models and BrowseComp, BrowseComp-Plus and DeepSearchQA, it had higher accuracy in all nine cells than the 30%-of-context threshold baseline. Figure 1 is one BrowseComp trace where a fixed interval drops four verified facts; it is an illustration, not an aggregate result. Other reported findings include summarisation as a **blocking call that can stall the agent for tens of seconds** and prompt instructions about summary length being largely ignored.
+- **Discount:** the broad trigger critique is author motivation, not a general experiment. Results apply to these models, benchmarks, budgets and this rubric; they do not show that all threshold or periodic triggers fail or that the rubric transfers to coding-agent workflows. The rubric is one instantiation.
+- **Used in:** [chapter 3](ch:ten-methods#m-8-semantic-boundary-compaction), [chapter 6](ch:compaction-and-memory#result-6-the-tested-trigger-comparisons).
 - **Link:** [arXiv 2606.23525](https://arxiv.org/abs/2606.23525)
 
 ### "The Complexity Trap: Simple Observation Masking Is as Efficient as LLM Summarization for Agent Context Management"
@@ -78,8 +78,8 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### Token economics of tool-heavy agents (including arXiv 2606.10209)
 
-- **Supports:** input tokens at 99.75–99.87% of total usage; full context at 2.68× the tokens of the best managed method with fewer tasks completed.
-- **Discount:** tool-heavy workloads specifically; ratios differ for chat.
+- **Supports:** across four GPT-5 configurations averaged over five runs on a 50-task Dynamics 365 hotel-expense benchmark using verbose MCP responses, input tokens were 99.75–99.87% of total token volume. Full context used 2.68× the total tokens of the best managed configuration and completed fewer tasks.
+- **Discount:** one structured form-filling workflow with verbose accumulated tool responses; not representative of agents generally. The input-token share is not a cost share: generated output has separate model/provider rates, while input cost depends on cache status and provider pricing. Measure segment volume, task outcomes and priced cost on the target workload.
 - **Used in:** [chapter 2](ch:anatomy#segment-6-tool-results), [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 10](ch:metrics-and-economics#the-four-line-cost-model), [chapter 11](ch:hard-calls#loading-and-retrieval).
 - **Link:** [arXiv 2606.10209](https://arxiv.org/abs/2606.10209)
 
@@ -117,8 +117,9 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 ### Sourcegraph, context-engineering guidance
 
-- **Supports:** **5K of targeted retrieval beating a 100K codebase summary** on identical coding tasks; the subtraction default; reserving headroom.
-- **Discount:** [P]. The comparison's full method was not available, and the page returned HTTP 403 during research, so figures were captured from search summaries. Its direction is corroborated by the focused-versus-full result above. **Re-verify before citing externally.**
+- **Supports:** the author reports that 5K-token targeted retrieval outperformed a 100K-token codebase summary on the same task [P]. This is an author-described practitioner observation, not a published benchmark result.
+- **Discount:** the first-party, vendor-authored post says “we've seen” but identifies no task, model, harness, prompt, comparison protocol, trial count or results table. Treat it as a bounded observation and a hypothesis to test locally; it does not establish a general advantage for smaller inputs or a universal token-size rule.
+- **Link:** [Sourcegraph, “Context Engineering: A Practical Guide for AI Agents”](https://sourcegraph.com/blog/context-engineering).
 - **Used in:** [chapter 3](ch:ten-methods#m-3-just-in-time-retrieval), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#generator-1-treating-the-window-as-a-container), [lessons B](ch:lessons#e-retrieval-l37l44).
 
 ### Hybrid code-retrieval reporting
@@ -140,17 +141,18 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 - **Used in:** [chapter 1](ch:foundations#five-ways-context-fails).
 - **Link:** [dbreunig.com](https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html)
 
-### Tool-count degradation reporting
+### Tool-pool size and tool selection
 
-- **Supports:** 43% → under 14% as tool count grows; 19 of 20 at 20 tools → failure at 107; the ~20-tool practitioner threshold; the ~42,000-token single-server figure; tool surfaces regrowing to their old size within a quarter without a recurring audit [P].
-- **Discount:** mixed [S] and [P]. The strength is two independent methods converging near 20; individual figures are weaker. The 43% → 14% and 19-of-20 figures are published evaluation numbers captured from secondary coverage (see the verification caveat); the ~20-tool threshold and the regrowth observation are practitioner consensus [P].
+- **Supports:** RAG-MCP reports **43.13% accuracy versus 13.62% for blank conditioning** in a method comparison on the held-out web-search subset of MCPBench; it does not report those numbers as a decline caused by increasing tool count. In a separate stress test, the paper varies a candidate MCP pool from 1 to 11,100 over 20 web-search tasks, with one relevant MCP and distractors; it reports a non-monotonic pattern and marked degradation as pools become large. Speakeasy's Dog API demonstration reports 19/20 successful tool calls for Qwen3 1.7B at 20 tools, 3/4 at 40, and frequent hallucinations/errors at 107 [P]. The same post says its demonstration is not exhaustive or rigorous.
+- **Discount:** RAG-MCP is a paper-specific evaluation; its method comparison and increasing-pool stress test are distinct experiments and do not establish a universal tool-count threshold. The Dog API result is a vendor/practitioner demonstration with a synthetic one-tool-per-breed setup, a small model, and very limited trials; its 107-tool observations are not “complete failure” across models. No cited result supports fixed 20-tool or 40-tool ceilings. The ~42,000-token server report and quarterly regrowth observation remain practitioner claims [P].
 - **Used in:** [chapter 2](ch:anatomy), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#the-measured-damage), [chapter 9](ch:evaluation#twelve-results-that-shape-the-design), [chapter 13](ch:antipatterns#ap-2-just-in-case-tooling), [chapter 15](ch:optimisation-plan#the-maintenance-loop), [lessons B](ch:lessons#g-practice-and-organisation-l53l58).
+- **Links:** [RAG-MCP](https://arxiv.org/abs/2505.03275); [Speakeasy, “Why less is more for MCP”](https://www.speakeasy.com/mcp/tool-design/less-is-more).
 
 ### Progressive disclosure and code-execution reporting
 
 - **Supports:** ~25,000 → ~2,500 tokens for descriptions versus definitions; **150,000 → ~2,000 (98.7%)** for code execution; 99%+ on definitions at 112 tools; an independent 98% production report on a GitHub MCP server; the practitioner-landscape convergence on deferred definitions, with some harnesses making them the default by 2026, and usage reporting / compaction control increasingly built in; emerging MCP proposals for adaptive response granularity.
 - **Discount:** first-party and community reports; no independent reproduction found.
-- **Used in:** [lessons B](ch:lessons#c-loss-and-reversibility-l18l26), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [chapter 18](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
+- **Used in:** [lessons B](ch:lessons#c-loss-and-reversibility-l18l26), [chapter 3](ch:ten-methods#m-2-tool-surface-minimisation), [chapter 8](ch:tool-surface#three-architectures), [chapter 15](ch:optimisation-plan#phase-6-advanced), [chapter 17](ch:tips#eight-practices-to-trial-in-week-one), [chapter 18](ch:tool-surface#three-architectures), [case CS-6](ch:case-studies#cs-6-removal-as-the-answer-code-execution-s).
 
 ### Prefix-caching operational reporting
 
@@ -162,24 +164,23 @@ Benchmark suites differ in task, model and scoring, so advertised length is not 
 
 - **Supports:** 30+ tools reading it; 60,000+ repositories; Agentic AI Foundation stewardship; the ≤150-line guidance; ~4% success improvement from human-written context files.
 - **Discount:** [P] throughout. The 4% figure has no published method.
-- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-6-the-growing-instruction-file), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [chapter 18](ch:tooling#standards-and-conventions).
+- **Used in:** [chapter 2](ch:anatomy#segment-3-project-instruction-files), [chapter 5](ch:retrieval#should-you-seed-the-session-with-a-codebase-overview), [chapter 11](ch:hard-calls#loading-and-retrieval), [chapter 13](ch:antipatterns#ap-6-the-growing-instruction-file), [chapter 17](ch:tips#eight-practices-to-trial-in-week-one), [chapter 18](ch:tooling#standards-and-conventions).
 
 ### Open-source tooling documentation
 
 - **Supports:** the tooling catalogue; the 60–90% and 98% output-reduction claims; symbol-level operations; language coverage (30+ languages via the Language Server Protocol across the surveyed toolkits).
 - **Discount:** self-reported, none reproduced here. Audit before installing.
-- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 10](ch:metrics-and-economics#where-to-spend-the-next-unit-of-effort), [chapter 16](ch:diagnostic#your-one-next-action), [chapter 17](ch:tips#the-eight-that-pay-for-themselves-in-week-one), [chapter 18](ch:tooling).
+- **Used in:** [chapter 5](ch:retrieval#structural-lsp-tree-sitter-symbol-index), [chapter 10](ch:metrics-and-economics#where-to-spend-the-next-unit-of-effort), [chapter 16](ch:diagnostic#your-one-next-action), [chapter 17](ch:tips#eight-practices-to-trial-in-week-one), [chapter 18](ch:tooling).
 
 ## Verification caveat
 
-Primary sources were read directly for the load-bearing claims: the compaction cluster (TRACE, ARC, CompactionRL, SelfCompact), the masking comparison, the agentic-search harness study and the context-rot study. **Several supporting figures were captured from abstracts, search summaries or secondary coverage** instead of a full read, and one source (Sourcegraph) could not be accessed directly.
+Primary sources were read directly for the load-bearing claims: the compaction cluster (TRACE, ARC, CompactionRL, SelfCompact), the masking comparison, the agentic-search harness study and the context-rot study. **Several supporting figures were captured from abstracts, search summaries or secondary coverage** instead of a full paper or published protocol.
 
 Figures in that category:
 
-- the Sourcegraph 5K-versus-100K comparison
 - the observation-masking numeric detail
 - the ~42,000-token single-server figure
-- the 43% → 14% and 19/20 → failure tool-count figures
+- the Speakeasy Dog API tool-count demonstration; its setup and limited scope are now stated above
 - the hybrid +12.5% figure
 - the 9K-versus-15K sub-agent token comparison and the within-a-quarter regrowth observation
 - the 60%+ search-time figure
@@ -197,6 +198,6 @@ Six observations would materially undermine the conclusions. Each is cheap to te
 1. **A frontier model with flat performance to about 80% of its window** on a distractor-rich task. That would undercut the attention-budget framing and much of the subtraction default.
 2. **A controlled study where Pass² degrades no faster than mean accuracy under compression.** That would remove the variance-first finding and make single-run evaluation legitimate again.
 3. **A retrieval ranking that replicates across three independent harnesses with similar margins.** That would weaken the harness-confound rule and make published comparisons transferable.
-4. **A current model keeping over 90% tool-selection accuracy at 60+ tools.** That would remove the ~20-tool ceiling and most of the urgency in chapter 8.
+4. **A replicated, representative tool-selection evaluation finding no meaningful change in task success or wrong-tool rate as the candidate pool grows, while controlling for prompt size and harness.** That would weaken the claim that larger choice sets can create a selection burden.
 5. **Parallel sub-agents reliably producing compatible interlocking implementations without a shared brief.** That would invalidate the composability test.
 6. **Total token spend falling when delegation is introduced.** That would change the isolation economics entirely.

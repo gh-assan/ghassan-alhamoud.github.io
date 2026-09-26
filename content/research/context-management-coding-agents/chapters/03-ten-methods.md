@@ -46,7 +46,7 @@ These ten passed the four tests described below; the [benched list](#what-was-be
 | **M-2** Tool surface minimisation | Delete unused tools; load short descriptions, fetch schemas on demand | Dilution, confusion | A rarely used tool |
 | **M-3** Just-in-time retrieval | Carry pointers; fetch content at the moment of need | Dilution | Starvation |
 | **M-4** Structural retrieval | Follow the reference graph the compiler already knows | Dilution | Config blind spots |
-| **M-5** Output shaping | The cheapest token is the one never generated | Dilution | Hiding a line you needed |
+| **M-5** Output shaping | Reduce irrelevant output, then verify the task still succeeds | Dilution | Hiding a line you needed |
 | **M-6** Reversible offload | Move it out, leave a self-describing stub | Information loss | Pointers never followed |
 | **M-7** Externalised state | A short plan file with a **ruled-out** section | Clash, distraction | Drift |
 | **M-8** Semantic-boundary compaction | Compact when a sub-goal closes, never on a timer or mid-debug | Information loss | Anything not in the schema |
@@ -98,14 +98,14 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 **Trouble signs.** Hit rate under about 50% on multi-turn sessions — that is an incident. The decision test below fires earlier, at 60%. Cost per turn rising faster than token count. Latency that never improves as a conversation "warms up".
 
 > [!example] Worked example: the dynamic tool trap [C]
-> A team adds "dynamic tool loading", cutting definitions from 38K to 9K tokens — 24% fewer per call. But the tool block sits about 10K tokens into the prompt and changes every turn, so everything after it misses the cache. At generic prices (cached read 0.10, new-token write 1.25, per 1K tokens), the per-turn bill moves from `117.5 × 0.10 + 2.5 × 1.25 ≈ 14.9` units to `10 × 0.10 + 81 × 1.25 ≈ 102.3` — **a 6.9× cost increase from a 24% token cut.** The team reverts to a static, hand-pruned 14-tool surface, and both bills go down.
+> A team adds "dynamic tool loading", cutting definitions from 38K to 9K tokens — 24% fewer per call. But the tool block sits about 10K tokens into the prompt and changes every turn, so everything after it misses the cache. At illustrative input prices only (cached read 0.10, new-token write 1.25, per 1K input tokens; output and other charges excluded), the modeled per-turn input cost moves from `117.5 × 0.10 + 2.5 × 1.25 ≈ 14.9` units to `10 × 0.10 + 81 × 1.25 ≈ 102.3` — **a 6.9× input-cost increase in this example despite a 24% input-token cut.** Actual total spend depends on provider/cache rates and separately priced generated output. The team reverts to a static, hand-pruned 14-tool surface, reducing the modeled input charge.
 
 ```chart
 {
   "type": "hbar",
-  "title": "Cost per turn: fewer tokens, far higher bill",
+  "title": "Illustrative input cost per turn: fewer tokens, higher charge",
   "categories": ["Static 38K tool block (120K context)", "Dynamic 9K tool block (91K context)"],
-  "series": [{"name": "Relative cost per turn", "values": [14.9, 102.3]}],
+  "series": [{"name": "Relative input cost per turn", "values": [14.9, 102.3]}],
   "valueFormat": "{v}",
   "highlight": [1],
   "labelWidth": 250,
@@ -127,14 +127,14 @@ The less obvious half: this **inverts the cost ranking of context operations**. 
 3. Treat zero-call tools as deletion candidates after a representative sample; verify task coverage and keep rollback.
 4. For what remains, prefer, in order: **built-in tools** over MCP equivalents (the shell already has `grep`, `find`, `curl`); **one general tool** over five narrow ones; **deferred definitions** (short descriptions upfront, schemas on demand); and **code execution** against an API instead of tool schemas at all.
 5. Scope tools per sub-agent or per task type where the harness allows.
-6. Set a hard budget, for example 20 active tools and 15K definition tokens, and enforce it in review.
+6. Set a local budget from measured definition cost, task coverage and selection outcomes; review it when the model, harness or workload changes.
 
 **Why it works.** Tools hurt through two separate channels, and mixing them up leads to the wrong fix.
 
 - **Displacement.** Definition tokens are prefix tokens and crowd out work. One popular MCP server measures about **42,000 tokens** of definitions [P].
-- **Selection confusion.** More candidates means worse choices, independent of tokens. Accuracy fell **from 43% to under 14%** as tool count grew [S]; **19 of 20 at 20 tools became complete failure at 107** [S].
+- **Selection load.** A larger candidate pool can make tool selection harder, but the cited evidence does not isolate choice count from prompt size and retrieval behavior. RAG-MCP scored **43.13% versus 13.62% for blank conditioning** in a separate method comparison [S]. Its stress test varied a pool containing one relevant MCP and distractors from 1 to 11,100 over 20 web-search tasks; reported performance was non-monotonic and degraded at large pool sizes [S]. A vendor Dog API demonstration reports Qwen3 1.7B at **19/20 calls correct with 20 tools, 3/4 with 40, and frequent errors with 107** [P], not complete failure.
 
-[[Progressive disclosure]] fixes displacement; code execution fixes both, with the agent writing code against a documented API instead of choosing among schemas. Reported, and vendor-reported means best case: **25,000 tokens of definitions became about 2,500 tokens of descriptions** [P], and **150,000 → about 2,000 tokens, a 98.7% reduction** [P].
+[[Progressive disclosure]] reduces definition cost. Code execution can also reduce the choices exposed to the model, with the agent writing code against a documented API instead of choosing among schemas. These changes may affect selection too, so evaluate both outcomes rather than assuming they do. Reported, and vendor-reported means best case: **25,000 tokens of definitions became about 2,500 tokens of descriptions** [P], and **150,000 → about 2,000 tokens, a 98.7% reduction** [P].
 
 **Costs and losses.** A one-time effort, then governance: surfaces grow back because adding an MCP server is one click and its cost invisible; without a recurring audit this regresses within a quarter [P]. The risk is dropping a tool the agent needed rarely but decisively — a representative zero-call sample plus task-coverage verification guards against it, and removal is reversible. Over-deferral also adds a round trip before each tool's first use.
 
@@ -166,7 +166,7 @@ Details, including the audit procedure, are in [chapter 8](ch:tool-surface).
 | Paths and names carry relevance for free | `src/auth/session.ts` says a lot in five tokens |
 | Needs are discovered by looking | The agent often cannot say what to pre-load |
 
-The evidence: focused ~300-token prompts beat ~113K-token prompts holding the same answer-bearing material, on LongMemEval [S]; 5K of targeted retrieval beat a 100K codebase summary [P]; full-context approaches used **2.68×** the tokens of the best managed method *and completed fewer tasks* [S].
+The evidence has different strengths: focused ~300-token prompts beat ~113K-token prompts holding the same answer-bearing material on LongMemEval [S]. A Sourcegraph author also reports 5K-token targeted retrieval outperforming a 100K-token codebase summary on the same task [P] (see [Sourcegraph's post](https://sourcegraph.com/blog/context-engineering)), but names no task, model or comparison protocol and gives no results table; treat it as a vendor/practitioner observation, not benchmark evidence. In the 50-task Dynamics 365 hotel-expense benchmark with verbose MCP responses, the full-context GPT-5 configuration used **2.68×** the total tokens of the best managed configuration and completed fewer tasks [S]. This is token volume for that workflow, not a priced-cost ratio.
 
 **Costs and losses.** More turns and latency; on a small repository pre-loading may genuinely be cheaper. Just-in-time wins once the repository exceeds a few windows' worth [D]. The loss is [[starvation]], the most dangerous failure in this research because it is silent: the agent never looks at the file that governs the behaviour and produces a confidently wrong change from a clean-looking transcript. That is why read-coverage audits are mandatory alongside this method.
 
@@ -218,9 +218,9 @@ The retrieval architecture this fits into, including when embeddings still earn 
 4. Add ignore files so lockfiles, `dist/`, `node_modules/`, snapshots and fixtures never enter through globs or diffs.
 5. Make the digest task-aware: a failing test run keeps the trace; a passing one needs one line.
 
-**Why it works.** Pure density gain with **no information loss when done right**, because the discarded text contained nothing: "200 passed in 14.2s" is complete; the 4,000 tokens of dots were noise. Reported: **60–90% reduction** on common dev commands [P] and **98%** by isolating large outputs in an indexed sandbox [P]. Since input is 99.75–99.87% of agent token usage [S] and tool results are the largest input, this is where the money is.
+**Why it can work.** When a command returns repeated or irrelevant text, keeping a concise result and a recoverable full log can reduce context volume without losing needed evidence. Practitioner reports describe **60–90% reduction** on common dev commands [P] and **98%** by isolating large outputs in an indexed sandbox [P]. A separate study found input tokens were **99.75–99.87% of total token volume** across four GPT-5 configurations averaged over five runs on a 50-task Dynamics 365 hotel-expense benchmark with verbose MCP responses [S]. That is a workload-specific token share, not a cost share: output rates differ, and input cost depends on cache status and provider rates. Treat output shaping as a hypothesis; measure input by segment, generated output, task outcomes, and priced cost on your own workload before prioritising it.
 
-**Costs and losses.** An afternoon of scripting for the top five commands; near zero afterwards. The real cost is over-filtering — hiding the warning that mattered, like the peer-dependency warning that explains a bug three hours later. The mitigation that works: **never delete, always redirect.** Full output to a file, digest to context, path included: an irreversible loss becomes a reversible one for about 15 tokens.
+**Costs and losses.** An afternoon of scripting for the top five commands; maintenance should stay low while those commands remain stable. The main risk is over-filtering — hiding the warning that mattered, like the peer-dependency warning that explains a bug three hours later. The mitigation: **never delete, always redirect.** Full output to a file, digest to context, path included: an irreversible loss becomes a reversible one for about 15 tokens.
 
 **Trouble signs.** The agent re-running a command with different verbosity flags to see more. That signal is clean and worth counting: a rise means you cut too deep.
 
@@ -234,7 +234,7 @@ The retrieval architecture this fits into, including when embeddings still earn 
 > | **Total** | **40K** | **~1K–2.5K: a 94–97% reduction, every full log one `cat` away** |
 
 > [!try] Decision test
-> Rank your commands by token volume. If the top three exceed 25% of session tokens, M-5 pays for itself in one afternoon and carries the lowest risk of any method here.
+> Rank your commands by token volume. If the top three exceed 25% of session tokens, test M-5 on representative tasks. Keep it only if measured task outcomes and priced costs improve enough to justify setup and maintenance.
 
 ## M-6: Reversible offload
 
@@ -290,7 +290,7 @@ The full offload architecture, including where offloaded files should live, is [
 1. At the start of a task, have the agent write a plan file: goal, constraints, approach, open questions, done and not done.
 2. **Rewrite it in place** at each meaningful checkpoint. It is a state document, not a log.
 3. Include a **ruled-out** section: the most valuable and most often omitted part.
-4. Re-read it after every compaction, reset or sub-agent return.
+4. As a practical orientation habit to evaluate, re-read it after a compaction, reset or sub-agent return; measure whether it reduces re-derivation on your workload.
 5. Keep it to 30–80 lines. Longer means the task needed splitting.
 
 **Why it works.** It attacks [[clash]] and [[distraction]] at once by treating the plan file, not the transcript, as the state. The transcript is an append-only log of everything that happened, including everything wrong, and the model resolves its contradictions by recency. A plan file is a *mutable* statement of what is currently true: the wrong thing is gone, not outvoted. It lives on disk, so it **survives compaction and resets intact** — the only structure in this research that gives *deliberate* control over what crosses a context boundary. And the ruled-out section counters the most expensive repeated behaviour in agent sessions: trying a failed approach again.
@@ -300,7 +300,7 @@ The full offload architecture, including where offloaded files should live, is [
 > [!example] Worked example: a four-hour auth refactor with three compactions [C]
 > **Without a plan file:** after compaction 1, the summary keeps "working on auth refactor" but drops "we decided against the middleware approach because it breaks the WebSocket path". At turn 71 the agent proposes the middleware approach again. The user re-explains. About 20 turns wasted, and that cost appears in no metric.
 >
-> **With one:** `PLAN.md` says, under *Ruled out*: `middleware interception — breaks WS upgrade path (see ws/upgrade.ts:88)`. After compaction it is re-read, 400 tokens, and the approach is never proposed again.
+> **With one:** `PLAN.md` says, under *Ruled out*: `middleware interception — breaks WS upgrade path (see ws/upgrade.ts:88)`. In this constructed scenario, the agent rereads the 400-token note. Whether that prevents a repeat is a practice to test, not a measured outcome.
 
 > [!try] Decision test
 > Review your last long session. After a compaction or reset, did the agent re-derive a conclusion or re-propose a rejected approach? If it happened even once, M-7 pays. For any task over an hour it is close to free.
@@ -323,14 +323,16 @@ The [plan-file template](ch:templates#3-plan-file) is ready to copy.
 2. Compact only at boundaries, unless a hard ceiling forces it.
 3. Compact with an explicit schema, not "summarise the above": goal and state; decisions with reasons; ruled-out approaches with reasons; **exact strings** (errors, versions, paths, line numbers); open questions; and what was verified and how.
 4. **Offload first** (M-6), so anything dropped is recoverable.
-5. Re-read the plan file (M-7) immediately afterwards.
+5. As a low-cost orientation practice to evaluate, re-read the plan file (M-7) afterwards.
 
-**Why it works.** **Threshold** compaction waits until the context is already full of stale and wrong tokens that have been degrading output for many steps; **periodic** compaction discards indiscriminately and often fires mid-task. Both naive triggers fail, in opposite directions [S]. [[Semantic triggering]] fires when information is genuinely finished: the 2026 self-compaction work gates on closed reasoning units and preserves verified facts that fixed-interval compaction destroys [S].
+**Rationale, not a general result.** SelfCompact's authors argue that token thresholds and fixed schedules ignore trajectory structure and can interrupt partial work. This is their motivation, not an experiment showing that every threshold or periodic policy fails [S].
+
+**What they tested.** Across four Qwen configurations and three competition-math benchmarks, a rubric-gated policy beat a 16,000-token fixed schedule in 11 of 12 similarly budgeted model/benchmark cells; fixed interval led by 1.1 points in the remaining Qwen3-30B-A3B/HMMT February 2026 cell. Across three deployed search models and BrowseComp, BrowseComp-Plus and DeepSearchQA, it had higher accuracy in all nine cells than the 30%-of-context threshold baseline [S]. These results support that scaffold on the tested workloads, not general trigger superiority or transfer to coding agents. The proposed task-boundary rules are a hypothesis to evaluate in your harness [D]; Chapter 6 gives the study detail.
 
 **Why the quality of compaction deserves this attention.** Holding the agent fixed and changing *only the summariser* moved SWE-bench from **49.0% to 55.5%** [S]. Compaction-aware training added **+5.5 and +7.0** on SWE-bench Verified and **+6.8 and +3.1** on Terminal-Bench 2.0 [S]. And the damage is mostly variance: on AppWorld, no compression scored **85.7% / 77.4% Pass²**, prompt-based compaction **71.4% / 59.5%**, FIFO **63.7% / 53.0%** [S].
 
-> [!warning] The first step after a compaction is the most dangerous step in the session
-> It carries **+0.108** extra blocked or error actions [S]. Put the plan-file re-read exactly there.
+> [!warning] TRACE flags a risky post-compaction step in its AppWorld evaluation
+> TRACE reports **+0.108** extra blocked or error actions at the first post-compaction action in AppWorld [S]. It did not evaluate plan-file rereading. Re-reading `PLAN.md` is a plausible orientation practice to test there, not a demonstrated mitigation.
 
 **Costs and losses.** A blocking model call per compaction, sometimes tens of seconds [S], plus a full cache invalidation — often the bigger cost, and almost never counted. See [chapter 10](ch:metrics-and-economics#belief-2-compaction-saves-money). The loss is anything not in the schema. Compaction is the most lossy operation here and the only one that can *invent*: a paraphrase can assert what the transcript only hypothesised. That is [[laundering]]. Mitigate it with a "verified how" field, verbatim exact strings, and offload.
 
@@ -407,7 +409,7 @@ The popular advice that did not make the list. This table is a result, not an om
 | **Multi-agent by default** | Impressive architecture | T4: no test separates decomposable from non-decomposable work without M-9's contract | Folded into M-9 with a decision rule |
 | **Knowledge-graph project memory** | Intellectually attractive | T2: no coding-specific measured result; high upkeep | Watch. Promising across repositories, unproven here |
 | **Middle truncation of long output** | Simple to build | T1: removes the region where errors usually are | Strictly dominated by head-and-tail |
-| **Priming with a codebase overview** | Feels like onboarding | T2: the 5K-versus-100K result and the coherent-text finding (chapter 1) both point against it | A small pointer seed survives as an M-3 setting |
+| **Priming with a codebase overview** | Feels like onboarding | T2: coherent-text results are specific to their tested retrieval tasks (chapter 1) | A small pointer seed survives as an M-3 setting |
 | **"Focus" reminders sprinkled through a session** | Cheap, feels responsive | T3: a weaker version of M-7 | Use M-7 |
 
 Two of these, bigger windows and default multi-agent, absorb a disproportionate share of the field's attention and money.

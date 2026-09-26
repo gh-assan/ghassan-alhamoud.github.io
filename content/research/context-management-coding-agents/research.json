@@ -3,33 +3,33 @@
   "code": "RSCH-001",
   "title": "Context Management in Coding Agents",
   "shortTitle": "Context Management",
-  "thesis": "Larger context windows did not make coding agents proportionally more reliable. The engineering problem is deciding what the agent should see, when it should see it, and what that context costs.",
+  "thesis": "Chroma's controlled retrieval and question-answer tests found performance generally fell as input grew, with model- and task-specific curves. Agent studies compare specific compaction strategies. This programme is an evidence synthesis; it did not test a direct coding-agent window-size effect or establish a universal window-size rule.",
   "audience": "For software and agent engineers working on multi-step repository tasks. Assumes comfort with tests, CI, APIs and production trade-offs.",
-  "description": "Why more context can make coding agents less reliable, and what to do instead: ten methods, measured evidence, an evaluation design and a 16-hour plan.",
+  "description": "Evidence synthesis for context management in coding agents: controlled retrieval and question-answer input-length tests, agent studies of specific compaction strategies, ten methods, an evaluation design and a sequenced plan.",
   "status": "published",
   "statusLabel": "Published",
   "version": "1.0",
   "published": "2026-09-21",
-  "updated": "2026-09-22",
-  "summaryLede": "Everything in this research on one page: the problem, the finding, the first actions, and the numbers behind them. Five minutes.",
+  "updated": "2026-09-23",
+  "summaryLede": "A five-minute evidence synthesis of controlled retrieval and question-answer input-length tests and agent compaction studies—and what they do not establish about coding-agent window size.",
   "sourcesLede": "What each source supports, how much to discount it, which chapters lean on it, and what would prove this research wrong.",
   "methodLede": "The research question, the design commitments fixed before writing, what is out of scope, and the acceptance bar the work had to pass.",
   "summaryStats": [
-    {"value": "18 models", "label": "tested across eight lengths; performance generally fell as input grew [S]"},
-    {"value": "5K > 100K", "label": "targeted retrieval beat a full codebase summary in one practitioner report [P]"},
+    {"value": "18 models", "label": "eight input lengths on controlled retrieval and question-answer tests [S]"},
+    {"value": "+0.108", "label": "marginal increase in blocked/error-action probability at the first post-compaction action in AppWorld [S]"},
     {"value": "6.5 pts", "label": "SWE-bench swing from changing only the summariser [S]"},
     {"value": "77% → 53%", "label": "Pass² with no compression vs FIFO truncation on AppWorld [S]"},
-    {"value": "6.9×", "label": "cost increase from a 24% token cut that broke the prompt cache [C]"},
+    {"value": "6.9×", "label": "estimated input-cost increase in an illustrative model after a 24% input-token cut broke the cache; output charges excluded [C]"},
     {"value": "25–35%", "label": "practitioner estimate when dead or duplicate capabilities dominate; verify and keep rollback [P]"}
   ],
   "finding": [
     {
       "claim": "The context window is an attention budget, not a bucket.",
-      "detail": "Chroma tested 18 models across eight lengths and found performance generally degraded as input grew, with non-uniform, model-specific curves [S]. Correct but irrelevant tokens can still reduce performance."
+      "detail": "Chroma varied input length in controlled retrieval and question-answer tests across 18 models. Performance generally fell as inputs grew, with model- and task-specific curves [S]; these tests did not measure coding-agent trajectories."
     },
     {
       "claim": "Subtraction beats addition, and the evidence is lopsided.",
-      "detail": "5K tokens of targeted retrieval beat a 100K summary [P]. Masking matched summarisation at lower cost [S]. Fewer tools beat more tools [S]. A first audit should test for waste before changing strategy."
+      "detail": "Masking matched summarisation at lower cost [S]. Fewer tools beat more tools [S]. A first audit should test for waste before changing strategy."
     },
     {
       "claim": "Compression damage shows up as unreliability before it shows up as lower accuracy.",
@@ -37,11 +37,11 @@
     },
     {
       "claim": "The cache can flip the sign of an optimisation.",
-      "detail": "In the worked price model, a 24% token cut that made the prefix dynamic raised cost 6.9× [C]. Token count alone is not a cost model."
+      "detail": "In an illustrative input-only price model, a 24% input-token cut that made the prefix dynamic raised estimated input cost 6.9× [C]. Generated-output charges are excluded. Token count alone is not a cost model."
     },
     {
       "claim": "There is a stopping point.",
-      "detail": "About 16 hours of sequenced work, most of it deletion, covers the large majority of the benefit. Past the stop rule, your binding constraint is somewhere else."
+      "detail": "One proposed route budgets about 16 hours across seven phases. Treat the durations as planning estimates, pass each phase gate, and stop when your local measures meet the stop rule."
     }
   ],
   "paths": [
@@ -62,13 +62,13 @@
   "chapters": [
     {
       "id": 1, "slug": "foundations", "part": "understand", "file": "chapters/01-foundations.md",
-      "title": "Why more context can hurt coding agents",
-      "navTitle": "Why more context can hurt",
+      "title": "Long-context evidence and its limits for coding agents",
+      "navTitle": "Long-context evidence",
       "level": "Foundational",
-      "question": "What is context, mechanically, and when does adding more make coding agents less reliable?",
-      "description": "Context is an attention budget, not a container. The evidence for degradation, five constraints around a context decision, and five ways context fails.",
+      "question": "What do controlled long-context tests establish, and what remains inference for coding agents?",
+      "description": "Chroma's controlled retrieval and question-answer input-length tests, their task-specific limits, and separate agent evidence on compaction.",
       "tldr": [
-        "Across Chroma's controlled tasks, performance generally fell as input grew, but the curves were model- and task-dependent [S].",
+        "Chroma's retrieval/QA tests found model- and task-specific input-length declines; agent studies compare compaction strategies. Neither tests window size's effect on coding agents or establishes a universal rule [S].",
         "Five constraints shape a context decision: dilution, position, recency bias in conflicts, cache and information loss.",
         "Context fails in five ways. Starvation can leave no trace in the transcript, so it needs a read-coverage check."
       ],
@@ -126,7 +126,7 @@
       "tldr": [
         "Only ten methods passed four tests: a mechanism, evidence, independence from the others, and a test you can run today.",
         "Each method loses something. The loss mode matters as much as the gain.",
-        "The biggest wins are unglamorous: stable prefixes, fewer tools, and quieter tool output."
+        "Stable prefixes, fewer tools, and quieter output are candidates to test; their measured value depends on workload, cache behavior and provider rates."
       ],
       "outcomes": [
         "Describe each of the ten methods in one sentence and name the force it acts on",
@@ -216,7 +216,7 @@
       "takeaways": [
         "Offload before you compact, and persist only what you would re-derive.",
         "Use an explicit summary schema with state, ruled-out approaches and verbatim exact strings.",
-        "Re-read the plan file first after any compaction; that step carries the most errors.",
+        "A plan-file reread is a low-cost orientation practice to evaluate after compaction; TRACE did not test this tactic.",
         "The repository is the only store with a repair mechanism. Prefer ADRs and tests to memory tools.",
         "Dereference the wiki by name; never index it."
       ]
@@ -254,8 +254,8 @@
       "question": "How much context do tools, MCP servers and skills consume, and what does a healthy tool surface look like?",
       "description": "A tool-surface audit can reveal large definition waste. This chapter covers degradation curves, three architectures, a 30-minute audit, and a worked deletion-versus-deferral example.",
       "tldr": [
-        "Tool count hurts twice: definitions displace work, and more choices mean worse choices [S].",
-        "Deferred definitions fix displacement, not confusion. Only fewer tools fix confusion.",
+        "Tool definitions consume prompt space; larger candidate pools may also affect selection, but current evidence does not isolate that effect cleanly [S].",
+        "Deferred definitions reduce upfront schema cost; measure whether retrieval or pruning changes selection quality on your workload.",
         "A 30-minute audit shows which tools were unused in your sample; delete only after a zero-call check."
       ],
       "outcomes": [
@@ -265,7 +265,7 @@
         "Budget skills the same way you budget tools"
       ],
       "takeaways": [
-        "Treat about 20 active tools as a soft ceiling and about 40 as a hard one.",
+        "Set any local tool-pool budget from representative task coverage, selection errors and prompt cost.",
         "Zero-invocation tools are deletion candidates when the sample is representative; keep rollback.",
         "Prefer the shell to an MCP server that duplicates it, unless the server is a deliberate security control.",
         "Code execution removes a whole category of context and shapes results before they arrive."
@@ -310,7 +310,7 @@
       ],
       "outcomes": [
         "Choose the five metrics to track and the decision each drives",
-        "Compute cache-adjusted cost per turn",
+        "Compute cache-adjusted input cost per turn and add generated-output charges separately",
         "Work out when a compaction pays for itself",
         "Use cost per solved task to compare configurations"
       ],
@@ -422,9 +422,9 @@
       "navTitle": "The optimisation plan",
       "level": "Action",
       "question": "Given everything so far, what exactly should I do, in what order, and when should I stop?",
-      "description": "A sequenced seven-phase plan of about 16 hours, ordered by yield per effort, with a measurement gate per phase and an explicit stop rule.",
+      "description": "A proposed seven-phase sequence budgeted at about 16 hours over six weeks. The time estimates are authored planning estimates, with a measurement gate per phase and an explicit stop rule.",
       "tldr": [
-        "Seven phases, about 16 hours over six weeks. Phases 0–2 take about seven hours and carry most of the benefit.",
+        "Seven phases are budgeted at about 16 hours over six weeks; Phases 0–2 account for about seven proposed hours. Continue only when each phase gate and your remaining needs justify it.",
         "Every phase has a gate. Do not start the next phase until the gate passes.",
         "Stop when the six stop-rule conditions hold. Past that, your constraint is elsewhere."
       ],
@@ -434,7 +434,7 @@
         "Know when a phase has worked and when to stop entirely"
       ],
       "takeaways": [
-        "The plan is ordered by yield per effort, not by intellectual interest.",
+        "The proposed sequence puts baseline measurement and reversible changes before optional advanced work.",
         "Start with deletion when the audit finds dead or duplicate surface; keep it measured and reversible.",
         "Measurement infrastructure is optional unless you will make several more changes.",
         "Re-audit quarterly; the maintenance loop is deletion plus re-measurement."
@@ -468,8 +468,8 @@
       "title": "Sixty-two habits that compound",
       "navTitle": "Habits and tips",
       "level": "Action",
-      "question": "What small, daily practices pay for themselves, and when does each one apply?",
-      "description": "Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus the eight that pay for themselves in the first week.",
+      "question": "What small, daily practices are worth testing, and when does each one apply?",
+      "description": "Sixty-two concrete context-management habits for coding agents, ordered by when they apply, plus eight candidates for a first-week trial.",
       "tldr": [
         "Sixty-two habits, ordered by when they apply: setup, opening, retrieval, state, boundaries, delegation, hygiene.",
         "Eight habits pay off in week one — five of them free.",

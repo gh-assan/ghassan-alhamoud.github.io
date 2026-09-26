@@ -19,13 +19,13 @@ These come first because the design choices follow from them.
 | E2 | Compression hurts stability more than average accuracy [S] | Reporting only single-run accuracy is invalid. Pass^k is mandatory |
 | E3 | The summariser alone moved SWE-bench 49.0% → 55.5% [S] | Hold the compaction prompt constant in every other comparison |
 | E4 | Harness effects can exceed strategy effects [S] | Published retrieval comparisons do not transfer. Re-run them |
-| E5 | Tool-selection accuracy falls 43% to under 14% as tool count grows [S] | Tool count is a controlled variable, not an incidental one |
+| E5 | RAG-MCP scores 43.13% versus 13.62% for blank conditioning; a separate increasing-pool stress test reports non-monotonic degradation at large sizes [S] | Measure candidate-pool size, prompt tokens and selection/task outcomes under the same harness |
 | E6 | Focused context retains the answer-bearing material while removing surrounding context [S] | Measure task outcomes, not retrieval coverage |
-| E7 | Input is 99.75–99.87% of agent token usage [S] | Tracking output tokens measures noise. Instrument input by segment |
-| E8 | Full context costs 2.68× the best managed method and completes fewer tasks [S] | A full-context arm bounds cost; it is not a quality ceiling |
+| E7 | Across four GPT-5 configurations averaged over five runs on a 50-task Dynamics 365 hotel-expense benchmark with verbose MCP responses, input was 99.75–99.87% of token volume [S] | Token share is not cost share. Measure input by segment and cache status, output volume and priced input/output cost on your workload |
+| E8 | On that benchmark, full context used 2.68× the total tokens of the best managed configuration and completed fewer tasks [S] | Compare priced cost and task outcomes under your provider's rates; token volume alone is not billed cost |
 | E9 | Simple masking matches LLM summarisation at lower cost [S] | Masking is the baseline any summarisation proposal must beat |
 | E10 | Addressable compaction wins big on retrieval, slightly on reasoning [S] | Choose a benchmark that matches your failure mode |
-| E11 | The first step after compaction is the most error-prone [S] | Instrument the post-boundary window specifically |
+| E11 | TRACE reports +0.108 additional blocked/error actions at the first post-compaction step in AppWorld [S] | Instrument post-boundary outcomes; TRACE did not test plan-file rereading, so evaluate it as a separate intervention |
 | E12 | Multi-agent gains largely came from spending ~15× the tokens [P] — the cost side of the 90.2% internal-eval gain | Compare topologies at **equal token spend**, or you are measuring spend |
 
 ## Eight design choices
@@ -95,7 +95,7 @@ The most violated row is the compaction prompt. A team comparing retrieval strat
 
 ### 6. Cost accounting
 
-Report **[[cache-adjusted cost]]**. Cached and uncached tokens differ in price by about an order of magnitude, and context changes often move the *ratio* rather than the total. A change that cuts tokens 20% while halving the cache hit rate is a cost *increase*, and a raw token count reports it as a win. [Chapter 10](ch:metrics-and-economics) works the numbers.
+Report input cost with cached and uncached tokens priced separately, then add generated-output tokens at their model/provider rate. Context changes can move the cache ratio; output rates also differ from input rates. A change that cuts raw input tokens 20% while halving the cache hit rate may raise priced cost, and token counts alone cannot decide. [Chapter 10](ch:metrics-and-economics) works the numbers.
 
 ### 7. Where you measure
 

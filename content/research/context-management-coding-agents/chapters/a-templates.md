@@ -51,7 +51,7 @@ Fresh session, send a single `.`, record reported input tokens.
 | **Total** | | | | |
 
 - Defined:invoked ratio (T3): ______ : 1   *(target < 3:1)*
-- Active tool count: ______   *(target ≤ 20)*
+- Active tool count: ______   *(set a local target from task coverage, selection errors and prompt cost)*
 
 ## 3. Session distribution
 
@@ -99,7 +99,7 @@ Record the before/after totals and rank the largest contributions before choosin
 | | | | |
 | | | | |
 
-Top 3 as % of session tokens: ______%   *(if > 25%, output shaping pays immediately)*
+Top 3 as % of session tokens: ______%   *(if > 25%, test output shaping; keep it only if measured task outcomes and priced costs justify the setup)*
 
 ## 5. Density and waste
 
@@ -140,7 +140,7 @@ Re-measure on: ____________ (date)
 ````markdown title="tool-surface-audit.md"
 # Tool Surface Audit
 
-**Date:** ____________  **Budget:** ≤20 active tools, ≤15K definition tokens
+**Date:** ____________  **Budget:** ______ active tools, ≤15K definition tokens *(set the tool-count budget from measured workload needs)*
 
 ## Inventory
 
@@ -199,7 +199,7 @@ ____________ (quarterly)
 
 > Rewrite **in place**. This is state, not a log. Cap: 80 lines.
 > If it exceeds 80 lines, the task needed decomposition.
-> Re-read after every compaction, reset, and sub-agent return.
+> Optional practice to evaluate: re-read after a compaction, reset, or sub-agent return as an orientation step. TRACE did not test this action.
 
 **Last updated:** turn ____ / after ____________________
 
@@ -312,16 +312,17 @@ verified, say so; do not convert a hypothesis into an assertion.
 
 ---
 
-## Operating rules
+## Candidate operating rules to test
 
-| Rule | Reason |
+| Candidate practice | Evidence and limit |
 |---|---|
-| Fire on sub-goal closure, test pass, or hypothesis resolution | Semantic triggering beats threshold and periodic [S] |
-| Suppress mid-derivation, mid-edit, when stuck, right after an error | Periodic compaction erases in-use information [S] |
+| Fire on sub-goal closure, test pass, or hypothesis resolution | Inspired by SelfCompact's task-specific rubric; the paper did not test these exact coding-agent events [D] |
+| Suppress mid-derivation, mid-edit, when stuck, right after an error | Its math rubric checks for mid-derivation or stuck states; mid-edit and post-error are coding-agent analogies to evaluate [S][D] |
 | Max 1 per session | A second compaction summarises a summary |
 | Not with < 5 turns remaining | Below the cost breakeven of about four turns [C] (chapter 10) |
 | Offload large artifacts BEFORE compacting | Converts irreversible loss to reversible |
-| **Re-read PLAN.md as the first post-compaction action** | +0.108 errors at that step [S] |
+| **TRACE result** | +0.108 additional blocked/error actions at the first post-compaction step in AppWorld [S] |
+| **Candidate practice** | Test whether rereading PLAN.md as an orientation step improves outcomes; TRACE did not evaluate it |
 ````
 
 ## 5. Session handoff
@@ -528,7 +529,7 @@ What single piece of information, had the agent had it and attended to it, would
 | Sub-agent returns so far | |
 | Turns since the last boundary | |
 
-> If the failure was within 3 turns of a boundary, suspect the post-compaction error spike.
+> TRACE reports additional blocked/error actions at the first post-compaction step in AppWorld. Use a wider post-boundary window as a local monitoring choice, not as the paper's measured interval.
 
 ## 5. First appearance trace (poisoning check)
 
