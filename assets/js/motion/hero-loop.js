@@ -183,7 +183,8 @@
     }
     function wake() {
       last = 0;
-      if (!raf && visible && !paused && !document.hidden) raf = requestAnimationFrame(frame);
+      if ((!visible || paused || document.hidden) && raf) { cancelAnimationFrame(raf); raf = 0; }
+      else if (!raf && visible && !paused && !document.hidden) raf = requestAnimationFrame(frame);
     }
 
     // Pause control in the caption row.
@@ -236,25 +237,31 @@
       return el('rect', { x: +r.getAttribute('x') - 2, y: 8, width: 66, height: 40, rx: 10,
         fill: 'none', stroke: 'var(--accent)', 'stroke-width': 4, opacity: 0 }, svg);
     });
-    var t0 = 0, done = false;
+    var t = 0, last = 0, raf = 0, visible = false, ready = false;
     function frame(now) {
-      if (!t0) t0 = now;
-      var t = (now - t0) / 1000;
+      raf = 0;
+      if (!visible || document.hidden || t >= 4) return;
+      if (last) t += Math.min((now - last) / 1000, 0.1);
+      last = now;
       place(tok, p, seg(t, 0.2, 3.6));
       halos.forEach(function (h, i) {
         var c = 0.35 + i * 0.95;
         h.setAttribute('opacity', (hold(t, c, c + 0.9, 0.3) * 0.25).toFixed(3));
       });
-      if (t < 4) requestAnimationFrame(frame);
+      if (t < 4) raf = requestAnimationFrame(frame);
+    }
+    function wake() {
+      last = 0;
+      if ((!visible || document.hidden) && raf) { cancelAnimationFrame(raf); raf = 0; }
+      else if (ready && visible && !document.hidden && t < 4 && !raf) raf = requestAnimationFrame(frame);
     }
     if (!('IntersectionObserver' in window)) return;
-    new IntersectionObserver(function (en, obs) {
-      if (en[0].isIntersecting && !done && !document.hidden) {
-        done = true;
-        obs.disconnect();
-        setTimeout(function () { requestAnimationFrame(frame); }, 500);
-      }
+    new IntersectionObserver(function (en) {
+      visible = en[0].isIntersecting;
+      if (visible && !ready) setTimeout(function () { ready = true; wake(); }, 500);
+      wake();
     }, { threshold: 0.5 }).observe(fig);
+    document.addEventListener('visibilitychange', wake);
   }
 
   function boot() {

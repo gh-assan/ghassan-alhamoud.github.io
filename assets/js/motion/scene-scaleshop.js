@@ -33,6 +33,37 @@
   }
   function queue(t) { return Math.round(7 * E.inOutSine(seg(t, 3.6, 6.4)) * (1 - E.inOutSine(seg(t, 9.6, 11.2)))); }
 
+  // The desktop isometric map becomes a legible routing diagram on phones.
+  function drawCompact(s, t) {
+    var w = s.w, app = w / 2, db = w - 49, cacheX = w * 0.66;
+    var ca = cache(t), q = queue(t);
+    var row = Math.round(s.h * 0.45), cacheRow = Math.round(s.h * 0.69);
+    var paths = [
+      L.path([[86, row], [app - 36, row]]),
+      L.path([[app + 36, row], [db - 40, row]]),
+      L.path([[app, row + 22], [app, cacheRow], [cacheX - 26, cacheRow]]),
+      L.path([[cacheX + 26, cacheRow], [db, cacheRow], [db, row + 25]])
+    ];
+    paths.forEach(function (p, i) { L.arrow(s, p, { tone: i > 1 ? 'info' : 'border', alpha: i > 1 ? ca : 1, headSize: 5 }); });
+    var heat = hold(t, 3.5, 9.8, 0.6);
+    L.node(s, { x: 49, y: row, w: 74, h: 44, title: 'clients', sub: 'requests' });
+    L.node(s, { x: app, y: row, w: 72, h: 44, title: 'apps × 3', sub: 'reads' });
+    L.node(s, { x: db, y: row, w: 80, h: 50, title: 'primary', sub: 'database', tone: heat > 0.4 ? 'warn' : 'info', emph: heat });
+    if (ca > 0.01) L.node(s, { x: cacheX, y: cacheRow, w: 52, h: 32, title: 'cache', size: 11, tone: 'info', alpha: ca, emph: ca });
+    for (var i = 0; i < q; i++) L.token(s, db - 45 - i * 5, row, { r: 1.8, tone: 'warn', halo: 2 });
+    var u = (s.clock * 0.65) % 1;
+    L.token(s, 86 + (app - 122) * u, row, { r: 2, tone: 'accent' });
+    if (ca > 0.6) L.token(s, app + (cacheX - app) * u, cacheRow, { r: 2, tone: 'info' });
+    else L.token(s, app + 36 + (db - 40 - app - 36) * u, row, { r: 2, tone: heat > 0.4 ? 'warn' : 'accent' });
+
+    var vals = [];
+    for (i = 0; i < 32; i++) vals.push(p95(t - (31 - i) * 0.12));
+    L.text(s, 'p95 read latency', 14, 16, { key: true, align: 'left' });
+    L.spark(s, 14, 26, 104, 30, vals, { tone: p95(t) > 0.55 ? 'warn' : 'info' });
+    if (hold(t, 6.2, 8.7, 0.35) > 0.01) L.chip(s, 'reads saturate primary', w - 12, 34, { align: 'right', tone: 'warn', emph: 1 });
+    else if (ca > 0.2) L.chip(s, 'read cache selected', w - 12, 34, { align: 'right', tone: 'info', emph: ca });
+  }
+
   Motion.register('scaleshop', {
     duration: DUR,
     poster: 10.3,
@@ -66,6 +97,7 @@
     },
 
     draw: function (s, t) {
+      if (s.compact) { drawCompact(s, t); return; }
       var g = s.g, cam = s.state.cam;
       cam.yaw = -0.38 + Math.sin(s.clock * 2 * Math.PI / 24) * 0.06 + s.pointer.x * 0.04;
       cam.pitch = 0.58 + s.pointer.y * 0.02;

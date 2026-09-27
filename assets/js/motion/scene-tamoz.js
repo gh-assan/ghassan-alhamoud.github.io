@@ -31,6 +31,43 @@
   var THIRD = Math.PI * 2 / 3, TOTAL = spun(13);
   var OMEGA = Math.round(14 * TOTAL / THIRD) * THIRD / TOTAL;
 
+  // Readable two-row topology for phones.
+  function drawCompact(s, t) {
+    var g = s.g, w = s.w, left = 72, right = w - 72;
+    var top = Math.round(s.h * 0.32), bottom = Math.round(s.h * 0.63);
+    var paths = [
+      L.path([[left + 54, top], [right - 54, top]]),
+      L.path([[right, top + 23], [right, bottom - 29], [left, bottom - 29]]),
+      L.path([[left + 54, bottom], [right - 54, bottom]])
+    ];
+    paths.forEach(function (p) { L.arrow(s, p, { tone: 'border', headSize: 5 }); });
+
+    var warm = hold(t, 1.0, 4.0, 0.5);
+    var decide = hold(t, 4.2, 6.7, 0.4);
+    var govern = hold(t, 6.4, 8.7, 0.4);
+    var act = hold(t, 8.4, 11.7, 0.4);
+    L.node(s, { x: left, y: top, w: 108, h: 46, title: 'readings', sub: warm > 0.4 ? 'threshold crossed' : 'sensor stream', tone: warm > 0.4 ? 'warn' : 'accent', emph: warm });
+    L.node(s, { x: right, y: top, w: 108, h: 46, title: 'Tamoz', sub: 'chooses intent', emph: decide });
+    L.node(s, { x: left, y: bottom, w: 108, h: 54, title: 'policy', sub: 'ceiling 60 %', tone: 'info', emph: govern });
+    L.node(s, { x: right, y: bottom, w: 108, h: 46, title: 'fan-01', sub: '10 s lease', tone: 'info', emph: act });
+
+    var duty = E.outQuart(seg(t, 7.9, 8.3)) * (1 - E.inOutSine(seg(t, 11.8, 12.7)));
+    var gx = left - 39, gy = bottom + 19;
+    g.fillStyle = col('border'); g.fillRect(gx, gy, 78, 2);
+    g.fillStyle = col('info'); g.fillRect(gx, gy, 78 * DUTY * duty, 2);
+    g.fillStyle = col('bad'); g.fillRect(gx + 78 * CEIL, gy - 3, 2, 8);
+
+    var u = seg(t, 3.9, 5.0);
+    if (u > 0 && u < 1) { var p = paths[0].at(u); L.token(s, p.x, p.y, { tone: 'accent' }); }
+    u = seg(t, 6.45, 7.85);
+    if (u > 0 && u < 1) { p = paths[1].at(u); L.token(s, p.x, p.y, { tone: 'info' }); }
+    u = seg(t, 8.0, 8.8);
+    if (u > 0 && u < 1) { p = paths[2].at(u); L.token(s, p.x, p.y, { tone: 'info' }); }
+    if (t < 6.4 && decide > 0.01) L.chip(s, 'mode: bounded_cooling', w / 2, 23, { code: true, emph: decide, alpha: decide });
+    else if (t < 8.6 && govern > 0.01) L.chip(s, 'set_pwm_lease · ≤ 60 %', w / 2, 23, { code: true, tone: 'info', emph: govern, alpha: govern });
+    else if (act > 0.01) L.chip(s, 'bounded command', w / 2, 23, { tone: 'info', emph: act, alpha: act });
+  }
+
   Motion.register('tamoz', {
     duration: 13,
     poster: 8.1,
@@ -47,21 +84,22 @@
     },
 
     layout: function (s) {
-      var cam = s.state.cam, c = s.compact;
-      s.state.yaw = c ? -0.95 : -0.5;
-      s.state.pitch = c ? 0.46 : 0.36;
+      if (s.compact) return;
+      var cam = s.state.cam;
+      s.state.yaw = -0.5;
+      s.state.pitch = 0.36;
       cam.yaw = s.state.yaw; cam.pitch = s.state.pitch;
       // extents: stream, window, core, policy plane, gauge, fan, ground labels
       var pts = [[X0, 0, 0], [X0, THRESH + 16, 0], [WIN - 22, 96, 30], [WIN + 22, 0, -30],
         [CORE, 62 + 41, 0], [PLANE, 118, 55], [PLANE, 0, -60], [GAUGE, 124, 0],
         [FAN + FAN_R + 12, FAN_Y, 0], [FAN, FAN_Y + FAN_R + 12, 0], [FAN, 0, -18], [CORE, 0, -25]];
-      // desktop chips float above their objects; compact docks them to the top
-      if (!c) pts.push([CORE, 62 + 41 + 34, 0], [GAUGE, 124 + 34, 0], [(FAN + CORE) / 2 + 40, FAN_Y + FAN_R + 56, 0]);
-      L.fit(s, cam, pts, { top: c ? 62 : 16, bottom: c ? 58 : 50, left: 14, right: 14 });
+      pts.push([CORE, 62 + 41 + 34, 0], [GAUGE, 124 + 34, 0], [(FAN + CORE) / 2 + 40, FAN_Y + FAN_R + 56, 0]);
+      L.fit(s, cam, pts, { top: 16, bottom: 50, left: 14, right: 14 });
     },
 
     draw: function (s, t) {
-      var g = s.g, cam = s.state.cam, c = L.colors();
+      if (s.compact) { drawCompact(s, t); return; }
+      var g = s.g, cam = s.state.cam;
       cam.yaw = s.state.yaw + Math.sin(s.clock * 2 * Math.PI / 20) * 0.05 + s.pointer.x * 0.04;
       cam.pitch = s.state.pitch + s.pointer.y * 0.02;
       var P = cam.project;
@@ -82,7 +120,7 @@
       var th0 = P(X0, THRESH, 0), th1 = P(WIN - 30, THRESH, 0);
       g.beginPath(); g.moveTo(th0.x, th0.y); g.lineTo(th1.x, th1.y);
       g.setLineDash([3, 4]); g.strokeStyle = col('warn', 0.55); g.stroke(); g.setLineDash([]);
-      if (!s.compact) L.text(s, 'threshold', th0.x + 2, th0.y - 8, { key: true, align: 'left', color: 'warn', alpha: 0.8 });
+      L.text(s, 'threshold', th0.x + 2, th0.y - 8, { key: true, align: 'left', color: 'warn', alpha: 0.8 });
 
       // ---- 1. readings: stems + dots; height = temperature at emission
       var step = 0.2, now = s.clock, n = Math.ceil((WIN + 20 - X0) / (V * step)) + 1;
@@ -113,7 +151,7 @@
         L.box3(s, cam, cx, cy - sz / 2, 0, sz, sz, sz, { tone: 'warn', emph: 1, alpha: cubeA, tint: 0.1, edgeTint: 1 });
         var cl = P(cx, Math.max(cy + sz / 2 + 14, 112), 0);
         var la = cubeA * (1 - seg(t, 4.3, 4.6));
-        if (la > 0.01) L.chip(s, 'situation v47', s.compact ? 12 : cl.x, s.compact ? 20 : cl.y, { tone: 'warn', emph: 1, alpha: la, align: s.compact ? 'left' : undefined });
+        if (la > 0.01) L.chip(s, 'situation v47', cl.x, cl.y, { tone: 'warn', emph: 1, alpha: la });
       }
 
       // ---- 3. Tamoz: turning octahedron; faster + accent while deciding
@@ -161,8 +199,7 @@
       });
       var ic = hold(t, 5.95, 8.5, 0.35) * (1 - reset);
       var icp = P(CORE, cyC + R3 * 1.2 + 26, 0);
-      // compact: chips dock to fixed top slots instead of floating over the scene
-      if (ic > 0.01) L.chip(s, 'intent · mode: bounded_cooling', s.compact ? 12 : icp.x, s.compact ? 20 : icp.y - (1 - ic) * 4, { emph: 1, alpha: ic, code: true, align: s.compact ? 'left' : undefined });
+      if (ic > 0.01) L.chip(s, 'intent · mode: bounded_cooling', icp.x, icp.y - (1 - ic) * 4, { emph: 1, alpha: ic, code: true });
 
       // intent travels core → policy plane; command continues to the fan
       var iu = seg(t, 6.45, 7.05);
@@ -200,10 +237,10 @@
       g.fillStyle = col('bad', 0.12); g.fill();
       g.strokeStyle = col('bad', 0.85); g.lineWidth = 1.5; g.stroke();
       var c1 = P(GAUGE + 11, H * CEIL, -11);
-      L.text(s, s.compact ? '60 %' : 'ceiling 60 %', c1.x + 8, c1.y, { key: true, align: 'left', color: 'bad', alpha: 0.9 });
+      L.text(s, 'ceiling 60 %', c1.x + 8, c1.y, { key: true, align: 'left', color: 'bad', alpha: 0.9 });
       var cc = hold(t, 7.9, 10.2, 0.35) * (1 - reset);
       var ccp = P(GAUGE, H + 26, 0);
-      if (cc > 0.01) L.chip(s, 'set_pwm_lease · ≤ 60 % · 10 s', s.compact ? s.w - 12 : ccp.x, s.compact ? 44 : ccp.y - (1 - cc) * 4, { tone: 'info', emph: 1, alpha: cc, code: true, align: s.compact ? 'right' : undefined });
+      if (cc > 0.01) L.chip(s, 'set_pwm_lease · ≤ 60 % · 10 s', ccp.x, ccp.y - (1 - cc) * 4, { tone: 'info', emph: 1, alpha: cc, code: true });
 
       var cu = seg(t, 8.05, 8.55);
       if (cu > 0 && cu < 1) {
@@ -265,7 +302,7 @@
       var xc = hold(t, 10.4, 11.9, 0.3);
       if (xc > 0.01) {
         var xp = P((FAN + CORE) / 2 + 40, FAN_Y + FAN_R + 50, 0);
-        L.chip(s, 'experience', s.compact ? s.w / 2 : xp.x, s.compact ? 20 : xp.y, { tone: 'info', emph: 1, alpha: xc });
+        L.chip(s, 'experience', xp.x, xp.y, { tone: 'info', emph: 1, alpha: xc });
       }
     }
   });

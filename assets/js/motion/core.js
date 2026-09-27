@@ -499,7 +499,10 @@
       }
     }
     var fadeIn = E.outCubic(seg(t, beats[cur][0], beats[cur][0] + 0.35));
-    text(s, beats[cur][1], x + n * (sw + 4) + 6 + (1 - fadeIn) * 4, y + 0.5,
+    // On phones the label gets its own row. The toggle occupies the lower
+    // right corner, so putting text after the segments makes it collide.
+    text(s, beats[cur][1], s.compact ? 14 : x + n * (sw + 4) + 6 + (1 - fadeIn) * 4,
+      s.compact ? s.h - 39 : y + 0.5,
       { key: true, align: 'left', color: 'text2', alpha: fadeIn });
   }
 
@@ -562,7 +565,10 @@
     if (any) wake();
   }
   function wake() {
-    if (!raf && !document.hidden) raf = requestAnimationFrame(frame);
+    var active = started && !reduceMotion && !document.hidden &&
+      insts.some(function (s) { return !s.dead && s.visible && !s.paused; });
+    if (!active && raf) { cancelAnimationFrame(raf); raf = 0; }
+    else if (active && !raf) raf = requestAnimationFrame(frame);
   }
 
   function setPaused(s, paused) {
@@ -643,7 +649,7 @@
           var s = en.target.__motion;
           s.visible = en.isIntersecting;
           s.last = 0;
-          if (s.visible) wake();
+          wake();
         });
       }, { threshold: 0.12 });
       insts.forEach(function (s) { io.observe(s.fig); });

@@ -62,6 +62,17 @@ All gates pass; scores above. No blocking defects.
 | One stage ratio (2.25 : 1) suited no scene exactly; wide, short compositions left bands empty. | Per-scene `--aspect` set inline on the stage (CLS-safe, reserved before JS): ALMS 2.4, Tamoz 2.45, Funnel 2.25, ScaleShop 2.4, Film 2.5, Email 2.7. Phones keep 4 : 3. |
 | Refit regressions on phones: Email's draft chip over the rail, allowlist label under the toggle. | Draft chip docks to the top slot on compact; compact insets widened. |
 
+## Iteration 5 — branch review (2026-09-27)
+
+| Finding | Root cause | Fix and evidence |
+|---|---|---|
+| Tamoz and ScaleShop were illegible at 320–375 px, despite fitting inside the stage. | Their desktop world coordinates were scaled to phone width. Increasing stage height could not recover the lost horizontal resolution. | Added compact two-row routing diagrams that preserve each scene's decision sequence. Browser screenshots at 320 and 375 px show readable nodes and labels; geometry tests exercise 320/375 px and four beats. |
+| The active beat text ran into the pause button on phones. | The rail appended text after five segments on one line, leaving too little width for its longest labels. | Compact rail places the beat label above its segments. Browser check at 320 px shows clearance. |
+| The homepage signature strip could continue its one-shot rAF loop after leaving view or entering a hidden tab. | Intersection was checked only when starting; each frame scheduled the next unconditionally. | The loop now tracks visibility, cancels pending frames, and resumes elapsed time on return. The shared canvas scheduler and full homepage loop also cancel pending frames when inactive. |
+| Film Pipeline spent too much height on an empty band above and below its graph. | The desktop stage ratio was taller than this horizontal diagram needed. | Desktop aspect changed from 2.5 to 2.9; the repair path, graph, and artifact strip remain inside the stage. Phone ratio remains 4:3. |
+
+**Verification:** six scene pages checked at 320 px: no horizontal overflow or console warnings/errors, and every pause control was present. Pause/play state was exercised on Email Intelligence. `npm run test:motion` and `python3 scripts/validate-site.py` pass. This round did not repeat the original performance benchmark or reduced-motion emulation; the previous iteration's measurements remain the evidence for those gates.
+
 ## Bar amendments
 
 - **G5 v1.1 (weight).** The v1 raw cap (`core.js` ≤ 16 KB) was mis-calibrated: the
