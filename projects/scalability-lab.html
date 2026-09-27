@@ -36,6 +36,7 @@
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css?v=20260809-3" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
 </head>
 <body>
   <header class="header" id="header">
@@ -61,7 +62,7 @@
   </header>
 
   <main class="article-single">
-    <div class="container article-layout">
+    <div class="container article-layout article-layout--single">
       <article>
         <header class="article-single__header">
           <div class="article-single__meta">
@@ -81,9 +82,9 @@
           </div>
         </header>
 
-        <figure class="artifact-frame">
-          <img class="project-single__hero" src="/images/projects/scaleshop-social.png" alt="ScaleShop Scalability Lab showing an abstract distributed-system topology" width="1200" height="630" />
-          <figcaption class="evidence-caption">Illustrative render — the workshop itself is live at <a href="https://lab.ghassan-alhamoud.com">lab.ghassan-alhamoud.com</a> and open source.</figcaption>
+        <figure class="scene" data-scene="scaleshop" data-label="Animated illustration: requests flow from clients through a load balancer and three app nodes to a primary database. Traffic grows, reads queue at the primary and p95 read latency climbs past its budget. The evidence is framed, four options are considered and a read cache is chosen as the smallest sufficient change; most reads now return from the cache, the queue drains and p95 recovers.">
+          <div class="scene__stage" style="--aspect: 2.4"><img src="/images/projects/scaleshop-social.png" alt="ScaleShop Scalability Lab showing an abstract distributed-system topology" width="1200" height="630" /></div>
+          <figcaption class="evidence-caption">Illustrative animation of the workshop's method, not one of its twelve scored scenarios. The lab itself is live at <a href="https://lab.ghassan-alhamoud.com">lab.ghassan-alhamoud.com</a> and open source.</figcaption>
         </figure>
 
         <div class="project-facts">
@@ -175,5 +176,7 @@ outcome:   scored against a reference path; trade-offs explained,
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-scaleshop.js?v=20260926" defer></script>
 </body>
 </html>

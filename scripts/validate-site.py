@@ -780,6 +780,77 @@ def check_handbook_decision_path():
     report("handbook-decision-path", not problems, "; ".join(problems))
 
 
+# --------------------------------------------------------------- motion
+def check_motion_contract():
+    """Animated scenes follow docs/animation/00-quality-bar.md."""
+    import gzip
+    problems = []
+    mdir = ROOT / "assets/js/motion"
+    core = mdir / "core.js"
+    if not core.exists():
+        report("motion-contract", False, "assets/js/motion/core.js missing")
+        return
+    core_js = read(core)
+    for needle in ("prefers-reduced-motion", "IntersectionObserver",
+                   "visibilitychange", "scene__toggle", "aria-pressed",
+                   "role', 'img'", "data-theme"):
+        if needle not in core_js:
+            problems.append(f"core.js: missing '{needle}'")
+    # G3: colours only from theme tokens
+    for f in sorted(mdir.glob("*.js")):
+        if re.search(r"['\"]#[0-9a-fA-F]{3,8}['\"]", read(f)):
+            problems.append(f"{f.name}: hex colour literal (use theme tokens)")
+    # G5: weight
+    caps = {"core.js": 28000, "hero-loop.js": 12000}
+    for f in sorted(mdir.glob("*.js")):
+        cap = caps.get(f.name, 16000)
+        if f.stat().st_size > cap:
+            problems.append(f"{f.name}: {f.stat().st_size} B raw > {cap}")
+    css = read(ROOT / "assets/css/motion.css")
+    if not re.search(r"\.scene__stage\s*\{[^}]*aspect-ratio", css):
+        problems.append("motion.css: .scene__stage reserves no aspect-ratio (G6)")
+    registered = {m: f for f in mdir.glob("scene-*.js")
+                  for m in re.findall(r"Motion\.register\('([a-z-]+)'", read(f))}
+    pages = 0
+    for f in published_files():
+        if f.suffix != ".html":
+            continue
+        html = read(f)
+        rel = f.relative_to(ROOT)
+        for fig in re.finditer(r'<figure class="scene"[^>]*>.*?</figure>', html, re.S):
+            pages += 1
+            block = fig.group(0)
+            name = re.search(r'data-scene="([a-z-]+)"', block)
+            name = name.group(1) if name else ""
+            label = re.search(r'data-label="([^"]+)"', block)
+            if not label or len(label.group(1)) < 60:
+                problems.append(f"{rel}: scene '{name}' lacks a descriptive data-label (G9)")
+            if not re.search(r'<figcaption class="evidence-caption">\s*Illustrative', block):
+                problems.append(f"{rel}: scene '{name}' caption must start 'Illustrative' (G2)")
+            src = registered.get(name)
+            if not src:
+                problems.append(f"{rel}: no scene registers '{name}'")
+                continue
+            i_core = html.find("/assets/js/motion/core.js")
+            i_scene = html.find(f"/assets/js/motion/{src.name}")
+            if i_core < 0 or i_scene < 0 or i_scene < i_core:
+                problems.append(f"{rel}: must load core.js before {src.name}")
+            if "/assets/css/motion.css" not in html:
+                problems.append(f"{rel}: motion.css not linked")
+            size = len(gzip.compress(core.read_bytes(), 9)) + len(gzip.compress(src.read_bytes(), 9))
+            if size > 16000:
+                problems.append(f"{rel}: motion JS {size} B gzip > 16000 (G5)")
+    index = read(ROOT / "index.html")
+    if "data-loop" in index:
+        loop = mdir / "hero-loop.js"
+        if "/assets/js/motion/hero-loop.js" not in index or not loop.exists():
+            problems.append("index.html: data-loop without hero-loop.js")
+        elif "prefers-reduced-motion" not in read(loop):
+            problems.append("hero-loop.js: no reduced-motion guard")
+    report("motion-contract", not problems,
+           f"checked {pages} scenes; " + "; ".join(problems[:8]))
+
+
 GATES = [
     check_forbidden_surfaces,
     check_canonical_identity,
@@ -815,6 +886,7 @@ GATES = [
     check_selected_impact,
     check_evidence_artifacts,
     check_handbook_decision_path,
+    check_motion_contract,
 ]
 
 

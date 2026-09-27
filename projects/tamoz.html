@@ -30,6 +30,7 @@
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
 </head>
 <body>
   <header class="header" id="header">
@@ -58,6 +59,11 @@
             <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
           </div>
         </header>
+
+        <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into Situation v47; Tamoz turns it into an intent with no magnitude, mode bounded cooling; the policy plane converts it into a bounded command under the firmware ceiling of 60 percent duty with a 10 second lease; the fan spins while the lease runs, the readings cool, and the outcome returns to Tamoz as experience.">
+          <div class="scene__stage" style="--aspect: 2.45"></div>
+          <figcaption class="evidence-caption">Illustrative animation, time-compressed. The ceiling (60 % duty) and the 10 s lease are the firmware values described below; the readings are not telemetry.</figcaption>
+        </figure>
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">An agent that acts on real equipment has to notice change by itself, spend reasoning only when it matters, and never be the thing that decides how hard a motor spins.</span></div>
@@ -437,5 +443,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-tamoz.js?v=20260926" defer></script>
 </body>
 </html>

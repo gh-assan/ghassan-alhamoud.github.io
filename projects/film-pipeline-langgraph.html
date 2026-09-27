@@ -30,6 +30,7 @@
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
 </head>
 <body>
   <header class="header" id="header">
@@ -47,7 +48,7 @@
   </header>
 
   <main class="article-single">
-    <div class="container article-layout">
+    <div class="container article-layout article-layout--single">
       <article>
         <header class="article-single__header">
           <div class="article-single__meta"><span>Public Release</span><span class="article-card__dot"></span><span>Python / LangGraph / Textual / MCP</span></div>
@@ -57,6 +58,11 @@
             <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/film-pipeline-langgraph" target="_blank" rel="noopener noreferrer">View Repository</a>
           </div>
         </header>
+
+        <figure class="scene" data-scene="film" data-requires-js data-label="Animated illustration: the project state moves through screenplay, shot bible and generation plan, each appending a versioned artifact to a film strip. An interrupt waits for human spend approval, then generation fans out to three parallel validators. One validator flags an issue; the repair returns to the shot bible and appends version 2 while version 1 stays in the history. The validators pass and the project reaches QC-ready state.">
+          <div class="scene__stage" style="--aspect: 2.9"></div>
+          <figcaption class="evidence-caption">Illustrative animation of the graph's behaviour. Node names follow this page; the artifacts and the flagged check are examples, not a recorded run.</figcaption>
+        </figure>
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Problem</span><span class="project-fact__value">AI film workflows lose state when artifacts, approvals, revisions, costs, and QC evidence live in loose files and chat history.</span></div>
@@ -157,5 +163,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-film.js?v=20260926" defer></script>
 </body>
 </html>

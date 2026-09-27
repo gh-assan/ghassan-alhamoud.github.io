@@ -29,6 +29,7 @@
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
 </head>
 <body>
   <header class="header" id="header">
@@ -57,6 +58,11 @@
             <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
           </div>
         </header>
+
+        <figure class="scene" data-scene="funnel" data-requires-js data-label="Animated illustration of the admission funnel: Situation versions fall through five stages, trigger condition, score threshold, freshness and completeness, then debounce and coalescing. Quiet versions exit at the stage that rejects them with a recorded reason: ignored, deferred or coalesced. One material change clears every stage and a bounded episode is admitted with a snapshot, a budget and a fence.">
+          <div class="scene__stage" style="--aspect: 2.25"></div>
+          <figcaption class="evidence-caption">Illustrative animation of Figure 2 below. Stage names and the Round 3 figure are from the public repo and this page; the falling versions are not telemetry.</figcaption>
+        </figure>
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Who this is for</span><span class="project-fact__value">Engineers who want to judge the design, reuse a piece of it, or contribute. The <a href="/projects/tamoz.html">overview</a> covers the why; this page covers the how.</span></div>
@@ -923,5 +929,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-funnel.js?v=20260926" defer></script>
 </body>
 </html>

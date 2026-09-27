@@ -3355,7 +3355,10 @@ html.js .reveal--visible {
 /* Single-column project deep pages: prose stays at reading width,
    diagrams and dense tables may use the full container width. */
 .article-layout--single,
-.article-layout--single > article {
+.article-layout--single > article,
+.article-layout > article {
+  /* grid items default to min-width:auto; without this a wide <pre>
+     stretches the whole article past a phone viewport */
   min-width: 0;
 }
 
