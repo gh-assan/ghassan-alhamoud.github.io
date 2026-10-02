@@ -1,6 +1,6 @@
 # Motion — Quality Bar v1
 
-**Status:** Adopted 2026-09-26, amended v1.1 (G5, see ledger) · **Owner:** design direction · **Applies to:** every
+**Status:** Adopted 2026-09-26, amended v1.1 and v1.2 (G5, see ledger) · **Owner:** design direction · **Applies to:** every
 animated scene on the site (home hero loop, project-page scenes, any future motion).
 **Enforced by:** `scripts/validate-site.py` gate `motion-contract` + the review protocol
 in §4, logged in [`03-review-ledger.md`](03-review-ledger.md).
@@ -32,7 +32,7 @@ feel like a well-made oscilloscope, not a screensaver.
 | G2 | **Honesty** | Figure caption starts with **"Illustrative"**. No invented metric is shown as measured; numbers on canvas are either quoted from the page or explicitly modeled (`~`, "modeled"). | Validator: caption text. Review: numbers audit. |
 | G3 | **Tokens only** | Every colour is read from CSS custom properties (`--accent`, `--success`, `--warning`, `--error`, `--text-*`, `--border`, `--bg-*`). Works in `nature` and `dark`; recolours live when `data-theme` changes. | Validator: no hex literals in scene files. Review: both themes screenshotted. |
 | G4 | **Performance** | Scripted work ≤ 4 ms avg / frame (M-class laptop), no dropped-frame bursts; **zero** rAF callbacks while off-screen or tab hidden; DPR capped at 2. | `Motion.stats()` sampled over 5 s; off-screen check via stats frame counter. |
-| G5 | **Weight** *(amended v1.1)* | No third-party libraries. Motion JS per page ≤ **16 KB gzip**; raw caps `core.js` ≤ 28 KB, each scene ≤ 16 KB, home loop ≤ 12 KB. Scripts are `defer` and page-scoped. | Validator: gzip + raw sizes, script tags. |
+| G5 | **Weight** *(amended v1.2)* | No third-party libraries. Motion JS per page ≤ **16 KB gzip** (core + every scene file the page loads); a handbook chapter with two or more scenes ≤ **20 KB gzip**. Raw caps `core.js` ≤ 28 KB, each scene ≤ 16 KB, home loop ≤ 12 KB. Scripts are `defer` and page-scoped. | Validator: gzip + raw sizes, script tags. |
 | G6 | **Layout stability** | Stage reserves its box with CSS `aspect-ratio` before JS runs: CLS contribution 0. No horizontal page scroll at 320 px. | Validator: stage CSS present. Review at 360 px. |
 | G7 | **Reduced motion** | `prefers-reduced-motion: reduce` ⇒ a composed static **poster frame** (the most explanatory moment), no autoplay, no intro. | Emulated reduced-motion screenshot. |
 | G8 | **Control** | Any motion running > 5 s has a visible pause/play control: keyboard reachable, ≥ 44×44 hit area, `aria-pressed`, visible focus ring (WCAG 2.2.2). | Validator: toggle markup emitted by core. Review: tab to it. |

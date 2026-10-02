@@ -29,7 +29,8 @@
 
 @media (max-width: 559px) {
   .scene__stage {
-    aspect-ratio: 4 / 3;
+    /* phones default to 4:3; a scene may reserve a taller box (--aspect-compact) */
+    aspect-ratio: var(--aspect-compact, 4 / 3);
   }
 }
 

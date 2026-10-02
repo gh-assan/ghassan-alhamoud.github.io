@@ -46,6 +46,7 @@ CHAPTER_OUTCOMES = {
     "human-in-the-loop": "you can set risk-based autonomy with enforceable approval gates.",
     "observability-evaluation": "you can wire traces, evals, and regression gates for agents.",
     "safety-guardrails": "you can constrain agent authority with enforceable policy and effect-level tests.",
+    "real-time-audio-agents": "you can keep spoken interaction aligned with durable work and verified playback.",
 }
 
 
@@ -60,6 +61,7 @@ def md_to_html(text: str) -> tuple[str, str]:
         extensions=[
             "tables",
             "fenced_code",
+            "md_in_html",
             # The page template renders the Markdown H1 as the hero. Excluding
             # H1 here prevents the sidebar from linking to the removed element.
             TocExtension(title="", toc_depth="2-6"),
@@ -312,6 +314,36 @@ def render_prerequisites(chapter: dict, all_chapters: dict) -> str:
     )
 
 
+MOTION_VERSION = "20261002"
+
+
+def motion_assets(body_html: str) -> tuple[str, str]:
+    """Head and body tags for chapters with illustrative scenes.
+
+    Loaded only on pages that contain a scene (docs/animation/00-quality-bar.md,
+    G5): motion.css in the head, then core.js before each scene file.
+    """
+    names = re.findall(r'<figure class="scene" data-scene="([a-z-]+)"', body_html)
+    if not names:
+        return "", ""
+    # A scene file may register several scenes; load each file once.
+    registry = {
+        name: f.name
+        for f in sorted((ROOT / "assets/js/motion").glob("scene-*.js"))
+        for name in re.findall(r"Motion\.register\('([a-z-]+)'", f.read_text(encoding="utf-8"))
+    }
+    missing = [n for n in names if n not in registry]
+    if missing:
+        raise ValueError(f"no motion scene registers: {', '.join(missing)}")
+    files = list(dict.fromkeys(registry[n] for n in names))
+    head = f'\n  <link rel="stylesheet" href="/assets/css/motion.css?v={MOTION_VERSION}" />'
+    scripts = [f'/assets/js/motion/core.js?v={MOTION_VERSION}'] + [
+        f"/assets/js/motion/{name}?v={MOTION_VERSION}" for name in files
+    ]
+    body = "".join(f'\n  <script src="{src}" defer></script>' for src in scripts)
+    return head, body
+
+
 def render_chapter(chapter: dict, all_chapters: list) -> str:
     md_path = MD_DIR / chapter["file"]
     if not md_path.exists():
@@ -324,6 +356,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
 
     body_html, toc_html = md_to_html(raw_md)
     body_html = wrap_diagrams(body_html)
+    motion_head, motion_body = motion_assets(body_html)
 
     # Clean up title line so it doesn't render as H1 in body (we use hero)
     body_html = re.sub(r"<h1[^>]*>.*?</h1>", "", body_html, count=1, flags=re.DOTALL)
@@ -393,7 +426,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
   <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
-  <link rel="stylesheet" href="/assets/css/handbook.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />{motion_head}
 </head>
 <body>
   <header class="header" id="header">
@@ -513,7 +546,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
       }}
     }})();
   </script>
-  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>{motion_body}
 </body>
 </html>"""
 
@@ -613,6 +646,15 @@ def render_index(handbook: dict, chapters: list) -> str:
             f'<a href="{first_url}" class="btn btn--primary">'
             f'Begin Chapter {first["id"]}</a>'
             '</div>'
+        )
+    if any(
+        right["id"] - left["id"] > 1
+        for left, right in zip(published, published[1:])
+    ):
+        start_here += (
+            '<p class="handbook-index__intro">Series numbers are retained. '
+            'Gaps indicate chapters not yet published in this edition; '
+            'each chapter lists its available prerequisites.</p>'
         )
 
     html = f"""<!DOCTYPE html>

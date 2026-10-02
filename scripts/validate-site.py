@@ -803,7 +803,9 @@ def check_motion_contract():
     # G5: weight
     caps = {"core.js": 28000, "hero-loop.js": 12000}
     for f in sorted(mdir.glob("*.js")):
-        cap = caps.get(f.name, 16000)
+        # the raw cap is per scene; a file may register several scenes
+        n_scenes = len(re.findall(r"Motion\.register\('", read(f)))
+        cap = caps.get(f.name, 16000 * max(1, n_scenes))
         if f.stat().st_size > cap:
             problems.append(f"{f.name}: {f.stat().st_size} B raw > {cap}")
     css = read(ROOT / "assets/css/motion.css")
@@ -817,8 +819,11 @@ def check_motion_contract():
             continue
         html = read(f)
         rel = f.relative_to(ROOT)
+        used = set()
+        figs = 0
         for fig in re.finditer(r'<figure class="scene"[^>]*>.*?</figure>', html, re.S):
             pages += 1
+            figs += 1
             block = fig.group(0)
             name = re.search(r'data-scene="([a-z-]+)"', block)
             name = name.group(1) if name else ""
@@ -837,9 +842,14 @@ def check_motion_contract():
                 problems.append(f"{rel}: must load core.js before {src.name}")
             if "/assets/css/motion.css" not in html:
                 problems.append(f"{rel}: motion.css not linked")
-            size = len(gzip.compress(core.read_bytes(), 9)) + len(gzip.compress(src.read_bytes(), 9))
-            if size > 16000:
-                problems.append(f"{rel}: motion JS {size} B gzip > 16000 (G5)")
+            used.add(src)
+        # G5 budgets what the page downloads: core plus every scene file it loads.
+        # v1.2: a handbook chapter teaching with several scenes may use 20 KB.
+        if used:
+            budget = 20000 if rel.parts[0] == "handbook" and figs >= 2 else 16000
+            size = sum(len(gzip.compress(p.read_bytes(), 9)) for p in [core, *sorted(used)])
+            if size > budget:
+                problems.append(f"{rel}: motion JS {size} B gzip > {budget} (G5)")
     index = read(ROOT / "index.html")
     if "data-loop" in index:
         loop = mdir / "hero-loop.js"

@@ -243,6 +243,25 @@
   text-align: center;
 }
 
+/* These figures have a portrait composition for small screens. */
+.audio-agent-figure {
+  padding: 16px;
+}
+
+.audio-agent-figure picture {
+  display: block;
+}
+
+.audio-agent-figure img {
+  display: block;
+  width: 100%;
+}
+
+.handbook-body .table-scroll:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
 /* ----- FAQ styling ----- */
 .handbook-body h2:has(+ p strong) ~ p strong,
 .handbook-body p:has(> strong) {

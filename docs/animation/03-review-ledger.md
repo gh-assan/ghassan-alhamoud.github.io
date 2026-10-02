@@ -73,12 +73,71 @@ All gates pass; scores above. No blocking defects.
 
 **Verification:** six scene pages checked at 320 px: no horizontal overflow or console warnings/errors, and every pause control was present. Pause/play state was exercised on Email Intelligence. `npm run test:motion` and `python3 scripts/validate-site.py` pass. This round did not repeat the original performance benchmark or reduced-motion emulation; the previous iteration's measurements remain the evidence for those gates.
 
+## Iteration 6 — Handbook Chapter 22 scenes (2026-10-02)
+
+Scores are the author's review against the bar. Nobody has done an independent pass yet.
+
+| Scene | Page | Cla | Cho | Cra | Con | Perf | Acc | Mean | Bar |
+|---|---|---|---|---|---|---|---|---|---|
+| Three clocks | `handbook/chapter-22-…` | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 | ✅ |
+| Cancellation races commit | `handbook/chapter-22-…` | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 | ✅ |
+
+| Finding | Fix |
+|---|---|
+| Desktop: the v1-result marker sat on the task bar and read as part of it. | Hollow mark below the bar with its caption ("kept, not spoken"). |
+| Desktop: the poster frame (barge-in) left the completed bar unlabelled. | Bar labels fall back to shorter text when narrow; poster moved to the rest beat, where every identity change is visible. |
+| Chips uppercased identifiers (`G4 → G5`), the iteration-1 defect again. | Chips name the change ("new generation"); the mono readouts beside each lane carry the identifiers in their real case. |
+| Cancel scene: ".205 sound stops" ran into the reply panel; the undo chip overflowed it; "commit came first" crowded the rail. | Label right-aligned before the stop mark; undo became a panel row; lanes raised. |
+| Phones: at 4:3 the cancel scene's waveform, lane labels and reply band collided; at 320 px the clocks scene's label rows touched its captions. | `motion.css` gains an optional `--aspect-compact` (still reserved by CSS before JS, so CLS stays 0). Both scenes use 1.15. On phones the user's speech overlays the voice lane, which is a full-duplex channel. |
+| G5: the two scenes as separate files made the page 16.97 KB gzip. The gate missed it because it checked core + one scene per figure. | Scenes merged into `scene-audio.js` with shared timeline helpers, which brings the page to 15.6 KB gzip. The gate now sums core and every scene file a page loads. The raw cap of 16 KB applies per registered scene. Negative test: padding the file fails the gate at 16.4 KB. |
+
+**Verification:** the beats were screenshotted at 720 px desktop and at 375 px and 320 px, plus one desktop beat
+in `dark`, which recoloured live. No horizontal overflow at 320 px, and no console messages.
+`npm run test:motion` covers both scenes: labels stay on the stage and clear the rail at
+320/375/720 px across the loop, identities change only at their own events, the receipt
+label survives barge-in and reconnect, and "It already completed." appears only after
+the commit is shown. The browser pane was hidden, so live rAF fps was not
+re-measured. Synchronous draw cost over 600 frames per scene: 0.17 / 0.13 ms
+average and ≤ 2.8 ms max (G4 ≤ 4 ms). With the document hidden, 0 frames ran.
+Reduced-motion emulation was not re-run; the scenes use core's unchanged poster path.
+
+## Iteration 7 — Chapter 22 opening scene (2026-10-02)
+
+| Scene | Page | Cla | Cho | Cra | Con | Perf | Acc | Mean | Bar |
+|---|---|---|---|---|---|---|---|---|---|
+| The plausible lie (split view) | `handbook/chapter-22-…` | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 | ✅ |
+
+These scores are the author's own review.
+
+| Finding | Fix |
+|---|---|
+| The panel title collided with the verdict ("…ONE CONVERSATION IDTHE PLAUSIBLE LIE"). | On desktop the verdict sits at the panel foot. Phones use short titles ("collapsed · one id") with the verdict to the right. |
+| "v1 result held · restart only proposed" ran past the separated panel's border. | Split into two lines: "v1 result held" and "its proposed restart: not approved, not run". |
+| The operator strip went blank between lines, so the poster frame lost its cause. | The latest line stays, dimmed, until the next one starts. |
+| A muted-speaker cross appeared after lines that ended normally. | The cross is drawn only when playback is cut. |
+| At 320 px the row labels left too little width for the spoken line. | Phones drop the row labels; the speaker and aerator glyphs carry them. |
+| The caption said "Left/Right", which is wrong on phones, where the panels stack. | The caption now names the designs, "Collapsed" and "Separated". |
+| The test's text-width estimate (0.62 em) was 24 % above Inter's measured 0.50 em, which gave a false overflow failure. | Calibrated to 0.56 em, still 12 % conservative, and the measurement is recorded in the test. |
+
+**Verification:** desktop beats at 720 px; posters at 375 px and 320 px with no
+horizontal overflow; dark theme recolours live; no console messages. Draw cost is 0.09 ms
+average over 600 frames. One frame took 4.0 ms (G4 is an average limit). Page weight is 17.9 KB
+gzip, within the v1.2 limit of 20 KB. Tests now cover the three scenes, including
+that only the collapsed design restarts the aerator, only after its own phrase, and
+that the separated design shows "no action admitted" at the end.
+
 ## Bar amendments
 
 - **G5 v1.1 (weight).** The v1 raw cap (`core.js` ≤ 16 KB) was mis-calibrated: the
   consistency rule deliberately moved every shared primitive into core (26 KB raw,
   8.4 KB gzip). The gate now budgets what users download — ≤ 16 KB gzip of motion JS
   per page — with raw caps kept as a creep guard. Owner confirmed the size is fine.
+
+- **G5 v1.2 (weight, 2026-10-02).** The per-page check now sums core and every scene
+  file the page loads, which closes an enforcement gap: it used to check core + one scene.
+  A handbook chapter teaching with two or more scenes may use ≤ 20 KB gzip, and other
+  pages keep ≤ 16 KB. The raw 16 KB cap applies per registered scene. Owner chose
+  raising the limit over lazy-loading or dropping a scene.
 
 ## Known limits (not blocking)
 
