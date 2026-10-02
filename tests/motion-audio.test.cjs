@@ -47,10 +47,12 @@ function load() {
   return { defs, run };
 }
 
-// [phone --aspect-compact, desktop --aspect] as set in the chapter source
+// Phone/desktop aspects follow the chapter; intermediate columns follow motion.css.
 const ASPECT = { 'audio-clocks': [1.15, 2.05], 'audio-cancel': [1.15, 2.1], 'audio-incident': [0.9, 1.95] };
 const stages = name => [
-  ['320 px', 270, 270 / ASPECT[name][0]], ['375 px', 325, 325 / ASPECT[name][0]], ['desktop', 720, 720 / ASPECT[name][1]],
+  ['320 px', 270, 270 / ASPECT[name][0]], ['375 px', 325, 325 / ASPECT[name][0]],
+  ...[400, 508, 560, 600, 679, 679.5].map(w => [`${w} px column`, w, w / (name === 'audio-incident' ? 1.4 : 1.7)]),
+  ...[680, 720].map(w => [`${w} px desktop`, w, w / ASPECT[name][1]]),
 ];
 const STAGES = stages('audio-cancel');
 
@@ -59,7 +61,7 @@ for (const name of Object.keys(ASPECT)) {
     const { defs, run } = load();
     assert.ok(defs[name], `${name} registered`);
     for (const [label, w, h] of stages(name)) {
-      const railTop = w < 560 ? h - 46 : h - 26;
+      const railTop = w < 680 ? h - 46 : h - 26;
       for (let t = 0; t < defs[name].duration; t += 0.25) {
         const { text } = run(name, w, h, t);
         assert.ok(text.length >= 3, `${name} draws its lanes at ${label}`);
@@ -115,8 +117,33 @@ test('audio-incident: only the collapsed design restarts the aerator, and only a
       const text = run('audio-incident', w, h, t).text.filter(x => (x.o.alpha ?? 1) > 0.05).map(x => x.str);
       const restarted = text.filter(x => /restart sent|aerator 2 restarted/.test(x)).length;
       assert.ok(restarted <= 1, `at most one panel shows a restart (t=${t.toFixed(1)})`);
-      if (restarted) assert.ok(t >= 7.7, `restart follows the spoken phrase (t=${t.toFixed(1)})`);
+      if (restarted) assert.ok(t >= 8.1, `restart follows the spoken phrase (t=${t.toFixed(1)})`);
       if (t >= 10.6 && t < 14.6) assert.ok(text.includes('unchanged · no action admitted'), `separated design admitted no action (t=${t.toFixed(1)})`);
+    }
+  }
+});
+
+test('audio-clocks: changing identity readouts do not overlap', () => {
+  const { defs, run } = load();
+  for (const [, w, h] of stages('audio-clocks')) {
+    for (let t = 0; t < defs['audio-clocks'].duration; t += 0.025) {
+      const ids = run('audio-clocks', w, h, t).text.filter(x => x.o.mono && /r7\/|g[45]|o[34]/.test(x.str) && (x.o.alpha ?? 1) > 0.1);
+      assert.ok(ids.length <= 3, `one legible identity per lane at width ${w}, t=${t}`);
+    }
+  }
+});
+
+test('audio-incident: voice annotations stay in their own panel', () => {
+  const { run } = load();
+  for (const [, w, h] of stages('audio-incident')) {
+    const { s, text } = run('audio-incident', w, h, 12.4);
+    for (const item of text.filter(x => x.str === 'sound stops')) {
+      const panel = s.state.P.find(p => item.x >= p.x && item.x < p.x + p.w);
+      assert.ok(panel, 'annotation has a panel');
+      assert.ok(item.x + width(item.str, item.o) <= panel.x + panel.w - 8,
+        `sound-stop annotation stays within its panel at width ${w}`);
+      const voice = text.find(x => /^Pond seven|^About pond three/.test(x.str) && x.x >= panel.x && x.x < panel.x + panel.w);
+      if (w >= 680) assert.ok(item.y - voice.y >= 14, 'desktop sound-stop annotation has its own line');
     }
   }
 });

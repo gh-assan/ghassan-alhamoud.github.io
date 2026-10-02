@@ -144,3 +144,54 @@ that the separated design shows "no action admitted" at the end.
 - ScaleShop's chosen option (read cache) is illustrative, not the lab's reference
   answer; the caption says so.
 - Scenes pause when scrolled away and resume where they left off (by design, R7).
+
+## Iteration 8 — branch-only Chrome review and video export (2026-10-02)
+
+Scope: only the three Chapter 22 animations introduced on
+`add-ai-handbook-chapter22`. The homepage and existing project scenes were not changed.
+This is the author's browser and code review, not an independent review.
+
+| Finding | Root cause | Correction |
+|---|---|---|
+| The collapsed design restarted the aerator while the caption was still spelling “restart”. | The speech reveal, causal token and actuator had independent timing constants. The earlier test asserted the actuator's existing start time rather than the completed phrase. | The phrase finishes at 7.7 s; the causal token then travels until restart at 8.1 s. Playback stops at 8.15 s. Only the collapsed design acts; the separated design retains the old result and admits no action. |
+| The two identifiers overprinted during revision, generation and owner transitions. | Six pixels of vertical separation was less than the 10.5 px font height, with both values visible during the crossfade. | Each value fades for 200 ms, with a 50 ms gap before the next fades in. The identities still change only at their own events. |
+| A narrow handbook column on a desktop viewport stacked the incident panels into a box sized for the wide layout. | CSS selected the aspect by viewport; the drawing selected geometry by stage width. The existing tests covered phones and 720 px stages, missing intermediate columns. | Audio scenes now choose compact geometry below a 680 px stage. Container queries reserve matching heights, with less vertical padding in 400–679 px columns. The change is limited to Chapter 22 audio scenes. |
+| Desktop “sound stops” extended beyond its incident panel. | The annotation was appended after a long spoken phrase without a panel-width budget. | Desktop annotations occupy their own line below the phrase. Compact annotations retain the short inline form. |
+| The three-clock beat announced barge-in while the current result was still being presented. | Beat and chip timings anticipated the actual interruption by over a second. | Both now start at the 7.8 s interruption. |
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Incident comparison | 4 | 4 | 4 | 5 | 5 | 4 | 4.33 |
+| Three clocks | 4 | 4 | 4 | 5 | 5 | 4 | 4.33 |
+| Cancellation races commit | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+
+Verification used Chrome with the actual chapter embedded in a temporary local
+review harness. It exercised posters and explanatory beats, both themes, 320/375 px
+pages, a 900 px page with a narrow handbook column, and a 1440 px page. An actual
+canvas text-measurement sweep at 0.1 s intervals found no text intersections or
+stage overflow at those four page widths after the fixes. Unit geometry tests also
+cover 400, 508, 560, 600, 679, 679.5 and 680 px stages, plus the original phone and desktop cases.
+
+Five-second live measurements: incident 576 frames, 1.349 ms average / 9.4 ms max;
+clocks 601 frames, 1.209 ms average / 7.1 ms max; cancellation 601 frames,
+1.107 ms average / 7.0 ms max. After scrolling out of view and allowing the observer
+to settle, counters stayed unchanged for a further second (577 / 603 / 602).
+Pause/play was exercised by these measurements. No Chrome warnings or errors were
+reported. The reduced-motion JavaScript path was forced before loading the chapter:
+all three scenes mounted at their composed poster time with no playback controls.
+This checks the runtime branch; it is not an OS-level preference emulation.
+
+`npm run test:motion`: 13 passing tests. `npm run validate`: all 35 gates pass.
+The new checks cover disjoint identifier visibility and incident panel annotations;
+the semantic test now forbids restart before the complete spoken phrase.
+
+Videos are rendered from the revised scenes in Chrome using explicit 30 fps frame
+steps, then encoded as 1920×1080 H.264 MP4, yuv420p, with fast-start metadata.
+Each keeps the illustrative label, a title and a 2.5 s final-state hold; it omits
+the website's loop-reset fade. They are silent educational illustrations, not
+recorded agent runs. Delivery target: `~/Movies/personal-website/chapter-22-2026-10-02`.
+
+All three MP4s passed a full decode check and completed playback in Chrome without
+media errors (16.8 / 15.8 / 14.7 s). The three videos, poster PNGs, local preview
+gallery, README and provenance manifest were saved to the requested destination;
+all nine copied files matched their source SHA-256 hashes.

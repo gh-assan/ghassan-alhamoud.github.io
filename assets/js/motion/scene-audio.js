@@ -88,6 +88,9 @@
     g.stroke();
   }
 
+  // These timelines need the stacked composition below a 680 px column.
+  // Match the container queries in motion.css, rather than viewport width.
+
   // =============================================== audio-clocks
   var T_END = 12; // the cursor stops here; the rest beat follows
   // User speech: [start, end, caption, phone caption].
@@ -104,7 +107,7 @@
     [0, 2, 7.8, 7.95, 'warn'], [1, 2, 10.2, 10.7, 'info']];
   var CHIPS = [[0.3, 3.4, 'ticket durably admitted, then acknowledged', 'accent'],
     [3.7, 6.4, 'correction: new revision · old result kept, not spoken', 'warn'],
-    [6.6, 9.1, 'barge-in: new generation · result stays completed', 'warn'],
+    [7.8, 9.1, 'barge-in: new generation · result stays completed', 'warn'],
     [9.4, 11.9, 'reconnect: new owner · briefing rebuilt from the record', 'info'],
     [12.1, 13.7, 'speech expressed intent · the record kept what happened', 'info']];
 
@@ -114,13 +117,13 @@
     beats: [
       [0, 'Accept, admit, then acknowledge'],
       [3.5, 'Correction changes the revision'],
-      [6.5, 'Barge-in clears playback only'],
+      [7.8, 'Barge-in clears playback only'],
       [9.2, 'Reconnect changes the owner'],
       [12, 'The receipt never moved']
     ],
 
     layout: function (s) {
-      var c = s.compact, top = c ? 8 : 40, sp = (s.h - top - (c ? 50 : 44)) / 3;
+      var c = s.compact = s.w < 680, top = c ? 8 : 40, sp = (s.h - top - (c ? 50 : 44)) / 3;
       s.state.x0 = c ? 10 : 124;
       s.state.x1 = s.w - (c ? 10 : 18);
       s.state.ly = [0, 1, 2].map(function (i) { return top + sp * (i + (c ? 0.62 : 0.5)); });
@@ -158,7 +161,7 @@
         { k: 'generation', a: 'g4', b: 'g5', at: 7.95, tone: 'warn' }
       ];
       for (var i = 0; i < 3; i++) {
-        var id = ids[i], flip = E.outCubic(seg(t, id.at, id.at + 0.45)), glow = hold(t, id.at, id.at + 1.6, 0.25);
+        var id = ids[i], flip = seg(t, id.at, id.at + 0.45), glow = hold(t, id.at, id.at + 1.6, 0.25);
         var lx = c ? x0 : 16, ky = c ? ly[i] - 19 : ly[i] - 8, ry = c ? ky : ly[i] + 9;
         L.text(s, names[i], lx, ky, { key: true, align: 'left', alpha: A });
         // phones: each clock's current state rides on its label row
@@ -176,8 +179,9 @@
           g.lineWidth = 1;
           g.stroke();
         }
-        if (flip < 1) L.text(s, pre + id.a, rx, ry - 6 * flip, { mono: true, size: 10.5, weight: 500, align: ral, color: 'text2', alpha: A * (1 - flip) });
-        if (flip > 0) L.text(s, pre + id.b, rx, ry + 6 * (1 - flip), { mono: true, size: 10.5, weight: 600, align: ral, color: glow > 0.3 ? id.tone : 'text2', alpha: A * flip });
+        // Fade out before fading in: overprinted IDs are hard to read.
+        if (flip < 1) L.text(s, pre + id.a, rx, ry - 6 * flip, { mono: true, size: 10.5, weight: 500, align: ral, color: 'text2', alpha: A * (1 - seg(t, id.at, id.at + 0.2)) });
+        if (flip > 0) L.text(s, pre + id.b, rx, ry + 6 * (1 - flip), { mono: true, size: 10.5, weight: 600, align: ral, color: glow > 0.3 ? id.tone : 'text2', alpha: A * seg(t, id.at + 0.25, id.at + 0.45) });
       }
 
       // ---- conversation: user speech, connection loss
@@ -266,7 +270,7 @@
     [3.0, 4.2, 'Actually, check pond three instead.'],
     [7.95, 8.4, 'No, stop.']];
   var VOICE = [
-    [[1.8, 2.4, 'Checking.', 2.3], [5.6, 8.15, 'Pond seven is low. I’ll restart', 7.95, true]],
+    [[1.8, 2.4, 'Checking.', 2.3], [5.6, 8.15, 'Pond seven is low. I’ll restart', 7.7, true]],
     [[1.8, 2.4, 'Checking.', 2.3], [4.5, 5.3, 'Checking pond three.', 5.2], [7.1, 8.15, 'About pond three…', 7.8, true]]
   ];
   function reveal(str, a, b, t) {
@@ -302,10 +306,11 @@
     g.lineWidth = 1.75;
     g.stroke();
   }
-  function spin(t) { // starts at 7.7, reaches 6 rad/s by 8.5
-    if (t < 7.7) return 0;
-    if (t < 8.5) return 3 * (t - 7.7) * (t - 7.7) / 0.8;
-    return 2.4 + 6 * (t - 8.5);
+  var RESTART = 8.1; // after the full phrase (7.7), before playback stops (8.15)
+  function spin(t) { // accelerates smoothly over 0.8 s
+    var elapsed = Math.max(0, t - RESTART);
+    if (elapsed < 0.8) return 3 * elapsed * elapsed / 0.8;
+    return 2.4 + 6 * (elapsed - 0.8);
   }
 
   Motion.register('audio-incident', {
@@ -320,7 +325,7 @@
     ],
 
     layout: function (s) {
-      var c = s.compact, st = s.state, top = c ? 34 : 46, gap = c ? 10 : 12, m = c ? 8 : 12;
+      var c = s.compact = s.w < 680, st = s.state, top = c ? 34 : 46, gap = c ? 10 : 12, m = c ? 8 : 12;
       var bot = s.h - (c ? 52 : 40);
       st.P = c
         ? [{ x: m, y: top, w: s.w - 2 * m, h: (bot - top - gap) / 2 },
@@ -377,7 +382,7 @@
             g.strokeStyle = col('warn', A);
             g.lineWidth = 1.75;
             g.stroke();
-            if (!c || i === 1) L.text(s, 'sound stops', zx + 8, rows[0], { size: 10, weight: 600, align: 'left', color: 'warn', alpha: A * (0.5 + 0.5 * hold(t, 8.15, 9.6, 0.25)) });
+            if (!c || i === 1) L.text(s, 'sound stops', c ? zx + 8 : cx + 20, rows[0] + (c ? 0 : 16), { size: 10, weight: 600, align: 'left', color: 'warn', alpha: A * (0.5 + 0.5 * hold(t, 8.15, 9.6, 0.25)) });
           }
         }
 
@@ -411,7 +416,7 @@
         }
 
         // effect row: the aerator, and what the dashboard later shows
-        var ang = sep ? 0 : spin(t), run = !sep && t >= 7.7;
+        var ang = sep ? 0 : spin(t), run = !sep && t >= RESTART;
         aerator(g, cx + 10, rows[2], ang, run ? 'bad' : 'muted', A);
         var fx = cx + 28, show = seg(t, 10.2, 10.6);
         var state = sep ? (show > 0 ? 'unchanged · no action admitted' : 'aerator 2 · idle')
@@ -433,7 +438,7 @@
         if (!sep) {
           link({ s: s, A: A }, t, [cx + 6, rows[1]], [cx + 6, rows[0]], 5.3, 5.6, 'bad');
           var rx = cx + 20 + L.measure(s, VOICE[0][1][2], { size: c ? 11 : 12 }) - 20;
-          link({ s: s, A: A }, t, [rx, rows[0] + 8], [cx + 10, rows[2]], 7.3, 7.7, 'bad');
+          link({ s: s, A: A }, t, [rx, rows[0] + 8], [cx + 10, rows[2]], 7.7, RESTART, 'bad');
         } else {
           link({ s: s, A: A }, t, [cx + 6, rows[1]], [cx + 6, rows[0]], 6.8, 7.1, 'info');
         }
@@ -471,7 +476,7 @@
     ],
 
     layout: function (s) {
-      var c = s.compact, st = s.state;
+      var c = s.compact = s.w < 680, st = s.state;
       st.x0 = c ? 10 : 124;
       st.x1 = c ? s.w - 10 : Math.round(s.w * 0.58);
       st.axis = c ? 24 : 34;
