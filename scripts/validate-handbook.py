@@ -84,7 +84,14 @@ def validate_file(path: Path) -> list[str]:
                 errors.append(f"broken internal fragment: {href}")
 
     # Check internal images
-    for src in re.findall(r'src="([^"]+)"', html):
+    image_sources = re.findall(r'src="([^"]+)"', html)
+    for srcset in re.findall(r'srcset="([^"]+)"', html):
+        image_sources.extend(
+            candidate.strip().split()[0]
+            for candidate in srcset.split(",")
+            if candidate.strip()
+        )
+    for src in image_sources:
         if not is_internal(src):
             continue
         target = local_path(src)

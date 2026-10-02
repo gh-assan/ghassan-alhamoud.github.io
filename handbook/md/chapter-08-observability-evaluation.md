@@ -481,6 +481,7 @@ Continue with [Chapter 9: Safety & Guardrails](/handbook/chapter-09-safety-guard
 - [Chapter 6: Memory & Context Management](/handbook/chapter-06-memory-context-management.html) — retrieval evals, provenance, and compaction correctness as component evals.
 - [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html) — approvals, denials, and escalations as audit events; evaluating whether gates work.
 - [Chapter 9: Safety & Guardrails](/handbook/chapter-09-safety-guardrails.html) — policy events, adversarial cases, control mutations, and incident regressions turn evaluation into a safety control loop.
+- [Chapter 22: Real-Time Audio Agents](/handbook/chapter-22-real-time-audio-agents.html): apply outcome evaluation and playback-aware tracing to spoken interaction.
 
 ## Frequently Asked Questions
 

@@ -73,6 +73,59 @@ All gates pass; scores above. No blocking defects.
 
 **Verification:** six scene pages checked at 320 px: no horizontal overflow or console warnings/errors, and every pause control was present. Pause/play state was exercised on Email Intelligence. `npm run test:motion` and `python3 scripts/validate-site.py` pass. This round did not repeat the original performance benchmark or reduced-motion emulation; the previous iteration's measurements remain the evidence for those gates.
 
+## Iteration 6 — Handbook Chapter 22 scenes (2026-10-02)
+
+Scores are the author's review against the bar. Nobody has done an independent pass yet.
+
+| Scene | Page | Cla | Cho | Cra | Con | Perf | Acc | Mean | Bar |
+|---|---|---|---|---|---|---|---|---|---|
+| Three clocks | `handbook/chapter-22-…` | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 | ✅ |
+| Cancellation races commit | `handbook/chapter-22-…` | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 | ✅ |
+
+| Finding | Fix |
+|---|---|
+| Desktop: the v1-result marker sat on the task bar and read as part of it. | Hollow mark below the bar with its caption ("kept, not spoken"). |
+| Desktop: the poster frame (barge-in) left the completed bar unlabelled. | Bar labels fall back to shorter text when narrow; poster moved to the rest beat, where every identity change is visible. |
+| Chips uppercased identifiers (`G4 → G5`), the iteration-1 defect again. | Chips name the change ("new generation"); the mono readouts beside each lane carry the identifiers in their real case. |
+| Cancel scene: ".205 sound stops" ran into the reply panel; the undo chip overflowed it; "commit came first" crowded the rail. | Label right-aligned before the stop mark; undo became a panel row; lanes raised. |
+| Phones: at 4:3 the cancel scene's waveform, lane labels and reply band collided; at 320 px the clocks scene's label rows touched its captions. | `motion.css` gains an optional `--aspect-compact` (still reserved by CSS before JS, so CLS stays 0). Both scenes use 1.15. On phones the user's speech overlays the voice lane, which is a full-duplex channel. |
+| G5: the two scenes as separate files made the page 16.97 KB gzip. The gate missed it because it checked core + one scene per figure. | Scenes merged into `scene-audio.js` with shared timeline helpers, which brings the page to 15.6 KB gzip. The gate now sums core and every scene file a page loads. The raw cap of 16 KB applies per registered scene. Negative test: padding the file fails the gate at 16.4 KB. |
+
+**Verification:** the beats were screenshotted at 720 px desktop and at 375 px and 320 px, plus one desktop beat
+in `dark`, which recoloured live. No horizontal overflow at 320 px, and no console messages.
+`npm run test:motion` covers both scenes: labels stay on the stage and clear the rail at
+320/375/720 px across the loop, identities change only at their own events, the receipt
+label survives barge-in and reconnect, and "It already completed." appears only after
+the commit is shown. The browser pane was hidden, so live rAF fps was not
+re-measured. Synchronous draw cost over 600 frames per scene: 0.17 / 0.13 ms
+average and ≤ 2.8 ms max (G4 ≤ 4 ms). With the document hidden, 0 frames ran.
+Reduced-motion emulation was not re-run; the scenes use core's unchanged poster path.
+
+## Iteration 7 — Chapter 22 opening scene (2026-10-02)
+
+| Scene | Page | Cla | Cho | Cra | Con | Perf | Acc | Mean | Bar |
+|---|---|---|---|---|---|---|---|---|---|
+| The plausible lie (split view) | `handbook/chapter-22-…` | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 | ✅ |
+
+These scores are the author's own review.
+
+| Finding | Fix |
+|---|---|
+| The panel title collided with the verdict ("…ONE CONVERSATION IDTHE PLAUSIBLE LIE"). | On desktop the verdict sits at the panel foot. Phones use short titles ("collapsed · one id") with the verdict to the right. |
+| "v1 result held · restart only proposed" ran past the separated panel's border. | Split into two lines: "v1 result held" and "its proposed restart: not approved, not run". |
+| The operator strip went blank between lines, so the poster frame lost its cause. | The latest line stays, dimmed, until the next one starts. |
+| A muted-speaker cross appeared after lines that ended normally. | The cross is drawn only when playback is cut. |
+| At 320 px the row labels left too little width for the spoken line. | Phones drop the row labels; the speaker and aerator glyphs carry them. |
+| The caption said "Left/Right", which is wrong on phones, where the panels stack. | The caption now names the designs, "Collapsed" and "Separated". |
+| The test's text-width estimate (0.62 em) was 24 % above Inter's measured 0.50 em, which gave a false overflow failure. | Calibrated to 0.56 em, still 12 % conservative, and the measurement is recorded in the test. |
+
+**Verification:** desktop beats at 720 px; posters at 375 px and 320 px with no
+horizontal overflow; dark theme recolours live; no console messages. Draw cost is 0.09 ms
+average over 600 frames. One frame took 4.0 ms (G4 is an average limit). Page weight is 17.9 KB
+gzip, within the v1.2 limit of 20 KB. Tests now cover the three scenes, including
+that only the collapsed design restarts the aerator, only after its own phrase, and
+that the separated design shows "no action admitted" at the end.
+
 ## Bar amendments
 
 - **G5 v1.1 (weight).** The v1 raw cap (`core.js` ≤ 16 KB) was mis-calibrated: the
@@ -80,8 +133,65 @@ All gates pass; scores above. No blocking defects.
   8.4 KB gzip). The gate now budgets what users download — ≤ 16 KB gzip of motion JS
   per page — with raw caps kept as a creep guard. Owner confirmed the size is fine.
 
+- **G5 v1.2 (weight, 2026-10-02).** The per-page check now sums core and every scene
+  file the page loads, which closes an enforcement gap: it used to check core + one scene.
+  A handbook chapter teaching with two or more scenes may use ≤ 20 KB gzip, and other
+  pages keep ≤ 16 KB. The raw 16 KB cap applies per registered scene. Owner chose
+  raising the limit over lazy-loading or dropping a scene.
+
 ## Known limits (not blocking)
 
 - ScaleShop's chosen option (read cache) is illustrative, not the lab's reference
   answer; the caption says so.
 - Scenes pause when scrolled away and resume where they left off (by design, R7).
+
+## Iteration 8 — branch-only Chrome review and video export (2026-10-02)
+
+Scope: only the three Chapter 22 animations introduced on
+`add-ai-handbook-chapter22`. The homepage and existing project scenes were not changed.
+This is the author's browser and code review, not an independent review.
+
+| Finding | Root cause | Correction |
+|---|---|---|
+| The collapsed design restarted the aerator while the caption was still spelling “restart”. | The speech reveal, causal token and actuator had independent timing constants. The earlier test asserted the actuator's existing start time rather than the completed phrase. | The phrase finishes at 7.7 s; the causal token then travels until restart at 8.1 s. Playback stops at 8.15 s. Only the collapsed design acts; the separated design retains the old result and admits no action. |
+| The two identifiers overprinted during revision, generation and owner transitions. | Six pixels of vertical separation was less than the 10.5 px font height, with both values visible during the crossfade. | Each value fades for 200 ms, with a 50 ms gap before the next fades in. The identities still change only at their own events. |
+| A narrow handbook column on a desktop viewport stacked the incident panels into a box sized for the wide layout. | CSS selected the aspect by viewport; the drawing selected geometry by stage width. The existing tests covered phones and 720 px stages, missing intermediate columns. | Audio scenes now choose compact geometry below a 680 px stage. Container queries reserve matching heights, with less vertical padding in 400–679 px columns. The change is limited to Chapter 22 audio scenes. |
+| Desktop “sound stops” extended beyond its incident panel. | The annotation was appended after a long spoken phrase without a panel-width budget. | Desktop annotations occupy their own line below the phrase. Compact annotations retain the short inline form. |
+| The three-clock beat announced barge-in while the current result was still being presented. | Beat and chip timings anticipated the actual interruption by over a second. | Both now start at the 7.8 s interruption. |
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Incident comparison | 4 | 4 | 4 | 5 | 5 | 4 | 4.33 |
+| Three clocks | 4 | 4 | 4 | 5 | 5 | 4 | 4.33 |
+| Cancellation races commit | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+
+Verification used Chrome with the actual chapter embedded in a temporary local
+review harness. It exercised posters and explanatory beats, both themes, 320/375 px
+pages, a 900 px page with a narrow handbook column, and a 1440 px page. An actual
+canvas text-measurement sweep at 0.1 s intervals found no text intersections or
+stage overflow at those four page widths after the fixes. Unit geometry tests also
+cover 400, 508, 560, 600, 679, 679.5 and 680 px stages, plus the original phone and desktop cases.
+
+Five-second live measurements: incident 576 frames, 1.349 ms average / 9.4 ms max;
+clocks 601 frames, 1.209 ms average / 7.1 ms max; cancellation 601 frames,
+1.107 ms average / 7.0 ms max. After scrolling out of view and allowing the observer
+to settle, counters stayed unchanged for a further second (577 / 603 / 602).
+Pause/play was exercised by these measurements. No Chrome warnings or errors were
+reported. The reduced-motion JavaScript path was forced before loading the chapter:
+all three scenes mounted at their composed poster time with no playback controls.
+This checks the runtime branch; it is not an OS-level preference emulation.
+
+`npm run test:motion`: 13 passing tests. `npm run validate`: all 35 gates pass.
+The new checks cover disjoint identifier visibility and incident panel annotations;
+the semantic test now forbids restart before the complete spoken phrase.
+
+Videos are rendered from the revised scenes in Chrome using explicit 30 fps frame
+steps, then encoded as 1920×1080 H.264 MP4, yuv420p, with fast-start metadata.
+Each keeps the illustrative label, a title and a 2.5 s final-state hold; it omits
+the website's loop-reset fade. They are silent educational illustrations, not
+recorded agent runs. Delivery target: `~/Movies/personal-website/chapter-22-2026-10-02`.
+
+All three MP4s passed a full decode check and completed playback in Chrome without
+media errors (16.8 / 15.8 / 14.7 s). The three videos, poster PNGs, local preview
+gallery, README and provenance manifest were saved to the requested destination;
+all nine copied files matched their source SHA-256 hashes.
