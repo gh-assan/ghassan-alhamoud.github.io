@@ -91,6 +91,44 @@
   // These timelines need the stacked composition below a 680 px column.
   // Match the container queries in motion.css, rather than viewport width.
 
+  // ---------------------------------------------------- reading pace
+  // Each scene is authored on a compact story clock. PACE maps real seconds
+  // to story seconds: [real, story] keys, linear between them. A flat run
+  // (same story time twice) is a reading hold: the frame stays still while
+  // the viewer reads the labels that just arrived. Beats switch when the
+  // story resumes after a hold, never at its start.
+  function paced(keys, poster, def) {
+    var last = keys[keys.length - 1];
+    function story(t) {
+      for (var i = 1; i < keys.length; i++) {
+        if (t <= keys[i][0]) {
+          var a = keys[i - 1], b = keys[i];
+          return b[0] === a[0] ? b[1] : L.lerp(a[1], b[1], (t - a[0]) / (b[0] - a[0]));
+        }
+      }
+      return last[1];
+    }
+    function real(st) { // the last real time showing story time st
+      for (var i = keys.length - 1; i > 0; i--) {
+        var a = keys[i - 1], b = keys[i];
+        if (st >= a[1] && st <= b[1]) return b[1] === a[1] ? b[0] : L.lerp(a[0], b[0], (st - a[1]) / (b[1] - a[1]));
+      }
+      return 0;
+    }
+    return {
+      duration: last[0],
+      poster: poster,
+      beats: def.beats.map(function (b) { return [real(b[0]), b[1]]; }),
+      layout: def.layout,
+      draw: function (s, t) {
+        s.state.rt = t;
+        s.state.real = real;
+        def.draw(s, story(t));
+      },
+      story: story, real: real
+    };
+  }
+
   // =============================================== audio-clocks
   var T_END = 12; // the cursor stops here; the rest beat follows
   // User speech: [start, end, caption, phone caption].
@@ -105,15 +143,13 @@
   var LINKS = [[0, 1, 1.6, 2.1, 'accent'], [1, 2, 2.1, 2.6, 'accent'],
     [0, 1, 4.6, 5.1, 'warn'], [1, 2, 6.6, 7.1, 'info'],
     [0, 2, 7.8, 7.95, 'warn'], [1, 2, 10.2, 10.7, 'info']];
-  var CHIPS = [[0.3, 3.4, 'ticket durably admitted, then acknowledged', 'accent'],
-    [3.7, 6.4, 'correction: new revision · old result kept, not spoken', 'warn'],
-    [7.8, 9.1, 'barge-in: new generation · result stays completed', 'warn'],
-    [9.4, 11.9, 'reconnect: new owner · briefing rebuilt from the record', 'info'],
+  // Chips add only what the lane captions and readouts do not already say.
+  var CHIPS = [[0.3, 3.4, 'acknowledged only after durable admission', 'accent'],
+    [8.3, 9.1, 'barge-in: the result stays completed', 'warn'], // after the clear, not with it
     [12.1, 13.7, 'speech expressed intent · the record kept what happened', 'info']];
 
-  Motion.register('audio-clocks', {
-    duration: 14.5,
-    poster: 12.6,
+  Motion.register('audio-clocks', paced([[0, 0], [5.6, 3.5], [7.1, 3.5], [8.75, 4.6], [11.35, 5.9], [13.35, 5.9], [16.25, 7.6],
+    [19.85, 8.5], [20, 8.6], [22.5, 8.6], [26.35, 11], [27.85, 11], [29.75, 12.6], [31.75, 12.6], [33.65, 14.5]], 30.7, {
     beats: [
       [0, 'Accept, admit, then acknowledge'],
       [3.5, 'Correction changes the revision'],
@@ -259,7 +295,7 @@
         if (a > 0.01) L.chip(s, h[2], (x0 + x1) / 2, 20, { tone: h[3], emph: 1, alpha: a * A });
       });
     }
-  });
+  }));
 
   // =============================================== audio-incident
   // The opening incident, same operator words into two designs. Left: one
@@ -270,7 +306,7 @@
     [3.0, 4.2, 'Actually, check pond three instead.'],
     [7.95, 8.4, 'No, stop.']];
   var VOICE = [
-    [[1.8, 2.4, 'Checking.', 2.3], [5.6, 8.15, 'Pond seven is low. I’ll restart', 7.7, true]],
+    [[1.8, 2.4, 'Checking.', 2.3], [6.0, 8.15, 'Pond seven is low. I’ll restart', 7.7, true]],
     [[1.8, 2.4, 'Checking.', 2.3], [4.5, 5.3, 'Checking pond three.', 5.2], [7.1, 8.15, 'About pond three…', 7.8, true]]
   ];
   function reveal(str, a, b, t) {
@@ -313,9 +349,8 @@
     return 2.4 + 6 * (elapsed - 0.8);
   }
 
-  Motion.register('audio-incident', {
-    duration: 15.5,
-    poster: 12.4,
+  Motion.register('audio-incident', paced([[0, 0], [3.4, 2.5], [4.9, 2.5], [8.6, 5.25], [10.6, 5.25], [11.45, 5.85], [13.65, 5.85],
+    [17.5, 7.6], [21.1, 8.6], [23.1, 8.6], [25, 10], [27.1, 11.4], [29.1, 11.4], [33.2, 15.5]], 28, {
     beats: [
       [0, 'Same question, two designs'],
       [2.9, 'The correction'],
@@ -410,13 +445,12 @@
             g.stroke();
             L.text(s, 'v1 result held', rw + 11, rows[1],
               { size: 10, weight: 500, align: 'left', color: held > 0.3 ? 'text' : 'text2', alpha: A * (0.6 + 0.4 * held) });
-            if (!c) L.text(s, 'its proposed restart: not approved, not run', cx, rows[1] + 16,
-              { size: 10, weight: 500, align: 'left', color: 'text2', alpha: A * (0.6 + 0.4 * held) });
           }
         }
 
         // effect row: the aerator, and what the dashboard later shows
-        var ang = sep ? 0 : spin(t), run = !sep && t >= RESTART;
+        // the rotor keeps turning through reading holds: spin runs on real time
+        var ang = sep ? 0 : spin(s.state.rt === undefined ? t : RESTART + s.state.rt - s.state.real(RESTART)), run = !sep && t >= RESTART;
         aerator(g, cx + 10, rows[2], ang, run ? 'bad' : 'muted', A);
         var fx = cx + 28, show = seg(t, 10.2, 10.6);
         var state = sep ? (show > 0 ? 'unchanged · no action admitted' : 'aerator 2 · idle')
@@ -424,7 +458,7 @@
         L.text(s, state, fx, rows[2], { size: c ? 10.5 : 11, weight: show > 0 ? 600 : 500, align: 'left',
           color: show > 0 ? tone : run ? 'bad' : 'text2', alpha: A });
         if (!sep && !c) {
-          var pa = hold(t, 7.6, 9.6, 0.25);
+          var pa = hold(t, RESTART + 0.1, 9.9, 0.25); // explains the restart once it has happened
           if (pa > 0.01) L.text(s, 'its own phrase became the action', fx, rows[2] + 16, { size: 10, weight: 500, align: 'left', color: 'bad', alpha: pa * A });
         }
         // the verdict, once the dashboard is read
@@ -444,7 +478,7 @@
         }
       });
     }
-  });
+  }));
 
   // =============================================== audio-cancel
   var MS0 = 80, MS1 = 220;
@@ -464,13 +498,12 @@
     return w;
   }
 
-  Motion.register('audio-cancel', {
-    duration: 13.5,
-    poster: 11.2,
+  Motion.register('audio-cancel', paced([[0, 0], [5.05, 3.9], [6.7, 3.9], [9.65, 5.85], [11.15, 5.85], [12.85, 7], [14.35, 7],
+    [17.05, 8.8], [19.65, 8.8], [21.6, 10.3], [23.1, 10.3], [24.2, 11.2], [26.2, 11.2], [28.5, 13.5]], 25.45, {
     beats: [
-      [0, 'Restart dispatched'],
-      [3.3, 'Remote system commits'],
-      [5.0, 'Cancel lands; sound stops'],
+      [0, 'Restart dispatched, then committed'],
+      [3.9, 'The user says “cancel that”'],
+      [5.85, 'Sound stops after the cancel'],
       [7.4, 'Silence is not cancellation'],
       [9.4, 'Say what the record shows']
     ],
@@ -617,5 +650,5 @@
         }
       }
     }
-  });
+  }));
 })();

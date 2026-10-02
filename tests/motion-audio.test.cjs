@@ -44,7 +44,9 @@ function load() {
     defs[name].draw(s, t);
     return { s, text: calls.text.slice(), chip: calls.chip.slice() };
   };
-  return { defs, run };
+  // Scenes play on a paced clock; semantic checks are written in story time.
+  const runStory = (name, w, h, st) => run(name, w, h, defs[name].real(st));
+  return { defs, run, runStory };
 }
 
 // Phone/desktop aspects follow the chapter; intermediate columns follow motion.css.
@@ -80,17 +82,17 @@ for (const name of Object.keys(ASPECT)) {
 }
 
 test('audio-clocks: the receipt survives barge-in and reconnect', () => {
-  const { run } = load();
+  const { runStory } = load();
   // from the moment the bar is wide enough to carry its label
   for (let t = 8.5; t <= 13.5; t += 0.5) {
-    const { text } = run('audio-clocks', 720, 351, t);
+    const { text } = runStory('audio-clocks', 720, 351, t);
     assert.ok(text.some(x => /^completed/.test(x.str)), `completed task bar labelled at t=${t}`);
   }
 });
 
 test('audio-clocks: identities change only at their own events', () => {
-  const { run } = load();
-  const readout = (t, key) => run('audio-clocks', 720, 351, t).text
+  const { runStory } = load();
+  const readout = (t, key) => runStory('audio-clocks', 720, 351, t).text
     .filter(x => x.str.startsWith(key) && (x.o.alpha ?? 1) > 0.5).map(x => x.str);
   assert.deepEqual(readout(7.0, 'generation'), ['generation g4']);
   assert.deepEqual(readout(8.6, 'generation'), ['generation g5']);
@@ -101,20 +103,23 @@ test('audio-clocks: identities change only at their own events', () => {
 });
 
 test('audio-cancel: "It already completed" is only said after the commit evidence', () => {
-  const { run } = load();
-  for (let t = 0; t < 13.5; t += 0.1) {
+  const { defs, run } = load();
+  const d = defs['audio-cancel'];
+  for (let t = 0; t < d.duration; t += 0.1) {
     for (const [, w, h] of STAGES) {
       const said = run('audio-cancel', w, h, t).text.some(x => x.str === '“It already completed.”' && x.o.alpha > 0);
-      if (said) assert.ok(t >= 9.4, `completion reply appears only after the commit is shown (t=${t.toFixed(1)})`);
+      if (said) assert.ok(d.story(t) >= 9.4, `completion reply appears only after the commit is shown (t=${t.toFixed(1)})`);
     }
   }
 });
 
 test('audio-incident: only the collapsed design restarts the aerator, and only after its own phrase', () => {
-  const { run } = load();
-  for (let t = 0; t < 15.5; t += 0.1) {
+  const { defs, run } = load();
+  const d = defs['audio-incident'];
+  for (let rt = 0; rt < d.duration; rt += 0.1) {
+    const t = d.story(rt);
     for (const [, w, h] of stages('audio-incident')) {
-      const text = run('audio-incident', w, h, t).text.filter(x => (x.o.alpha ?? 1) > 0.05).map(x => x.str);
+      const text = run('audio-incident', w, h, rt).text.filter(x => (x.o.alpha ?? 1) > 0.05).map(x => x.str);
       const restarted = text.filter(x => /restart sent|aerator 2 restarted/.test(x)).length;
       assert.ok(restarted <= 1, `at most one panel shows a restart (t=${t.toFixed(1)})`);
       if (restarted) assert.ok(t >= 8.1, `restart follows the spoken phrase (t=${t.toFixed(1)})`);
@@ -134,9 +139,9 @@ test('audio-clocks: changing identity readouts do not overlap', () => {
 });
 
 test('audio-incident: voice annotations stay in their own panel', () => {
-  const { run } = load();
+  const { runStory } = load();
   for (const [, w, h] of stages('audio-incident')) {
-    const { s, text } = run('audio-incident', w, h, 12.4);
+    const { s, text } = runStory('audio-incident', w, h, 12.4);
     for (const item of text.filter(x => x.str === 'sound stops')) {
       const panel = s.state.P.find(p => item.x >= p.x && item.x < p.x + p.w);
       assert.ok(panel, 'annotation has a panel');

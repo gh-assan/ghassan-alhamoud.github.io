@@ -314,7 +314,7 @@ def render_prerequisites(chapter: dict, all_chapters: dict) -> str:
     )
 
 
-MOTION_VERSION = "20261002"
+MOTION_VERSION = "20261003"
 
 
 def motion_assets(body_html: str) -> tuple[str, str]:
