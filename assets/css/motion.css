@@ -29,7 +29,8 @@
 
 @media (max-width: 559px) {
   .scene__stage {
-    aspect-ratio: 4 / 3;
+    /* phones default to 4:3; a scene may reserve a taller box (--aspect-compact) */
+    aspect-ratio: var(--aspect-compact, 4 / 3);
   }
 }
 
@@ -128,4 +129,21 @@ html:not(.js) .scene[data-requires-js],
 
 @media (prefers-reduced-motion: reduce) {
   .scene__toggle { display: none; }
+}
+
+/* Chapter timelines stack by their actual column width, including when
+   the handbook sidebar leaves a narrow stage on a desktop viewport. */
+.scene[data-scene^="audio-"] {
+  container-type: inline-size;
+}
+
+@container (width < 680px) {
+  .scene[data-scene^="audio-"] > .scene__stage {
+    aspect-ratio: var(--aspect-compact, 4 / 3);
+  }
+}
+
+@container (400px <= width < 680px) {
+  .scene[data-scene^="audio-"] > .scene__stage { aspect-ratio: 1.7; }
+  .scene[data-scene="audio-incident"] > .scene__stage { aspect-ratio: 1.4; }
 }

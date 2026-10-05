@@ -155,6 +155,52 @@ MCP; draft-first, allowlist sending.
 ### 3.7 SkillLedger — removed
 Dropped from v1 at the owner's request (the project may leave the systems list).
 
+### 3.8 Handbook Ch. 22 — "three clocks" (2D timeline, 14.5 s) · added 2026-10-02
+Traces: "One Conversation, End to End" ledger; identity map (revision, generation,
+owner epoch). Logic-analyser lanes `conversation / task / playback`, a recording
+cursor, identity readouts beside each lane (`owner o3`, `request r7/v1`,
+`generation g4`). Placed directly after the ledger table.
+- **B1 Accept (0–3.5):** user speech → accept `r7/v1` → ticket bar `queued`; only
+  then does the acknowledgement play (cause precedes effect).
+- **B2 Correct (3.5–6.5):** "actually, pond 3" → readout flips `r7/v1 → v2`; the v1
+  result lands as a hollow mark: *kept, not spoken*.
+- **B3 Barge-in (6.5–9.2):** `g4` speech plays, the user interrupts, playback is
+  cleared and the readout flips `g4 → g5`; the task bar stays `completed · receipt`.
+- **B4 Reconnect (9.2–12):** connection lost; owner `o3 → o4`; briefing rebuilt
+  from the record.
+- **Rest (12–14.5):** "the receipt never moved"; masked reset. Poster: t = 12.6.
+- Phones: label rows carry each clock's live state (`TASK · RUNNING`); readouts dock
+  right.
+
+### 3.9 Handbook Ch. 22 — "cancellation races commit" (2D timeline, 13.5 s)
+Traces: "Cancellation Has a Race with Commit" (.100 / .180 / .200 / .205). A
+millisecond axis played in slow motion (the cursor slows through the race);
+lanes `voice / executor / remote system`; a reply panel.
+- **B1 (0–3.3):** restart dispatched at .100. **B2 (3.3–5):** remote commits at .180.
+- **B3 (5–7.4):** the user's "cancel that" lands at .200; sound stops at .205.
+- **B4 (7.4–9.4):** "commit came first"; the candidate reply "Cancelled." is struck.
+- **B5 (9.4–13.5):** "It already completed." with the evidence; undo would be a new
+  action with its own approval. Poster: t = 11.2.
+
+### 3.10 Handbook Ch. 22 — "the plausible lie" (split view, 15.5 s) · opens the chapter
+Traces: the constructed incident and its five-whys. Placed right after the
+"constructed incident" disclaimer. The operator's words run once across the top
+and drive two panels at once: **collapsed · one conversation id** and
+**separated · three clocks**. Each panel has rows for voice, record and effect. On
+phones the panels stack.
+- **B1 (0–2.9):** "Why is oxygen falling in pond seven?" Both panels say "Checking."
+- **B2 (2.9–5.5):** "Actually, check pond three instead." Collapsed: *correction not
+  tracked*. Separated: `r7/v1 → v2`, "Checking pond three."
+- **B3 (5.5–7.9):** the old result returns. Collapsed speaks "Pond seven is low. I'll
+  restart", and the phrase itself travels to the aerator, which starts.
+  Separated: *v1 result held; its proposed restart not approved, not run*.
+- **B4 (7.9–10.2):** "No, stop." Both panels cut playback (*sound stops*).
+- **B5 (10.2–15.5):** the dashboard shows *aerator 2 restarted*, the plausible lie,
+  against *unchanged · no action admitted*, speech ≠ effect. Poster: t = 12.4.
+
+All three scenes live in one file (`scene-audio.js`): core plus one scene file,
+inside the G5 v1.2 budget for multi-scene handbook chapters.
+
 ## 4. Placement
 
 - Project pages: `<figure class="scene" data-scene="…" data-label="…">` directly
@@ -178,4 +224,6 @@ Dropped from v1 at the owner's request (the project may leave the systems list).
 ## 6. Out of scope (v1)
 
 Projects index cards, article pages, handbook and research diagrams, any audio,
-scroll-jacking, WebGL.
+scroll-jacking, WebGL. Exception (2026-10-02): Handbook Chapter 22 carries the three scenes in
+§3.8–3.10. `build-handbook.py` loads motion assets only on chapters that contain a
+scene figure.

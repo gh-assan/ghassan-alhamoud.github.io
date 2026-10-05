@@ -807,6 +807,7 @@ Chapter 10: Building an Agent Platform turns these chapter-level patterns into s
 - [Chapter 6: Memory & Context Management](/handbook/chapter-06-memory-context-management.html): provenance, tenant isolation, and memory poisoning determine whether untrusted claims survive safely.
 - [Chapter 7: Human-in-the-Loop](/handbook/chapter-07-human-in-the-loop.html): meaningful approval and escalation provide authority for high-impact actions.
 - [Chapter 8: Observability & Evaluation](/handbook/chapter-08-observability-evaluation.html): policy events, adversarial cases, regression gates, and incident learning close the safety loop.
+- [Chapter 22: Real-Time Audio Agents](/handbook/chapter-22-real-time-audio-agents.html): apply authority, approval and complete mediation to spoken interaction.
 
 ## Frequently Asked Questions
 

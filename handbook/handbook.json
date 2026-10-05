@@ -2,7 +2,7 @@
   "handbook": {
     "title": "The AI-Native Engineering Handbook",
     "subtitle": "Production-tested patterns for building autonomous agents",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "baseUrl": "https://ghassan-alhamoud.com/handbook/",
     "author": {
       "name": "Ghassan Alhamoud",
@@ -322,10 +322,11 @@
           "tool-use-skill-registry",
           "memory-context-management",
           "human-in-the-loop",
-          "safety-guardrails"
+          "safety-guardrails",
+          "real-time-audio-agents"
         ],
         "publishedAt": "2026-08-18",
-        "lastModified": "2026-08-18"
+        "lastModified": "2026-10-02"
       },
       {
         "id": 9,
@@ -364,10 +365,50 @@
           "tool-use-skill-registry",
           "memory-context-management",
           "human-in-the-loop",
-          "observability-evaluation"
+          "observability-evaluation",
+          "real-time-audio-agents"
         ],
         "publishedAt": "2026-09-01",
-        "lastModified": "2026-09-01"
+        "lastModified": "2026-10-02"
+      },
+      {
+        "id": 22,
+        "slug": "real-time-audio-agents",
+        "title": "Real-Time Audio Agents",
+        "subtitle": "Keeping conversation and work in sync",
+        "description": "Design real-time audio agents with durable tickets, interruption control, grounded speech, exact approvals and separate conversation, task and playback state.",
+        "primaryKeyword": "real-time audio agents",
+        "keywords": [
+          "voice agents",
+          "speech-to-speech",
+          "conversation controller",
+          "barge-in",
+          "durable execution",
+          "voice agent evaluation"
+        ],
+        "status": "published",
+        "difficulty": "advanced",
+        "readingTime": "46 min",
+        "file": "chapter-22-real-time-audio-agents.md",
+        "diagram": "HDBK-022-controller.svg",
+        "ogImage": "/images/handbook/HDBK-022-real-time-audio-agents.webp",
+        "prerequisites": [
+          "react-pattern",
+          "tool-use-skill-registry",
+          "human-in-the-loop",
+          "observability-evaluation",
+          "safety-guardrails"
+        ],
+        "relatedPatterns": [
+          "plan-and-execute",
+          "tool-use-skill-registry",
+          "memory-context-management",
+          "human-in-the-loop",
+          "observability-evaluation",
+          "safety-guardrails"
+        ],
+        "publishedAt": "2026-10-02",
+        "lastModified": "2026-10-02"
       }
     ]
   }
