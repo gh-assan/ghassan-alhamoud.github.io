@@ -195,3 +195,46 @@ All three MP4s passed a full decode check and completed playback in Chrome witho
 media errors (16.8 / 15.8 / 14.7 s). The three videos, poster PNGs, local preview
 gallery, README and provenance manifest were saved to the requested destination;
 all nine copied files matched their source SHA-256 hashes.
+
+## Iteration 9 — IoT handbook integration (2026-10-08)
+
+Scope: IOT-001, its four responsive diagrams and three existing source-package
+animations. This is a self-review using the installed Chrome 154.0.8037.98;
+it does not constitute independent technical acceptance or a physical lab run.
+
+| Finding | Root cause | Correction |
+|---|---|---|
+| Static posters appeared instead of working animations. | The builder matched one exact figure attribute order and class value. IoT figures have an ID and an additional class. | Discover scene figures regardless of attribute order and extra classes. Load core before the single scene file. A regression test reproduces the missed markup; the release gate now recognizes it too. |
+| Wide SVGs were selected in narrow desktop reading columns. | The source package used a viewport media query; the website adds a sidebar. | Observe each diagram's column width and select its compact composition below 680 px. Reserve matching compact scene height with container queries. |
+| A firmware field widened the 320 px page. | Inline code contained a long JSON field with no break opportunity. | Allow inline code to wrap; keep source code blocks copyable. |
+| Compact scene labels fell to 9 px on the narrowest phone. | The source preview used 12 px page margins; the website uses 24 px. Later motion CSS also overrode the initial correction. | Give IoT figures 12 px outer margins below 360 px with a sufficiently specific selector. Final canvas label floor is 9.93 px including border-box rounding, nominally 10 px. |
+| The chapter hero said there were no prerequisites. | No prerequisite chapters was treated as no prerequisite knowledge. | Catalog supports prerequisite text; this chapter states comfort with Go and no required electronics experience. |
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Same command, three benches | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+| Fan incident | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+| Test discrimination | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+
+The bench keeps command/readback invariant while wiring and observation change.
+The fan replay distinguishes recorded operator observation from software state.
+The diagnostic scene removes a candidate only when a performed test discriminates
+against it. All start paused; captions identify illustrative timing and evidence
+limits. These longer teaching sequences retain the source's paced stages.
+
+`tests/iot-visuals.cjs` verifies 430 states at 320, 375, 400, 508, 560, 600,
+679, 680, 720 and 1200 px; eight SVGs; label overlap/clipping; compact selection;
+keyboard play/pause; scenario selection; live theme changes; reduced motion;
+no-JavaScript and renderer-error fallbacks; off-screen and hidden-tab idling.
+Review captures include desktop opening beats and poster states, mobile posters,
+dark posters and reduced-motion posters in `/private/tmp/iot-handbook-qa/`.
+These are temporary QA artifacts; regenerate using `IOT_QA_DIR`.
+
+Five-second live samples: bench 0.738 ms average / 1.5 ms maximum; fan
+0.649 / 1.5 ms; diagnostic 0.524 / 1.2 ms. All are below the 2 ms review target.
+Chrome reported no unexpected warnings or errors. The visible Chrome tab was
+also used to inspect the collection, chapter shell and LED playback.
+
+Final verification: all 35 website gates, 64 Python publication tests, 13 existing
+motion tests, Go control/wire tests and 15 lab-analysis tests pass. The first
+chapter remains a draft with physical lab and independent review pending.

@@ -59,7 +59,7 @@ FORBIDDEN = [
 ]
 
 PUBLISHED_GLOBS = ["*.html", "rss.xml", "sitemap.xml", "llms.txt"]
-PUBLISHED_DIRS = ["", "articles", "projects", "handbook", "research", "connect", "assets"]
+PUBLISHED_DIRS = ["", "articles", "projects", "handbook", "iot-handbook", "research", "connect", "assets"]
 EXTRA_CODE_GLOBS = ["assets/js/*.js", "assets/css/*.css", "scripts/*.py"]
 
 CV_TIMELINE = [
@@ -362,6 +362,7 @@ def check_content_validators():
         ["python3", "scripts/validate-articles.py"],
         ["python3", "scripts/validate-projects.py"],
         ["python3", "scripts/validate-handbook.py"],
+        ["python3", "scripts/validate-handbook.py", "--collection", "iot-handbook"],
         ["python3", "scripts/validate-research.py"],
         ["python3", "-m", "unittest", "discover", "-s", "tests", "-q"],
     ]
@@ -564,7 +565,7 @@ def check_hero_contract():
 def check_handbook_mobile_toc():
     """Every handbook chapter exposes an 'On this page' control for small screens."""
     problems = []
-    for f in sorted((ROOT / "handbook").glob("chapter-*.html")):
+    for f in sorted([*(ROOT / "handbook").glob("chapter-*.html"), *(ROOT / "iot-handbook").glob("chapter-*.html")]):
         if "on-this-page" not in read(f):
             problems.append(f"handbook/{f.name}: no on-this-page control")
     report("handbook-mobile-toc", not problems, "; ".join(problems[:10]))
@@ -821,7 +822,7 @@ def check_motion_contract():
         rel = f.relative_to(ROOT)
         used = set()
         figs = 0
-        for fig in re.finditer(r'<figure class="scene"[^>]*>.*?</figure>', html, re.S):
+        for fig in re.finditer(r'<figure\b(?=[^>]*\bclass="[^"]*\bscene\b[^"]*")[^>]*>.*?</figure>', html, re.S):
             pages += 1
             figs += 1
             block = fig.group(0)
@@ -846,7 +847,7 @@ def check_motion_contract():
         # G5 budgets what the page downloads: core plus every scene file it loads.
         # v1.2: a handbook chapter teaching with several scenes may use 20 KB.
         if used:
-            budget = 20000 if rel.parts[0] == "handbook" and figs >= 2 else 16000
+            budget = 20000 if rel.parts[0] in ("handbook", "iot-handbook") and figs >= 2 else 16000
             size = sum(len(gzip.compress(p.read_bytes(), 9)) for p in [core, *sorted(used)])
             if size > budget:
                 problems.append(f"{rel}: motion JS {size} B gzip > {budget} (G5)")

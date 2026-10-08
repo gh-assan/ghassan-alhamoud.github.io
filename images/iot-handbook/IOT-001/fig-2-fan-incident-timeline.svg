@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" role="img" aria-labelledby="title desc">
+<title id="title">Five steps from software belief to a wiring diagnosis</title><desc id="desc">Historical operator-observed evidence from round-008, 8–9 September 2026. Four governed commands on 8 September and two on 9 September reported executed and energized, but the fan did not rotate. The raw diagnostic kept the same pin map and also failed. Direct supply connection produced rotation. Correcting direction-input jumpers from D4/D3 to D6/D7 produced seen and heard rotation. Earlier mismatched wiring is known retrospectively, not a contemporaneous measurement. No tachometer was fitted.</desc>
+<style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}</style><defs>
+<marker id="accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1d6f42"/></marker>
+<marker id="info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0e7490"/></marker>
+<marker id="warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b45309"/></marker>
+<marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a6741"/></marker>
+</defs>
+<rect x="1" y="1" width="1098" height="798" rx="18" fill="#ffffff" stroke="#b0c4b0" stroke-width="1.4"/>
+<text x="32" y="35" font-size="13" font-weight="700" fill="#1d6f42" text-anchor="start">02 / RECORDED INCIDENT · OPERATOR OBSERVATION</text>
+<text x="32" y="72" font-size="28" font-weight="650" fill="#1a2e1a" text-anchor="start">The records stayed reassuring. The fan stayed still.</text>
+<text x="32" y="100" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">8–9 September 2026 · reconstructed from round-008; not an instrumented trace</text>
+<path d="M67 152H1030" fill="none" stroke="#4a6741" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="32" y="132" width="28" height="28" rx="10" fill="#1d6f42"/>
+<text x="46" y="152" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="70" y="152" font-size="16" font-weight="600" fill="#4a6741" text-anchor="start">8 Sep</text>
+<text x="32" y="191" font-size="18" font-weight="450" fill="#1a2e1a" text-anchor="start">4 governed commands</text>
+<g data-card="Software record" data-bounds="32,222,196,145">
+<rect x="32" y="222" width="196" height="145" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="48" y="251" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Software record</text>
+<text x="48" y="275" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">executed</text>
+<text x="48" y="297" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">energized: true</text>
+</g>
+<text x="48" y="332" font-size="11" font-weight="650" fill="#4a6741" text-anchor="start">REPORT ≠ ROTATION</text>
+<g data-card="Operator saw" data-bounds="32,411,196,101">
+<rect x="32" y="411" width="196" height="101" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="1.4"/>
+<text x="48" y="440" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Operator saw</text>
+<text x="48" y="464" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">No rotation seen</text>
+</g>
+<g data-card="Diagnosis" data-bounds="32,553,196,115">
+<rect x="32" y="553" width="196" height="115" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="1.4"/>
+<text x="48" y="582" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Diagnosis</text>
+<text x="48" y="606" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">D4 / D3 connected</text>
+<text x="48" y="628" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">D6 / D7 driven</text>
+</g>
+<rect x="242" y="132" width="28" height="28" rx="10" fill="#1d6f42"/>
+<text x="256" y="152" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="280" y="152" font-size="16" font-weight="600" fill="#4a6741" text-anchor="start">9 Sep</text>
+<text x="242" y="191" font-size="18" font-weight="450" fill="#1a2e1a" text-anchor="start">2 governed commands</text>
+<g data-card="Software record" data-bounds="242,222,196,145">
+<rect x="242" y="222" width="196" height="145" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="258" y="251" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Software record</text>
+<text x="258" y="275" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">executed</text>
+<text x="258" y="297" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">energized: true</text>
+</g>
+<text x="258" y="332" font-size="11" font-weight="650" fill="#4a6741" text-anchor="start">REPORT ≠ ROTATION</text>
+<g data-card="Operator saw" data-bounds="242,411,196,101">
+<rect x="242" y="411" width="196" height="101" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="1.4"/>
+<text x="258" y="440" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Operator saw</text>
+<text x="258" y="464" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">No rotation or sound</text>
+</g>
+<g data-card="Diagnosis" data-bounds="242,553,196,115">
+<rect x="242" y="553" width="196" height="115" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="1.4"/>
+<text x="258" y="582" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Diagnosis</text>
+<text x="258" y="606" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Same pin map</text>
+<text x="258" y="628" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Same hidden mismatch</text>
+</g>
+<rect x="452" y="132" width="28" height="28" rx="10" fill="#1d6f42"/>
+<text x="466" y="152" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="490" y="152" font-size="16" font-weight="600" fill="#4a6741" text-anchor="start">9 Sep</text>
+<text x="452" y="191" font-size="18" font-weight="450" fill="#1a2e1a" text-anchor="start">Raw diagnostic</text>
+<g data-card="Software record" data-bounds="452,222,196,145">
+<rect x="452" y="222" width="196" height="145" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="468" y="251" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Software record</text>
+<text x="468" y="275" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">no command protocol</text>
+<text x="468" y="297" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">outputs driven</text>
+</g>
+<text x="468" y="332" font-size="11" font-weight="650" fill="#4a6741" text-anchor="start">REPORT ≠ ROTATION</text>
+<g data-card="Operator saw" data-bounds="452,411,196,101">
+<rect x="452" y="411" width="196" height="101" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="1.4"/>
+<text x="468" y="440" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Operator saw</text>
+<text x="468" y="464" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">No twitch or hum</text>
+</g>
+<g data-card="Diagnosis" data-bounds="452,553,196,115">
+<rect x="452" y="553" width="196" height="115" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="1.4"/>
+<text x="468" y="582" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Diagnosis</text>
+<text x="468" y="606" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Bypass kept pin map</text>
+<text x="468" y="628" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Fault stayed in the test</text>
+</g>
+<rect x="662" y="132" width="28" height="28" rx="10" fill="#1d6f42"/>
+<text x="676" y="152" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="700" y="152" font-size="16" font-weight="600" fill="#4a6741" text-anchor="start">9 Sep</text>
+<text x="662" y="191" font-size="18" font-weight="450" fill="#1a2e1a" text-anchor="start">Motor on supply</text>
+<g data-card="Software record" data-bounds="662,222,196,145">
+<rect x="662" y="222" width="196" height="145" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="678" y="251" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Software record</text>
+<text x="678" y="275" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">driver bypassed</text>
+<text x="678" y="297" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">no firmware receipt</text>
+</g>
+<text x="678" y="332" font-size="11" font-weight="650" fill="#4a6741" text-anchor="start">REPORT ≠ ROTATION</text>
+<g data-card="Operator saw" data-bounds="662,411,196,101">
+<rect x="662" y="411" width="196" height="101" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="678" y="440" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Operator saw</text>
+<text x="678" y="464" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Rotation seen</text>
+</g>
+<g data-card="Diagnosis" data-bounds="662,553,196,115">
+<rect x="662" y="553" width="196" height="115" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="678" y="582" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Diagnosis</text>
+<text x="678" y="606" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Motor + supply worked</text>
+<text x="678" y="628" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">in this direct test</text>
+</g>
+<rect x="872" y="132" width="28" height="28" rx="10" fill="#1d6f42"/>
+<text x="886" y="152" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="910" y="152" font-size="16" font-weight="600" fill="#4a6741" text-anchor="start">9 Sep</text>
+<text x="872" y="191" font-size="18" font-weight="450" fill="#1a2e1a" text-anchor="start">Inputs corrected</text>
+<g data-card="Software record" data-bounds="872,222,196,145">
+<rect x="872" y="222" width="196" height="145" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="888" y="251" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Software record</text>
+<text x="888" y="275" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">executed</text>
+<text x="888" y="297" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">energized: true</text>
+</g>
+<text x="888" y="332" font-size="11" font-weight="650" fill="#4a6741" text-anchor="start">REPORT ≠ ROTATION</text>
+<g data-card="Operator saw" data-bounds="872,411,196,101">
+<rect x="872" y="411" width="196" height="101" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="888" y="440" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Operator saw</text>
+<text x="888" y="464" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Seen + heard rotating</text>
+</g>
+<g data-card="Diagnosis" data-bounds="872,553,196,115">
+<rect x="872" y="553" width="196" height="115" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="888" y="582" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Diagnosis</text>
+<text x="888" y="606" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Moved to D6 / D7</text>
+<text x="888" y="628" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Wiring now matched</text>
+</g>
+<text x="32" y="395" font-size="13" font-weight="700" fill="#0e7490" text-anchor="start">PHYSICAL OBSERVATION</text>
+<text x="32" y="539" font-size="13" font-weight="700" fill="#4a6741" text-anchor="start">DIAGNOSTIC MEANING · EARLY WIRING IS KNOWN IN HINDSIGHT</text>
+<rect x="32" y="697" width="1036" height="72" rx="10" fill="#f5f7f5"/>
+<text x="52" y="726" font-size="21" font-weight="650" fill="#1a2e1a" text-anchor="start">A bypass can preserve the assumption that caused the failure.</text>
+<text x="52" y="750" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">No tachometer or current probe. “Rotation” means the operator saw or heard the fan.</text>
+</svg>

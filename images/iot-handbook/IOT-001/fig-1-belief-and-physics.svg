@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 720" role="img" aria-labelledby="title desc">
+<title id="title">Belief crosses into physics; evidence comes back</title><desc id="desc">Illustrative local LED control loop. DHT11 senses air temperature and creates a reading. The controller compares 26.3 C with a 26.0 C threshold and commands D9 high. The pin drives current through the LED only if the wiring connects it. A light sensor or human observes emitted light. Compare that observation with the command; pin readback alone cannot establish light. The observer shares board failures if read by the same board.</desc>
+<style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}</style><defs>
+<marker id="accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1d6f42"/></marker>
+<marker id="info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0e7490"/></marker>
+<marker id="warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b45309"/></marker>
+<marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a6741"/></marker>
+</defs>
+<rect x="1" y="1" width="1098" height="718" rx="18" fill="#ffffff" stroke="#b0c4b0" stroke-width="1.4"/>
+<text x="32" y="35" font-size="13" font-weight="700" fill="#1d6f42" text-anchor="start">01 / CONTROL MODEL · ILLUSTRATIVE</text>
+<text x="32" y="72" font-size="28" font-weight="650" fill="#1a2e1a" text-anchor="start">A command crosses down. Evidence comes back up.</text>
+<text x="32" y="100" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Three boundary crossings; the LED experiment has not been run.</text>
+<rect x="28" y="125" width="1044" height="221" rx="10" fill="#f5f7f5"/>
+<text x="48" y="153" font-size="13" font-weight="700" fill="#4a6741" text-anchor="start">SOFTWARE / RECORDS AND DECISIONS</text>
+<rect x="28" y="389" width="1044" height="179" rx="10" fill="#edf4f6"/>
+<text x="48" y="554" font-size="13" font-weight="700" fill="#0e7490" text-anchor="start">PHYSICAL WORLD / SENSORS, WIRES AND LIGHT</text>
+<g data-card="Reading" data-bounds="65,176,185,88">
+<rect x="65" y="176" width="185" height="88" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="81" y="205" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Reading</text>
+<text x="81" y="229" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">26.3 °C · valid</text>
+</g>
+<g data-card="Decision" data-bounds="300,176,180,88">
+<rect x="300" y="176" width="180" height="88" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="316" y="205" font-size="17" font-weight="650" fill="#1a2e1a" text-anchor="start">Decision</text>
+<text x="316" y="229" font-size="14" font-weight="450" fill="#4a6741" text-anchor="start">threshold 26.0 °C</text>
+</g>
+<g data-card="Command" data-bounds="530,176,200,88">
+<rect x="530" y="176" width="200" height="88" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="546" y="205" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Command</text>
+<text x="546" y="229" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">D9.Set(true)</text>
+</g>
+<g data-card="Observation record" data-bounds="820,176,220,88">
+<rect x="820" y="176" width="220" height="88" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="836" y="205" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Observation record</text>
+<text x="836" y="229" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">lit / dark / unknown</text>
+</g>
+<path d="M250 220H297" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<path d="M480 220H527" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<path d="M730 220H778V306H818" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#info)"/>
+<g data-card="Compare evidence" data-bounds="820,280,220,53">
+<rect x="820" y="280" width="220" height="53" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="836" y="309" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Compare evidence</text>
+</g>
+<path d="M930 264V277" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<g data-card="DHT11 on D2" data-bounds="65,438,185,88">
+<rect x="65" y="438" width="185" height="88" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="81" y="467" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">DHT11 on D2</text>
+<text x="81" y="491" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">air → sensor → data</text>
+</g>
+<g data-card="D9 pin" data-bounds="530,438,155,88">
+<rect x="530" y="438" width="155" height="88" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="546" y="467" font-size="17" font-weight="650" fill="#1a2e1a" text-anchor="start">D9 pin</text>
+<text x="546" y="491" font-size="14" font-weight="450" fill="#4a6741" text-anchor="start">logic level HIGH</text>
+</g>
+<g data-card="LED" data-bounds="712,438,128,88">
+<rect x="712" y="438" width="128" height="88" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="728" y="467" font-size="17" font-weight="650" fill="#1a2e1a" text-anchor="start">LED</text>
+<text x="728" y="491" font-size="14" font-weight="450" fill="#4a6741" text-anchor="start">current → light</text>
+</g>
+<g data-card="Observer" data-bounds="867,438,173,88">
+<rect x="867" y="438" width="173" height="88" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="883" y="467" font-size="17" font-weight="650" fill="#1a2e1a" text-anchor="start">Observer</text>
+<text x="883" y="491" font-size="14" font-weight="450" fill="#4a6741" text-anchor="start">sensor or person</text>
+</g>
+<path d="M685 482H709" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<path d="M840 482H864" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<path d="M157 438V267" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<text x="172" y="368" font-size="16" font-weight="650" fill="#0e7490" text-anchor="start">① Sensing</text>
+<path d="M630 264V435" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<text x="643" y="368" font-size="16" font-weight="650" fill="#1d6f42" text-anchor="start">② Actuation</text>
+<path d="M953 438V355H1057V220H1043" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<text x="815" y="377" font-size="16" font-weight="650" fill="#0e7490" text-anchor="start">③ Observe</text>
+<rect x="32" y="594" width="1036" height="94" rx="10" fill="#f5f7f5"/>
+<text x="52" y="624" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">The wiring is part of the contract.</text>
+<text x="52" y="650" font-size="17" font-weight="450" fill="#4a6741" text-anchor="start">Command: software intended “on”.   Readback: D9 reached HIGH.</text>
+<text x="52" y="673" font-size="17" font-weight="450" fill="#4a6741" text-anchor="start">Effect evidence: light reached an observer. A return value cannot establish that.</text>
+</svg>

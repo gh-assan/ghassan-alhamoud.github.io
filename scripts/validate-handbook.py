@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Validate the generated handbook HTML."""
 
+import argparse
+import sys
 import json
 import re
 from pathlib import Path
@@ -72,7 +74,7 @@ def validate_file(path: Path) -> list[str]:
             continue
         if href.startswith("/#") or href == "/" or href.startswith("mailto:"):
             continue
-        target = path if not urlparse(href).path else local_path(href)
+        target = path if not urlparse(href).path else (local_path(href) if urlparse(href).path.startswith("/") else path.parent / urlparse(href).path)
         if not target.exists():
             errors.append(f"broken internal link: {href}")
             continue
@@ -94,8 +96,8 @@ def validate_file(path: Path) -> list[str]:
     for src in image_sources:
         if not is_internal(src):
             continue
-        target = local_path(src)
-        if not target.exists():
+        target = local_path(src) if urlparse(src).path.startswith("/") else path.parent / urlparse(src).path
+        if not target.is_file():
             errors.append(f"broken image: {src}")
 
     return errors
@@ -146,13 +148,13 @@ def validate_catalog() -> list[str]:
         output_name = f"chapter-{chapter_id:02d}-{slug}.html"
         output = HANDBOOK_DIR / output_name
         if not output.is_file():
-            errors.append(f"{label}: missing generated page handbook/{output_name}")
+            errors.append(f"{label}: missing generated page {HANDBOOK_DIR.name}/{output_name}")
 
         og_image = chapter.get("ogImage", "")
         if not og_image or not local_path(og_image).is_file():
             errors.append(f"{label}: missing OG image {og_image or '(not set)'}")
 
-        canonical = f"https://ghassan-alhamoud.com/handbook/{output_name}"
+        canonical = f"https://ghassan-alhamoud.com/{HANDBOOK_DIR.name}/{output_name}"
         if canonical not in sitemap:
             errors.append(f"{label}: missing sitemap entry")
         if canonical not in llms_txt:
@@ -172,7 +174,13 @@ def validate_catalog() -> list[str]:
     return errors
 
 
-def main():
+def main(argv=None):
+    global HANDBOOK_DIR, HANDBOOK_JSON
+    parser = argparse.ArgumentParser(description="Validate a handbook collection.")
+    parser.add_argument("--collection", choices=("handbook", "iot-handbook"), default="handbook")
+    if argv is not None:
+        HANDBOOK_DIR = ROOT / parser.parse_args(argv).collection
+        HANDBOOK_JSON = HANDBOOK_DIR / "handbook.json"
     files = sorted(HANDBOOK_DIR.glob("chapter-*.html")) + [HANDBOOK_DIR / "index.html"]
 
     all_ok = True
@@ -203,4 +211,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

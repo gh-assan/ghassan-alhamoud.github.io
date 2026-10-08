@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 1: What Is an IoT System, Really? — IoT Engineering Handbook</title>
+  <meta name="description" content="Trace an IoT system from software belief to physical evidence, diagnose a real fan wiring fault, and explore a Go/TinyGo LED lab." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html" />
+  <meta property="og:title" content="Chapter 1: What Is an IoT System, Really? — Belief, command, effect and observation" />
+  <meta property="og:description" content="Trace an IoT system from software belief to physical evidence, diagnose a real fan wiring fault, and explore a Go/TinyGo LED lab." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="article:published_time" content="2026-10-08" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html" />
+  <meta property="twitter:title" content="Chapter 1: What Is an IoT System, Really? — Belief, command, effect and observation" />
+  <meta property="twitter:description" content="Trace an IoT system from software belief to physical evidence, diagnose a real fan wiring fault, and explore a Go/TinyGo LED lab." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "What Is an IoT System, Really? \u2014 Belief, command, effect and observation",
+  "description": "Trace an IoT system from software belief to physical evidence, diagnose a real fan wiring fault, and explore a Go/TinyGo LED lab.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The IoT Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/iot-handbook/"
+  },
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-08",
+  "image": "https://ghassan-alhamoud.com/images/og-default.webp",
+  "learningResourceType": "Chapter",
+  "position": 1,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IoT Engineering Handbook",
+      "item": "https://ghassan-alhamoud.com/iot-handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "What Is an IoT System, Really?",
+      "item": "https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261003" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/research/" class="nav__link">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <nav class="handbook-collections" aria-label="Handbook collections"><a href="/handbook/">AI Engineering</a><a href="/iot-handbook/" aria-current="page">IoT Engineering</a></nav>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">IOT-001</span>
+          <h1 class="handbook-hero__title">What Is an IoT System, Really?</h1>
+          <p class="handbook-hero__subtitle">Belief, command, effect and observation</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 1</span>
+            <span class="handbook-hero__dot">•</span><span>31 min</span>
+            <span class="handbook-hero__dot">•</span><span>Beginner</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-10-08</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><p class="prerequisites-box__text">Comfort with Go code. No electronics experience required.</p></div>
+
+        <details class="on-this-page"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li><li><a class="on-this-page__link" href="#prerequisites-and-outcomes">Prerequisites and Outcomes</a></li><li><a class="on-this-page__link" href="#the-fan-that-reported-energized">The Fan That Reported Energized</a></li><li><a class="on-this-page__link" href="#what-makes-a-system-iot">What Makes a System "IoT"</a></li><li><a class="on-this-page__link" href="#the-model-belief-command-effect-observation">The Model: Belief, Command, Effect, Observation</a></li><li><a class="on-this-page__link" href="#just-enough-electricity">Just Enough Electricity</a></li><li><a class="on-this-page__link" href="#revisiting-the-fan-with-the-model">Revisiting the Fan With the Model</a></li><li><a class="on-this-page__link" href="#choosing-how-to-know">Choosing How to Know</a></li><li><a class="on-this-page__link" href="#the-lab-one-loop-three-observers">The Lab: One Loop, Three Observers</a></li><li><a class="on-this-page__link" href="#safety-security-and-stale-data-from-day-one">Safety, Security and Stale Data From Day One</a></li><li><a class="on-this-page__link" href="#where-tamoz-and-agentic-stream-fit">Where Tamoz and Agentic Stream Fit</a></li><li><a class="on-this-page__link" href="#design-principles">Design Principles</a></li><li><a class="on-this-page__link" href="#transfer-exercise">Transfer Exercise</a></li><li><a class="on-this-page__link" href="#misconceptions">Misconceptions</a></li><li><a class="on-this-page__link" href="#summary">Summary</a></li><li><a class="on-this-page__link" href="#glossary">Glossary</a></li><li><a class="on-this-page__link" href="#sources">Sources</a></li><li><a class="on-this-page__link" href="#revision-history">Revision History</a></li></ul></details>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Version:</strong> 0.4 draft | <strong>Evidence cutoff:</strong> 2026-10-08 | <strong>Reading time:</strong> about 31 min (≈7,100 words at 230 wpm, code and HTML markup excluded) | <strong>Lab time:</strong> about 90 min, plus parts check | <strong>Status:</strong> draft; lab-pending; review-pending</p>
+<blockquote>
+<p>Draft notice. The lab in this chapter has a written procedure, tested analysis code and a predicted outcome, but it has <strong>not been run</strong>. Every result table marked <em>Not yet run</em> is waiting for real observations. The fan incident is a recorded historical observation from the sensor study, not a new run.</p>
+</blockquote>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>An IoT system connects software to the physical world through networked devices that sense, actuate, or do both. A connected temperature logger needs no actuator to qualify. The engineering difficulty is that the thing you care about — a room's temperature, a motor's rotation, a light — is outside the program, and the program only ever holds a <strong>belief</strong> about it.</p>
+<p>That belief is assembled from records: a sensor reading, a decision, a command, an acknowledgement, a reported state. Each record proves something real, but less than it seems to. A command record proves that software issued a command. A firmware state of <code>energized: true</code> proves that the firmware set its outputs. Neither proves that anything moved.</p>
+<p>The guarantee boundary of this chapter is one sentence: <strong>an effect is established only by an observation that does not travel the command path.</strong> Everything else in the handbook builds on that distinction. We will ask three questions of every system: What did the software believe? What happened physically? What evidence connects them?</p>
+<h2 id="prerequisites-and-outcomes">Prerequisites and Outcomes</h2>
+<p><strong>Required:</strong> comfort with Go code. <strong>Not required:</strong> any electronics. This chapter introduces voltage, current, resistance and ground as it needs them.</p>
+<p>After this chapter you should be able to:</p>
+<ol>
+<li>Draw an actuating IoT feature as a chain of belief, decision, command, effect and observation, and identify which parts a sensor-only feature omits.</li>
+<li>Say exactly what a given record (return value, acknowledgement, pin readback, sensor value, human observation) does and does not establish.</li>
+<li>Size a series resistor for an LED from a datasheet limit, and explain why "5 V" on a pin is a nominal value, not a measurement.</li>
+<li>Choose an observation method for an effect, and name the failures it shares with the command path.</li>
+<li>Design a fault that separates two hypotheses, instead of a test that both hypotheses survive.</li>
+</ol>
+<h2 id="the-fan-that-reported-energized">The Fan That Reported Energized</h2>
+<p><em>Observed. Source: round-008 execution report in the real-world-sensor study, 8–9 September 2026. Operator observation only; no rotation instrument was fitted.</em></p>
+<p>The sensor study built a small thermal rig: a DHT11 temperature and humidity sensor, an Arduino Mega 2560-compatible board, an L293D motor driver and a small fan. Software on a laptop could send the board a bounded command such as "run the fan at 45% duty for 5 seconds", and the board would report back.</p>
+<p>On 8 September, the first fan command produced a clean record:</p>
+<pre><code class="language-json">{&quot;message_type&quot;:&quot;result&quot;,&quot;command_id&quot;:&quot;physical-fan-smoke-01&quot;,&quot;boot_id&quot;:&quot;boot-38&quot;,&quot;status&quot;:&quot;executed&quot;}
+</code></pre>
+<p>The board's state report followed: <code>"current_output":{"target":"fan-01","operation":"set_pwm_lease","value":450,"energized":true}</code>. Five and a half seconds later, the lease expired and the board reported <code>energized: false</code> and <code>safe_state: true</code>, exactly as designed. Every software check passed.</p>
+<p>The fan did not turn.</p>
+<p>Over two days the rig ran six governed commands, at up to 60% duty, and a raw diagnostic sketch that drove the driver at full power in both directions. Every record said the outputs were being driven. The operator watching the fan saw no rotation, no twitch and heard no hum. Eventually the operator lifted the motor leads and touched them directly to the power supply. The motor spun. The fault was in the driver stage.</p>
+<p>The cause was two jumper wires. The driver's direction inputs were plugged into Mega pins D4 and D3. The firmware drove D6 and D7. The program was correct, the board was correct, the driver was correct, and the motor was correct. The system was wrong, because a system includes its wiring. Moving the two jumpers to D6 and D7 produced visible, audible rotation on the next governed command.</p>
+<p>Keep this incident in mind. By the end of the chapter we will be able to say precisely which records misled us, why the "decisive" full-power test was not decisive, and which single observation would have found the wiring fault on the first day.</p>
+<h2 id="what-makes-a-system-iot">What Makes a System "IoT"</h2>
+<p>A useful baseline is <a href="https://csrc.nist.gov/glossary/term/iot_device">NIST's IoT-device definition</a>: a device interacts with the physical world through a sensor or actuator and has a network interface. Definitions vary with context, but this includes a connected temperature logger without requiring it to control anything.</p>
+<p>For a system that acts, we will use a four-part control model: something that <strong>senses</strong>, something that <strong>decides</strong>, something that <strong>acts</strong>, and something that <strong>observes</strong> whether the action had the intended effect. A network may distribute these parts; it does not supply the missing observation.</p>
+<p>If you have built distributed services, much of this will feel familiar: messages, retries, timeouts, partial failure. Three differences matter from the first chapter.</p>
+<p><strong>Physical state is not yours to roll back.</strong> A database transaction can abort. Heat already delivered to a room cannot. A motor that already ran for 10 seconds has already moved whatever it moves. Retrying a command is therefore not neutral: if the first attempt worked and you could not tell, the retry does it twice.</p>
+<p><strong>You never read physical state directly.</strong> A service reads its own memory. An IoT system reads a sensor, which converts a physical quantity into a voltage, which a converter turns into a number, which firmware turns into a reading, which a gateway turns into an event. Each step has its own delay, resolution and failure modes. The reading is evidence about the temperature, not the temperature.</p>
+<p><strong>The wiring is part of the program.</strong> In a service, the code that calls a function and the function it calls are both in the repository. In an IoT system, the firmware says "drive pin 6" and a physical wire decides what pin 6 is connected to. No compiler, type checker or test suite sees that wire. The fan incident is not an exotic failure; it is the characteristic failure of a system whose interface contract is a jumper.</p>
+<p>The local USB-connected LED rig below isolates this sensing/control problem before networked integration. It is a precursor to an IoT system, rather than evidence that networking is optional in the definition. A standalone thermostat shares these physical-control problems; a networked sensor-only logger shares measurement uncertainty but has no actuator effect to verify.</p>
+<h3 id="the-whole-system-before-the-local-loop">The whole system, before the local loop</h3>
+<figure class="iot-diagram">
+<picture>
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-0-iot-system-map-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-0-iot-system-map.svg" alt="Illustrative IoT architecture: sensor and firmware send readings through transport, gateway and event processing. History is a separate branch. Optional decisions return bounded commands through local control to an actuator. Physical feedback returns through sensing." style="width:100%;height:auto">
+</picture>
+<figcaption>System map. Illustrative roles and flows, not a deployment diagram or an implemented product bridge. Readings travel outward; optional commands return; physical feedback supplies evidence about the effect.</figcaption>
+</figure>
+
+<p>The top journey carries telemetry: the device samples and identifies a reading, transport carries it, a gateway can normalize or buffer it, and processing interprets it. History storage supports later queries and replay. A sensor-only logger can stop there.</p>
+<p>The return journey carries control: a rule, person or supervisory agent decides, local control applies timing and output limits, and an actuator affects the physical world. These are roles, not one server per box; several can run on the same machine. Observe the physical quantity or effect to close the loop. A message acknowledgement closes only a transport hop.</p>
+<p>Our USB-connected lab isolates the device, local control, actuator and observer. It teaches the physical boundary before adding network failure, remote decisions or fleets.</p>
+<h2 id="the-model-belief-command-effect-observation">The Model: Belief, Command, Effect, Observation</h2>
+<figure class="iot-diagram">
+<picture>
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-1-belief-and-physics-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-1-belief-and-physics.svg" alt="Illustrative LED loop: a DHT11 reading crosses into software; a decision commands D9; current and light depend on wiring; a separate observer supplies evidence that is compared with the command." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 1. The same loop for the lab in this chapter. Software holds a reading, a decision and a command. Physics holds a temperature, a voltage, a current and light. Three arrows cross the boundary. Only the observation, which crosses back on a separate path, can be compared with the command to say whether the effect happened.</figcaption>
+</figure>
+
+<p>Figure 1 shows the loop we will build in the lab. Read the desktop view as two rows that touch in three places; the compact view uses two columns with the same crossings.</p>
+<p><strong>Sensing</strong> crosses from physics to software. Air temperature changes the DHT11's internal element; the module converts that into a digital message on pin D2; a library turns the message into a number such as 26.3 °C. Software now holds a <em>reading</em>, which it treats as its belief about the room.</p>
+<p><strong>Actuation</strong> crosses from software to physics. The decision "LED on" becomes a command: <code>machine.D9.Set(true)</code>. That call sets a bit in the microcontroller's output register, which switches the pin's output transistor, which raises the pin's voltage, which drives current through the LED, which emits light. Every step after the register is physics.</p>
+<p><strong>Observation</strong> crosses back. A light sensor, or a person, detects the light and produces a record: lit, dark, or unknown. That record is the only one in the loop that is caused by the effect itself.</p>
+<p>The comparison reached by Figure 1's dashed command path — command against observation — is the core operation of every reliable IoT system. It is how we know whether the world matches the belief.</p>
+<h3 id="what-each-record-establishes">What each record establishes</h3>
+<p>The useful habit is to ask of every record: <em>what caused this to be written?</em> A record can only establish the things that had to be true for it to exist.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Written because…</th>
+<th>Establishes</th>
+<th>Does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Decision log line "LED on"</td>
+<td>Code reached that branch</td>
+<td>The decision logic produced this output for this input</td>
+<td>That the input was fresh or correct</td>
+</tr>
+<tr>
+<td><code>machine.D9.Set(true)</code> completed</td>
+<td>The function returned</td>
+<td>Nothing about the pin; <a href="https://tinygo.org/docs/reference/microcontrollers/machine/arduino-mega2560/#func-pin-set">TinyGo <code>Pin.Set</code> returns nothing</a></td>
+<td>That the pin was configured as an output</td>
+</tr>
+<tr>
+<td>Firmware state <code>energized: true</code></td>
+<td>Firmware set its own variable</td>
+<td>Firmware believes it drove the outputs</td>
+<td>That any pin moved, or that the right pins were wired</td>
+</tr>
+<tr>
+<td>Transport acknowledgement (serial, broker)</td>
+<td>A message reached the next hop</td>
+<td>Delivery to that hop</td>
+<td>That the receiver acted, or that the action had an effect</td>
+</tr>
+<tr>
+<td>Pin readback HIGH</td>
+<td>The input circuit saw the pin above its threshold</td>
+<td>The pin is at a logic-high level</td>
+<td>That current flows through the load, or that the load is on that pin</td>
+</tr>
+<tr>
+<td>Light sensor "lit"</td>
+<td>Light reached the sensor</td>
+<td>Light at the sensor's position</td>
+<td>That the light came from <em>this</em> LED, or that the sensor is healthy</td>
+</tr>
+<tr>
+<td>Human observation "lit"</td>
+<td>A person looked and saw light</td>
+<td>Light was visible at that time</td>
+<td>Precise timing or brightness; and people miss things</td>
+</tr>
+</tbody>
+</table>
+<p>Read down the "does not establish" column and the fan incident explains itself. The command result, the firmware state, and even the full-power diagnostic sketch's trace all sit in the first four rows. None of them was caused by the motor turning. They were all true, and all consistent with a motor that never moved.</p>
+<h3 id="readback-is-better-than-nothing-and-less-than-it-looks">Readback is better than nothing, and less than it looks</h3>
+<p>The ATmega2560 lets firmware read a pin's actual logic level whatever the pin's direction, including while it is an output (<a href="#sources">ATmega2560 datasheet</a>, §13.2.4). In TinyGo, <code>machine.D9.Get()</code> reads that level, including in output mode. Our lab firmware records it as <code>pin_readback</code>.</p>
+<p>Readback catches some real faults. If the pin is shorted to ground, or the output transistor is damaged, readback reports LOW while the firmware commanded HIGH. But in the fan incident, readback on D6 and D7 would have reported exactly what the firmware commanded, because those pins were driving nothing. Readback is evidence about the pin. The wiring fault lived after the pin.</p>
+<h2 id="just-enough-electricity">Just Enough Electricity</h2>
+<p>The lab drives an LED. That needs four ideas and one formula.</p>
+<p><strong>Voltage</strong> is the difference in electrical potential between two points, measured in volts (V). It is always <em>between</em> two points. "The pin is at 5 V" means 5 V relative to the board's ground.</p>
+<p><strong>Ground</strong> is the reference point all other voltages on a circuit are measured against. Two circuits that need to exchange signals must share a ground, or a "5 V" signal from one means nothing to the other. Missing common ground was one of the fan incident's candidate causes; it was a reasonable suspect.</p>
+<p><strong>Current</strong> is the rate of charge flow, measured in amperes (A) or milliamperes (mA). Current flows only around a closed loop: out of a source, through a load, back to the source's ground.</p>
+<p><strong>Resistance</strong> opposes current and is measured in ohms (Ω). For a resistor, <strong>Ohm's law</strong> relates them: <em>V = I × R</em>. Voltage in volts, current in amperes, resistance in ohms.</p>
+<p>An LED is not a resistor. Once it conducts, the voltage across it stays roughly at its <strong>forward voltage</strong>, <em>V_f</em>, whatever the current. That is why an LED needs a series resistor: without one, almost nothing limits the current except the pin's own output stage.</p>
+<h3 id="worked-example-sizing-the-led-resistor">Worked example: sizing the LED resistor</h3>
+<p><em>Illustrative values. Read the forward voltage from your LED's datasheet; it varies by colour and part.</em></p>
+<p>The ATmega2560 datasheet lists 40.0 mA as the absolute maximum DC current per I/O pin, and warns that stresses beyond the absolute maximum ratings "may cause permanent damage." An absolute maximum is a cliff edge, not an operating point; we want to stay well below it. Choose a target of 10 mA, and assume a red LED with <em>V_f</em> = 2.0 V.</p>
+<p>The resistor sees the pin voltage minus the LED's forward voltage:</p>
+<p><em>R = (V_pin − V_f) / I = (5.0 V − 2.0 V) / 0.010 A = 300 Ω</em></p>
+<p>Resistors come in standard values, so take the next one up: 330 Ω. Now check the current with the value we actually fitted:</p>
+<p><em>I = (5.0 V − 2.0 V) / 330 Ω ≈ 9.1 mA</em></p>
+<p>That assumes the pin really sits at 5.0 V. It does not, under load. The datasheet guarantees only that a high output stays at or above <strong>4.2 V while sourcing 20 mA</strong> from a 5 V supply. At about 9 mA the drop will be smaller, but we only have the guaranteed bound, so use it for the worst case:</p>
+<p><em>I_min ≈ (4.2 V − 2.0 V) / 330 Ω ≈ 6.7 mA</em></p>
+<p>So the honest statement is "between roughly 6.7 and 9.1 mA, depending on the actual pin voltage and LED", not "9.1 mA". Both ends are far below 40 mA, and the LED will be clearly visible. Power dissipated in the resistor is <em>I²R</em> ≈ 0.0091² × 330 ≈ 27 mW, small for a typical through-hole resistor (check its rating).</p>
+<p>Two lessons travel beyond LEDs. First, "5 V" on a pin is a nominal value; a datasheet gives you bounds under stated conditions, and your design should hold across the bound. Second, the calculation needs the part's own datasheet. Arduino's own guide says a pin cannot supply enough current for most relays, solenoids or motors (<a href="#sources">Arduino digital pins</a>); that is why the fan needed an L293D driver at all.</p>
+<h3 id="a-pin-that-is-not-driven-is-not-low">A pin that is not driven is not LOW</h3>
+<p>At power-up, Arduino (ATmega) pins default to inputs in a high-impedance state, and an input with nothing connected picks up noise and reports apparently random levels (<a href="#sources">Arduino digital pins</a>). An undriven pin is not 0 V. It is <em>undefined</em>.</p>
+<p>The sensor study met this twice. During USB bring-up, analog pin A0 had no sensor connected, and the board reported temperatures around 100 °C: a floating input converted into a confident-looking number. In the fan incident, the driver's inputs were wired to D4 and D3, pins the firmware never configured. The firmware was not holding them LOW; it was not holding them at all. The execution report describes them as LOW; strictly, that is an inference. What we can say from the L293D datasheet is enough: with the enable input high, each output follows its input (<a href="#sources">TI L293D</a>, Table 1), so whenever the two direction inputs sat at the same level, both motor terminals sat at the same voltage, and a motor with no voltage across it does not turn.</p>
+<h2 id="revisiting-the-fan-with-the-model">Revisiting the Fan With the Model</h2>
+<figure class="iot-diagram">
+<picture>
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline.svg" alt="Recorded investigation, 8–9 September 2026: governed commands and a raw diagnostic reported drive while the operator saw no rotation. Direct supply connection spun the motor; correcting D4/D3 jumpers to D6/D7 produced rotation. Earlier wiring is shown in hindsight." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 2. Five stages of the recorded investigation, separating software reports, operator observations and diagnostic interpretation. The governed reports said executed and energized before and after the repair; the physical outcome changed. Early wiring is reconstructed in hindsight. Rotation was operator-observed, with no tachometer or current probe.</figcaption>
+</figure>
+
+<p>Figure 2 lays the incident out as evidence rather than narrative. Three things stand out.</p>
+<p><strong>The software rows never changed.</strong> Command result and firmware state were green in every governed run, including the ones where the fan was stationary. They could not distinguish success from this failure, because nothing in them was caused by rotation.</p>
+<p><strong>The candidate list did not contain the answer.</strong> After the first day, the report listed the motor supply rail, common ground, motor terminal wiring and startup torque as suspects. The input wiring was not on the list. That is an easy trap: we suspect the parts we think of as "hardware", and treat the pin map as settled because it is written in the firmware. The firmware's pin map is a claim about the wiring, not an observation of it.</p>
+<p><strong>The "decisive" test was decisive about the wrong thing.</strong> The raw full-power sketch bypassed the command protocol, the governance limits and the duty ceiling. When the fan still did not move, the report concluded that this "conclusively rules out firmware" and placed the fault in motor power delivery. It did rule out the governance path. But the raw sketch used the same pin map — D5, D6, D7 — as the governed firmware. Both programs shared the faulty assumption, so both failed the same way. A test can only discriminate between hypotheses that predict different outcomes for it, and "the inputs are on the wrong pins" predicted exactly what was seen.</p>
+<p>The report's proposed next step was a multimeter across the motor terminals during a driven phase, reading "~0 V confirms the VCC2/ground fault." That reading would almost certainly have been close to 0 V — the motor never even hummed — and would have been read as confirming the wrong cause, because the input-wiring fault also leaves no voltage across the motor. The step that actually split the hypotheses was the isolation test: connect the motor straight to the supply. It spun, which eliminated the motor and supply together and left only the driver stage. From there, comparing the physical jumpers with the firmware's pin map found the fault.</p>
+<figure class="iot-diagram">
+<picture>
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-test-discrimination-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-3-test-discrimination.svg" alt="Reasoning model: six candidate causes against five tests. The raw sketch rules out only firmware and torque; a proposed meter reading would not separate supply, ground and wiring; motor on supply rules out the motor; comparing jumpers with the pin map confirms a wiring fault; rewiring alone fixing it rules out supply and ground." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 3. Which test could tell the causes apart? A reasoning model built from the recorded report: each cell is what the test would show if that cause were the only fault. A test removes only the causes whose prediction differs from what was observed. The meter test was proposed and never run.</figcaption>
+</figure>
+
+<p>Figure 3 makes the argument mechanical. Six causes were plausible after the first day. The full-power sketch observed "still"; only two causes predicted anything else, so it removed two and left four. The proposed meter would have read about 0 V under three of the remaining four, so it could not have separated them. The supply test removed the motor. Comparing the jumpers with the pin map <em>confirmed</em> a wiring fault, but finding one fault does not exclude a second; it was rewiring alone producing rotation that ruled out a supply or ground fault as well.</p>
+<p>Which single observation would have found it on day one? A continuity check — one multimeter probe on the driver's 1A input (pin 2), one on the Mega's D6 header — would have shown no connection. That check compares the wiring against the pin map directly, instead of inferring the wiring from symptoms. The habit to form now is to <strong>verify the wiring against the code's pin map before believing either.</strong></p>
+<h2 id="choosing-how-to-know">Choosing How to Know</h2>
+<p>Every effect needs an observation, but not every observation is equally good, equally cheap, or equally independent. Here are the options for our LED, in increasing distance from the command path.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>What it can catch</th>
+<th>What it shares with the command path</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trust the call returned</td>
+<td>Nothing about the effect</td>
+<td>Everything</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Firmware state flag</td>
+<td>Logic bugs that skip the command</td>
+<td>Firmware, board, wiring</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Pin readback</td>
+<td>Shorted or damaged pin; wrong pin <em>mode</em></td>
+<td>Firmware, board, wiring after the pin</td>
+<td>Free on AVR</td>
+</tr>
+<tr>
+<td>Electrical measurement (current through the load)</td>
+<td>Open circuit, missing load, wrong wiring</td>
+<td>Board power; measurement wiring</td>
+<td>An instrument or sense circuit</td>
+</tr>
+<tr>
+<td>Independent physical sensor (light sensor for light)</td>
+<td>Load missing, wrong pin, dead LED</td>
+<td>Board, if the same board reads the sensor; room light</td>
+<td>A sensor, a pin, calibration</td>
+</tr>
+<tr>
+<td>Human observation</td>
+<td>Gross failures of all kinds</td>
+<td>Little, but timing is imprecise and attention lapses</td>
+<td>Someone watching</td>
+</tr>
+</tbody>
+</table>
+<p>Two judgements follow from the table.</p>
+<p><strong>Independence is a spectrum, and you should say where you are on it.</strong> In our lab, the light sensor is read by the same Mega that drives the LED. The <em>physical</em> path — pin, LED, light, sensor — is independent of the firmware's belief, which is what matters for catching wiring faults. But a board-wide failure, such as a brown-out or a frozen loop, would affect both the command and the observation. A light sensor on a second board would remove that shared failure. For a lab LED, the same board is good enough; for a heater, it would not be.</p>
+<p><strong>Match the observer to the claim.</strong> A light sensor can say "light reached me." It cannot say the LED is at full brightness, nor that the light was not a desk lamp. If the claim you need is "the fan is cooling the room", rotation is not enough either; you need a temperature measurement downstream of the fan, and time for it to change. The rule: the observation must be caused by the effect you are claiming, not by a step before it.</p>
+<p>A decision rule for this chapter: <em>observe any effect whose silent failure would mislead a person or a later decision.</em> The counterexample is an indicator LED that duplicates information already shown elsewhere; observing it costs more than its failure. The fan in a thermal loop is the opposite case: if it silently fails, the controller will keep believing it is cooling while the room heats. That belief needs evidence before it can support another decision.</p>
+<h3 id="watch-it-happen">Watch it happen</h3>
+<p>Three paused animations follow the evidence from command to physical observation. Use each play control to advance the scene. The diagrams and captions retain the lesson without JavaScript or motion.</p>
+<p><label class="iot-scenario" for="iot-scenario">Illustrative LED bench
+<select id="iot-scenario"></p>
+<option value="wiring">Wrong wire: command on, LED dark</option>
+<option value="baseline">Correct wiring: light observed</option>
+<option value="blind">Covered observer: effect unknown</option>
+<p></select></label></p>
+<h3 id="same-command-three-benches">Same Command, Three Benches</h3>
+<figure class="scene iot-scene" id="evidence-scene" data-scene="iot-evidence" data-scenario="wiring" data-label="Illustrative sequence: command issued, pin driven, physical effect, observation, then comparison. A wrong wire produces dark evidence; a covered observer produces unknown.">
+<div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-1-belief-and-physics-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-1-belief-and-physics.svg" alt="Static alternative: a command crosses into physics, then a separate observation is compared with it."></picture></div>
+<figcaption class="evidence-caption">Illustrative. No sensor values or hardware timings were measured. The command and readback records are identical in all three cases; only the wire, the light and the observer differ. Correct wiring yields agreement; a jumper on the wrong pin yields contradiction; a covered observer leaves the effect unknown. The cases assume usable calibration; in a dim room a cap can resemble ordinary darkness, which the physical lab must check.</figcaption></figure>
+
+<h3 id="the-fan-incident-in-four-stages">The Fan Incident in Four Stages</h3>
+<figure class="scene iot-scene" id="fan-scene" data-scene="iot-fan" data-label="Recorded fan incident in four stages: governed commands and a raw sketch drive D5, D6 and D7 while the driver inputs are jumpered to D4 and D3, so the fan stays still; connecting the motor to its supply spins it; moving the jumpers to D6 and D7 makes the fan spin with the same software record.">
+<div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline.svg" alt="Static alternative: five recorded stages of the fan incident."></picture></div>
+<figcaption class="evidence-caption">Illustrative replay of a recorded incident (round-008, 8–9 September 2026). Stages are compressed; rotation was observed by the operator, with no tachometer or current probe. The jumper positions were only known in hindsight; the scene marks that moment.</figcaption></figure>
+
+<h3 id="which-test-tells-the-causes-apart">Which Test Tells the Causes Apart?</h3>
+<figure class="scene iot-scene" id="tests-scene" data-scene="iot-tests" data-label="Reasoning model: five diagnostic tests against six candidate causes. The raw full-power sketch rules out only firmware and startup torque; a proposed meter reading would not separate supply, ground and wiring; motor-on-supply rules out the motor; comparing jumpers with the pin map confirms a wiring fault; rewiring alone fixing it rules out supply and ground.">
+<div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-test-discrimination-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-3-test-discrimination.svg" alt="Static alternative: table of candidate causes against diagnostic tests."></picture></div>
+<figcaption class="evidence-caption">Illustrative reasoning model built from the recorded report, not a recorded sequence of instrument readings. Each cell is what the test would show if that cause were the only fault. The meter test was proposed in the report and never run.</figcaption></figure>
+
+<h2 id="the-lab-one-loop-three-observers">The Lab: One Loop, Three Observers</h2>
+<p>The full procedure, wiring, safety limits and pre-registered criteria are in <a href="/iot-handbook/examples/what-is-an-iot-system/lab.md">lab.md</a>. Here is what it tests and what we predict.</p>
+<p><strong>Rig.</strong> The historical rig's Mega 2560-compatible board and DHT11 on D2 (both verified working in the sensor study on 8 September). An LED with a 330 Ω series resistor on D9. Optionally, a photoresistor facing the LED, read on A0. All parts must be confirmed against the actual bench before wiring; none is assumed.</p>
+<p><strong>Firmware.</strong> <a href="/iot-handbook/examples/what-is-an-iot-system/firmware/main.go"><code>main.go</code></a> uses TinyGo on the Mega 2560-compatible board. It starts a DHT11 measurement every 2.5 seconds, decides whether the LED should be on, drives D9, waits 500 ms for the light sensor to settle, and prints one JSON record per sample. The decision logic lives in <a href="/iot-handbook/examples/what-is-an-iot-system/control/decide.go"><code>decide.go</code></a>, with no hardware imports, so standard Go can test it on a laptop:</p>
+<pre><code class="language-go">func Decide(mode Mode, reading Reading, thresholdDeciC int16) Decision {
+    if mode == ForceOn { return Decision{true, &quot;forced_on&quot;} }
+    if mode == ForceOff { return Decision{false, &quot;forced_off&quot;} }
+    if !reading.Valid { return Decision{false, &quot;invalid_reading&quot;} }
+    if reading.TempDeciC &gt;= thresholdDeciC {
+        return Decision{true, &quot;at_or_above_threshold&quot;}
+    }
+    return Decision{false, &quot;below_threshold&quot;}
+}
+</code></pre>
+<p>Temperature is stored in tenths of a degree: <code>260</code> means 26.0 °C, matching the driver's integer units. A failed sensor read is not evidence that the room is cool. The function falls back to the benign output and records <em>why</em>, so an analyst cannot mistake <code>invalid_reading</code> for <code>below_threshold</code>. The firmware consumes a temperature only after the current measurement succeeds; the driver's retained value is not accepted after failure.</p>
+<p>TinyGo's Mega ADC returns a left-aligned 16-bit value with 10-bit precision. The firmware shifts it right by six before reporting <code>light_raw</code>, preserving the lab's 0–1023 calibration scale. Go tests cover decisions, failure/recovery, serial commands and JSON encoding; a target build checks the hardware APIs. Neither establishes physical behaviour. See lab.md for the exact versions and build result. The host analysis utility remains Python.</p>
+<p>Each record carries the whole belief chain for one sample:</p>
+<pre><code class="language-json">{&quot;seq&quot;:12,&quot;t_ms&quot;:30017,&quot;mode&quot;:&quot;auto&quot;,&quot;reading&quot;:&quot;ok&quot;,&quot;temp_c&quot;:26.3,&quot;threshold_c&quot;:26.0,
+ &quot;reason&quot;:&quot;at_or_above_threshold&quot;,&quot;commanded&quot;:1,&quot;pin_readback&quot;:1,&quot;light_raw&quot;:731}
+</code></pre>
+<p><em>Illustrative record showing the format, not a measurement.</em></p>
+<p><strong>Three observers.</strong> Pin readback (cheap, close to the command path), the light sensor (instrumented, physically independent), and the operator (a person writing down what they see against the sequence number). The analysis script <a href="/iot-handbook/examples/what-is-an-iot-system/analyze_run.py"><code>analyze_run.py</code></a> compares each record's command with the best available observation and classifies it as <code>effect_consistent</code>, <code>effect_contradicted</code>, <code>effect_unknown</code> or <code>pin_disagrees_with_command</code>.</p>
+<h3 id="phase-1-calibrate-the-observer">Phase 1: calibrate the observer</h3>
+<p>Before the light sensor can testify, we check that it can tell lit from dark at all. Force the LED off for at least five samples, then on for at least five. The calibration step refuses to proceed unless the lowest lit reading exceeds the highest dark reading by at least 50 ADC counts. With the Mega's 10-bit converter on a 5 V reference, one count is about 4.9 mV (<a href="#sources">ATmega2560 datasheet and TinyGo machine API</a>), so 50 counts is about 0.24 V. The threshold is fixed before the run, in the script and in lab.md; we do not move it after looking at the data.</p>
+<p>If the sensor cannot separate the two states, that is a result: the lab falls back to operator observation and says so.</p>
+<h3 id="phase-2-baseline">Phase 2: baseline</h3>
+<p>Run in automatic mode, with the threshold set about 1.5 °C above the room's reading. Warm the DHT11 gently with a fingertip until the reading crosses the threshold, then let it cool.</p>
+<table>
+<thead>
+<tr>
+<th>Prediction (written before the run)</th>
+<th>Observed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LED is commanded on in the same sample in which the reading first reaches the threshold</td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>Every <code>commanded:1</code> record has <code>pin_readback:1</code></td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>No record is <code>effect_contradicted</code>; at most one <code>effect_unknown</code> per on/off transition</td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>Operator notes agree with the light sensor on every sampled record</td>
+<td><em>Not yet run</em></td>
+</tr>
+</tbody>
+</table>
+<p>An above-range reading is <code>out_of_calibration</code>, not proof that the LED is on. When a recorded operator observation disagrees with an in-band sensor observation, analysis retains both and returns <code>effect_unknown</code>.</p>
+<p>The allowance for one unknown per transition is there because a photoresistor responds far more slowly than an LED; if the 500 ms wait is too short for the actual part, transitions will read <em>ambiguous</em>. Expect a second wrinkle too: with a single threshold and a noisy reading, the LED may flicker on and off while the temperature sits near the threshold. That is not a fault in the lab; it is the problem hysteresis solves, which introduces separate turn-on and turn-off thresholds.</p>
+<h3 id="phase-3-fault-f1-the-wiring-no-longer-matches-the-pin-map">Phase 3: fault F1 — the wiring no longer matches the pin map</h3>
+<p>This is the fan incident, made benign. Unplug USB, move the LED's jumper from D9 to D10, a pin the firmware never drives, and reconnect. The board reboots into automatic mode, so force the LED on again.</p>
+<table>
+<thead>
+<tr>
+<th>Prediction</th>
+<th>Observed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Firmware continues to report <code>commanded:1</code></td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td><code>pin_readback</code> stays 1: D9 is still high; it is just connected to nothing</td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>Light sensor reads in the dark band; analysis reports <code>effect_contradicted</code></td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>Operator sees the LED dark</td>
+<td><em>Not yet run</em></td>
+</tr>
+</tbody>
+</table>
+<p><em>What would falsify the prediction:</em> <code>pin_readback</code> reading 0 would mean D9 is not at the level the firmware set, which our model says should not happen with nothing attached. Any glow from the LED would mean something is supplying current through D10. A high-impedance input cannot do that, but a pin with its internal pull-up enabled can light an LED dimly (<a href="#sources">Arduino digital pins</a>); a glow would therefore tell us D10 is not in the state we assumed. Either outcome is a result to record, not a run to discard.</p>
+<h3 id="phase-4-fault-f2-the-observer-goes-blind">Phase 4: fault F2 — the observer goes blind</h3>
+<p>Restore the LED to D9. With the LED forced on, cover the light sensor with an opaque cap.</p>
+<table>
+<thead>
+<tr>
+<th>Prediction</th>
+<th>Observed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>commanded:1</code>, <code>pin_readback:1</code>, LED visibly lit to the operator</td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>In a lit room, the light reading falls <em>below</em> the calibrated dark band</td>
+<td><em>Not yet run</em></td>
+</tr>
+<tr>
+<td>Analysis reports <code>effect_unknown</code> (observer blind), <strong>not</strong> <code>effect_contradicted</code></td>
+<td><em>Not yet run</em></td>
+</tr>
+</tbody>
+</table>
+<p><em>What would falsify the prediction:</em> a capped reading inside the dark band. That happens if the room is so dim that "LED off" and "covered" look alike, and it would mean this observer cannot detect its own blindness under these conditions — a limitation to report.</p>
+<p>This fault tests the observer, not the LED. A naive check — "light sensor says dark, so the LED is off" — would report a failure that did not happen. Because calibration recorded what "LED off in this room" looks like, a reading darker than that is evidence that the observer itself is compromised. The correct output is <em>unknown</em>. An IoT system that cannot distinguish "the effect failed" from "I can no longer see the effect" will either raise false alarms or, worse, teach its operators to ignore them.</p>
+<h3 id="phase-5-recovery">Phase 5: recovery</h3>
+<p>Uncover the sensor, confirm the LED is on D9, return to automatic mode, and run until at least five consecutive records are <code>effect_consistent</code>. Then force the LED off and unplug USB, which removes all power from the rig. That is the physically accessible stop for this lab.</p>
+<h3 id="what-the-lab-can-and-cannot-show">What the lab can and cannot show</h3>
+<p>When run, this lab will show — on one named rig, under one room's lighting — that a command record and a pin readback can both stay true while the effect disappears, and that a calibrated independent observer catches it. It will be an operator-observed and instrumented physical run with a small number of repeats. It cannot show that the method is reliable across rigs, that the light sensor is accurate in any absolute sense, or anything about systems with networks between the parts. Each would require a separately scoped experiment and more evidence.</p>
+<h2 id="safety-security-and-stale-data-from-day-one">Safety, Security and Stale Data From Day One</h2>
+<p>The lab is low-energy by design: a 5 V USB-powered board, an LED, a sensor. That is a choice, not a limitation to work around.</p>
+<ul>
+<li><strong>A benign output first.</strong> An LED proves an optical response only. It does not qualify a motor, heater or pump. Do not swap in a mains relay because the code "already works": nothing in this chapter has established the safety of a load that can hurt someone.</li>
+<li><strong>A physical stop you can reach.</strong> Unplugging USB removes all power. Know where it is before you start. Software stops come later and never replace this one.</li>
+<li><strong>Rated wiring.</strong> Every part has limits; the resistor calculation above exists so the pin stays far from its 40 mA absolute maximum. Change wiring with USB unplugged.</li>
+<li><strong>Trust boundaries.</strong> The serial port accepts single-character commands from anything that opens it. That is acceptable for a laptop on your desk and unacceptable on a network. Treat every input that crosses into the device as untrusted. A networked command path needs an authenticated device identity and authorization.</li>
+<li><strong>No secrets in firmware.</strong> This lab has none. When later chapters add network credentials, they stay out of source files and evidence logs.</li>
+<li><strong>Stale data.</strong> A reading is a statement about the past. The TinyGo DHT driver retains the last successful value; its explicit measurement API does not enforce the two-second interval. Our firmware starts measurements 2.5 seconds apart and checks each attempt before consuming a value (drivers v0.36.0). The driver also masks interrupts during pulse acquisition, so serial commands can be delayed or lost; <code>0</code> is a convenient control, while unplugging USB is the immediate stop. A decision made on a stale reading is a decision about a room that may no longer exist.</li>
+<li><strong>Acknowledgement is not effect.</strong> The serial log confirms that each record was sent and received. None of those records turned on an LED.</li>
+</ul>
+<h2 id="where-tamoz-and-agentic-stream-fit">Where Tamoz and Agentic Stream Fit</h2>
+<p><em>Optional. Readers can skip this section without losing the chapter's argument.</em></p>
+<p>The sensor study connects this kind of rig to two research products: Agentic Stream, which turns events into deterministic situations, and Tamoz, which orchestrates supervisory agents. Here we examine one boundary in that architecture.</p>
+<p>Agentic Stream records whether a physical transition has complete evidence. Its check, as of commit <code>be37f6b</code>, is:</p>
+<pre><code class="language-go">func PhysicalEvidenceComplete(details map[string]any) bool {
+    if !claimsComplete(details) {
+        return false
+    }
+    source, _ := details[&quot;source&quot;].(string)
+    digest, _ := details[&quot;evidence_digest&quot;].(string)
+    _, err := canonicaljson.DecodeDigest(digest)
+    return source != &quot;&quot; &amp;&amp; err == nil
+}
+</code></pre>
+<p>This verifies the <em>shape</em> of the evidence — a completeness claim, a named source, a well-formed digest. It cannot verify that the evidence is true; no code can, from inside the software row of Figure 1. That is a correct design, not a gap: the function's job is to refuse transitions without evidence, and the observation's job is to be caused by the effect. A system is only as good as the observer behind the digest. The same applies to an agent: a supervisory decision that was admitted, logged and executed is still a belief until something in the physical row says otherwise.</p>
+<h2 id="design-principles">Design Principles</h2>
+<ol>
+<li><strong>Write down the belief.</strong> For every effect your system causes, name the record that represents the software's belief about it, and what wrote that record.</li>
+<li><strong>Observe off the command path.</strong> Establish an effect only with an observation caused by the effect. Say which failures the observer shares with the command path.</li>
+<li><strong>Make unknown a first-class answer.</strong> "Not observed", "observer blind" and "reading invalid" are distinct from "off", "dark" and "cool". Collapsing them produces confident wrong answers.</li>
+<li><strong>Verify wiring against the pin map.</strong> The pin map is a claim. A continuity check or a deliberate one-pin test is the observation that confirms it.</li>
+<li><strong>Calibrate before you trust.</strong> An observer that has not been shown to separate the states you care about is not yet an observer.</li>
+<li><strong>Design faults that discriminate.</strong> Before running a diagnostic, write down what each hypothesis predicts. If they all predict the same outcome, the test cannot help.</li>
+<li><strong>Start benign.</strong> Prove the evidence chain on a load that cannot hurt anyone, then earn the right to drive a bigger one.</li>
+</ol>
+<h2 id="transfer-exercise">Transfer Exercise</h2>
+<p>A team runs a greenhouse. A controller reads soil moisture every 10 minutes and, when it drops below a threshold, publishes "open valve 3 for 60 seconds" to a broker. A gateway near the valves receives it, energizes a solenoid valve through a relay, and publishes <code>{"valve":3,"state":"open"}</code>. A dashboard shows the valve open for 60 seconds. One week, bed 3's plants wilt, although the dashboard shows the valve opening twice a day.</p>
+<ol>
+<li>Draw the loop as in Figure 1. Mark the sensing, actuation and observation crossings.</li>
+<li>List every record in the chain and, for each, what it does and does not establish.</li>
+<li>Propose two hypotheses for the wilting and one observation that distinguishes them.</li>
+<li>Propose the cheapest observation that would establish water actually flowed.</li>
+</ol>
+<h3 id="worked-answer">Worked answer</h3>
+<p><strong>1.</strong> Sensing: soil moisture probe → controller. Actuation: gateway → relay → solenoid → valve → water. Observation: <em>there is none</em>. The arrow back from physics to software that Figure 1 requires is missing; the dashboard's "open" comes from the gateway's own state.</p>
+<p><strong>2.</strong> The broker acknowledgement establishes delivery to the broker. The gateway's <code>state: open</code> establishes that the gateway believes it energized the relay, like the fan's <code>energized: true</code>. The dashboard establishes that the dashboard received the gateway's message. None was caused by water moving. The moisture reading is the only physical record, and it is upstream of the action.</p>
+<p><strong>3.</strong> Hypothesis A: the valve opens but water does not reach bed 3 (blocked line, closed manual valve, low pressure). Hypothesis B: the relay is wired to the wrong solenoid, so a different bed is being watered. Both predict that bed 3's moisture does not rise after each "open". They differ on the other beds: B predicts a neighbouring bed's moisture rises after each valve-3 command; A does not. Comparing all beds' moisture traces against valve-3 command times distinguishes them without new hardware. A continuity or one-valve-at-a-time test then confirms B directly.</p>
+<p><strong>4.</strong> A flow sensor on bed 3's line is the direct observer. Cheaper, and good enough to start: bed 3's own moisture reading 20–30 minutes after each opening, compared with before. It is slow and indirect (moisture depends on soil and weather), so it cannot say <em>when</em> water flowed, but it is caused by water arriving, which no current record is.</p>
+<h2 id="misconceptions">Misconceptions</h2>
+<p><strong>"If the protocol guarantees delivery, the command was carried out."</strong> Delivery guarantees are about messages between endpoints. Carrying out a command is the receiver's behaviour, and the effect is the world's. MQTT and CoAP delivery semantics must be assessed separately from the physical effect.</p>
+<p><strong>"Reading the pin back proves the output works."</strong> It proves the pin is at a logic level. The fan incident's D6 and D7 would have read back correctly while driving nothing.</p>
+<p><strong>"If the software shows no error, the hardware is fine."</strong> The fan rig had no errors. Software can only report the failures it can sense, and it had no sensor on the shaft.</p>
+<p><strong>"More logging would have caught the fan fault."</strong> More logs from the same path repeat the same belief. Catching it needed one observation from a different path.</p>
+<p><strong>"The diagnostic sketch bypassed the firmware, so it tested the hardware."</strong> It bypassed the governance code and kept the pin map. A bypass tests only what it does not share.</p>
+<h2 id="summary">Summary</h2>
+<p>An IoT system holds beliefs about physical state it cannot read directly. Its records — decisions, commands, acknowledgements, reported states, pin readbacks — each establish less than they appear to, and the useful question for every record is what caused it to be written. An effect is established only by an observation caused by the effect, travelling off the command path, from an observer that has been calibrated and can say "unknown".</p>
+<p>The fan that reported <code>energized: true</code> for two days was a correct program in a wrongly wired system. The records that misled were all true. The test called decisive shared the fault it was meant to find. The observation that ended it — a motor touched to its supply — was the first one that could tell the hypotheses apart.</p>
+<p>The next question follows directly. We have treated the DHT11's 26.3 °C as a reading to compare against a threshold. But what does a sensor actually measure, how wrong can it be, and how would you know? That question concerns the sensing arrow in our model.</p>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li><strong>Absolute maximum rating:</strong> a stress limit beyond which a part may be permanently damaged; not an operating target.</li>
+<li><strong>Actuation:</strong> software causing a physical change, through an output pin and usually a driver.</li>
+<li><strong>Belief:</strong> the software's current record of a physical state; always derived, possibly stale or wrong.</li>
+<li><strong>Effect:</strong> the physical change a command was meant to cause.</li>
+<li><strong>Floating input:</strong> an input pin with nothing driving it; its reading is undefined.</li>
+<li><strong>Forward voltage (V_f):</strong> the roughly constant voltage across a conducting LED or diode.</li>
+<li><strong>Ground:</strong> the reference point voltages are measured against; communicating circuits must share it.</li>
+<li><strong>Observation:</strong> a record caused by the effect itself, via a path separate from the command.</li>
+<li><strong>Ohm's law:</strong> <em>V = I × R</em> for a resistor.</li>
+<li><strong>Pin map:</strong> the firmware's declaration of which pin does what; a claim about the wiring, not a measurement of it.</li>
+<li><strong>Pin readback:</strong> reading the logic level of an output pin; evidence about the pin, not about the load.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<p>Material claims and their status are recorded in <a href="/iot-handbook/examples/what-is-an-iot-system/claims.md">claims.md</a>; full source records are in <a href="/iot-handbook/examples/what-is-an-iot-system/sources.md">sources.md</a>.</p>
+<ul>
+<li><strong>ATmega2560 datasheet:</strong> Atmel, <em>ATmega640/V-1280/V-1281/V-2560/V-2561/V datasheet</em>, 2549Q–AVR–02/2014. §13.2.4 (reading the pin value); Electrical Characteristics (40.0 mA absolute maximum per I/O pin; V_OH ≥ 4.2 V at I_OH = −20 mA, V_CC = 5 V). <a href="https://ww1.microchip.com/downloads/en/devicedoc/atmel-2549-8-bit-avr-microcontroller-atmega640-1280-1281-2560-2561_datasheet.pdf">PDF</a></li>
+<li><strong>TI L293D:</strong> Texas Instruments, <em>L293x Quadruple Half-H Drivers</em>, SLRS008D, revised January 2016. Table 1 function table; VCC1/VCC2 description. <a href="https://www.ti.com/lit/ds/symlink/l293d.pdf">PDF</a></li>
+<li><strong>Arduino digital pins:</strong> Arduino, <em>Digital Pins</em>, last revision 02/09/2026. <a href="https://docs.arduino.cc/learn/microcontrollers/digital-pins/">docs.arduino.cc</a></li>
+<li><strong>TinyGo Mega API:</strong> <code>Pin.Set</code>, <code>Pin.Get</code>, <code>ADC.Get</code>; v0.42.0 machine implementation inspected 2026-10-08. <a href="https://tinygo.org/docs/reference/microcontrollers/machine/arduino-mega2560/">tinygo.org</a></li>
+<li><strong>NIST IoT device:</strong> network interface plus a sensor or actuator; glossary entry referring to NISTIR 8425, accessed 2026-10-08. <a href="https://csrc.nist.gov/glossary/term/iot_device">csrc.nist.gov</a></li>
+<li><strong>TinyGo DHT driver v0.36.0:</strong> explicit measurement API, retained values and interrupt masking; source inspected 2026-10-08. <a href="https://github.com/tinygo-org/drivers/tree/v0.36.0/dht">upstream source</a></li>
+<li><strong>Sensor study:</strong> real-world-sensor, round-008 execution report and Round 2 hardware inventory, working tree at <code>6f523d4</code> (dirty); report SHA-256 <code>8d167169…ebf790b</code>.</li>
+<li><strong>Agentic Stream:</strong> <code>internal/authority/internal/domain/safety.go</code> at <code>be37f6b</code>, inspected 2026-10-08.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>2026-10-08</td>
+<td>First draft. Lab procedure, firmware, analysis code and figures prepared; lab not run; not independently reviewed.</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>2026-10-08</td>
+<td>Convert embedded examples to TinyGo and host Go tests; remove unwritten-chapter navigation and centralize deferred links. Correct IoT scope, run-bound observations, calibration limits and lab commands from round 2. Physical lab and independent review remain pending.</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>2026-10-08</td>
+<td>Redesign control and fan evidence diagrams; add whole-system map, compact variants and local illustrative motion preview using the existing runtime. Physical evidence remains pending.</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>2026-10-08</td>
+<td>Add Figure 3 (test discrimination) and its explanation; replace the abstract animation with a physical bench scene; add fan-incident and test-elimination animations. Fix the closing temperature value and a pronoun slip. Physical evidence and independent review remain pending.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<div class="chapter-nav__link chapter-nav__link--prev chapter-nav__link--disabled"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">—</div></div>
+<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/iot-handbook/" class="btn btn--primary">Read the Handbook</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites-and-outcomes">Prerequisites and Outcomes</a></li>
+<li><a class="handbook-toc__link" href="#the-fan-that-reported-energized">The Fan That Reported Energized</a></li>
+<li><a class="handbook-toc__link" href="#what-makes-a-system-iot">What Makes a System "IoT"</a><ul>
+<li><a class="handbook-toc__link" href="#the-whole-system-before-the-local-loop">The whole system, before the local loop</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#the-model-belief-command-effect-observation">The Model: Belief, Command, Effect, Observation</a><ul>
+<li><a class="handbook-toc__link" href="#what-each-record-establishes">What each record establishes</a></li>
+<li><a class="handbook-toc__link" href="#readback-is-better-than-nothing-and-less-than-it-looks">Readback is better than nothing, and less than it looks</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#just-enough-electricity">Just Enough Electricity</a><ul>
+<li><a class="handbook-toc__link" href="#worked-example-sizing-the-led-resistor">Worked example: sizing the LED resistor</a></li>
+<li><a class="handbook-toc__link" href="#a-pin-that-is-not-driven-is-not-low">A pin that is not driven is not LOW</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#revisiting-the-fan-with-the-model">Revisiting the Fan With the Model</a></li>
+<li><a class="handbook-toc__link" href="#choosing-how-to-know">Choosing How to Know</a><ul>
+<li><a class="handbook-toc__link" href="#watch-it-happen">Watch it happen</a></li>
+<li><a class="handbook-toc__link" href="#same-command-three-benches">Same Command, Three Benches</a></li>
+<li><a class="handbook-toc__link" href="#the-fan-incident-in-four-stages">The Fan Incident in Four Stages</a></li>
+<li><a class="handbook-toc__link" href="#which-test-tells-the-causes-apart">Which Test Tells the Causes Apart?</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#the-lab-one-loop-three-observers">The Lab: One Loop, Three Observers</a><ul>
+<li><a class="handbook-toc__link" href="#phase-1-calibrate-the-observer">Phase 1: calibrate the observer</a></li>
+<li><a class="handbook-toc__link" href="#phase-2-baseline">Phase 2: baseline</a></li>
+<li><a class="handbook-toc__link" href="#phase-3-fault-f1-the-wiring-no-longer-matches-the-pin-map">Phase 3: fault F1 — the wiring no longer matches the pin map</a></li>
+<li><a class="handbook-toc__link" href="#phase-4-fault-f2-the-observer-goes-blind">Phase 4: fault F2 — the observer goes blind</a></li>
+<li><a class="handbook-toc__link" href="#phase-5-recovery">Phase 5: recovery</a></li>
+<li><a class="handbook-toc__link" href="#what-the-lab-can-and-cannot-show">What the lab can and cannot show</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#safety-security-and-stale-data-from-day-one">Safety, Security and Stale Data From Day One</a></li>
+<li><a class="handbook-toc__link" href="#where-tamoz-and-agentic-stream-fit">Where Tamoz and Agentic Stream Fit</a></li>
+<li><a class="handbook-toc__link" href="#design-principles">Design Principles</a></li>
+<li><a class="handbook-toc__link" href="#transfer-exercise">Transfer Exercise</a><ul>
+<li><a class="handbook-toc__link" href="#worked-answer">Worked answer</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#misconceptions">Misconceptions</a></li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#glossary">Glossary</a></li>
+<li><a class="handbook-toc__link" href="#sources">Sources</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20261003" defer></script>
+  <script src="/assets/js/motion/scene-iot.js?v=20261003" defer></script>
+  <script src="/assets/js/iot-handbook.js" defer></script>
+</body>
+</html>
