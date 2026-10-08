@@ -487,3 +487,66 @@
 .handbook-index__start-here .article-cta__text strong {
   color: var(--accent);
 }
+
+/* Collection navigation shares the reading shell across the two handbooks. */
+.handbook-collections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 32px;
+}
+.handbook-collections a {
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-decoration: none;
+}
+.handbook-collections a[aria-current="page"] {
+  background: var(--bg-tertiary);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.handbook-collections a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.handbook-index__card-status:not(:empty) {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.iot-diagram picture, .iot-diagram img { display: block; width: 100%; }
+.iot-diagram { margin: 32px 0; }
+.iot-diagram figcaption { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-top: 12px; }
+.iot-scene { container-type: inline-size; }
+.iot-scene > .scene__stage { aspect-ratio: auto; height: 440px; }
+.iot-scene .scene__stage > img { object-fit: contain; }
+@container (width < 680px) {
+  .iot-scene > .scene__stage { height: 600px; }
+}
+.iot-scenario { display: block; color: var(--text-secondary); font-size: 14px; margin: 24px 0; }
+.iot-scenario select {
+  display: block;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  min-height: 44px;
+  font: inherit;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+html:not(.js) .iot-scenario { display: none; }
+
+/* Long firmware fields must wrap without widening the reading column. */
+.handbook-body :not(pre) > code { overflow-wrap: anywhere; }
+@media (max-width: 360px) {
+  .handbook-body .iot-scene,
+  .handbook-body .iot-diagram { width: calc(100% + 24px); margin-left: -12px; }
+}
+.iot-scene .scene__stage > picture { display: block; width: 100%; height: 100%; }
+.iot-scene .scene__stage > picture img { display: block; margin: 0; width: 100%; height: 100%; object-fit: contain; }

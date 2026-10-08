@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 1345" role="img" aria-labelledby="title desc">
+<title id="title">IoT architecture — compact view</title><desc id="desc">Illustrative networked IoT architecture. Sensor and firmware publish readings over a transport to a gateway and event processing. History storage is a separate branch. An optional decision uses events and context and sends a bounded command back to local control, which drives an actuator. Physical feedback is sensed, returning evidence about the effect. A sensor-only system needs no command path. Roles may share a machine; the local lab uses only sensor, local control, actuator and observation. No Tamoz or Agentic Stream connector implementation is claimed.</desc>
+<style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}</style><defs>
+<marker id="accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1d6f42"/></marker>
+<marker id="info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0e7490"/></marker>
+<marker id="warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b45309"/></marker>
+<marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a6741"/></marker>
+</defs>
+<rect x="1" y="1" width="398" height="1343" rx="18" fill="#ffffff" stroke="#b0c4b0" stroke-width="1.4"/>
+<text x="20" y="34" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">00 / ILLUSTRATIVE SYSTEM MAP</text>
+<text x="20" y="68" font-size="25" font-weight="450" fill="#1a2e1a" text-anchor="start">Readings travel out.</text>
+<text x="20" y="99" font-size="25" font-weight="450" fill="#1a2e1a" text-anchor="start">Commands can return.</text>
+<g data-card="Sensor + firmware" data-bounds="26,151,348,86">
+<rect x="26" y="151" width="348" height="86" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="42" y="180" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Sensor + firmware</text>
+<text x="42" y="204" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">sample · timestamp · identity</text>
+</g>
+<path d="M200 237V259" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<g data-card="Transport" data-bounds="26,262,348,86">
+<rect x="26" y="262" width="348" height="86" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="42" y="291" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Transport</text>
+<text x="42" y="315" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">serial / radio / network</text>
+</g>
+<path d="M200 348V370" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<g data-card="Gateway" data-bounds="26,373,348,86">
+<rect x="26" y="373" width="348" height="86" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="42" y="402" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Gateway</text>
+<text x="42" y="426" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">normalize · buffer · route</text>
+</g>
+<path d="M200 459V481" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#accent)"/>
+<g data-card="Event processing" data-bounds="26,484,348,86">
+<rect x="26" y="484" width="348" height="86" rx="10" fill="#ffffff" stroke="#1d6f42" stroke-width="1.4"/>
+<text x="42" y="513" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Event processing</text>
+<text x="42" y="537" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">interpret readings + context</text>
+</g>
+<text x="20" y="604" font-size="14" font-weight="700" fill="#0e7490" text-anchor="start">OPTIONAL CONTROL / RETURN JOURNEY</text>
+<g data-card="Decision" data-bounds="26,631,348,86">
+<rect x="26" y="631" width="348" height="86" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="42" y="660" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Decision</text>
+<text x="42" y="684" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">rule / operator / agent</text>
+</g>
+<path d="M200 717V739" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<g data-card="Local control" data-bounds="26,742,348,86">
+<rect x="26" y="742" width="348" height="86" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="42" y="771" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Local control</text>
+<text x="42" y="795" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">limits · timing · safe state</text>
+</g>
+<path d="M200 828V850" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<g data-card="Actuator" data-bounds="26,853,348,86">
+<rect x="26" y="853" width="348" height="86" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="42" y="882" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">Actuator</text>
+<text x="42" y="906" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">physical effect</text>
+</g>
+<path d="M200 570V628" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#info)"/>
+<g data-card="History storage" data-bounds="26,1005,348,86">
+<rect x="26" y="1005" width="348" height="86" rx="10" fill="#ffffff" stroke="#0e7490" stroke-width="1.4"/>
+<text x="42" y="1034" font-size="20" font-weight="650" fill="#1a2e1a" text-anchor="start">History storage</text>
+<text x="42" y="1058" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">separate branch: retention / replay</text>
+</g>
+<path d="M26 529H12V1048H23" fill="none" stroke="#0e7490" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#info)"/>
+<path d="M374 897H389V194H377" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#warn)"/>
+<text x="20" y="1144" font-size="17" font-weight="600" fill="#b45309" text-anchor="start">Feedback returns physical observations.</text>
+<text x="20" y="1184" font-size="17" font-weight="450" fill="#4a6741" text-anchor="start">Roles can share one machine.</text>
+<text x="20" y="1210" font-size="17" font-weight="450" fill="#4a6741" text-anchor="start">A sensor-only system needs no actuator.</text>
+<text x="20" y="1236" font-size="17" font-weight="450" fill="#4a6741" text-anchor="start">The local lab isolates the control loop.</text>
+<text x="20" y="1262" font-size="17" font-weight="450" fill="#4a6741" text-anchor="start">This is not an implemented product bridge.</text>
+</svg>

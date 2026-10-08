@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 1510" role="img" aria-labelledby="title desc">
+<title id="title">Fan incident — compact evidence timeline</title><desc id="desc">Historical operator-observed evidence from round-008, 8–9 September 2026. Four governed commands on 8 September and two on 9 September reported executed and energized, but the fan did not rotate. The raw diagnostic kept the same pin map and also failed. Direct supply connection produced rotation. Correcting direction-input jumpers from D4/D3 to D6/D7 produced seen and heard rotation. Earlier mismatched wiring is known retrospectively, not a contemporaneous measurement. No tachometer was fitted.</desc>
+<style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}</style><defs>
+<marker id="accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#1d6f42"/></marker>
+<marker id="info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0e7490"/></marker>
+<marker id="warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b45309"/></marker>
+<marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4a6741"/></marker>
+</defs>
+<rect x="1" y="1" width="398" height="1508" rx="18" fill="#ffffff" stroke="#b0c4b0" stroke-width="1.4"/>
+<text x="20" y="34" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">02 / RECORDED INCIDENT</text>
+<text x="20" y="68" font-size="25" font-weight="450" fill="#1a2e1a" text-anchor="start">Reassuring records.</text>
+<text x="20" y="99" font-size="25" font-weight="450" fill="#1a2e1a" text-anchor="start">A stationary fan.</text>
+<text x="20" y="132" font-size="15" font-weight="450" fill="#4a6741" text-anchor="start">8–9 Sep 2026 · operator observation</text>
+<rect x="20" y="163" width="360" height="226" rx="10" fill="#f5f7f5" stroke="#b0c4b0" stroke-width="1.4"/>
+<rect x="34" y="180" width="26" height="26" rx="10" fill="#1d6f42"/>
+<text x="47" y="199" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="72" y="199" font-size="19" font-weight="650" fill="#1a2e1a" text-anchor="start">4 governed commands</text>
+<text x="34" y="230" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">8 Sep · SOFTWARE RECORD</text>
+<text x="34" y="256" font-size="16" font-weight="450" fill="#1a2e1a" text-anchor="start">executed / energized: true</text>
+<text x="34" y="288" font-size="14" font-weight="700" fill="#b45309" text-anchor="start">OPERATOR SAW</text>
+<text x="34" y="314" font-size="19" font-weight="650" fill="#b45309" text-anchor="start">No rotation seen</text>
+<text x="34" y="342" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">D4 / D3 connected</text>
+<text x="34" y="364" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">D6 / D7 driven</text>
+<path d="M47 389V404" fill="none" stroke="#4a6741" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="20" y="407" width="360" height="226" rx="10" fill="#f5f7f5" stroke="#b0c4b0" stroke-width="1.4"/>
+<rect x="34" y="424" width="26" height="26" rx="10" fill="#1d6f42"/>
+<text x="47" y="443" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="72" y="443" font-size="19" font-weight="650" fill="#1a2e1a" text-anchor="start">2 governed commands</text>
+<text x="34" y="474" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">9 Sep · SOFTWARE RECORD</text>
+<text x="34" y="500" font-size="16" font-weight="450" fill="#1a2e1a" text-anchor="start">executed / energized: true</text>
+<text x="34" y="532" font-size="14" font-weight="700" fill="#b45309" text-anchor="start">OPERATOR SAW</text>
+<text x="34" y="558" font-size="19" font-weight="650" fill="#b45309" text-anchor="start">No rotation or sound</text>
+<text x="34" y="586" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Same pin map</text>
+<text x="34" y="608" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Same hidden mismatch</text>
+<path d="M47 633V648" fill="none" stroke="#4a6741" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="20" y="651" width="360" height="226" rx="10" fill="#f5f7f5" stroke="#b0c4b0" stroke-width="1.4"/>
+<rect x="34" y="668" width="26" height="26" rx="10" fill="#1d6f42"/>
+<text x="47" y="687" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="72" y="687" font-size="19" font-weight="650" fill="#1a2e1a" text-anchor="start">Raw diagnostic</text>
+<text x="34" y="718" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">9 Sep · SOFTWARE RECORD</text>
+<text x="34" y="744" font-size="16" font-weight="450" fill="#1a2e1a" text-anchor="start">no command protocol / outputs driven</text>
+<text x="34" y="776" font-size="14" font-weight="700" fill="#b45309" text-anchor="start">OPERATOR SAW</text>
+<text x="34" y="802" font-size="19" font-weight="650" fill="#b45309" text-anchor="start">No twitch or hum</text>
+<text x="34" y="830" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Bypass kept pin map</text>
+<text x="34" y="852" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Fault stayed in the test</text>
+<path d="M47 877V892" fill="none" stroke="#4a6741" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="20" y="895" width="360" height="226" rx="10" fill="#f5f7f5" stroke="#b0c4b0" stroke-width="1.4"/>
+<rect x="34" y="912" width="26" height="26" rx="10" fill="#1d6f42"/>
+<text x="47" y="931" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="72" y="931" font-size="19" font-weight="650" fill="#1a2e1a" text-anchor="start">Motor on supply</text>
+<text x="34" y="962" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">9 Sep · SOFTWARE RECORD</text>
+<text x="34" y="988" font-size="16" font-weight="450" fill="#1a2e1a" text-anchor="start">driver bypassed / no firmware receipt</text>
+<text x="34" y="1020" font-size="14" font-weight="700" fill="#0e7490" text-anchor="start">OPERATOR SAW</text>
+<text x="34" y="1046" font-size="19" font-weight="650" fill="#0e7490" text-anchor="start">Rotation seen</text>
+<text x="34" y="1074" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Motor + supply worked</text>
+<text x="34" y="1096" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">in this direct test</text>
+<path d="M47 1121V1136" fill="none" stroke="#4a6741" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#muted)"/>
+<rect x="20" y="1139" width="360" height="226" rx="10" fill="#f5f7f5" stroke="#b0c4b0" stroke-width="1.4"/>
+<rect x="34" y="1156" width="26" height="26" rx="10" fill="#1d6f42"/>
+<text x="47" y="1175" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="72" y="1175" font-size="19" font-weight="650" fill="#1a2e1a" text-anchor="start">Inputs corrected</text>
+<text x="34" y="1206" font-size="14" font-weight="700" fill="#1d6f42" text-anchor="start">9 Sep · SOFTWARE RECORD</text>
+<text x="34" y="1232" font-size="16" font-weight="450" fill="#1a2e1a" text-anchor="start">executed / energized: true</text>
+<text x="34" y="1264" font-size="14" font-weight="700" fill="#0e7490" text-anchor="start">OPERATOR SAW</text>
+<text x="34" y="1290" font-size="19" font-weight="650" fill="#0e7490" text-anchor="start">Seen + heard rotating</text>
+<text x="34" y="1318" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Moved to D6 / D7</text>
+<text x="34" y="1340" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Wiring now matched</text>
+<text x="20" y="1422" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">Earlier wiring shown in hindsight.</text>
+<text x="20" y="1447" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">No tachometer or current probe.</text>
+<text x="20" y="1472" font-size="16" font-weight="450" fill="#4a6741" text-anchor="start">A bypass can keep the faulty assumption.</text>
+</svg>

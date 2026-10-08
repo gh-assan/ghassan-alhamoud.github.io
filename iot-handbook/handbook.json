@@ -1,0 +1,40 @@
+{
+  "handbook": {
+    "title": "The IoT Engineering Handbook",
+    "shortTitle": "IoT Engineering Handbook",
+    "subtitle": "Engineering connected devices, physical effects and trustworthy evidence",
+    "code": "IOT",
+    "indexTagline": "From software to physical evidence",
+    "description": "Learn IoT engineering through connected-system models, physical observation, fault diagnosis and a Go/TinyGo lab with explicit evidence limits.",
+    "intro": "A handbook for engineers connecting software to the physical world. Start with what a connected system can know, then follow commands, observations and faults across the boundary. Chapter 1 is available as a draft; its physical lab and independent review are pending.",
+    "version": "0.1.0",
+    "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
+    "educationalLevel": "Beginner",
+    "courseWorkload": "PT31M",
+    "author": {
+      "name": "Ghassan Alhamoud",
+      "url": "https://ghassan-alhamoud.com/"
+    },
+    "chapters": [
+      {
+        "id": 1,
+        "slug": "what-is-an-iot-system",
+        "title": "What Is an IoT System, Really?",
+        "subtitle": "Belief, command, effect and observation",
+        "description": "Trace an IoT system from software belief to physical evidence, diagnose a real fan wiring fault, and explore a Go/TinyGo LED lab.",
+        "status": "published",
+        "editorialStatus": "Draft \u00b7 lab pending \u00b7 review pending",
+        "difficulty": "beginner",
+        "readingTime": "31 min",
+        "file": "chapter-01-what-is-an-iot-system.md",
+        "ogImage": "/images/og-default.webp",
+        "prerequisites": [],
+        "relatedPatterns": [],
+        "publishedAt": "2026-10-08",
+        "lastModified": "2026-10-08",
+        "outcome": "you can distinguish a software acknowledgement from evidence of a physical effect.",
+        "prerequisiteText": "Comfort with Go code. No electronics experience required."
+      }
+    ]
+  }
+}

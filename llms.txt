@@ -73,3 +73,8 @@ Core themes:
 - Do not infer production adoption beyond what the page states.
 - Do not describe these projects as closed-source products. They are open-source systems or active open-source builds.
 - The site emphasizes credibility through inspectable code, explicit architecture tradeoffs, and long-form technical writing.
+
+## IoT Engineering Handbook
+
+- [The IoT Engineering Handbook](https://ghassan-alhamoud.com/iot-handbook/): Connected systems, physical effects and evidence. First chapter available as a draft; physical lab and independent review pending.
+- [What Is an IoT System, Really?](https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html): Belief, command, effect and observation; a recorded fan wiring incident and an unexecuted Go/TinyGo LED lab.

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-Build the AI-Native Engineering Handbook from markdown into static HTML.
+Build the AI and IoT engineering handbooks from Markdown into static HTML.
 
 Usage:
     python3 scripts/build-handbook.py
+    python3 scripts/build-handbook.py --collection iot-handbook
 
-Reads handbook/handbook.json and handbook/md/*.md.
-Outputs handbook/index.html and handbook/chapter-NN-slug.html.
+Reads <collection>/handbook.json and <collection>/md/*.md.
+Outputs <collection>/index.html and chapter-NN-slug.html.
 """
 
+import argparse
 import json
 import re
 import os
@@ -26,6 +28,35 @@ OUT_DIR = HANDBOOK_DIR
 JSON_PATH = HANDBOOK_DIR / "handbook.json"
 
 BASE_URL = "https://ghassan-alhamoud.com"
+
+# Both collections share the renderer, CSS and motion runtime.
+COLLECTION = {
+    "path": "/handbook/", "title": "The AI-Native Engineering Handbook",
+    "shortTitle": "AI-Native Engineering Handbook", "code": "HDBK",
+    "indexTagline": "Production-tested agent patterns",
+    "description": "A production-tested reference for AI-native engineering patterns: ReAct, Plan-and-Execute, Reflection, multi-agent systems, and more.",
+    "intro": "A structured, production-tested guide to the patterns that make autonomous agents reliable. Each chapter includes diagrams, pseudocode, decision frameworks, and the failure modes you will hit in production.",
+}
+
+DEFAULT_COLLECTION = dict(COLLECTION)
+
+def configure_collection(name: str):
+    global HANDBOOK_DIR, MD_DIR, OUT_DIR, JSON_PATH, COLLECTION
+    HANDBOOK_DIR = ROOT / name
+    MD_DIR = HANDBOOK_DIR / "md"
+    OUT_DIR = HANDBOOK_DIR
+    JSON_PATH = HANDBOOK_DIR / "handbook.json"
+    data = load_json()
+    COLLECTION = {**DEFAULT_COLLECTION, **data, "path": f"/{name}/"}
+
+
+def collection_links() -> str:
+    links = []
+    for path, label in (("/handbook/", "AI Engineering"), ("/iot-handbook/", "IoT Engineering")):
+        current = ' aria-current="page"' if path == COLLECTION["path"] else ""
+        links.append(f'<a href="{path}"{current}>{label}</a>')
+    return '<nav class="handbook-collections" aria-label="Handbook collections">' + ''.join(links) + '</nav>'
+
 
 CTA_HTML = """<div class="article-cta">
   <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
@@ -112,7 +143,7 @@ def wrap_diagrams(html: str) -> str:
 
 def build_schema(chapter: dict, full_html: str) -> str:
     """Generate JSON-LD TechArticle + LearningResource schema."""
-    url = f"{BASE_URL}/handbook/chapter-{chapter['id']:02d}-{chapter['slug']}.html"
+    url = f"{BASE_URL}{COLLECTION['path']}chapter-{chapter['id']:02d}-{chapter['slug']}.html"
     image = f"{BASE_URL}{chapter['ogImage']}"
     desc = chapter.get("description") or extract_first_paragraph(full_html)
     if len(desc) > 160:
@@ -130,8 +161,8 @@ def build_schema(chapter: dict, full_html: str) -> str:
         },
         "isPartOf": {
             "@type": "Course",
-            "name": "The AI-Native Engineering Handbook",
-            "url": BASE_URL + "/handbook/",
+            "name": COLLECTION["title"],
+            "url": BASE_URL + COLLECTION["path"],
         },
         "datePublished": chapter.get("publishedAt") or datetime.now().strftime("%Y-%m-%d"),
         "dateModified": chapter.get("lastModified") or chapter.get("publishedAt") or datetime.now().strftime("%Y-%m-%d"),
@@ -144,13 +175,13 @@ def build_schema(chapter: dict, full_html: str) -> str:
 
 
 def build_breadcrumbs(chapter: dict) -> str:
-    url = f"/handbook/chapter-{chapter['id']:02d}-{chapter['slug']}.html"
+    url = f"{COLLECTION['path']}chapter-{chapter['id']:02d}-{chapter['slug']}.html"
     schema = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL + "/"},
-            {"@type": "ListItem", "position": 2, "name": "Handbook", "item": BASE_URL + "/handbook/"},
+            {"@type": "ListItem", "position": 2, "name": COLLECTION["shortTitle"], "item": BASE_URL + COLLECTION["path"]},
             {"@type": "ListItem", "position": 3, "name": chapter["title"], "item": BASE_URL + url},
         ],
     }
@@ -216,7 +247,7 @@ def chapter_nav_html(prev_ch: Optional[dict], next_ch: Optional[dict]) -> str:
     parts = ['<nav class="chapter-nav" aria-label="Chapter navigation">']
 
     if prev_ch:
-        url = f"/handbook/chapter-{prev_ch['id']:02d}-{prev_ch['slug']}.html"
+        url = f"{COLLECTION['path']}chapter-{prev_ch['id']:02d}-{prev_ch['slug']}.html"
         parts.append(
             f'<a href="{url}" class="chapter-nav__link chapter-nav__link--prev">'
             f'<div class="chapter-nav__label">← Previous Chapter</div>'
@@ -230,7 +261,7 @@ def chapter_nav_html(prev_ch: Optional[dict], next_ch: Optional[dict]) -> str:
         )
 
     if next_ch:
-        url = f"/handbook/chapter-{next_ch['id']:02d}-{next_ch['slug']}.html"
+        url = f"{COLLECTION['path']}chapter-{next_ch['id']:02d}-{next_ch['slug']}.html"
         parts.append(
             f'<a href="{url}" class="chapter-nav__link chapter-nav__link--next">'
             f'<div class="chapter-nav__label">Next Chapter →</div>'
@@ -293,7 +324,7 @@ def render_prerequisites(chapter: dict, all_chapters: dict) -> str:
         return (
             '<div class="prerequisites-box">'
             '<h3 class="prerequisites-box__title">Prerequisites</h3>'
-            '<p class="prerequisites-box__text">None. This is a foundational chapter.</p>'
+            f'<p class="prerequisites-box__text">{chapter.get("prerequisiteText", "None. This is a foundational chapter.")}</p>'
             '</div>'
         )
 
@@ -303,7 +334,7 @@ def render_prerequisites(chapter: dict, all_chapters: dict) -> str:
         ref = by_slug.get(slug)
         if not ref:
             continue
-        url = f"/handbook/chapter-{ref['id']:02d}-{ref['slug']}.html"
+        url = f"{COLLECTION['path']}chapter-{ref['id']:02d}-{ref['slug']}.html"
         items.append(f'<li><a href="{url}">{ref["title"]}</a></li>')
 
     return (
@@ -323,7 +354,13 @@ def motion_assets(body_html: str) -> tuple[str, str]:
     Loaded only on pages that contain a scene (docs/animation/00-quality-bar.md,
     G5): motion.css in the head, then core.js before each scene file.
     """
-    names = re.findall(r'<figure class="scene" data-scene="([a-z-]+)"', body_html)
+    names = [
+        match.group(1)
+        for figure in re.findall(r'<figure\b[^>]*>', body_html)
+        if re.search(r'\bclass="[^"]*\bscene\b[^"]*"', figure)
+        for match in [re.search(r'\bdata-scene="([a-z-]+)"', figure)]
+        if match
+    ]
     if not names:
         return "", ""
     # A scene file may register several scenes; load each file once.
@@ -340,6 +377,8 @@ def motion_assets(body_html: str) -> tuple[str, str]:
     scripts = [f'/assets/js/motion/core.js?v={MOTION_VERSION}'] + [
         f"/assets/js/motion/{name}?v={MOTION_VERSION}" for name in files
     ]
+    if any(name.startswith("iot-") for name in names):
+        scripts.append("/assets/js/iot-handbook.js")
     body = "".join(f'\n  <script src="{src}" defer></script>' for src in scripts)
     return head, body
 
@@ -363,21 +402,21 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
 
     prev_ch, next_ch = find_prev_next(all_chapters, chapter)
     nav_html = chapter_nav_html(prev_ch, next_ch)
-    cta_html = CTA_HTML
+    cta_html = CTA_HTML.replace("/handbook/", COLLECTION["path"])
     toc_sidebar = render_toc(toc_html)
     prereq_box = render_prerequisites(chapter, all_chapters)
     mobile_toc = render_mobile_toc(body_html)
 
-    page_url = f"/handbook/chapter-{chapter['id']:02d}-{chapter['slug']}.html"
+    page_url = f"{COLLECTION['path']}chapter-{chapter['id']:02d}-{chapter['slug']}.html"
     canonical = BASE_URL + page_url
     og_image = BASE_URL + chapter["ogImage"]
     description = chapter.get("description") or extract_first_paragraph(body_html)
     if len(description) > 160:
         description = description[:157] + "..."
 
-    title = f"Chapter {chapter['id']}: {chapter['title']} — AI-Native Engineering Handbook"
+    title = f"Chapter {chapter['id']}: {chapter['title']} — {COLLECTION['shortTitle']}"
 
-    badge = f"HDBK-{chapter['id']:03d}"
+    badge = f"{COLLECTION['code']}-{chapter['id']:03d}"
     difficulty = chapter.get("difficulty", "").capitalize()
     reading_time = chapter.get("readingTime", "")
     last_modified = chapter.get("lastModified") or chapter.get("publishedAt") or ""
@@ -458,6 +497,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
   <main class="article-single handbook-page">
     <div class="container article-layout">
       <article>
+        {collection_links()}
         <header class="article-single__header handbook-hero">
           <span class="handbook-hero__badge">{badge}</span>
           <h1 class="handbook-hero__title">{chapter['title']}</h1>
@@ -556,13 +596,10 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
 def render_index(handbook: dict, chapters: list) -> str:
     published = [c for c in chapters if c["status"] == "published"]
     published.sort(key=lambda c: c["id"])
-    title = f"{handbook['title']} — Production-tested agent patterns"
-    canonical = BASE_URL + "/handbook/"
+    title = f"{handbook['title']} — {COLLECTION['indexTagline']}"
+    canonical = BASE_URL + COLLECTION["path"]
     og_image = BASE_URL + "/images/og-default.webp"
-    description = (
-        "A production-tested reference for AI-native engineering patterns: "
-        "ReAct, Plan-and-Execute, Reflection, multi-agent systems, and more."
-    )
+    description = COLLECTION["description"]
 
     schema = {
         "@context": "https://schema.org",
@@ -575,13 +612,13 @@ def render_index(handbook: dict, chapters: list) -> str:
             "name": "Ghassan Alhamoud",
             "url": BASE_URL + "/",
         },
-        "courseCode": "HDBK",
-        "educationalLevel": "Advanced",
+        "courseCode": COLLECTION["code"],
+        "educationalLevel": handbook.get("educationalLevel", "Advanced"),
         "hasCourseInstance": [
             {
                 "@type": "CourseInstance",
                 "courseMode": "online",
-                "courseWorkload": "PT8M",
+                "courseWorkload": handbook.get("courseWorkload", "PT8M"),
                 "instructor": {"@type": "Person", "name": "Ghassan Alhamoud"},
             }
         ],
@@ -595,7 +632,7 @@ def render_index(handbook: dict, chapters: list) -> str:
                 "@type": "ListItem",
                 "position": idx + 1,
                 "name": c["title"],
-                "url": BASE_URL + f"/handbook/chapter-{c['id']:02d}-{c['slug']}.html",
+                "url": BASE_URL + f"{COLLECTION['path']}chapter-{c['id']:02d}-{c['slug']}.html",
             }
             for idx, c in enumerate(published)
         ],
@@ -612,26 +649,29 @@ def render_index(handbook: dict, chapters: list) -> str:
 
     chapter_cards = []
     for c in published:
-        url = f"/handbook/chapter-{c['id']:02d}-{c['slug']}.html"
-        outcome = CHAPTER_OUTCOMES.get(c["slug"])
+        url = f"{COLLECTION['path']}chapter-{c['id']:02d}-{c['slug']}.html"
+        outcome = c.get("outcome") or CHAPTER_OUTCOMES.get(c["slug"])
         outcome_html = (
             f'<p class="chapter-card__outcome">Outcome: {outcome}</p>'
             if outcome else ""
         )
+        editorial_status = c.get("editorialStatus", "")
+        status_html = f'<span class="handbook-index__card-status">{editorial_status}</span>' if editorial_status else ""
         chapter_cards.append(
             f'<a href="{url}" class="handbook-index__card">'
-            f'<span class="handbook-index__card-number">HDBK-{c["id"]:03d}</span>'
+            f'<span class="handbook-index__card-number">{COLLECTION["code"]}-{c["id"]:03d}</span>'
             f'<h3 class="handbook-index__card-title">{c["title"]}</h3>'
             f'<p class="handbook-index__card-desc">{c["description"]}</p>'
             f'{outcome_html}'
+            f'{status_html}'
             f'<span class="handbook-index__card-meta">{c.get("readingTime", "")} • {c.get("difficulty", "").capitalize()}</span>'
             f'</a>'
         )
 
     first = published[0] if published else None
     first_url = (
-        f"/handbook/chapter-{first['id']:02d}-{first['slug']}.html"
-        if first else "/handbook/"
+        f"{COLLECTION['path']}chapter-{first['id']:02d}-{first['slug']}.html"
+        if first else COLLECTION["path"]
     )
     start_here = ""
     if first:
@@ -725,13 +765,13 @@ def render_index(handbook: dict, chapters: list) -> str:
 
   <main class="handbook-index">
     <div class="container">
+      {collection_links()}
       <div class="handbook-index__hero">
-        <span class="handbook-hero__badge">HDBK</span>
+        <span class="handbook-hero__badge">{COLLECTION["code"]}</span>
         <h1 class="section__title">{handbook['title']}</h1>
         <p class="section__subtitle">{handbook['subtitle']}</p>
         <p class="handbook-index__intro">
-          A structured, production-tested guide to the patterns that make autonomous agents reliable.
-          Each chapter includes diagrams, pseudocode, decision frameworks, and the failure modes you will hit in production.
+          {COLLECTION["intro"]}
         </p>
       </div>
 
@@ -812,6 +852,9 @@ def render_index(handbook: dict, chapters: list) -> str:
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Build a handbook collection.")
+    parser.add_argument("--collection", choices=("handbook", "iot-handbook"), default="handbook")
+    configure_collection(parser.parse_args().collection)
     data = load_json()
     chapters = data["chapters"]
 
