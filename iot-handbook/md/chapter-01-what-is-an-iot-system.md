@@ -1,455 +1,400 @@
-# Chapter 1: What Is an IoT System, Really?
+# Chapter 1: What Is an IoT System?
 
-**Version:** 0.4 draft | **Evidence cutoff:** 2026-10-08 | **Reading time:** about 31 min (≈7,100 words at 230 wpm, code and HTML markup excluded) | **Lab time:** about 90 min, plus parts check | **Status:** draft; lab-pending; review-pending
-
-> Draft notice. The lab in this chapter has a written procedure, tested analysis code and a predicted outcome, but it has **not been run**. Every result table marked *Not yet run* is waiting for real observations. The fan incident is a recorded historical observation from the sensor study, not a new run.
+**Version:** 1.0 | **Sources checked:** 2026-10-12 | **Reading time:** about 25 min (≈5,700 words at 230 words/min; exercises included, markup excluded) | **Status:** author-approved for publication; three independent review lenses completed
 
 ## If You Only Read One Section
 
-An IoT system connects software to the physical world through networked devices that sense, actuate, or do both. A connected temperature logger needs no actuator to qualify. The engineering difficulty is that the thing you care about — a room's temperature, a motor's rotation, a light — is outside the program, and the program only ever holds a **belief** about it.
+An Internet of Things system connects things, digital representations, communications, and applications so that information about the world can be used. Many systems measure physical conditions; some also change them. A networked environmental monitor is an IoT system even when it has no actuator. A cloud service, a gateway, and artificial intelligence are possible design choices, rather than universal requirements.
 
-That belief is assembled from records: a sensor reading, a decision, a command, an acknowledgement, a reported state. Each record proves something real, but less than it seems to. A command record proves that software issued a command. A firmware state of `energized: true` proves that the firmware set its outputs. Neither proves that anything moved.
+For this chapter, use a practical working definition: **an IoT system combines networked devices that sense or affect the physical world with the software, communications, and operational responsibilities needed to deliver an application.** This is a teaching definition. Standards have different scopes, and we will make those differences explicit.
 
-The guarantee boundary of this chapter is one sentence: **an effect is established only by an observation that does not travel the command path.** Everything else in the handbook builds on that distinction. We will ask three questions of every system: What did the software believe? What happened physically? What evidence connects them?
+Study a system in three views. First, identify its functions: sensing, communication, processing, application behavior, and optional actuation. Second, identify where those functions run: on a device, near the device, or in remote infrastructure. Third, identify its contracts: what the data means, when it is valid, who may use it, and what happens during failure. A diagram becomes useful when it answers these questions.
 
-## Prerequisites and Outcomes
+## Prerequisites, Scope, and Learning Outcomes
 
-**Required:** comfort with Go code. **Not required:** any electronics. This chapter introduces voltage, current, resistance and ground as it needs them.
+You should be comfortable with software components, network requests, and basic distributed-system failure. No programming language, electronics kit, vendor platform, or previous chapter is required.
 
-After this chapter you should be able to:
+This chapter establishes a conceptual foundation. It does not provide wiring instructions, firmware, a physical experiment, protocol configuration, a certification checklist, or a complete control-system design. Examples and numerical values are constructed for reasoning; they are not measurements from a deployment.
 
-1. Draw an actuating IoT feature as a chain of belief, decision, command, effect and observation, and identify which parts a sensor-only feature omits.
-2. Say exactly what a given record (return value, acknowledgement, pin readback, sensor value, human observation) does and does not establish.
-3. Size a series resistor for an LED from a datasheet limit, and explain why "5 V" on a pin is a nominal value, not a measurement.
-4. Choose an observation method for an effect, and name the failures it shares with the command path.
-5. Design a fault that separates two hypotheses, instead of a test that both hypotheses survive.
+After studying it, you should be able to:
 
-## The Fan That Reported Energized
+1. Explain the distinction between a thing, an IoT device, and an IoT system, while naming the definition being used.
+2. Read a reference model and distinguish functional layers from deployment locations.
+3. Trace measurement, telemetry, command, and feedback flows, including their guarantee boundaries.
+4. Compare device, gateway, edge, and remote-service placements under explicit constraints.
+5. Analyze interoperability, timing, security, reliability, and lifecycle responsibilities in a generic system.
 
-*Observed. Source: round-008 execution report in the real-world-sensor study, 8–9 September 2026. Operator observation only; no rotation instrument was fitted.*
+## 1. Definitions: Begin With the Scope
 
-The sensor study built a small thermal rig: a DHT11 temperature and humidity sensor, an Arduino Mega 2560-compatible board, an L293D motor driver and a small fan. Software on a laptop could send the board a bounded command such as "run the fan at 45% duty for 5 seconds", and the board would report back.
+### A thing, a device, and a system
 
-On 8 September, the first fan command produced a clean record:
+A **thing** is the entity of interest. It might be a room, a machine, a parcel, or a digital representation. A **device** is equipment that provides computing and communication capabilities. A **system** includes cooperating devices and services, their interfaces, and the people and processes responsible for operation.
 
-```json
-{"message_type":"result","command_id":"physical-fan-smoke-01","boot_id":"boot-38","status":"executed"}
-```
+These words are related, but substituting one for another hides important boundaries. The room is not its temperature sensor. A device identifier is not the identity of every object that device might observe. A replacement sensor can monitor the same room while changing calibration, credentials, and maintenance history.
 
-The board's state report followed: `"current_output":{"target":"fan-01","operation":"set_pwm_lease","value":450,"energized":true}`. Five and a half seconds later, the lease expired and the board reported `energized: false` and `safe_state: true`, exactly as designed. Every software check passed.
+ITU-T Y.4000, originally published as Y.2060 in 2012, describes IoT in terms of interconnected physical and virtual things. Its device definition requires communication while treating sensing, actuation, capture, storage, and processing as optional capabilities. NISTIR 8228 uses a narrower device scope centered on a network interface and sensing or actuating capability. A gateway can therefore be an IoT device in one vocabulary and supporting infrastructure in another. Neither definition should be silently applied outside its context. See [ITU-T Y.4000/Y.2060, §3.2](https://www.itu.int/rec/T-REC-Y.2060-201206-I/en) and [NISTIR 8228, §2](https://doi.org/10.6028/NIST.IR.8228).
 
-The fan did not turn.
+**ISO/IEC 20924:2024** is the ISO/IEC vocabulary standard for IoT and digital twins. It is a useful terminology reference, but this chapter does not reproduce its definitions or claim clause-level coverage from an inaccessible full text. The official catalogue identifies edition 3, published in February 2024, replacing the 2021 edition. [ISO/IEC 20924:2024](https://www.iso.org/standard/88799.html).
 
-Over two days the rig ran six governed commands, at up to 60% duty, and a raw diagnostic sketch that drove the driver at full power in both directions. Every record said the outputs were being driven. The operator watching the fan saw no rotation, no twitch and heard no hum. Eventually the operator lifted the motor leads and touched them directly to the power supply. The motor spun. The fault was in the driver stage.
+The study habit is simple: when a definition affects an argument, name its source and scope. Ask whether the discussion concerns physical equipment, an information model, a communication participant, or an entire operational system.
 
-The cause was two jumper wires. The driver's direction inputs were plugged into Mega pins D4 and D3. The firmware drove D6 and D7. The program was correct, the board was correct, the driver was correct, and the motor was correct. The system was wrong, because a system includes its wiring. Moving the two jumpers to D6 and D7 produced visible, audible rotation on the next governed command.
+### What qualifies under our working definition?
 
-Keep this incident in mind. By the end of the chapter we will be able to say precisely which records misled us, why the "decisive" full-power test was not decisive, and which single observation would have found the wiring fault on the first day.
+Consider four constructed examples:
 
-## What Makes a System "IoT"
+| Example | Classification for this chapter | Reason |
+|---|---|---|
+| A standalone thermometer with a display | Sensing equipment | It measures, but has no networked system relationship |
+| A networked temperature monitor sending readings to a local application | IoT system | Physical sensing and communication support an application |
+| A connected valve receiving authorized remote commands | Actuating IoT system | Physical interaction need not be sensing-only |
+| A conventional online document editor | Networked software application | Networking alone does not establish the physical-device boundary in our working definition |
 
-A useful baseline is [NIST's IoT-device definition](https://csrc.nist.gov/glossary/term/iot_device): a device interacts with the physical world through a sensor or actuator and has a network interface. Definitions vary with context, but this includes a connected temperature logger without requiring it to control anything.
+These classifications are teaching examples, not an exhaustive taxonomy. A software service can be part of an IoT system without itself being a physical IoT device. W3C's Web of Things also models virtual Things and services. Broader models remain useful, provided their scope is stated. [W3C WoT Architecture 1.1, §3](https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/#terminology).
 
-For a system that acts, we will use a four-part control model: something that **senses**, something that **decides**, something that **acts**, and something that **observes** whether the action had the intended effect. A network may distribute these parts; it does not supply the missing observation.
+A networked system can operate inside a private local network. Public Internet reachability is a deployment property. Likewise, a sensing application can deliver useful information without a return control path. These observations prevent two common mistakes: requiring a cloud backend in every diagram and requiring an actuator in every system.
 
-If you have built distributed services, much of this will feel familiar: messages, retries, timeouts, partial failure. Three differences matter from the first chapter.
+## 2. Reference Architectures: Functions Before Machines
 
-**Physical state is not yours to roll back.** A database transaction can abort. Heat already delivered to a room cannot. A motor that already ran for 10 seconds has already moved whatever it moves. Retrying a command is therefore not neutral: if the first attempt worked and you could not tell, the retry does it twice.
+A **reference model** provides an abstract vocabulary and relationships. A **reference architecture** organizes architectural concepts and reusable structures. A **deployment architecture** assigns a particular system's functions to equipment and services. These working distinctions help us avoid treating every box in a teaching diagram as a required server.
 
-**You never read physical state directly.** A service reads its own memory. An IoT system reads a sensor, which converts a physical quantity into a voltage, which a converter turns into a number, which firmware turns into a reading, which a gateway turns into an event. Each step has its own delay, resolution and failure modes. The reading is evidence about the temperature, not the temperature.
+Standards address different questions:
 
-**The wiring is part of the program.** In a service, the code that calls a function and the function it calls are both in the repository. In an IoT system, the firmware says "drive pin 6" and a physical wire decides what pin 6 is connected to. No compiler, type checker or test suite sees that wire. The fan incident is not an exotic failure; it is the characteristic failure of a system whose interface contract is a jumper.
+| Reference | Role in this chapter | Scope boundary |
+|---|---|---|
+| ISO/IEC 20924:2024 | Terminology reference | Vocabulary does not choose a deployment |
+| ISO/IEC 30141:2024 | IoT reference-architecture context | Common architecture vocabulary and reusable designs; no chapter claim of conformance |
+| ITU-T Y.4000/Y.2060 | Four-layer functional model | Layers describe capabilities, not four mandatory machines |
+| NIST SP 800-183 | Dataflow reasoning vocabulary | An analytical model, not a mandatory protocol stack |
+| W3C WoT Architecture 1.1 | Interactions and interoperability | Complements existing technologies; does not replace every IoT protocol |
 
-The local USB-connected LED rig below isolates this sensing/control problem before networked integration. It is a precursor to an IoT system, rather than evidence that networking is optional in the definition. A standalone thermostat shares these physical-control problems; a networked sensor-only logger shares measurement uncertainty but has no actuator effect to verify.
+ISO/IEC 30141:2024 is edition 2 of the IoT reference-architecture standard, published in August 2024. Its official abstract describes a foundational view and additional views, including construction patterns. Only the public scope and edition information are used here; the detailed model below comes from the openly available ITU recommendation. [ISO/IEC 30141:2024](https://www.iso.org/standard/88800.html).
 
-### The whole system, before the local loop
-
-<figure class="iot-diagram">
-<picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-0-iot-system-map-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-0-iot-system-map.svg" alt="Illustrative IoT architecture: sensor and firmware send readings through transport, gateway and event processing. History is a separate branch. Optional decisions return bounded commands through local control to an actuator. Physical feedback returns through sensing." style="width:100%;height:auto">
-</picture>
-<figcaption>System map. Illustrative roles and flows, not a deployment diagram or an implemented product bridge. Readings travel outward; optional commands return; physical feedback supplies evidence about the effect.</figcaption>
-</figure>
-
-The top journey carries telemetry: the device samples and identifies a reading, transport carries it, a gateway can normalize or buffer it, and processing interprets it. History storage supports later queries and replay. A sensor-only logger can stop there.
-
-The return journey carries control: a rule, person or supervisory agent decides, local control applies timing and output limits, and an actuator affects the physical world. These are roles, not one server per box; several can run on the same machine. Observe the physical quantity or effect to close the loop. A message acknowledgement closes only a transport hop.
-
-Our USB-connected lab isolates the device, local control, actuator and observer. It teaches the physical boundary before adding network failure, remote decisions or fleets.
-
-## The Model: Belief, Command, Effect, Observation
+### The ITU four-layer model
 
 <figure class="iot-diagram">
 <picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-1-belief-and-physics-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-1-belief-and-physics.svg" alt="Illustrative LED loop: a DHT11 reading crosses into software; a decision commands D9; current and light depend on wiring; a separate observer supplies evidence that is compared with the command." style="width:100%;height:auto">
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-1-reference-model-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-1-reference-model.svg" alt="ITU functional model, paraphrased: application, service support and application support, network, and device layers. Management and security apply across all four layers." style="width:100%;height:auto">
 </picture>
-<figcaption>Figure 1. The same loop for the lab in this chapter. Software holds a reading, a decision and a command. Physics holds a temperature, a voltage, a current and light. Three arrows cross the boundary. Only the observation, which crosses back on a separate path, can be compared with the command to say whether the effect happened.</figcaption>
+<figcaption>Figure 1. Author-drawn paraphrase of the ITU functional model. Security and management span all layers. Box size and position do not specify deployment or ownership.</figcaption>
 </figure>
 
-Figure 1 shows the loop we will build in the lab. Read the desktop view as two rows that touch in three places; the compact view uses two columns with the same crossings.
+ITU-T Y.4000/Y.2060 §8 identifies four layers: **device**, **network**, **service support and application support**, and **application**. Management and security capabilities are associated with all four. Read upward from capabilities close to equipment toward the application using them. [ITU-T Y.4000/Y.2060, §8](https://www.itu.int/rec/T-REC-Y.2060-201206-I/en).
 
-**Sensing** crosses from physics to software. Air temperature changes the DHT11's internal element; the module converts that into a digital message on pin D2; a library turns the message into a number such as 26.3 °C. Software now holds a *reading*, which it treats as its belief about the room.
+Here is a constructed mapping for a building's environmental monitoring application:
 
-**Actuation** crosses from software to physics. The decision "LED on" becomes a command: `machine.D9.Set(true)`. That call sets a bit in the microcontroller's output register, which switches the pin's output transistor, which raises the pin's voltage, which drives current through the LED, which emits light. Every step after the register is physics.
+| Functional layer | Illustrative responsibility |
+|---|---|
+| Device | Acquire observations and provide device communication capabilities |
+| Network | Move information between communication participants |
+| Service support and application support | Offer reusable storage, processing, or application-specific support |
+| Application | Present room conditions and notify an operator |
 
-**Observation** crosses back. A light sensor, or a person, detects the light and produces a record: lit, dark, or unknown. That record is the only one in the loop that is caused by the effect itself.
+The mapping is our example. It is not a list of mandatory products. The monitor might connect directly to a service or communicate through a gateway. Processing and storage might share one application process. Some supporting functions might run on the device itself.
 
-The comparison reached by Figure 1's dashed command path — command against observation — is the core operation of every reliable IoT system. It is how we know whether the world matches the belief.
+A useful way to read the figure is to ask what each layer contributes, then draw a separate deployment view. A single gateway can communicate, store data, and perform application logic. It can therefore realize functions associated with several layers. Conversely, one functional layer can span several services.
 
-### What each record establishes
+Security cannot be confined to the remote backend. An authenticated application still depends on device identity, interface access, and the protection of data in transit. Management cannot be reduced to a dashboard: configuration and updates must reach the equipment they affect. The cross-layer columns remind us to follow these responsibilities through the entire system.
 
-The useful habit is to ask of every record: *what caused this to be written?* A record can only establish the things that had to be true for it to exist.
+### A complementary NIST dataflow model
 
-| Record | Written because… | Establishes | Does not establish |
+NIST SP 800-183 describes five primitives: **sensor**, **aggregator**, **communication channel**, **external utility (eUtility)**, and **decision trigger**. They help analyze how data becomes an application result. An external utility can provide supporting products or services; a decision trigger can lead to an action or transaction, and need not control an actuator. [NIST SP 800-183, §2](https://doi.org/10.6028/NIST.SP.800-183).
+
+Do not equate these primitives one-to-one with the ITU layers. One model organizes capabilities; the other helps reason about dataflow. For example, an aggregator function could execute in device firmware, a gateway, or a remote service. Calling it an aggregator tells us what it does, while its deployment location tells us which resources and failures it depends on.
+
+## 3. Components and Their Responsibilities
+
+The following vocabulary is a teaching organization used throughout this chapter. It is not an additional standardized layer stack.
+
+### Sensors and actuators
+
+A **sensor** produces information about a physical quantity or condition. An **actuator** changes a physical condition. Together, these are transducer capabilities at the boundary between physical and digital environments. Measurement and actuation are distinct functions; a device can provide either or both. [NISTIR 8228, §2](https://doi.org/10.6028/NIST.IR.8228).
+
+A sensing path connects a quantity of interest to an observation. For example, a sensor at one point in a room provides evidence about temperature at that location and time. The application may estimate the room's condition from that reading. The estimate requires assumptions about placement and relevance. A precise digital value does not eliminate those assumptions.
+
+An actuation path connects a requested operation to physical equipment. An application may request a valve position. The request describes intent; equipment determines what actually happens. Feedback can provide evidence about the resulting position or process condition. The needed evidence depends on the application: a valve's position and the flow through it are different quantities.
+
+### Devices and firmware
+
+A device combines hardware capabilities with software that accesses them. **Firmware** is software operating close to that hardware: it may acquire observations, manage communication, maintain configuration, or execute local decisions. An embedded system does not imply a particular operating system or programming language.
+
+Resource limits shape design. RFC 7228 discusses constrained nodes in terms of memory, processing, power, and deployment accessibility, and separately discusses constrained networks. It is an **Informational RFC**, rather than a requirements standard for every IoT device. A powerful industrial computer and a small battery-operated node can both participate in IoT while having very different constraints. [RFC 7228, §§2–4](https://www.rfc-editor.org/info/rfc7228/).
+
+From those constraints, reason about responsibilities. A battery-operated sensor may sleep between transmissions, so continuous remote availability cannot simply be assumed. A device with small storage cannot retain unlimited disconnected history. Firmware that must meet a local deadline needs a plan for what happens while another component is unavailable. These are engineering consequences of stated constraints, not universal device characteristics.
+
+### Networks, gateways, and edge computing
+
+A **network** carries information among participants. **Gateway** describes a role at an interface: it may bridge protocols, relay communication, normalize data, or mediate access. A gateway is useful when an actual boundary needs that service. Adding one introduces another component to operate and another failure mode to analyze.
+
+**Edge computing** places processing near the source or use of information. A device can perform edge computation. A gateway can do so too. The terms are therefore not interchangeable: a gateway describes an interface responsibility, while edge describes placement. A relay gateway need not run application analytics.
+
+A **remote service** provides processing or storage away from the equipment. Cloud infrastructure is one possible implementation. Whether to place a function remotely depends on deadlines, connectivity, capacity, administration, and data policy. Location does not automatically establish reliability or security.
+
+### Applications and operations
+
+An application interprets information for a purpose: monitoring, alerting, reporting, optimization, or control. Its correctness depends on the meaning and quality of its inputs as well as its own logic.
+
+Operations includes onboarding equipment, assigning identity, changing configuration, applying updates, monitoring health, maintaining devices, and retiring them. A useful system definition includes these responsibilities because software that works on installation day still needs a supportable lifecycle. We will return to lifecycle in Section 8.
+
+## 4. Flows: Measurement, Telemetry, Command, and Feedback
+
+<figure class="iot-diagram">
+<picture>
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-flows-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-2-flows.svg" alt="Illustrative flows: a physical condition is measured by a device, telemetry crosses a network to an application, an optional command returns to a device, and optional actuation changes the condition. Feedback requires a relevant new observation." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 2. Generic teaching model. Measurement, information transfer, and optional actuation are separate relationships. The diagram describes no particular protocol, product, or measured deployment.</figcaption>
+</figure>
+
+
+<div class="iot-controls"><label class="iot-scenario" for="iot-flow-kind">Illustrative flow<select id="iot-flow-kind"><option value="sensing">Sensing only</option><option value="actuating" selected>With optional actuation</option></select></label><button type="button" class="iot-reset" data-iot-reset="iot-study-flow">Reset flow</button></div>
+
+<figure id="iot-flow-scene" class="scene iot-scene" data-scene="iot-study-flow" data-kind="actuating" data-label="Illustrative sequence: measurement, telemetry, optional command, optional actuation, and relevant feedback">
+  <div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-flows-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-2-flows.svg" alt="Static alternative: measurement and telemetry, with an optional return command and actuation path."></picture></div>
+  <figcaption class="evidence-caption">Illustrative teaching model, initially paused. Time is stretched for explanation. Sequence: observation acquired → telemetry received → optional operation requested → operation applied → relevant new observation. The sequence supplies no measured timing or outcome guarantee.</figcaption>
+</figure>
+
+### Measurement and telemetry
+
+**Measurement** produces an observation about a quantity. **Telemetry** communicates observations or other device information for use elsewhere. Telemetry can include measurement data, equipment status, or diagnostics; these have different meanings.
+
+Follow a constructed observation from a room monitor:
+
+1. A sensor acquires a temperature observation.
+2. Device software associates it with a quantity, unit, identity, and measurement time.
+3. Communication carries a representation of that observation.
+4. A receiving application interprets it under its data contract.
+5. The application uses it to display a condition or make a decision.
+
+The value `24.0` alone does not tell a receiver what was measured, which unit applies, where the observation came from, or when it was acquired. Receiving valid bytes is only one part of understanding the observation.
+
+SenML, specified in RFC 8428, is one standardized way to represent sensor measurements, including names, units, values, and time. Its time representation can be absolute or relative. We use the concept of measurement metadata here without prescribing a serialization or inventing a SenML message. [RFC 8428, §§4–5](https://www.rfc-editor.org/info/rfc8428/).
+
+### Commands and feedback
+
+A **command** requests an operation. A **response** communicates something about handling that request. **Feedback** provides information used to assess the system's state or response. These can be carried by the same communication network, but they answer different questions.
+
+For a constructed connected-valve example, distinguish these records:
+
+| Record | What it can support, given a trustworthy implementation | What remains separate |
+|---|---|---|
+| Request issued | The application requested a position | Receipt and execution |
+| Communication acknowledgement | The relevant protocol exchange reached its acknowledged stage | Application acceptance and physical movement |
+| Application response: accepted | The receiving application accepted the operation under its contract | Completion and process outcome |
+| Device report: target position set | Device software reports a state change | Actual valve position |
+| Position observation | Evidence about position at a stated time | Whether the intended flow was achieved |
+| Flow observation | Evidence about flow at the observation point | Other process objectives and future behavior |
+
+The table is engineering reasoning, not a universal response vocabulary. Some systems combine stages; others expose fewer records. Always read the actual interface contract.
+
+A feedback path must observe something relevant to the question. A device's copy of its commanded value provides useful software-state information, but it cannot by itself establish a physical process outcome. A physical observation also has limitations: placement, delay, calibration, and shared failures can affect its interpretation. Evidence is evaluated against a claim, rather than treated as an absolute proof of all system behavior.
+
+### Open-loop and closed-loop control
+
+In an **open-loop** control model, the operation is selected without using feedback about the resulting controlled quantity to adjust it. In a **closed-loop** model, feedback about that quantity influences subsequent control. This is the control vocabulary used in our teaching model.
+
+A system can be connected while its physical control loop remains local. A remote application might select a desired value while a local controller repeatedly measures and adjusts the process. A monitoring application can receive feedback without controlling anything. Consequently, telemetry does not automatically imply closed-loop control, and a closed loop does not automatically imply remote control.
+
+The design question is which component owns the decision at each timescale. A person changing a daily schedule and a controller responding to a fast disturbance have different timing contracts. Drawing both simply as “control” conceals those differences.
+
+## 5. Deployment Patterns and Placement Decisions
+
+Compare the following illustrative placements of the same functions. W3C WoT discusses local, intermediary, edge, and remote arrangements. [WoT Architecture 1.1, §§5 and 9](https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/#common-deployment-patterns).
+
+| Pattern | Where key work happens | Useful when | Question to resolve |
 |---|---|---|---|
-| Decision log line "LED on" | Code reached that branch | The decision logic produced this output for this input | That the input was fresh or correct |
-| `machine.D9.Set(true)` completed | The function returned | Nothing about the pin; [TinyGo `Pin.Set` returns nothing](https://tinygo.org/docs/reference/microcontrollers/machine/arduino-mega2560/#func-pin-set) | That the pin was configured as an output |
-| Firmware state `energized: true` | Firmware set its own variable | Firmware believes it drove the outputs | That any pin moved, or that the right pins were wired |
-| Transport acknowledgement (serial, broker) | A message reached the next hop | Delivery to that hop | That the receiver acted, or that the action had an effect |
-| Pin readback HIGH | The input circuit saw the pin above its threshold | The pin is at a logic-high level | That current flows through the load, or that the load is on that pin |
-| Light sensor "lit" | Light reached the sensor | Light at the sensor's position | That the light came from *this* LED, or that the sensor is healthy |
-| Human observation "lit" | A person looked and saw light | Light was visible at that time | Precise timing or brightness; and people miss things |
+| Direct telemetry | Device communicates with an application service | The device supports the required communication and data contract | What happens during disconnection? |
+| Gateway-assisted telemetry | Gateway mediates between devices and applications | Protocol translation or local consolidation is needed | Does gateway failure stop all dependent devices? |
+| Local control with remote supervision | Immediate control is local; a remote application supplies goals or history | Physical response must continue through remote outages | What authority and limits does each controller have? |
+| Remote processing | A remote service processes device information | Centralized capacity or cross-device analysis matters | Are delay and availability compatible with the application? |
 
-Read down the "does not establish" column and the fan incident explains itself. The command result, the firmware state, and even the full-power diagnostic sketch's trace all sit in the first four rows. None of them was caused by the motor turning. They were all true, and all consistent with a motor that never moved.
+### Worked comparison: a generic monitoring system
 
-### Readback is better than nothing, and less than it looks
+Assume a constructed building application must show environmental trends and notify an operator about an out-of-range condition. It has no automatic actuator. Consider two deployments under the same functional requirements.
 
-The ATmega2560 lets firmware read a pin's actual logic level whatever the pin's direction, including while it is an output ([ATmega2560 datasheet](#sources), §13.2.4). In TinyGo, `machine.D9.Get()` reads that level, including in output mode. Our lab firmware records it as `pin_readback`.
+**Option A:** each monitor sends observations directly to a remote service. This removes a separately managed gateway from the path. It places the communication and identity responsibilities on each device and its service relationship.
 
-Readback catches some real faults. If the pin is shorted to ground, or the output transistor is damaged, readback reports LOW while the firmware commanded HIGH. But in the fan incident, readback on D6 and D7 would have reported exactly what the firmware commanded, because those pins were driving nothing. Readback is evidence about the pin. The wiring fault lived after the pin.
+**Option B:** monitors send observations to a site gateway that stores and forwards them. This can consolidate communication and preserve some history through a remote outage. It adds local storage, gateway maintenance, and a shared dependency. A failed gateway may affect many monitors.
 
-## Just Enough Electricity
+The decision cannot be made from the word “IoT.” First establish whether the devices support the remote interface, whether connectivity interruptions matter, and whether someone can maintain the gateway. Next establish what the application must deliver during an outage. Preserving observations for later trend analysis is different from delivering an immediate notification.
 
-The lab drives an LED. That needs four ideas and one formula.
+A gateway with a buffer can address the first requirement without addressing the second. If nobody can receive the notification while disconnected, later replay does not restore the missed opportunity to respond. This counterexample shows why a useful architecture starts from an application contract, rather than a preferred technology.
 
-**Voltage** is the difference in electrical potential between two points, measured in volts (V). It is always *between* two points. "The pin is at 5 V" means 5 V relative to the board's ground.
+### Worked reasoning: freshness is separate from delivery
 
-**Ground** is the reference point all other voltages on a circuit are measured against. Two circuits that need to exchange signals must share a ground, or a "5 V" signal from one means nothing to the other. Missing common ground was one of the fan incident's candidate causes; it was a reasonable suspect.
+Assume a constructed application evaluates a reading at **12:00:10**. The observation was acquired at **12:00:00** and arrived at **12:00:09**. Assume synchronized clocks and negligible timestamp uncertainty for this exercise. The application permits observations no older than **5 seconds**.
 
-**Current** is the rate of charge flow, measured in amperes (A) or milliamperes (mA). Current flows only around a closed loop: out of a source, through a load, back to the source's ground.
+The observation's age at evaluation is:
 
-**Resistance** opposes current and is measured in ohms (Ω). For a resistor, **Ohm's law** relates them: *V = I × R*. Voltage in volts, current in amperes, resistance in ohms.
+**age = evaluation time − measurement time = 10 seconds**
 
-An LED is not a resistor. Once it conducts, the voltage across it stays roughly at its **forward voltage**, *V_f*, whatever the current. That is why an LED needs a series resistor: without one, almost nothing limits the current except the pin's own output stage.
+Its age exceeds the assumed limit, so it cannot support the application's “current condition” decision. Arrival only one second earlier does not make the measurement one second old. It can still contribute to historical analysis if that use accepts older data.
 
-### Worked example: sizing the LED resistor
+The 5-second limit is an invented application requirement. There is no universal IoT freshness limit. In a real contract, clock uncertainty and the interval between sensing and timestamp assignment also matter. When that uncertainty crosses the allowed age boundary, the decision needs an explicit policy for uncertain freshness.
 
-*Illustrative values. Read the forward voltage from your LED's datasheet; it varies by colour and part.*
+This reasoning separates four terms: sampling interval, communication delay, observation age, and decision deadline. Increasing the sampling rate does not remove a long transmission queue. Reliable delivery does not make old information timely.
 
-The ATmega2560 datasheet lists 40.0 mA as the absolute maximum DC current per I/O pin, and warns that stresses beyond the absolute maximum ratings "may cause permanent damage." An absolute maximum is a cliff edge, not an operating point; we want to stay well below it. Choose a target of 10 mA, and assume a red LED with *V_f* = 2.0 V.
-
-The resistor sees the pin voltage minus the LED's forward voltage:
-
-*R = (V_pin − V_f) / I = (5.0 V − 2.0 V) / 0.010 A = 300 Ω*
-
-Resistors come in standard values, so take the next one up: 330 Ω. Now check the current with the value we actually fitted:
-
-*I = (5.0 V − 2.0 V) / 330 Ω ≈ 9.1 mA*
-
-That assumes the pin really sits at 5.0 V. It does not, under load. The datasheet guarantees only that a high output stays at or above **4.2 V while sourcing 20 mA** from a 5 V supply. At about 9 mA the drop will be smaller, but we only have the guaranteed bound, so use it for the worst case:
-
-*I_min ≈ (4.2 V − 2.0 V) / 330 Ω ≈ 6.7 mA*
-
-So the honest statement is "between roughly 6.7 and 9.1 mA, depending on the actual pin voltage and LED", not "9.1 mA". Both ends are far below 40 mA, and the LED will be clearly visible. Power dissipated in the resistor is *I²R* ≈ 0.0091² × 330 ≈ 27 mW, small for a typical through-hole resistor (check its rating).
-
-Two lessons travel beyond LEDs. First, "5 V" on a pin is a nominal value; a datasheet gives you bounds under stated conditions, and your design should hold across the bound. Second, the calculation needs the part's own datasheet. Arduino's own guide says a pin cannot supply enough current for most relays, solenoids or motors ([Arduino digital pins](#sources)); that is why the fan needed an L293D driver at all.
-
-### A pin that is not driven is not LOW
-
-At power-up, Arduino (ATmega) pins default to inputs in a high-impedance state, and an input with nothing connected picks up noise and reports apparently random levels ([Arduino digital pins](#sources)). An undriven pin is not 0 V. It is *undefined*.
-
-The sensor study met this twice. During USB bring-up, analog pin A0 had no sensor connected, and the board reported temperatures around 100 °C: a floating input converted into a confident-looking number. In the fan incident, the driver's inputs were wired to D4 and D3, pins the firmware never configured. The firmware was not holding them LOW; it was not holding them at all. The execution report describes them as LOW; strictly, that is an inference. What we can say from the L293D datasheet is enough: with the enable input high, each output follows its input ([TI L293D](#sources), Table 1), so whenever the two direction inputs sat at the same level, both motor terminals sat at the same voltage, and a motor with no voltage across it does not turn.
-
-## Revisiting the Fan With the Model
 
 <figure class="iot-diagram">
 <picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline.svg" alt="Recorded investigation, 8–9 September 2026: governed commands and a raw diagnostic reported drive while the operator saw no rotation. Direct supply connection spun the motor; correcting D4/D3 jumpers to D6/D7 produced rotation. Earlier wiring is shown in hindsight." style="width:100%;height:auto">
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-freshness-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-3-freshness.svg" alt="Illustrative timeline: measured at 12:00:00, received at 12:00:09, evaluated at 12:00:10. Age is ten seconds against an assumed five-second maximum." style="width:100%;height:auto">
 </picture>
-<figcaption>Figure 2. Five stages of the recorded investigation, separating software reports, operator observations and diagnostic interpretation. The governed reports said executed and energized before and after the repair; the physical outcome changed. Early wiring is reconstructed in hindsight. Rotation was operator-observed, with no tachometer or current probe.</figcaption>
+<figcaption>Figure 3. Constructed timeline under the clock and age-limit assumptions stated above. Measurement age continues increasing through delivery.</figcaption>
 </figure>
 
-Figure 2 lays the incident out as evidence rather than narrative. Three things stand out.
+<div class="iot-controls"><button type="button" class="iot-reset" data-iot-reset="iot-study-freshness">Reset timeline</button></div>
 
-**The software rows never changed.** Command result and firmware state were green in every governed run, including the ones where the fan was stationary. They could not distinguish success from this failure, because nothing in them was caused by rotation.
-
-**The candidate list did not contain the answer.** After the first day, the report listed the motor supply rail, common ground, motor terminal wiring and startup torque as suspects. The input wiring was not on the list. That is an easy trap: we suspect the parts we think of as "hardware", and treat the pin map as settled because it is written in the firmware. The firmware's pin map is a claim about the wiring, not an observation of it.
-
-**The "decisive" test was decisive about the wrong thing.** The raw full-power sketch bypassed the command protocol, the governance limits and the duty ceiling. When the fan still did not move, the report concluded that this "conclusively rules out firmware" and placed the fault in motor power delivery. It did rule out the governance path. But the raw sketch used the same pin map — D5, D6, D7 — as the governed firmware. Both programs shared the faulty assumption, so both failed the same way. A test can only discriminate between hypotheses that predict different outcomes for it, and "the inputs are on the wrong pins" predicted exactly what was seen.
-
-The report's proposed next step was a multimeter across the motor terminals during a driven phase, reading "~0 V confirms the VCC2/ground fault." That reading would almost certainly have been close to 0 V — the motor never even hummed — and would have been read as confirming the wrong cause, because the input-wiring fault also leaves no voltage across the motor. The step that actually split the hypotheses was the isolation test: connect the motor straight to the supply. It spun, which eliminated the motor and supply together and left only the driver stage. From there, comparing the physical jumpers with the firmware's pin map found the fault.
-
-<figure class="iot-diagram">
-<picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-test-discrimination-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-3-test-discrimination.svg" alt="Reasoning model: six candidate causes against five tests. The raw sketch rules out only firmware and torque; a proposed meter reading would not separate supply, ground and wiring; motor on supply rules out the motor; comparing jumpers with the pin map confirms a wiring fault; rewiring alone fixing it rules out supply and ground." style="width:100%;height:auto">
-</picture>
-<figcaption>Figure 3. Which test could tell the causes apart? A reasoning model built from the recorded report: each cell is what the test would show if that cause were the only fault. A test removes only the causes whose prediction differs from what was observed. The meter test was proposed and never run.</figcaption>
+<figure id="iot-freshness-scene" class="scene iot-scene" data-scene="iot-study-freshness" data-label="Illustrative observation age increases from measurement through arrival to evaluation">
+  <div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-freshness-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-3-freshness.svg" alt="Static alternative: the observation is already too old for this decision when it arrives."></picture></div>
+  <figcaption class="evidence-caption">Illustrative teaching model, initially paused. Sequence: measured at age zero → assumed age limit passes → received at age nine seconds → evaluated at age ten seconds. Receipt does not reset the measurement time. The prose and static figure carry the same lesson.</figcaption>
 </figure>
 
-Figure 3 makes the argument mechanical. Six causes were plausible after the first day. The full-power sketch observed "still"; only two causes predicted anything else, so it removed two and left four. The proposed meter would have read about 0 V under three of the remaining four, so it could not have separated them. The supply test removed the motor. Comparing the jumpers with the pin map *confirmed* a wiring fault, but finding one fault does not exclude a second; it was rewiring alone producing rotation that ruled out a supply or ground fault as well.
+## 6. Interoperability: Agreement at Several Levels
 
-Which single observation would have found it on day one? A continuity check — one multimeter probe on the driver's 1A input (pin 2), one on the Mega's D6 header — would have shown no connection. That check compares the wiring against the pin map directly, instead of inferring the wiring from symptoms. The habit to form now is to **verify the wiring against the code's pin map before believing either.**
+Interoperability requires enough agreement for participants to exchange and use information correctly. We will distinguish three levels for study:
 
-## Choosing How to Know
+- **Communication:** participants can establish the required exchanges.
+- **Representation:** participants agree on encoding, field structure, and data types.
+- **Meaning:** participants agree on quantity, units, identity, location, time, and behavior.
 
-Every effect needs an observation, but not every observation is equally good, equally cheap, or equally independent. Here are the options for our LED, in increasing distance from the command path.
+Standards may group these three levels differently. The distinction helps identify what two participants have actually agreed on.
 
-| Method | What it can catch | What it shares with the command path | Cost |
-|---|---|---|---|
-| Trust the call returned | Nothing about the effect | Everything | Free |
-| Firmware state flag | Logic bugs that skip the command | Firmware, board, wiring | Free |
-| Pin readback | Shorted or damaged pin; wrong pin *mode* | Firmware, board, wiring after the pin | Free on AVR |
-| Electrical measurement (current through the load) | Open circuit, missing load, wrong wiring | Board power; measurement wiring | An instrument or sense circuit |
-| Independent physical sensor (light sensor for light) | Load missing, wrong pin, dead LED | Board, if the same board reads the sensor; room light | A sensor, a pin, calibration |
-| Human observation | Gross failures of all kinds | Little, but timing is imprecise and attention lapses | Someone watching |
+Two devices may use the same transport and JSON encoding while assigning different meanings to `temperature`. One may report air temperature in degrees Celsius, the other equipment temperature in degrees Fahrenheit. Both messages can be syntactically valid. An application comparing their numbers directly is still wrong.
 
-Two judgements follow from the table.
+W3C WoT provides an interaction model with **Properties**, **Actions**, and **Events**. A Property exposes state, an Action invokes functionality, and an Event provides asynchronous notifications. Thing Descriptions describe interaction affordances and supporting metadata; protocol bindings connect interaction descriptions to concrete protocols. This complements existing IoT technologies. [WoT Architecture 1.1, §§6.1, 6.5, and 6.7](https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/#interaction-model).
 
-**Independence is a spectrum, and you should say where you are on it.** In our lab, the light sensor is read by the same Mega that drives the LED. The *physical* path — pin, LED, light, sensor — is independent of the firmware's belief, which is what matters for catching wiring faults. But a board-wide failure, such as a brown-out or a frozen loop, would affect both the command and the observation. A light sensor on a second board would remove that shared failure. For a lab LED, the same board is good enough; for a heater, it would not be.
+For a constructed monitor, current temperature might be exposed as a Property, a requested calibration procedure as an Action, and an alarm notification as an Event. These are possible interface choices. A time-series sample can also be communicated as an Event, so “measurement” does not map exclusively to Property.
 
-**Match the observer to the claim.** A light sensor can say "light reached me." It cannot say the LED is at full brightness, nor that the light was not a desk lamp. If the claim you need is "the fan is cooling the room", rotation is not enough either; you need a temperature measurement downstream of the fan, and time for it to change. The rule: the observation must be caused by the effect you are claiming, not by a step before it.
+A description helps consumers understand how to interact. It does not independently prove that a sensor is calibrated or that an Action achieved a physical outcome. Metadata and measurement evidence serve different purposes.
 
-A decision rule for this chapter: *observe any effect whose silent failure would mislead a person or a later decision.* The counterexample is an indicator LED that duplicates information already shown elsewhere; observing it costs more than its failure. The fan in a thermal loop is the opposite case: if it silently fails, the controller will keep believing it is cooling while the room heats. That belief needs evidence before it can support another decision.
+### Protocols occupy part of the architecture
 
-### Watch it happen
+MQTT 5.0 specifies publish/subscribe messaging with three delivery QoS levels. CoAP's base specification describes a constrained application protocol with request/response semantics and confirmable-message exchanges. These are application-protocol choices, not complete IoT system architectures. [OASIS MQTT 5.0, §§1 and 4.3](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html); [RFC 7252, §§2 and 4](https://www.rfc-editor.org/info/rfc7252/).
 
-Three paused animations follow the evidence from command to physical observation. Use each play control to advance the scene. The diagrams and captions retain the lesson without JavaScript or motion.
+MQTT's “exactly once” QoS concerns its message-delivery exchange. It does not mean a separate actuator changed the world exactly once. In CoAP, an empty acknowledgement can precede a separate response; message acknowledgement and application response are distinct protocol concepts. Neither protocol can establish a physical outcome without an application-specific evidence path. [MQTT 5.0, §4.3.3](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html); [RFC 7252, §5.2.2](https://www.rfc-editor.org/info/rfc7252/).
 
-<label class="iot-scenario" for="iot-scenario">Illustrative LED bench
-<select id="iot-scenario">
-<option value="wiring">Wrong wire: command on, LED dark</option>
-<option value="baseline">Correct wiring: light observed</option>
-<option value="blind">Covered observer: effect unknown</option>
-</select></label>
+Choose a protocol by the required interactions and constraints, then specify the remaining application semantics. A broker, a resource endpoint, a data schema, and an authorization rule have different responsibilities even when one product implements several of them.
 
-### Same Command, Three Benches
+## 7. Reliability: Identify What Must Continue
 
-<figure class="scene iot-scene" id="evidence-scene" data-scene="iot-evidence" data-scenario="wiring" data-label="Illustrative sequence: command issued, pin driven, physical effect, observation, then comparison. A wrong wire produces dark evidence; a covered observer produces unknown.">
-<div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-1-belief-and-physics-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-1-belief-and-physics.svg" alt="Static alternative: a command crosses into physics, then a separate observation is compared with it."></picture></div>
-<figcaption class="evidence-caption">Illustrative. No sensor values or hardware timings were measured. The command and readback records are identical in all three cases; only the wire, the light and the observer differ. Correct wiring yields agreement; a jumper on the wrong pin yields contradiction; a covered observer leaves the effect unknown. The cases assume usable calibration; in a dim room a cap can resemble ordinary darkness, which the physical lab must check.</figcaption></figure>
+Reliability reasoning begins with a named service and its conditions. “The system is available” is incomplete until we know whether that means local sensing, remote visibility, timely notification, control, or historical retrieval.
 
-### The Fan Incident in Four Stages
+Consider these constructed failures:
 
-<figure class="scene iot-scene" id="fan-scene" data-scene="iot-fan" data-label="Recorded fan incident in four stages: governed commands and a raw sketch drive D5, D6 and D7 while the driver inputs are jumpered to D4 and D3, so the fan stays still; connecting the motor to its supply spins it; moving the jumpers to D6 and D7 makes the fan spin with the same software record.">
-<div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-2-fan-incident-timeline.svg" alt="Static alternative: five recorded stages of the fan incident."></picture></div>
-<figcaption class="evidence-caption">Illustrative replay of a recorded incident (round-008, 8–9 September 2026). Stages are compressed; rotation was observed by the operator, with no tachometer or current probe. The jumper positions were only known in hindsight; the scene marks that moment.</figcaption></figure>
+| Failure | Possible consequence | Responsibility to make explicit |
+|---|---|---|
+| Sensor stops updating | Application may display a plausible old value | Detect freshness and distinguish missing from current data |
+| Network disconnects | Remote information or commands may stop | Define local behavior and disconnected-data policy |
+| Device restarts | Volatile state and communication sessions may change | Define initialization and state recovery |
+| Gateway fails | Several devices may lose a shared path | Identify dependency scope and recovery ownership |
+| Command response is lost | Sender may not know whether an operation occurred | Define reconciliation and retry semantics |
+| Storage fills during outage | Old or new observations may be discarded | Bound capacity and define the loss policy |
 
-### Which Test Tells the Causes Apart?
+Select the failures relevant to the deployment and consequence being studied.
 
-<figure class="scene iot-scene" id="tests-scene" data-scene="iot-tests" data-label="Reasoning model: five diagnostic tests against six candidate causes. The raw full-power sketch rules out only firmware and startup torque; a proposed meter reading would not separate supply, ground and wiring; motor-on-supply rules out the motor; comparing jumpers with the pin map confirms a wiring fault; rewiring alone fixing it rules out supply and ground.">
-<div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-test-discrimination-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-3-test-discrimination.svg" alt="Static alternative: table of candidate causes against diagnostic tests."></picture></div>
-<figcaption class="evidence-caption">Illustrative reasoning model built from the recorded report, not a recorded sequence of instrument readings. Each cell is what the test would show if that cause were the only fault. The meter test was proposed in the report and never run.</figcaption></figure>
+A retry is an application decision. Repeating “set desired temperature to 20 °C” and repeating “dispense one unit” have different meanings. Even a state-setting operation can become inappropriate when delayed past its validity period. Duplicate handling, validity, and recovery need a contract that extends beyond successful transmission.
 
-## The Lab: One Loop, Three Observers
+Unknown outcomes deserve representation. If a response is missing, the sender may have evidence of neither success nor failure. Reporting failure as certainty can invite an unsafe retry; reporting success as certainty can hide a missed action. A system can instead expose uncertainty and use reconciliation or a relevant new observation to narrow it.
 
-The full procedure, wiring, safety limits and pre-registered criteria are in [lab.md](/iot-handbook/examples/what-is-an-iot-system/lab.md). Here is what it tests and what we predict.
+Observability should follow the same boundaries. Device health, communication status, application processing, and process outcomes answer different questions. A connected device may have a broken sensor. A healthy remote service may hold stale observations. A dashboard that combines these into one green indicator discards information needed for diagnosis.
 
-**Rig.** The historical rig's Mega 2560-compatible board and DHT11 on D2 (both verified working in the sensor study on 8 September). An LED with a 330 Ω series resistor on D9. Optionally, a photoresistor facing the LED, read on A0. All parts must be confirmed against the actual bench before wiring; none is assumed.
+## 8. Security, Privacy, and Lifecycle
 
-**Firmware.** [`main.go`](/iot-handbook/examples/what-is-an-iot-system/firmware/main.go) uses TinyGo on the Mega 2560-compatible board. It starts a DHT11 measurement every 2.5 seconds, decides whether the LED should be on, drives D9, waits 500 ms for the light sensor to settle, and prints one JSON record per sample. The decision logic lives in [`decide.go`](/iot-handbook/examples/what-is-an-iot-system/control/decide.go), with no hardware imports, so standard Go can test it on a laptop:
+An identifier answers “which entity?” Authentication establishes evidence of identity under a mechanism. Authorization determines which operations that identity may perform. Keeping these concepts separate matters when equipment is installed, replaced, transferred, or retired.
 
-```go
-func Decide(mode Mode, reading Reading, thresholdDeciC int16) Decision {
-    if mode == ForceOn { return Decision{true, "forced_on"} }
-    if mode == ForceOff { return Decision{false, "forced_off"} }
-    if !reading.Valid { return Decision{false, "invalid_reading"} }
-    if reading.TempDeciC >= thresholdDeciC {
-        return Decision{true, "at_or_above_threshold"}
-    }
-    return Decision{false, "below_threshold"}
-}
-```
+NISTIR 8259A's **2020 device cybersecurity core baseline** organizes six capability areas: device identification, device configuration, data protection, logical access to interfaces, software update, and cybersecurity state awareness. The baseline is a starting point for requirements, rather than a guarantee that any device offering six labeled features is secure. Later NIST catalogues may expand the taxonomy; the six-area list here is specifically the 2020 document. [NISTIR 8259A, §2 and Table 1](https://doi.org/10.6028/NIST.IR.8259A).
 
-Temperature is stored in tenths of a degree: `260` means 26.0 °C, matching the driver's integer units. A failed sensor read is not evidence that the room is cool. The function falls back to the benign output and records *why*, so an analyst cannot mistake `invalid_reading` for `below_threshold`. The firmware consumes a temperature only after the current measurement succeeds; the driver's retained value is not accepted after failure.
+Follow a device through a conceptual lifecycle: selection, onboarding, operation, maintenance, and retirement. This sequence is a teaching organization. At selection, establish whether the equipment can meet the required support and security needs. At onboarding, establish identity and authorized configuration. During operation, protect interfaces and monitor relevant state. During maintenance, manage changes and updates. At retirement, resolve credentials, stored information, and any remaining service relationships.
 
-TinyGo's Mega ADC returns a left-aligned 16-bit value with 10-bit precision. The firmware shifts it right by six before reporting `light_raw`, preserving the lab's 0–1023 calibration scale. Go tests cover decisions, failure/recovery, serial commands and JSON encoding; a target build checks the hardware APIs. Neither establishes physical behaviour. See lab.md for the exact versions and build result. The host analysis utility remains Python.
+A system with protected remote APIs can still have an exposed local configuration interface. A device with signed updates can still be operated under a weak authorization policy. Security is a relationship among capabilities, configuration, people, and consequences.
 
-Each record carries the whole belief chain for one sample:
+Privacy also extends beyond personal names. A stream of room-occupancy observations may reveal activity patterns. The data's value to an application does not settle who should have access, how long it should be retained, or which uses are permitted. Those decisions require an explicit purpose and policy.
 
-```json
-{"seq":12,"t_ms":30017,"mode":"auto","reading":"ok","temp_c":26.3,"threshold_c":26.0,
- "reason":"at_or_above_threshold","commanded":1,"pin_readback":1,"light_raw":731}
-```
+NISTIR 8228 discusses how IoT's physical interactions and management differences affect cybersecurity and privacy risk. Protecting information and preserving physical operation can require different considerations from conventional IT. [NISTIR 8228, §3](https://doi.org/10.6028/NIST.IR.8228).
 
-*Illustrative record showing the format, not a measurement.*
+For this introductory chapter, learn to identify the boundary and consequence. A full safety assessment, industrial security profile, radio approval, or sector-specific regulatory assessment requires the relevant domain standards and expertise. None is established by calling a design “IoT” or by drawing a layered architecture.
 
-**Three observers.** Pin readback (cheap, close to the command path), the light sensor (instrumented, physically independent), and the operator (a person writing down what they see against the sequence number). The analysis script [`analyze_run.py`](/iot-handbook/examples/what-is-an-iot-system/analyze_run.py) compares each record's command with the best available observation and classifies it as `effect_consistent`, `effect_contradicted`, `effect_unknown` or `pin_disagrees_with_command`.
+## 9. Study Questions and Worked Answers
 
-### Phase 1: calibrate the observer
+Attempt the questions before reading the answers. They assess conceptual reasoning and require no hardware.
 
-Before the light sensor can testify, we check that it can tell lit from dark at all. Force the LED off for at least five samples, then on for at least five. The calibration step refuses to proceed unless the lowest lit reading exceeds the highest dark reading by at least 50 ADC counts. With the Mega's 10-bit converter on a 5 V reference, one count is about 4.9 mV ([ATmega2560 datasheet and TinyGo machine API](#sources)), so 50 counts is about 0.24 V. The threshold is fixed before the run, in the script and in lab.md; we do not move it after looking at the data.
+### Questions
 
-If the sensor cannot separate the two states, that is a result: the lab falls back to operator observation and says so.
+1. A monitor sends measurements to a local application over a private network. It has no actuator and no cloud account. Is it an IoT system under this chapter's working definition? Which details would matter under a different definition?
+2. A gateway translates a device protocol, stores observations, and runs alarm logic. Does this contradict a four-layer reference model?
+3. A temperature observation was measured at 09:15:00, received at 09:15:08, and evaluated at 09:15:12. Assume synchronized clocks and a maximum permitted age of 10 seconds. Can it support the current-condition decision?
+4. A valve command was delivered with MQTT QoS 2. The application reports success. What additional question must you answer before concluding that the intended flow occurred?
+5. Two monitors publish the same field name through the same protocol. What information is still needed before their readings can be compared?
+6. An application must notify a remote operator within 30 seconds of a condition change. A gateway buffers every observation during an hour-long remote outage. Has the requirement been met?
+7. A connected controller continues a local feedback loop while its remote application is unavailable. Which responsibilities must still be distinguished?
+8. A building monitor is replaced, and the old device is retired. What responsibilities must be resolved for identity, permissions, software support, and stored information?
 
-### Phase 2: baseline
+### Worked answers
 
-Run in automatic mode, with the threshold set about 1.5 °C above the room's reading. Warm the DHT11 gently with a fingertip until the reading crosses the threshold, then let it cool.
+**1.** Yes. It combines physical sensing, networking, and an application. Actuation and cloud hosting are optional. When using another definition, check its scope for physical and virtual things, device capabilities, and the role of communication. A vocabulary choice should be explicit rather than inferred from a brand or topology.
 
-| Prediction (written before the run) | Observed |
+**2.** No. Functional layers are not machine boundaries. One deployment component can realize communication, service-support, and application functions. The deployment still needs clear interfaces and responsibilities among those functions.
+
+**3.** The observation is 12 seconds old at evaluation, exceeding the assumed 10-second limit. Its four seconds since arrival do not determine measurement age. It may still be useful as historical data. The answer changes only if the actual requirement or timestamp assumptions change.
+
+**4.** Ask what “success” means in that application's contract and what evidence concerns the physical process. Message delivery and an application response do not, by themselves, establish flow. Valve position can support one claim; a relevant flow observation supports another. Freshness and measurement limitations still apply.
+
+**5.** Establish the quantity, unit, identity, measurement location, measurement time, and relevant quality information. Matching transport and syntax do not establish matching meaning. Even matching units do not make two different physical locations interchangeable.
+
+**6.** No. Buffering can preserve history, but the stated remote notification deadline was missed. The architecture needs a feasible timely notification path or a revised requirement. Replay cannot make the original notification timely.
+
+**7.** Distinguish immediate control decisions, remotely supplied goals, authority to change them, reporting, and recovery after reconnection. Determine whether the controller can continue meeting its local contract and how old remote commands or conflicting state will be handled. Remote outage tolerance is a claim about defined behavior, rather than an automatic property of local placement.
+
+**8.** Establish the replacement device’s identity and authorize it for its intended role; do not assume the old device’s permissions transfer automatically. Resolve the old device’s credentials and service access so retirement removes its authority to participate. Confirm who will configure, update, and monitor the replacement over its support life. Decide what to retain, transfer, or erase from the old device and associated services under the data policy. Physical replacement, authorization, software support, and information retention are separate lifecycle responsibilities.
+
+## 10. Glossary
+
+| Term | Working meaning in this chapter |
 |---|---|
-| LED is commanded on in the same sample in which the reading first reaches the threshold | *Not yet run* |
-| Every `commanded:1` record has `pin_readback:1` | *Not yet run* |
-| No record is `effect_contradicted`; at most one `effect_unknown` per on/off transition | *Not yet run* |
-| Operator notes agree with the light sensor on every sampled record | *Not yet run* |
+| Thing | Entity of interest; physical or virtual depending on the cited vocabulary |
+| IoT device | Equipment within the scope of the selected device definition |
+| IoT system | A system combining networked devices that sense or affect the physical world with the software, communications, and operational responsibilities needed to deliver an application |
+| Sensor | Component producing information about a physical quantity or condition |
+| Actuator | Component changing a physical condition |
+| Firmware | Software operating close to device hardware |
+| Telemetry | Communication of observations or device information |
+| Gateway | Component mediating an interface between participants or technologies |
+| Edge computing | Processing placed near the source or use of information |
+| Reference model | Abstract concepts and relationships for reasoning |
+| Reference architecture | Architectural vocabulary and reusable organization |
+| Deployment architecture | Assignment of functions to actual equipment and services |
+| Feedback | Information used to assess state or response and, in a closed loop, influence control |
+| Freshness | Whether information's age is acceptable for a stated use |
+| Interoperability | Ability to exchange and correctly use information under agreed contracts |
+| Authentication | Establishing evidence of identity under a mechanism |
+| Authorization | Determining which operations an identity may perform |
+| Lifecycle | Responsibilities spanning selection, onboarding, use, maintenance, and retirement |
 
-An above-range reading is `out_of_calibration`, not proof that the LED is on. When a recorded operator observation disagrees with an in-band sensor observation, analysis retains both and returns `effect_unknown`.
+## 11. What the Foundation Lets You Explain
 
-The allowance for one unknown per transition is there because a photoresistor responds far more slowly than an LED; if the 500 ms wait is too short for the actual part, transitions will read *ambiguous*. Expect a second wrinkle too: with a single threshold and a noisy reading, the LED may flicker on and off while the temperature sits near the threshold. That is not a fault in the lab; it is the problem hysteresis solves, which introduces separate turn-on and turn-off thresholds.
+An IoT system is understood through its purpose, physical and digital participants, functional responsibilities, deployment, and contracts. A component list alone does not explain how observations become useful information or how requested operations relate to physical outcomes.
 
-### Phase 3: fault F1 — the wiring no longer matches the pin map
+Reference models provide vocabulary. Deployment decisions allocate work under constraints. Data and interaction contracts establish meaning. Reliability, security, and lifecycle reasoning establish what must hold as equipment and communication conditions change.
 
-This is the fan incident, made benign. Unplug USB, move the LED's jumper from D9 to D10, a pin the firmware never drives, and reconnect. The board reboots into automatic mode, so force the LED on again.
+When studying an unfamiliar system, begin with five questions: What is its purpose? What does it observe or affect? Which functions run where? What do its exchanges establish? Who owns its behavior during failure and change? The answers produce a useful architecture before selecting a platform.
 
-| Prediction | Observed |
-|---|---|
-| Firmware continues to report `commanded:1` | *Not yet run* |
-| `pin_readback` stays 1: D9 is still high; it is just connected to nothing | *Not yet run* |
-| Light sensor reads in the dark band; analysis reports `effect_contradicted` | *Not yet run* |
-| Operator sees the LED dark | *Not yet run* |
+## Further Reading
 
-*What would falsify the prediction:* `pin_readback` reading 0 would mean D9 is not at the level the firmware set, which our model says should not happen with nothing attached. Any glow from the LED would mean something is supplying current through D10. A high-impedance input cannot do that, but a pin with its internal pull-up enabled can light an LED dimly ([Arduino digital pins](#sources)); a glow would therefore tell us D10 is not in the state we assumed. Either outcome is a result to record, not a run to discard.
+Read these sources according to their roles. A recommendation, an Informational RFC, a protocol specification, and a technical baseline do not have identical normative status.
 
-### Phase 4: fault F2 — the observer goes blind
-
-Restore the LED to D9. With the LED forced on, cover the light sensor with an opaque cap.
-
-| Prediction | Observed |
-|---|---|
-| `commanded:1`, `pin_readback:1`, LED visibly lit to the operator | *Not yet run* |
-| In a lit room, the light reading falls *below* the calibrated dark band | *Not yet run* |
-| Analysis reports `effect_unknown` (observer blind), **not** `effect_contradicted` | *Not yet run* |
-
-*What would falsify the prediction:* a capped reading inside the dark band. That happens if the room is so dim that "LED off" and "covered" look alike, and it would mean this observer cannot detect its own blindness under these conditions — a limitation to report.
-
-This fault tests the observer, not the LED. A naive check — "light sensor says dark, so the LED is off" — would report a failure that did not happen. Because calibration recorded what "LED off in this room" looks like, a reading darker than that is evidence that the observer itself is compromised. The correct output is *unknown*. An IoT system that cannot distinguish "the effect failed" from "I can no longer see the effect" will either raise false alarms or, worse, teach its operators to ignore them.
-
-### Phase 5: recovery
-
-Uncover the sensor, confirm the LED is on D9, return to automatic mode, and run until at least five consecutive records are `effect_consistent`. Then force the LED off and unplug USB, which removes all power from the rig. That is the physically accessible stop for this lab.
-
-### What the lab can and cannot show
-
-When run, this lab will show — on one named rig, under one room's lighting — that a command record and a pin readback can both stay true while the effect disappears, and that a calibrated independent observer catches it. It will be an operator-observed and instrumented physical run with a small number of repeats. It cannot show that the method is reliable across rigs, that the light sensor is accurate in any absolute sense, or anything about systems with networks between the parts. Each would require a separately scoped experiment and more evidence.
-
-## Safety, Security and Stale Data From Day One
-
-The lab is low-energy by design: a 5 V USB-powered board, an LED, a sensor. That is a choice, not a limitation to work around.
-
-- **A benign output first.** An LED proves an optical response only. It does not qualify a motor, heater or pump. Do not swap in a mains relay because the code "already works": nothing in this chapter has established the safety of a load that can hurt someone.
-- **A physical stop you can reach.** Unplugging USB removes all power. Know where it is before you start. Software stops come later and never replace this one.
-- **Rated wiring.** Every part has limits; the resistor calculation above exists so the pin stays far from its 40 mA absolute maximum. Change wiring with USB unplugged.
-- **Trust boundaries.** The serial port accepts single-character commands from anything that opens it. That is acceptable for a laptop on your desk and unacceptable on a network. Treat every input that crosses into the device as untrusted. A networked command path needs an authenticated device identity and authorization.
-- **No secrets in firmware.** This lab has none. When later chapters add network credentials, they stay out of source files and evidence logs.
-- **Stale data.** A reading is a statement about the past. The TinyGo DHT driver retains the last successful value; its explicit measurement API does not enforce the two-second interval. Our firmware starts measurements 2.5 seconds apart and checks each attempt before consuming a value (drivers v0.36.0). The driver also masks interrupts during pulse acquisition, so serial commands can be delayed or lost; `0` is a convenient control, while unplugging USB is the immediate stop. A decision made on a stale reading is a decision about a room that may no longer exist.
-- **Acknowledgement is not effect.** The serial log confirms that each record was sent and received. None of those records turned on an LED.
-
-## Where Tamoz and Agentic Stream Fit
-
-*Optional. Readers can skip this section without losing the chapter's argument.*
-
-The sensor study connects this kind of rig to two research products: Agentic Stream, which turns events into deterministic situations, and Tamoz, which orchestrates supervisory agents. Here we examine one boundary in that architecture.
-
-Agentic Stream records whether a physical transition has complete evidence. Its check, as of commit `be37f6b`, is:
-
-```go
-func PhysicalEvidenceComplete(details map[string]any) bool {
-	if !claimsComplete(details) {
-		return false
-	}
-	source, _ := details["source"].(string)
-	digest, _ := details["evidence_digest"].(string)
-	_, err := canonicaljson.DecodeDigest(digest)
-	return source != "" && err == nil
-}
-```
-
-This verifies the *shape* of the evidence — a completeness claim, a named source, a well-formed digest. It cannot verify that the evidence is true; no code can, from inside the software row of Figure 1. That is a correct design, not a gap: the function's job is to refuse transitions without evidence, and the observation's job is to be caused by the effect. A system is only as good as the observer behind the digest. The same applies to an agent: a supervisory decision that was admitted, logged and executed is still a belief until something in the physical row says otherwise.
-
-## Design Principles
-
-1. **Write down the belief.** For every effect your system causes, name the record that represents the software's belief about it, and what wrote that record.
-2. **Observe off the command path.** Establish an effect only with an observation caused by the effect. Say which failures the observer shares with the command path.
-3. **Make unknown a first-class answer.** "Not observed", "observer blind" and "reading invalid" are distinct from "off", "dark" and "cool". Collapsing them produces confident wrong answers.
-4. **Verify wiring against the pin map.** The pin map is a claim. A continuity check or a deliberate one-pin test is the observation that confirms it.
-5. **Calibrate before you trust.** An observer that has not been shown to separate the states you care about is not yet an observer.
-6. **Design faults that discriminate.** Before running a diagnostic, write down what each hypothesis predicts. If they all predict the same outcome, the test cannot help.
-7. **Start benign.** Prove the evidence chain on a load that cannot hurt anyone, then earn the right to drive a bigger one.
-
-## Transfer Exercise
-
-A team runs a greenhouse. A controller reads soil moisture every 10 minutes and, when it drops below a threshold, publishes "open valve 3 for 60 seconds" to a broker. A gateway near the valves receives it, energizes a solenoid valve through a relay, and publishes `{"valve":3,"state":"open"}`. A dashboard shows the valve open for 60 seconds. One week, bed 3's plants wilt, although the dashboard shows the valve opening twice a day.
-
-1. Draw the loop as in Figure 1. Mark the sensing, actuation and observation crossings.
-2. List every record in the chain and, for each, what it does and does not establish.
-3. Propose two hypotheses for the wilting and one observation that distinguishes them.
-4. Propose the cheapest observation that would establish water actually flowed.
-
-### Worked answer
-
-**1.** Sensing: soil moisture probe → controller. Actuation: gateway → relay → solenoid → valve → water. Observation: *there is none*. The arrow back from physics to software that Figure 1 requires is missing; the dashboard's "open" comes from the gateway's own state.
-
-**2.** The broker acknowledgement establishes delivery to the broker. The gateway's `state: open` establishes that the gateway believes it energized the relay, like the fan's `energized: true`. The dashboard establishes that the dashboard received the gateway's message. None was caused by water moving. The moisture reading is the only physical record, and it is upstream of the action.
-
-**3.** Hypothesis A: the valve opens but water does not reach bed 3 (blocked line, closed manual valve, low pressure). Hypothesis B: the relay is wired to the wrong solenoid, so a different bed is being watered. Both predict that bed 3's moisture does not rise after each "open". They differ on the other beds: B predicts a neighbouring bed's moisture rises after each valve-3 command; A does not. Comparing all beds' moisture traces against valve-3 command times distinguishes them without new hardware. A continuity or one-valve-at-a-time test then confirms B directly.
-
-**4.** A flow sensor on bed 3's line is the direct observer. Cheaper, and good enough to start: bed 3's own moisture reading 20–30 minutes after each opening, compared with before. It is slow and indirect (moisture depends on soil and weather), so it cannot say *when* water flowed, but it is caused by water arriving, which no current record is.
-
-## Misconceptions
-
-**"If the protocol guarantees delivery, the command was carried out."** Delivery guarantees are about messages between endpoints. Carrying out a command is the receiver's behaviour, and the effect is the world's. MQTT and CoAP delivery semantics must be assessed separately from the physical effect.
-
-**"Reading the pin back proves the output works."** It proves the pin is at a logic level. The fan incident's D6 and D7 would have read back correctly while driving nothing.
-
-**"If the software shows no error, the hardware is fine."** The fan rig had no errors. Software can only report the failures it can sense, and it had no sensor on the shaft.
-
-**"More logging would have caught the fan fault."** More logs from the same path repeat the same belief. Catching it needed one observation from a different path.
-
-**"The diagnostic sketch bypassed the firmware, so it tested the hardware."** It bypassed the governance code and kept the pin map. A bypass tests only what it does not share.
-
-## Summary
-
-An IoT system holds beliefs about physical state it cannot read directly. Its records — decisions, commands, acknowledgements, reported states, pin readbacks — each establish less than they appear to, and the useful question for every record is what caused it to be written. An effect is established only by an observation caused by the effect, travelling off the command path, from an observer that has been calibrated and can say "unknown".
-
-The fan that reported `energized: true` for two days was a correct program in a wrongly wired system. The records that misled were all true. The test called decisive shared the fault it was meant to find. The observation that ended it — a motor touched to its supply — was the first one that could tell the hypotheses apart.
-
-The next question follows directly. We have treated the DHT11's 26.3 °C as a reading to compare against a threshold. But what does a sensor actually measure, how wrong can it be, and how would you know? That question concerns the sensing arrow in our model.
-
-## Glossary
-
-- **Absolute maximum rating:** a stress limit beyond which a part may be permanently damaged; not an operating target.
-- **Actuation:** software causing a physical change, through an output pin and usually a driver.
-- **Belief:** the software's current record of a physical state; always derived, possibly stale or wrong.
-- **Effect:** the physical change a command was meant to cause.
-- **Floating input:** an input pin with nothing driving it; its reading is undefined.
-- **Forward voltage (V_f):** the roughly constant voltage across a conducting LED or diode.
-- **Ground:** the reference point voltages are measured against; communicating circuits must share it.
-- **Observation:** a record caused by the effect itself, via a path separate from the command.
-- **Ohm's law:** *V = I × R* for a resistor.
-- **Pin map:** the firmware's declaration of which pin does what; a claim about the wiring, not a measurement of it.
-- **Pin readback:** reading the logic level of an output pin; evidence about the pin, not about the load.
-
-## Sources
-
-Material claims and their status are recorded in [claims.md](/iot-handbook/examples/what-is-an-iot-system/claims.md); full source records are in [sources.md](/iot-handbook/examples/what-is-an-iot-system/sources.md).
-
-- **ATmega2560 datasheet:** Atmel, *ATmega640/V-1280/V-1281/V-2560/V-2561/V datasheet*, 2549Q–AVR–02/2014. §13.2.4 (reading the pin value); Electrical Characteristics (40.0 mA absolute maximum per I/O pin; V_OH ≥ 4.2 V at I_OH = −20 mA, V_CC = 5 V). [PDF](https://ww1.microchip.com/downloads/en/devicedoc/atmel-2549-8-bit-avr-microcontroller-atmega640-1280-1281-2560-2561_datasheet.pdf)
-- **TI L293D:** Texas Instruments, *L293x Quadruple Half-H Drivers*, SLRS008D, revised January 2016. Table 1 function table; VCC1/VCC2 description. [PDF](https://www.ti.com/lit/ds/symlink/l293d.pdf)
-- **Arduino digital pins:** Arduino, *Digital Pins*, last revision 02/09/2026. [docs.arduino.cc](https://docs.arduino.cc/learn/microcontrollers/digital-pins/)
-- **TinyGo Mega API:** `Pin.Set`, `Pin.Get`, `ADC.Get`; v0.42.0 machine implementation inspected 2026-10-08. [tinygo.org](https://tinygo.org/docs/reference/microcontrollers/machine/arduino-mega2560/)
-- **NIST IoT device:** network interface plus a sensor or actuator; glossary entry referring to NISTIR 8425, accessed 2026-10-08. [csrc.nist.gov](https://csrc.nist.gov/glossary/term/iot_device)
-- **TinyGo DHT driver v0.36.0:** explicit measurement API, retained values and interrupt masking; source inspected 2026-10-08. [upstream source](https://github.com/tinygo-org/drivers/tree/v0.36.0/dht)
-- **Sensor study:** real-world-sensor, round-008 execution report and Round 2 hardware inventory, working tree at `6f523d4` (dirty); report SHA-256 `8d167169…ebf790b`.
-- **Agentic Stream:** `internal/authority/internal/domain/safety.go` at `be37f6b`, inspected 2026-10-08.
+- [ITU-T Y.4000/Y.2060: Overview of the Internet of things](https://www.itu.int/rec/T-REC-Y.2060-201206-I/en), June 2012; renumbered in 2016. Study §§3 and 8 for definitions and the functional model.
+- [ISO/IEC 20924:2024: IoT and digital twin vocabulary](https://www.iso.org/standard/88799.html), edition 3. Official catalogue and scope; full definitions are not reproduced here.
+- [ISO/IEC 30141:2024: IoT reference architecture](https://www.iso.org/standard/88800.html), edition 2. Official catalogue and scope; detailed clauses require the standard itself.
+- [NIST SP 800-183: Networks of Things](https://doi.org/10.6028/NIST.SP.800-183), July 2016. Study §2 as a complementary analytical vocabulary.
+- [W3C WoT Architecture 1.1](https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/), Recommendation, 5 December 2023. Study the interaction model and deployment examples alongside its [errata](https://w3c.github.io/wot-architecture/errata11.html).
+- [RFC 7228: Terminology for Constrained-Node Networks](https://www.rfc-editor.org/info/rfc7228/), Informational, May 2014. Study device, network, and energy constraints.
+- [RFC 8428: Sensor Measurement Lists](https://www.rfc-editor.org/info/rfc8428/), August 2018. Study measurement metadata and time representation; consult the status page for updates and errata.
+- [OASIS MQTT 5.0](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html), OASIS Standard, 7 March 2019; and [RFC 7252: CoAP](https://www.rfc-editor.org/info/rfc7252/), June 2014. Study interaction and delivery semantics separately from physical-effect claims; consult RFC status for extensions and errata.
+- [NISTIR 8259A](https://doi.org/10.6028/NIST.IR.8259A), May 2020; and [NISTIR 8228](https://doi.org/10.6028/NIST.IR.8228), June 2019. Study capability baselines and IoT risk considerations as guidance for scoped requirements.
 
 ## Revision History
 
 | Version | Date | Change |
 |---|---|---|
-| 0.1 | 2026-10-08 | First draft. Lab procedure, firmware, analysis code and figures prepared; lab not run; not independently reviewed. |
-| 0.2 | 2026-10-08 | Convert embedded examples to TinyGo and host Go tests; remove unwritten-chapter navigation and centralize deferred links. Correct IoT scope, run-bound observations, calibration limits and lab commands from round 2. Physical lab and independent review remain pending. |
-| 0.3 | 2026-10-08 | Redesign control and fan evidence diagrams; add whole-system map, compact variants and local illustrative motion preview using the existing runtime. Physical evidence remains pending. |
-| 0.4 | 2026-10-08 | Add Figure 3 (test discrimination) and its explanation; replace the abstract animation with a physical bench scene; add fan-incident and test-elimination animations. Fix the closing temperature value and a pronoun slip. Physical evidence and independent review remain pending. |
+| 1.0 | 2026-10-12 | Published independent, standards-grounded study material after author approval and three review lenses; aligned the glossary, added a lifecycle exercise, and tightened repeated scope caveats |

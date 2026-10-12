@@ -373,12 +373,13 @@ def motion_assets(body_html: str) -> tuple[str, str]:
     if missing:
         raise ValueError(f"no motion scene registers: {', '.join(missing)}")
     files = list(dict.fromkeys(registry[n] for n in names))
-    head = f'\n  <link rel="stylesheet" href="/assets/css/motion.css?v={MOTION_VERSION}" />'
-    scripts = [f'/assets/js/motion/core.js?v={MOTION_VERSION}'] + [
-        f"/assets/js/motion/{name}?v={MOTION_VERSION}" for name in files
+    motion_version = "20261012" if any(name.startswith("iot-") for name in names) else MOTION_VERSION
+    head = f'\n  <link rel="stylesheet" href="/assets/css/motion.css?v={motion_version}" />'
+    scripts = [f'/assets/js/motion/core.js?v={motion_version}'] + [
+        f"/assets/js/motion/{name}?v={motion_version}" for name in files
     ]
     if any(name.startswith("iot-") for name in names):
-        scripts.append("/assets/js/iot-handbook.js")
+        scripts.append("/assets/js/iot-handbook.js?v=" + motion_version)
     body = "".join(f'\n  <script src="{src}" defer></script>' for src in scripts)
     return head, body
 

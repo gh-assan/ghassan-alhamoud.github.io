@@ -522,7 +522,7 @@
 .iot-diagram { margin: 32px 0; }
 .iot-diagram figcaption { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-top: 12px; }
 .iot-scene { container-type: inline-size; }
-.iot-scene > .scene__stage { aspect-ratio: auto; height: 440px; }
+.iot-scene > .scene__stage { width: 100%; aspect-ratio: auto; height: 440px; }
 .iot-scene .scene__stage > img { object-fit: contain; }
 @container (width < 680px) {
   .iot-scene > .scene__stage { height: 600px; }
@@ -550,3 +550,10 @@ html:not(.js) .iot-scenario { display: none; }
 }
 .iot-scene .scene__stage > picture { display: block; width: 100%; height: 100%; }
 .iot-scene .scene__stage > picture img { display: block; margin: 0; width: 100%; height: 100%; object-fit: contain; }
+
+/* Conceptual study controls use the existing player and site theme. */
+.iot-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin: 24px 0 16px; }
+.iot-controls .iot-scenario { margin: 0; }
+.iot-reset { font: inherit; font-size: 14px; min-height: 44px; padding: 10px 16px; color: var(--text-primary); background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-lg); cursor: pointer; }
+.iot-reset:focus-visible, .iot-scenario select:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+html:not(.js) .iot-controls { display: none; }

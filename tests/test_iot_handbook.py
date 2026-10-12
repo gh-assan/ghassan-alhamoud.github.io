@@ -16,6 +16,18 @@ def load_script(name):
 
 
 class IoTHandbookTests(unittest.TestCase):
+    def test_mqtt_term_allowed_but_subscription_cta_still_rejected(self):
+        validator = load_script('validate-site')
+        page = ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html'
+        for text, expected in [('MQTT publish/subscribe messaging', True),
+                               ('MQTT publish/subscribe. Subscribe to my newsletter', False)]:
+            validator.results.clear()
+            with patch.object(validator, 'published_files', return_value=[page]), \
+                 patch.object(validator, 'code_files', return_value=[]), \
+                 patch.object(validator, 'read', return_value=text):
+                validator.check_forbidden_surfaces()
+            self.assertEqual(expected, validator.results[-1][1])
+
     def test_iot_catalog_and_public_pages(self):
         validator = load_script('validate-handbook')
         directory = ROOT / 'iot-handbook'
@@ -26,7 +38,7 @@ class IoTHandbookTests(unittest.TestCase):
 
     def test_scenes_load_with_extra_classes_and_different_attribute_order(self):
         builder = load_script('build-handbook')
-        head, body = builder.motion_assets('<figure id="bench" class="scene iot-scene" data-scene="iot-evidence"></figure><figure data-scene="iot-fan" class="scene"></figure>')
+        head, body = builder.motion_assets('<figure id="bench" class="scene iot-scene" data-scene="iot-study-flow"></figure><figure data-scene="iot-study-freshness" class="scene"></figure>')
         self.assertIn('/assets/css/motion.css', head)
         self.assertEqual(1, body.count('/assets/js/motion/scene-iot.js'))
         self.assertLess(body.index('core.js'), body.index('scene-iot.js'))
@@ -48,13 +60,23 @@ class IoTHandbookTests(unittest.TestCase):
         self.assertEqual('HDBK', builder.COLLECTION['code'])
         self.assertEqual('AI-Native Engineering Handbook', builder.COLLECTION['shortTitle'])
 
-    def test_chapter_preserves_draft_and_exposes_all_three_scenes(self):
+    def test_chapter_publishes_independent_study_material(self):
         page = (ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html').read_text()
-        for scene in ('iot-evidence', 'iot-fan', 'iot-tests'):
+        for scene in ('iot-study-flow', 'iot-study-freshness'):
             self.assertIn(f'data-scene="{scene}"', page)
-        for text in ('not been run', 'lab-pending', 'review-pending', 'Comfort with Go code.', 'id="iot-scenario"', 'on-this-page'):
+        for text in ('author-approved for publication', 'id="iot-flow-kind"', 'on-this-page', 'device is retired'):
             self.assertIn(text, page)
-        self.assertEqual(4, page.count('class="iot-diagram"'))
+        self.assertEqual(3, page.count('class="iot-diagram"'))
         self.assertNotIn('/Users/', page)
         self.assertIn('/assets/js/motion/scene-iot.js', page)
         self.assertIn('/iot-handbook/', (ROOT / 'handbook/index.html').read_text())
+
+    def test_private_experiment_is_excluded_from_deployable_collection(self):
+        self.assertFalse((ROOT / 'iot-handbook/examples').exists())
+        for file in (ROOT / 'iot-handbook').rglob('*'):
+            if file.suffix not in ('.html', '.md', '.json'):
+                continue
+            text = file.read_text()
+            for private in ('Tamoz', 'Agentic Stream', 'DHT11', 'L293D', 'TinyGo', 'iot-fan', 'iot-evidence', 'lab-pending'):
+                self.assertNotIn(private, text, file.name)
+        self.assertEqual(6, len(list((ROOT / 'images/iot-handbook/IOT-001').glob('*.svg'))))

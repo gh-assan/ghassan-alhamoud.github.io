@@ -10,56 +10,27 @@ const base = process.env.IOT_VISUAL_URL || 'http://127.0.0.1:7110';
 // Causal invariants are checked on the pure state functions before drawing.
 const sandbox = {window: {}};
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../assets/js/motion/scene-iot.js'), 'utf8'), sandbox);
-const V = sandbox.window.IoTVisual;
-
-for (let t = 0; t < 18; t += 0.125) {
-  const runs = ['baseline', 'wiring', 'blind'].map(sc => [sc, V.benchAt(t, sc)]);
-  for (const [sc, s] of runs) {
-    if (s.current) assert(s.pin && s.command, 'current preceded its drive');
-    if (s.pin) assert(s.command, 'pin preceded command');
-    if (s.light) assert(s.lit, 'light without a lit LED');
-    if (s.verdict !== 'pending') assert.notEqual(s.observation, 'pending', 'verdict without observation');
-    if (sc === 'wiring') assert.equal(s.lit, false, 'wrong wire lit the LED');
-    if (sc === 'blind') assert.equal(s.reachesSensor, false, 'light reached a covered sensor');
-    if (sc === 'blind') assert.notEqual(s.verdict, 'effect_consistent', 'blindness established success');
-  }
-  // The software records are identical in every case: that is the lesson.
-  for (const [, s] of runs) assert.deepEqual([s.command, s.pin], [runs[0][1].command, runs[0][1].pin]);
+const V = sandbox.window.IoTStudy;
+for (let t = 0; t <= 18; t += 0.1) {
+  const v = V.flowAt(t, 'actuating');
+  assert(!v.received || v.measured, 'telemetry before measurement');
+  assert(!v.requested || v.received, 'request before telemetry in this model');
+  assert(!v.applied || v.requested, 'operation before request');
+  assert(!v.observed || v.applied, 'feedback before operation');
+  const monitoring = V.flowAt(t, 'sensing');
+  assert(!monitoring.requested && !monitoring.applied && !monitoring.observed, 'monitoring requires actuation');
 }
-assert.equal(V.benchAt(13, 'baseline').verdict, 'effect_consistent');
-assert.equal(V.benchAt(13, 'wiring').verdict, 'effect_contradicted');
-assert.equal(V.benchAt(13, 'blind').verdict, 'effect_unknown');
-
-for (let t = 0; t < 34; t += 0.125) {
-  const s = V.fanAt(t);
-  if (s.spinning) assert(s.leadsOnSupply || s.inputsDriven, 'fan spun without supply or driven inputs');
-  if (s.inputsDriven) assert.equal(s.move, 1, 'inputs driven before jumpers reached D6/D7');
-  if (s.stage < 2) assert.equal(s.spinning, false, 'fan spun with jumpers on D4/D3');
-  if (s.saw) assert(s.u >= 5.4, 'observation before the stage played out');
-}
-assert.equal(V.fanAt(31).software, V.fanAt(7).software, 'stage 4 report must equal stage 1 report');
-assert.equal(V.fanAt(31).spinning, true);
-
-let prevAlive = V.CAUSES.length;
-for (let t = 0; t < 36; t += 0.125) {
-  const s = V.testsAt(t), alive = s.alive.filter(Boolean).length;
-  assert(alive <= prevAlive, 'a ruled-out cause came back');
-  prevAlive = alive;
-  s.cols.forEach((c, j) => {
-    if (c.removed.length) assert(c.observed && V.TESTS[j].ran, 'removed without a run observation');
-    if (V.TESTS[j].confirm !== undefined) assert.equal(c.removed.length, 0, 'a confirming test removed causes');
-  });
-  if (s.confirmed >= 0) assert(s.cols[3].observed, 'confirmed before the pin-map comparison');
-}
-const end = V.testsAt(35);
-assert.deepEqual([...end.alive], [false, false, false, false, false, true]);
-assert.deepEqual([...V.testsAt(10).alive], [false, false, true, true, true, true], 'bypass should remove exactly two');
+assert.equal(V.freshnessAt(5).usable, true);
+assert.equal(V.freshnessAt(5.1).usable, false);
+assert.equal(V.freshnessAt(9).age, 9, 'receipt reset measurement age');
+assert.equal(V.freshnessAt(9).received, true);
+assert.equal(V.freshnessAt(9).usable, false);
+assert.equal(V.freshnessAt(10).age, 10);
 
 // --------------------------------------------------------------- browser
 const SCENES = [
-  {name: 'iot-evidence', id: 'evidence-scene', times: [0, 2.5, 4.5, 6.5, 9, 11, 13], scenarios: ['baseline', 'wiring', 'blind']},
-  {name: 'iot-fan', id: 'fan-scene', times: [1, 3, 5, 7, 11, 15, 18, 21, 23, 25, 27, 31]},
-  {name: 'iot-tests', id: 'tests-scene', times: [1, 5, 7.5, 12, 14, 20, 24, 27.5, 30, 34]}
+  {name: 'iot-study-flow', id: 'iot-flow-scene', times: [0, 2, 4.9, 5, 8, 11, 14, 17], scenarios: ['sensing', 'actuating']},
+  {name: 'iot-study-freshness', id: 'iot-freshness-scene', times: [0, 4, 5, 5.1, 8.9, 9, 10, 13]}
 ];
 
 (async () => {
@@ -91,7 +62,7 @@ const SCENES = [
       };
     });
 
-    const files = ['fig-0-iot-system-map', 'fig-1-belief-and-physics', 'fig-2-fan-incident-timeline', 'fig-3-test-discrimination']
+    const files = ['fig-1-reference-model', 'fig-2-flows', 'fig-3-freshness']
       .flatMap(n => [n + '.svg', n + '-compact.svg']);
     for (const file of files) {
       await page.goto(base + '/images/iot-handbook/IOT-001/' + file);
@@ -120,12 +91,12 @@ const SCENES = [
       assert(initial.every(s => s.paused), 'autoplay at ' + width);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'horizontal page scroll at ' + width + ': ' + JSON.stringify(await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1).map(e => [e.tagName, e.className, e.getBoundingClientRect().right]).slice(0, 12))));
       if (qaDir && [375, 1200].includes(width)) {
-        for (let i = 0; i < 4; i++) await page.locator('.iot-diagram').nth(i).screenshot({path: path.join(qaDir, `diagram-${i}-${width}.png`)});
+        for (let i = 0; i < 3; i++) await page.locator('.iot-diagram').nth(i).screenshot({path: path.join(qaDir, `diagram-${i}-${width}.png`)});
       }
       for (const sc of SCENES) {
         await page.locator('#' + sc.id).scrollIntoViewIfNeeded();
         for (const scenario of sc.scenarios || [null]) {
-          if (scenario) await page.selectOption('#iot-scenario', scenario);
+          if (scenario) await page.selectOption('#iot-flow-kind', scenario);
           for (const time of sc.times) {
             await page.evaluate(([n, t]) => Motion.seek(n, t), [sc.name, time]);
             const res = await page.evaluate(id => {
@@ -180,7 +151,7 @@ const SCENES = [
       assert.equal(await toggle.getAttribute('aria-label'), 'Play animation', sc.name + ' keyboard pause');
     }
     await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
-    await page.evaluate(() => Motion.seek('iot-fan', 31));
+    await page.evaluate(() => Motion.seek('iot-study-flow', 16));
     assert.equal(await page.evaluate(() => Motion.lib.colors().dark), true);
     if (qaDir) for (const sc of SCENES) {
       await page.locator('#' + sc.id).scrollIntoViewIfNeeded();
@@ -189,17 +160,17 @@ const SCENES = [
     }
 
     // Off-screen and hidden-tab scenes do no work.
-    await page.locator('#fan-scene .scene__toggle').click();
+    await page.locator('#iot-flow-scene .scene__toggle').click();
     await page.evaluate(() => scrollTo(0, 0));
     await page.waitForTimeout(350);
-    const off0 = await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-fan').frames);
+    const off0 = await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-study-flow').frames);
     await page.waitForTimeout(350);
-    assert.equal(await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-fan').frames), off0, 'offscreen frames');
-    await page.locator('#fan-scene').scrollIntoViewIfNeeded();
+    assert.equal(await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-study-flow').frames), off0, 'offscreen frames');
+    await page.locator('#iot-flow-scene').scrollIntoViewIfNeeded();
     await page.evaluate(() => { Object.defineProperty(document, 'hidden', {configurable: true, get: () => true}); document.dispatchEvent(new Event('visibilitychange')); });
-    const hidden0 = await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-fan').frames);
+    const hidden0 = await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-study-flow').frames);
     await page.waitForTimeout(350);
-    assert.equal(await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-fan').frames), hidden0, 'hidden-tab frames');
+    assert.equal(await page.evaluate(() => Motion.stats().find(s => s.name === 'iot-study-flow').frames), hidden0, 'hidden-tab frames');
 
     const reduced = await browser.newPage({viewport: {width: 375, height: 900}, reducedMotion: 'reduce'});
     await reduced.goto(base + '/iot-handbook/chapter-01-what-is-an-iot-system.html');
@@ -217,8 +188,8 @@ const SCENES = [
     assert.equal(await nojs.locator('canvas').count(), 0);
     for (const sc of SCENES) assert(await nojs.locator(`#${sc.id} img`).isVisible(), sc.name + ' no-JS fallback');
 
-    await page.evaluate(() => { const s = document.getElementById('tests-scene').__motion; s.def.draw = () => { throw Error('intentional QA fault'); }; Motion.seek('iot-tests', 5); });
-    assert(await page.locator('#tests-scene.scene--failed img').isVisible(), 'renderer fault fallback');
+    await page.evaluate(() => { const s = document.getElementById('iot-freshness-scene').__motion; s.def.draw = () => { throw Error('intentional QA fault'); }; Motion.seek('iot-study-freshness', 5); });
+    assert(await page.locator('#iot-freshness-scene.scene--failed img').isVisible(), 'renderer fault fallback');
     const real = errors.filter(e => !e.includes('intentional QA fault'));
     assert.deepEqual(real, [], 'browser errors');
     console.log(JSON.stringify({browser: browser.version(), svgFiles: files.length, framesChecked,

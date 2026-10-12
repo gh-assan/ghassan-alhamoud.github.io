@@ -122,7 +122,9 @@ def check_forbidden_surfaces():
             continue
         text = read(f).lower()
         for pat in FORBIDDEN:
-            if pat.lower() in text:
+            # MQTT terminology describes messaging, rather than a signup CTA.
+            candidate = re.sub(r'\bpublish/subscribe\b', '', text) if pat == "subscribe" else text
+            if pat.lower() in candidate:
                 offenders.append(f"{f.relative_to(ROOT)}: '{pat}'")
     report("forbidden-surfaces", not offenders,
            "; ".join(offenders[:12]) + (" ..." if len(offenders) > 12 else ""))

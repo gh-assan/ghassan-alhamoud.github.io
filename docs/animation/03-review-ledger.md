@@ -238,3 +238,52 @@ also used to inspect the collection, chapter shell and LED playback.
 Final verification: all 35 website gates, 64 Python publication tests, 13 existing
 motion tests, Go control/wire tests and 15 lab-analysis tests pass. The first
 chapter remains a draft with physical lab and independent review pending.
+
+## 2026-10-12 — IOT-001 independent study revision
+
+This revision replaces the earlier draft's experiment-specific visuals and public
+lab files. The canonical source is original-repository commit `cf1b113`, chapter
+SHA-256 `2d35f0e61c5e34a7d555c5973a5c782b08f3fce8323f659b42b51ca68eb8ef44`.
+The source received three review lenses; minor teaching/style findings were
+resolved in the original before website integration. This is an integration
+self-review, not an additional independent technical review.
+
+Three diagram families now cover the ITU functional model, generic flows and
+observation freshness. All six wide/compact SVGs are byte-identical to the
+original. Two conceptual animations replace the three bench/investigation
+scenes. Their models match the original; only the runtime registration alias
+changes for website discovery. Chapter prose is preserved apart from figure
+wrappers, public asset paths, controls, and illustrative evidence captions.
+The former practical package remains only in the original internal archive.
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Sensing and optional actuation | 5 | 4 | 4 | 4 | 5 | 5 | 4.50 |
+| Observation freshness | 5 | 4 | 4 | 4 | 5 | 5 | 4.50 |
+
+These are editorial self-assessments, not measured learning outcomes. Static
+SVGs use the original dark palette; animated scenes follow the site theme.
+Both scenes start paused and retain static/text alternatives. The flow selector
+compares sensing only with optional actuation. Reset controls and keyboard play
+remain available. The freshness scene demonstrates that receipt does not reset
+observation age, under explicitly assumed synchronized clocks and an age limit.
+
+Installed Chrome 155.0.8059.39 checked six SVGs and 240 animation states at
+320, 375, 400, 508, 560, 600, 679, 680, 720 and 1200 px. Checks cover causal
+ordering, freshness boundaries, clipping/overlap, compact selection by actual
+reading-column width, keyboard operation, theme changes, reduced motion,
+no-JavaScript/error fallbacks and offscreen/hidden-tab idling. Minimum label
+size is 9.93 CSS px with border rounding (nominally 10 px). Five-second live
+samples averaged 0.508 ms for flow and 0.532 ms for freshness per draw. Review
+captures are temporary artifacts under `/private/tmp/iot-website-qa/` and can
+be regenerated using `IOT_QA_DIR`.
+
+Integration fixes: reserve full stage width; use evidence-caption markup;
+permit the MQTT compound `publish/subscribe` in the signup-surface validator
+while continuing to reject subscription CTAs, covered by regression tests.
+The sitemap modification date now matches the revised chapter.
+
+Verification: 66 website Python tests, 13 existing motion tests, all 35 site
+gates, and handbook/article/project validators pass. The original package's
+four contract tests also pass. The website PR remains open for the author's
+chapter and visual review. No merge or production deployment is authorized.
