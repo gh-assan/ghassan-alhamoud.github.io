@@ -1,38 +1,160 @@
-/* Generic teaching scenes. Times are illustrative, with no hardware connection. */
-(function(root){
-'use strict';
-function flowAt(t,kind){return {measured:t>=2,received:t>=5,requested:kind==='actuating'&&t>=8,applied:kind==='actuating'&&t>=11,observed:kind==='actuating'&&t>=14};}
-function freshnessAt(t){var now=Math.min(10,Math.max(0,t));return {age:now,received:now>=9,evaluated:now>=10,usable:now<=5};}
-root.IoTStudy={flowAt:flowAt,freshnessAt:freshnessAt};
-if(!root.Motion)return;
-var Motion=root.Motion,L=Motion.lib;
-function label(s,str,x,y,size,color,maxW){size=size||14; var words=str.split(' '),line='',lines=[]; var o={size:size,color:color||'text',align:'left'}; maxW=maxW||s.w-x-18; words.forEach(function(word){var next=line?line+' '+word:word;if(line&&L.measure(s,next,o)>maxW){lines.push(line);line=word;}else line=next;});if(line)lines.push(line);lines.forEach(function(ln,i){L.text(s,ln,x,y+i*(size+5),o);});}
-function box(s,x,y,w,h,title,detail,active){L.rr(s.g,x,y,w,h,9);s.g.fillStyle=L.col('bg2');s.g.fill();s.g.strokeStyle=L.col(active?'info':'border');s.g.lineWidth=active?2:1;s.g.stroke();label(s,title,x+14,y+25,15,'text',w-28);label(s,detail,x+14,y+51,13,'text2',w-28);}
-function arrow(s,x1,y1,x2,y2,active){s.g.beginPath();s.g.moveTo(x1,y1);s.g.lineTo(x2,y2);s.g.lineWidth=2;s.g.strokeStyle=L.col(active?'info':'border');s.g.stroke();var a=Math.atan2(y2-y1,x2-x1);s.g.beginPath();s.g.moveTo(x2,y2);s.g.lineTo(x2-8*Math.cos(a-.4),y2-8*Math.sin(a-.4));s.g.lineTo(x2-8*Math.cos(a+.4),y2-8*Math.sin(a+.4));s.g.closePath();s.g.fillStyle=L.col(active?'info':'border');s.g.fill();}
-function drawFlow(s,t){
-var compact=s.w<680,margin=18,w=compact?s.w-36:(s.w-112)/3;
-var kind=s.fig.dataset.kind||'sensing',v=flowAt(t,kind),x=[margin,compact?margin:margin+w+38,compact?margin:margin+2*(w+38)],y=compact?[80,211,342]:[128,128,128];
-label(s,'ILLUSTRATIVE · '+(kind==='sensing'?'SENSING ONLY':'WITH OPTIONAL ACTUATION'),margin,30,12,'accent');
-box(s,x[0],y[0],w,76,'Physical condition',v.observed?'New observation available':'Quantity of interest',v.measured||v.observed);
-box(s,x[1],y[1],w,76,'Device',v.applied?'Operation applied':v.measured?'Observation acquired':'Awaiting observation',v.measured);
-box(s,x[2],y[2],w,76,'Application',v.received?'Telemetry received':'Awaiting telemetry',v.received);
-if(compact){arrow(s,margin+22,158,margin+22,204,v.measured);label(s,'Measurement',margin+38,181,13,'text2');arrow(s,margin+22,289,margin+22,335,v.received);label(s,'Telemetry via network',margin+38,313,13,'text2');}
-else {arrow(s,x[0]+w+4,164,x[1]-5,164,v.measured);arrow(s,x[1]+w+4,164,x[2]-5,164,v.received);label(s,'Measure',x[0]+w-11,105,12,'text2');label(s,'Telemetry',x[1]+w-12,105,12,'text2');}
-var lines=kind==='sensing'?(v.received?['Telemetry is available to the application.','No command or actuator is required.']:['Measurement precedes received telemetry.','No command or actuator is required.']):v.observed?['Feedback: relevant new observation.','The next decision can use that feedback.']:v.applied?['Optional actuation: equipment applies operation.','The outcome still needs relevant observation.']:v.requested?['Optional command: application requests operation.','Receipt and effect remain separate.']:['First: measure, then communicate.','Optional commands appear after receipt.'];
-var yy=compact?458:283;label(s,lines[0],margin,yy,13,'info');label(s,lines[1],margin,yy+(compact?46:28),13,'text2');
-if(!compact&&v.requested)arrow(s,x[2]-5,191,x[1]+w+4,191,true);
-if(!compact&&v.applied)arrow(s,x[1]-5,191,x[0]+w+4,191,true);
-}
-function drawFreshness(s,t){var v=freshnessAt(t),compact=s.w<680,w=s.w-36;
-label(s,'ILLUSTRATIVE · SYNCHRONIZED CLOCKS',18,30,12,'accent');
-box(s,18,72,w,78,'Measured at 12:00:00','Permitted age: 5 seconds (assumed)',true);
-label(s,'Observation age',18,191,15);label(s,v.age.toFixed(1)+' seconds',18,228,25,v.usable?'info':'warn');
-L.rr(s.g,18,259,w,12,6);s.g.fillStyle=L.col('border');s.g.fill();L.rr(s.g,18,259,w*v.age/10,12,6);s.g.fillStyle=L.col(v.usable?'info':'warn');s.g.fill();
-label(s,v.received?'Received at 12:00:09':'Telemetry has not arrived',18,314,14,'text2');
-label(s,v.evaluated?'Evaluated at 12:00:10: too old':v.usable?'Within assumed age limit':'Beyond assumed age limit',18,349,14,v.usable?'info':'warn');
-label(s,'Arrival does not reset measurement time.',18,compact?410:391,13,'text2');
-}
-function startPaused(s){s.paused=true;s.btn.setAttribute('aria-pressed','true');s.btn.setAttribute('aria-label','Play animation');s.btn.classList.add('scene__toggle--paused');}
-Motion.register('iot-study-flow',{setup:startPaused,duration:18,poster:16,beats:[[0,'Setup'],[2,'Measurement'],[5,'Telemetry'],[8,'Optional command'],[11,'Optional actuation'],[14,'Feedback']],draw:drawFlow});
-Motion.register('iot-study-freshness',{setup:startPaused,duration:14,poster:10,beats:[[0,'Measured'],[5.1,'Age limit passed'],[9,'Received'],[10,'Evaluated']],draw:drawFreshness});
-})(typeof window==='undefined'?globalThis:window);
+/* Illustrative IoT mechanisms; no hardware connection or measured timings. */
+(function (root) {
+  'use strict';
+  function flowAt(t, kind) {
+    return {measured: t >= 1.8, received: t >= 4.1,
+      requested: kind === 'actuating' && t >= 6.6,
+      applied: kind === 'actuating' && t >= 9.1,
+      observed: kind === 'actuating' && t >= 11.4};
+  }
+  function freshnessAt(t) {
+    var age = Math.min(10, Math.max(0, t));
+    return {age: age, received: age >= 9, evaluated: age >= 10, usable: age <= 5};
+  }
+  function poster(kind) { return kind === 'sensing' ? 5.6 : 12.4; }
+  root.IoTStudy = {flowAt: flowAt, freshnessAt: freshnessAt, poster: poster};
+  if (!root.Motion) return;
+  var Motion = root.Motion, L = Motion.lib, E = L.E;
+
+  function text(s, str, x, y, width, o) {
+    o = Object.assign({size: 12, align: 'left', weight: 500, color: 'text2'}, o);
+    var lines = [], line = '';
+    str.split(' ').forEach(function (word) {
+      var next = line ? line + ' ' + word : word;
+      if (line && L.measure(s, next, o) > width) { lines.push(line); line = word; }
+      else line = next;
+    });
+    if (line) lines.push(line);
+    lines.forEach(function (ln, i) { L.text(s, ln, x, y + i * (o.size + 6), o); });
+  }
+  function heading(s, title, subtitle) {
+    text(s, title, 22, 28, s.w - 44, {key: true, size: 10, color: 'text2'});
+    text(s, subtitle, 22, 54, s.w - 44, {size: 15, weight: 600, color: 'text'});
+  }
+  function frameAlpha(s, t, duration) {
+    if (s.paused) return 1;
+    return E.inOutCubic(L.seg(t, 0, 0.3)) * (1 - E.inOutCubic(L.seg(t, duration - 0.3, duration)));
+  }
+  function route(s, points, name, x, y, active, tone) {
+    var p = L.path(points), g = s.g;
+    p.trace(g, 0, 1);
+    g.strokeStyle = L.col(active ? tone : 'muted', active ? 1 : 0.45);
+    g.lineWidth = active ? 1.75 : 1;
+    g.stroke();
+    var end = p.at(1), a = end.a;
+    g.beginPath(); g.moveTo(end.x, end.y);
+    g.lineTo(end.x - 6 * Math.cos(a - 0.45), end.y - 6 * Math.sin(a - 0.45));
+    g.moveTo(end.x, end.y);
+    g.lineTo(end.x - 6 * Math.cos(a + 0.45), end.y - 6 * Math.sin(a + 0.45));
+    g.stroke();
+    L.text(s, name, x, y, {size: 11, color: active ? tone : 'text2', weight: 500});
+    return p;
+  }
+  function travel(s, path, t, start, end, tone) {
+    if (t < start || t > end) return;
+    var u = E.inOutCubic(L.seg(t, start, end));
+    var a = L.hold(t, start, end, 0.18);
+    L.trail(s, path.at, u, {tone: tone, r: 3, alpha: a, len: 0.12});
+  }
+  function node(s, x, y, w, title, detail, emph, tone) {
+    L.node(s, {x: x, y: y, w: w, h: 70, title: title, size: 13,
+      tone: tone || 'accent', emph: emph});
+    // Shared node primitive supplies geometry; detail gets a separate line.
+    L.text(s, detail, x, y + 20, {size: 11, weight: 500, color: 'text2'});
+  }
+  function configureFlow(s) {
+    var sensing = s.fig.dataset.kind === 'sensing';
+    s.def.duration = sensing ? 7 : 14;
+    s.def.poster = poster(sensing ? 'sensing' : 'actuating');
+    s.def.beats = sensing ? [[0, 'Observe'], [2.4, 'Transmit'], [4.1, 'Monitoring'], [5.6, 'Rest']]
+      : [[0, 'Observe'], [2.4, 'Transmit'], [5, 'Request and effect'], [9.7, 'Relevant feedback'], [12.4, 'Rest']];
+  }
+  function drawFlow(s, t) {
+    configureFlow(s);
+    var sensing = s.fig.dataset.kind === 'sensing', kind = sensing ? 'sensing' : 'actuating';
+    var v = flowAt(t, kind), compact = s.w < 680, g = s.g;
+    g.save(); g.globalAlpha = frameAlpha(s, t, s.def.duration);
+    heading(s, 'Illustrative · ' + (sensing ? 'sensing only' : 'optional actuation'),
+      sensing ? 'An observation becomes information' : 'Information, action, then new evidence');
+    var w = compact ? s.w - 44 : (s.w - 140) / 3;
+    var x = compact ? [s.w / 2, s.w / 2, s.w / 2] : [22 + w / 2, s.w / 2, s.w - 22 - w / 2];
+    var y = compact ? [112, 244, 376] : [145, 145, 145];
+    var measure = t < 2.2 || (!sensing && t >= 9.7 && t < 10.5);
+    var transmit = t >= 2.4 && t < 4.5 || (!sensing && t >= 10.5 && t < 11.8);
+    var command = !sensing && t >= 5 && t < 7.1;
+    var effect = !sensing && t >= 7.5 && t < 9.7;
+    // One focal receiver at a time; completed steps return to quiet scaffolding.
+    node(s, x[0], y[0], w, 'Physical condition', v.applied ? 'Condition may change' : 'Quantity of interest', effect ? L.hold(t, 9.1, 9.7, 0.18) : 0, 'warn');
+    node(s, x[1], y[1], w, 'Device', v.applied ? 'Operation applied' : v.measured ? 'Observation acquired' : 'Ready to measure', Math.max(L.hold(t,1.8,2.2,0.15), sensing ? 0 : L.hold(t,6.6,7.1,0.18), sensing ? 0 : L.hold(t,10.5,10.9,0.15)));
+    node(s, x[2], y[2], w, 'Application', v.observed ? 'New evidence received' : v.received ? 'Telemetry received' : 'Waiting for telemetry', Math.max(L.hold(t,4.1,4.7,0.18), sensing ? 0 : L.hold(t,11.4,12.2,0.2)));
+    var f1, f2, r1, r2;
+    if (compact) {
+      var left = 52, right = s.w - 52;
+      f1 = route(s, [[left, 149], [left, 207]], 'Measure', left + 36, 179, measure, 'accent');
+      f2 = route(s, [[left, 281], [left, 339]], 'Telemetry', left + 36, 311, transmit, 'accent');
+      if (!sensing) {
+        r1 = route(s, [[right, 339], [right, 281]], 'Command', right - 37, 311, command, 'accent');
+        r2 = route(s, [[right, 207], [right, 149]], 'Actuate', right - 37, 179, effect, 'warn');
+      }
+    } else {
+      f1 = route(s, [[x[0] + w/2 + 2, 129], [x[1] - w/2 - 2, 129]], 'Measure', (x[0]+x[1])/2, 105, measure, 'accent');
+      f2 = route(s, [[x[1] + w/2 + 2, 129], [x[2] - w/2 - 2, 129]], 'Telemetry', (x[1]+x[2])/2, 105, transmit, 'accent');
+      if (!sensing) {
+        r1 = route(s, [[x[2] - w/2 - 2, 161], [x[1] + w/2 + 2, 161]], 'Command', (x[1]+x[2])/2, 200, command, 'accent');
+        r2 = route(s, [[x[1] - w/2 - 2, 161], [x[0] + w/2 + 2, 161]], 'Actuate', (x[0]+x[1])/2, 200, effect, 'warn');
+      }
+    }
+    travel(s, f1, t, 1, 1.65, 'accent');
+    travel(s, f2, t, 3.3, 3.95, 'accent');
+    if (!sensing) {
+      travel(s, r1, t, 5.8, 6.45, 'accent'); travel(s, r2, t, 8.3, 8.95, 'warn');
+      travel(s, f1, t, 9.7, 10.35, 'info'); travel(s, f2, t, 10.6, 11.25, 'info');
+    }
+    var status = sensing ? (v.received ? 'Monitoring: no actuator is required.' : 'Acquire an observation, then communicate it.')
+      : v.observed ? 'Feedback: a relevant new observation informs the next decision.'
+      : effect || v.applied ? 'Actuation changes the world; an outcome still needs observation.'
+      : command || v.requested ? 'A command requests an operation. Receipt is not an effect.'
+      : 'Measurement and telemetry carry information outward.';
+    var yy = compact ? 445 : 249;
+    text(s, status, 22, yy, s.w - 44, {size: 12, color: v.observed ? 'info' : 'text'});
+    text(s, sensing ? 'The flow ends when information reaches the application.' : 'Return paths are optional. Feedback follows a fresh sensing path.',
+      22, yy + (compact ? 54 : 42), s.w - 44, {size: 11});
+    g.restore();
+  }
+  function drawFreshness(s, t) {
+    var v = freshnessAt(t), g = s.g, compact = s.w < 680;
+    g.save(); g.globalAlpha = frameAlpha(s, t, 14);
+    heading(s, 'Illustrative · synchronized clocks', 'Delivery does not reset age');
+    var left = 28, right = s.w - 28, width = right - left, axisY = 219;
+    L.node(s, {x: s.w/2, y: 112, w: s.w-44, h: 62, title: 'Measurement anchor · 12:00:00', size: 13});
+    L.text(s, 'Observation age', 28, 165, {align:'left',size:11,color:'text2',weight:500});
+    L.text(s, v.age.toFixed(1) + ' s', right, 164, {align:'right',size:23,color:v.usable?'accent':'warn'});
+    // An explicit scale and threshold make age visible independently of color.
+    g.beginPath(); g.moveTo(left,axisY);g.lineTo(right,axisY);g.strokeStyle=L.col('border');g.lineWidth=3;g.stroke();
+    g.beginPath();g.moveTo(left,axisY);g.lineTo(left+width*v.age/10,axisY);g.strokeStyle=L.col(v.usable?'accent':'warn');g.lineWidth=3;g.stroke();
+    [0,5,9,10].forEach(function(n){var xx=left+width*n/10;g.beginPath();g.moveTo(xx,axisY-7);g.lineTo(xx,axisY+7);g.strokeStyle=L.col(n===5?'warn':'border');g.lineWidth=1;g.stroke();});
+    L.text(s, '0', left, 242, {size:11,color:'text2'});
+    L.text(s, '5 s limit', left+width*.5, 191, {size:11,color:'warn'});
+    L.text(s, '10 s', right, 242, {size:11,color:'text2',align:'right'});
+    L.token(s, left+width*v.age/10, axisY, {tone:v.usable?'accent':'warn',r:4,alpha:frameAlpha(s,t,14)});
+    g.globalAlpha = frameAlpha(s, t, 14);
+    var at = compact ? 281 : 285;
+    text(s, v.received ? '12:00:09 · Received at age 9 s' : 'In transit · the observation keeps aging',22,at,s.w-44,{size:12});
+    text(s, v.evaluated ? '12:00:10 · Evaluated: too old for this use' : v.usable ? 'Within the assumed five-second limit' : 'Beyond the assumed five-second limit',
+      22,at+38,s.w-44,{size:12,color:v.usable?'text':'warn'});
+    text(s,'Assumed limit; not a universal IoT rule.',22,at+86,s.w-44,{size:11});
+    g.restore();
+  }
+  function startPaused(s) {
+    if (s.name === 'iot-study-flow') {
+      configureFlow(s);
+      if (root.matchMedia('(prefers-reduced-motion: reduce)').matches) s.clock = s.def.poster;
+    }
+    s.paused=true;s.btn.setAttribute('aria-pressed','true');
+    s.btn.setAttribute('aria-label','Play animation');s.btn.classList.add('scene__toggle--paused');
+  }
+  Motion.register('iot-study-flow', {setup:startPaused,duration:14,poster:12.4,
+    beats:[[0,'Observe'],[2.4,'Transmit'],[5,'Request and effect'],[9.7,'Relevant feedback'],[12.4,'Rest']],draw:drawFlow});
+  Motion.register('iot-study-freshness', {setup:startPaused,duration:14,poster:10,
+    beats:[[0,'Measured'],[5.1,'Age limit passed'],[9,'Received'],[10,'Evaluated'],[12.4,'Rest']],draw:drawFreshness});
+})(typeof window === 'undefined' ? globalThis : window);

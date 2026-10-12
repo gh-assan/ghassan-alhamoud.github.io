@@ -522,10 +522,10 @@
 .iot-diagram { margin: 32px 0; }
 .iot-diagram figcaption { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-top: 12px; }
 .iot-scene { container-type: inline-size; }
-.iot-scene > .scene__stage { width: 100%; aspect-ratio: auto; height: 440px; }
+.iot-scene > .scene__stage { width: 100%; aspect-ratio: auto; height: 360px; }
 .iot-scene .scene__stage > img { object-fit: contain; }
 @container (width < 680px) {
-  .iot-scene > .scene__stage { height: 600px; }
+  .iot-scene > .scene__stage { height: 570px; }
 }
 .iot-scenario { display: block; color: var(--text-secondary); font-size: 14px; margin: 24px 0; }
 .iot-scenario select {
@@ -557,3 +557,6 @@ html:not(.js) .iot-scenario { display: none; }
 .iot-reset { font: inherit; font-size: 14px; min-height: 44px; padding: 10px 16px; color: var(--text-primary); background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-lg); cursor: pointer; }
 .iot-reset:focus-visible, .iot-scenario select:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 html:not(.js) .iot-controls { display: none; }
+
+#iot-freshness-scene > .scene__stage { height: 430px; }
+.iot-diagram picture { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }

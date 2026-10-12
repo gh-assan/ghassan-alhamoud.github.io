@@ -1,27 +1,42 @@
-/* IoT figures follow the reading column; controls operate teaching models only. */
+/* Responsive static alternatives and controls for illustrative teaching models. */
 (function () {
   'use strict';
-  if ('ResizeObserver' in window) {
-    var pictures = new ResizeObserver(function (entries) {
-      entries.forEach(function (entry) {
-        entry.target.querySelector('source').media = entry.contentRect.width < 680
-          ? '(min-width: 0px)' : '(max-width: 0px)';
-      });
-    });
-    document.querySelectorAll('.iot-diagram picture, .iot-scene picture').forEach(function (picture) {
-      pictures.observe(picture);
+  var pictures = Array.from(document.querySelectorAll('.iot-diagram picture, .iot-scene picture'));
+  var owners = new Map();
+  pictures.forEach(function (picture) {
+    owners.set(picture, picture.closest('.iot-scene') || picture);
+    picture.dataset.original = picture.querySelector('img').getAttribute('src');
+  });
+  function updatePictures() {
+    var dark = document.documentElement.dataset.theme === 'dark';
+    pictures.forEach(function (picture) {
+      var original = picture.dataset.original;
+      var compact = original.replace('.svg', '-compact.svg');
+      var suffix = dark ? '-dark.svg' : '.svg';
+      picture.querySelector('img').src = original.replace('.svg', suffix);
+      var source = picture.querySelector('source');
+      source.srcset = compact.replace('.svg', suffix);
+      source.media = owners.get(picture).getBoundingClientRect().width < 680 ? '(min-width: 0px)' : '(max-width: 0px)';
     });
   }
+  updatePictures();
+  if ('ResizeObserver' in window) {
+    var resize = new ResizeObserver(updatePictures);
+    pictures.forEach(function (picture) { resize.observe(owners.get(picture)); });
+  }
+  new MutationObserver(updatePictures).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function reset(name) {
+    if (!window.Motion) return;
+    Motion.seek(name, 0);
+    if (reduce.matches) Motion.seek(name, name === 'iot-study-flow' ? IoTStudy.poster(document.getElementById('iot-flow-kind').value) : 10);
+  }
   var select = document.getElementById('iot-flow-kind');
   if (select) select.addEventListener('change', function () {
     document.getElementById('iot-flow-scene').dataset.kind = select.value;
-    if (window.Motion) window.Motion.seek('iot-study-flow', reduce.matches ? 16 : 0);
+    reset('iot-study-flow');
   });
   document.querySelectorAll('[data-iot-reset]').forEach(function (button) {
-    button.addEventListener('click', function () {
-      var name = button.dataset.iotReset;
-      if (window.Motion) window.Motion.seek(name, reduce.matches ? (name === 'iot-study-flow' ? 16 : 10) : 0);
-    });
+    button.addEventListener('click', function () { reset(button.dataset.iotReset); });
   });
 })();

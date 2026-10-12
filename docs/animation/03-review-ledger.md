@@ -287,3 +287,53 @@ Verification: 66 website Python tests, 13 existing motion tests, all 35 site
 gates, and handbook/article/project validators pass. The original package's
 four contract tests also pass. The website PR remains open for the author's
 chapter and visual review. No merge or production deployment is authorized.
+
+## 2026-10-12 — IOT-001 visual direction revision 1.1
+
+The subsequent visual-direction review supersedes the previous revision's
+self-assessed craft scores. It found missing compact return paths, abrupt state
+changes/reset, inconsistent static and animated styles, an unmarked freshness
+threshold, duplicate figures and excess stage space. The compact reference
+model also made management/security resemble a fifth layer.
+
+The original was revised first and committed as `51f4961`. All twelve SVG
+variants and the motion source match that original byte for byte. Three figure
+families have wide/compact and nature/dark alternatives. Flow and freshness
+static/animated pairs are now one scene each with static/text fallbacks.
+The reader opening retains concise version/source metadata, while review
+process details stay in the review records.
+
+| Finding | Correction |
+|---|---|
+| Compact command and actuation disappeared. | Both directional paths and labels remain visible, with fresh observations traveling outward again as feedback. |
+| Causality relied on changing labels. | Shared node/path/token/trail primitives show transfers; receiver state follows arrival, focal emphasis follows reception, and completed nodes return to quiet scaffolding. |
+| Monitoring reused irrelevant control beats. | A separate seven-second sensing sequence omits return paths and control labels; optional actuation uses fourteen seconds. |
+| Reset popped back to setup. | A 300 ms fade on each side of the loop boundary masks reset; paused/poster views remain fully visible. |
+| SVGs and canvas looked unrelated. | Site palette, typography and node geometry align; SVG themes change live with the website theme. |
+| Dark headings retained light-theme text color. | Removed a Python default-argument color binding; contrast regression covers all SVG text against the diagram background. Small dark accent text uses the existing brighter accent shade. |
+| Freshness limit existed only in text. | Visible 0–10 s scale and assumed five-second threshold separate measurement age from receipt/evaluation. |
+| Compact reference model suggested a fifth layer. | Four layers sit inside a spanning management/security boundary. |
+| Fallback sizing could follow a detached picture. | Observe the owning scene width so restored static alternatives use the correct composition and theme. |
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Information, action, then new evidence | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+| Delivery does not reset age | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+
+These are visual self-review judgments, not independent technical review or
+measured learning outcomes. Installed Chrome 155.0.8059.39 checked twelve SVGs
+and 290 states at ten widths (320–1200 px), including mobile semantic parity,
+scenario-specific playback/reduced-motion posters, reset, clipping/overlap,
+keyboard controls, theme changes, responsive static/error fallbacks and
+hidden/offscreen idling. A full fourteen-second live loop and seven intermediate
+beats were also inspected. Nominal 10 px canvas labels measure 9.93 px with
+border rounding. Final average draws: flow 1.230 ms, freshness 0.657 ms; single
+frame maxima: 5.0 and 4.1 ms. No unexpected browser errors.
+
+The original preview separately passed 168 states at seven widths and twelve
+SVGs, plus four package contract tests. Website validation: 67 Python tests,
+13 existing motion tests, all 35 site gates, handbook/article/project validators
+and whitespace checks pass. Temporary captures: `/private/tmp/iot-v2-qa/`;
+canonical review evidence: original `reviews/v1.1-visual-qa/`.
+
+PR #35 remains open. The author reviews before merging; no deployment occurred.

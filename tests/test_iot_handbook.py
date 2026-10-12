@@ -2,6 +2,7 @@
 import importlib.util
 import json
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,6 +17,21 @@ def load_script(name):
 
 
 class IoTHandbookTests(unittest.TestCase):
+    def test_svg_text_contrast_in_both_themes(self):
+        def luminance(color):
+            channels = [int(color[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+            linear = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in channels]
+            return sum(c * w for c, w in zip(linear, (0.2126, 0.7152, 0.0722)))
+
+        ns = '{http://www.w3.org/2000/svg}'
+        for file in (ROOT / 'images/iot-handbook/IOT-001').glob('*.svg'):
+            svg = ET.fromstring(file.read_text())
+            background = luminance(svg.find(ns + 'rect').get('fill'))
+            for text in svg.findall(ns + 'text'):
+                foreground = luminance(text.get('fill'))
+                contrast = (max(background, foreground) + 0.05) / (min(background, foreground) + 0.05)
+                self.assertGreaterEqual(contrast, 4.5, f'{file.name}: {text.text}')
+
     def test_mqtt_term_allowed_but_subscription_cta_still_rejected(self):
         validator = load_script('validate-site')
         page = ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html'
@@ -64,9 +80,9 @@ class IoTHandbookTests(unittest.TestCase):
         page = (ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html').read_text()
         for scene in ('iot-study-flow', 'iot-study-freshness'):
             self.assertIn(f'data-scene="{scene}"', page)
-        for text in ('author-approved for publication', 'id="iot-flow-kind"', 'on-this-page', 'device is retired'):
+        for text in ('Version:</strong> 1.1', 'id="iot-flow-kind"', 'on-this-page', 'device is retired'):
             self.assertIn(text, page)
-        self.assertEqual(3, page.count('class="iot-diagram"'))
+        self.assertEqual(1, page.count('class="iot-diagram"'))
         self.assertNotIn('/Users/', page)
         self.assertIn('/assets/js/motion/scene-iot.js', page)
         self.assertIn('/iot-handbook/', (ROOT / 'handbook/index.html').read_text())
@@ -79,4 +95,4 @@ class IoTHandbookTests(unittest.TestCase):
             text = file.read_text()
             for private in ('Tamoz', 'Agentic Stream', 'DHT11', 'L293D', 'TinyGo', 'iot-fan', 'iot-evidence', 'lab-pending'):
                 self.assertNotIn(private, text, file.name)
-        self.assertEqual(6, len(list((ROOT / 'images/iot-handbook/IOT-001').glob('*.svg'))))
+        self.assertEqual(12, len(list((ROOT / 'images/iot-handbook/IOT-001').glob('*.svg'))))

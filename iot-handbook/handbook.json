@@ -7,7 +7,7 @@
     "indexTagline": "Understand connected systems",
     "description": "Study IoT definitions, reference architectures, information flows, interoperability, reliability, security and device lifecycle through standards-grounded explanations.",
     "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked study questions support the reading.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
     "educationalLevel": "Beginner",
     "courseWorkload": "PT25M",

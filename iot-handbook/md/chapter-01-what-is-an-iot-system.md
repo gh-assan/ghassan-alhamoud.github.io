@@ -1,6 +1,6 @@
 # Chapter 1: What Is an IoT System?
 
-**Version:** 1.0 | **Sources checked:** 2026-10-12 | **Reading time:** about 25 min (≈5,700 words at 230 words/min; exercises included, markup excluded) | **Status:** author-approved for publication; three independent review lenses completed
+**Version:** 1.1 | **Sources checked:** 2026-10-12
 
 ## If You Only Read One Section
 
@@ -138,15 +138,6 @@ Operations includes onboarding equipment, assigning identity, changing configura
 
 ## 4. Flows: Measurement, Telemetry, Command, and Feedback
 
-<figure class="iot-diagram">
-<picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-flows-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-2-flows.svg" alt="Illustrative flows: a physical condition is measured by a device, telemetry crosses a network to an application, an optional command returns to a device, and optional actuation changes the condition. Feedback requires a relevant new observation." style="width:100%;height:auto">
-</picture>
-<figcaption>Figure 2. Generic teaching model. Measurement, information transfer, and optional actuation are separate relationships. The diagram describes no particular protocol, product, or measured deployment.</figcaption>
-</figure>
-
-
 <div class="iot-controls"><label class="iot-scenario" for="iot-flow-kind">Illustrative flow<select id="iot-flow-kind"><option value="sensing">Sensing only</option><option value="actuating" selected>With optional actuation</option></select></label><button type="button" class="iot-reset" data-iot-reset="iot-study-flow">Reset flow</button></div>
 
 <figure id="iot-flow-scene" class="scene iot-scene" data-scene="iot-study-flow" data-kind="actuating" data-label="Illustrative sequence: measurement, telemetry, optional command, optional actuation, and relevant feedback">
@@ -234,14 +225,6 @@ The 5-second limit is an invented application requirement. There is no universal
 
 This reasoning separates four terms: sampling interval, communication delay, observation age, and decision deadline. Increasing the sampling rate does not remove a long transmission queue. Reliable delivery does not make old information timely.
 
-
-<figure class="iot-diagram">
-<picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-freshness-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-3-freshness.svg" alt="Illustrative timeline: measured at 12:00:00, received at 12:00:09, evaluated at 12:00:10. Age is ten seconds against an assumed five-second maximum." style="width:100%;height:auto">
-</picture>
-<figcaption>Figure 3. Constructed timeline under the clock and age-limit assumptions stated above. Measurement age continues increasing through delivery.</figcaption>
-</figure>
 
 <div class="iot-controls"><button type="button" class="iot-reset" data-iot-reset="iot-study-freshness">Reset timeline</button></div>
 
@@ -397,4 +380,5 @@ Read these sources according to their roles. A recommendation, an Informational 
 
 | Version | Date | Change |
 |---|---|---|
-| 1.0 | 2026-10-12 | Published independent, standards-grounded study material after author approval and three review lenses; aligned the glossary, added a lifecycle exercise, and tightened repeated scope caveats |
+| 1.0 | 2026-10-12 | Prepared independent, standards-grounded study material after author approval and three review lenses; aligned the glossary, added a lifecycle exercise, and tightened repeated scope caveats |
+| 1.1 | 2026-10-12 | Redesigned compact return paths and causal motion; added an explicit freshness threshold, shared visual styling and equivalent static fallbacks |

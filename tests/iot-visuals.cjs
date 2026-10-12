@@ -29,8 +29,8 @@ assert.equal(V.freshnessAt(10).age, 10);
 
 // --------------------------------------------------------------- browser
 const SCENES = [
-  {name: 'iot-study-flow', id: 'iot-flow-scene', times: [0, 2, 4.9, 5, 8, 11, 14, 17], scenarios: ['sensing', 'actuating']},
-  {name: 'iot-study-freshness', id: 'iot-freshness-scene', times: [0, 4, 5, 5.1, 8.9, 9, 10, 13]}
+  {name: 'iot-study-flow', id: 'iot-flow-scene', times: [0, 0.8, 1.8, 2.7, 4.1, 5.4, 6.6, 8, 9.1, 10, 11.4, 12.4, 13.8], scenarios: ['sensing', 'actuating']},
+  {name: 'iot-study-freshness', id: 'iot-freshness-scene', times: [0, 4, 5, 5.1, 8.9, 9, 10, 12.4, 13.8]}
 ];
 
 (async () => {
@@ -63,7 +63,7 @@ const SCENES = [
     });
 
     const files = ['fig-1-reference-model', 'fig-2-flows', 'fig-3-freshness']
-      .flatMap(n => [n + '.svg', n + '-compact.svg']);
+      .flatMap(n => [n + '.svg', n + '-compact.svg', n + '-dark.svg', n + '-compact-dark.svg']);
     for (const file of files) {
       await page.goto(base + '/images/iot-handbook/IOT-001/' + file);
       const issues = await page.evaluate(() => {
@@ -91,13 +91,14 @@ const SCENES = [
       assert(initial.every(s => s.paused), 'autoplay at ' + width);
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'horizontal page scroll at ' + width + ': ' + JSON.stringify(await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1).map(e => [e.tagName, e.className, e.getBoundingClientRect().right]).slice(0, 12))));
       if (qaDir && [375, 1200].includes(width)) {
-        for (let i = 0; i < 3; i++) await page.locator('.iot-diagram').nth(i).screenshot({path: path.join(qaDir, `diagram-${i}-${width}.png`)});
+        for (let i = 0; i < 1; i++) await page.locator('.iot-diagram').nth(i).screenshot({path: path.join(qaDir, `diagram-${i}-${width}.png`)});
       }
       for (const sc of SCENES) {
         await page.locator('#' + sc.id).scrollIntoViewIfNeeded();
         for (const scenario of sc.scenarios || [null]) {
           if (scenario) await page.selectOption('#iot-flow-kind', scenario);
-          for (const time of sc.times) {
+          const times = scenario === 'sensing' ? [0, 0.8, 1.8, 2.7, 4.1, 5.6, 6.8] : sc.times;
+          for (const time of times) {
             await page.evaluate(([n, t]) => Motion.seek(n, t), [sc.name, time]);
             const res = await page.evaluate(id => {
               const s = document.getElementById(id).__motion, out = [], a = s.canvas.__labels || [];
@@ -115,7 +116,7 @@ const SCENES = [
             }, sc.id);
             assert.deepEqual(res.out, [], `${sc.name} ${width}px ${scenario || ''} t=${time}`);
             if (res.min < minLabel) { minLabel = res.min; minAt = `${sc.name} ${width}px t=${time}`; }
-            if (qaDir && [375, 1200].includes(width) && (time === sc.times.at(-1) || (width === 1200 && sc.times.indexOf(time) < 3))) await page.locator('#' + sc.id).screenshot({path: path.join(qaDir, `${sc.name}-${width}-${scenario || 'final'}-${time}.png`)});
+            if (qaDir && [375, 1200].includes(width) && (time === times.at(-1) || (width === 1200 && times.indexOf(time) < 3))) await page.locator('#' + sc.id).screenshot({path: path.join(qaDir, `${sc.name}-${width}-${scenario || 'final'}-${time}.png`)});
             framesChecked++;
           }
         }
@@ -130,9 +131,26 @@ const SCENES = [
     await page.waitForFunction(() => [...document.querySelectorAll('figure.scene')].every(f => f.__motion));
     // A narrow handbook column on a wide viewport must use compact assets.
     await page.evaluate(() => document.querySelector('.article-layout').style.maxWidth = '548px');
-    await page.waitForFunction(() => [...document.querySelectorAll('picture img')].every(img => img.currentSrc.includes('-compact.svg')));
+    await page.waitForFunction(() => [...document.querySelectorAll('picture img')].every(img => img.currentSrc.includes('-compact')));
     await page.evaluate(() => document.querySelector('.article-layout').style.maxWidth = '');
-    await page.waitForFunction(() => [...document.querySelectorAll('.iot-diagram picture')].every(p => p.querySelector('img').currentSrc.includes('-compact.svg') === (p.getBoundingClientRect().width < 680)));
+    await page.waitForFunction(() => [...document.querySelectorAll('.iot-diagram picture')].every(p => p.querySelector('img').currentSrc.includes('-compact') === (p.getBoundingClientRect().width < 680)));
+
+    await page.setViewportSize({width: 375, height: 900});
+    await page.selectOption('#iot-flow-kind', 'actuating');
+    await page.evaluate(() => Motion.seek('iot-study-flow', 12.4));
+    const flowLabels = await page.evaluate(() => document.querySelector('#iot-flow-scene canvas').__labels.map(x => x.text));
+    for (const label of ['Measure', 'Telemetry', 'Command', 'Actuate', 'New evidence received']) assert(flowLabels.includes(label), 'mobile semantic parity: ' + label);
+    await page.selectOption('#iot-flow-kind', 'sensing');
+    await page.evaluate(() => Motion.seek('iot-study-flow', 5.6));
+    const sensing = await page.evaluate(() => ({duration: document.querySelector('#iot-flow-scene').__motion.def.duration, labels: document.querySelector('#iot-flow-scene canvas').__labels.map(x => x.text)}));
+    assert.equal(sensing.duration, 7, 'monitoring sequence did not end independently');
+    assert(!sensing.labels.includes('Command') && !sensing.labels.includes('Actuate'), 'optional control leaked into monitoring');
+    await page.locator('[data-iot-reset="iot-study-flow"]').click();
+    assert.equal(await page.evaluate(() => document.querySelector('#iot-flow-scene').__motion.clock), 0, 'reset flow');
+    await page.selectOption('#iot-flow-kind', 'actuating');
+    await page.evaluate(() => Motion.seek('iot-study-freshness', 10));
+    assert(await page.evaluate(() => document.querySelector('#iot-freshness-scene canvas').__labels.some(x => x.text === '5 s limit')), 'missing visible freshness threshold');
+    await page.setViewportSize({width: 1200, height: 900});
 
     const perf = [];
     for (const sc of SCENES) {
@@ -151,8 +169,9 @@ const SCENES = [
       assert.equal(await toggle.getAttribute('aria-label'), 'Play animation', sc.name + ' keyboard pause');
     }
     await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
-    await page.evaluate(() => Motion.seek('iot-study-flow', 16));
+    await page.evaluate(() => Motion.seek('iot-study-flow', 12.4));
     assert.equal(await page.evaluate(() => Motion.lib.colors().dark), true);
+    await page.waitForFunction(() => [...document.querySelectorAll('.iot-diagram img')].every(img => img.currentSrc.includes('-dark.svg')));
     if (qaDir) for (const sc of SCENES) {
       await page.locator('#' + sc.id).scrollIntoViewIfNeeded();
       await page.evaluate(n => { const s = document.querySelector(`[data-scene="${n}"]`).__motion; Motion.seek(n, s.def.poster); }, sc.name);
@@ -179,6 +198,10 @@ const SCENES = [
     for (const [n, clock, poster] of posters) assert.equal(clock, poster, n + ' reduced-motion poster');
     assert.equal(await reduced.locator('.scene__toggle').count(), 0);
     if (qaDir) for (const sc of SCENES) await reduced.locator('#' + sc.id).screenshot({path: path.join(qaDir, sc.name + '-reduced-poster.png')});
+    await reduced.selectOption('#iot-flow-kind', 'sensing');
+    assert.equal(await reduced.evaluate(() => document.querySelector('#iot-flow-scene').__motion.clock), 5.6, 'sensing reduced-motion poster');
+    await reduced.locator('[data-iot-reset="iot-study-flow"]').click();
+    assert.equal(await reduced.evaluate(() => document.querySelector('#iot-flow-scene').__motion.clock), 5.6, 'reset preserved sensing poster');
     const r0 = await reduced.evaluate(() => Motion.stats().map(s => s.frames));
     await reduced.waitForTimeout(350);
     assert.deepEqual(await reduced.evaluate(() => Motion.stats().map(s => s.frames)), r0, 'reduced-motion autoplay');
@@ -190,6 +213,7 @@ const SCENES = [
 
     await page.evaluate(() => { const s = document.getElementById('iot-freshness-scene').__motion; s.def.draw = () => { throw Error('intentional QA fault'); }; Motion.seek('iot-study-freshness', 5); });
     assert(await page.locator('#iot-freshness-scene.scene--failed img').isVisible(), 'renderer fault fallback');
+    await page.waitForFunction(() => document.querySelector('#iot-freshness-scene.scene--failed img').currentSrc.includes('-dark.svg'));
     const real = errors.filter(e => !e.includes('intentional QA fault'));
     assert.deepEqual(real, [], 'browser errors');
     console.log(JSON.stringify({browser: browser.version(), svgFiles: files.length, framesChecked,

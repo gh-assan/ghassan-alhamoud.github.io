@@ -82,7 +82,7 @@
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/handbook.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261012" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261012b" />
 </head>
 <body>
   <header class="header" id="header">
@@ -133,7 +133,7 @@
 
         <div class="article-single__body handbook-body">
 
-<p><strong>Version:</strong> 1.0 | <strong>Sources checked:</strong> 2026-10-12 | <strong>Reading time:</strong> about 25 min (≈5,700 words at 230 words/min; exercises included, markup excluded) | <strong>Status:</strong> author-approved for publication; three independent review lenses completed</p>
+<p><strong>Version:</strong> 1.1 | <strong>Sources checked:</strong> 2026-10-12</p>
 <h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
 <p>An Internet of Things system connects things, digital representations, communications, and applications so that information about the world can be used. Many systems measure physical conditions; some also change them. A networked environmental monitor is an IoT system even when it has no actuator. A cloud service, a gateway, and artificial intelligence are possible design choices, rather than universal requirements.</p>
 <p>For this chapter, use a practical working definition: <strong>an IoT system combines networked devices that sense or affect the physical world with the software, communications, and operational responsibilities needed to deliver an application.</strong> This is a teaching definition. Standards have different scopes, and we will make those differences explicit.</p>
@@ -292,14 +292,6 @@
 <p>An application interprets information for a purpose: monitoring, alerting, reporting, optimization, or control. Its correctness depends on the meaning and quality of its inputs as well as its own logic.</p>
 <p>Operations includes onboarding equipment, assigning identity, changing configuration, applying updates, monitoring health, maintaining devices, and retiring them. A useful system definition includes these responsibilities because software that works on installation day still needs a supportable lifecycle. We will return to lifecycle in Section 8.</p>
 <h2 id="4-flows-measurement-telemetry-command-and-feedback">4. Flows: Measurement, Telemetry, Command, and Feedback</h2>
-<figure class="iot-diagram">
-<picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-flows-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-2-flows.svg" alt="Illustrative flows: a physical condition is measured by a device, telemetry crosses a network to an application, an optional command returns to a device, and optional actuation changes the condition. Feedback requires a relevant new observation." style="width:100%;height:auto">
-</picture>
-<figcaption>Figure 2. Generic teaching model. Measurement, information transfer, and optional actuation are separate relationships. The diagram describes no particular protocol, product, or measured deployment.</figcaption>
-</figure>
-
 <div class="iot-controls"><label class="iot-scenario" for="iot-flow-kind">Illustrative flow<select id="iot-flow-kind"><option value="sensing">Sensing only</option><option value="actuating" selected>With optional actuation</option></select></label><button type="button" class="iot-reset" data-iot-reset="iot-study-flow">Reset flow</button></div>
 
 <figure id="iot-flow-scene" class="scene iot-scene" data-scene="iot-study-flow" data-kind="actuating" data-label="Illustrative sequence: measurement, telemetry, optional command, optional actuation, and relevant feedback">
@@ -420,14 +412,6 @@
 <p>Its age exceeds the assumed limit, so it cannot support the application's “current condition” decision. Arrival only one second earlier does not make the measurement one second old. It can still contribute to historical analysis if that use accepts older data.</p>
 <p>The 5-second limit is an invented application requirement. There is no universal IoT freshness limit. In a real contract, clock uncertainty and the interval between sensing and timestamp assignment also matter. When that uncertainty crosses the allowed age boundary, the decision needs an explicit policy for uncertain freshness.</p>
 <p>This reasoning separates four terms: sampling interval, communication delay, observation age, and decision deadline. Increasing the sampling rate does not remove a long transmission queue. Reliable delivery does not make old information timely.</p>
-<figure class="iot-diagram">
-<picture>
-  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-freshness-compact.svg">
-  <img src="/images/iot-handbook/IOT-001/fig-3-freshness.svg" alt="Illustrative timeline: measured at 12:00:00, received at 12:00:09, evaluated at 12:00:10. Age is ten seconds against an assumed five-second maximum." style="width:100%;height:auto">
-</picture>
-<figcaption>Figure 3. Constructed timeline under the clock and age-limit assumptions stated above. Measurement age continues increasing through delivery.</figcaption>
-</figure>
-
 <div class="iot-controls"><button type="button" class="iot-reset" data-iot-reset="iot-study-freshness">Reset timeline</button></div>
 
 <figure id="iot-freshness-scene" class="scene iot-scene" data-scene="iot-study-freshness" data-label="Illustrative observation age increases from measurement through arrival to evaluation">
@@ -642,7 +626,12 @@
 <tr>
 <td>1.0</td>
 <td>2026-10-12</td>
-<td>Published independent, standards-grounded study material after author approval and three review lenses; aligned the glossary, added a lifecycle exercise, and tightened repeated scope caveats</td>
+<td>Prepared independent, standards-grounded study material after author approval and three review lenses; aligned the glossary, added a lifecycle exercise, and tightened repeated scope caveats</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>2026-10-12</td>
+<td>Redesigned compact return paths and causal motion; added an explicit freshness threshold, shared visual styling and equivalent static fallbacks</td>
 </tr>
 </tbody>
 </table>
@@ -772,8 +761,8 @@
     })();
   </script>
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/motion/core.js?v=20261012" defer></script>
-  <script src="/assets/js/motion/scene-iot.js?v=20261012" defer></script>
-  <script src="/assets/js/iot-handbook.js?v=20261012" defer></script>
+  <script src="/assets/js/motion/core.js?v=20261012b" defer></script>
+  <script src="/assets/js/motion/scene-iot.js?v=20261012b" defer></script>
+  <script src="/assets/js/iot-handbook.js?v=20261012b" defer></script>
 </body>
 </html>

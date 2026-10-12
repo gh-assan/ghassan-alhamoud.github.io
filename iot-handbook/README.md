@@ -24,8 +24,8 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/Ma
 ```
 
 `IOT_VISUAL_URL` changes the preview origin. `IOT_QA_DIR` optionally saves
-review screenshots. The test covers both conceptual models, six SVGs,
-240 animation states at ten widths, label clipping/overlap, a 10 px label floor
+review screenshots. The test covers both conceptual models, twelve SVG variants,
+290 animation states at ten widths, label clipping/overlap, a 10 px label floor
 (with border-box rounding tolerance), keyboard controls, themes, reduced
 motion, no-JavaScript/error fallbacks, and idle behavior. Shared motion quality
 requirements remain in `docs/animation/00-quality-bar.md`.
@@ -39,3 +39,5 @@ Record reading time, learning outcome, prerequisites, and editorial status.
 Do not label predictions or illustrative animation as physical measurements.
 
 The former practical package is preserved only in the original source's internal archive. It is excluded from the website. The new figures explain the ITU functional model, generic sensing/actuation flows, and observation freshness. The two paused scenes model flows and freshness with static/text alternatives; all values are illustrative.
+
+Visual revision 1.1 consolidates static and animated figure pairs, keeps command and actuation paths visible on compact layouts, uses the shared motion primitives, and marks the assumed five-second freshness threshold. Nature and dark SVG variants follow the website theme. Sensing-only playback ends on its own seven-second sequence; optional actuation uses a fourteen-second sequence with an eased loop boundary.
