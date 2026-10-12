@@ -195,3 +195,145 @@ All three MP4s passed a full decode check and completed playback in Chrome witho
 media errors (16.8 / 15.8 / 14.7 s). The three videos, poster PNGs, local preview
 gallery, README and provenance manifest were saved to the requested destination;
 all nine copied files matched their source SHA-256 hashes.
+
+## Iteration 9 — IoT handbook integration (2026-10-08)
+
+Scope: IOT-001, its four responsive diagrams and three existing source-package
+animations. This is a self-review using the installed Chrome 154.0.8037.98;
+it does not constitute independent technical acceptance or a physical lab run.
+
+| Finding | Root cause | Correction |
+|---|---|---|
+| Static posters appeared instead of working animations. | The builder matched one exact figure attribute order and class value. IoT figures have an ID and an additional class. | Discover scene figures regardless of attribute order and extra classes. Load core before the single scene file. A regression test reproduces the missed markup; the release gate now recognizes it too. |
+| Wide SVGs were selected in narrow desktop reading columns. | The source package used a viewport media query; the website adds a sidebar. | Observe each diagram's column width and select its compact composition below 680 px. Reserve matching compact scene height with container queries. |
+| A firmware field widened the 320 px page. | Inline code contained a long JSON field with no break opportunity. | Allow inline code to wrap; keep source code blocks copyable. |
+| Compact scene labels fell to 9 px on the narrowest phone. | The source preview used 12 px page margins; the website uses 24 px. Later motion CSS also overrode the initial correction. | Give IoT figures 12 px outer margins below 360 px with a sufficiently specific selector. Final canvas label floor is 9.93 px including border-box rounding, nominally 10 px. |
+| The chapter hero said there were no prerequisites. | No prerequisite chapters was treated as no prerequisite knowledge. | Catalog supports prerequisite text; this chapter states comfort with Go and no required electronics experience. |
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Same command, three benches | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+| Fan incident | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+| Test discrimination | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+
+The bench keeps command/readback invariant while wiring and observation change.
+The fan replay distinguishes recorded operator observation from software state.
+The diagnostic scene removes a candidate only when a performed test discriminates
+against it. All start paused; captions identify illustrative timing and evidence
+limits. These longer teaching sequences retain the source's paced stages.
+
+`tests/iot-visuals.cjs` verifies 430 states at 320, 375, 400, 508, 560, 600,
+679, 680, 720 and 1200 px; eight SVGs; label overlap/clipping; compact selection;
+keyboard play/pause; scenario selection; live theme changes; reduced motion;
+no-JavaScript and renderer-error fallbacks; off-screen and hidden-tab idling.
+Review captures include desktop opening beats and poster states, mobile posters,
+dark posters and reduced-motion posters in `/private/tmp/iot-handbook-qa/`.
+These are temporary QA artifacts; regenerate using `IOT_QA_DIR`.
+
+Five-second live samples: bench 0.738 ms average / 1.5 ms maximum; fan
+0.649 / 1.5 ms; diagnostic 0.524 / 1.2 ms. All are below the 2 ms review target.
+Chrome reported no unexpected warnings or errors. The visible Chrome tab was
+also used to inspect the collection, chapter shell and LED playback.
+
+Final verification: all 35 website gates, 64 Python publication tests, 13 existing
+motion tests, Go control/wire tests and 15 lab-analysis tests pass. The first
+chapter remains a draft with physical lab and independent review pending.
+
+## 2026-10-12 — IOT-001 independent study revision
+
+This revision replaces the earlier draft's experiment-specific visuals and public
+lab files. The canonical source is original-repository commit `cf1b113`, chapter
+SHA-256 `2d35f0e61c5e34a7d555c5973a5c782b08f3fce8323f659b42b51ca68eb8ef44`.
+The source received three review lenses; minor teaching/style findings were
+resolved in the original before website integration. This is an integration
+self-review, not an additional independent technical review.
+
+Three diagram families now cover the ITU functional model, generic flows and
+observation freshness. All six wide/compact SVGs are byte-identical to the
+original. Two conceptual animations replace the three bench/investigation
+scenes. Their models match the original; only the runtime registration alias
+changes for website discovery. Chapter prose is preserved apart from figure
+wrappers, public asset paths, controls, and illustrative evidence captions.
+The former practical package remains only in the original internal archive.
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Sensing and optional actuation | 5 | 4 | 4 | 4 | 5 | 5 | 4.50 |
+| Observation freshness | 5 | 4 | 4 | 4 | 5 | 5 | 4.50 |
+
+These are editorial self-assessments, not measured learning outcomes. Static
+SVGs use the original dark palette; animated scenes follow the site theme.
+Both scenes start paused and retain static/text alternatives. The flow selector
+compares sensing only with optional actuation. Reset controls and keyboard play
+remain available. The freshness scene demonstrates that receipt does not reset
+observation age, under explicitly assumed synchronized clocks and an age limit.
+
+Installed Chrome 155.0.8059.39 checked six SVGs and 240 animation states at
+320, 375, 400, 508, 560, 600, 679, 680, 720 and 1200 px. Checks cover causal
+ordering, freshness boundaries, clipping/overlap, compact selection by actual
+reading-column width, keyboard operation, theme changes, reduced motion,
+no-JavaScript/error fallbacks and offscreen/hidden-tab idling. Minimum label
+size is 9.93 CSS px with border rounding (nominally 10 px). Five-second live
+samples averaged 0.508 ms for flow and 0.532 ms for freshness per draw. Review
+captures are temporary artifacts under `/private/tmp/iot-website-qa/` and can
+be regenerated using `IOT_QA_DIR`.
+
+Integration fixes: reserve full stage width; use evidence-caption markup;
+permit the MQTT compound `publish/subscribe` in the signup-surface validator
+while continuing to reject subscription CTAs, covered by regression tests.
+The sitemap modification date now matches the revised chapter.
+
+Verification: 66 website Python tests, 13 existing motion tests, all 35 site
+gates, and handbook/article/project validators pass. The original package's
+four contract tests also pass. The website PR remains open for the author's
+chapter and visual review. No merge or production deployment is authorized.
+
+## 2026-10-12 — IOT-001 visual direction revision 1.1
+
+The subsequent visual-direction review supersedes the previous revision's
+self-assessed craft scores. It found missing compact return paths, abrupt state
+changes/reset, inconsistent static and animated styles, an unmarked freshness
+threshold, duplicate figures and excess stage space. The compact reference
+model also made management/security resemble a fifth layer.
+
+The original was revised first and committed as `51f4961`. All twelve SVG
+variants and the motion source match that original byte for byte. Three figure
+families have wide/compact and nature/dark alternatives. Flow and freshness
+static/animated pairs are now one scene each with static/text fallbacks.
+The reader opening retains concise version/source metadata, while review
+process details stay in the review records.
+
+| Finding | Correction |
+|---|---|
+| Compact command and actuation disappeared. | Both directional paths and labels remain visible, with fresh observations traveling outward again as feedback. |
+| Causality relied on changing labels. | Shared node/path/token/trail primitives show transfers; receiver state follows arrival, focal emphasis follows reception, and completed nodes return to quiet scaffolding. |
+| Monitoring reused irrelevant control beats. | A separate seven-second sensing sequence omits return paths and control labels; optional actuation uses fourteen seconds. |
+| Reset popped back to setup. | A 300 ms fade on each side of the loop boundary masks reset; paused/poster views remain fully visible. |
+| SVGs and canvas looked unrelated. | Site palette, typography and node geometry align; SVG themes change live with the website theme. |
+| Dark headings retained light-theme text color. | Removed a Python default-argument color binding; contrast regression covers all SVG text against the diagram background. Small dark accent text uses the existing brighter accent shade. |
+| Freshness limit existed only in text. | Visible 0–10 s scale and assumed five-second threshold separate measurement age from receipt/evaluation. |
+| Compact reference model suggested a fifth layer. | Four layers sit inside a spanning management/security boundary. |
+| Fallback sizing could follow a detached picture. | Observe the owning scene width so restored static alternatives use the correct composition and theme. |
+
+| Scene | Clarity | Choreography | Craft | Consistency | Performance | Access | Mean |
+|---|---|---|---|---|---|---|---|
+| Information, action, then new evidence | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+| Delivery does not reset age | 5 | 4 | 4 | 5 | 5 | 4 | 4.50 |
+
+These are visual self-review judgments, not independent technical review or
+measured learning outcomes. Installed Chrome 155.0.8059.39 checked twelve SVGs
+and 290 states at ten widths (320–1200 px), including mobile semantic parity,
+scenario-specific playback/reduced-motion posters, reset, clipping/overlap,
+keyboard controls, theme changes, responsive static/error fallbacks and
+hidden/offscreen idling. A full fourteen-second live loop and seven intermediate
+beats were also inspected. Nominal 10 px canvas labels measure 9.93 px with
+border rounding. Final average draws: flow 1.230 ms, freshness 0.657 ms; single
+frame maxima: 5.0 and 4.1 ms. No unexpected browser errors.
+
+The original preview separately passed 168 states at seven widths and twelve
+SVGs, plus four package contract tests. Website validation: 67 Python tests,
+13 existing motion tests, all 35 site gates, handbook/article/project validators
+and whitespace checks pass. Temporary captures: `/private/tmp/iot-v2-qa/`;
+canonical review evidence: original `reviews/v1.1-visual-qa/`.
+
+PR #35 remains open. The author reviews before merging; no deployment occurred.

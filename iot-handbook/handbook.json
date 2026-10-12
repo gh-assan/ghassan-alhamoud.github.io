@@ -1,0 +1,40 @@
+{
+  "handbook": {
+    "title": "The IoT Engineering Handbook",
+    "shortTitle": "IoT Engineering Handbook",
+    "subtitle": "Standards, architectures and the foundations of connected systems",
+    "code": "IOT",
+    "indexTagline": "Understand connected systems",
+    "description": "Study IoT definitions, reference architectures, information flows, interoperability, reliability, security and device lifecycle through standards-grounded explanations.",
+    "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked study questions support the reading.",
+    "version": "1.1.0",
+    "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
+    "educationalLevel": "Beginner",
+    "courseWorkload": "PT25M",
+    "author": {
+      "name": "Ghassan Alhamoud",
+      "url": "https://ghassan-alhamoud.com/"
+    },
+    "chapters": [
+      {
+        "id": 1,
+        "slug": "what-is-an-iot-system",
+        "title": "What Is an IoT System?",
+        "subtitle": "Definitions, reference models and engineering responsibilities",
+        "description": "Understand IoT through standard models, sensing and control flows, deployment choices, interoperability, reliability, security and lifecycle.",
+        "status": "published",
+        "editorialStatus": "Standards-grounded study chapter",
+        "difficulty": "beginner",
+        "readingTime": "25 min",
+        "file": "chapter-01-what-is-an-iot-system.md",
+        "ogImage": "/images/og-default.webp",
+        "prerequisites": [],
+        "relatedPatterns": [],
+        "publishedAt": "2026-10-08",
+        "lastModified": "2026-10-12",
+        "outcome": "you can explain an IoT system’s functions, deployment, information flows and lifecycle responsibilities.",
+        "prerequisiteText": "Familiarity with software components, network requests and distributed-system failure. No electronics or hardware required."
+      }
+    ]
+  }
+}
