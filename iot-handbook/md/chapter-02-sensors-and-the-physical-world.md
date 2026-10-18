@@ -28,7 +28,6 @@ After studying this chapter, you should be able to:
 4. Reason about sampling, aliasing, filtering, sensor response, and saturation under explicit assumptions.
 5. Evaluate whether a measurement supports a decision, and preserve its limitations in software.
 
-For a shorter first pass, read through “How Sensors Turn Physical Quantities into Signals,” then use the value tables in the calibration, sampling, response and uncertainty sections. Finish with the worked design example and common pitfalls. Reading time is approximately 35 minutes at 200 words per minute (approximately 6,900 words including tables and optional reasoning). No lab time applies.
 
 ## Begin With the Quantity, Not the Device
 
