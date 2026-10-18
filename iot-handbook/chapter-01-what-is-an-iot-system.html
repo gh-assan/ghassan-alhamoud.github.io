@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 1: What Is an IoT System? — IoT Engineering Handbook</title>
+  <meta name="description" content="Understand IoT through standard models, sensing and control flows, deployment choices, interoperability, reliability, security and lifecycle." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html" />
+  <meta property="og:title" content="Chapter 1: What Is an IoT System? — Definitions, reference models and engineering responsibilities" />
+  <meta property="og:description" content="Understand IoT through standard models, sensing and control flows, deployment choices, interoperability, reliability, security and lifecycle." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="article:published_time" content="2026-10-08" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html" />
+  <meta property="twitter:title" content="Chapter 1: What Is an IoT System? — Definitions, reference models and engineering responsibilities" />
+  <meta property="twitter:description" content="Understand IoT through standard models, sensing and control flows, deployment choices, interoperability, reliability, security and lifecycle." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "What Is an IoT System? \u2014 Definitions, reference models and engineering responsibilities",
+  "description": "Understand IoT through standard models, sensing and control flows, deployment choices, interoperability, reliability, security and lifecycle.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The IoT Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/iot-handbook/"
+  },
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-12",
+  "image": "https://ghassan-alhamoud.com/images/og-default.webp",
+  "learningResourceType": "Chapter",
+  "position": 1,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IoT Engineering Handbook",
+      "item": "https://ghassan-alhamoud.com/iot-handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "What Is an IoT System?",
+      "item": "https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html"
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261012b" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/research/" class="nav__link">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <nav class="handbook-collections" aria-label="Handbook collections"><a href="/handbook/">AI Engineering</a><a href="/iot-handbook/" aria-current="page">IoT Engineering</a></nav>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">IOT-001</span>
+          <h1 class="handbook-hero__title">What Is an IoT System?</h1>
+          <p class="handbook-hero__subtitle">Definitions, reference models and engineering responsibilities</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 1</span>
+            <span class="handbook-hero__dot">•</span><span>25 min</span>
+            <span class="handbook-hero__dot">•</span><span>Beginner</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-10-12</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><p class="prerequisites-box__text">Familiarity with software components, network requests and distributed-system failure. No electronics or hardware required.</p></div>
+
+        <details class="on-this-page"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li><li><a class="on-this-page__link" href="#prerequisites-scope-and-learning-outcomes">Prerequisites, Scope, and Learning Outcomes</a></li><li><a class="on-this-page__link" href="#1-definitions-begin-with-the-scope">1. Definitions: Begin With the Scope</a></li><li><a class="on-this-page__link" href="#2-reference-architectures-functions-before-machines">2. Reference Architectures: Functions Before Machines</a></li><li><a class="on-this-page__link" href="#3-components-and-their-responsibilities">3. Components and Their Responsibilities</a></li><li><a class="on-this-page__link" href="#4-flows-measurement-telemetry-command-and-feedback">4. Flows: Measurement, Telemetry, Command, and Feedback</a></li><li><a class="on-this-page__link" href="#5-deployment-patterns-and-placement-decisions">5. Deployment Patterns and Placement Decisions</a></li><li><a class="on-this-page__link" href="#6-interoperability-agreement-at-several-levels">6. Interoperability: Agreement at Several Levels</a></li><li><a class="on-this-page__link" href="#7-reliability-identify-what-must-continue">7. Reliability: Identify What Must Continue</a></li><li><a class="on-this-page__link" href="#8-security-privacy-and-lifecycle">8. Security, Privacy, and Lifecycle</a></li><li><a class="on-this-page__link" href="#9-study-questions-and-worked-answers">9. Study Questions and Worked Answers</a></li><li><a class="on-this-page__link" href="#10-glossary">10. Glossary</a></li><li><a class="on-this-page__link" href="#11-what-the-foundation-lets-you-explain">11. What the Foundation Lets You Explain</a></li><li><a class="on-this-page__link" href="#further-reading">Further Reading</a></li><li><a class="on-this-page__link" href="#revision-history">Revision History</a></li></ul></details>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Version:</strong> 1.1 | <strong>Sources checked:</strong> 2026-10-12</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>An Internet of Things system connects things, digital representations, communications, and applications so that information about the world can be used. Many systems measure physical conditions; some also change them. A networked environmental monitor is an IoT system even when it has no actuator. A cloud service, a gateway, and artificial intelligence are possible design choices, rather than universal requirements.</p>
+<p>For this chapter, use a practical working definition: <strong>an IoT system combines networked devices that sense or affect the physical world with the software, communications, and operational responsibilities needed to deliver an application.</strong> This is a teaching definition. Standards have different scopes, and we will make those differences explicit.</p>
+<p>Study a system in three views. First, identify its functions: sensing, communication, processing, application behavior, and optional actuation. Second, identify where those functions run: on a device, near the device, or in remote infrastructure. Third, identify its contracts: what the data means, when it is valid, who may use it, and what happens during failure. A diagram becomes useful when it answers these questions.</p>
+<h2 id="prerequisites-scope-and-learning-outcomes">Prerequisites, Scope, and Learning Outcomes</h2>
+<p>You should be comfortable with software components, network requests, and basic distributed-system failure. No programming language, electronics kit, vendor platform, or previous chapter is required.</p>
+<p>This chapter establishes a conceptual foundation. It does not provide wiring instructions, firmware, a physical experiment, protocol configuration, a certification checklist, or a complete control-system design. Examples and numerical values are constructed for reasoning; they are not measurements from a deployment.</p>
+<p>After studying it, you should be able to:</p>
+<ol>
+<li>Explain the distinction between a thing, an IoT device, and an IoT system, while naming the definition being used.</li>
+<li>Read a reference model and distinguish functional layers from deployment locations.</li>
+<li>Trace measurement, telemetry, command, and feedback flows, including their guarantee boundaries.</li>
+<li>Compare device, gateway, edge, and remote-service placements under explicit constraints.</li>
+<li>Analyze interoperability, timing, security, reliability, and lifecycle responsibilities in a generic system.</li>
+</ol>
+<h2 id="1-definitions-begin-with-the-scope">1. Definitions: Begin With the Scope</h2>
+<h3 id="a-thing-a-device-and-a-system">A thing, a device, and a system</h3>
+<p>A <strong>thing</strong> is the entity of interest. It might be a room, a machine, a parcel, or a digital representation. A <strong>device</strong> is equipment that provides computing and communication capabilities. A <strong>system</strong> includes cooperating devices and services, their interfaces, and the people and processes responsible for operation.</p>
+<p>These words are related, but substituting one for another hides important boundaries. The room is not its temperature sensor. A device identifier is not the identity of every object that device might observe. A replacement sensor can monitor the same room while changing calibration, credentials, and maintenance history.</p>
+<p>ITU-T Y.4000, originally published as Y.2060 in 2012, describes IoT in terms of interconnected physical and virtual things. Its device definition requires communication while treating sensing, actuation, capture, storage, and processing as optional capabilities. NISTIR 8228 uses a narrower device scope centered on a network interface and sensing or actuating capability. A gateway can therefore be an IoT device in one vocabulary and supporting infrastructure in another. Neither definition should be silently applied outside its context. See <a href="https://www.itu.int/rec/T-REC-Y.2060-201206-I/en">ITU-T Y.4000/Y.2060, §3.2</a> and <a href="https://doi.org/10.6028/NIST.IR.8228">NISTIR 8228, §2</a>.</p>
+<p><strong>ISO/IEC 20924:2024</strong> is the ISO/IEC vocabulary standard for IoT and digital twins. It is a useful terminology reference, but this chapter does not reproduce its definitions or claim clause-level coverage from an inaccessible full text. The official catalogue identifies edition 3, published in February 2024, replacing the 2021 edition. <a href="https://www.iso.org/standard/88799.html">ISO/IEC 20924:2024</a>.</p>
+<p>The study habit is simple: when a definition affects an argument, name its source and scope. Ask whether the discussion concerns physical equipment, an information model, a communication participant, or an entire operational system.</p>
+<h3 id="what-qualifies-under-our-working-definition">What qualifies under our working definition?</h3>
+<p>Consider four constructed examples:</p>
+<table>
+<thead>
+<tr>
+<th>Example</th>
+<th>Classification for this chapter</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A standalone thermometer with a display</td>
+<td>Sensing equipment</td>
+<td>It measures, but has no networked system relationship</td>
+</tr>
+<tr>
+<td>A networked temperature monitor sending readings to a local application</td>
+<td>IoT system</td>
+<td>Physical sensing and communication support an application</td>
+</tr>
+<tr>
+<td>A connected valve receiving authorized remote commands</td>
+<td>Actuating IoT system</td>
+<td>Physical interaction need not be sensing-only</td>
+</tr>
+<tr>
+<td>A conventional online document editor</td>
+<td>Networked software application</td>
+<td>Networking alone does not establish the physical-device boundary in our working definition</td>
+</tr>
+</tbody>
+</table>
+<p>These classifications are teaching examples, not an exhaustive taxonomy. A software service can be part of an IoT system without itself being a physical IoT device. W3C's Web of Things also models virtual Things and services. Broader models remain useful, provided their scope is stated. <a href="https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/#terminology">W3C WoT Architecture 1.1, §3</a>.</p>
+<p>A networked system can operate inside a private local network. Public Internet reachability is a deployment property. Likewise, a sensing application can deliver useful information without a return control path. These observations prevent two common mistakes: requiring a cloud backend in every diagram and requiring an actuator in every system.</p>
+<h2 id="2-reference-architectures-functions-before-machines">2. Reference Architectures: Functions Before Machines</h2>
+<p>A <strong>reference model</strong> provides an abstract vocabulary and relationships. A <strong>reference architecture</strong> organizes architectural concepts and reusable structures. A <strong>deployment architecture</strong> assigns a particular system's functions to equipment and services. These working distinctions help us avoid treating every box in a teaching diagram as a required server.</p>
+<p>Standards address different questions:</p>
+<table>
+<thead>
+<tr>
+<th>Reference</th>
+<th>Role in this chapter</th>
+<th>Scope boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ISO/IEC 20924:2024</td>
+<td>Terminology reference</td>
+<td>Vocabulary does not choose a deployment</td>
+</tr>
+<tr>
+<td>ISO/IEC 30141:2024</td>
+<td>IoT reference-architecture context</td>
+<td>Common architecture vocabulary and reusable designs; no chapter claim of conformance</td>
+</tr>
+<tr>
+<td>ITU-T Y.4000/Y.2060</td>
+<td>Four-layer functional model</td>
+<td>Layers describe capabilities, not four mandatory machines</td>
+</tr>
+<tr>
+<td>NIST SP 800-183</td>
+<td>Dataflow reasoning vocabulary</td>
+<td>An analytical model, not a mandatory protocol stack</td>
+</tr>
+<tr>
+<td>W3C WoT Architecture 1.1</td>
+<td>Interactions and interoperability</td>
+<td>Complements existing technologies; does not replace every IoT protocol</td>
+</tr>
+</tbody>
+</table>
+<p>ISO/IEC 30141:2024 is edition 2 of the IoT reference-architecture standard, published in August 2024. Its official abstract describes a foundational view and additional views, including construction patterns. Only the public scope and edition information are used here; the detailed model below comes from the openly available ITU recommendation. <a href="https://www.iso.org/standard/88800.html">ISO/IEC 30141:2024</a>.</p>
+<h3 id="the-itu-four-layer-model">The ITU four-layer model</h3>
+<figure class="iot-diagram">
+<picture>
+  <source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-1-reference-model-compact.svg">
+  <img src="/images/iot-handbook/IOT-001/fig-1-reference-model.svg" alt="ITU functional model, paraphrased: application, service support and application support, network, and device layers. Management and security apply across all four layers." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 1. Author-drawn paraphrase of the ITU functional model. Security and management span all layers. Box size and position do not specify deployment or ownership.</figcaption>
+</figure>
+
+<p>ITU-T Y.4000/Y.2060 §8 identifies four layers: <strong>device</strong>, <strong>network</strong>, <strong>service support and application support</strong>, and <strong>application</strong>. Management and security capabilities are associated with all four. Read upward from capabilities close to equipment toward the application using them. <a href="https://www.itu.int/rec/T-REC-Y.2060-201206-I/en">ITU-T Y.4000/Y.2060, §8</a>.</p>
+<p>Here is a constructed mapping for a building's environmental monitoring application:</p>
+<table>
+<thead>
+<tr>
+<th>Functional layer</th>
+<th>Illustrative responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Device</td>
+<td>Acquire observations and provide device communication capabilities</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Move information between communication participants</td>
+</tr>
+<tr>
+<td>Service support and application support</td>
+<td>Offer reusable storage, processing, or application-specific support</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>Present room conditions and notify an operator</td>
+</tr>
+</tbody>
+</table>
+<p>The mapping is our example. It is not a list of mandatory products. The monitor might connect directly to a service or communicate through a gateway. Processing and storage might share one application process. Some supporting functions might run on the device itself.</p>
+<p>A useful way to read the figure is to ask what each layer contributes, then draw a separate deployment view. A single gateway can communicate, store data, and perform application logic. It can therefore realize functions associated with several layers. Conversely, one functional layer can span several services.</p>
+<p>Security cannot be confined to the remote backend. An authenticated application still depends on device identity, interface access, and the protection of data in transit. Management cannot be reduced to a dashboard: configuration and updates must reach the equipment they affect. The cross-layer columns remind us to follow these responsibilities through the entire system.</p>
+<h3 id="a-complementary-nist-dataflow-model">A complementary NIST dataflow model</h3>
+<p>NIST SP 800-183 describes five primitives: <strong>sensor</strong>, <strong>aggregator</strong>, <strong>communication channel</strong>, <strong>external utility (eUtility)</strong>, and <strong>decision trigger</strong>. They help analyze how data becomes an application result. An external utility can provide supporting products or services; a decision trigger can lead to an action or transaction, and need not control an actuator. <a href="https://doi.org/10.6028/NIST.SP.800-183">NIST SP 800-183, §2</a>.</p>
+<p>Do not equate these primitives one-to-one with the ITU layers. One model organizes capabilities; the other helps reason about dataflow. For example, an aggregator function could execute in device firmware, a gateway, or a remote service. Calling it an aggregator tells us what it does, while its deployment location tells us which resources and failures it depends on.</p>
+<h2 id="3-components-and-their-responsibilities">3. Components and Their Responsibilities</h2>
+<p>The following vocabulary is a teaching organization used throughout this chapter. It is not an additional standardized layer stack.</p>
+<h3 id="sensors-and-actuators">Sensors and actuators</h3>
+<p>A <strong>sensor</strong> produces information about a physical quantity or condition. An <strong>actuator</strong> changes a physical condition. Together, these are transducer capabilities at the boundary between physical and digital environments. Measurement and actuation are distinct functions; a device can provide either or both. <a href="https://doi.org/10.6028/NIST.IR.8228">NISTIR 8228, §2</a>.</p>
+<p>A sensing path connects a quantity of interest to an observation. For example, a sensor at one point in a room provides evidence about temperature at that location and time. The application may estimate the room's condition from that reading. The estimate requires assumptions about placement and relevance. A precise digital value does not eliminate those assumptions.</p>
+<p>An actuation path connects a requested operation to physical equipment. An application may request a valve position. The request describes intent; equipment determines what actually happens. Feedback can provide evidence about the resulting position or process condition. The needed evidence depends on the application: a valve's position and the flow through it are different quantities.</p>
+<h3 id="devices-and-firmware">Devices and firmware</h3>
+<p>A device combines hardware capabilities with software that accesses them. <strong>Firmware</strong> is software operating close to that hardware: it may acquire observations, manage communication, maintain configuration, or execute local decisions. An embedded system does not imply a particular operating system or programming language.</p>
+<p>Resource limits shape design. RFC 7228 discusses constrained nodes in terms of memory, processing, power, and deployment accessibility, and separately discusses constrained networks. It is an <strong>Informational RFC</strong>, rather than a requirements standard for every IoT device. A powerful industrial computer and a small battery-operated node can both participate in IoT while having very different constraints. <a href="https://www.rfc-editor.org/info/rfc7228/">RFC 7228, §§2–4</a>.</p>
+<p>From those constraints, reason about responsibilities. A battery-operated sensor may sleep between transmissions, so continuous remote availability cannot simply be assumed. A device with small storage cannot retain unlimited disconnected history. Firmware that must meet a local deadline needs a plan for what happens while another component is unavailable. These are engineering consequences of stated constraints, not universal device characteristics.</p>
+<h3 id="networks-gateways-and-edge-computing">Networks, gateways, and edge computing</h3>
+<p>A <strong>network</strong> carries information among participants. <strong>Gateway</strong> describes a role at an interface: it may bridge protocols, relay communication, normalize data, or mediate access. A gateway is useful when an actual boundary needs that service. Adding one introduces another component to operate and another failure mode to analyze.</p>
+<p><strong>Edge computing</strong> places processing near the source or use of information. A device can perform edge computation. A gateway can do so too. The terms are therefore not interchangeable: a gateway describes an interface responsibility, while edge describes placement. A relay gateway need not run application analytics.</p>
+<p>A <strong>remote service</strong> provides processing or storage away from the equipment. Cloud infrastructure is one possible implementation. Whether to place a function remotely depends on deadlines, connectivity, capacity, administration, and data policy. Location does not automatically establish reliability or security.</p>
+<h3 id="applications-and-operations">Applications and operations</h3>
+<p>An application interprets information for a purpose: monitoring, alerting, reporting, optimization, or control. Its correctness depends on the meaning and quality of its inputs as well as its own logic.</p>
+<p>Operations includes onboarding equipment, assigning identity, changing configuration, applying updates, monitoring health, maintaining devices, and retiring them. A useful system definition includes these responsibilities because software that works on installation day still needs a supportable lifecycle. We will return to lifecycle in Section 8.</p>
+<h2 id="4-flows-measurement-telemetry-command-and-feedback">4. Flows: Measurement, Telemetry, Command, and Feedback</h2>
+<div class="iot-controls"><label class="iot-scenario" for="iot-flow-kind">Illustrative flow<select id="iot-flow-kind"><option value="sensing">Sensing only</option><option value="actuating" selected>With optional actuation</option></select></label><button type="button" class="iot-reset" data-iot-reset="iot-study-flow">Reset flow</button></div>
+
+<figure id="iot-flow-scene" class="scene iot-scene" data-scene="iot-study-flow" data-kind="actuating" data-label="Illustrative sequence: measurement, telemetry, optional command, optional actuation, and relevant feedback">
+  <div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-2-flows-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-2-flows.svg" alt="Static alternative: measurement and telemetry, with an optional return command and actuation path."></picture></div>
+  <figcaption class="evidence-caption">Illustrative teaching model, initially paused. Time is stretched for explanation. Sequence: observation acquired → telemetry received → optional operation requested → operation applied → relevant new observation. The sequence supplies no measured timing or outcome guarantee.</figcaption>
+</figure>
+
+<h3 id="measurement-and-telemetry">Measurement and telemetry</h3>
+<p><strong>Measurement</strong> produces an observation about a quantity. <strong>Telemetry</strong> communicates observations or other device information for use elsewhere. Telemetry can include measurement data, equipment status, or diagnostics; these have different meanings.</p>
+<p>Follow a constructed observation from a room monitor:</p>
+<ol>
+<li>A sensor acquires a temperature observation.</li>
+<li>Device software associates it with a quantity, unit, identity, and measurement time.</li>
+<li>Communication carries a representation of that observation.</li>
+<li>A receiving application interprets it under its data contract.</li>
+<li>The application uses it to display a condition or make a decision.</li>
+</ol>
+<p>The value <code>24.0</code> alone does not tell a receiver what was measured, which unit applies, where the observation came from, or when it was acquired. Receiving valid bytes is only one part of understanding the observation.</p>
+<p>SenML, specified in RFC 8428, is one standardized way to represent sensor measurements, including names, units, values, and time. Its time representation can be absolute or relative. We use the concept of measurement metadata here without prescribing a serialization or inventing a SenML message. <a href="https://www.rfc-editor.org/info/rfc8428/">RFC 8428, §§4–5</a>.</p>
+<h3 id="commands-and-feedback">Commands and feedback</h3>
+<p>A <strong>command</strong> requests an operation. A <strong>response</strong> communicates something about handling that request. <strong>Feedback</strong> provides information used to assess the system's state or response. These can be carried by the same communication network, but they answer different questions.</p>
+<p>For a constructed connected-valve example, distinguish these records:</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>What it can support, given a trustworthy implementation</th>
+<th>What remains separate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Request issued</td>
+<td>The application requested a position</td>
+<td>Receipt and execution</td>
+</tr>
+<tr>
+<td>Communication acknowledgement</td>
+<td>The relevant protocol exchange reached its acknowledged stage</td>
+<td>Application acceptance and physical movement</td>
+</tr>
+<tr>
+<td>Application response: accepted</td>
+<td>The receiving application accepted the operation under its contract</td>
+<td>Completion and process outcome</td>
+</tr>
+<tr>
+<td>Device report: target position set</td>
+<td>Device software reports a state change</td>
+<td>Actual valve position</td>
+</tr>
+<tr>
+<td>Position observation</td>
+<td>Evidence about position at a stated time</td>
+<td>Whether the intended flow was achieved</td>
+</tr>
+<tr>
+<td>Flow observation</td>
+<td>Evidence about flow at the observation point</td>
+<td>Other process objectives and future behavior</td>
+</tr>
+</tbody>
+</table>
+<p>The table is engineering reasoning, not a universal response vocabulary. Some systems combine stages; others expose fewer records. Always read the actual interface contract.</p>
+<p>A feedback path must observe something relevant to the question. A device's copy of its commanded value provides useful software-state information, but it cannot by itself establish a physical process outcome. A physical observation also has limitations: placement, delay, calibration, and shared failures can affect its interpretation. Evidence is evaluated against a claim, rather than treated as an absolute proof of all system behavior.</p>
+<h3 id="open-loop-and-closed-loop-control">Open-loop and closed-loop control</h3>
+<p>In an <strong>open-loop</strong> control model, the operation is selected without using feedback about the resulting controlled quantity to adjust it. In a <strong>closed-loop</strong> model, feedback about that quantity influences subsequent control. This is the control vocabulary used in our teaching model.</p>
+<p>A system can be connected while its physical control loop remains local. A remote application might select a desired value while a local controller repeatedly measures and adjusts the process. A monitoring application can receive feedback without controlling anything. Consequently, telemetry does not automatically imply closed-loop control, and a closed loop does not automatically imply remote control.</p>
+<p>The design question is which component owns the decision at each timescale. A person changing a daily schedule and a controller responding to a fast disturbance have different timing contracts. Drawing both simply as “control” conceals those differences.</p>
+<h2 id="5-deployment-patterns-and-placement-decisions">5. Deployment Patterns and Placement Decisions</h2>
+<p>Compare the following illustrative placements of the same functions. W3C WoT discusses local, intermediary, edge, and remote arrangements. <a href="https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/#common-deployment-patterns">WoT Architecture 1.1, §§5 and 9</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Where key work happens</th>
+<th>Useful when</th>
+<th>Question to resolve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct telemetry</td>
+<td>Device communicates with an application service</td>
+<td>The device supports the required communication and data contract</td>
+<td>What happens during disconnection?</td>
+</tr>
+<tr>
+<td>Gateway-assisted telemetry</td>
+<td>Gateway mediates between devices and applications</td>
+<td>Protocol translation or local consolidation is needed</td>
+<td>Does gateway failure stop all dependent devices?</td>
+</tr>
+<tr>
+<td>Local control with remote supervision</td>
+<td>Immediate control is local; a remote application supplies goals or history</td>
+<td>Physical response must continue through remote outages</td>
+<td>What authority and limits does each controller have?</td>
+</tr>
+<tr>
+<td>Remote processing</td>
+<td>A remote service processes device information</td>
+<td>Centralized capacity or cross-device analysis matters</td>
+<td>Are delay and availability compatible with the application?</td>
+</tr>
+</tbody>
+</table>
+<h3 id="worked-comparison-a-generic-monitoring-system">Worked comparison: a generic monitoring system</h3>
+<p>Assume a constructed building application must show environmental trends and notify an operator about an out-of-range condition. It has no automatic actuator. Consider two deployments under the same functional requirements.</p>
+<p><strong>Option A:</strong> each monitor sends observations directly to a remote service. This removes a separately managed gateway from the path. It places the communication and identity responsibilities on each device and its service relationship.</p>
+<p><strong>Option B:</strong> monitors send observations to a site gateway that stores and forwards them. This can consolidate communication and preserve some history through a remote outage. It adds local storage, gateway maintenance, and a shared dependency. A failed gateway may affect many monitors.</p>
+<p>The decision cannot be made from the word “IoT.” First establish whether the devices support the remote interface, whether connectivity interruptions matter, and whether someone can maintain the gateway. Next establish what the application must deliver during an outage. Preserving observations for later trend analysis is different from delivering an immediate notification.</p>
+<p>A gateway with a buffer can address the first requirement without addressing the second. If nobody can receive the notification while disconnected, later replay does not restore the missed opportunity to respond. This counterexample shows why a useful architecture starts from an application contract, rather than a preferred technology.</p>
+<h3 id="worked-reasoning-freshness-is-separate-from-delivery">Worked reasoning: freshness is separate from delivery</h3>
+<p>Assume a constructed application evaluates a reading at <strong>12:00:10</strong>. The observation was acquired at <strong>12:00:00</strong> and arrived at <strong>12:00:09</strong>. Assume synchronized clocks and negligible timestamp uncertainty for this exercise. The application permits observations no older than <strong>5 seconds</strong>.</p>
+<p>The observation's age at evaluation is:</p>
+<p><strong>age = evaluation time − measurement time = 10 seconds</strong></p>
+<p>Its age exceeds the assumed limit, so it cannot support the application's “current condition” decision. Arrival only one second earlier does not make the measurement one second old. It can still contribute to historical analysis if that use accepts older data.</p>
+<p>The 5-second limit is an invented application requirement. There is no universal IoT freshness limit. In a real contract, clock uncertainty and the interval between sensing and timestamp assignment also matter. When that uncertainty crosses the allowed age boundary, the decision needs an explicit policy for uncertain freshness.</p>
+<p>This reasoning separates four terms: sampling interval, communication delay, observation age, and decision deadline. Increasing the sampling rate does not remove a long transmission queue. Reliable delivery does not make old information timely.</p>
+<div class="iot-controls"><button type="button" class="iot-reset" data-iot-reset="iot-study-freshness">Reset timeline</button></div>
+
+<figure id="iot-freshness-scene" class="scene iot-scene" data-scene="iot-study-freshness" data-label="Illustrative observation age increases from measurement through arrival to evaluation">
+  <div class="scene__stage"><picture><source media="(max-width: 679px)" srcset="/images/iot-handbook/IOT-001/fig-3-freshness-compact.svg"><img src="/images/iot-handbook/IOT-001/fig-3-freshness.svg" alt="Static alternative: the observation is already too old for this decision when it arrives."></picture></div>
+  <figcaption class="evidence-caption">Illustrative teaching model, initially paused. Sequence: measured at age zero → assumed age limit passes → received at age nine seconds → evaluated at age ten seconds. Receipt does not reset the measurement time. The prose and static figure carry the same lesson.</figcaption>
+</figure>
+
+<h2 id="6-interoperability-agreement-at-several-levels">6. Interoperability: Agreement at Several Levels</h2>
+<p>Interoperability requires enough agreement for participants to exchange and use information correctly. We will distinguish three levels for study:</p>
+<ul>
+<li><strong>Communication:</strong> participants can establish the required exchanges.</li>
+<li><strong>Representation:</strong> participants agree on encoding, field structure, and data types.</li>
+<li><strong>Meaning:</strong> participants agree on quantity, units, identity, location, time, and behavior.</li>
+</ul>
+<p>Standards may group these three levels differently. The distinction helps identify what two participants have actually agreed on.</p>
+<p>Two devices may use the same transport and JSON encoding while assigning different meanings to <code>temperature</code>. One may report air temperature in degrees Celsius, the other equipment temperature in degrees Fahrenheit. Both messages can be syntactically valid. An application comparing their numbers directly is still wrong.</p>
+<p>W3C WoT provides an interaction model with <strong>Properties</strong>, <strong>Actions</strong>, and <strong>Events</strong>. A Property exposes state, an Action invokes functionality, and an Event provides asynchronous notifications. Thing Descriptions describe interaction affordances and supporting metadata; protocol bindings connect interaction descriptions to concrete protocols. This complements existing IoT technologies. <a href="https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/#interaction-model">WoT Architecture 1.1, §§6.1, 6.5, and 6.7</a>.</p>
+<p>For a constructed monitor, current temperature might be exposed as a Property, a requested calibration procedure as an Action, and an alarm notification as an Event. These are possible interface choices. A time-series sample can also be communicated as an Event, so “measurement” does not map exclusively to Property.</p>
+<p>A description helps consumers understand how to interact. It does not independently prove that a sensor is calibrated or that an Action achieved a physical outcome. Metadata and measurement evidence serve different purposes.</p>
+<h3 id="protocols-occupy-part-of-the-architecture">Protocols occupy part of the architecture</h3>
+<p>MQTT 5.0 specifies publish/subscribe messaging with three delivery QoS levels. CoAP's base specification describes a constrained application protocol with request/response semantics and confirmable-message exchanges. These are application-protocol choices, not complete IoT system architectures. <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html">OASIS MQTT 5.0, §§1 and 4.3</a>; <a href="https://www.rfc-editor.org/info/rfc7252/">RFC 7252, §§2 and 4</a>.</p>
+<p>MQTT's “exactly once” QoS concerns its message-delivery exchange. It does not mean a separate actuator changed the world exactly once. In CoAP, an empty acknowledgement can precede a separate response; message acknowledgement and application response are distinct protocol concepts. Neither protocol can establish a physical outcome without an application-specific evidence path. <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html">MQTT 5.0, §4.3.3</a>; <a href="https://www.rfc-editor.org/info/rfc7252/">RFC 7252, §5.2.2</a>.</p>
+<p>Choose a protocol by the required interactions and constraints, then specify the remaining application semantics. A broker, a resource endpoint, a data schema, and an authorization rule have different responsibilities even when one product implements several of them.</p>
+<h2 id="7-reliability-identify-what-must-continue">7. Reliability: Identify What Must Continue</h2>
+<p>Reliability reasoning begins with a named service and its conditions. “The system is available” is incomplete until we know whether that means local sensing, remote visibility, timely notification, control, or historical retrieval.</p>
+<p>Consider these constructed failures:</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Possible consequence</th>
+<th>Responsibility to make explicit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sensor stops updating</td>
+<td>Application may display a plausible old value</td>
+<td>Detect freshness and distinguish missing from current data</td>
+</tr>
+<tr>
+<td>Network disconnects</td>
+<td>Remote information or commands may stop</td>
+<td>Define local behavior and disconnected-data policy</td>
+</tr>
+<tr>
+<td>Device restarts</td>
+<td>Volatile state and communication sessions may change</td>
+<td>Define initialization and state recovery</td>
+</tr>
+<tr>
+<td>Gateway fails</td>
+<td>Several devices may lose a shared path</td>
+<td>Identify dependency scope and recovery ownership</td>
+</tr>
+<tr>
+<td>Command response is lost</td>
+<td>Sender may not know whether an operation occurred</td>
+<td>Define reconciliation and retry semantics</td>
+</tr>
+<tr>
+<td>Storage fills during outage</td>
+<td>Old or new observations may be discarded</td>
+<td>Bound capacity and define the loss policy</td>
+</tr>
+</tbody>
+</table>
+<p>Select the failures relevant to the deployment and consequence being studied.</p>
+<p>A retry is an application decision. Repeating “set desired temperature to 20 °C” and repeating “dispense one unit” have different meanings. Even a state-setting operation can become inappropriate when delayed past its validity period. Duplicate handling, validity, and recovery need a contract that extends beyond successful transmission.</p>
+<p>Unknown outcomes deserve representation. If a response is missing, the sender may have evidence of neither success nor failure. Reporting failure as certainty can invite an unsafe retry; reporting success as certainty can hide a missed action. A system can instead expose uncertainty and use reconciliation or a relevant new observation to narrow it.</p>
+<p>Observability should follow the same boundaries. Device health, communication status, application processing, and process outcomes answer different questions. A connected device may have a broken sensor. A healthy remote service may hold stale observations. A dashboard that combines these into one green indicator discards information needed for diagnosis.</p>
+<h2 id="8-security-privacy-and-lifecycle">8. Security, Privacy, and Lifecycle</h2>
+<p>An identifier answers “which entity?” Authentication establishes evidence of identity under a mechanism. Authorization determines which operations that identity may perform. Keeping these concepts separate matters when equipment is installed, replaced, transferred, or retired.</p>
+<p>NISTIR 8259A's <strong>2020 device cybersecurity core baseline</strong> organizes six capability areas: device identification, device configuration, data protection, logical access to interfaces, software update, and cybersecurity state awareness. The baseline is a starting point for requirements, rather than a guarantee that any device offering six labeled features is secure. Later NIST catalogues may expand the taxonomy; the six-area list here is specifically the 2020 document. <a href="https://doi.org/10.6028/NIST.IR.8259A">NISTIR 8259A, §2 and Table 1</a>.</p>
+<p>Follow a device through a conceptual lifecycle: selection, onboarding, operation, maintenance, and retirement. This sequence is a teaching organization. At selection, establish whether the equipment can meet the required support and security needs. At onboarding, establish identity and authorized configuration. During operation, protect interfaces and monitor relevant state. During maintenance, manage changes and updates. At retirement, resolve credentials, stored information, and any remaining service relationships.</p>
+<p>A system with protected remote APIs can still have an exposed local configuration interface. A device with signed updates can still be operated under a weak authorization policy. Security is a relationship among capabilities, configuration, people, and consequences.</p>
+<p>Privacy also extends beyond personal names. A stream of room-occupancy observations may reveal activity patterns. The data's value to an application does not settle who should have access, how long it should be retained, or which uses are permitted. Those decisions require an explicit purpose and policy.</p>
+<p>NISTIR 8228 discusses how IoT's physical interactions and management differences affect cybersecurity and privacy risk. Protecting information and preserving physical operation can require different considerations from conventional IT. <a href="https://doi.org/10.6028/NIST.IR.8228">NISTIR 8228, §3</a>.</p>
+<p>For this introductory chapter, learn to identify the boundary and consequence. A full safety assessment, industrial security profile, radio approval, or sector-specific regulatory assessment requires the relevant domain standards and expertise. None is established by calling a design “IoT” or by drawing a layered architecture.</p>
+<h2 id="9-study-questions-and-worked-answers">9. Study Questions and Worked Answers</h2>
+<p>Attempt the questions before reading the answers. They assess conceptual reasoning and require no hardware.</p>
+<h3 id="questions">Questions</h3>
+<ol>
+<li>A monitor sends measurements to a local application over a private network. It has no actuator and no cloud account. Is it an IoT system under this chapter's working definition? Which details would matter under a different definition?</li>
+<li>A gateway translates a device protocol, stores observations, and runs alarm logic. Does this contradict a four-layer reference model?</li>
+<li>A temperature observation was measured at 09:15:00, received at 09:15:08, and evaluated at 09:15:12. Assume synchronized clocks and a maximum permitted age of 10 seconds. Can it support the current-condition decision?</li>
+<li>A valve command was delivered with MQTT QoS 2. The application reports success. What additional question must you answer before concluding that the intended flow occurred?</li>
+<li>Two monitors publish the same field name through the same protocol. What information is still needed before their readings can be compared?</li>
+<li>An application must notify a remote operator within 30 seconds of a condition change. A gateway buffers every observation during an hour-long remote outage. Has the requirement been met?</li>
+<li>A connected controller continues a local feedback loop while its remote application is unavailable. Which responsibilities must still be distinguished?</li>
+<li>A building monitor is replaced, and the old device is retired. What responsibilities must be resolved for identity, permissions, software support, and stored information?</li>
+</ol>
+<h3 id="worked-answers">Worked answers</h3>
+<p><strong>1.</strong> Yes. It combines physical sensing, networking, and an application. Actuation and cloud hosting are optional. When using another definition, check its scope for physical and virtual things, device capabilities, and the role of communication. A vocabulary choice should be explicit rather than inferred from a brand or topology.</p>
+<p><strong>2.</strong> No. Functional layers are not machine boundaries. One deployment component can realize communication, service-support, and application functions. The deployment still needs clear interfaces and responsibilities among those functions.</p>
+<p><strong>3.</strong> The observation is 12 seconds old at evaluation, exceeding the assumed 10-second limit. Its four seconds since arrival do not determine measurement age. It may still be useful as historical data. The answer changes only if the actual requirement or timestamp assumptions change.</p>
+<p><strong>4.</strong> Ask what “success” means in that application's contract and what evidence concerns the physical process. Message delivery and an application response do not, by themselves, establish flow. Valve position can support one claim; a relevant flow observation supports another. Freshness and measurement limitations still apply.</p>
+<p><strong>5.</strong> Establish the quantity, unit, identity, measurement location, measurement time, and relevant quality information. Matching transport and syntax do not establish matching meaning. Even matching units do not make two different physical locations interchangeable.</p>
+<p><strong>6.</strong> No. Buffering can preserve history, but the stated remote notification deadline was missed. The architecture needs a feasible timely notification path or a revised requirement. Replay cannot make the original notification timely.</p>
+<p><strong>7.</strong> Distinguish immediate control decisions, remotely supplied goals, authority to change them, reporting, and recovery after reconnection. Determine whether the controller can continue meeting its local contract and how old remote commands or conflicting state will be handled. Remote outage tolerance is a claim about defined behavior, rather than an automatic property of local placement.</p>
+<p><strong>8.</strong> Establish the replacement device’s identity and authorize it for its intended role; do not assume the old device’s permissions transfer automatically. Resolve the old device’s credentials and service access so retirement removes its authority to participate. Confirm who will configure, update, and monitor the replacement over its support life. Decide what to retain, transfer, or erase from the old device and associated services under the data policy. Physical replacement, authorization, software support, and information retention are separate lifecycle responsibilities.</p>
+<h2 id="10-glossary">10. Glossary</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Working meaning in this chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thing</td>
+<td>Entity of interest; physical or virtual depending on the cited vocabulary</td>
+</tr>
+<tr>
+<td>IoT device</td>
+<td>Equipment within the scope of the selected device definition</td>
+</tr>
+<tr>
+<td>IoT system</td>
+<td>A system combining networked devices that sense or affect the physical world with the software, communications, and operational responsibilities needed to deliver an application</td>
+</tr>
+<tr>
+<td>Sensor</td>
+<td>Component producing information about a physical quantity or condition</td>
+</tr>
+<tr>
+<td>Actuator</td>
+<td>Component changing a physical condition</td>
+</tr>
+<tr>
+<td>Firmware</td>
+<td>Software operating close to device hardware</td>
+</tr>
+<tr>
+<td>Telemetry</td>
+<td>Communication of observations or device information</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>Component mediating an interface between participants or technologies</td>
+</tr>
+<tr>
+<td>Edge computing</td>
+<td>Processing placed near the source or use of information</td>
+</tr>
+<tr>
+<td>Reference model</td>
+<td>Abstract concepts and relationships for reasoning</td>
+</tr>
+<tr>
+<td>Reference architecture</td>
+<td>Architectural vocabulary and reusable organization</td>
+</tr>
+<tr>
+<td>Deployment architecture</td>
+<td>Assignment of functions to actual equipment and services</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>Information used to assess state or response and, in a closed loop, influence control</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>Whether information's age is acceptable for a stated use</td>
+</tr>
+<tr>
+<td>Interoperability</td>
+<td>Ability to exchange and correctly use information under agreed contracts</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td>Establishing evidence of identity under a mechanism</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Determining which operations an identity may perform</td>
+</tr>
+<tr>
+<td>Lifecycle</td>
+<td>Responsibilities spanning selection, onboarding, use, maintenance, and retirement</td>
+</tr>
+</tbody>
+</table>
+<h2 id="11-what-the-foundation-lets-you-explain">11. What the Foundation Lets You Explain</h2>
+<p>An IoT system is understood through its purpose, physical and digital participants, functional responsibilities, deployment, and contracts. A component list alone does not explain how observations become useful information or how requested operations relate to physical outcomes.</p>
+<p>Reference models provide vocabulary. Deployment decisions allocate work under constraints. Data and interaction contracts establish meaning. Reliability, security, and lifecycle reasoning establish what must hold as equipment and communication conditions change.</p>
+<p>When studying an unfamiliar system, begin with five questions: What is its purpose? What does it observe or affect? Which functions run where? What do its exchanges establish? Who owns its behavior during failure and change? The answers produce a useful architecture before selecting a platform.</p>
+<h2 id="further-reading">Further Reading</h2>
+<p>Read these sources according to their roles. A recommendation, an Informational RFC, a protocol specification, and a technical baseline do not have identical normative status.</p>
+<ul>
+<li><a href="https://www.itu.int/rec/T-REC-Y.2060-201206-I/en">ITU-T Y.4000/Y.2060: Overview of the Internet of things</a>, June 2012; renumbered in 2016. Study §§3 and 8 for definitions and the functional model.</li>
+<li><a href="https://www.iso.org/standard/88799.html">ISO/IEC 20924:2024: IoT and digital twin vocabulary</a>, edition 3. Official catalogue and scope; full definitions are not reproduced here.</li>
+<li><a href="https://www.iso.org/standard/88800.html">ISO/IEC 30141:2024: IoT reference architecture</a>, edition 2. Official catalogue and scope; detailed clauses require the standard itself.</li>
+<li><a href="https://doi.org/10.6028/NIST.SP.800-183">NIST SP 800-183: Networks of Things</a>, July 2016. Study §2 as a complementary analytical vocabulary.</li>
+<li><a href="https://www.w3.org/TR/2023/REC-wot-architecture11-20231205/">W3C WoT Architecture 1.1</a>, Recommendation, 5 December 2023. Study the interaction model and deployment examples alongside its <a href="https://w3c.github.io/wot-architecture/errata11.html">errata</a>.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc7228/">RFC 7228: Terminology for Constrained-Node Networks</a>, Informational, May 2014. Study device, network, and energy constraints.</li>
+<li><a href="https://www.rfc-editor.org/info/rfc8428/">RFC 8428: Sensor Measurement Lists</a>, August 2018. Study measurement metadata and time representation; consult the status page for updates and errata.</li>
+<li><a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html">OASIS MQTT 5.0</a>, OASIS Standard, 7 March 2019; and <a href="https://www.rfc-editor.org/info/rfc7252/">RFC 7252: CoAP</a>, June 2014. Study interaction and delivery semantics separately from physical-effect claims; consult RFC status for extensions and errata.</li>
+<li><a href="https://doi.org/10.6028/NIST.IR.8259A">NISTIR 8259A</a>, May 2020; and <a href="https://doi.org/10.6028/NIST.IR.8228">NISTIR 8228</a>, June 2019. Study capability baselines and IoT risk considerations as guidance for scoped requirements.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>2026-10-12</td>
+<td>Prepared independent, standards-grounded study material after author approval and three review lenses; aligned the glossary, added a lifecycle exercise, and tightened repeated scope caveats</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>2026-10-12</td>
+<td>Redesigned compact return paths and causal motion; added an explicit freshness threshold, shared visual styling and equivalent static fallbacks</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<div class="chapter-nav__link chapter-nav__link--prev chapter-nav__link--disabled"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">—</div></div>
+<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/iot-handbook/" class="btn btn--primary">Read the Handbook</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites-scope-and-learning-outcomes">Prerequisites, Scope, and Learning Outcomes</a></li>
+<li><a class="handbook-toc__link" href="#1-definitions-begin-with-the-scope">1. Definitions: Begin With the Scope</a><ul>
+<li><a class="handbook-toc__link" href="#a-thing-a-device-and-a-system">A thing, a device, and a system</a></li>
+<li><a class="handbook-toc__link" href="#what-qualifies-under-our-working-definition">What qualifies under our working definition?</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#2-reference-architectures-functions-before-machines">2. Reference Architectures: Functions Before Machines</a><ul>
+<li><a class="handbook-toc__link" href="#the-itu-four-layer-model">The ITU four-layer model</a></li>
+<li><a class="handbook-toc__link" href="#a-complementary-nist-dataflow-model">A complementary NIST dataflow model</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#3-components-and-their-responsibilities">3. Components and Their Responsibilities</a><ul>
+<li><a class="handbook-toc__link" href="#sensors-and-actuators">Sensors and actuators</a></li>
+<li><a class="handbook-toc__link" href="#devices-and-firmware">Devices and firmware</a></li>
+<li><a class="handbook-toc__link" href="#networks-gateways-and-edge-computing">Networks, gateways, and edge computing</a></li>
+<li><a class="handbook-toc__link" href="#applications-and-operations">Applications and operations</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#4-flows-measurement-telemetry-command-and-feedback">4. Flows: Measurement, Telemetry, Command, and Feedback</a><ul>
+<li><a class="handbook-toc__link" href="#measurement-and-telemetry">Measurement and telemetry</a></li>
+<li><a class="handbook-toc__link" href="#commands-and-feedback">Commands and feedback</a></li>
+<li><a class="handbook-toc__link" href="#open-loop-and-closed-loop-control">Open-loop and closed-loop control</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#5-deployment-patterns-and-placement-decisions">5. Deployment Patterns and Placement Decisions</a><ul>
+<li><a class="handbook-toc__link" href="#worked-comparison-a-generic-monitoring-system">Worked comparison: a generic monitoring system</a></li>
+<li><a class="handbook-toc__link" href="#worked-reasoning-freshness-is-separate-from-delivery">Worked reasoning: freshness is separate from delivery</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#6-interoperability-agreement-at-several-levels">6. Interoperability: Agreement at Several Levels</a><ul>
+<li><a class="handbook-toc__link" href="#protocols-occupy-part-of-the-architecture">Protocols occupy part of the architecture</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#7-reliability-identify-what-must-continue">7. Reliability: Identify What Must Continue</a></li>
+<li><a class="handbook-toc__link" href="#8-security-privacy-and-lifecycle">8. Security, Privacy, and Lifecycle</a></li>
+<li><a class="handbook-toc__link" href="#9-study-questions-and-worked-answers">9. Study Questions and Worked Answers</a><ul>
+<li><a class="handbook-toc__link" href="#questions">Questions</a></li>
+<li><a class="handbook-toc__link" href="#worked-answers">Worked answers</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#10-glossary">10. Glossary</a></li>
+<li><a class="handbook-toc__link" href="#11-what-the-foundation-lets-you-explain">11. What the Foundation Lets You Explain</a></li>
+<li><a class="handbook-toc__link" href="#further-reading">Further Reading</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20261012b" defer></script>
+  <script src="/assets/js/motion/scene-iot.js?v=20261012b" defer></script>
+  <script src="/assets/js/iot-handbook.js?v=20261012b" defer></script>
+</body>
+</html>
