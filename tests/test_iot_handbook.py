@@ -1,6 +1,7 @@
 """Publication and renderer regressions for the IoT collection."""
 import importlib.util
 import json
+import re
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -17,6 +18,30 @@ def load_script(name):
 
 
 class IoTHandbookTests(unittest.TestCase):
+    def test_sensor_chapter_publication_is_complete(self):
+        chapter = 'chapter-02-sensors-and-the-physical-world.html'
+        page = (ROOT / 'iot-handbook' / chapter).read_text()
+        self.assertIn('Version:</strong> 1.6', page)
+        self.assertEqual(3, page.count('class="iot-diagram"'))
+        self.assertIn('/assets/js/iot-handbook.js', page)
+        self.assertNotIn('/assets/js/motion/core.js', page)
+        self.assertNotIn('src="visuals/', page)
+        self.assertNotIn('../IOT-001-', page)
+        self.assertIn('/iot-handbook/sources/chapter-02.md', page)
+        self.assertTrue((ROOT / 'iot-handbook/sources/chapter-02.md').is_file())
+        for surface in ('index.html', 'llms.txt', 'sitemap.xml',
+                        'iot-handbook/index.html', 'iot-handbook/chapter-01-what-is-an-iot-system.html'):
+            self.assertIn(chapter, (ROOT / surface).read_text(), surface)
+        self.assertEqual(12, len(list((ROOT / 'images/iot-handbook/IOT-002').glob('*.svg'))))
+
+    def test_static_sensor_figures_load_without_motion_runtime(self):
+        builder = load_script('build-handbook')
+        head, body = builder.motion_assets('<figure class="iot-diagram"><picture></picture></figure>')
+        self.assertEqual('', head)
+        self.assertIn('/assets/js/iot-handbook.js', body)
+        self.assertNotIn('/motion/', body)
+        self.assertEqual(('', ''), builder.motion_assets('<p>No figures.</p>'))
+
     def test_svg_text_contrast_in_both_themes(self):
         def luminance(color):
             channels = [int(color[i:i + 2], 16) / 255 for i in (1, 3, 5)]
@@ -80,7 +105,7 @@ class IoTHandbookTests(unittest.TestCase):
         page = (ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html').read_text()
         for scene in ('iot-study-flow', 'iot-study-freshness'):
             self.assertIn(f'data-scene="{scene}"', page)
-        for text in ('Version:</strong> 1.1', 'id="iot-flow-kind"', 'on-this-page', 'device is retired'):
+        for text in ('Version:</strong> 1.4', 'id="iot-flow-kind"', 'on-this-page', 'id="security-privacy-and-lifecycle"'):
             self.assertIn(text, page)
         self.assertEqual(1, page.count('class="iot-diagram"'))
         self.assertNotIn('/Users/', page)
@@ -96,3 +121,58 @@ class IoTHandbookTests(unittest.TestCase):
             for private in ('Tamoz', 'Agentic Stream', 'DHT11', 'L293D', 'TinyGo', 'iot-fan', 'iot-evidence', 'lab-pending'):
                 self.assertNotIn(private, text, file.name)
         self.assertEqual(12, len(list((ROOT / 'images/iot-handbook/IOT-001').glob('*.svg'))))
+
+    def test_reading_structure_reports_missing_duplicate_and_reordered_sections(self):
+        validate = load_script('validate-handbook').validate_chapter_structure
+        required = ['Summary', "What's Next?", 'Related Chapters']
+        self.assertEqual([], validate('## Summary\n\n## What\'s Next?\n\n## Related Chapters\n', required))
+        self.assertTrue(any('found 0' in e for e in validate('## Summary\n', required)))
+        self.assertTrue(any('found 2' in e for e in validate('## Summary\n\n## Summary\n', ['Summary'])))
+        self.assertIn('shared chapter sections are out of order',
+                      validate('## Related Chapters\n\n## Summary\n\n## What\'s Next?\n', required))
+        self.assertEqual([], validate('## Other format\n', []))
+
+    def test_iot_faq_schema_matches_visible_questions(self):
+        for page in (ROOT / 'iot-handbook').glob('chapter-*.html'):
+            html = page.read_text()
+            schemas = [json.loads(s) for s in re.findall(
+                r'<script type="application/ld\+json">(.*?)</script>', html, re.S)]
+            faq = next(s for s in schemas if s['@type'] == 'FAQPage')
+            self.assertEqual(html.count('<strong>Q:'), len(faq['mainEntity']))
+            self.assertGreaterEqual(len(faq['mainEntity']), 5)
+            self.assertTrue(all(q['acceptedAnswer']['text'] for q in faq['mainEntity']))
+            self.assertNotIn('Author review pending', html)
+            self.assertNotIn('provenance in reviews/', html)
+            for anchor in ('summary', 'whats-next', 'related-chapters', 'frequently-asked-questions',
+                           'glossary-terms-introduced'):
+                self.assertIn(f'href="#{anchor}"', html)
+                self.assertIn(f'id="{anchor}"', html)
+
+    def test_study_question_section_is_excluded(self):
+        catalog = json.loads((ROOT / 'iot-handbook/handbook.json').read_text())['handbook']
+        self.assertNotIn('Study Questions and Worked Answers', catalog['requiredSections'])
+        for chapter in catalog['chapters']:
+            source = ROOT / 'iot-handbook/md' / chapter['file']
+            page = ROOT / 'iot-handbook' / source.with_suffix('.html').name
+            for file in (source, page):
+                self.assertNotIn('Study Questions and Worked Answers', file.read_text())
+                self.assertNotIn('study-questions-and-worked-answers', file.read_text())
+
+    def test_iot_revision_histories_preserve_older_records_and_consolidate_today(self):
+        for source in (ROOT / 'iot-handbook/md').glob('chapter-*.md'):
+            history = source.read_text().split('## Revision History\n', 1)[1]
+            records = re.findall(r'^\| ([\d.]+) \| (\d{4}-\d{2}-\d{2}) \|', history, re.M)
+            self.assertEqual(1, sum(date == '2026-10-19' for _, date in records), source.name)
+            expected = ['1.1', '1.0'] if source.name.startswith('chapter-01-') else ['1.3', '1.2', '1.1', '1.0']
+            self.assertEqual(expected, [version for version, date in records if date == '2026-10-12'])
+
+    def test_sensor_equations_are_optional_but_design_consequences_remain_visible(self):
+        page = (ROOT / 'iot-handbook/chapter-02-sensors-and-the-physical-world.html').read_text()
+        details = re.findall(r'<details>(.*?)</details>', page, re.S)
+        main = re.sub(r'<details\b.*?</details>', '', page, flags=re.S)
+        for equation in ('r(t) =', 'R(T) =', 'r = aT + b', 'T_s(t) =', 'u_c =', '2^12 ='):
+            self.assertTrue(any(equation in body for body in details), equation)
+            self.assertNotIn(equation, main)
+        for result in ('26.12 °C', '12.04', '0.54 °C', 'cannot repair a wrong location'):
+            self.assertIn(result, main)
+        self.assertNotIn('<details open', page)

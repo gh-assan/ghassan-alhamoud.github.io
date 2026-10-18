@@ -8,6 +8,7 @@
     "validate": "python3 scripts/validate-site.py",
     "test:motion": "node --test tests/motion-mobile.test.cjs tests/motion-audio.test.cjs",
     "build:iot-handbook": "python3 scripts/build-handbook.py --collection iot-handbook",
-    "test:iot-visuals": "node tests/iot-visuals.cjs"
+    "test:iot-visuals": "node tests/iot-visuals.cjs",
+    "test:iot-sensors-visuals": "node tests/iot-sensors-visuals.cjs"
   }
 }
