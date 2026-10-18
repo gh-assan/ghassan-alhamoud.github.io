@@ -1,6 +1,6 @@
 # Chapter 1: What Is an IoT System?
 
-**Version:** 1.4 | **Sources checked:** 2026-10-12
+**Version:** 1.2 | **Sources checked:** 2026-10-12
 
 ## If You Only Read One Section
 
@@ -384,6 +384,6 @@ Read these sources according to their roles. A recommendation, an Informational 
 
 | Version | Date | Change |
 |---|---|---|
-| 1.4 | 2026-10-19 | Aligned the handbook structure, added FAQs and a concise glossary, and threaded a room-monitoring service through the architecture, deployment, failure and lifecycle decisions; tightened repeated qualifications. |
+| 1.2 | 2026-10-19 | Aligned the handbook structure, added FAQs and a concise glossary, and threaded a room-monitoring service through the architecture, deployment, failure and lifecycle decisions; tightened repeated qualifications. |
 | 1.1 | 2026-10-12 | Redesigned compact return paths and causal motion; added an explicit freshness threshold, shared visual styling and equivalent static fallbacks. |
 | 1.0 | 2026-10-12 | Introduced the standards-grounded foundation, glossary and lifecycle exercise. |

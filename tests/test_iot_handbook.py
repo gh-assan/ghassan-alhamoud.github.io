@@ -21,7 +21,7 @@ class IoTHandbookTests(unittest.TestCase):
     def test_sensor_chapter_publication_is_complete(self):
         chapter = 'chapter-02-sensors-and-the-physical-world.html'
         page = (ROOT / 'iot-handbook' / chapter).read_text()
-        self.assertIn('Version:</strong> 1.6', page)
+        self.assertIn('Version:</strong> 1.4', page)
         self.assertEqual(3, page.count('class="iot-diagram"'))
         self.assertIn('/assets/js/iot-handbook.js', page)
         self.assertNotIn('/assets/js/motion/core.js', page)
@@ -105,7 +105,7 @@ class IoTHandbookTests(unittest.TestCase):
         page = (ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html').read_text()
         for scene in ('iot-study-flow', 'iot-study-freshness'):
             self.assertIn(f'data-scene="{scene}"', page)
-        for text in ('Version:</strong> 1.4', 'id="iot-flow-kind"', 'on-this-page', 'id="security-privacy-and-lifecycle"'):
+        for text in ('Version:</strong> 1.2', 'id="iot-flow-kind"', 'on-this-page', 'id="security-privacy-and-lifecycle"'):
             self.assertIn(text, page)
         self.assertEqual(1, page.count('class="iot-diagram"'))
         self.assertNotIn('/Users/', page)
@@ -165,6 +165,10 @@ class IoTHandbookTests(unittest.TestCase):
             self.assertEqual(1, sum(date == '2026-10-19' for _, date in records), source.name)
             expected = ['1.1', '1.0'] if source.name.startswith('chapter-01-') else ['1.3', '1.2', '1.1', '1.0']
             self.assertEqual(expected, [version for version, date in records if date == '2026-10-12'])
+            versions = [tuple(map(int, version.split('.'))) for version, _ in records]
+            for newer, older in zip(versions, versions[1:]):
+                self.assertEqual((older[0], older[1] + 1), newer, source.name)
+            self.assertIn(f'**Version:** {records[0][0]}', source.read_text())
 
     def test_sensor_equations_are_optional_but_design_consequences_remain_visible(self):
         page = (ROOT / 'iot-handbook/chapter-02-sensors-and-the-physical-world.html').read_text()

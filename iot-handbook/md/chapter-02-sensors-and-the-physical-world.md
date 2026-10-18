@@ -1,6 +1,6 @@
 # Chapter 2: Sensors and the Physical World
 
-**Version:** 1.6 | **Sources checked:** 2026-10-12
+**Version:** 1.4 | **Sources checked:** 2026-10-12
 
 ## If You Only Read One Section
 
@@ -502,7 +502,7 @@ No. A valid measurement can leave a decision unresolved. Under this chapter's wh
 
 | Version | Date | Change |
 |---|---|---|
-| 1.6 | 2026-10-19 | Published sensing principles, measurement chains, calibration, sampling, response and uncertainty; aligned the handbook structure, made detailed calculations optional and reduced the glossary to twelve terms. |
+| 1.4 | 2026-10-19 | Published sensing principles, measurement chains, calibration, sampling, response and uncertainty; aligned the handbook structure, made detailed calculations optional and reduced the glossary to twelve terms. |
 | 1.3 | 2026-10-12 | Added sensing principles, worked temperature-sensor cases and six other sensor families; shortened explanations and expanded transfer exercises. |
 | 1.2 | 2026-10-12 | Connected observation objectives, aliased interference, response lag and freshness to Chapter 1. |
 | 1.1 | 2026-10-12 | Clarified numerical examples, terminology and responsive figures. |
