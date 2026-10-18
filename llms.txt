@@ -77,4 +77,5 @@ Core themes:
 ## IoT Engineering Handbook
 
 - [The IoT Engineering Handbook](https://ghassan-alhamoud.com/iot-handbook/): Standards-grounded study material on connected systems, architectures, information flows, interoperability and lifecycle.
-- [What Is an IoT System?](https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html): IoT definitions, functional models, sensing and control flows, deployment reasoning, security and eight worked study questions.
+- [What Is an IoT System?](https://ghassan-alhamoud.com/iot-handbook/chapter-01-what-is-an-iot-system.html): IoT definitions, functional models, sensing and control flows, deployment reasoning, security and lifecycle.
+- [Sensors and the Physical World](https://ghassan-alhamoud.com/iot-handbook/chapter-02-sensors-and-the-physical-world.html): Measurement chains, sensing principles, calibration, sampling, aliasing, lag, uncertainty and worked examples.

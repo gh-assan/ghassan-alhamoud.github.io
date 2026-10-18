@@ -6,11 +6,11 @@
     "code": "IOT",
     "indexTagline": "Understand connected systems",
     "description": "Study IoT definitions, reference architectures, information flows, interoperability, reliability, security and device lifecycle through standards-grounded explanations.",
-    "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked study questions support the reading.",
-    "version": "1.1.0",
+    "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked examples support the reading.",
+    "version": "1.7.0",
     "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
     "educationalLevel": "Beginner",
-    "courseWorkload": "PT25M",
+    "courseWorkload": "PT60M",
     "author": {
       "name": "Ghassan Alhamoud",
       "url": "https://ghassan-alhamoud.com/"
@@ -29,12 +29,48 @@
         "file": "chapter-01-what-is-an-iot-system.md",
         "ogImage": "/images/og-default.webp",
         "prerequisites": [],
-        "relatedPatterns": [],
+        "relatedPatterns": [
+          "sensors-and-the-physical-world"
+        ],
         "publishedAt": "2026-10-08",
-        "lastModified": "2026-10-12",
+        "lastModified": "2026-10-19",
         "outcome": "you can explain an IoT system’s functions, deployment, information flows and lifecycle responsibilities.",
         "prerequisiteText": "Familiarity with software components, network requests and distributed-system failure. No electronics or hardware required."
+      },
+      {
+        "id": 2,
+        "slug": "sensors-and-the-physical-world",
+        "title": "Sensors and the Physical World",
+        "subtitle": "Measurement chains, sensing principles and decision-ready results",
+        "description": "Trace a sensor reading from physical coupling to a software result. Study calibration, sampling, sensor lag and uncertainty through worked examples.",
+        "status": "published",
+        "editorialStatus": "Standards-grounded theoretical study chapter",
+        "difficulty": "beginner",
+        "readingTime": "35 min",
+        "file": "chapter-02-sensors-and-the-physical-world.md",
+        "ogImage": "/images/og-default.webp",
+        "prerequisites": [
+          "what-is-an-iot-system"
+        ],
+        "relatedPatterns": [
+          "what-is-an-iot-system"
+        ],
+        "publishedAt": "2026-10-19",
+        "lastModified": "2026-10-19",
+        "outcome": "you can judge whether a sensor reading supports a physical-world decision."
       }
+    ],
+    "requiredSections": [
+      "If You Only Read One Section",
+      "Prerequisites",
+      "Common Pitfalls and Mitigations",
+      "Summary",
+      "What's Next?",
+      "Related Chapters",
+      "Frequently Asked Questions",
+      "Glossary Terms Introduced",
+      "References and Further Reading",
+      "Revision History"
     ]
   }
 }

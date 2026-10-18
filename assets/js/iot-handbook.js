@@ -16,7 +16,8 @@
       picture.querySelector('img').src = original.replace('.svg', suffix);
       var source = picture.querySelector('source');
       source.srcset = compact.replace('.svg', suffix);
-      source.media = owners.get(picture).getBoundingClientRect().width < 680 ? '(min-width: 0px)' : '(max-width: 0px)';
+      var compactBelow = Number(picture.dataset.compactBelow || 680);
+      source.media = owners.get(picture).getBoundingClientRect().width < compactBelow ? '(min-width: 0px)' : '(max-width: 0px)';
     });
   }
   updatePictures();

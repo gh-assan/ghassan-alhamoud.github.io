@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 620" role="img" aria-labelledby="title desc">
+<title id="title">From quantity to measurement result</title><desc id="desc">Define the intended quantity; follow placement, sensing response, conversion and interpretation. Each stage limits the resulting claim.</desc>
+<rect width="360" height="620" rx="8" fill="#f5f7f5"/>
+<text x="22" y="32" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="600" text-anchor="start">FOLLOW THE MEASUREMENT CHAIN</text>
+<text x="22" y="56" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">A digital interface can hide several stages.</text>
+<rect x="22" y="82" width="316" height="78" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="34" y="106" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">1. Define</text>
+<text x="34" y="128" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Quantity and location</text>
+<text x="34" y="148" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">What claim is needed?</text>
+<line x1="180" y1="162" x2="180" y2="180" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M175.000,174.000 L180.000,180.000 L185.000,174.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="22" y="182" width="316" height="78" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="34" y="206" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">2. Couple</text>
+<text x="34" y="228" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Placement and contact</text>
+<text x="34" y="248" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">What reaches the element?</text>
+<line x1="180" y1="262" x2="180" y2="280" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M175.000,274.000 L180.000,280.000 L185.000,274.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="22" y="282" width="316" height="78" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="34" y="306" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">3. Sense</text>
+<text x="34" y="328" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Physical response</text>
+<text x="34" y="348" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">What changes are retained?</text>
+<line x1="180" y1="362" x2="180" y2="380" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M175.000,374.000 L180.000,380.000 L185.000,374.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="22" y="382" width="316" height="78" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="34" y="406" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">4. Convert</text>
+<text x="34" y="428" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Condition and digitize</text>
+<text x="34" y="448" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">What can be represented?</text>
+<line x1="180" y1="462" x2="180" y2="480" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M175.000,474.000 L180.000,480.000 L185.000,474.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="22" y="482" width="316" height="78" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="34" y="506" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">5. Interpret</text>
+<text x="34" y="528" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Correction and context</text>
+<text x="34" y="548" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">What does the result mean?</text>
+<text x="22" y="596" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">The result needs a unit, time and limitations.</text>
+</svg>

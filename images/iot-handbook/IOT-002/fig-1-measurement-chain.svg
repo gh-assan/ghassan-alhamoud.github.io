@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+<title id="title">From quantity to measurement result</title><desc id="desc">Define the intended quantity; follow placement, sensing response, conversion and interpretation. Each stage limits the resulting claim.</desc>
+<rect width="900" height="300" rx="8" fill="#f5f7f5"/>
+<text x="22" y="32" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="600" text-anchor="start">FOLLOW THE MEASUREMENT CHAIN</text>
+<text x="22" y="56" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">A digital interface can hide several stages.</text>
+<rect x="22" y="100" width="160" height="88" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="34" y="124" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">1. Define</text>
+<text x="34" y="146" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Quantity and location</text>
+<text x="34" y="166" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Claim boundary</text>
+<line x1="183" y1="144" x2="195" y2="144" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M190.000,139.000 L195.000,144.000 L190.000,149.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="196" y="100" width="160" height="88" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="208" y="124" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">2. Couple</text>
+<text x="208" y="146" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Placement and contact</text>
+<text x="208" y="166" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Installation effects</text>
+<line x1="357" y1="144" x2="369" y2="144" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M364.000,139.000 L369.000,144.000 L364.000,149.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="370" y="100" width="160" height="88" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="382" y="124" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">3. Sense</text>
+<text x="382" y="146" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Physical response</text>
+<text x="382" y="166" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Response limits</text>
+<line x1="531" y1="144" x2="543" y2="144" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M538.000,139.000 L543.000,144.000 L538.000,149.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="544" y="100" width="160" height="88" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="556" y="124" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">4. Convert</text>
+<text x="556" y="146" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Condition and digitize</text>
+<text x="556" y="166" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Conversion limits</text>
+<line x1="705" y1="144" x2="717" y2="144" stroke="#1d6f42" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M712.000,139.000 L717.000,144.000 L712.000,149.000" fill="none" stroke="#1d6f42" stroke-width="2" stroke-dasharray=""/>
+<rect x="718" y="100" width="160" height="88" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="730" y="124" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="15" font-weight="600" text-anchor="start">5. Interpret</text>
+<text x="730" y="146" fill="#1a2e1a" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Correction and context</text>
+<text x="730" y="166" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Validity and units</text>
+<text x="22" y="228" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" text-anchor="start">Placement, response, conversion and correction can each limit the claim.</text>
+<text x="22" y="254" fill="#4a6741" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="13" font-weight="400" text-anchor="start">Illustrative responsibilities, not a mandatory circuit or standardized layer stack.</text>
+</svg>

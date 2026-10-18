@@ -103,6 +103,22 @@ def validate_file(path: Path) -> list[str]:
     return errors
 
 
+def validate_chapter_structure(markdown: str, required_sections: list[str]) -> list[str]:
+    """Check the collection's reading structure without prescribing topic sections."""
+    headings = re.findall(r'^## (.+?)\s*$', markdown, re.MULTILINE)
+    errors = []
+    positions = []
+    for title in required_sections:
+        count = headings.count(title)
+        if count != 1:
+            errors.append(f"expected one '{title}' section, found {count}")
+        else:
+            positions.append(headings.index(title))
+    if positions != sorted(positions):
+        errors.append("shared chapter sections are out of order")
+    return errors
+
+
 def validate_catalog() -> list[str]:
     """Validate metadata and discovery surfaces for every published chapter."""
     errors = []
@@ -144,6 +160,12 @@ def validate_catalog() -> list[str]:
             source = HANDBOOK_DIR / "md" / source_name
             if not source.is_file():
                 errors.append(f"{label}: missing markdown source {source.relative_to(ROOT)}")
+            else:
+                errors.extend(
+                    f"{label}: {error}" for error in validate_chapter_structure(
+                        source.read_text(encoding="utf-8"), data.get("requiredSections", [])
+                    )
+                )
 
         output_name = f"chapter-{chapter_id:02d}-{slug}.html"
         output = HANDBOOK_DIR / output_name

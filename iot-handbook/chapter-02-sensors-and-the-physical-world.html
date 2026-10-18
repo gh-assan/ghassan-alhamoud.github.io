@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Chapter 2: Sensors and the Physical World — IoT Engineering Handbook</title>
+  <meta name="description" content="Trace a sensor reading from physical coupling to a software result. Study calibration, sampling, sensor lag and uncertainty through worked examples." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/iot-handbook/chapter-02-sensors-and-the-physical-world.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/iot-handbook/chapter-02-sensors-and-the-physical-world.html" />
+  <meta property="og:title" content="Chapter 2: Sensors and the Physical World — Measurement chains, sensing principles and decision-ready results" />
+  <meta property="og:description" content="Trace a sensor reading from physical coupling to a software result. Study calibration, sampling, sensor lag and uncertainty through worked examples." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+  <meta property="article:published_time" content="2026-10-19" />
+  <meta property="article:author" content="Ghassan Alhamoud" />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ghassan-alhamoud.com/iot-handbook/chapter-02-sensors-and-the-physical-world.html" />
+  <meta property="twitter:title" content="Chapter 2: Sensors and the Physical World — Measurement chains, sensing principles and decision-ready results" />
+  <meta property="twitter:description" content="Trace a sensor reading from physical coupling to a software result. Study calibration, sampling, sensor lag and uncertainty through worked examples." />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.webp" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "TechArticle",
+    "LearningResource"
+  ],
+  "headline": "Sensors and the Physical World \u2014 Measurement chains, sensing principles and decision-ready results",
+  "description": "Trace a sensor reading from physical coupling to a software result. Study calibration, sampling, sensor lag and uncertainty through worked examples.",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud",
+    "url": "https://ghassan-alhamoud.com/"
+  },
+  "isPartOf": {
+    "@type": "Course",
+    "name": "The IoT Engineering Handbook",
+    "url": "https://ghassan-alhamoud.com/iot-handbook/"
+  },
+  "datePublished": "2026-10-19",
+  "dateModified": "2026-10-19",
+  "image": "https://ghassan-alhamoud.com/images/og-default.webp",
+  "learningResourceType": "Chapter",
+  "position": 2,
+  "mainEntityOfPage": "https://ghassan-alhamoud.com/iot-handbook/chapter-02-sensors-and-the-physical-world.html"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ghassan-alhamoud.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IoT Engineering Handbook",
+      "item": "https://ghassan-alhamoud.com/iot-handbook/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Sensors and the Physical World",
+      "item": "https://ghassan-alhamoud.com/iot-handbook/chapter-02-sensors-and-the-physical-world.html"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does a digital sensor eliminate analog measurement problems?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The sensing element still interacts with the physical world. A digital interface can contain conditioning and conversion within a package, while placement, self-heating, response and calibration still affect the result."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does calibration fix a sensor in the wrong location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Calibration establishes a relationship under specified conditions. It cannot make a local measurement represent a different location or an unobserved room-wide maximum."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does faster polling give me more measurements?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only if the device acquires new observations at that rate. Polling faster than acquisition can return the same observation repeatedly. Preserve acquisition time so repeated delivery does not appear to be new evidence."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a fresh reading still describe an earlier physical condition?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Acquisition time establishes observation age; sensor response and filtering also affect the time meaning. Evaluate them against the decision's timescale instead of using delivery time alone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can averaging recover a transient the sensor missed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Averaging can reduce some noise under stated conditions, but it cannot restore information lost through slow response or inadequate sampling. It can also dilute a brief change and delay a decision."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does an uncertainty interval crossing a threshold mean the sensor failed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A valid measurement can leave a decision unresolved. Under this chapter's whole-interval policy, an interval overlapping the threshold supports neither a below-threshold nor an above-threshold classification."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Ghassan Alhamoud — AI Architecture &amp; Automation" href="/rss.xml" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/handbook.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home">
+        <svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+          <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+        </svg>
+        <span class="nav__name">Ghassan Alhamoud</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link nav__link--active">Handbook</a></li>
+        <li><a href="/research/" class="nav__link">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="article-single handbook-page">
+    <div class="container article-layout">
+      <article>
+        <nav class="handbook-collections" aria-label="Handbook collections"><a href="/handbook/">AI Engineering</a><a href="/iot-handbook/" aria-current="page">IoT Engineering</a></nav>
+        <header class="article-single__header handbook-hero">
+          <span class="handbook-hero__badge">IOT-002</span>
+          <h1 class="handbook-hero__title">Sensors and the Physical World</h1>
+          <p class="handbook-hero__subtitle">Measurement chains, sensing principles and decision-ready results</p>
+          <div class="handbook-hero__meta">
+            <span>Chapter 2</span>
+            <span class="handbook-hero__dot">•</span><span>35 min</span>
+            <span class="handbook-hero__dot">•</span><span>Beginner</span>
+            <span class="handbook-hero__dot">•</span><span>Updated 2026-10-19</span>
+          </div>
+        </header>
+
+        <div class="prerequisites-box"><h3 class="prerequisites-box__title">Prerequisites</h3><ul><li><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">What Is an IoT System?</a></li></ul></div>
+
+        <details class="on-this-page"><summary>On this page</summary><ul class="on-this-page__list"><li><a class="on-this-page__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li><li><a class="on-this-page__link" href="#prerequisites">Prerequisites</a></li><li><a class="on-this-page__link" href="#begin-with-the-quantity-not-the-device">Begin With the Quantity, Not the Device</a></li><li><a class="on-this-page__link" href="#follow-the-measurement-chain">Follow the Measurement Chain</a></li><li><a class="on-this-page__link" href="#how-sensors-turn-physical-quantities-into-signals">How Sensors Turn Physical Quantities into Signals</a></li><li><a class="on-this-page__link" href="#read-specifications-with-precise-vocabulary">Read Specifications With Precise Vocabulary</a></li><li><a class="on-this-page__link" href="#calibration-establishes-a-relationship">Calibration Establishes a Relationship</a></li><li><a class="on-this-page__link" href="#sampling-determines-what-we-can-distinguish">Sampling Determines What We Can Distinguish</a></li><li><a class="on-this-page__link" href="#fresh-data-can-still-describe-a-delayed-response">Fresh Data Can Still Describe a Delayed Response</a></li><li><a class="on-this-page__link" href="#carry-uncertainty-into-the-result">Carry Uncertainty Into the Result</a></li><li><a class="on-this-page__link" href="#worked-example-choose-a-sensor-from-the-decision">Worked Example: Choose a Sensor From the Decision</a></li><li><a class="on-this-page__link" href="#common-pitfalls-and-mitigations">Common Pitfalls and Mitigations</a></li><li><a class="on-this-page__link" href="#summary">Summary</a></li><li><a class="on-this-page__link" href="#whats-next">What's Next?</a></li><li><a class="on-this-page__link" href="#related-chapters">Related Chapters</a></li><li><a class="on-this-page__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li><li><a class="on-this-page__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li><li><a class="on-this-page__link" href="#references-and-further-reading">References and Further Reading</a></li><li><a class="on-this-page__link" href="#revision-history">Revision History</a></li></ul></details>
+
+        <div class="article-single__body handbook-body">
+
+<p><strong>Version:</strong> 1.4 | <strong>Sources checked:</strong> 2026-10-12</p>
+<h2 id="if-you-only-read-one-section">If You Only Read One Section</h2>
+<p>A sensor reading is the output of a measurement chain. Its meaning depends on what we intended to measure, how the sensor interacts with that quantity, how the signal is converted, and which corrections and assumptions we use to interpret it. The physical condition an application cares about is a further inference from that number.</p>
+<p>Every sensor exploits a physical effect: a resistance that changes with temperature, a voltage at a junction of two metals, a capacitance that changes as a polymer absorbs water. The effect determines what the sensor actually responds to and which errors come with it. Knowing the effect tells you where to look when a reading misleads.</p>
+<p>Start with the <strong>measurand</strong>: the quantity intended to be measured. Then follow the path from that quantity to the reported result, and ask what each stage can change or lose. Choose a sensing design from the decision it must support. More digits, more messages, and smoother charts add evidence only when they carry the distinction that decision needs.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">Chapter 1: What Is an IoT System?</a> establishes measurement, telemetry, feedback, and freshness. This chapter develops the sensing part of that model. You need software experience and basic arithmetic; electronics, calculus, and a hardware kit are not prerequisites. Figures, value tables and design consequences carry the main path. Equations and detailed calculations are in optional disclosures; they are not required to follow the chapter.</p>
+<p>This is theoretical study material. Worked readings and requirements are constructed examples, not observations from equipment. Device documents illustrate mechanisms; no part is recommended.</p>
+<p>Terminology follows the international metrology vocabulary, <strong>JCGM 200:2012 (VIM3)</strong>. Uncertainty follows <strong>NIST Technical Note 1297 (1994)</strong>, an accessible introduction to the GUM, the <em>Guide to the Expression of Uncertainty in Measurement</em>. Editions and the 2026 GUM amendment are recorded in <a href="/iot-handbook/sources/chapter-02.md">the source register</a>.</p>
+<h3 id="learning-outcomes">Learning Outcomes</h3>
+<p>After studying this chapter, you should be able to:</p>
+<ol>
+<li>Define a measurand and trace a measurement chain from physical coupling to a software result.</li>
+<li>Explain how common sensors convert a physical quantity into an electrical signal, and name the characteristic limitation each principle brings.</li>
+<li>Distinguish resolution, sensitivity, precision, trueness, accuracy, and uncertainty, and explain what calibration and traceability establish.</li>
+<li>Reason about sampling, aliasing, filtering, sensor response, and saturation under explicit assumptions.</li>
+<li>Evaluate whether a measurement supports a decision, and preserve its limitations in software.</li>
+</ol>
+<h2 id="begin-with-the-quantity-not-the-device">Begin With the Quantity, Not the Device</h2>
+<h3 id="opening-problem-two-reasonable-readings">Opening problem: two reasonable readings</h3>
+<p>Consider a constructed room-monitoring system. One sensor reports <strong>24.2 °C</strong> near the center of the room. Another reports <strong>26.0 °C</strong> beside a warm equipment enclosure. Both values arrive on time with valid checksums. The application labels both “room temperature” and raises a disagreement alert.</p>
+<p>Which sensor is wrong?</p>
+<p>The numbers cannot answer that. The sensors may be measuring different local conditions. The application might need air temperature at an occupied location, an average across the room, or the maximum near equipment. Those are different measurands. A single point measurement directly addresses the quantity at its point; an average or a maximum needs more evidence or assumptions.</p>
+<h3 id="specify-the-measurand">Specify the measurand</h3>
+<p>VIM3 defines the measurand around the intended quantity and notes that its specification needs relevant information about the phenomenon, object, and state. The measurement itself can affect what is measured. <a href="https://jcgm.bipm.org/vim/en/2.3.html">VIM3, §2.3</a>.</p>
+<p>For our example, a more useful specification is:</p>
+<blockquote>
+<p>Air temperature at the designated monitoring point, away from direct heat sources, evaluated for changes lasting at least 30 seconds.</p>
+</blockquote>
+<p>The location and timescale are illustrative requirements of this application. If we actually need the hottest point in the room, this specification is inadequate however accurately the selected point is measured.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What quantity do we want?</td>
+<td>Air temperature at a defined location</td>
+</tr>
+<tr>
+<td>What quantity affects the sensing element?</td>
+<td>The element's own temperature, through thermal contact with its surroundings</td>
+</tr>
+<tr>
+<td>What quantity does the application infer?</td>
+<td>A condition at the monitoring point, under a stated placement and response model</td>
+</tr>
+</tbody>
+</table>
+<p>The inference is where a plausible number acquires an unjustified meaning. “Sensor A reports 24.2 °C” and “every location in the room is below 25 °C” are different claims.</p>
+<p>This extends Chapter 1's contract view. A device identifier tells us which device sent a message; installation records are evidence of where it was placed, and a current check confirms it is still there. Communication can preserve a reading exactly while the application interprets the wrong quantity.</p>
+<h2 id="follow-the-measurement-chain">Follow the Measurement Chain</h2>
+<p>A <strong>sensor</strong>, in VIM3's vocabulary, is the part of a measuring system directly affected by the phenomenon carrying the quantity of interest. A <strong>measuring transducer</strong> produces an output quantity related to an input quantity. Chapter 1 used “sensor” in the broader, everyday sense of a component producing information about a physical quantity. This chapter keeps that meaning, as in “two sensors agree,” and says <strong>sensing element</strong> when the narrow VIM sense matters. <a href="https://jcgm.bipm.org/vim/en/3.8.html">VIM3, §§3.7–3.8</a>, <a href="https://jcgm.bipm.org/vim/en/3.7.html">measuring transducer</a>.</p>
+<figure class="iot-diagram">
+<picture data-compact-below="760">
+  <source media="(max-width: 759px)" srcset="/images/iot-handbook/IOT-002/fig-1-measurement-chain-compact.svg">
+  <img src="/images/iot-handbook/IOT-002/fig-1-measurement-chain.svg" alt="Measurement chain: define the quantity, couple it to a sensor, convert its response, then interpret the result. Placement, response, conversion and correction can each limit the claim." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 1. A teaching decomposition of the measurement chain. It describes responsibilities, not a standardized layer stack or mandatory circuit. A digital sensor can contain several stages within one package.</figcaption>
+</figure>
+
+<p><strong>Quantity of interest → physical coupling → sensing response → signal conditioning and conversion → corrected result with context.</strong></p>
+<p><strong>Physical coupling</strong> describes how the quantity reaches the element: a temperature element exchanges heat with its surroundings, and its mounting decides which surroundings. <strong>Signal conditioning</strong> prepares an electrical signal for conversion, for example by amplification or filtering. <strong>Conversion</strong> produces a representation software can use.</p>
+<h3 id="what-can-change-the-reading">What can change the reading?</h3>
+<p>An <strong>indication</strong> is the value the instrument supplies before later interpretation. It can be affected by gain (how strongly the output changes with the input), a persistent offset and varying disturbances. Placement and response determine which physical condition reaches the sensing element in the first place.</p>
+<p>Calibration can establish the indication-to-quantity relationship over a supported range. It cannot repair a wrong location or recover a transient the sensor never captured. Disturbances can depend on operating conditions; treating every effect as independent random noise needs justification.</p>
+<details>
+<summary>Optional model: gain, offset and noise</summary>
+<p>For an illustrative sensor over a limited range, write:</p>
+<p><code>r(t) = a × x_s(t) + b + n(t)</code></p>
+<p>Here <code>r(t)</code> is an <strong>indication</strong>, the value the instrument supplies before later interpretation; <code>x_s(t)</code> is the quantity the sensing element actually experiences; <code>a</code> is a scale factor; <code>b</code> is an offset; and <code>n(t)</code> is a varying disturbance. The unit of <code>a</code> follows from input and output, for example volts per degree Celsius. This is our simplified model, not a law for all sensors.</p>
+</details>
+<h2 id="how-sensors-turn-physical-quantities-into-signals">How Sensors Turn Physical Quantities into Signals</h2>
+<p>A sensing element works because some physical property changes with the quantity of interest. Engineers call this <strong>transduction</strong>. The property is usually electrical: resistance, voltage, capacitance, or current. Signal conditioning then turns that property into something a converter can digitize.</p>
+<p>Two broad classes behave differently. Some elements <strong>modulate</strong> a supplied signal: a resistor or capacitor must be driven by an <strong>excitation</strong> current or voltage before it reveals anything. In a resistive element, that excitation dissipates power and warms the element, an effect called <strong>self-heating</strong>. Other elements <strong>generate</strong> a signal from the quantity itself, as a thermocouple produces a voltage or a photodiode a current. They need no excitation, but their signals can be very small and are easily disturbed by wiring and interference.</p>
+<h3 id="four-ways-to-measure-temperature">Four ways to measure temperature</h3>
+<p><strong>Thermistors</strong> are resistors made from materials whose resistance changes strongly with temperature. The common <strong>NTC</strong> (negative temperature coefficient) type falls in resistance as it warms, and the relationship is highly nonlinear. <a href="https://www.ti.com/lit/pdf/snoaa12">TI SNOAA12, §§1–2</a>. Consider a constructed NTC element with 10 kΩ at 25 °C:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Temperature</th>
+<th style="text-align: right;">Modeled resistance</th>
+<th style="text-align: right;">Change over the previous 25 °C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0 °C</td>
+<td style="text-align: right;">33.6 kΩ</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: right;">25 °C</td>
+<td style="text-align: right;">10.0 kΩ</td>
+<td style="text-align: right;">−23.6 kΩ</td>
+</tr>
+<tr>
+<td style="text-align: right;">50 °C</td>
+<td style="text-align: right;">3.59 kΩ</td>
+<td style="text-align: right;">−6.4 kΩ</td>
+</tr>
+</tbody>
+</table>
+<p>The same 25-degree step changes the resistance about 3.7 times as much at the cold end. The useful sensitivity therefore depends on temperature, and software must convert the nonlinear response with a fitted equation or a lookup table. Higher-order fits cost computation; deeper tables cost memory. <a href="https://www.ti.com/lit/pdf/snoaa12">TI SNOAA12, §2</a>.</p>
+<details>
+<summary>Optional derivation: the model behind the thermistor table</summary>
+<p>The table uses the simplified <strong>beta model</strong>, <code>R(T) = R₂₅ × exp(β × (1/T − 1/T₂₅))</code>, with temperatures in kelvin, <code>R₂₅ = 10 kΩ</code>, <code>T₂₅ = 298.15 K</code>, and an assumed <code>β = 3950 K</code>. At 0 °C, <code>1/273.15 − 1/298.15 ≈ 0.000307 K⁻¹</code>; multiplied by 3950 this gives about 1.213, and <code>exp(1.213) ≈ 3.36</code>, so <code>R ≈ 33.6 kΩ</code>. The local relative slope is <code>−β/T²</code>, about −4.4% per kelvin at 25 °C. Real thermistors are characterized more precisely, for example with the three-term Steinhart–Hart equation, and their coefficients come from the part's own documentation.</p>
+</details>
+<p><strong>Resistance temperature detectors (RTDs)</strong> use a metal, typically platinum, whose resistance rises almost linearly with temperature. A Pt100 element has 100 Ω at 0 °C, and the IEC 60751 coefficients give about 109.7 Ω at 25 °C, roughly 0.39 Ω per degree. <a href="https://www.ti.com/lit/pdf/sbaa275">TI SBAA275A, §1.1</a>. That small change makes wiring part of the measurement: in a two-wire connection, a constructed 0.5 Ω in each lead adds 1.0 Ω, which reads as about 2.6 °C. Three-wire circuits cancel matched lead resistance, and four-wire circuits sense the element separately from the excitation path. <a href="https://www.ti.com/lit/pdf/sbaa275">TI SBAA275A, §1.3</a>. Excitation current also self-heats the element, by an amount that depends on construction and the surrounding medium. <a href="https://www.ti.com/lit/pdf/sbaa275">TI SBAA275A, §1.5.2</a>.</p>
+<p><strong>Thermocouples</strong> join two different metals. A voltage develops that depends on the temperatures of both the measuring junction and the <strong>reference junction</strong>, where the wires meet the measuring circuit. It tracks roughly their difference, but nonlinearly. A type K thermocouple produces only about 39.5 µV per degree near 0 °C, across a range of roughly −270 to 1370 °C. <a href="https://www.ti.com/lit/pdf/sbaa274">TI SBAA274A, §§1.1–1.2</a>. The system must therefore measure the reference junction separately, often with a thermistor, RTD, or integrated circuit (IC) sensor: <strong>cold-junction compensation</strong>. <a href="https://www.ti.com/lit/pdf/sbaa274">TI SBAA274A, §1.3</a>.</p>
+<p>Standard thermocouple tables give the voltage for a reference junction at 0 °C. A warmer reference junction leaves the measured voltage short by the voltage its own temperature would produce in that table, so the compensation adds that voltage and then converts. Because the response is nonlinear, this must happen in voltage, not temperature.</p>
+<details>
+<summary>Optional calculation: cold-junction compensation</summary>
+<p>TI's worked case adds the reference junction's 1.000 mV equivalent at 25 °C to a measured 24.904 mV, then converts 25.904 mV to about 623.5 °C. Converting first and adding 25 °C afterward would give 625 °C, a 1.5 °C error. <a href="https://www.ti.com/lit/pdf/sbaa274">TI SBAA274A, §1.4.4</a>.</p>
+</details>
+<p><strong>Integrated semiconductor sensors</strong> place the sensing element and its conditioning, and in digital parts the conversion, in one silicon device. Some supply an analog voltage, for example one that falls by about 5.19 mV per degree <a href="https://www.ti.com/lit/ds/symlink/lmt70.pdf">TI LMT70</a>; others supply digital readings over a bus. The package still exchanges heat with its board and surroundings, so installation and self-heating remain part of the measurement model. <a href="https://www.ti.com/lit/pdf/snoa986a">TI SNOA986A, §§10–11</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>How it works and connects</th>
+<th>Strength; characteristic limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NTC thermistor</td>
+<td>Resistance falls steeply with temperature; a resistor pair turns it into a voltage</td>
+<td>Large signal near its design point; strong nonlinearity, self-heating</td>
+</tr>
+<tr>
+<td>Platinum RTD</td>
+<td>Resistance rises nearly linearly; an excitation current is compared against known resistors</td>
+<td>Standardized, interchangeable curve; small signal, lead resistance, self-heating</td>
+</tr>
+<tr>
+<td>Thermocouple</td>
+<td>Voltage set by both junction temperatures, measured as a small voltage between two wires</td>
+<td>Very wide range, no excitation; microvolt signals, cold-junction compensation</td>
+</tr>
+<tr>
+<td>Integrated sensor</td>
+<td>Temperature-dependent semiconductor behavior; analog voltage or digital bus</td>
+<td>Conditioning in the package (and conversion, for digital parts); package thermal path, device-specific specifications</td>
+</tr>
+</tbody>
+</table>
+<p>These are generic characteristics, not a ranking; range, accuracy, and stability belong to a specific part's datasheet.</p>
+<h3 id="beyond-temperature-what-the-sensor-actually-responds-to">Beyond temperature: what the sensor actually responds to</h3>
+<p>The same habit applies to every sensor: separate what the element responds to from what the application infers.</p>
+<table>
+<thead>
+<tr>
+<th>Sensor → usual inference</th>
+<th>What the element actually responds to</th>
+<th>Characteristic limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relative humidity → humidity of the surrounding air</td>
+<td>Water absorbed into a polymer insulating layer (dielectric), changing its capacitance, at the element's own temperature</td>
+<td>Contamination; hysteresis (readings depend on whether humidity was rising or falling); long-term drift; condensation may need a heater <a href="https://www.ti.com/lit/ds/symlink/hdc2010.pdf">HDC2010</a></td>
+</tr>
+<tr>
+<td>Light → lighting at a work surface</td>
+<td>Light reaching a filtered photodetector, weighted by wavelength and arrival angle</td>
+<td>Filter match to the human eye; aperture and placement <a href="https://www.ti.com/lit/ds/symlink/opt3001.pdf">OPT3001</a></td>
+</tr>
+<tr>
+<td>Hall-effect magnetic → magnet position, or current in a nearby conductor</td>
+<td>Magnetic flux density at the package, producing a proportional voltage</td>
+<td>Magnet temperature drift; geometry <a href="https://www.ti.com/lit/ds/symlink/drv5055.pdf">DRV5055</a></td>
+</tr>
+<tr>
+<td>MEMS (micro-machined) accelerometer → motion, vibration, tilt, or a drop</td>
+<td>Specific force (acceleration relative to free fall) on a spring-suspended proof mass, read as a capacitance change: about 1 g at rest, about 0 g in free fall</td>
+<td>Stiffness trades range and bandwidth (how fast a change it can follow) against noise <a href="https://doi.org/10.3390/mi10060380">Rao et al., 2019</a>, <a href="https://www.nxp.com/docs/en/application-note/AN3151.pdf">NXP AN3151</a></td>
+</tr>
+<tr>
+<td>Ultrasonic ranger → distance to a target</td>
+<td>Round-trip time of a sound pulse</td>
+<td>Distance uses an assumed speed of sound, which depends on air temperature <a href="https://www.grc.nasa.gov/WWW/K-12/BGP/sound.html">NASA Glenn</a></td>
+</tr>
+<tr>
+<td>Metal-oxide gas → indoor air quality</td>
+<td>Resistance of a heated metal-oxide layer as gases react at its surface</td>
+<td>Raw signal often processed into a relative index that adapts to its environment; humidity compensation <a href="https://sensirion.com/media/documents/296373BB/6203C5DF/Sensirion_Gas_Sensors_Datasheet_SGP40.pdf">SGP40</a></td>
+</tr>
+</tbody>
+</table>
+<p>Two rows show how far the gap can open. An accelerometer at rest reads about 1 g, the force supporting it against gravity, which is why it can measure tilt. A metal-oxide gas sensor may report an index rather than a concentration, so two units can disagree while both behave as designed.</p>
+<p>The ultrasonic row shows a gap in the conversion itself. The element times the echo correctly, but distance is computed from an assumed speed of sound, which depends on the air temperature. A sensor that assumes the 20 °C speed in 0 °C air overstates distance by about 3.6%.</p>
+<h2 id="read-specifications-with-precise-vocabulary">Read Specifications With Precise Vocabulary</h2>
+<h3 id="resolution-sensitivity-and-quantization">Resolution, sensitivity, and quantization</h3>
+<p><strong>Resolution</strong> is the smallest change in the measured quantity that produces a perceptible change in indication. Noise and the operating point, meaning the input level and conditions at which the instrument works, can influence it. Displaying more digits is a formatting decision, separate from what the system can physically resolve. <a href="https://jcgm.bipm.org/vim/en/4.14.html">VIM3, §4.14</a>. <strong>Sensitivity</strong> relates a change in indication to the corresponding change in input, and it can vary across the range, as the thermistor table shows. <a href="https://jcgm.bipm.org/vim/en/4.12.html">VIM3, §4.12</a>.</p>
+<p>A converter divides its input range into discrete bins: <strong>quantization</strong>. In the illustrative conversion below, one bin corresponds to 0.1 °C. That does not establish 0.1 °C accuracy. Offset, reference-voltage error, noise, nonlinearity and installation effects remain. Distinct inputs within one bin produce the same code; extra decimal places and repeated messages cannot distinguish them.</p>
+<details>
+<summary>Optional calculation: converter bins and temperature increments</summary>
+<p>Consider an ideal 12-bit converter spanning 0–4.096 V. It has <code>2^12 = 4096</code> codes, so each ideal bin spans <code>4.096 V / 4096 = 1 mV</code>. With an ideal linear sensor of <code>10 mV/°C</code>, one bin corresponds to <code>0.1 °C</code>. That is nominal <strong>quantization</strong>, not 0.1 °C accuracy. Offset, error in the converter's reference voltage (which sets its full scale), noise, nonlinearity, and installation effects remain. Distinct inputs within one bin produce the same code, and neither extra decimal places nor repeated messages distinguish them.</p>
+</details>
+<h3 id="precision-trueness-and-accuracy">Precision, trueness, and accuracy</h3>
+<p><strong>Precision</strong> concerns agreement among repeated measurements under specified conditions. <strong>Trueness</strong> concerns agreement of the long-run average with a reference value. <strong>Accuracy</strong> concerns closeness to the true value; VIM3 treats it as a qualitative concept rather than a number. <a href="https://jcgm.bipm.org/vim/en/2.15.html">VIM3, §2.15</a>, <a href="https://jcgm.bipm.org/vim/en/2.14.html">§2.14</a>, <a href="https://jcgm.bipm.org/vim/en/2.13.html">§2.13</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Indications against a 25.0 °C reference</th>
+<th>What it illustrates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>25.8, 25.8, 25.9, 25.8</td>
+<td>Small spread, substantial apparent offset</td>
+</tr>
+<tr>
+<td>B</td>
+<td>24.6, 25.4, 24.8, 25.2</td>
+<td>Larger spread, mean at the reference</td>
+</tr>
+</tbody>
+</table>
+<p>Set A is more tightly grouped, yet further from the reference. Set B's mean is encouraging, but four values cannot establish long-run trueness. <strong>Standard deviation</strong> describes spread around the mean. A small one describes a tight group, whatever value it is grouped around.</p>
+<p>Datasheets often put error limits under an “accuracy” heading. Read what the number bounds: maximum or typical error, at which temperature, supply, and configuration. An error limit, a standard deviation, and an expanded uncertainty (see “Carry Uncertainty Into the Result”) are different statements.</p>
+<h3 id="error-and-uncertainty">Error and uncertainty</h3>
+<p>A <strong>measurement error</strong> is the measured value minus a reference value. <a href="https://jcgm.bipm.org/vim/en/2.16.html">VIM3, §2.16</a>. <strong>Measurement uncertainty</strong> characterizes the dispersion of values attributed to the measurand from the available information, including contributions from corrections and references. It is more than the visible fluctuation of readings. <a href="https://jcgm.bipm.org/vim/en/2.26.html">VIM3, §2.26</a>. An estimated offset can be corrected, but the correction carries uncertainty from the reference and the comparison. A stable reading can therefore have significant uncertainty.</p>
+<h2 id="calibration-establishes-a-relationship">Calibration Establishes a Relationship</h2>
+<p><strong>Calibration</strong> establishes, under specified conditions, how indications relate to reference values and how that relationship yields results with uncertainty. A calibration-derived <strong>correction</strong> turns an unchanged indication into a corrected result. <strong>Adjustment</strong> changes the measuring system so that it supplies prescribed indications, possibly through firmware; recalibration is usually needed afterward. <strong>Verification</strong> provides objective evidence that specified requirements are fulfilled. <a href="https://jcgm.bipm.org/vim/en/2.39.html">VIM3, calibration §2.39</a>, <a href="https://jcgm.bipm.org/vim/en/2.53.html">correction §2.53</a>, <a href="https://jcgm.bipm.org/vim/en/3.11.html">adjustment §3.11</a>, <a href="https://jcgm.bipm.org/vim/en/2.44.html">verification §2.44</a>.</p>
+<p>Changing an output until it matches another device is an adjustment, not a calibration. A meaningful adjustment needs a prior calibration against a reference with known uncertainty.</p>
+<h3 id="worked-two-point-example">Worked two-point example</h3>
+<p>Assume the indication is approximately linear over 20–30 °C. At two reference points it reports:</p>
+<table>
+<thead>
+<tr>
+<th>Reference temperature</th>
+<th>Instrument indication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20.0 °C</td>
+<td>20.6 °C</td>
+</tr>
+<tr>
+<td>30.0 °C</td>
+<td>30.8 °C</td>
+</tr>
+</tbody>
+</table>
+<p>A fixed subtraction fits one comparison but leaves an error at the other. A linear correction accounts for both the offset and the changing discrepancy:</p>
+<table>
+<thead>
+<tr>
+<th>Instrument indication</th>
+<th>Subtract 0.6 °C everywhere</th>
+<th>Linear correction from both points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20.60 °C</td>
+<td>20.00 °C</td>
+<td>20.00 °C</td>
+</tr>
+<tr>
+<td>26.72 °C</td>
+<td>26.12 °C</td>
+<td>26.00 °C</td>
+</tr>
+<tr>
+<td>30.80 °C</td>
+<td>30.20 °C</td>
+<td>30.00 °C</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary>Optional derivation: the two-point correction</summary>
+<p>Use <code>r = aT + b</code>, with <code>r</code> and <code>T</code> both in degrees Celsius, so <code>a</code> is dimensionless:</p>
+<p><code>a = (30.8 − 20.6) / (30.0 − 20.0) = 1.02</code> and <code>b = 20.6 − 1.02 × 20.0 = 0.2 °C</code></p>
+<p>An indication of 26.72 °C becomes <code>T = (26.72 − 0.2) / 1.02 = 26.0 °C</code>. Subtracting 0.6 °C everywhere would fit the lower point but turn 30.8 °C into 30.2 °C, leaving a discrepancy at the upper point.</p>
+</details>
+<p>Two points define a line without proving linearity between them, and the example suppresses reference and fitting uncertainty. Calibrating a bare element characterizes that element, not the assembled installation; decide which part of the chain the calibration covers.</p>
+<h3 id="traceability-has-a-specific-meaning">Traceability has a specific meaning</h3>
+<p><strong>Metrological traceability</strong> relates a result to a reference through a documented, unbroken calibration chain, each step contributing uncertainty. Software lineage and serial numbers are useful records, but they are not this property. VIM3 also notes that traceability alone does not establish adequate uncertainty for the purpose. <a href="https://jcgm.bipm.org/vim/en/2.41.html">VIM3, §2.41</a>. Keep calibration identity, range, conditions, correction version, and uncertainty connected to the result; replacing a sensor or changing the conversion path can break that association.</p>
+<h2 id="sampling-determines-what-we-can-distinguish">Sampling Determines What We Can Distinguish</h2>
+<p><strong>Sampling</strong> observes a changing signal at selected times. To reconstruct a <strong>band-limited</strong> signal, one with no content above a known highest frequency, ideal sampling must be faster than twice that frequency. Practical systems need margin for real filters. Content outside the intended band can appear as a slower variation after sampling: <strong>aliasing</strong>. Filtering must act before the sampling that would make the content ambiguous. <a href="https://www.analog.com/en/resources/technical-articles/antialiasing-basics-using-switchcapacitor-filters.html">Analog Devices, Anti-Aliasing Basics</a>. A brief pulse is a different problem: it is not band-limited, and whether the samples catch it depends on their timing.</p>
+<h3 id="worked-ambiguity-two-signals-identical-samples">Worked ambiguity: two signals, identical samples</h3>
+<figure class="iot-diagram">
+<picture data-compact-below="760">
+  <source media="(max-width: 759px)" srcset="/images/iot-handbook/IOT-002/fig-2-aliasing-compact.svg">
+  <img src="/images/iot-handbook/IOT-002/fig-2-aliasing.svg" alt="Constructed cosine signals at 9 Hz and 1 Hz differ between observations but have identical values at the marked 10 samples per second sampling instants. Time is in seconds; amplitude is normalized." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 2. Original analytical example, not a measured trace. Solid: 9 Hz input. Dashed: 1 Hz alternative. Circles: identical sample values. The samples alone do not reveal which curve generated them.</figcaption>
+</figure>
+
+<p>An ideal sampler takes ten samples per second. Figure 2 compares a 9 Hz wave with a 1 Hz wave of the same normalized amplitude, ranging from −1 to +1.</p>
+<table>
+<thead>
+<tr>
+<th>Sample time, s</th>
+<th style="text-align: right;">9 Hz input</th>
+<th style="text-align: right;">1 Hz alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td style="text-align: right;">0.809</td>
+<td style="text-align: right;">0.809</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td style="text-align: right;">0.309</td>
+<td style="text-align: right;">0.309</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td style="text-align: right;">−0.309</td>
+<td style="text-align: right;">−0.309</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td style="text-align: right;">−0.809</td>
+<td style="text-align: right;">−0.809</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td style="text-align: right;">−1.000</td>
+<td style="text-align: right;">−1.000</td>
+</tr>
+</tbody>
+</table>
+<p>The equality continues at every sample, although the curves differ between them.</p>
+<details>
+<summary>Optional derivation: why the samples are identical</summary>
+<p>A cosine, <code>cos</code>, repeats after each full cycle of <code>2π</code> radians and has the same value at an angle and its negative. Write each sample time as <code>t_n = n/10</code>, where <code>n</code> is an integer. The sequences are <code>x_9(t_n) = cos(2π × 9n/10)</code> and <code>x_1(t_n) = cos(2π × n/10)</code>. Since <code>9n/10 = n − n/10</code>, the 9 Hz phase is a whole number of cycles minus the 1 Hz phase. Removing the full cycles and reversing the sign leaves the same cosine value at every integer sample index.</p>
+</details>
+<p>The sampler produced correct values that carry too little information to distinguish the two possibilities, and no downstream smoothing can recover the distinction. An anti-alias filter would remove the 9 Hz content before sampling; if 9 Hz itself matters, the bandwidth and sampling design must change instead.</p>
+<h3 id="aliased-interference-can-look-like-a-slow-physical-change">Aliased interference can look like a slow physical change</h3>
+<p>Interference can appear as an offset or a slow physical trend after sampling. In a constructed example, 50 Hz mains pickup appears constant when sampled at exactly ten samples per second. A small change in the sampling clock makes that same interference appear as a twenty-second cycle.</p>
+<p>The apparent trend can therefore change when acquisition timing changes, even when the environment does not. This is a reason to investigate the acquisition path before treating a slow variation as a change in the measurand.</p>
+<details>
+<summary>Optional calculation: the alias frequency</summary>
+<p>Under ideal uniform sampling, a component at frequency <code>f</code> produces the same samples as one at its <strong>alias frequency</strong>: the distance from <code>f</code> to the nearest whole multiple of <code>f_s</code>. For 9 Hz at 10 samples/s, the nearest multiple is 10 Hz, so the alias is 1 Hz.</p>
+<p>Consider a constructed path that picks up interference at exactly 50 Hz from the <strong>mains</strong>, the AC power supply (50 or 60 Hz depending on region), sampled at exactly 10 samples/s. Fifty hertz is a whole multiple of the rate, so the alias is 0 Hz: every sample meets the interference at the same point in its cycle, and it appears as a constant offset whose size depends on that point. At 9.99 samples/s, the nearest multiple is 49.95 Hz and the alias is 0.05 Hz, a slow cycle with a 20-second period. A 0.1% clock difference has turned an apparent offset into an apparent environmental cycle, and a 0.1% shift in mains frequency does the same.</p>
+</details>
+<p>Both look like plausible properties of the measurand, and small-signal sensors such as thermocouples are especially exposed. The remedy is to reduce the pickup before it can alias: at its source, with an input filter, or by sampling fast enough to represent the interference and its harmonics (components at whole multiples of 50 Hz) and removing them digitally. Small changes to the sample rate only move the alias.</p>
+<h3 id="acquisition-polling-and-reporting-are-different-rates">Acquisition, polling, and reporting are different rates</h3>
+<p>A device may acquire once per second while software polls ten times per second and reports once per minute. Faster polling can return repeated observations; slower reporting can hide acquired variation unless a summary preserves it. A 0.2-second excursion can fall entirely between one-second samples. Choose the rate from the phenomenon and the decision: a trend, a peak, a duration, or a waveform.</p>
+<h2 id="fresh-data-can-still-describe-a-delayed-response">Fresh Data Can Still Describe a Delayed Response</h2>
+<p>A measurement can be recent and still lag the physical quantity. VIM3 defines step response time by an abrupt input change and the time for the indication to settle within specified limits, so a response-time number needs its criterion and conditions. <a href="https://jcgm.bipm.org/vim/en/4.23.html">VIM3, §4.23</a>. For temperature, the whole thermal path matters, including mounting and self-heating. <a href="https://www.ti.com/lit/pdf/snoa986a">TI SNOA986A, §§10–11</a>.</p>
+<h3 id="worked-first-order-response">Worked first-order response</h3>
+<figure class="iot-diagram">
+<picture data-compact-below="760">
+  <source media="(max-width: 759px)" srcset="/images/iot-handbook/IOT-002/fig-3-sensor-lag-compact.svg">
+  <img src="/images/iot-handbook/IOT-002/fig-3-sensor-lag.svg" alt="Illustrative temperature step from 20 to 30 degrees Celsius with a sensor following a first-order response of time constant 10 seconds. The indication crosses 27 degrees at about 12.04 seconds and approaches 30 degrees gradually." style="width:100%;height:auto">
+</picture>
+<figcaption>Figure 3. An assumed model, not a sensor specification. Dashed: imposed temperature step. Solid: sensor indication. The marked threshold crossing is different from settling near the final value.</figcaption>
+</figure>
+
+<p>Assume the temperature at the sensing location steps from 20 °C to 30 °C at the start of the example. The modeled sensor's remaining difference from 30 °C shrinks by the same proportion over equal intervals. This is a <strong>first-order response</strong>. Its <strong>time constant</strong> is 10 seconds; after one time constant it completes about 63.2% of the change.</p>
+<table>
+<thead>
+<tr>
+<th>Time after step</th>
+<th style="text-align: right;">Modeled indication</th>
+<th>What it establishes in this model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 s</td>
+<td style="text-align: right;">23.93 °C</td>
+<td>A substantial change, still below 27 °C</td>
+</tr>
+<tr>
+<td>10 s</td>
+<td style="text-align: right;">26.32 °C</td>
+<td>About 63.2% of the ten-degree change</td>
+</tr>
+<tr>
+<td>12.04 s, approximately</td>
+<td style="text-align: right;">27.00 °C</td>
+<td>The specified threshold crossing</td>
+</tr>
+<tr>
+<td>13 s</td>
+<td style="text-align: right;">27.27 °C</td>
+<td>First above-threshold sample at integer-second acquisition</td>
+</tr>
+<tr>
+<td>30 s</td>
+<td style="text-align: right;">29.50 °C</td>
+<td>Approaching the final value</td>
+</tr>
+</tbody>
+</table>
+<p>A requirement to <strong>produce an indication above 27 °C within five seconds after the 20→30 °C step</strong> is incompatible with this response model, and no network change affects that; it needs a faster physical response. Detecting <em>some</em> departure from 20 °C is a different requirement: the indication reaches 23 °C after about 3.57 seconds. Whether a real system can distinguish it depends on noise, uncertainty, and timing.</p>
+<details>
+<summary>Optional derivation: response and threshold time</summary>
+<p>The function <code>exp(z)</code> means <code>e</code> raised to the power <code>z</code>, with <code>e</code> approximately 2.718. For <code>t</code> in seconds, the modeled indication is:</p>
+<p><code>T_s(t) = 30 − 10 × exp(−t/10), for t ≥ 0</code></p>
+<p>At 10 seconds, <code>exp(−1)</code> is about 0.368, leaving 3.68 °C of the 10 °C gap, so the indication is about 26.32 °C. For the 27 °C threshold, <code>exp(−t/10) = 0.3</code>. The natural logarithm, <code>ln</code>, inverts <code>exp</code>, giving <code>t = −10 × ln(0.3) ≈ 12.04 s</code>. For 23 °C, the remaining gap is 0.7 of the original, and <code>t = −10 × ln(0.7) ≈ 3.57 s</code>.</p>
+</details>
+<p>Response lag changes what Chapter 1's freshness calculation means. Observation age starts at the acquisition timestamp. If the input rises steadily, this model's indication eventually trails it by about one time constant: a reading acquired now approximately equals the input value of about 10 seconds earlier. Under that steady-rise model, add the time constant to the observation age when the decision concerns the physical condition. For a step and a specific threshold, use the model's crossing time for that threshold instead, which can exceed the time constant: the 27 °C crossing takes 12.04 seconds. In general, the indication is a weighted blend of recent conditions, and real thermal paths need not be first-order.</p>
+<h3 id="averaging-changes-both-noise-and-time-meaning">Averaging changes both noise and time meaning</h3>
+<p>When the quantity stays fixed, a mean reduces the spread of <strong>independent</strong> noise, where one value tells us nothing about the next. Closely spaced observations can instead be <strong>correlated</strong>, varying together, and averaging then reduces the spread less. With independent noise of standard deviation 0.4 °C per observation:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Observations in the mean</th>
+<th style="text-align: right;">Standard deviation of the mean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.4 °C</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.2 °C</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.1 °C</td>
+</tr>
+</tbody>
+</table>
+<p>The spread halves each time the count quadruples, for the independent noise only; offsets, correlation, and a changing measurand need separate treatment. Statistical evaluation of repeated observations is a Type A evaluation. <a href="https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-3-type-evaluation-standard-uncertainty">NIST TN1297, §3</a>.</p>
+<p>Averaging also delays. Consider an ideal step <strong>directly at the software filter input</strong>, ignoring sensor lag. A ten-sample trailing window holds ten values of 20 °C. After one new value of 30 °C, the mean rises to only 21 °C, and it reaches 30 °C only after ten new values. The smoother reports recent history: its output describes the window, while the application may need the current value. If the application wants the current condition, averaging is an explicit trade-off between variability and delay.</p>
+<h2 id="carry-uncertainty-into-the-result">Carry Uncertainty Into the Result</h2>
+<p><strong>Type A</strong> and <strong>Type B</strong> classify evaluation methods: statistical analysis of observations, and evaluation from other information such as calibration reports or specifications. They are not labels for random versus systematic error. <a href="https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-4-type-b-evaluation-standard-uncertainty">NIST TN1297, §§3–4</a>. A <strong>standard uncertainty</strong> is expressed as a standard deviation. An <strong>expanded uncertainty</strong> multiplies the combined standard uncertainty by a coverage factor <code>k</code>. <a href="https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-6-expanded-uncertainty">NIST TN1297, §6</a>.</p>
+<h3 id="worked-linear-uncertainty-budget">Worked linear uncertainty budget</h3>
+<p>For a corrected temperature result and an additive model, stipulate these standard uncertainties:</p>
+<table>
+<thead>
+<tr>
+<th>Contribution</th>
+<th>Standard uncertainty</th>
+<th>Assumption in this example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reference comparison and correction</td>
+<td>0.15 °C</td>
+<td>Correction uncertainty, not an uncorrected known bias</td>
+</tr>
+<tr>
+<td>Repeatability of the reported estimate</td>
+<td>0.10 °C</td>
+<td>Appropriate evaluation for that estimate</td>
+</tr>
+<tr>
+<td>Quantization</td>
+<td>0.029 °C</td>
+<td>Uniform position within a 0.1 °C bin</td>
+</tr>
+<tr>
+<td>Remaining installation/model contribution</td>
+<td>0.20 °C</td>
+<td>For the defined monitoring point; not room-wide coverage</td>
+</tr>
+</tbody>
+</table>
+<p>The quantization term assumes a uniform position within the bin. A Type B evaluation needs a reason for that distribution beyond the existence of a bound. <a href="https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-4-type-b-evaluation-standard-uncertainty">NIST TN1297, §4.6</a>. Assume the contributions do not vary together and each enters the result with a multiplier of one. Combining them gives a standard uncertainty of approximately <strong>0.271 °C</strong>.</p>
+<p>When contributions vary together, propagation must include their <strong>covariance</strong>. Two sensors sharing a reference are not fully independent evidence. <a href="https://www.nist.gov/pml/nist-technical-note-1297/nist-tn-1297-5-combined-standard-uncertainty">NIST TN1297, §5</a>.</p>
+<details>
+<summary>Optional calculation: combining the uncertainty contributions</summary>
+<p>For a uniform distribution over a bin of width <code>q</code>, the standard deviation is <code>q/√12</code>; with <code>q = 0.1 °C</code>, about 0.029 °C. Under the stated assumptions, <strong>root-sum-of-squares</strong> squares each standard uncertainty, adds the squares, and takes the square root:</p>
+<p><code>u_c = √(0.15² + 0.10² + 0.029² + 0.20²) ≈ 0.271 °C</code></p>
+<p>With <code>k = 2</code>, the expanded uncertainty is <code>U = 2 × 0.271 ≈ 0.54 °C</code>. Shared effects or different multipliers need a model that accounts for them.</p>
+</details>
+<p>With the illustrative coverage factor of two, the expanded uncertainty is about 0.54 °C. A corrected estimate of 26.0 °C is reported as <strong>26.0 °C ± 0.54 °C, k = 2</strong>, with model and conditions stated. It is a coverage statement, not a guaranteed bound. Approximately 95% coverage requires suitable distribution and estimation conditions; <code>k = 2</code> alone does not establish it.</p>
+<p>Saturation, wrong units, and a detached sensor invalidate the model rather than enlarging the uncertainty. A significantly nonlinear model may need higher-order treatment or propagation of distributions, addressed in the 2026 amendment to JCGM 100. <a href="https://doi.org/10.59161/PPDI3267">JCGM 100:2008/Amd.1:2026</a>.</p>
+<h2 id="worked-example-choose-a-sensor-from-the-decision">Worked Example: Choose a Sensor From the Decision</h2>
+<p>Return to the monitoring application. It must resolve slow changes of about 1 °C over minutes at one location, and it has a separate requirement: an indication above 27 °C within five seconds after the modeled 20→30 °C step. Compare two hypothetical designs under the same constraints:</p>
+<table>
+<thead>
+<tr>
+<th>Design</th>
+<th>Stipulated properties</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0.01 °C reported increment; 10 s time constant</td>
+<td>Fine increments; 27 °C crossing at about 12.04 s; misses the five-second requirement</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.1 °C reported increment; 1 s time constant</td>
+<td>Coarser increments; 27 °C crossing at about 1.20 s</td>
+</tr>
+</tbody>
+</table>
+<p>Neither row is a complete error specification, so neither establishes better accuracy. For the 27 °C requirement, B leaves time for acquisition and reporting and A does not; for a slow trend, a slower design may suffice and win on energy or cost.</p>
+<p>The decision sequence is:</p>
+<ol>
+<li>Define the quantity, location, range, and timescale.</li>
+<li>Define the distinction the application must make and the permitted delay.</li>
+<li>Choose a sensing principle whose physical effect, range, and characteristic limitation fit those needs.</li>
+<li>Evaluate physical coupling and response.</li>
+<li>Evaluate calibration, uncertainty, and conversion.</li>
+<li>Select acquisition, filtering, and reporting that preserve the needed evidence.</li>
+<li>Define invalid, stale, out-of-range, and ambiguous-result handling.</li>
+</ol>
+<h3 id="a-result-near-a-threshold">A result near a threshold</h3>
+<p>Suppose the corrected result is <strong>26.8 °C ± 0.54 °C, k = 2</strong>, and the application asks whether the temperature at the point exceeds 27 °C. The interval runs from <strong>26.26 °C to 27.34 °C</strong> and overlaps the threshold. The point estimate is below 27 °C, but a policy requiring the whole interval below the threshold cannot classify it as below. Such a policy has three outcomes: supported below, supported above, or unresolved. This is an illustrative policy, not a conformity rule or safety guarantee; other applications weigh false alarms and missed detections differently, so define the rule explicitly.</p>
+<h2 id="common-pitfalls-and-mitigations">Common Pitfalls and Mitigations</h2>
+<h3 id="noise-saturation-and-repeated-codes">Noise, saturation, and repeated codes</h3>
+<p><strong>Noise</strong> is unwanted variation for the measurement task; a filter can remove useful information along with it. <strong>Saturation</strong> occurs when a stage cannot represent further input changes. A conditioning stage or converter may clip at a limit while still producing valid-looking codes. A limit reading supports an out-of-range interpretation, not an estimate of how far beyond the range the input is. Some designs deliberately send a fault to the limit: TI notes that small resistor currents on a thermocouple input pull a burned-out thermocouple's reading to full scale. The fault becomes visible, but the reading alone no longer separates it from a true over-range input. <a href="https://www.ti.com/lit/pdf/sbaa274">TI SBAA274A, §1.4.6</a>.</p>
+<p>A repeated code is ambiguous: the condition may be stable, resolution may hide small changes, software may return a cached observation, or a fault may have frozen the output. Sequence information, status flags, and reference comparisons help distinguish these cases.</p>
+<h3 id="drift-and-influence-quantities">Drift and influence quantities</h3>
+<p>VIM3's <strong>instrumental drift</strong> is a change in indication over time caused by changes in the instrument's metrological properties. It is distinct from a change in the measured quantity or in a recognized influence quantity. <a href="https://jcgm.bipm.org/vim/en/4.21.html">VIM3, §4.21</a>.</p>
+<p>In a <strong>direct measurement</strong>, the result comes from the instrument's indication rather than being computed from other measured quantities. There, an <strong>influence quantity</strong> does not change the quantity actually measured, but changes the relation between indication and result. The temperature of a converter's voltage reference can act this way by shifting gain (the scale factor) or offset, much as VIM's example treats the temperature of a micrometer, a precision length gauge, measuring a rod. Heat reaching the sensing element itself is different: it changes the measured quantity. The GUM uses a broader version of the term, so state which meaning applies. <a href="https://jcgm.bipm.org/vim/en/2.52.html">VIM3, §2.52</a>.</p>
+<p>So a warmer reading after an enclosure heats up is not automatically drift. It may reflect a changed local thermal condition, self-heating, or another influence. A long-term trend may be a real environmental change or aliased interference (see “Sampling Determines What We Can Distinguish”). Comparison evidence separates these explanations. Replacement, relocation, damage, or configuration change can alter the chain before any calibration date arrives.</p>
+<h3 id="a-failure-analysis-that-preserves-unknowns">A failure analysis that preserves unknowns</h3>
+<p>In a constructed incident, a room monitor reads 2 °C warmer after its enclosure is changed. Do not start by editing a firmware offset. Trace the evidence:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Evidence needed</th>
+<th>Current conclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Did the raw indication or only the calculated result change?</td>
+<td>Raw values, correction version, configuration history</td>
+<td>Unknown until compared</td>
+</tr>
+<tr>
+<td>Did the observation location or thermal path change?</td>
+<td>Installation records and physical arrangement</td>
+<td>Enclosure change is known; its effect is a hypothesis</td>
+</tr>
+<tr>
+<td>Is the reference comparison at the same place and condition?</td>
+<td>Comparable location, timing, reference uncertainty</td>
+<td>Unresolved without that context</td>
+</tr>
+<tr>
+<td>Does the discrepancy track operating activity?</td>
+<td>Condition-matched observations</td>
+<td>Could separate self-heating from other causes</td>
+</tr>
+<tr>
+<td>Does the original calibration still cover this chain?</td>
+<td>Calibration scope and changed components</td>
+<td>Must be reassessed</td>
+</tr>
+</tbody>
+</table>
+<p>The analysis narrows causes rather than guessing one. An offset that fixes one observed discrepancy can conceal a condition-dependent effect; identify the affected stage first.</p>
+<h3 id="preserve-measurement-meaning-in-software">Preserve measurement meaning in software</h3>
+<p>A useful observation record identifies the quantity and unit, acquisition time, installation location, raw indication where needed, correction version, and validity. Calibration and uncertainty details can live in an associated versioned record. This is a conceptual data contract, not a prescribed serialization.</p>
+<p>Keep range failure, missing acquisition, stale data, and unresolved quality distinct from a valid number. A zero substituted for a failure looks like a physical condition, and a refreshed timestamp makes old evidence look recent. Protect the configuration that determines meaning. If an unauthorized change can replace the location, unit, or correction, authentic telemetry may carry a misleading interpretation. Authentication provides evidence of the sending identity, while placement and metrological adequacy need their own evidence.</p>
+<h2 id="summary">Summary</h2>
+<p>Begin with the claim the application needs to make. Know the physical effect the sensor uses, because it decides what the element responds to and which errors come with it: nonlinearity, lead resistance, a reference junction, an assumed conversion, a processed index. Then check whether placement, response, conversion, and calibration support the claim. Preserve location, acquisition time, uncertainty, and validity with the result.</p>
+<p>Sampling and filtering decide which changes remain distinguishable, uncertainty connects the result to the strength of a decision, and faults can invalidate the model. Software keeps these distinctions instead of turning every number into a condition of the world.</p>
+<p>The opening disagreement stays unresolved until location, measurement behavior, and comparison conditions are established. Both sensors could be valid for their local quantities while the shared “room temperature” label is wrong.</p>
+<h2 id="whats-next">What's Next?</h2>
+<p>The next topic is embedded boards: where acquisition and conversion run, how processing and interfaces fit together, and which constraints shape hardware choices. Carry this chapter's measurement requirements into that study: the board must preserve the timing, context and quality needed by the application.</p>
+<h2 id="related-chapters">Related Chapters</h2>
+<ul>
+<li><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">Chapter 1: What Is an IoT System?</a> — Places sensing within the wider system and introduces telemetry, acquisition timestamps, freshness and responsibility during failure.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Does a digital sensor eliminate analog measurement problems?</strong>
+No. The sensing element still interacts with the physical world. A digital interface can contain conditioning and conversion within a package, while placement, self-heating, response and calibration still affect the result.</p>
+<p><strong>Q: Does calibration fix a sensor in the wrong location?</strong>
+No. Calibration establishes a relationship under specified conditions. It cannot make a local measurement represent a different location or an unobserved room-wide maximum.</p>
+<p><strong>Q: Does faster polling give me more measurements?</strong>
+Only if the device acquires new observations at that rate. Polling faster than acquisition can return the same observation repeatedly. Preserve acquisition time so repeated delivery does not appear to be new evidence.</p>
+<p><strong>Q: Can a fresh reading still describe an earlier physical condition?</strong>
+Yes. Acquisition time establishes observation age; sensor response and filtering also affect the time meaning. Evaluate them against the decision's timescale instead of using delivery time alone.</p>
+<p><strong>Q: Can averaging recover a transient the sensor missed?</strong>
+No. Averaging can reduce some noise under stated conditions, but it cannot restore information lost through slow response or inadequate sampling. It can also dilute a brief change and delay a decision.</p>
+<p><strong>Q: Does an uncertainty interval crossing a threshold mean the sensor failed?</strong>
+No. A valid measurement can leave a decision unresolved. Under this chapter's whole-interval policy, an interval overlapping the threshold supports neither a below-threshold nor an above-threshold classification.</p>
+<h2 id="glossary-terms-introduced">Glossary Terms Introduced</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning in this chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sensitivity</td>
+<td>How much the output changes per unit change in the measured quantity. It can vary across the operating range.</td>
+</tr>
+<tr>
+<td>Resolution</td>
+<td>The smallest change in the measured quantity that produces a detectable change in the reading. More displayed digits do not establish better resolution.</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>How closely repeated measurements agree under stated conditions. They can agree closely and still share a substantial error.</td>
+</tr>
+<tr>
+<td>Trueness</td>
+<td>How closely the average of many repeated measurements agrees with a reference value. A few readings cannot establish it.</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>How close a measured value is to the true value. In the vocabulary used here, this is a qualitative judgment; datasheet numbers need their stated error limits and conditions.</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>Establishing how readings relate to reference values, including uncertainty, so readings can be interpreted. It does not itself adjust the instrument.</td>
+</tr>
+<tr>
+<td>Adjustment</td>
+<td>Changing the measuring system so it gives specified readings. Because the system has changed, calibration usually needs to be checked again.</td>
+</tr>
+<tr>
+<td>Metrological traceability</td>
+<td>A result’s connection to a stated reference through a documented, unbroken calibration chain. Each link contributes uncertainty; the connection alone does not establish fitness for the application.</td>
+</tr>
+<tr>
+<td>Measurement uncertainty</td>
+<td>Quantifies the spread of values that the available evidence supports for the measured quantity. It includes limitations from references and corrections, not just fluctuations between readings.</td>
+</tr>
+<tr>
+<td>Aliasing</td>
+<td>When sampling makes different signals produce the same observations. A fast variation can appear slow or constant, and later smoothing cannot recover the missing distinction.</td>
+</tr>
+<tr>
+<td>Time constant</td>
+<td>For the first-order step-response model, the time needed to complete about 63% of a sudden input change. It is not the time needed to settle or cross every threshold.</td>
+</tr>
+<tr>
+<td>Instrumental drift</td>
+<td>A change in the instrument’s reading over time caused by changes in the instrument itself. A changing environment or a changed installation is a different explanation.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references-and-further-reading">References and Further Reading</h2>
+<ul>
+<li><a href="https://jcgm.bipm.org/vim/en/">VIM3 annotated vocabulary</a>: the formal definitions this chapter paraphrases.</li>
+<li><a href="https://www.nist.gov/pml/nist-technical-note-1297">NIST Technical Note 1297</a> and <a href="https://www.bipm.org/en/committees/jc/jcgm/publications">JCGM publications</a>: uncertainty evaluation, covariance, coverage, and the GUM family.</li>
+<li>TI application notes <a href="https://www.ti.com/lit/pdf/sbaa275">SBAA275A (RTDs)</a>, <a href="https://www.ti.com/lit/pdf/sbaa274">SBAA274A (thermocouples)</a>, and <a href="https://www.ti.com/lit/pdf/snoaa12">SNOAA12 (thermistors)</a>: sensing principles, wiring, compensation, and linearization.</li>
+<li><a href="https://srdata.nist.gov/its90/main/">NIST ITS-90 Thermocouple Database</a>: reference functions behind thermocouple conversion.</li>
+<li><a href="https://www.analog.com/en/resources/technical-articles/antialiasing-basics-using-switchcapacitor-filters.html">Analog Devices: Anti-Aliasing Basics</a> and <a href="https://www.ti.com/lit/pdf/snoa986a">TI SNOA986A</a>: sampling and temperature-installation effects.</li>
+</ul>
+<h2 id="revision-history">Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.4</td>
+<td>2026-10-19</td>
+<td>Published sensing principles, measurement chains, calibration, sampling, response and uncertainty; aligned the handbook structure, made detailed calculations optional and reduced the glossary to twelve terms.</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td>2026-10-12</td>
+<td>Added sensing principles, worked temperature-sensor cases and six other sensor families; shortened explanations and expanded transfer exercises.</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>2026-10-12</td>
+<td>Connected observation objectives, aliased interference, response lag and freshness to Chapter 1.</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>2026-10-12</td>
+<td>Clarified numerical examples, terminology and responsive figures.</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>2026-10-12</td>
+<td>Introduced the theoretical study chapter.</td>
+</tr>
+</tbody>
+</table>
+        </div>
+
+        <nav class="chapter-nav" aria-label="Chapter navigation">
+<a href="/iot-handbook/chapter-01-what-is-an-iot-system.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">What Is an IoT System?</div></a>
+<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+</nav>
+
+        <div class="article-cta">
+  <p class="article-cta__text">Continue with more handbook chapters and related engineering patterns.</p>
+  <a href="/iot-handbook/" class="btn btn--primary">Read the Handbook</a>
+</div>
+      </article>
+
+      <aside class="article-sidebar handbook-sidebar">
+        <div class="handbook-toc"><h3 class="handbook-toc__title">On this page</h3>
+<ul class="handbook-toc__list">
+<li><a class="handbook-toc__link" href="#if-you-only-read-one-section">If You Only Read One Section</a></li>
+<li><a class="handbook-toc__link" href="#prerequisites">Prerequisites</a><ul>
+<li><a class="handbook-toc__link" href="#learning-outcomes">Learning Outcomes</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#begin-with-the-quantity-not-the-device">Begin With the Quantity, Not the Device</a><ul>
+<li><a class="handbook-toc__link" href="#opening-problem-two-reasonable-readings">Opening problem: two reasonable readings</a></li>
+<li><a class="handbook-toc__link" href="#specify-the-measurand">Specify the measurand</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#follow-the-measurement-chain">Follow the Measurement Chain</a><ul>
+<li><a class="handbook-toc__link" href="#what-can-change-the-reading">What can change the reading?</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#how-sensors-turn-physical-quantities-into-signals">How Sensors Turn Physical Quantities into Signals</a><ul>
+<li><a class="handbook-toc__link" href="#four-ways-to-measure-temperature">Four ways to measure temperature</a></li>
+<li><a class="handbook-toc__link" href="#beyond-temperature-what-the-sensor-actually-responds-to">Beyond temperature: what the sensor actually responds to</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#read-specifications-with-precise-vocabulary">Read Specifications With Precise Vocabulary</a><ul>
+<li><a class="handbook-toc__link" href="#resolution-sensitivity-and-quantization">Resolution, sensitivity, and quantization</a></li>
+<li><a class="handbook-toc__link" href="#precision-trueness-and-accuracy">Precision, trueness, and accuracy</a></li>
+<li><a class="handbook-toc__link" href="#error-and-uncertainty">Error and uncertainty</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#calibration-establishes-a-relationship">Calibration Establishes a Relationship</a><ul>
+<li><a class="handbook-toc__link" href="#worked-two-point-example">Worked two-point example</a></li>
+<li><a class="handbook-toc__link" href="#traceability-has-a-specific-meaning">Traceability has a specific meaning</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#sampling-determines-what-we-can-distinguish">Sampling Determines What We Can Distinguish</a><ul>
+<li><a class="handbook-toc__link" href="#worked-ambiguity-two-signals-identical-samples">Worked ambiguity: two signals, identical samples</a></li>
+<li><a class="handbook-toc__link" href="#aliased-interference-can-look-like-a-slow-physical-change">Aliased interference can look like a slow physical change</a></li>
+<li><a class="handbook-toc__link" href="#acquisition-polling-and-reporting-are-different-rates">Acquisition, polling, and reporting are different rates</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#fresh-data-can-still-describe-a-delayed-response">Fresh Data Can Still Describe a Delayed Response</a><ul>
+<li><a class="handbook-toc__link" href="#worked-first-order-response">Worked first-order response</a></li>
+<li><a class="handbook-toc__link" href="#averaging-changes-both-noise-and-time-meaning">Averaging changes both noise and time meaning</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#carry-uncertainty-into-the-result">Carry Uncertainty Into the Result</a><ul>
+<li><a class="handbook-toc__link" href="#worked-linear-uncertainty-budget">Worked linear uncertainty budget</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#worked-example-choose-a-sensor-from-the-decision">Worked Example: Choose a Sensor From the Decision</a><ul>
+<li><a class="handbook-toc__link" href="#a-result-near-a-threshold">A result near a threshold</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#common-pitfalls-and-mitigations">Common Pitfalls and Mitigations</a><ul>
+<li><a class="handbook-toc__link" href="#noise-saturation-and-repeated-codes">Noise, saturation, and repeated codes</a></li>
+<li><a class="handbook-toc__link" href="#drift-and-influence-quantities">Drift and influence quantities</a></li>
+<li><a class="handbook-toc__link" href="#a-failure-analysis-that-preserves-unknowns">A failure analysis that preserves unknowns</a></li>
+<li><a class="handbook-toc__link" href="#preserve-measurement-meaning-in-software">Preserve measurement meaning in software</a></li>
+</ul>
+</li>
+<li><a class="handbook-toc__link" href="#summary">Summary</a></li>
+<li><a class="handbook-toc__link" href="#whats-next">What's Next?</a></li>
+<li><a class="handbook-toc__link" href="#related-chapters">Related Chapters</a></li>
+<li><a class="handbook-toc__link" href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a class="handbook-toc__link" href="#glossary-terms-introduced">Glossary Terms Introduced</a></li>
+<li><a class="handbook-toc__link" href="#references-and-further-reading">References and Further Reading</a></li>
+<li><a class="handbook-toc__link" href="#revision-history">Revision History</a></li>
+</ul>
+
+</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      document.documentElement.classList.add('js');
+      var saved = localStorage.getItem("theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    })();
+  </script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/iot-handbook.js?v=20261019" defer></script>
+</body>
+</html>
