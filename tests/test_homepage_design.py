@@ -37,3 +37,14 @@ class HomeDesignTests(unittest.TestCase):
             self.assertTrue((ROOT / image['src'].lstrip('/')).is_file())
         self.assertIn('Simulated environment, Level 5', self.text)
         self.assertIn('Five simulator rounds and a real Arduino motor bench', self.text)
+
+    def test_collection_counts_include_only_published_registry_entries(self):
+        import json
+        cards = [a for tag, a in self.elements if tag == 'article' and a.get('data-collection')]
+        self.assertEqual({c['data-collection'] for c in cards}, {'handbook', 'iot-handbook'})
+        for card in cards:
+            chapters = json.loads((ROOT / card['data-collection'] / 'handbook.json').read_text())['handbook']['chapters']
+            self.assertEqual(int(card['data-published-chapters']), sum(c['status'] == 'published' for c in chapters))
+    def test_collections_precede_the_lighter_principles(self):
+        self.assertLess(self.text.index('id="handbook"'), self.text.index('id="principles"'))
+        self.assertNotIn('handbook-feature__chapters', self.text)

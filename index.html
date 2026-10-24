@@ -239,20 +239,45 @@
       </div>
     </section>
 
+    <!-- ==================== HANDBOOK COLLECTIONS ==================== -->
+    <section class="handbook-feature section section--compact" id="handbook">
+      <div class="container">
+        <h2 class="section__title">Engineering Handbooks</h2>
+        <p class="section__subtitle">Two paths into the systems I build. Choose a collection and start with the foundations.</p>
+        <div class="collections-grid">
+          <article class="collection-card" id="ai-handbook" data-collection="handbook" data-published-chapters="11">
+            <p class="collection-card__eyebrow">AI ENGINEERING</p>
+            <h3>The AI-Native Engineering Handbook</h3>
+            <p class="collection-card__description">Build a vocabulary for reliable agents, from the first ReAct loop to memory, evaluation, human oversight, and real-time audio. Each chapter develops the decisions behind the patterns.</p>
+            <p class="collection-card__topics">Agent patterns · Memory · Evaluation</p>
+            <p class="collection-card__count">11 published chapters</p>
+            <a class="text-link" href="/handbook/">Explore the AI handbook <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="collection-card" id="iot-handbook" data-collection="iot-handbook" data-published-chapters="2">
+            <p class="collection-card__eyebrow">CONNECTED SYSTEMS</p>
+            <h3>The IoT Engineering Handbook</h3>
+            <p class="collection-card__description">Study connected systems through standards and clear engineering models. Begin with IoT reference architectures, sensing, measurement, and the relationship between physical signals and software decisions.</p>
+            <p class="collection-card__topics">Reference models · Sensing · Measurement</p>
+            <p class="collection-card__count">2 published chapters</p>
+            <a class="text-link" href="/iot-handbook/">Explore the IoT handbook <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== OPERATING PRINCIPLES ==================== -->
     <section class="process section section--compact" id="principles">
       <div class="container">
         <div class="process__intro">
           <h2 class="section__title reveal">Operating Principles</h2>
-          <p class="section__subtitle reveal reveal--delay-1">The method behind those systems: framing, tradeoffs, and follow-through, developed in full in the handbook.</p>
+          <p class="section__subtitle reveal reveal--delay-1">Frame the problem, make the tradeoffs explicit, and follow the work into operation.</p>
         </div>
         <div class="process__steps">
           <div class="process__step reveal reveal--delay-1">
             <div class="process__number">01</div>
             <div class="process__content">
               <h3 class="process__title">Problem Framing</h3>
-              <p class="process__desc">Start with the system context, constraints, users, failure modes, and business pressure before choosing a technical direction.</p>
-              <span class="process__badge">Evidence First</span>
+              <p class="process__desc">Start with users, constraints, and failure modes. Establish what the evidence says before choosing a technical direction.</p>
             </div>
           </div>
           <div class="process__connector" aria-hidden="true"></div>
@@ -260,8 +285,7 @@
             <div class="process__number">02</div>
             <div class="process__content">
               <h3 class="process__title">System Design</h3>
-              <p class="process__desc">Turn ambiguous requirements into clear boundaries, contracts, tradeoffs, and implementation paths that teams can reason about.</p>
-              <span class="process__badge">Maintainable Design</span>
+              <p class="process__desc">Turn ambiguous requirements into boundaries, contracts, and tradeoffs that a team can reason about and maintain.</p>
             </div>
           </div>
           <div class="process__connector" aria-hidden="true"></div>
@@ -269,56 +293,9 @@
             <div class="process__number">03</div>
             <div class="process__content">
               <h3 class="process__title">Delivery &amp; Follow-through</h3>
-              <p class="process__desc">Ship the work, document the decisions, review the implementation, and make sure the operational reality matches the design.</p>
-              <span class="process__badge">Production Mindset</span>
+              <p class="process__desc">Ship, document, and review the work. Check that the operational reality matches the design, and resolve the gaps.</p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== HANDBOOK ==================== -->
-    <section class="handbook-feature section section--compact" id="handbook">
-      <div class="container">
-        <h2 class="section__title reveal">The AI-Native Engineering Handbook</h2>
-        <p class="section__subtitle reveal reveal--delay-1">
-          The same method, structured for teaching. Eleven published chapters, from the first
-          ReAct loop to safety guardrails and real-time audio agents.
-        </p>
-        <ol class="handbook-feature__chapters reveal reveal--delay-2">
-          <li><a href="/handbook/chapter-00-agentic-landscape.html">The Agentic Landscape</a></li>
-          <li><a href="/handbook/chapter-01-react-pattern.html">The ReAct Pattern</a></li>
-          <li><a href="/handbook/chapter-02-plan-and-execute.html">Plan-and-Execute</a></li>
-          <li><a href="/handbook/chapter-03-reflection.html">Reflection</a></li>
-          <li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Multi-Agent Collaboration</a></li>
-          <li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Tool Use &amp; Skill Registries</a></li>
-          <li><a href="/handbook/chapter-06-memory-context-management.html">Memory &amp; Context Management</a></li>
-          <li><a href="/handbook/chapter-07-human-in-the-loop.html">Human-in-the-Loop</a></li>
-          <li><a href="/handbook/chapter-08-observability-evaluation.html">Observability &amp; Evaluation</a></li>
-          <li><a href="/handbook/chapter-09-safety-guardrails.html">Safety &amp; Guardrails</a></li>
-          <li><a href="/handbook/chapter-22-real-time-audio-agents.html">Real-Time Audio Agents</a></li>
-        </ol>
-        <div class="handbook-feature__cta reveal reveal--delay-3">
-          <a href="/handbook/" class="btn btn--secondary">Open the Handbook</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== IOT HANDBOOK ==================== -->
-    <section class="handbook-feature section section--compact" id="iot-handbook">
-      <div class="container">
-        <h2 class="section__title reveal">The IoT Engineering Handbook</h2>
-        <p class="section__subtitle reveal reveal--delay-1">
-          Study connected systems through standards, reference architectures and
-          clear engineering models. Explore sensing, communication, control,
-          interoperability and device lifecycle.
-        </p>
-        <ol class="handbook-feature__chapters reveal reveal--delay-2">
-          <li><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">What Is an IoT System?</a></li>
-          <li><a href="/iot-handbook/chapter-02-sensors-and-the-physical-world.html">Sensors and the Physical World</a></li>
-        </ol>
-        <div class="handbook-feature__cta reveal reveal--delay-3">
-          <a href="/iot-handbook/" class="btn btn--secondary">Open the IoT Handbook</a>
         </div>
       </div>
     </section>

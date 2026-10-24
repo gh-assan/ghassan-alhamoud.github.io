@@ -1,4 +1,6 @@
 /* Home page composition. Shared site primitives remain in main.css. */
+.home .section { padding: 80px 0; }
+@media (max-width: 599px) { .home .section { padding: 48px 0; } }
 .skip-link { position: fixed; top: 8px; left: 16px; z-index: 2000; padding: 12px 20px; background: var(--bg-primary); color: var(--accent); border: 2px solid currentColor; transform: translateY(-150%); }
 .skip-link:focus { transform: none; }
 .home .reveal { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
@@ -66,4 +68,26 @@
   .home .hero__artifact { display: none; }
   .hero__mobile-model { display: grid; gap: 4px; border-top: 1px solid var(--border); margin-top: 24px; padding-top: 16px; font-size: 14px; color: var(--text-secondary); }
   .hero__mobile-model span:first-child { font-weight: 600; color: var(--accent); }
+}
+
+/* Collections are an editorial choice; principles stay open and compact. */
+.collections-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.collection-card { padding: 32px; border: 1px solid var(--border); border-radius: 14px; display: flex; flex-direction: column; scroll-margin-top: 80px; }
+.collection-card__eyebrow { font-size: 12px; letter-spacing: .1em; color: var(--accent); margin-bottom: 16px; }
+.collection-card h3 { font-size: 28px; letter-spacing: -.025em; line-height: 1.25; margin-bottom: 20px; }
+.collection-card__description { font-size: 16px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; }
+.collection-card__topics { font-size: 13px; color: var(--text-secondary); margin-top: auto; }
+.collection-card__count { font-size: 13px; color: var(--text-muted); margin: 12px 0; }
+.home .process__steps { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; max-width: none; margin-top: 36px; }
+.home .process__step { display: grid; grid-template-columns: 40px minmax(0, 1fr); padding: 0; background: transparent; border: 0; box-shadow: none; border-radius: 0; gap: 16px; }
+.home .process__step:hover { box-shadow: none; }
+.home .process__number { font-size: 24px; line-height: 1.3; color: var(--accent); }
+.home .process__title { font-size: 19px; line-height: 1.4; margin-bottom: 12px; }
+.home .process__desc { font-size: 16px; line-height: 1.65; }
+.home .process__connector { display: none; }
+@media (min-width: 900px) { .home .process__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 699px) {
+  .collections-grid { grid-template-columns: minmax(0, 1fr); }
+  .collection-card { padding: 24px; }
+  .collection-card h3 { font-size: 25px; }
 }
