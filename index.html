@@ -151,8 +151,7 @@
       <div class="container">
         <h2 class="section__title reveal">Public Systems</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          The argument starts with shipped work: three public systems you can
-          run, inspect, and trace back to their reasoning.
+          Three public systems. Inspect the work, run the code, and trace the engineering decisions.
         </p>
 
         <div class="systems__grid">
@@ -188,16 +187,14 @@
               <span class="system-card__status">Public release</span>
             </header>
             <p class="system-card__summary">
-              An open-source, stream-native agent that understands sensor-derived situations,
-              decides what should happen, and acts through governed, bounded commands.
+              An open-source agent that turns sensor-derived situations into governed decisions and bounded device commands.
             </p>
             <figure class="system-card__diagram">
               <img src="/images/projects/tamoz-boundary.svg" width="360" height="120" loading="lazy" alt="Illustrative Tamoz boundary: sensor-derived situation, governed intent, and bounded device command."/>
-              <figcaption class="evidence-caption">Illustrative · Governed stream-to-action boundary.</figcaption>
+              <figcaption class="evidence-caption">Illustrative · Governed commands.</figcaption>
             </figure>
             <p class="system-card__proof">
-              Five simulator rounds and a real Arduino motor bench, with durable execution,
-              memory, and an evaluation harness inspectable in three public repositories.
+              Five simulator rounds and a real Arduino motor bench. Durable execution, memory, and evaluation are inspectable across three public repositories.
             </p>
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Physical-World AI</span>
@@ -212,16 +209,14 @@
               <span class="system-card__status">Public release</span>
             </header>
             <p class="system-card__summary">
-              A self-hosted MCP server that gives autonomous agents shared operational
-              memory without turning into an orchestration framework.
+              Shared operational memory for autonomous agents, through a self-hosted MCP server. Independent of orchestration.
             </p>
             <figure class="system-card__diagram">
               <img src="/images/projects/alms-memory.svg" width="360" height="120" loading="lazy" alt="Illustrative ALMS access: agents publish and retrieve shared memory and protocols through MCP."/>
-              <figcaption class="evidence-caption">Illustrative · Shared knowledge, independent agents.</figcaption>
+              <figcaption class="evidence-caption">Illustrative · Shared operational memory.</figcaption>
             </figure>
             <p class="system-card__proof">
-              Agents register, publish learnings, and pull operational protocols by
-              tag, and they keep working when ALMS itself is offline.
+              Agents publish learnings and retrieve protocols by tag. They keep working when ALMS itself is offline.
             </p>
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Agent Memory</span>
@@ -233,9 +228,7 @@
         </div>
 
         <p class="systems__more reveal">
-          Application systems and experiments, including a film-production
-          pipeline, an email intelligence platform, and an agent skill ledger,
-          are documented on the <a href="/projects/">systems index</a>.
+          Explore the film pipeline, email intelligence platform, and skill ledger in <a href="/projects/">all public systems</a>.
         </p>
       </div>
     </section>
@@ -249,7 +242,7 @@
           <article class="collection-card" id="ai-handbook" data-collection="handbook" data-published-chapters="11">
             <p class="collection-card__eyebrow">AI ENGINEERING</p>
             <h3>The AI-Native Engineering Handbook</h3>
-            <p class="collection-card__description">Build a vocabulary for reliable agents, from the first ReAct loop to memory, evaluation, human oversight, and real-time audio. Each chapter develops the decisions behind the patterns.</p>
+            <p class="collection-card__description">Build reliable agents, from the first ReAct loop to memory, evaluation, human oversight, and real-time audio. Learn the engineering decisions behind each pattern.</p>
             <p class="collection-card__topics">Agent patterns · Memory · Evaluation</p>
             <p class="collection-card__count">11 published chapters</p>
             <a class="text-link" href="/handbook/">Explore the AI handbook <span aria-hidden="true">↗</span></a>
@@ -257,7 +250,7 @@
           <article class="collection-card" id="iot-handbook" data-collection="iot-handbook" data-published-chapters="2">
             <p class="collection-card__eyebrow">CONNECTED SYSTEMS</p>
             <h3>The IoT Engineering Handbook</h3>
-            <p class="collection-card__description">Study connected systems through standards and clear engineering models. Begin with IoT reference architectures, sensing, measurement, and the relationship between physical signals and software decisions.</p>
+            <p class="collection-card__description">Understand connected systems through standards and engineering models. Begin with IoT architectures, sensing, and the relationship between physical measurements and software decisions.</p>
             <p class="collection-card__topics">Reference models · Sensing · Measurement</p>
             <p class="collection-card__count">2 published chapters</p>
             <a class="text-link" href="/iot-handbook/">Explore the IoT handbook <span aria-hidden="true">↗</span></a>
@@ -278,7 +271,7 @@
             <div class="process__number">01</div>
             <div class="process__content">
               <h3 class="process__title">Problem Framing</h3>
-              <p class="process__desc">Start with users, constraints, and failure modes. Establish what the evidence says before choosing a technical direction.</p>
+              <p class="process__desc">Understand users, constraints, and failure modes. Let the evidence shape the technical direction.</p>
             </div>
           </div>
           <div class="process__connector" aria-hidden="true"></div>
@@ -286,7 +279,7 @@
             <div class="process__number">02</div>
             <div class="process__content">
               <h3 class="process__title">System Design</h3>
-              <p class="process__desc">Turn ambiguous requirements into boundaries, contracts, and tradeoffs that a team can reason about and maintain.</p>
+              <p class="process__desc">Make boundaries, contracts, and tradeoffs explicit so the team can reason about and maintain the system.</p>
             </div>
           </div>
           <div class="process__connector" aria-hidden="true"></div>
@@ -294,7 +287,7 @@
             <div class="process__number">03</div>
             <div class="process__content">
               <h3 class="process__title">Delivery &amp; Follow-through</h3>
-              <p class="process__desc">Ship, document, and review the work. Check that the operational reality matches the design, and resolve the gaps.</p>
+              <p class="process__desc">Ship, document, and review. Follow the work into operation and resolve gaps between reality and design.</p>
             </div>
           </div>
         </div>
@@ -318,13 +311,13 @@
           <a class="field-note" href="/articles/stop-building-agent-soup-compilers.html">
             <span class="field-note__path">Production AI architecture</span>
             <span class="field-note__title">Stop Building &quot;Agent Soup&quot;: A Compiler-Style Multi-Agent Workflow</span>
-            <span class="field-note__excerpt">A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate policy, execute deterministically, and verify effects.</span>
+            <span class="field-note__excerpt">Normalize intent, validate policy, execute deterministically, and verify effects in a compiler-style agent workflow.</span>
           <span class="field-note__meta"><time datetime="2026-03-10">10 Mar 2026</time> · 12 min</span>
           </a>
           <a class="field-note" href="/articles/alms-open-source-shared-agent-memory.html">
             <span class="field-note__path">Agent memory and infrastructure</span>
             <span class="field-note__title">Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)</span>
-            <span class="field-note__excerpt">Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.</span>
+            <span class="field-note__excerpt">An open-source MCP server for shared learnings, gap-safe memory sync, and operational protocols.</span>
           <span class="field-note__meta"><time datetime="2026-06-11">11 Jun 2026</time> · 9 min</span>
           </a>
         </div>
