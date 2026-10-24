@@ -10,6 +10,6 @@
     "build:iot-handbook": "python3 scripts/build-handbook.py --collection iot-handbook",
     "test:iot-visuals": "node tests/iot-visuals.cjs",
     "test:iot-sensors-visuals": "node tests/iot-sensors-visuals.cjs",
-    "test:nav": "node --test tests/nav.test.cjs"
+    "test:nav": "node --test tests/nav.test.cjs tests/transitions.test.cjs"
   }
 }
