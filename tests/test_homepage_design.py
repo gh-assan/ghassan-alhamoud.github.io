@@ -21,7 +21,7 @@ class HomeDesignTests(unittest.TestCase):
     def test_static_hero_keeps_architecture_accessible_without_motion_script(self):
         hero = self.text.split('id="hero"', 1)[1].split('</section>', 1)[0]
         self.assertIn('aria-label="Illustrative agent architecture:', hero)
-        self.assertIn('checkpoints', hero)
+        self.assertIn('durable state', hero)
         self.assertNotIn('data-loop', hero)
         self.assertNotIn('hero-loop.js', self.text)
     def test_homepage_style_is_loaded_after_shared_styles(self):

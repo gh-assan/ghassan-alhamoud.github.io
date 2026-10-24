@@ -140,3 +140,9 @@
   .home .counter__number { font-size: 28px; }
   .home .contact { padding: 48px 0; }
 }
+
+/* Keep small architectural previews secondary to the project evidence. */
+.home .system-card__diagram img { max-width: 340px; margin: 0 auto; }
+.home .hero__eyebrow { max-width: none; }
+.home .section__subtitle { margin-bottom: 32px; }
+.home .header--hidden { transform: none; }
