@@ -59,3 +59,11 @@
   .home .system-card, .home .system-card--flagship { padding: 24px; }
   .home .system-card__title { font-size: 22px; }
 }
+
+/* A text model keeps the smallest diagram readable without scaling fine labels. */
+.hero__mobile-model { display: none; }
+@media (max-width: 599px) {
+  .home .hero__artifact { display: none; }
+  .hero__mobile-model { display: grid; gap: 4px; border-top: 1px solid var(--border); margin-top: 24px; padding-top: 16px; font-size: 14px; color: var(--text-secondary); }
+  .hero__mobile-model span:first-child { font-weight: 600; color: var(--accent); }
+}

@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="580" height="160" viewBox="0 0 580 160" fill="none">
-  <rect width="580" height="160" rx="12" fill="#edf2ed"/>
-  <g stroke="#1d6f42" stroke-width="1.5"><rect x="16" y="26" width="128" height="46" rx="10"/><rect x="16" y="88" width="128" height="46" rx="10"/><rect x="230" y="44" width="156" height="70" rx="10"/><path d="M152 49h30v62h-30M182 79h38m-6-5 6 5-6 5M396 79h28m-6-5 6 5-6 5"/><rect x="434" y="44" width="130" height="70" rx="10"/></g>
-  <g fill="#1a2e1a" font-family="Inter, sans-serif" text-anchor="middle" font-size="18"><text x="80" y="55">Agent A</text><text x="80" y="117">Agent B</text><text x="308" y="76">Shared memory</text><text x="499" y="76">Protocols</text></g>
-  <g fill="#4a6741" font-family="Inter, sans-serif" text-anchor="middle" font-size="15"><text x="308" y="98">via MCP</text><text x="499" y="98">pull by tag</text></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" fill="none"><rect width="360" height="120" rx="12" fill="#edf2ed"/><g stroke="#1d6f42" stroke-width="1.5"><rect x="10" y="28" width="100" height="64" rx="10"/><rect x="130" y="28" width="100" height="64" rx="10"/><rect x="250" y="28" width="100" height="64" rx="10"/><path d="M112 60h16m-5-5 5 5-5 5M232 60h16m-5-5 5 5-5 5"/></g><g fill="#1a2e1a" font-family="Inter, sans-serif" text-anchor="middle" font-size="20"><text x="60" y="67">Agents</text><text x="180" y="67">Memory</text><text x="300" y="67">Protocols</text></g></svg>
