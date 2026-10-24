@@ -509,6 +509,10 @@ def check_scroll_spy_contract():
             problems.append(f"nav.js: route state missing '{needle}'")
     if "SECTION_TO_LINK" in js:
         problems.append("nav.js: home previews still activate unrelated routes")
+    run = subprocess.run(["node", "--test", "tests/nav.test.cjs"], cwd=ROOT,
+                         capture_output=True, text=True)
+    if run.returncode:
+        problems.append("navigation regression tests failed: " + run.stdout[-800:])
     report("navigation-state", not problems, "; ".join(problems))
 
 

@@ -4,7 +4,7 @@ const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 const vm = require('node:vm');
 
-function setup() {
+function setup(pathname = '/') {
   let document;
   class Element {
     constructor(id = '') {
@@ -31,7 +31,9 @@ function setup() {
   const main = new Element(), footer = new Element();
   body.appendChild(header); body.appendChild(main); body.appendChild(footer);
   header.appendChild(nav); nav.appendChild(logo); nav.appendChild(toggle); nav.appendChild(menu);
-  const links = Array.from({ length: 5 }, () => new Element());
+  const links = ['/projects/', '/articles/', '/#handbook', '/research/', '/#about', '/#contact'].map(href => {
+    const link = new Element(); link.setAttribute('href', href); return link;
+  });
   links.forEach(link => menu.appendChild(link)); toggle.setAttribute('aria-expanded', 'false');
   const query = { matches: true, addEventListener: (_, fn) => { query.change = fn; } };
   document = {
@@ -40,7 +42,7 @@ function setup() {
     querySelectorAll: selector => selector === '.nav__link' ? links : [],
     addEventListener: (key, fn) => { document.events[key] = fn; },
   };
-  const window = { location: { pathname: '/' }, matchMedia: () => query, scrollY: 0, addEventListener() {} };
+  const window = { location: { pathname }, matchMedia: () => query, scrollY: 0, addEventListener() {} };
   vm.runInNewContext(readFileSync(join(__dirname, '../assets/js/nav.js'), 'utf8'), { document, window });
   const key = (name, shiftKey = false) => {
     const event = { key: name, shiftKey, prevented: false, preventDefault() { this.prevented = true; } };
@@ -88,3 +90,18 @@ for (const dismiss of ['scrim', 'route']) {
     assert.equal(s.body.style.overflow, ''); assert.ok(!s.main.hasAttribute('inert'));
   });
 }
+
+
+test('desktop transition moves focus away from a now-hidden toggle', () => {
+  const s = setup(); s.open(); s.toggle.focus(); s.query.matches = false; s.query.change();
+  assert.equal(s.document.activeElement, s.links[0]);
+});
+
+test('route activity distinguishes current pages and their parent collection', () => {
+  const project = setup('/projects/tamoz.html');
+  assert.equal(project.links[0].getAttribute('aria-current'), 'page');
+  const handbook = setup('/iot-handbook/chapter-01-what-is-an-iot-system.html');
+  assert.equal(handbook.links[2].getAttribute('aria-current'), 'true');
+  const home = setup('/');
+  assert.ok(home.links.every(link => !link.hasAttribute('aria-current')));
+});

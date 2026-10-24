@@ -120,7 +120,14 @@
   });
 
   function reconcileViewport() {
-    if (!mobileQuery.matches && isOpen()) closeMenu(false);
+    if (!mobileQuery.matches && isOpen()) {
+      var toggleHadFocus = document.activeElement === navToggle;
+      closeMenu(false);
+      if (toggleHadFocus) {
+        var destination = navMenu.querySelector('a');
+        if (destination) destination.focus();
+      }
+    }
     else applyInertState();
   }
 
@@ -143,7 +150,7 @@
       ? /^\/(?:iot-)?handbook\//.test(path)
       : href.charAt(0) === '/' && href.indexOf('#') === -1 && path.indexOf(href) === 0;
     link.classList.toggle('nav__link--active', current);
-    if (current) link.setAttribute('aria-current', 'page');
+    if (current) link.setAttribute('aria-current', href === '/#handbook' ? 'true' : 'page');
     else link.removeAttribute('aria-current');
   });
 
