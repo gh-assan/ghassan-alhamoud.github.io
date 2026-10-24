@@ -48,3 +48,16 @@ class HomeDesignTests(unittest.TestCase):
     def test_collections_precede_the_lighter_principles(self):
         self.assertLess(self.text.index('id="handbook"'), self.text.index('id="principles"'))
         self.assertNotIn('handbook-feature__chapters', self.text)
+
+    def test_career_detail_is_available_in_native_disclosure(self):
+        self.assertIn('<details class="about-details">', self.text)
+        for fact in ['11/2021 — 06/2026', '2007 — 2012', 'Billcom', 'secu-ring', 'Applicata', 'Logos', 'role-explainer']:
+            self.assertIn(fact, self.text)
+    def test_article_metadata_matches_registry(self):
+        import re, json
+        registry = {a['slug']: a for a in json.loads((ROOT / 'articles/articles.json').read_text())}
+        notes = re.findall(r'<a class="field-note[^\"]*" href="/articles/([^\"]+)\.html">(.*?)</a>', self.text, re.S)
+        self.assertEqual(len(notes), 3)
+        for slug, content in notes:
+            self.assertIn(registry[slug]['date'], content)
+            self.assertIn(registry[slug]['readingTime'], content)

@@ -303,31 +303,28 @@
     <!-- ==================== FIELD NOTES ==================== -->
     <section class="field-notes section section--compact" id="field-notes">
       <div class="container">
-        <h2 class="section__title reveal">Field Notes</h2>
+        <h2 class="section__title reveal">Selected Field Notes</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          Current thinking in long form. Case studies and frameworks from the
-          systems above, written while the work is still in motion.
+          Case studies and frameworks from the work. Start with a physical-world experiment, then explore the architecture behind reliable agents.
         </p>
         <div class="field-notes__list reveal reveal--delay-2">
-          <a class="field-note" href="/articles/agent-spun-the-motor.html">
+          <a class="field-note field-note--lead" href="/articles/agent-spun-the-motor.html">
             <span class="field-note__path">AI agents and physical systems</span>
             <span class="field-note__title">When an AI Agent Met a Real Motor: Energized Is Not Spinning</span>
             <span class="field-note__excerpt">A real-model decision and a separately verified hardware run show why GPIO state is not physical proof—and why the production integration seam remains open.</span>
+          <span class="field-note__meta"><time datetime="2026-09-14">14 Sep 2026</time> · 9 min</span>
           </a>
           <a class="field-note" href="/articles/stop-building-agent-soup-compilers.html">
             <span class="field-note__path">Production AI architecture</span>
             <span class="field-note__title">Stop Building &quot;Agent Soup&quot;: A Compiler-Style Multi-Agent Workflow</span>
             <span class="field-note__excerpt">A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate policy, execute deterministically, and verify effects.</span>
+          <span class="field-note__meta"><time datetime="2026-03-10">10 Mar 2026</time> · 12 min</span>
           </a>
           <a class="field-note" href="/articles/alms-open-source-shared-agent-memory.html">
             <span class="field-note__path">Agent memory and infrastructure</span>
             <span class="field-note__title">Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)</span>
             <span class="field-note__excerpt">Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.</span>
-          </a>
-          <a class="field-note" href="/articles/smart-models-go-stupid.html">
-            <span class="field-note__path">Reliability and evaluation</span>
-            <span class="field-note__title">Why a Strong Coding Agent Failed a TUI Task: A Detailed Case Study</span>
-            <span class="field-note__excerpt">A repository-backed case study: 6,142 lines of TUI design became a 280-line REPL. Here is the acceptance gap and the delivery contract that fixed it.</span>
+          <span class="field-note__meta"><time datetime="2026-06-11">11 Jun 2026</time> · 9 min</span>
           </a>
         </div>
         <div class="field-notes__footer reveal">
@@ -338,87 +335,36 @@
 
     <!-- ==================== ABOUT ==================== -->
     <section class="about section" id="about">
-      <div class="container about__layout">
-
-        <!-- Photo column -->
-        <div class="about__photo-col reveal">
-          <div class="about__photo-frame">
-            <img
-              src="/images/ghassan.png"
-              alt="Portrait of Ghassan Alhamoud"
-              class="about__photo"
-              width="253"
-              height="561"
-              loading="lazy"
-            />
+      <div class="container">
+        <div class="about-intro">
+          <img src="/images/ghassan.png" alt="Portrait of Ghassan Alhamoud" class="about-intro__portrait" width="160" height="200" loading="lazy"/>
+          <div>
+            <h2 class="section__title">About</h2>
+            <p>I am a Senior Software Engineer with more than 15 years of experience building backend systems and modernizing complex architectures. My work at <strong>Vinted</strong>, <strong>Wayfair</strong>, and <strong>PlusDental</strong> focused on clear service boundaries, platform reliability, and reducing coupling.</p>
+            <p>Outside those roles, I build public systems to explore these decisions in practice, and write about distributed systems and reliable AI-agent infrastructure.</p>
+            <a href="#contact" class="text-link">Get in touch <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-
-        <!-- Bio column -->
-        <div class="about__bio-col">
-          <h2 class="section__title reveal">About</h2>
-          <p class="role-explainer">
+        <div class="impacts">
+          <h3 class="impacts__heading">Selected impact</h3>
+          <div class="impacts__grid">
+            <div class="impact"><span class="impact__employer">Vinted</span><h4 class="impact__title">From monolith to independent service</h4><p class="impact__body">Led the first independently operated microservice extraction on a live platform, backed by Kafka and a dedicated database.</p></div>
+            <div class="impact"><span class="impact__employer">Wayfair</span><h4 class="impact__title">Database decoupling</h4><p class="impact__body">Tech Lead for a nine-month database-decoupling project; built the MVP for a decoupled Kafka consumer.</p></div>
+            <div class="impact"><span class="impact__employer">PlusDental</span><h4 class="impact__title">Migration and engineering practices</h4><p class="impact__body">Zero-downtime API migration, internal platform tools, testing practices, and architecture improvements.</p></div>
+          </div>
+        </div>
+        <details class="about-details">
+          <summary>Full career timeline and engineering role</summary>
+          <div class="about-details__content">
+            <p class="role-explainer">
             AI Agent Enabler means enabling the reliable adoption and integration
             of AI agents into products, workflows, and engineering practices,
             making them dependable parts of real systems rather than demos. Inside
             a company, this work maps to senior and staff backend, platform, or
             distributed-systems engineering roles.
           </p>
-          <div class="about__text reveal reveal--delay-1">
-            <p>
-              I am a Senior Software Engineer with more than 15 years of experience
-              building backend systems and modernizing complex architectures. My work
-              focuses on reducing coupling, establishing clear service boundaries, and
-              improving the scalability and reliability of platforms.
-            </p>
-            <p>
-              That work was built at <strong>Vinted</strong>,
-              <strong>PlusDental</strong>, and <strong>Wayfair</strong>, spanning
-              marketplace platforms, API migration, and supply-chain systems. The
-              selected impact below names the scope; the full timeline follows.
-            </p>
-            <p>
-              Outside my professional roles, I build systems to explore these ideas in
-              practice: ScaleShop, an interactive scalability lab; Tamoz, a
-              stream-oriented agent project; and an AI-assisted film-production pipeline
-              that produced two short films. I write about distributed systems,
-              event-driven architecture, reliability, and practical AI-agent infrastructure.
-            </p>
-          </div>
-
-          <div class="impacts reveal reveal--delay-2">
-            <h3 class="impacts__heading">Selected impact</h3>
-            <div class="impact">
-              <span class="impact__employer">Vinted</span>
-              <h3 class="impact__title">First independently operated microservice extraction</h3>
-              <p class="impact__body">
-                Led the extraction of the platform's first independently operated
-                microservice, backed by Kafka and a dedicated database, out of an
-                existing monolith on a live platform. Work around it spanned
-                parcel-tracking performance, carrier webhook integrations, and
-                crawler infrastructure; influence extended beyond the service itself
-                into engineering practices and technical hiring.
-              </p>
-            </div>
-            <div class="impact">
-              <span class="impact__employer">Wayfair</span>
-              <h3 class="impact__title">Database decoupling, as Tech Lead</h3>
-              <p class="impact__body">
-                Tech Lead for a nine-month database-decoupling project; built the
-                MVP for a decoupled Kafka consumer.
-              </p>
-            </div>
-            <div class="impact">
-              <span class="impact__employer">PlusDental</span>
-              <h3 class="impact__title">API migration and testing practices</h3>
-              <p class="impact__body">
-                Zero-downtime API migration, internal platform tools, testing
-                practices, and architecture improvements.
-              </p>
-            </div>
-          </div>
-
-          <div class="about__career reveal reveal--delay-2">
+            <p>At Vinted, work around the extraction spanned parcel-tracking performance, carrier webhook integrations, and crawler infrastructure, with influence extending into engineering practices and technical hiring. Independent work also includes an AI-assisted film-production pipeline that produced two short films.</p>
+            <div class="about__career reveal reveal--delay-2">
             <div class="career-step">
               <span class="career-step__year">11/2021 — 06/2026</span>
               <span class="career-step__role">Senior Software Engineer — Vinted</span>
@@ -448,8 +394,7 @@
               <span class="career-step__role">Senior Consultant &amp; Developer (Mongolia &amp; Syria) — Billcom Consulting</span>
             </div>
           </div>
-
-          <div class="about__skills reveal reveal--delay-3">
+<div class="about__skills reveal reveal--delay-3">
             <span class="about__skill">Distributed Systems</span>
             <span class="about__skill">Event-Driven Architecture</span>
             <span class="about__skill">Kafka</span>
@@ -457,8 +402,8 @@
             <span class="about__skill">Evaluation</span>
             <span class="about__skill">System Design</span>
           </div>
-        </div>
-
+          </div>
+        </details>
       </div>
     </section>
 
@@ -475,20 +420,20 @@
           <div class="counter reveal reveal--delay-1">
             <span class="counter__number" data-target="6" data-metric="systems" data-suffix="" aria-hidden="true">6</span>
             <span class="sr-only">6 public systems</span>
-            <span class="counter__label">Public Systems</span>
-            <span class="counter__scope">Open source, listed in projects.json</span>
+            <a class="counter__label" href="/projects/">Public Systems</a>
+            <span class="counter__scope">Open-source projects and labs</span>
           </div>
           <div class="counter reveal reveal--delay-2">
             <span class="counter__number" data-target="39" data-metric="articles" data-suffix="" aria-hidden="true">39</span>
             <span class="sr-only">39 field notes</span>
-            <span class="counter__label">Field Notes</span>
-            <span class="counter__scope">Registered in articles.json</span>
+            <a class="counter__label" href="/articles/">Field Notes</a>
+            <span class="counter__scope">Published engineering writing</span>
           </div>
           <div class="counter reveal reveal--delay-3">
             <span class="counter__number" data-target="11" data-metric="handbook" data-suffix="" aria-hidden="true">11</span>
-            <span class="sr-only">11 handbook chapters</span>
-            <span class="counter__label">Handbook Chapters</span>
-            <span class="counter__scope">Published chapters of the handbook</span>
+            <span class="sr-only">11 AI handbook chapters</span>
+            <a class="counter__label" href="/handbook/">AI Handbook Chapters</a>
+            <span class="counter__scope">Published in the AI collection</span>
           </div>
         </div>
       </div>
@@ -502,6 +447,7 @@
           Questions about the public systems, the handbook, or a field note?
           Email is the direct route.
         </p>
+        <p class="contact__address"><a href="mailto:galhamoud@gmx.de">galhamoud@gmx.de</a></p>
         <div class="contact__actions reveal reveal--delay-2">
           <a href="mailto:galhamoud@gmx.de" class="btn btn--secondary btn--large">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="btn__icon" aria-hidden="true">
@@ -578,7 +524,7 @@
   </script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
-  <script src="/assets/js/counters.js" defer></script>
+
   <script src="/assets/js/transitions.js" defer></script>
 
 </body>
