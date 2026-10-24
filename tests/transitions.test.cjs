@@ -6,7 +6,12 @@ const vm = require('node:vm');
 function setup(path = '/', reduce = false) {
   const callbacks = {}, timers = [], classes = new Set(); let handler;
   const overlay = { setAttribute() {}, classList: { add: x => classes.add(x), remove: x => classes.delete(x) } };
-  const location = new URL(path, 'https://example.com');
+  const url = new URL(path, 'https://example.com');
+  const location = {
+    get href() { return url.href; }, set href(value) { url.href = new URL(value, url.href).href; },
+    get origin() { return url.origin; }, get pathname() { return url.pathname; },
+    get search() { return url.search; }, get hash() { return url.hash; }, get protocol() { return url.protocol; },
+  };
   const window = { location, matchMedia: () => ({ matches: reduce }), addEventListener: (name, fn) => { callbacks[name] = fn; } };
   const document = { createElement: () => overlay, body: { appendChild() {} }, addEventListener: (_, fn) => { handler = fn; } };
   vm.runInNewContext(readFileSync(join(__dirname, '../assets/js/transitions.js'), 'utf8'), {
