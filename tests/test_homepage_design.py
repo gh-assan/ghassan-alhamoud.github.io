@@ -26,3 +26,14 @@ class HomeDesignTests(unittest.TestCase):
         self.assertNotIn('hero-loop.js', self.text)
     def test_homepage_style_is_loaded_after_shared_styles(self):
         self.assertGreater(self.text.index('/assets/css/homepage.css'), self.text.index('/assets/css/main.css'))
+
+    def test_project_previews_have_dimensions_text_alternatives_and_scope_labels(self):
+        images = [a for tag, a in self.elements if tag == 'img' and a.get('src', '').startswith('/images/projects/')]
+        self.assertEqual(len(images), 3)
+        for image in images:
+            self.assertTrue(image.get('alt'))
+            self.assertGreater(int(image['width']), 0)
+            self.assertGreater(int(image['height']), 0)
+            self.assertTrue((ROOT / image['src'].lstrip('/')).is_file())
+        self.assertIn('Simulated environment, Level 5', self.text)
+        self.assertIn('Five simulator rounds and a real Arduino motor bench', self.text)

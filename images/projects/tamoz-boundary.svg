@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="160" viewBox="0 0 580 160" fill="none">
+  <rect width="580" height="160" rx="12" fill="#edf2ed"/>
+  <g stroke="#1d6f42" stroke-width="1.5"><rect x="16" y="44" width="146" height="70" rx="10"/><rect x="216" y="44" width="148" height="70" rx="10"/><rect x="418" y="44" width="146" height="70" rx="10"/><path d="M170 79h36m-6-5 6 5-6 5M372 79h36m-6-5 6 5-6 5"/></g>
+  <g fill="#1a2e1a" font-family="Inter, sans-serif" text-anchor="middle" font-size="18"><text x="89" y="76">Situation</text><text x="290" y="76">Governed intent</text><text x="491" y="76">Bounded action</text></g>
+  <g fill="#4a6741" font-family="Inter, sans-serif" text-anchor="middle" font-size="15"><text x="89" y="98">sensor-derived</text><text x="290" y="98">policy checks</text><text x="491" y="98">device command</text></g>
+</svg>

@@ -156,6 +156,7 @@
         <div class="systems__grid">
 
           <article class="system-card system-card--flagship reveal reveal--delay-1">
+            <div class="system-card__copy">
             <header class="system-card__header">
               <h3 class="system-card__title"><a href="/projects/scalability-lab.html">ScaleShop Scalability Lab</a></h3>
               <span class="system-card__status">Live workshop</span>
@@ -164,17 +165,23 @@
               An evidence-driven workshop where engineers diagnose bottlenecks from
               telemetry and choose the smallest sufficient architecture change.
             </p>
+            <figure class="system-card__diagram">
+              <img src="/images/projects/tamoz-boundary.svg" width="580" height="160" loading="lazy" alt="Illustrative Tamoz boundary: sensor-derived situation, governed intent, and bounded device command."/>
+              <figcaption class="evidence-caption">Illustrative · Governed stream-to-action boundary.</figcaption>
+            </figure>
             <p class="system-card__proof">
-              Twelve playable incident scenarios with modeled outcomes. Live and
-              open source at lab.ghassan-alhamoud.com, with full reasoning in the
-              repository.
+              Twelve playable incident scenarios with modeled outcomes. Live, open source, and backed by inspectable engineering decisions.
             </p>
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Scalability</span>
               <span class="article-card__tag system-card__tag">Distributed Systems</span>
-              <span class="article-card__tag system-card__tag">Interactive Lab</span>
             </div>
             <a class="system-card__action" href="/projects/scalability-lab.html">Inspect the system</a>
+                      </div>
+            <figure class="system-card__preview">
+              <img src="/images/projects/scaleshop-workshop-preview.jpg" width="1489" height="789" loading="lazy" alt="ScaleShop workshop showing the one-instance capacity incident and its inherited application architecture."/>
+              <figcaption class="evidence-caption">From the live workshop · Simulated environment, Level 5.</figcaption>
+            </figure>
           </article>
 
           <article class="system-card reveal reveal--delay-2">
@@ -193,7 +200,6 @@
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Physical-World AI</span>
               <span class="article-card__tag system-card__tag">Stream-Native</span>
-              <span class="article-card__tag system-card__tag">Durability</span>
             </div>
             <a class="system-card__action" href="/projects/tamoz.html">Inspect the system</a>
           </article>
@@ -207,6 +213,10 @@
               A self-hosted MCP server that gives autonomous agents shared operational
               memory without turning into an orchestration framework.
             </p>
+            <figure class="system-card__diagram">
+              <img src="/images/projects/alms-memory.svg" width="580" height="160" loading="lazy" alt="Illustrative ALMS access: agents publish and retrieve shared memory and protocols through MCP."/>
+              <figcaption class="evidence-caption">Illustrative · Shared knowledge, independent agents.</figcaption>
+            </figure>
             <p class="system-card__proof">
               Agents register, publish learnings, and pull operational protocols by
               tag, and they keep working when ALMS itself is offline.
@@ -214,7 +224,6 @@
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Agent Memory</span>
               <span class="article-card__tag system-card__tag">MCP</span>
-              <span class="article-card__tag system-card__tag">Open Source</span>
             </div>
             <a class="system-card__action" href="/projects/alms.html">Inspect the system</a>
           </article>

@@ -31,3 +31,31 @@
   .home .hero__role { margin-top: 16px; font-size: 13px; }
   .home .hero__artifact { max-width: 300px; }
 }
+
+/* Inspectable work receives the strongest surfaces and the only large image. */
+.home .systems { padding: 56px 0 80px; }
+.home .system-card { padding: 28px; display: flex; flex-direction: column; border-radius: 16px; box-shadow: none; gap: 0; }
+.home .system-card--flagship { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 32px; align-items: center; padding: 32px; box-shadow: 0 12px 36px rgba(var(--accent-rgb), .06); }
+.home .system-card--flagship > * { grid-column: auto; grid-row: auto; }
+.home .system-card__copy { min-width: 0; }
+.home .system-card__header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 16px; }
+.home .system-card__title { font-size: 24px; line-height: 1.25; letter-spacing: -.025em; }
+.home .system-card__status { font-size: 11px; }
+.home .system-card__summary { font-size: 16px; line-height: 1.65; margin-bottom: 20px; }
+.home .system-card__proof { background: transparent; padding: 0 0 0 14px; border-left: 2px solid var(--accent); font-size: 14px; line-height: 1.65; margin: 0 0 20px; }
+.home .system-card__preview, .home .system-card__diagram { margin: 0 0 20px; min-width: 0; }
+.home .system-card__preview img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 10px; }
+.home .system-card__preview .evidence-caption, .home .system-card__diagram .evidence-caption { margin-top: 8px; font-size: 12px; }
+.home .system-card__diagram img { width: 100%; height: auto; }
+.home .system-card__action { min-height: 44px; display: inline-flex; align-items: center; margin-top: auto; width: fit-content; }
+.home .system-card__copy .system-card__action { margin-top: 8px; }
+.home .systems__more { margin-top: 24px; font-size: 15px; max-width: 70ch; }
+@media (max-width: 1000px) {
+  .home .system-card--flagship { grid-template-columns: minmax(0, 1fr); }
+  .home .system-card__preview { margin: 0; }
+}
+@media (max-width: 599px) {
+  .home .systems { padding: 32px 0 48px; }
+  .home .system-card, .home .system-card--flagship { padding: 24px; }
+  .home .system-card__title { font-size: 22px; }
+}
