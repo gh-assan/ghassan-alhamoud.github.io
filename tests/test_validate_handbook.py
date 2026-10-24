@@ -166,7 +166,7 @@ class HandbookValidationTests(unittest.TestCase):
         count = re.search(r'data-target="(\d+)" data-metric="handbook"', homepage)
         self.assertIsNotNone(count)
         self.assertEqual(len(published), int(count.group(1)))
-        self.assertIn(f'{len(published)} handbook chapters', homepage)
+        self.assertIn(f'{len(published)} AI handbook chapters', homepage)
 
     def test_missing_responsive_image_is_reported(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -4,7 +4,7 @@
  * - Closed menu stays out of the tab order and accessibility tree (inert)
  * - Escape closes the menu and restores focus to the toggle
  * - Closes menu on link click and scrim click
- * - Sets active link based on scroll position (scroll spy)
+ * - Sets route activity without mapping home previews onto different pages
  * - Hides header on scroll down, shows on scroll up
  */
 
@@ -135,51 +135,17 @@
   }
   applyInertState();
 
-  // --- Scroll Spy (homepage sections → route nav links) ---
-  // Homepage nav links point at routes, not in-page anchors, so map each
-  // homepage section id to the href of the nav link it should activate.
-  var SECTION_TO_LINK = {
-    'systems': '/projects/',
-    'field-notes': '/articles/',
-    'handbook': '/handbook/',
-    'about': '#about'
-  };
-
-  var sections = document.querySelectorAll('section[id]');
-  if (sections.length > 0 && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-
-          // Explicit mapping first; fall back to in-page anchor match so
-          // non-homepage sections keep working if a link targets them.
-          var href = SECTION_TO_LINK[entry.target.id] ||
-            ('#' + entry.target.id);
-
-          var matched = false;
-          navLinks.forEach(function (link) {
-            if (link.getAttribute('href') === href) matched = true;
-          });
-          // No nav link for this section: leave the current active
-          // (route-based) state untouched.
-          if (!matched) return;
-
-          navLinks.forEach(function (link) {
-            link.classList.toggle(
-              'nav__link--active',
-              link.getAttribute('href') === href
-            );
-          });
-        });
-      },
-      { rootMargin: '-50% 0px -50% 0px' }
-    );
-
-    sections.forEach(function (section) {
-      observer.observe(section);
-    });
-  }
+  // Global navigation describes destinations, not the home preview in view.
+  var path = window.location.pathname;
+  navLinks.forEach(function (link) {
+    var href = link.getAttribute('href') || '';
+    var current = href === '/#handbook'
+      ? /^\/(?:iot-)?handbook\//.test(path)
+      : href.charAt(0) === '/' && href.indexOf('#') === -1 && path.indexOf(href) === 0;
+    link.classList.toggle('nav__link--active', current);
+    if (current) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
 
   // --- Hide/show header on scroll ---
   var lastScrollY = window.scrollY;

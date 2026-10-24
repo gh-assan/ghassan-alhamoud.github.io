@@ -40,7 +40,7 @@ function setup() {
     querySelectorAll: selector => selector === '.nav__link' ? links : [],
     addEventListener: (key, fn) => { document.events[key] = fn; },
   };
-  const window = { matchMedia: () => query, scrollY: 0, addEventListener() {} };
+  const window = { location: { pathname: '/' }, matchMedia: () => query, scrollY: 0, addEventListener() {} };
   vm.runInNewContext(readFileSync(join(__dirname, '../assets/js/nav.js'), 'utf8'), { document, window });
   const key = (name, shiftKey = false) => {
     const event = { key: name, shiftKey, prevented: false, preventDefault() { this.prevented = true; } };

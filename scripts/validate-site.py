@@ -37,9 +37,10 @@ DESCRIPTION = (
 NAV_MODEL = [
     ("Systems", "/projects/"),
     ("Field Notes", "/articles/"),
-    ("Handbook", "/handbook/"),
+    ("Handbooks", "/#handbook"),
     ("Research", "/research/"),
     ("About", "#about"),
+    ("Contact", "/#contact"),
 ]
 
 # Strings that must never appear in a published surface (case-insensitive).
@@ -500,13 +501,15 @@ def check_shell_parity():
 
 # --------------------------------------------------------------- gate 18
 def check_scroll_spy_contract():
-    """Homepage section activity must map to route nav links."""
+    """Global route state must not impersonate home-page section navigation."""
     js = read(ROOT / "assets/js/nav.js")
     problems = []
-    for needle in ("systems", "/projects/", "/articles/"):
+    for needle in ("location.pathname", "aria-current"):
         if needle not in js:
-            problems.append(f"nav.js: scroll-spy mapping missing '{needle}'")
-    report("scroll-spy-contract", not problems, "; ".join(problems))
+            problems.append(f"nav.js: route state missing '{needle}'")
+    if "SECTION_TO_LINK" in js:
+        problems.append("nav.js: home previews still activate unrelated routes")
+    report("navigation-state", not problems, "; ".join(problems))
 
 
 # --------------------------------------------------------------- gate 19
