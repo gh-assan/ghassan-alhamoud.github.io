@@ -30,7 +30,10 @@ class Page(HTMLParser):
 def main():
     folder = Path(__file__).resolve().parent
     root = folder.parents[1]
-    report = (folder / 'audit.md').read_text()
+    reports = sorted(folder.glob('*.md'))
+    report = '\n'.join(path.read_text() for path in reports)
+    for name in re.findall(r'\]\(([^)#]+\.md)\)', report):
+        assert (folder / name).is_file(), 'Missing report: ' + name
     evidence = sorted(set(re.findall(r'\]\((evidence/[^)]+)\)', report)))
     assert evidence, 'No linked evidence'
     manifest = []
@@ -53,6 +56,15 @@ def main():
                 raise AssertionError('Missing JPEG dimensions: ' + name)
             assert width > 0 and height > 0, name
             item.update(width=width, height=height)
+            if path.name.startswith('design-'):
+                expected = (1440, 900)
+                if path.name.startswith('design-mobile-'):
+                    expected = (390, 844)
+                elif path.name.startswith('design-tablet-'):
+                    expected = (768, 1024)
+                elif path.name.startswith('design-1000-'):
+                    expected = (1000, 900)
+                assert (width, height) == expected, (name, width, height)
         elif path.suffix == '.json':
             rows = json.loads(data)
             assert {320, 375, 768, 999, 1000, 1280, 1440} == {r['width'] for r in rows}
@@ -72,7 +84,8 @@ def main():
         if url.fragment:
             assert unquote(url.fragment) in Page(target.read_text()).ids, href
         count += 1
-    print(json.dumps({'evidence_count': len(manifest), 'local_links_checked': count,
+    print(json.dumps({'reports_checked': [p.name for p in reports],
+                      'evidence_count': len(manifest), 'local_links_checked': count,
                       'evidence': manifest}, indent=2))
 
 

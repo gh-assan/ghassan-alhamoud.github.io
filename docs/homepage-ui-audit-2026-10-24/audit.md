@@ -4,6 +4,8 @@ The home page has a coherent visual identity, credible engineering evidence, and
 
 This is an audit and implementation proposal. No website UI was changed.
 
+For the deeper visual direction and a second Chrome review, see [Home page design improvements](design-improvements.md).
+
 ## Baseline and method
 
 - Branch: `codex/homepage-ui-audit-2026-10-24`.

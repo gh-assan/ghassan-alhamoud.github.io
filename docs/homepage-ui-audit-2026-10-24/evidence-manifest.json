@@ -1,7 +1,77 @@
 {
-  "evidence_count": 18,
+  "reports_checked": [
+    "audit.md",
+    "design-improvements.md"
+  ],
+  "evidence_count": 29,
   "local_links_checked": 42,
   "evidence": [
+    {
+      "path": "evidence/design-1000-hero.jpg",
+      "sha256": "602609ea885012e10856a96de251da87a8bc2462ab7878d3d9bb5f9ec8253ea5",
+      "width": 1000,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-about.jpg",
+      "sha256": "b8b27d15dd02bafcc5f9834351fa0e0fdb20423405db09fb143d131628b0e1fc",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-handbooks.jpg",
+      "sha256": "8c7d3ce3b5dafa8a8bfd62513831c25c0b882d8acd93024661817286e9d9bce3",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-hero.jpg",
+      "sha256": "a276611705ae788168bc27dc75ce5612c4b355c03d98264f7a2da508b3dadaaa",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-principles.jpg",
+      "sha256": "82c6b80c39bc954612d18f806634400279ff09717498b23decd59f05d8c8487c",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-systems.jpg",
+      "sha256": "5bb7291277b9abdf7785f85392fb12c85a1920b60bbc1d44562015e5f2164ca4",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-writing.jpg",
+      "sha256": "cdbbfca38a4b8f4abdfcde1a5541f4358c5d4512fd192fc30385d75df2d163a1",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-mobile-about.jpg",
+      "sha256": "abc865b9d1d00006fbb957f52f7ec0232f8d8f6967b73fb52acaefd2a5687308",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-mobile-handbook.jpg",
+      "sha256": "30ac1ba1874bdbed14d4445ba91aee84d8d92d67bc781c87c368f7b26d510f8e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-mobile-hero.jpg",
+      "sha256": "145b550a9f0e1e3e0414d53630d132e5c167dbeccf2f9b8497373d75d4da3ffd",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-tablet-hero.jpg",
+      "sha256": "aeb360065dc85367446d331d648011b468184c6937f8f4cec54bedcf77f8b4bd",
+      "width": 768,
+      "height": 1024
+    },
     {
       "path": "evidence/desktop-about.jpg",
       "sha256": "07566d4d947fc7654662fd380d65bf25a139b87304ec0d8112f778f680b8f11d",
