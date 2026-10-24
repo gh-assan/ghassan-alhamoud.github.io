@@ -1,0 +1,112 @@
+{
+  "evidence_count": 18,
+  "local_links_checked": 42,
+  "evidence": [
+    {
+      "path": "evidence/desktop-about.jpg",
+      "sha256": "07566d4d947fc7654662fd380d65bf25a139b87304ec0d8112f778f680b8f11d",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-after-open-menu-resize.jpg",
+      "sha256": "0173016f2a9d5cd21f9cd3e2aec30be41aaf292ce1706046c1e336ab876c00b3",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "path": "evidence/desktop-contact-footer.jpg",
+      "sha256": "be17bf126e3b00e5934f3124abc9a997425027d5711c52573f3e43a1e1199f96",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-handbooks.jpg",
+      "sha256": "fd7ff9349d01ad4c190298ceb03dc1baeaf812a8d1064ca26b00cf855438916f",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-hero.jpg",
+      "sha256": "e6a7b8b8f87d4c2f6bc74d03aa0d0019e09a8f39be6cc5cf07aea19c4ff52cc3",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-principles.jpg",
+      "sha256": "1674ba6658f70a968d95e044a34b7a35eec9a827bea658c59ccbe783859315d6",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-systems.jpg",
+      "sha256": "ad40e5968dd85719647a65d26564dd6ad22e6169a1fc07926a4a387f8702d937",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/mobile-320-hero.jpg",
+      "sha256": "c3984f20a98d853feb74a4f88a7cf9b6648be46f34a214f40894973e744499d6",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "path": "evidence/mobile-390-hero.jpg",
+      "sha256": "fb4de8734351111097714cd2911a14fe37d86ad7c7c21eb65f1045475347858a",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-about.jpg",
+      "sha256": "366d54ba8df749fc9636f2b83a35cc7df173e245553f1397915d74edbde8b59e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-contact.jpg",
+      "sha256": "ab0abfabb7674a2855faf27ba1457715955eb08c52c4c70e58163632b5b3033f",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-field-notes.jpg",
+      "sha256": "6078bdad4d8d65488ddb76588e5c3489dd099e821b44a9ac34f6a2cdb054573e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-handbook.jpg",
+      "sha256": "43fbebc8068ae2ae3adab2eb4e4fa9b1bee9478d98bf02d6441572a31cd2cd6f",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-menu-focus-escape.jpg",
+      "sha256": "f0f7e90905cf31ae5738638e88881c04f163f482ec8b62c27ba21b166d5d0bc1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-principles.jpg",
+      "sha256": "6227335849f6bdf2b320c0bdf7a4b06e0c29099c966d668f116bc847563ac5a7",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-systems.jpg",
+      "sha256": "147ee99b2c1c21c4d6ab6dd2e881f2d356862164d87edd0ad04476b73afc4158",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/responsive-matrix.json",
+      "sha256": "00c4005dbe31e9e8056e7d96a6e7c23a0c2501097d00e7ab7e598d8b57369b90"
+    },
+    {
+      "path": "evidence/tablet-768-hero.jpg",
+      "sha256": "25a673108d07ce732556cb2a060d13572fd8e4a8e3678d365fc0f0b63588c141",
+      "width": 768,
+      "height": 1024
+    }
+  ]
+}
