@@ -67,7 +67,11 @@ def main():
                 assert (width, height) == expected, (name, width, height)
         elif path.suffix == '.json':
             rows = json.loads(data)
-            assert {320, 375, 768, 999, 1000, 1280, 1440} == {r['width'] for r in rows}
+            expected = {320, 375, 768, 999, 1000, 1280, 1440}
+            if path.name == 'after-layout.json':
+                expected = {320, 390, 768, 999, 1000, 1440}
+                assert all(not r['mainOverflow'] for r in rows)
+            assert expected == {r['width'] for r in rows}
             assert all(r['scrollWidth'] == r['width'] for r in rows)
         manifest.append(item)
 

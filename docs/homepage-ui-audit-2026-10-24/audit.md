@@ -1,5 +1,7 @@
 # Home page UI audit — 24 October 2026
 
+**Implementation:** See [the implementation and Chrome verification record](implementation.md) for the completed changes. Observations below describe the earlier baseline.
+
 The home page has a coherent visual identity, credible engineering evidence, and useful public work. Keep those strengths. The highest priorities are fixing the mobile menu state model, making contact easier to find, and reducing the amount of reading required before a visitor can choose a path.
 
 This is an audit and implementation proposal. No website UI was changed.

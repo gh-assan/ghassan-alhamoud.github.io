@@ -1,5 +1,7 @@
 # Home page design improvements
 
+**Implementation:** See [the implementation and Chrome verification record](implementation.md) for the completed changes. Observations below describe the earlier baseline.
+
 24 October 2026 · Second Chrome review · Proposal for the existing site
 
 The strongest direction is a calm engineering portfolio with an editorial structure: a decisive opening, visually inspectable work, clear learning collections, selected writing, and a concise personal introduction. Keep the current forest-green identity. Give each kind of content a different visual role.

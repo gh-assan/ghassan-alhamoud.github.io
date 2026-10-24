@@ -1,0 +1,62 @@
+[
+  {
+    "aboutHeight": 1618,
+    "ctaY": 495,
+    "height": 568,
+    "mainOverflow": [],
+    "navWidth": 320,
+    "pageHeight": 10197,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "aboutHeight": 1378,
+    "ctaY": 431,
+    "height": 844,
+    "mainOverflow": [],
+    "navWidth": 390,
+    "pageHeight": 9131,
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "aboutHeight": 935,
+    "ctaY": 348,
+    "height": 1024,
+    "mainOverflow": [],
+    "navWidth": 768,
+    "pageHeight": 7554,
+    "scrollWidth": 768,
+    "width": 768
+  },
+  {
+    "aboutHeight": 852,
+    "ctaY": 366,
+    "height": 900,
+    "mainOverflow": [],
+    "navWidth": 999,
+    "pageHeight": 7116,
+    "scrollWidth": 999,
+    "width": 999
+  },
+  {
+    "aboutHeight": 852,
+    "ctaY": 442,
+    "height": 900,
+    "mainOverflow": [],
+    "navWidth": 1000,
+    "pageHeight": 6817,
+    "scrollWidth": 1000,
+    "width": 1000
+  },
+  {
+    "aboutHeight": 864,
+    "ctaY": 489,
+    "height": 900,
+    "mainOverflow": [],
+    "navWidth": 1080,
+    "pageHeight": 6041,
+    "scrollWidth": 1440,
+    "width": 1440
+  }
+]
