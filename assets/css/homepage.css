@@ -1,0 +1,33 @@
+/* Home page composition. Shared site primitives remain in main.css. */
+.skip-link { position: fixed; top: 8px; left: 16px; z-index: 2000; padding: 12px 20px; background: var(--bg-primary); color: var(--accent); border: 2px solid currentColor; transform: translateY(-150%); }
+.skip-link:focus { transform: none; }
+.home .reveal { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+.home .hero { padding: 120px 0 64px; }
+.home .hero__layout { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
+.home .hero__eyebrow { font-size: 12px; letter-spacing: .11em; line-height: 1.8; max-width: 48ch; }
+.home .hero__title { font-size: clamp(32px, 4vw, 54px); line-height: 1.12; letter-spacing: -.045em; max-width: 19ch; margin-bottom: 24px; }
+.home .hero__subtitle { font-size: 19px; font-weight: 400; line-height: 1.65; margin-bottom: 28px; max-width: 48ch; }
+.home .hero__cta { margin: 0; padding: 0; gap: 20px; align-items: center; }
+.home .hero__role { font-size: 14px; color: var(--text-muted); margin: 24px 0 0; }
+.home .hero__artifact { display: block; width: 100%; max-width: 440px; justify-self: center; color: var(--accent); }
+.home .hero__artifact svg { width: 100%; }
+.home .hero__artifact .evidence-caption { font-size: 13px; padding-top: 16px; line-height: 1.8; border-top: 1px solid var(--border); }
+.home .hero__artifact a { text-decoration: underline; text-underline-offset: 4px; }
+.text-link { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; font-weight: 600; }
+.text-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+@media (max-width: 999px) {
+  .home .hero__layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .home .hero__title { max-width: 24ch; }
+  .home .hero__artifact { max-width: 380px; }
+  .home .hero__subtitle { max-width: 60ch; }
+}
+@media (max-width: 599px) {
+  .home .hero { padding: 100px 0 40px; }
+  .home .hero__layout { gap: 24px; }
+  .home .hero__title { font-size: 32px; }
+  .home .hero__subtitle { font-size: 17px; margin-bottom: 24px; }
+  .home .hero__cta { flex-direction: column; align-items: stretch; gap: 8px; }
+  .home .hero__cta .btn { width: 100%; }
+  .home .hero__role { margin-top: 16px; font-size: 13px; }
+  .home .hero__artifact { max-width: 300px; }
+}
