@@ -61,3 +61,11 @@ class HomeDesignTests(unittest.TestCase):
         for slug, content in notes:
             self.assertIn(registry[slug]['date'], content)
             self.assertIn(registry[slug]['readingTime'], content)
+
+    def test_each_project_owns_its_preview(self):
+        import re
+        cards = re.findall(r'<article class="system-card[^\"]*".*?</article>', self.text, re.S)
+        self.assertEqual(len(cards), 3)
+        for card, asset in zip(cards, ['scaleshop-workshop-preview.jpg', 'tamoz-boundary.svg', 'alms-memory.svg']):
+            self.assertIn('/images/projects/' + asset, card)
+            self.assertEqual(card.count('<img '), 1)
