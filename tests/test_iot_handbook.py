@@ -29,7 +29,9 @@ class IoTHandbookTests(unittest.TestCase):
         self.assertNotIn('../IOT-001-', page)
         self.assertIn('/iot-handbook/sources/chapter-02.md', page)
         self.assertTrue((ROOT / 'iot-handbook/sources/chapter-02.md').is_file())
-        for surface in ('index.html', 'llms.txt', 'sitemap.xml',
+        # Home now links to the collection; its index owns the chapter list.
+        self.assertIn('href="/iot-handbook/"', (ROOT / 'index.html').read_text())
+        for surface in ('llms.txt', 'sitemap.xml',
                         'iot-handbook/index.html', 'iot-handbook/chapter-01-what-is-an-iot-system.html'):
             self.assertIn(chapter, (ROOT / surface).read_text(), surface)
         self.assertEqual(12, len(list((ROOT / 'images/iot-handbook/IOT-002').glob('*.svg'))))

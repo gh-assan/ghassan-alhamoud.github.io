@@ -41,6 +41,8 @@
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/main.css?v=20260819" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
+  <link rel="stylesheet" href="/assets/css/homepage.css?v=20261024" />
+  <noscript><link rel="stylesheet" href="/assets/css/homepage-no-script.css" /></noscript>
 
   <!-- JSON-LD Structured Data: one canonical Person entity -->
   <script type="application/ld+json">
@@ -76,7 +78,8 @@
   }
   </script>
 </head>
-<body>
+<body class="home">
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <!-- ==================== HEADER ==================== -->
   <header class="header" id="header">
     <nav class="nav container">
@@ -97,99 +100,49 @@
       <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
         <li><a href="/projects/" class="nav__link">Systems</a></li>
         <li><a href="/articles/" class="nav__link">Field Notes</a></li>
-        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/#handbook" class="nav__link">Handbooks</a></li>
         <li><a href="/research/" class="nav__link">Research</a></li>
         <li><a href="#about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__link">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <!-- ==================== HERO ==================== -->
     <section class="hero" id="hero">
       <div class="container hero__layout">
         <div class="hero__content">
-          <p class="hero__eyebrow">Ghassan Alhamoud · Independent Engineering Practice</p>
+          <p class="hero__eyebrow">Ghassan Alhamoud · Independent engineering practice</p>
           <h1 class="hero__title">AI agent systems, built with distributed-systems discipline.</h1>
-          <p class="hero__role">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
-          <p class="hero__subtitle">I build and document agent systems in public: Tamoz, ALMS, and the ScaleShop lab, backed by 15+ years of distributed-systems practice.</p>
-          <p class="hero__proof">
-            Every system on this site is public, documented, and inspectable.
-            Code, decisions, and limitations included.
-          </p>
-          <figure class="hero__signature" data-loop-strip aria-label="Compact map of the practice's agent loop: events flow into the runtime, then durable memory, then a human gate.">
-            <svg viewBox="0 0 316 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-              <defs>
-                <marker id="sig-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/>
-                </marker>
-              </defs>
-              <rect data-hl="s0" x="0" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-              <text x="31" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">events</text>
-              <line x1="64" y1="28" x2="78" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
-              <rect data-hl="s1" x="82" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5" fill="var(--bg-secondary)"/>
-              <text x="113" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">runtime</text>
-              <line x1="146" y1="28" x2="160" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
-              <rect data-hl="s2" x="164" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-              <text x="195" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">memory</text>
-              <line x1="228" y1="28" x2="242" y2="28" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#sig-arrow)"/>
-              <rect data-hl="s3" x="246" y="10" width="62" height="36" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-              <text x="277" y="32" text-anchor="middle" fill="var(--text-primary)" font-size="11" font-family="Inter, sans-serif">gate</text>
-            </svg>
-          </figure>
+          <p class="hero__subtitle">I build public agent systems and interactive labs, backed by 15+ years of backend engineering. Explore the code, decisions, and limitations.</p>
           <div class="hero__cta">
             <a href="/projects/" class="btn btn--primary">Explore Public Systems</a>
-            <a href="/handbook/">Read the Handbook</a>
+            <a href="#handbook" class="text-link">Explore the handbooks <span aria-hidden="true">↗</span></a>
           </div>
+          <p class="hero__role">Senior Software Engineer · AI Agent Enabler</p>
+          <div class="hero__mobile-model"><span>Events → Agent runtime</span><span>Human oversight · Durable state</span></div>
         </div>
-
-        <figure class="hero__artifact" data-loop aria-label="Checkpoint loop of the agent runtime behind the public systems on this site: events enter a checkpointed runtime that cycles plan, act, observe; every step is written to SQLite checkpoints and artifacts, which the eval harness replays; a human gate approves or denies consequential actions; and an eval harness records an evidence log that feeds the next run.">
-          <svg viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-            <defs>
-              <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0 L8 4 L0 8 z" fill="var(--accent)"/>
-              </marker>
-            </defs>
-
-            <!-- events -->
-            <rect data-hl="events" x="16" y="146" width="84" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="58" y="173" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-family="Inter, sans-serif">events</text>
-
-            <!-- checkpointed runtime -->
-            <rect data-hl="runtime" x="148" y="104" width="216" height="92" rx="8" stroke="var(--accent)" stroke-width="2" fill="var(--bg-secondary)"/>
-            <text x="256" y="140" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="600" font-family="Inter, sans-serif">checkpointed runtime</text>
-            <text x="256" y="164" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-family="Inter, sans-serif"><tspan data-hl="plan">plan</tspan> → <tspan data-hl="act">act</tspan> → <tspan data-hl="observe">observe</tspan></text>
-
-            <!-- sqlite durability -->
-            <rect data-hl="sqlite" x="148" y="236" width="216" height="56" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="256" y="262" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-weight="600" font-family="Inter, sans-serif">sqlite</text>
-            <text x="256" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif">checkpoints + artifacts</text>
-
-            <!-- human gate -->
-            <rect data-hl="gate" x="404" y="104" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="454" y="126" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">human gate</text>
-            <text x="454" y="144" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="Inter, sans-serif"><tspan data-hl="approve">approve</tspan> / deny</text>
-
-            <!-- eval harness -->
-            <rect data-hl="eval" x="404" y="196" width="100" height="52" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="454" y="225" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">eval harness</text>
-
-            <!-- evidence log -->
-            <rect data-hl="evidence" x="404" y="288" width="100" height="44" rx="8" stroke="var(--accent)" stroke-width="1.5"/>
-            <text x="454" y="315" text-anchor="middle" fill="var(--text-primary)" font-size="12" font-family="Inter, sans-serif">evidence log</text>
-
-            <!-- flows -->
-            <line x1="100" y1="168" x2="140" y2="156" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="364" y1="130" x2="396" y2="130" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="404" y1="118" x2="372" y2="118" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5" marker-end="url(#arrow)"/>
-            <line x1="256" y1="196" x2="256" y2="228" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <line x1="236" y1="228" x2="236" y2="196" stroke="var(--accent)" stroke-width="1.2" opacity="0.4" marker-end="url(#arrow)"/>
-            <line x1="454" y1="248" x2="454" y2="280" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
-            <path d="M 364 262 C 384 262 382 232 398 228" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.5" marker-end="url(#arrow)"/>
-            <path data-hl="return" d="M 404 322 C 280 352 100 352 66 334 C 50 320 56 240 58 196" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" marker-end="url(#arrow)"/>
-            <text data-hl="return-label" x="180" y="346" fill="var(--text-muted)" font-size="10" font-family="Inter, sans-serif">evidence feeds the next run</text>
+        <figure class="hero__artifact" aria-label="Illustrative agent architecture: events enter a runtime, human oversight governs consequential actions, and durable state preserves progress.">
+          <svg viewBox="0 0 440 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs><marker id="hero-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L8 4L0 8" fill="currentColor"/></marker></defs>
+            <g stroke="currentColor" stroke-width="1.5">
+              <path d="M115 155H166" marker-end="url(#hero-arrow)"/><path d="M252 80V113" marker-end="url(#hero-arrow)"/><path d="M240 185V223" marker-end="url(#hero-arrow)"/><path d="M264 223V185" marker-end="url(#hero-arrow)"/>
+              <rect x="15" y="124" width="100" height="62" rx="12"/>
+              <rect x="176" y="120" width="152" height="66" rx="12" fill="var(--bg-secondary)"/>
+              <rect x="176" y="16" width="152" height="64" rx="12"/>
+              <rect x="176" y="230" width="152" height="64" rx="12"/>
+            </g>
+            <g fill="var(--text-primary)" font-family="Inter, sans-serif" text-anchor="middle" font-size="18">
+              <text x="65" y="161">Events</text><text x="252" y="159" font-weight="600">Agent runtime</text>
+              <text x="252" y="43" font-size="16">Human oversight</text><text x="252" y="257">Durable state</text>
+            </g>
+            <g fill="var(--text-secondary)" font-family="Inter, sans-serif" text-anchor="middle" font-size="15">
+              <text x="252" y="65">approve · bound</text><text x="252" y="279">saved progress</text>
+            </g>
+            <circle cx="370" cy="153" r="5" fill="currentColor"/><path d="M341 153H365" stroke="currentColor" stroke-width="1.5"/>
           </svg>
-          <figcaption class="evidence-caption loop-caption"><span>Illustrative. The checkpoint loop behind Tamoz and ALMS. Inspect the public repos.</span></figcaption>
+          <figcaption class="evidence-caption">Illustrative · Governed execution, preserved progress.<br/><a href="/projects/tamoz.html">Inside the Tamoz architecture <span aria-hidden="true">↗</span></a></figcaption>
         </figure>
       </div>
     </section>
@@ -199,13 +152,13 @@
       <div class="container">
         <h2 class="section__title reveal">Public Systems</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          The argument starts with shipped work: three public systems you can
-          run, inspect, and trace back to their reasoning.
+          Three public systems. Inspect the work, run the code, and trace the engineering decisions.
         </p>
 
         <div class="systems__grid">
 
           <article class="system-card system-card--flagship reveal reveal--delay-1">
+            <div class="system-card__copy">
             <header class="system-card__header">
               <h3 class="system-card__title"><a href="/projects/scalability-lab.html">ScaleShop Scalability Lab</a></h3>
               <span class="system-card__status">Live workshop</span>
@@ -215,16 +168,18 @@
               telemetry and choose the smallest sufficient architecture change.
             </p>
             <p class="system-card__proof">
-              Twelve playable incident scenarios with modeled outcomes. Live and
-              open source at lab.ghassan-alhamoud.com, with full reasoning in the
-              repository.
+              Twelve playable incident scenarios with modeled outcomes. Live, open source, and backed by inspectable engineering decisions.
             </p>
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Scalability</span>
               <span class="article-card__tag system-card__tag">Distributed Systems</span>
-              <span class="article-card__tag system-card__tag">Interactive Lab</span>
             </div>
             <a class="system-card__action" href="/projects/scalability-lab.html">Inspect the system</a>
+                      </div>
+            <figure class="system-card__preview">
+              <img src="/images/projects/scaleshop-workshop-preview.jpg" width="1489" height="789" loading="lazy" alt="ScaleShop workshop showing the one-instance capacity incident and its inherited application architecture."/>
+              <figcaption class="evidence-caption">From the live workshop · Simulated environment, Level 5.</figcaption>
+            </figure>
           </article>
 
           <article class="system-card reveal reveal--delay-2">
@@ -233,17 +188,18 @@
               <span class="system-card__status">Public release</span>
             </header>
             <p class="system-card__summary">
-              An open-source, stream-native agent that understands sensor-derived situations,
-              decides what should happen, and acts through governed, bounded commands.
+              An open-source agent that turns sensor-derived situations into governed decisions and bounded device commands.
             </p>
+            <figure class="system-card__diagram">
+              <img src="/images/projects/tamoz-boundary.svg" width="360" height="120" loading="lazy" alt="Illustrative Tamoz boundary: sensor-derived situation, governed intent, and bounded device command."/>
+              <figcaption class="evidence-caption">Illustrative · Governed commands.</figcaption>
+            </figure>
             <p class="system-card__proof">
-              Five simulator rounds and a real Arduino motor bench, with durable execution,
-              memory, and an evaluation harness inspectable in three public repositories.
+              Five simulator rounds and a real Arduino motor bench. Durable execution, memory, and evaluation are inspectable across three public repositories.
             </p>
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Physical-World AI</span>
               <span class="article-card__tag system-card__tag">Stream-Native</span>
-              <span class="article-card__tag system-card__tag">Durability</span>
             </div>
             <a class="system-card__action" href="/projects/tamoz.html">Inspect the system</a>
           </article>
@@ -254,17 +210,18 @@
               <span class="system-card__status">Public release</span>
             </header>
             <p class="system-card__summary">
-              A self-hosted MCP server that gives autonomous agents shared operational
-              memory without turning into an orchestration framework.
+              Shared operational memory for autonomous agents, through a self-hosted MCP server. Independent of orchestration.
             </p>
+            <figure class="system-card__diagram">
+              <img src="/images/projects/alms-memory.svg" width="360" height="120" loading="lazy" alt="Illustrative ALMS access: agents publish and retrieve shared memory and protocols through MCP."/>
+              <figcaption class="evidence-caption">Illustrative · Shared operational memory.</figcaption>
+            </figure>
             <p class="system-card__proof">
-              Agents register, publish learnings, and pull operational protocols by
-              tag, and they keep working when ALMS itself is offline.
+              Agents publish learnings and retrieve protocols by tag. They keep working when ALMS itself is offline.
             </p>
             <div class="article-card__tags">
               <span class="article-card__tag system-card__tag">Agent Memory</span>
               <span class="article-card__tag system-card__tag">MCP</span>
-              <span class="article-card__tag system-card__tag">Open Source</span>
             </div>
             <a class="system-card__action" href="/projects/alms.html">Inspect the system</a>
           </article>
@@ -272,10 +229,34 @@
         </div>
 
         <p class="systems__more reveal">
-          Application systems and experiments, including a film-production
-          pipeline, an email intelligence platform, and an agent skill ledger,
-          are documented on the <a href="/projects/">systems index</a>.
+          Explore the film pipeline, email intelligence platform, and skill ledger in <a href="/projects/">all public systems</a>.
         </p>
+      </div>
+    </section>
+
+    <!-- ==================== HANDBOOK COLLECTIONS ==================== -->
+    <section class="handbook-feature section section--compact" id="handbook">
+      <div class="container">
+        <h2 class="section__title">Engineering Handbooks</h2>
+        <p class="section__subtitle">Two paths into the systems I build. Choose a collection and start with the foundations.</p>
+        <div class="collections-grid">
+          <article class="collection-card" id="ai-handbook" data-collection="handbook" data-published-chapters="11">
+            <p class="collection-card__eyebrow">AI ENGINEERING</p>
+            <h3>The AI-Native Engineering Handbook</h3>
+            <p class="collection-card__description">Build reliable agents, from the first ReAct loop to memory, evaluation, human oversight, and real-time audio. Learn the engineering decisions behind each pattern.</p>
+            <p class="collection-card__topics">Agent patterns · Memory · Evaluation</p>
+            <p class="collection-card__count">11 published chapters</p>
+            <a class="text-link" href="/handbook/">Explore the AI handbook <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="collection-card" id="iot-handbook" data-collection="iot-handbook" data-published-chapters="2">
+            <p class="collection-card__eyebrow">CONNECTED SYSTEMS</p>
+            <h3>The IoT Engineering Handbook</h3>
+            <p class="collection-card__description">Understand connected systems through standards and engineering models. Begin with IoT architectures, sensing, and the relationship between physical measurements and software decisions.</p>
+            <p class="collection-card__topics">Reference models · Sensing · Measurement</p>
+            <p class="collection-card__count">2 published chapters</p>
+            <a class="text-link" href="/iot-handbook/">Explore the IoT handbook <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -284,15 +265,14 @@
       <div class="container">
         <div class="process__intro">
           <h2 class="section__title reveal">Operating Principles</h2>
-          <p class="section__subtitle reveal reveal--delay-1">The method behind those systems: framing, tradeoffs, and follow-through, developed in full in the handbook.</p>
+          <p class="section__subtitle reveal reveal--delay-1">Frame the problem, make the tradeoffs explicit, and follow the work into operation.</p>
         </div>
         <div class="process__steps">
           <div class="process__step reveal reveal--delay-1">
             <div class="process__number">01</div>
             <div class="process__content">
               <h3 class="process__title">Problem Framing</h3>
-              <p class="process__desc">Start with the system context, constraints, users, failure modes, and business pressure before choosing a technical direction.</p>
-              <span class="process__badge">Evidence First</span>
+              <p class="process__desc">Understand users, constraints, and failure modes. Let the evidence shape the technical direction.</p>
             </div>
           </div>
           <div class="process__connector" aria-hidden="true"></div>
@@ -300,8 +280,7 @@
             <div class="process__number">02</div>
             <div class="process__content">
               <h3 class="process__title">System Design</h3>
-              <p class="process__desc">Turn ambiguous requirements into clear boundaries, contracts, tradeoffs, and implementation paths that teams can reason about.</p>
-              <span class="process__badge">Maintainable Design</span>
+              <p class="process__desc">Make boundaries, contracts, and tradeoffs explicit so the team can reason about and maintain the system.</p>
             </div>
           </div>
           <div class="process__connector" aria-hidden="true"></div>
@@ -309,56 +288,9 @@
             <div class="process__number">03</div>
             <div class="process__content">
               <h3 class="process__title">Delivery &amp; Follow-through</h3>
-              <p class="process__desc">Ship the work, document the decisions, review the implementation, and make sure the operational reality matches the design.</p>
-              <span class="process__badge">Production Mindset</span>
+              <p class="process__desc">Ship, document, and review. Follow the work into operation and resolve gaps between reality and design.</p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== HANDBOOK ==================== -->
-    <section class="handbook-feature section section--compact" id="handbook">
-      <div class="container">
-        <h2 class="section__title reveal">The AI-Native Engineering Handbook</h2>
-        <p class="section__subtitle reveal reveal--delay-1">
-          The same method, structured for teaching. Eleven published chapters, from the first
-          ReAct loop to safety guardrails and real-time audio agents.
-        </p>
-        <ol class="handbook-feature__chapters reveal reveal--delay-2">
-          <li><a href="/handbook/chapter-00-agentic-landscape.html">The Agentic Landscape</a></li>
-          <li><a href="/handbook/chapter-01-react-pattern.html">The ReAct Pattern</a></li>
-          <li><a href="/handbook/chapter-02-plan-and-execute.html">Plan-and-Execute</a></li>
-          <li><a href="/handbook/chapter-03-reflection.html">Reflection</a></li>
-          <li><a href="/handbook/chapter-04-multi-agent-collaboration.html">Multi-Agent Collaboration</a></li>
-          <li><a href="/handbook/chapter-05-tool-use-skill-registry.html">Tool Use &amp; Skill Registries</a></li>
-          <li><a href="/handbook/chapter-06-memory-context-management.html">Memory &amp; Context Management</a></li>
-          <li><a href="/handbook/chapter-07-human-in-the-loop.html">Human-in-the-Loop</a></li>
-          <li><a href="/handbook/chapter-08-observability-evaluation.html">Observability &amp; Evaluation</a></li>
-          <li><a href="/handbook/chapter-09-safety-guardrails.html">Safety &amp; Guardrails</a></li>
-          <li><a href="/handbook/chapter-22-real-time-audio-agents.html">Real-Time Audio Agents</a></li>
-        </ol>
-        <div class="handbook-feature__cta reveal reveal--delay-3">
-          <a href="/handbook/" class="btn btn--secondary">Open the Handbook</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== IOT HANDBOOK ==================== -->
-    <section class="handbook-feature section section--compact" id="iot-handbook">
-      <div class="container">
-        <h2 class="section__title reveal">The IoT Engineering Handbook</h2>
-        <p class="section__subtitle reveal reveal--delay-1">
-          Study connected systems through standards, reference architectures and
-          clear engineering models. Explore sensing, communication, control,
-          interoperability and device lifecycle.
-        </p>
-        <ol class="handbook-feature__chapters reveal reveal--delay-2">
-          <li><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">What Is an IoT System?</a></li>
-          <li><a href="/iot-handbook/chapter-02-sensors-and-the-physical-world.html">Sensors and the Physical World</a></li>
-        </ol>
-        <div class="handbook-feature__cta reveal reveal--delay-3">
-          <a href="/iot-handbook/" class="btn btn--secondary">Open the IoT Handbook</a>
         </div>
       </div>
     </section>
@@ -366,31 +298,28 @@
     <!-- ==================== FIELD NOTES ==================== -->
     <section class="field-notes section section--compact" id="field-notes">
       <div class="container">
-        <h2 class="section__title reveal">Field Notes</h2>
+        <h2 class="section__title reveal">Selected Field Notes</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          Current thinking in long form. Case studies and frameworks from the
-          systems above, written while the work is still in motion.
+          Case studies and frameworks from the work. Start with a physical-world experiment, then explore the architecture behind reliable agents.
         </p>
         <div class="field-notes__list reveal reveal--delay-2">
-          <a class="field-note" href="/articles/agent-spun-the-motor.html">
+          <a class="field-note field-note--lead" href="/articles/agent-spun-the-motor.html">
             <span class="field-note__path">AI agents and physical systems</span>
             <span class="field-note__title">When an AI Agent Met a Real Motor: Energized Is Not Spinning</span>
             <span class="field-note__excerpt">A real-model decision and a separately verified hardware run show why GPIO state is not physical proof—and why the production integration seam remains open.</span>
+          <span class="field-note__meta"><time datetime="2026-09-14">14 Sep 2026</time> · 9 min</span>
           </a>
           <a class="field-note" href="/articles/stop-building-agent-soup-compilers.html">
             <span class="field-note__path">Production AI architecture</span>
             <span class="field-note__title">Stop Building &quot;Agent Soup&quot;: A Compiler-Style Multi-Agent Workflow</span>
-            <span class="field-note__excerpt">A compiler-style pattern for multi-agent workflows: normalize intent into a typed IR, validate policy, execute deterministically, and verify effects.</span>
+            <span class="field-note__excerpt">Normalize intent, validate policy, execute deterministically, and verify effects in a compiler-style agent workflow.</span>
+          <span class="field-note__meta"><time datetime="2026-03-10">10 Mar 2026</time> · 12 min</span>
           </a>
           <a class="field-note" href="/articles/alms-open-source-shared-agent-memory.html">
             <span class="field-note__path">Agent memory and infrastructure</span>
             <span class="field-note__title">Shared Operational Memory for AI Agents via MCP (ALMS, Open Source)</span>
-            <span class="field-note__excerpt">Shared operational memory for AI agents: an open-source MCP server with an agent registry, gap-safe learning sync, and tag-based protocols.</span>
-          </a>
-          <a class="field-note" href="/articles/smart-models-go-stupid.html">
-            <span class="field-note__path">Reliability and evaluation</span>
-            <span class="field-note__title">Why a Strong Coding Agent Failed a TUI Task: A Detailed Case Study</span>
-            <span class="field-note__excerpt">A repository-backed case study: 6,142 lines of TUI design became a 280-line REPL. Here is the acceptance gap and the delivery contract that fixed it.</span>
+            <span class="field-note__excerpt">An open-source MCP server for shared learnings, gap-safe memory sync, and operational protocols.</span>
+          <span class="field-note__meta"><time datetime="2026-06-11">11 Jun 2026</time> · 9 min</span>
           </a>
         </div>
         <div class="field-notes__footer reveal">
@@ -401,87 +330,36 @@
 
     <!-- ==================== ABOUT ==================== -->
     <section class="about section" id="about">
-      <div class="container about__layout">
-
-        <!-- Photo column -->
-        <div class="about__photo-col reveal">
-          <div class="about__photo-frame">
-            <img
-              src="/images/ghassan.png"
-              alt="Portrait of Ghassan Alhamoud"
-              class="about__photo"
-              width="253"
-              height="561"
-              loading="lazy"
-            />
+      <div class="container">
+        <div class="about-intro">
+          <img src="/images/ghassan.png" alt="Portrait of Ghassan Alhamoud" class="about-intro__portrait" width="160" height="200" loading="lazy"/>
+          <div>
+            <h2 class="section__title">About</h2>
+            <p>I am a Senior Software Engineer with more than 15 years of experience building backend systems and modernizing complex architectures. My work at <strong>Vinted</strong>, <strong>Wayfair</strong>, and <strong>PlusDental</strong> focused on clear service boundaries, platform reliability, and reducing coupling.</p>
+            <p>Outside those roles, I build public systems to explore these decisions in practice, and write about distributed systems and reliable AI-agent infrastructure.</p>
+            <a href="#contact" class="text-link">Get in touch <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-
-        <!-- Bio column -->
-        <div class="about__bio-col">
-          <h2 class="section__title reveal">About</h2>
-          <p class="role-explainer">
+        <div class="impacts">
+          <h3 class="impacts__heading">Selected impact</h3>
+          <div class="impacts__grid">
+            <div class="impact"><span class="impact__employer">Vinted</span><h4 class="impact__title">From monolith to independent service</h4><p class="impact__body">Led the first independently operated microservice extraction on a live platform, backed by Kafka and a dedicated database.</p></div>
+            <div class="impact"><span class="impact__employer">Wayfair</span><h4 class="impact__title">Database decoupling</h4><p class="impact__body">Tech Lead for a nine-month database-decoupling project; built the MVP for a decoupled Kafka consumer.</p></div>
+            <div class="impact"><span class="impact__employer">PlusDental</span><h4 class="impact__title">Migration and engineering practices</h4><p class="impact__body">Zero-downtime API migration, internal platform tools, testing practices, and architecture improvements.</p></div>
+          </div>
+        </div>
+        <details class="about-details">
+          <summary>Full career timeline and engineering role</summary>
+          <div class="about-details__content">
+            <p class="role-explainer">
             AI Agent Enabler means enabling the reliable adoption and integration
             of AI agents into products, workflows, and engineering practices,
             making them dependable parts of real systems rather than demos. Inside
             a company, this work maps to senior and staff backend, platform, or
             distributed-systems engineering roles.
           </p>
-          <div class="about__text reveal reveal--delay-1">
-            <p>
-              I am a Senior Software Engineer with more than 15 years of experience
-              building backend systems and modernizing complex architectures. My work
-              focuses on reducing coupling, establishing clear service boundaries, and
-              improving the scalability and reliability of platforms.
-            </p>
-            <p>
-              That work was built at <strong>Vinted</strong>,
-              <strong>PlusDental</strong>, and <strong>Wayfair</strong>, spanning
-              marketplace platforms, API migration, and supply-chain systems. The
-              selected impact below names the scope; the full timeline follows.
-            </p>
-            <p>
-              Outside my professional roles, I build systems to explore these ideas in
-              practice: ScaleShop, an interactive scalability lab; Tamoz, a
-              stream-oriented agent project; and an AI-assisted film-production pipeline
-              that produced two short films. I write about distributed systems,
-              event-driven architecture, reliability, and practical AI-agent infrastructure.
-            </p>
-          </div>
-
-          <div class="impacts reveal reveal--delay-2">
-            <h3 class="impacts__heading">Selected impact</h3>
-            <div class="impact">
-              <span class="impact__employer">Vinted</span>
-              <h3 class="impact__title">First independently operated microservice extraction</h3>
-              <p class="impact__body">
-                Led the extraction of the platform's first independently operated
-                microservice, backed by Kafka and a dedicated database, out of an
-                existing monolith on a live platform. Work around it spanned
-                parcel-tracking performance, carrier webhook integrations, and
-                crawler infrastructure; influence extended beyond the service itself
-                into engineering practices and technical hiring.
-              </p>
-            </div>
-            <div class="impact">
-              <span class="impact__employer">Wayfair</span>
-              <h3 class="impact__title">Database decoupling, as Tech Lead</h3>
-              <p class="impact__body">
-                Tech Lead for a nine-month database-decoupling project; built the
-                MVP for a decoupled Kafka consumer.
-              </p>
-            </div>
-            <div class="impact">
-              <span class="impact__employer">PlusDental</span>
-              <h3 class="impact__title">API migration and testing practices</h3>
-              <p class="impact__body">
-                Zero-downtime API migration, internal platform tools, testing
-                practices, and architecture improvements.
-              </p>
-            </div>
-          </div>
-
-          <div class="about__career reveal reveal--delay-2">
+            <p>At Vinted, work around the extraction spanned parcel-tracking performance, carrier webhook integrations, and crawler infrastructure, with influence extending into engineering practices and technical hiring. Independent work also includes an AI-assisted film-production pipeline that produced two short films.</p>
+            <div class="about__career reveal reveal--delay-2">
             <div class="career-step">
               <span class="career-step__year">11/2021 — 06/2026</span>
               <span class="career-step__role">Senior Software Engineer — Vinted</span>
@@ -511,8 +389,7 @@
               <span class="career-step__role">Senior Consultant &amp; Developer (Mongolia &amp; Syria) — Billcom Consulting</span>
             </div>
           </div>
-
-          <div class="about__skills reveal reveal--delay-3">
+<div class="about__skills reveal reveal--delay-3">
             <span class="about__skill">Distributed Systems</span>
             <span class="about__skill">Event-Driven Architecture</span>
             <span class="about__skill">Kafka</span>
@@ -520,8 +397,8 @@
             <span class="about__skill">Evaluation</span>
             <span class="about__skill">System Design</span>
           </div>
-        </div>
-
+          </div>
+        </details>
       </div>
     </section>
 
@@ -538,20 +415,20 @@
           <div class="counter reveal reveal--delay-1">
             <span class="counter__number" data-target="6" data-metric="systems" data-suffix="" aria-hidden="true">6</span>
             <span class="sr-only">6 public systems</span>
-            <span class="counter__label">Public Systems</span>
-            <span class="counter__scope">Open source, listed in projects.json</span>
+            <a class="counter__label" href="/projects/">Public Systems</a>
+            <span class="counter__scope">Open-source projects and labs</span>
           </div>
           <div class="counter reveal reveal--delay-2">
             <span class="counter__number" data-target="39" data-metric="articles" data-suffix="" aria-hidden="true">39</span>
             <span class="sr-only">39 field notes</span>
-            <span class="counter__label">Field Notes</span>
-            <span class="counter__scope">Registered in articles.json</span>
+            <a class="counter__label" href="/articles/">Field Notes</a>
+            <span class="counter__scope">Published engineering writing</span>
           </div>
           <div class="counter reveal reveal--delay-3">
             <span class="counter__number" data-target="11" data-metric="handbook" data-suffix="" aria-hidden="true">11</span>
-            <span class="sr-only">11 handbook chapters</span>
-            <span class="counter__label">Handbook Chapters</span>
-            <span class="counter__scope">Published chapters of the handbook</span>
+            <span class="sr-only">11 AI handbook chapters</span>
+            <a class="counter__label" href="/handbook/">AI Handbook Chapters</a>
+            <span class="counter__scope">Published in the AI collection</span>
           </div>
         </div>
       </div>
@@ -565,6 +442,7 @@
           Questions about the public systems, the handbook, or a field note?
           Email is the direct route.
         </p>
+        <p class="contact__address"><a href="mailto:galhamoud@gmx.de">galhamoud@gmx.de</a></p>
         <div class="contact__actions reveal reveal--delay-2">
           <a href="mailto:galhamoud@gmx.de" class="btn btn--secondary btn--large">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="btn__icon" aria-hidden="true">
@@ -605,7 +483,9 @@
           <span class="footer__nav-heading">Explore</span>
           <a href="/projects/" class="footer__nav-link">Systems</a>
           <a href="/articles/" class="footer__nav-link">Field Notes</a>
-          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/handbook/" class="footer__nav-link">AI Handbook</a>
+          <a href="/iot-handbook/" class="footer__nav-link">IoT Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
           <a href="#about" class="footer__nav-link">About</a>
         </div>
         <div class="footer__nav-col">
@@ -641,8 +521,8 @@
   </script>
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
-  <script src="/assets/js/counters.js" defer></script>
+
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/motion/hero-loop.js?v=20260926" defer></script>
+
 </body>
 </html>

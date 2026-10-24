@@ -370,8 +370,8 @@ def reading_minutes(words, figures=0):
 
 
 # ---------------------------------------------------------------- shell
-NAV = [("Systems", "/projects/"), ("Field Notes", "/articles/"), ("Handbook", "/handbook/"),
-       ("Research", "/research/"), ("About", "/#about")]
+NAV = [("Systems", "/projects/"), ("Field Notes", "/articles/"), ("Handbooks", "/#handbook"),
+       ("Research", "/research/"), ("About", "/#about"), ("Contact", "/#contact")]
 
 
 def header():
@@ -425,7 +425,8 @@ FOOTER = f"""  <footer class="footer">
           <span class="footer__nav-heading">Explore</span>
           <a href="/projects/" class="footer__nav-link">Systems</a>
           <a href="/articles/" class="footer__nav-link">Field Notes</a>
-          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/handbook/" class="footer__nav-link">AI Handbook</a>
+          <a href="/iot-handbook/" class="footer__nav-link">IoT Handbook</a>
           <a href="/research/" class="footer__nav-link">Research</a>
           <a href="/#about" class="footer__nav-link">About</a>
         </div>

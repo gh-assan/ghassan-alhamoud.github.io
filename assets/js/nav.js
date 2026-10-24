@@ -4,7 +4,7 @@
  * - Closed menu stays out of the tab order and accessibility tree (inert)
  * - Escape closes the menu and restores focus to the toggle
  * - Closes menu on link click and scrim click
- * - Sets active link based on scroll position (scroll spy)
+ * - Sets route activity without mapping home previews onto different pages
  * - Hides header on scroll down, shows on scroll up
  */
 
@@ -17,6 +17,23 @@
   var navLinks = document.querySelectorAll('.nav__link');
 
   if (!navToggle || !navMenu) return;
+
+  navToggle.setAttribute('aria-controls', navMenu.id);
+  var previousOverflow = '';
+  var isolated = [];
+
+  // Isolate siblings along the drawer's ancestor path, preserving prior inert state.
+  function isolateBackground() {
+    var branch = navMenu;
+    while (branch !== document.body) {
+      Array.prototype.forEach.call(branch.parentElement.children, function (sibling) {
+        if (sibling === branch || sibling === navToggle || sibling === navMenu || sibling === scrim) return;
+        isolated.push({ element: sibling, inert: sibling.hasAttribute('inert') });
+        sibling.setAttribute('inert', '');
+      });
+      branch = branch.parentElement;
+    }
+  }
 
   var mobileQuery = window.matchMedia('(max-width: 999px)');
 
@@ -41,22 +58,31 @@
   }
 
   function openMenu() {
+    if (!mobileQuery.matches || isOpen()) return;
+    previousOverflow = document.body.style.overflow;
+    header.classList.remove('header--hidden');
     navToggle.setAttribute('aria-expanded', 'true');
     navMenu.classList.add('nav__menu--open');
     scrim.classList.add('nav__scrim--visible');
     document.body.style.overflow = 'hidden';
     applyInertState();
+    isolateBackground();
     var firstLink = navMenu.querySelector('a');
     if (firstLink) firstLink.focus();
   }
 
   function closeMenu(restoreFocus) {
+    var wasOpen = isOpen();
     navToggle.setAttribute('aria-expanded', 'false');
     navMenu.classList.remove('nav__menu--open');
     scrim.classList.remove('nav__scrim--visible');
-    document.body.style.overflow = '';
+    if (wasOpen) document.body.style.overflow = previousOverflow;
+    isolated.forEach(function (saved) {
+      if (!saved.inert) saved.element.removeAttribute('inert');
+    });
+    isolated = [];
     applyInertState();
-    if (restoreFocus) navToggle.focus();
+    if (restoreFocus && mobileQuery.matches) navToggle.focus();
   }
 
   navToggle.addEventListener('click', function () {
@@ -75,63 +101,58 @@
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && isOpen()) {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
       closeMenu(true);
+    } else if (e.key === 'Tab') {
+      var links = navMenu.querySelectorAll('a[href]');
+      var last = links[links.length - 1] || navToggle;
+      var active = document.activeElement;
+      if (e.shiftKey && (active === navToggle || !header.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !header.contains(active))) {
+        e.preventDefault();
+        navToggle.focus();
+      }
     }
   });
 
+  function reconcileViewport() {
+    if (!mobileQuery.matches && isOpen()) {
+      var toggleHadFocus = document.activeElement === navToggle;
+      closeMenu(false);
+      if (toggleHadFocus) {
+        var destination = navMenu.querySelector('a');
+        if (destination) destination.focus();
+      }
+    }
+    else applyInertState();
+  }
+
+  header.addEventListener('focusin', function () {
+    header.classList.remove('header--hidden');
+  });
+
   if (mobileQuery.addEventListener) {
-    mobileQuery.addEventListener('change', applyInertState);
+    mobileQuery.addEventListener('change', reconcileViewport);
   } else if (mobileQuery.addListener) {
-    mobileQuery.addListener(applyInertState);
+    mobileQuery.addListener(reconcileViewport);
   }
   applyInertState();
 
-  // --- Scroll Spy (homepage sections → route nav links) ---
-  // Homepage nav links point at routes, not in-page anchors, so map each
-  // homepage section id to the href of the nav link it should activate.
-  var SECTION_TO_LINK = {
-    'systems': '/projects/',
-    'field-notes': '/articles/',
-    'handbook': '/handbook/',
-    'about': '#about'
-  };
-
-  var sections = document.querySelectorAll('section[id]');
-  if (sections.length > 0 && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-
-          // Explicit mapping first; fall back to in-page anchor match so
-          // non-homepage sections keep working if a link targets them.
-          var href = SECTION_TO_LINK[entry.target.id] ||
-            ('#' + entry.target.id);
-
-          var matched = false;
-          navLinks.forEach(function (link) {
-            if (link.getAttribute('href') === href) matched = true;
-          });
-          // No nav link for this section: leave the current active
-          // (route-based) state untouched.
-          if (!matched) return;
-
-          navLinks.forEach(function (link) {
-            link.classList.toggle(
-              'nav__link--active',
-              link.getAttribute('href') === href
-            );
-          });
-        });
-      },
-      { rootMargin: '-50% 0px -50% 0px' }
-    );
-
-    sections.forEach(function (section) {
-      observer.observe(section);
-    });
-  }
+  // Global navigation describes destinations, not the home preview in view.
+  var path = window.location.pathname;
+  navLinks.forEach(function (link) {
+    var href = link.getAttribute('href') || '';
+    var current = href === '/#handbook'
+      ? /^\/(?:iot-)?handbook\//.test(path)
+      : href.charAt(0) === '/' && href.indexOf('#') === -1 && path.indexOf(href) === 0;
+    link.classList.toggle('nav__link--active', current);
+    if (current) link.setAttribute('aria-current', href === '/#handbook' ? 'true' : 'page');
+    else link.removeAttribute('aria-current');
+  });
 
   // --- Hide/show header on scroll ---
   var lastScrollY = window.scrollY;
@@ -140,7 +161,7 @@
   function handleScroll() {
     var currentScrollY = window.scrollY;
 
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+    if (!isOpen() && !header.contains(document.activeElement) && currentScrollY > lastScrollY && currentScrollY > 100) {
       header.classList.add('header--hidden');
     } else {
       header.classList.remove('header--hidden');

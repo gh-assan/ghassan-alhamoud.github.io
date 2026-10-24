@@ -1,0 +1,7 @@
+/* The complete home navigation remains available when scripting is disabled. */
+@media (max-width: 999px) {
+  .home .header { position: relative; }
+  .home .nav { height: auto; min-height: 64px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+  .home .nav__toggle { display: none; }
+  .home .nav__menu { position: static; width: 100%; height: auto; transform: none; padding: 12px 0 0; border: 0; background: transparent; flex-direction: row; flex-wrap: wrap; gap: 0; }
+}

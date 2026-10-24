@@ -1,0 +1,259 @@
+{
+  "reports_checked": [
+    "audit.md",
+    "design-improvements.md",
+    "implementation.md"
+  ],
+  "evidence_count": 42,
+  "local_links_checked": 37,
+  "evidence": [
+    {
+      "path": "evidence/after-about-desktop.jpg",
+      "sha256": "69c6548bae9d4aef3f7c11c7dcf3507af2bd8c9ca7a066524cfc11788efcdadb",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/after-about-mobile.jpg",
+      "sha256": "76d8ae94229a47342e10399a593e34bca16c80930855464aa753601bc28db2a6",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/after-contact-mobile.jpg",
+      "sha256": "fe2bc5abafc1eacfe585b8081f91594a0eb11e33f58aa08130432be1447f305e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/after-handbooks-desktop.jpg",
+      "sha256": "e0ba1507dcb77e5c3d299c4695e37afef36adef3a6f180decca639dc6e68ac62",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/after-handbooks-mobile.jpg",
+      "sha256": "bf25fc021d02aae6fbe90987bb363cf0f400e5f98912a0e2796f9a1f1cf745ef",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/after-hero-1000.jpg",
+      "sha256": "59ede4289c389658a09e104a08b302acd596a0472f63ab1d890c6f8cf07287fc",
+      "width": 1000,
+      "height": 900
+    },
+    {
+      "path": "evidence/after-hero-1440.jpg",
+      "sha256": "94c410f33dc779ad03dac2d2752ffcd5941461908ad6ab3dbe79dfed15423fec",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/after-hero-320.jpg",
+      "sha256": "7379dd5e547ce3f73828214663eb011e06eb59e857386fb13faf1a6ebf53b051",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "path": "evidence/after-hero-390.jpg",
+      "sha256": "38656a5571bab9e2466e5edfef207174364b4710a12083a90d0e986cd31e2a66",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/after-hero-768.jpg",
+      "sha256": "2d6ed315728aa7c041562cd59ff657119723b7f7fbd380c9ef52a7501affbc13",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "path": "evidence/after-hero-999.jpg",
+      "sha256": "6bdf260906e8a57b1ba6a6a368c0a88c3044314fe69532058029fd2e650d65b6",
+      "width": 999,
+      "height": 900
+    },
+    {
+      "path": "evidence/after-layout.json",
+      "sha256": "f8a5319f56f9c81b28a003a2c4da6e3c587dbbf26dbad0595dfab5c3f2f05ea5"
+    },
+    {
+      "path": "evidence/after-systems-mobile.jpg",
+      "sha256": "6f1e848dbd0da9985b164be2f1849a7602d9f6fe03ab5ac343163a557f6dd0be",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-1000-hero.jpg",
+      "sha256": "602609ea885012e10856a96de251da87a8bc2462ab7878d3d9bb5f9ec8253ea5",
+      "width": 1000,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-about.jpg",
+      "sha256": "b8b27d15dd02bafcc5f9834351fa0e0fdb20423405db09fb143d131628b0e1fc",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-handbooks.jpg",
+      "sha256": "8c7d3ce3b5dafa8a8bfd62513831c25c0b882d8acd93024661817286e9d9bce3",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-hero.jpg",
+      "sha256": "a276611705ae788168bc27dc75ce5612c4b355c03d98264f7a2da508b3dadaaa",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-principles.jpg",
+      "sha256": "82c6b80c39bc954612d18f806634400279ff09717498b23decd59f05d8c8487c",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-systems.jpg",
+      "sha256": "5bb7291277b9abdf7785f85392fb12c85a1920b60bbc1d44562015e5f2164ca4",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-desktop-writing.jpg",
+      "sha256": "cdbbfca38a4b8f4abdfcde1a5541f4358c5d4512fd192fc30385d75df2d163a1",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "evidence/design-mobile-about.jpg",
+      "sha256": "abc865b9d1d00006fbb957f52f7ec0232f8d8f6967b73fb52acaefd2a5687308",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-mobile-handbook.jpg",
+      "sha256": "30ac1ba1874bdbed14d4445ba91aee84d8d92d67bc781c87c368f7b26d510f8e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-mobile-hero.jpg",
+      "sha256": "145b550a9f0e1e3e0414d53630d132e5c167dbeccf2f9b8497373d75d4da3ffd",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/design-tablet-hero.jpg",
+      "sha256": "aeb360065dc85367446d331d648011b468184c6937f8f4cec54bedcf77f8b4bd",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "path": "evidence/desktop-about.jpg",
+      "sha256": "07566d4d947fc7654662fd380d65bf25a139b87304ec0d8112f778f680b8f11d",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-after-open-menu-resize.jpg",
+      "sha256": "0173016f2a9d5cd21f9cd3e2aec30be41aaf292ce1706046c1e336ab876c00b3",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "path": "evidence/desktop-contact-footer.jpg",
+      "sha256": "be17bf126e3b00e5934f3124abc9a997425027d5711c52573f3e43a1e1199f96",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-handbooks.jpg",
+      "sha256": "fd7ff9349d01ad4c190298ceb03dc1baeaf812a8d1064ca26b00cf855438916f",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-hero.jpg",
+      "sha256": "e6a7b8b8f87d4c2f6bc74d03aa0d0019e09a8f39be6cc5cf07aea19c4ff52cc3",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-principles.jpg",
+      "sha256": "1674ba6658f70a968d95e044a34b7a35eec9a827bea658c59ccbe783859315d6",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/desktop-systems.jpg",
+      "sha256": "ad40e5968dd85719647a65d26564dd6ad22e6169a1fc07926a4a387f8702d937",
+      "width": 1841,
+      "height": 1099
+    },
+    {
+      "path": "evidence/mobile-320-hero.jpg",
+      "sha256": "c3984f20a98d853feb74a4f88a7cf9b6648be46f34a214f40894973e744499d6",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "path": "evidence/mobile-390-hero.jpg",
+      "sha256": "fb4de8734351111097714cd2911a14fe37d86ad7c7c21eb65f1045475347858a",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-about.jpg",
+      "sha256": "366d54ba8df749fc9636f2b83a35cc7df173e245553f1397915d74edbde8b59e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-contact.jpg",
+      "sha256": "ab0abfabb7674a2855faf27ba1457715955eb08c52c4c70e58163632b5b3033f",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-field-notes.jpg",
+      "sha256": "6078bdad4d8d65488ddb76588e5c3489dd099e821b44a9ac34f6a2cdb054573e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-handbook.jpg",
+      "sha256": "43fbebc8068ae2ae3adab2eb4e4fa9b1bee9478d98bf02d6441572a31cd2cd6f",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-menu-focus-escape.jpg",
+      "sha256": "f0f7e90905cf31ae5738638e88881c04f163f482ec8b62c27ba21b166d5d0bc1",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-principles.jpg",
+      "sha256": "6227335849f6bdf2b320c0bdf7a4b06e0c29099c966d668f116bc847563ac5a7",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/mobile-systems.jpg",
+      "sha256": "147ee99b2c1c21c4d6ab6dd2e881f2d356862164d87edd0ad04476b73afc4158",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "evidence/responsive-matrix.json",
+      "sha256": "00c4005dbe31e9e8056e7d96a6e7c23a0c2501097d00e7ab7e598d8b57369b90"
+    },
+    {
+      "path": "evidence/tablet-768-hero.jpg",
+      "sha256": "25a673108d07ce732556cb2a060d13572fd8e4a8e3678d365fc0f0b63588c141",
+      "width": 768,
+      "height": 1024
+    }
+  ]
+}
