@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" aria-labelledby="title desc">
+<title id="title">Who executes a CC2640R2F report</title>
+<desc id="desc">Normal path: local input through driver into Cortex-M3 application and RAM, upper Bluetooth stack on the main CPU, dedicated RF subsystem, then nearby peer. Optional Sensor Controller work can wake the main CPU; it is separate from the normal path. This is a conceptual ownership diagram, not timing or wiring.</desc>
+<rect width="900" height="400" rx="8" fill="#f5f7f5"/>
+<text x="22" y="32" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="600" fill="#1a2e1a">FROM INPUT TO BLE PEER</text>
+<text x="22" y="56" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Main path: connected reporting example.</text>
+<rect x="22" y="92" width="188" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="117" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Sensor / input</text>
+<text x="36" y="140" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Local I²C connection</text>
+<text x="36" y="161" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Peripheral + driver</text>
+<path d="M211,133 L241,133" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="235,129 241,133 235,137" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="244" y="92" width="188" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="258" y="117" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Cortex-M3</text>
+<text x="258" y="140" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Driver + application</text>
+<text x="258" y="161" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">RAM + upper BLE</text>
+<path d="M433,133 L463,133" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="457,129 463,133 457,137" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="466" y="92" width="188" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="480" y="117" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">RF subsystem</text>
+<text x="480" y="140" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Radio timing + signals</text>
+<text x="480" y="161" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Dedicated Cortex-M0</text>
+<path d="M655,133 L685,133" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="679,129 685,133 679,137" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="688" y="92" width="188" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="702" y="117" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Nearby BLE peer</text>
+<text x="702" y="140" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Gateway central/client</text>
+<text x="702" y="161" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Receive + process</text>
+<rect x="244" y="244" width="410" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="258" y="269" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Optional Sensor Controller</text>
+<text x="258" y="292" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Supported sensing work</text>
+<text x="258" y="313" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Can wake the main CPU</text>
+<text x="22" y="206" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Upper Bluetooth work shares the main CPU; RF timing belongs to the radio subsystem.</text>
+<text x="22" y="370" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Conceptual ownership, not a wiring diagram or measured timing trace.</text>
+</svg>

@@ -417,7 +417,7 @@ def render_chapter(chapter: dict, all_chapters: list) -> str:
     if len(description) > 160:
         description = description[:157] + "..."
 
-    title = f"Chapter {chapter['id']}: {chapter['title']} — {COLLECTION['shortTitle']}"
+    title = f"Chapter {chapter['id']}: {chapter.get('shortTitle', chapter['title'])} — {COLLECTION['shortTitle']}"
 
     badge = f"{COLLECTION['code']}-{chapter['id']:03d}"
     difficulty = chapter.get("difficulty", "").capitalize()

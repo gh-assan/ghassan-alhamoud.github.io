@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 766" role="img" aria-labelledby="title desc">
+<title id="title">A duty cycle includes activity and failure handling</title>
+<desc id="desc">Sleep, acquire, buffer, attempt radio transfer, then sleep. If no link is available, follow bounded retry and queue policy before sleeping. Sending alone does not prove delivery. No measured timing is represented.</desc>
+<rect width="360" height="766" rx="8" fill="#f5f7f5"/>
+<text x="22" y="32" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="600" fill="#1a2e1a">FOLLOW THE WHOLE CYCLE</text>
+<text x="22" y="56" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Illustrative states; no measured timing.</text>
+<rect x="22" y="82" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="107" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">1. Sleep</text>
+<text x="36" y="130" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Wait for a wake event</text>
+<text x="36" y="151" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Board loads remain</text>
+<path d="M180,166 L180,184" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="176,178 180,184 184,178" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="22" y="186" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="211" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">2. Acquire</text>
+<text x="36" y="234" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Read the local input</text>
+<text x="36" y="255" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Conversion takes time</text>
+<path d="M180,270 L180,288" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="176,282 180,288 184,282" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="22" y="290" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="315" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">3. Buffer</text>
+<text x="36" y="338" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Retain a record</text>
+<text x="36" y="359" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Capacity is finite</text>
+<path d="M180,374 L180,392" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="176,386 180,392 184,386" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="22" y="394" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="419" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">4. Radio attempt</text>
+<text x="36" y="442" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Try the selected link</text>
+<text x="36" y="463" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Send ≠ delivery</text>
+<path d="M180,478 L180,496" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<polyline points="176,490 180,496 184,490" fill="none" stroke="#1d6f42" stroke-width="1.5"/>
+<rect x="22" y="498" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="523" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">5. Sleep again</text>
+<text x="36" y="546" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Bound active work</text>
+<text x="36" y="567" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Follow queue policy</text>
+<rect x="22" y="622" width="316" height="88" rx="7" fill="#edf2ed" stroke="#b0c4b0" stroke-dasharray="5 4"/>
+<text x="36" y="647" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="600" fill="#1a2e1a">IF THE LINK IS UNAVAILABLE</text>
+<text x="36" y="671" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Bound retries, then return to sleep.</text>
+<text x="36" y="694" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Retain or explicitly drop queued data.</text>
+<text x="22" y="744" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Proposed state policy, not executed firmware.</text>
+</svg>

@@ -122,8 +122,11 @@ def check_forbidden_surfaces():
             continue
         text = read(f).lower()
         for pat in FORBIDDEN:
-            # MQTT terminology describes messaging, rather than a signup CTA.
-            candidate = re.sub(r'\bpublish/subscribe\b', '', text) if pat == "subscribe" else text
+            # Protocol terms and exact BLE state cells are not signup CTAs.
+            candidate = text
+            if pat == "subscribe":
+                candidate = re.sub(r'\bpublish/subscribe\b', '', candidate)
+                candidate = re.sub(r'<td>\s*connected(?: and|, not) subscribed\s*</td>', '', candidate)
             if pat.lower() in candidate:
                 offenders.append(f"{f.relative_to(ROOT)}: '{pat}'")
     report("forbidden-surfaces", not offenders,
