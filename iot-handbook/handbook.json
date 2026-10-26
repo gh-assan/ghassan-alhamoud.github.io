@@ -7,10 +7,10 @@
     "indexTagline": "Understand connected systems",
     "description": "Study IoT definitions, reference architectures, information flows, interoperability, reliability, security and device lifecycle through standards-grounded explanations.",
     "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked examples support the reading.",
-    "version": "1.8.0",
+    "version": "1.9.0",
     "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
     "educationalLevel": "Beginner",
-    "courseWorkload": "PT117M",
+    "courseWorkload": "PT174M",
     "author": {
       "name": "Ghassan Alhamoud",
       "url": "https://ghassan-alhamoud.com/"
@@ -31,7 +31,8 @@
         "prerequisites": [],
         "relatedPatterns": [
           "sensors-and-the-physical-world",
-          "boards-from-prototype-to-industry"
+          "boards-from-prototype-to-industry",
+          "firmware-clocks-and-timing"
         ],
         "publishedAt": "2026-10-08",
         "lastModified": "2026-10-19",
@@ -55,7 +56,8 @@
         ],
         "relatedPatterns": [
           "what-is-an-iot-system",
-          "boards-from-prototype-to-industry"
+          "boards-from-prototype-to-industry",
+          "firmware-clocks-and-timing"
         ],
         "publishedAt": "2026-10-19",
         "lastModified": "2026-10-19",
@@ -80,11 +82,38 @@
         ],
         "relatedPatterns": [
           "what-is-an-iot-system",
-          "sensors-and-the-physical-world"
+          "sensors-and-the-physical-world",
+          "firmware-clocks-and-timing"
         ],
         "publishedAt": "2026-10-26",
         "lastModified": "2026-10-26",
         "outcome": "you can trace firmware execution and compare board architectures against explicit deployment requirements."
+      },
+      {
+        "id": 4,
+        "slug": "firmware-clocks-and-timing",
+        "title": "Firmware, Clocks, and Timing",
+        "subtitle": "Execution, clock domains and the timing contracts behind reliable firmware",
+        "description": "Trace firmware from reset to acquisition and communication. Reason about scheduling, clock synchronization, drift, sleep and recovery.",
+        "status": "published",
+        "editorialStatus": "Standards-grounded theoretical study chapter",
+        "difficulty": "intermediate",
+        "readingTime": "57 min",
+        "file": "chapter-04-firmware-clocks-and-timing.md",
+        "ogImage": "/images/og-default.webp",
+        "prerequisites": [
+          "what-is-an-iot-system",
+          "sensors-and-the-physical-world",
+          "boards-from-prototype-to-industry"
+        ],
+        "relatedPatterns": [
+          "what-is-an-iot-system",
+          "sensors-and-the-physical-world",
+          "boards-from-prototype-to-industry"
+        ],
+        "publishedAt": "2026-10-26",
+        "lastModified": "2026-10-26",
+        "outcome": "you can define firmware execution and timestamp contracts through clock correction, sleep and reset."
       }
     ],
     "requiredSections": [

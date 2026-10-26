@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 604" role="img" aria-labelledby="title desc">
+<title id="title">One operation, two clocks</title><desc id="desc">After two elapsed seconds, wall time steps backward thirty seconds. A five-second monotonic deadline still expires at elapsed five seconds. The original wall deadline is reached after thirty-five seconds.</desc>
+<rect width="920" height="604" rx="18" fill="#0d0d0d"/>
+<text x="24" y="38" font-family="system-ui,sans-serif" font-size="20" fill="#ededed">One operation, two clocks</text>
+<text x="24" y="68" font-family="system-ui,sans-serif" font-size="16" fill="#b3b3b3">Constructed teaching model</text>
+<rect x="24" y="96" width="872" height="104" rx="10" fill="#171717" stroke="#5a5a5a"/>
+<text x="40" y="124" font-family="system-ui,sans-serif" font-size="18" fill="#ededed">Elapsed 0 s · local count 100 s</text>
+<text x="40" y="151" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Wall 12:00:00 · operation starts.</text>
+<text x="40" y="176" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Allowed duration: five local seconds.</text>
+<rect x="24" y="212" width="872" height="104" rx="10" fill="#171717" stroke="#5a5a5a"/>
+<text x="40" y="240" font-family="system-ui,sans-serif" font-size="18" fill="#ededed">Elapsed 2 s · local count 102 s</text>
+<text x="40" y="267" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Wall changes 12:00:02 → 11:59:32.</text>
+<text x="40" y="292" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Synchronization steps it backward 30 s.</text>
+<rect x="24" y="328" width="872" height="104" rx="10" fill="#171717" stroke="#5a5a5a"/>
+<text x="40" y="356" font-family="system-ui,sans-serif" font-size="18" fill="#ededed">Elapsed 5 s · local count 105 s</text>
+<text x="40" y="383" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Wall 11:59:35 · local timeout expires.</text>
+<text x="40" y="408" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Wall subtraction falsely gives −25 s.</text>
+<rect x="24" y="444" width="872" height="104" rx="10" fill="#171717" stroke="#5a5a5a"/>
+<text x="40" y="472" font-family="system-ui,sans-serif" font-size="18" fill="#ededed">Elapsed 35 s · local count 135 s</text>
+<text x="40" y="499" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">Wall 12:00:05 · wall deadline reached.</text>
+<text x="40" y="524" font-family="system-ui,sans-serif" font-size="16" fill="#ededed">That timeout allowed 30 extra seconds.</text>
+<text x="24" y="582" font-family="system-ui,sans-serif" font-size="16" fill="#b3b3b3">Read the caption for assumptions and limits.</text>
+</svg>

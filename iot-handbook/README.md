@@ -8,7 +8,9 @@ Chapter 1 was imported from the approved original in `ai-projects/articles/iot-e
 
 Chapter 2 was imported from `IOT-002-sensors-and-the-physical-world`, source version 1.3, on 2026-10-19. Website edition 1.4 adopts the shared structure and adds six FAQs. It covers sensing principles, measurement chains, calibration, sampling, lag and uncertainty. Its three static figure families retain all twelve source SVG variants. Compact figures are selected below a 760 px reading-column width; theme changes select the corresponding dark variants. The source register is available at `sources/chapter-02.md`. Numerical examples are constructed theoretical models. The main reading path retains figures, tables and design consequences; equations and detailed calculations are in optional native disclosures.
 
-Chapter 3 is integrated from `IOT-003-boards-from-prototype-to-industry` source v1.5, revised 2026-10-26. It covers board roles, firmware execution, the CC2640R2F/BLE path and board selection under memory, timing, energy, interface and recovery requirements. Its twelve SVG variants use the same container-width/theme helper as Chapter 2. Detailed calculations remain optional; the source register is at `sources/chapter-03.md`. Catalogue availability does not imply hardware qualification or a new independent technical review. Chapter 4 references remain plain text marked forthcoming until that chapter is published. The original Chapter 3 package remains unchanged by integration. Optional chapter `shortTitle` metadata shortens the browser title while retaining the full reader title.
+Chapter 3 is integrated from `IOT-003-boards-from-prototype-to-industry` source v1.5, revised 2026-10-26. It covers board roles, firmware execution, the CC2640R2F/BLE path and board selection under memory, timing, energy, interface and recovery requirements. Its twelve SVG variants use the same container-width/theme helper as Chapter 2. Detailed calculations remain optional; the source register is at `sources/chapter-03.md`. Catalogue availability does not imply hardware qualification or a new independent technical review. The original Chapter 3 package remains unchanged by integration. Optional chapter `shortTitle` metadata shortens the browser title while retaining the full reader title.
+
+Chapter 4 imports source v1.1, revised 2026-10-24. It covers execution ownership, scheduling, clock domains, synchronization, drift, sleep and reset. The two source figure families receive the handbook’s light/dark palettes and container-width selection. The source register retains dated case-study provenance without private filesystem paths or working-tree details. Chapter 5 references remain forthcoming. The source authoring package is unchanged.
 
 ## Build and validation
 
@@ -28,7 +30,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/Ma
 npm run test:iot-static-visuals
 ```
 
-The static suite covers Chapters 2 and 3 and navigation among all published IoT chapters. `test:iot-sensors-visuals` remains an alias for compatibility.
+The static suite covers Chapters 2–4 and navigation among all published IoT chapters. `test:iot-sensors-visuals` remains an alias for compatibility.
 
 `IOT_VISUAL_URL` changes the preview origin. `IOT_QA_DIR` optionally saves
 review screenshots. The test covers both conceptual models, twelve SVG variants,

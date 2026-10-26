@@ -338,6 +338,8 @@ When studying an unfamiliar system, begin with five questions: What is its purpo
 - [Chapter 2: Sensors and the Physical World](/iot-handbook/chapter-02-sensors-and-the-physical-world.html) — Develops this chapter's measurement and freshness contracts, including why timely telemetry can still describe a delayed physical response.
 - [Chapter 3: Boards — From Prototypes to Industrial Systems](/iot-handbook/chapter-03-boards-from-prototype-to-industry.html) — Maps device, gateway and local-control responsibilities onto hardware and firmware choices.
 
+- [Chapter 4: Firmware, Clocks, and Timing](/iot-handbook/chapter-04-firmware-clocks-and-timing.html) — Develops firmware execution, acquisition timestamps and clock behavior through drift, sleep and reset.
+
 ## Frequently Asked Questions
 
 **Q: Does an IoT system need the public Internet or a cloud service?**

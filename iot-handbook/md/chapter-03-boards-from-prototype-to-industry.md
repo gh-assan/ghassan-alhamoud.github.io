@@ -50,7 +50,7 @@ A local **controller** has another responsibility: decide and apply an output wi
 
 ### Firmware is the device software
 
-**Firmware** is software operating close to the device's hardware: it deploys to the device, operates that hardware and implements its behavior. For the room monitor, our work includes the sampling schedule, input validation, record format, Bluetooth service, buffering and recovery policy. Drivers and libraries supply mechanisms; the application decides when and why to use them. Chapter 4 (forthcoming) follows the image from build to running system in depth.
+**Firmware** is software operating close to the device's hardware: it deploys to the device, operates that hardware and implements its behavior. For the room monitor, our work includes the sampling schedule, input validation, record format, Bluetooth service, buffering and recovery policy. Drivers and libraries supply mechanisms; the application decides when and why to use them. [Chapter 4](/iot-handbook/chapter-04-firmware-clocks-and-timing.html) follows the image from build to running system in depth.
 
 A **microcontroller** (MCU) integrates the processor core, memory and peripherals in one chip, so the program lives inside it. Firmware commonly executes from programmable **flash**, which retains its contents without power. Think of flash as the deployed image: it survives a power cycle, but it is erased in whole blocks and programmed in smaller units. Programming can only clear bits from 1 to 0, so changing a stored value usually means erasing its block first, and each erase consumes a limited endurance budget. We therefore do not treat flash as a log file. **RAM** holds changing state: the current reading, task stacks, queues and protocol buffers. The static kind built into the chip is **SRAM**. After reset, startup code reinitializes the application according to its memory layout, so state that must survive needs an explicit retention or persistence design.
 
@@ -604,12 +604,14 @@ To return to the opening question: we program the policy, meaning when to sample
 
 ## What's Next?
 
-Chapter 4: Firmware, Clocks, and Timing (forthcoming) looks inside the firmware this chapter placed on the board. You will follow the monitor from reset to normal operation, see how work reaches the processor, and decide which clock gives each timestamp its meaning. Carry the acquisition-time convention, the record's sequence number and the outage policy into that study; each becomes a timing or ownership contract there.
+[Chapter 4: Firmware, Clocks, and Timing](/iot-handbook/chapter-04-firmware-clocks-and-timing.html) looks inside the firmware this chapter placed on the board. You will follow the monitor from reset to normal operation, see how work reaches the processor, and decide which clock gives each timestamp its meaning. Carry the acquisition-time convention, the record's sequence number and the outage policy into that study; each becomes a timing or ownership contract there.
 
 ## Related Chapters
 
 - [Chapter 1: What Is an IoT System?](/iot-handbook/chapter-01-what-is-an-iot-system.html) — Defines the device, gateway and local-control responsibilities that boards must implement, including freshness and failure contracts.
 - [Chapter 2: Sensors and the Physical World](/iot-handbook/chapter-02-sensors-and-the-physical-world.html) — Explains the sensing response, conversion and uncertainty that firmware must preserve when it records and communicates an observation.
+
+- [Chapter 4: Firmware, Clocks, and Timing](/iot-handbook/chapter-04-firmware-clocks-and-timing.html) — Develops firmware execution, acquisition timestamps and clock behavior through drift, sleep and reset.
 
 ## Frequently Asked Questions
 

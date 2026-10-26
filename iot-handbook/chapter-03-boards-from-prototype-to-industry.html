@@ -217,7 +217,7 @@
 <p>Firmware requests the indication over a local connection, checks its status and creates an application record. A Bluetooth software stack handles the communication procedure and the radio sends the signals; a gateway application interprets the record and separate network software forwards it. In Chapter 1's vocabulary, this is the telemetry path: acquisition, a record with quantity, unit, identity and time, communication, then interpretation under a data contract.</p>
 <p>A local <strong>controller</strong> has another responsibility: decide and apply an output within the application's required time. Chapter 1 called this local control with remote supervision, a closed loop whose decision stays near the process. If it must continue during a network outage, it needs a local execution path, on the monitor's board or in a separate product, so we assign the responsibility before choosing the board.</p>
 <h3 id="firmware-is-the-device-software">Firmware is the device software</h3>
-<p><strong>Firmware</strong> is software operating close to the device's hardware: it deploys to the device, operates that hardware and implements its behavior. For the room monitor, our work includes the sampling schedule, input validation, record format, Bluetooth service, buffering and recovery policy. Drivers and libraries supply mechanisms; the application decides when and why to use them. Chapter 4 (forthcoming) follows the image from build to running system in depth.</p>
+<p><strong>Firmware</strong> is software operating close to the device's hardware: it deploys to the device, operates that hardware and implements its behavior. For the room monitor, our work includes the sampling schedule, input validation, record format, Bluetooth service, buffering and recovery policy. Drivers and libraries supply mechanisms; the application decides when and why to use them. <a href="/iot-handbook/chapter-04-firmware-clocks-and-timing.html">Chapter 4</a> follows the image from build to running system in depth.</p>
 <p>A <strong>microcontroller</strong> (MCU) integrates the processor core, memory and peripherals in one chip, so the program lives inside it. Firmware commonly executes from programmable <strong>flash</strong>, which retains its contents without power. Think of flash as the deployed image: it survives a power cycle, but it is erased in whole blocks and programmed in smaller units. Programming can only clear bits from 1 to 0, so changing a stored value usually means erasing its block first, and each erase consumes a limited endurance budget. We therefore do not treat flash as a log file. <strong>RAM</strong> holds changing state: the current reading, task stacks, queues and protocol buffers. The static kind built into the chip is <strong>SRAM</strong>. After reset, startup code reinitializes the application according to its memory layout, so state that must survive needs an explicit retention or persistence design.</p>
 <p>The development path is:</p>
 <ol>
@@ -995,11 +995,16 @@ when_no_work_is_ready:
 <p>The room monitor's sensor result becomes a useful report only when firmware preserves its meaning, acquisition time and validity. The CC2640R2F walkthrough shows how application code, Bluetooth services and radio execution cooperate; the comparisons show when a different memory, interface or operating-system arrangement changes the choice. Review the complete installed design against its requirements before treating a development platform as a deployable product.</p>
 <p>To return to the opening question: we program the policy, meaning when to sample, what a record means, what to retain and how to recover. The board and its SDK provide the execution environment, power management and physical interfaces. The requirement that makes one design preferable is the first mandatory constraint a candidate fails, whether that is a voltage range, memory for the retention promise, a local deadline or a field interface. Preference scores come only after that screen.</p>
 <h2 id="whats-next">What's Next?</h2>
-<p>Chapter 4: Firmware, Clocks, and Timing (forthcoming) looks inside the firmware this chapter placed on the board. You will follow the monitor from reset to normal operation, see how work reaches the processor, and decide which clock gives each timestamp its meaning. Carry the acquisition-time convention, the record's sequence number and the outage policy into that study; each becomes a timing or ownership contract there.</p>
+<p><a href="/iot-handbook/chapter-04-firmware-clocks-and-timing.html">Chapter 4: Firmware, Clocks, and Timing</a> looks inside the firmware this chapter placed on the board. You will follow the monitor from reset to normal operation, see how work reaches the processor, and decide which clock gives each timestamp its meaning. Carry the acquisition-time convention, the record's sequence number and the outage policy into that study; each becomes a timing or ownership contract there.</p>
 <h2 id="related-chapters">Related Chapters</h2>
 <ul>
 <li><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">Chapter 1: What Is an IoT System?</a> — Defines the device, gateway and local-control responsibilities that boards must implement, including freshness and failure contracts.</li>
-<li><a href="/iot-handbook/chapter-02-sensors-and-the-physical-world.html">Chapter 2: Sensors and the Physical World</a> — Explains the sensing response, conversion and uncertainty that firmware must preserve when it records and communicates an observation.</li>
+<li>
+<p><a href="/iot-handbook/chapter-02-sensors-and-the-physical-world.html">Chapter 2: Sensors and the Physical World</a> — Explains the sensing response, conversion and uncertainty that firmware must preserve when it records and communicates an observation.</p>
+</li>
+<li>
+<p><a href="/iot-handbook/chapter-04-firmware-clocks-and-timing.html">Chapter 4: Firmware, Clocks, and Timing</a> — Develops firmware execution, acquisition timestamps and clock behavior through drift, sleep and reset.</p>
+</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Q: Can we move an Arduino application to an ESP32 board without changing the design?</strong>
@@ -1137,7 +1142,7 @@ No. Stack submission, radio delivery and gateway storage are different stages. L
 
         <nav class="chapter-nav" aria-label="Chapter navigation">
 <a href="/iot-handbook/chapter-02-sensors-and-the-physical-world.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">Sensors and the Physical World</div></a>
-<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+<a href="/iot-handbook/chapter-04-firmware-clocks-and-timing.html" class="chapter-nav__link chapter-nav__link--next"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Firmware, Clocks, and Timing</div></a>
 </nav>
 
         <div class="article-cta">
