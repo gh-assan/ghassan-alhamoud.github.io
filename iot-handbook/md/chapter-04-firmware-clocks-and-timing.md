@@ -511,7 +511,7 @@ For the room monitor, write the time contract before accepting the implementatio
 | Remote commands | Explicit deadline domain, trust and uncertainty checks; bounded local validity |
 | Recovery | Preserve gaps and failure evidence; recover pending operations before retry |
 
-A watchdog, introduced in Chapter 3, detects missing progress and triggers a defined recovery. Two points belong here: tie it to the progress the service needs rather than to an unrelated timer, and bound repeated recovery so a permanently broken sensor does not cause endless resets. Chapter 5 (forthcoming) treats liveness when several owners must each show progress. A watchdog reset establishes a recovery action; subsequent valid acquisition establishes recovery of the service.
+A watchdog, introduced in Chapter 3, detects missing progress and triggers a defined recovery. Two points belong here: tie it to the progress the service needs rather than to an unrelated timer, and bound repeated recovery so a permanently broken sensor does not cause endless resets. [Chapter 5](/iot-handbook/chapter-05-designing-firmware.html) treats liveness when several owners must each show progress. A watchdog reset establishes a recovery action; subsequent valid acquisition establishes recovery of the service.
 
 Time input is also an authority boundary. An unauthorized clock-setting operation can alter freshness and command validity decisions. Validate who may supply time, reject stale/replayed updates under the chosen protocol, and expose degraded time quality. A connected peer is not automatically an adequate or authorized time source.
 
@@ -551,13 +551,15 @@ The chapter asked which clock gives each operation its meaning, and what happens
 
 ## What's Next?
 
-Chapter 5: Designing Firmware — Architecture, State, and Reliability (forthcoming) widens the view from time to the whole device. It asks which responsibilities each part of the firmware owns, how memory and queues stay bounded, and how the monitor recovers from overload, reset and a failed update. Carry this chapter's bounded queues, fenced completions and time-quality states into that design.
+[Chapter 5: Designing Firmware — Architecture, State, and Reliability](/iot-handbook/chapter-05-designing-firmware.html) widens the view from time to the whole device. It asks which responsibilities each part of the firmware owns, how memory and queues stay bounded, and how the monitor recovers from overload, reset and a failed update. Carry this chapter's bounded queues, fenced completions and time-quality states into that design.
 
 ## Related Chapters
 
 - [Chapter 1: What Is an IoT System?](/iot-handbook/chapter-01-what-is-an-iot-system.html) — Defines the system contracts and freshness boundary that the timestamps in this chapter must support.
 - [Chapter 2: Sensors and the Physical World](/iot-handbook/chapter-02-sensors-and-the-physical-world.html) — Explains physical response, acquisition and uncertainty, which the acquisition-time convention here must preserve.
 - [Chapter 3: Boards — From Prototypes to Industrial Systems](/iot-handbook/chapter-03-boards-from-prototype-to-industry.html) — Supplies the firmware image, the CC2640R2F execution path and the 16-byte record whose timing this chapter examines.
+
+- [Chapter 5: Designing Firmware — Architecture, State, and Reliability](/iot-handbook/chapter-05-designing-firmware.html) — Develops ownership, bounded resources and recovery across the device lifecycle.
 
 ## Frequently Asked Questions
 
