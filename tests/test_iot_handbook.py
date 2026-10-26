@@ -18,6 +18,30 @@ def load_script(name):
 
 
 class IoTHandbookTests(unittest.TestCase):
+    def test_board_chapter_publication_and_reader_title(self):
+        chapter = 'chapter-03-boards-from-prototype-to-industry.html'
+        page = (ROOT / 'iot-handbook' / chapter).read_text()
+        self.assertEqual('Boards — From Prototypes to Industrial Systems',
+                         re.search(r'<h1[^>]*>(.*?)</h1>', page).group(1))
+        title = re.search(r'<title>(.*?)</title>', page).group(1)
+        self.assertIn('Boards — Prototype to Industry', title)
+        self.assertLessEqual(len(title), 80)
+        self.assertIn('Version:</strong> 1.5', page)
+        self.assertEqual(3, page.count('class="iot-diagram"'))
+        self.assertIn('/assets/js/iot-handbook.js', page)
+        self.assertNotIn('/assets/js/motion/core.js', page)
+        for private_path in ('src="visuals/', '../IOT-001-', '../IOT-002-', '../IOT-004-', '/Users/'):
+            self.assertNotIn(private_path, page)
+        self.assertIn('Chapter 4: Firmware, Clocks, and Timing (forthcoming)', page)
+        self.assertIn('boot identity associated with the records', page)
+        self.assertIn('/iot-handbook/sources/chapter-03.md', page)
+        self.assertTrue((ROOT / 'iot-handbook/sources/chapter-03.md').is_file())
+        self.assertEqual(12, len(list((ROOT / 'images/iot-handbook/IOT-003').glob('*.svg'))))
+        for surface in ('index.html', 'llms.txt', 'sitemap.xml', 'iot-handbook/index.html',
+                        'iot-handbook/chapter-01-what-is-an-iot-system.html',
+                        'iot-handbook/chapter-02-sensors-and-the-physical-world.html'):
+            self.assertIn(chapter, (ROOT / surface).read_text(), surface)
+
     def test_sensor_chapter_publication_is_complete(self):
         chapter = 'chapter-02-sensors-and-the-physical-world.html'
         page = (ROOT / 'iot-handbook' / chapter).read_text()
@@ -61,6 +85,9 @@ class IoTHandbookTests(unittest.TestCase):
         validator = load_script('validate-site')
         page = ROOT / 'iot-handbook/chapter-01-what-is-an-iot-system.html'
         for text, expected in [('MQTT publish/subscribe messaging', True),
+                               ('<td>Connected and subscribed</td><td>Connected, not subscribed</td>', True),
+                               ('<td>Connected and subscribed to my newsletter</td>', False),
+                               ('<td>Connected and subscribed</td> Subscribe now', False),
                                ('MQTT publish/subscribe. Subscribe to my newsletter', False)]:
             validator.results.clear()
             with patch.object(validator, 'published_files', return_value=[page]), \
@@ -163,8 +190,13 @@ class IoTHandbookTests(unittest.TestCase):
             history = source.read_text().split('## Revision History\n', 1)[1]
             records = re.findall(r'^\| ([\d.]+) \| (\d{4}-\d{2}-\d{2}) \|', history, re.M)
             self.assertEqual(1, sum(date == '2026-10-19' for _, date in records), source.name)
-            expected = ['1.1', '1.0'] if source.name.startswith('chapter-01-') else ['1.3', '1.2', '1.1', '1.0']
-            self.assertEqual(expected, [version for version, date in records if date == '2026-10-12'])
+            older = {
+                'chapter-01-': [('1.1', '2026-10-12'), ('1.0', '2026-10-12')],
+                'chapter-02-': [('1.3', '2026-10-12'), ('1.2', '2026-10-12'), ('1.1', '2026-10-12'), ('1.0', '2026-10-12')],
+                'chapter-03-': [('1.5', '2026-10-26'), ('1.4', '2026-10-24'), ('1.2', '2026-10-17'), ('1.1', '2026-10-17'), ('1.0', '2026-10-17')],
+            }
+            expected = next(entries for prefix, entries in older.items() if source.name.startswith(prefix))
+            self.assertEqual(expected, [(version, date) for version, date in records if date != '2026-10-19'])
             versions = [tuple(map(int, version.split('.'))) for version, _ in records]
             for newer, older in zip(versions, versions[1:]):
                 self.assertEqual((older[0], older[1] + 1), newer, source.name)

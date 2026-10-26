@@ -446,11 +446,12 @@ The opening disagreement stays unresolved until location, measurement behavior, 
 
 ## What's Next?
 
-The next topic is embedded boards: where acquisition and conversion run, how processing and interfaces fit together, and which constraints shape hardware choices. Carry this chapter's measurement requirements into that study: the board must preserve the timing, context and quality needed by the application.
+[Chapter 3: Boards — From Prototypes to Industrial Systems](/iot-handbook/chapter-03-boards-from-prototype-to-industry.html) follows acquisition into the hardware and firmware that implement it. You will trace a reading through a connected device and compare board choices against memory, timing, energy, interface and recovery requirements.
 
 ## Related Chapters
 
 - [Chapter 1: What Is an IoT System?](/iot-handbook/chapter-01-what-is-an-iot-system.html) — Places sensing within the wider system and introduces telemetry, acquisition timestamps, freshness and responsibility during failure.
+- [Chapter 3: Boards — From Prototypes to Industrial Systems](/iot-handbook/chapter-03-boards-from-prototype-to-industry.html) — Shows how board interfaces, converter references, acquisition timing and firmware preserve the measurement chain.
 
 ## Frequently Asked Questions
 

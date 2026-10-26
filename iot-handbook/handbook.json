@@ -7,10 +7,10 @@
     "indexTagline": "Understand connected systems",
     "description": "Study IoT definitions, reference architectures, information flows, interoperability, reliability, security and device lifecycle through standards-grounded explanations.",
     "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked examples support the reading.",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
     "educationalLevel": "Beginner",
-    "courseWorkload": "PT60M",
+    "courseWorkload": "PT117M",
     "author": {
       "name": "Ghassan Alhamoud",
       "url": "https://ghassan-alhamoud.com/"
@@ -30,7 +30,8 @@
         "ogImage": "/images/og-default.webp",
         "prerequisites": [],
         "relatedPatterns": [
-          "sensors-and-the-physical-world"
+          "sensors-and-the-physical-world",
+          "boards-from-prototype-to-industry"
         ],
         "publishedAt": "2026-10-08",
         "lastModified": "2026-10-19",
@@ -53,11 +54,37 @@
           "what-is-an-iot-system"
         ],
         "relatedPatterns": [
-          "what-is-an-iot-system"
+          "what-is-an-iot-system",
+          "boards-from-prototype-to-industry"
         ],
         "publishedAt": "2026-10-19",
         "lastModified": "2026-10-19",
         "outcome": "you can judge whether a sensor reading supports a physical-world decision."
+      },
+      {
+        "id": 3,
+        "slug": "boards-from-prototype-to-industry",
+        "title": "Boards — From Prototypes to Industrial Systems",
+        "shortTitle": "Boards — Prototype to Industry",
+        "subtitle": "Firmware, interfaces and the constraints behind board selection",
+        "description": "Follow a sensor reading through firmware and Bluetooth. Compare boards using memory, timing, energy, interfaces and recovery requirements.",
+        "status": "published",
+        "editorialStatus": "Standards-grounded theoretical study chapter",
+        "difficulty": "intermediate",
+        "readingTime": "57 min",
+        "file": "chapter-03-boards-from-prototype-to-industry.md",
+        "ogImage": "/images/og-default.webp",
+        "prerequisites": [
+          "what-is-an-iot-system",
+          "sensors-and-the-physical-world"
+        ],
+        "relatedPatterns": [
+          "what-is-an-iot-system",
+          "sensors-and-the-physical-world"
+        ],
+        "publishedAt": "2026-10-26",
+        "lastModified": "2026-10-26",
+        "outcome": "you can trace firmware execution and compare board architectures against explicit deployment requirements."
       }
     ],
     "requiredSections": [

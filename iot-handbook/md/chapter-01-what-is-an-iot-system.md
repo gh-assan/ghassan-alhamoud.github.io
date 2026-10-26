@@ -336,6 +336,7 @@ When studying an unfamiliar system, begin with five questions: What is its purpo
 ## Related Chapters
 
 - [Chapter 2: Sensors and the Physical World](/iot-handbook/chapter-02-sensors-and-the-physical-world.html) — Develops this chapter's measurement and freshness contracts, including why timely telemetry can still describe a delayed physical response.
+- [Chapter 3: Boards — From Prototypes to Industrial Systems](/iot-handbook/chapter-03-boards-from-prototype-to-industry.html) — Maps device, gateway and local-control responsibilities onto hardware and firmware choices.
 
 ## Frequently Asked Questions
 

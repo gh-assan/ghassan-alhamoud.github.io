@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 648" role="img" aria-labelledby="title desc">
+<title id="title">A board implements more than computation</title>
+<desc id="desc">Five responsibilities: power, compute and memory, interfaces, clock and reset, and programming and debug. This is conceptual anatomy, not a circuit or wiring diagram.</desc>
+<rect width="360" height="648" rx="8" fill="#f5f7f5"/>
+<text x="22" y="32" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="600" fill="#1a2e1a">WHAT THE BOARD IMPLEMENTS</text>
+<text x="22" y="56" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Responsibilities may share a package.</text>
+<rect x="22" y="82" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="107" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Power</text>
+<text x="36" y="130" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Regulate and distribute</text>
+<text x="36" y="151" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Supply quality and limits</text>
+<rect x="22" y="186" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="211" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Compute + memory</text>
+<text x="36" y="234" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Execute and retain state</text>
+<text x="36" y="255" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Resources have owners</text>
+<rect x="22" y="290" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="315" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Physical interfaces</text>
+<text x="36" y="338" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Connect to the outside</text>
+<text x="36" y="359" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Pins, radio and protection</text>
+<rect x="22" y="394" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="419" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Clock + reset</text>
+<text x="36" y="442" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Start, time and recover</text>
+<text x="36" y="463" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Output behavior matters</text>
+<rect x="22" y="498" width="316" height="82" rx="7" fill="#edf2ed" stroke="#b0c4b0"/>
+<text x="36" y="523" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#1a2e1a">Program + debug</text>
+<text x="36" y="546" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#1a2e1a">Load and inspect software</text>
+<text x="36" y="567" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Access is a design choice</text>
+<text x="22" y="626" font-family="Inter,-apple-system,Segoe UI,sans-serif" font-size="14" font-weight="400" fill="#4a6741">Conceptual anatomy; not a wiring diagram.</text>
+</svg>
