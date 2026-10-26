@@ -453,6 +453,8 @@ The opening disagreement stays unresolved until location, measurement behavior, 
 - [Chapter 1: What Is an IoT System?](/iot-handbook/chapter-01-what-is-an-iot-system.html) — Places sensing within the wider system and introduces telemetry, acquisition timestamps, freshness and responsibility during failure.
 - [Chapter 3: Boards — From Prototypes to Industrial Systems](/iot-handbook/chapter-03-boards-from-prototype-to-industry.html) — Shows how board interfaces, converter references, acquisition timing and firmware preserve the measurement chain.
 
+- [Chapter 4: Firmware, Clocks, and Timing](/iot-handbook/chapter-04-firmware-clocks-and-timing.html) — Develops firmware execution, acquisition timestamps and clock behavior through drift, sleep and reset.
+
 ## Frequently Asked Questions
 
 **Q: Does a digital sensor eliminate analog measurement problems?**

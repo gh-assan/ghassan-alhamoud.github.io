@@ -1,4 +1,4 @@
-/* Static teaching figures and reading navigation for IoT Chapters 2 and 3. */
+/* Static teaching figures and reading navigation for IoT Chapters 2–4. */
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -6,7 +6,7 @@ const {chromium} = require('playwright');
 const base = process.env.IOT_VISUAL_URL || 'http://127.0.0.1:7110';
 const catalog = JSON.parse(fs.readFileSync(path.join(__dirname, '../iot-handbook/handbook.json'), 'utf8')).handbook.chapters.filter(c => c.status === 'published');
 const routeFor = c => `/iot-handbook/chapter-${String(c.id).padStart(2, '0')}-${c.slug}.html`;
-const staticChapters = [{id: 2, disclosures: 9}, {id: 3, disclosures: 7}];
+const staticChapters = [{id: 2, disclosures: 9, figures: 3}, {id: 3, disclosures: 7, figures: 3}, {id: 4, disclosures: 2, figures: 2}];
 (async () => {
   const browser = await chromium.launch({headless: true, executablePath:
     process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
@@ -18,6 +18,17 @@ const staticChapters = [{id: 2, disclosures: 9}, {id: 3, disclosures: 7}];
     page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
     const qa = process.env.IOT_QA_DIR;
     if (qa) fs.mkdirSync(qa, {recursive: true});
+    for (const file of fs.readdirSync(path.join(__dirname, '../images/iot-handbook/IOT-004'))) {
+      await page.goto(base + '/images/iot-handbook/IOT-004/' + file);
+      const clipped = await page.evaluate(() => {
+        const svg = document.querySelector('svg'), v = svg.viewBox.baseVal;
+        return [...svg.querySelectorAll('text')].filter(t => {
+          const b = t.getBBox();
+          return b.x < 0 || b.y < 0 || b.x + b.width > v.width || b.y + b.height > v.height;
+        }).map(t => t.textContent);
+      });
+      assert.deepEqual(clipped, [], `${file} clipped text`);
+    }
     let layouts = 0;
     for (const config of staticChapters) {
       const chapter = catalog.find(c => c.id === config.id);
@@ -43,7 +54,7 @@ const staticChapters = [{id: 2, disclosures: 9}, {id: 3, disclosures: 7}];
             brokenAnchors: [...document.querySelectorAll('a[href^="#"]')].map(a => a.hash.slice(1)).filter(id => id && !document.getElementById(decodeURIComponent(id)))
           }));
           assert.equal(result.overflow, false, `${chapter.id}/${width}/${theme} page overflow`);
-          assert.equal(result.figures.length, 3);
+          assert.equal(result.figures.length, config.figures);
           result.figures.forEach(f => {
             assert.equal(f.compact, f.width < 760, `${chapter.id}/${width}/${theme} figure selection`);
             assert(f.minLabel >= 9.9, `${chapter.id}/${width}/${theme} small label: ${f.minLabel}`);
@@ -59,7 +70,7 @@ const staticChapters = [{id: 2, disclosures: 9}, {id: 3, disclosures: 7}];
               return overflow;
             }), false, `${chapter.id}/${width}/${theme} expanded calculation overflow`);
             if (qa) {
-              for (let i = 0; i < 3; i++) await page.locator('.iot-diagram').nth(i).screenshot({path: path.join(qa, `chapter-${chapter.id}-figure-${i}-${width}-${theme}.png`)});
+              for (let i = 0; i < config.figures; i++) await page.locator('.iot-diagram').nth(i).screenshot({path: path.join(qa, `chapter-${chapter.id}-figure-${i}-${width}-${theme}.png`)});
               await page.screenshot({path: path.join(qa, `chapter-${chapter.id}-reading-${width}-${theme}.png`)});
             }
           }
@@ -83,7 +94,7 @@ const staticChapters = [{id: 2, disclosures: 9}, {id: 3, disclosures: 7}];
       const context = await browser.newContext({javaScriptEnabled: false, viewport: {width: 390, height: 900}});
       const staticPage = await context.newPage();
       await staticPage.goto(base + route);
-      assert(await staticPage.locator('.iot-diagram img').evaluateAll(imgs => imgs.length === 3 && imgs.every(i => i.complete && i.naturalWidth > 0)));
+      assert(await staticPage.locator('.iot-diagram img').evaluateAll((imgs, count) => imgs.length === count && imgs.every(i => i.complete && i.naturalWidth > 0), config.figures));
       await context.close();
     }
     for (const chapter of catalog) {
@@ -117,6 +128,6 @@ const staticChapters = [{id: 2, disclosures: 9}, {id: 3, disclosures: 7}];
       }
     }
     assert.deepEqual(errors, []);
-    console.log(`PASS: ${layouts} Chrome layouts; both static chapters, readable figures, themes, expanded calculations, container breakpoints, keyboard, no-JS and all related chapter links.`);
+    console.log(`PASS: ${layouts} Chrome layouts; all static chapters, readable figures, themes, expanded calculations, container breakpoints, keyboard, no-JS and all related chapter links.`);
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

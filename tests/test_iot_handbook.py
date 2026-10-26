@@ -32,7 +32,8 @@ class IoTHandbookTests(unittest.TestCase):
         self.assertNotIn('/assets/js/motion/core.js', page)
         for private_path in ('src="visuals/', '../IOT-001-', '../IOT-002-', '../IOT-004-', '/Users/'):
             self.assertNotIn(private_path, page)
-        self.assertIn('Chapter 4: Firmware, Clocks, and Timing (forthcoming)', page)
+        self.assertIn('href="/iot-handbook/chapter-04-firmware-clocks-and-timing.html"', page)
+        self.assertNotIn('Chapter 4: Firmware, Clocks, and Timing (forthcoming)', page)
         self.assertIn('boot identity associated with the records', page)
         self.assertIn('/iot-handbook/sources/chapter-03.md', page)
         self.assertTrue((ROOT / 'iot-handbook/sources/chapter-03.md').is_file())
@@ -40,6 +41,27 @@ class IoTHandbookTests(unittest.TestCase):
         for surface in ('index.html', 'llms.txt', 'sitemap.xml', 'iot-handbook/index.html',
                         'iot-handbook/chapter-01-what-is-an-iot-system.html',
                         'iot-handbook/chapter-02-sensors-and-the-physical-world.html'):
+            self.assertIn(chapter, (ROOT / surface).read_text(), surface)
+
+    def test_timing_chapter_publication_is_complete(self):
+        chapter = 'chapter-04-firmware-clocks-and-timing.html'
+        page = (ROOT / 'iot-handbook' / chapter).read_text()
+        self.assertIn('Version:</strong> 1.1', page)
+        self.assertEqual(2, page.count('class="iot-diagram"'))
+        self.assertIn('/assets/js/iot-handbook.js', page)
+        self.assertNotIn('/assets/js/motion/core.js', page)
+        self.assertIn('Chapter 5: Designing Firmware — Architecture, State, and Reliability (forthcoming)', page)
+        for private_path in ('src="visuals/', '../IOT-', '/Users/', 'reviews/source-snapshot.json'):
+            self.assertNotIn(private_path, page)
+        register = ROOT / 'iot-handbook/sources/chapter-04.md'
+        self.assertIn('/iot-handbook/sources/chapter-04.md', page)
+        self.assertIn('2004dafb86bedb008ff9a9ae481a6a345f9c1891', register.read_text())
+        self.assertNotIn('/Users/', register.read_text())
+        self.assertEqual(8, len(list((ROOT / 'images/iot-handbook/IOT-004').glob('*.svg'))))
+        for surface in ('index.html', 'llms.txt', 'sitemap.xml', 'iot-handbook/index.html',
+                        'iot-handbook/chapter-01-what-is-an-iot-system.html',
+                        'iot-handbook/chapter-02-sensors-and-the-physical-world.html',
+                        'iot-handbook/chapter-03-boards-from-prototype-to-industry.html'):
             self.assertIn(chapter, (ROOT / surface).read_text(), surface)
 
     def test_sensor_chapter_publication_is_complete(self):
@@ -189,8 +211,10 @@ class IoTHandbookTests(unittest.TestCase):
         for source in (ROOT / 'iot-handbook/md').glob('chapter-*.md'):
             history = source.read_text().split('## Revision History\n', 1)[1]
             records = re.findall(r'^\| ([\d.]+) \| (\d{4}-\d{2}-\d{2}) \|', history, re.M)
-            self.assertEqual(1, sum(date == '2026-10-19' for _, date in records), source.name)
+            self.assertEqual(0 if source.name.startswith('chapter-04-') else 1,
+                             sum(date == '2026-10-19' for _, date in records), source.name)
             older = {
+                'chapter-04-': [('1.1', '2026-10-24'), ('1.0', '2026-10-21')],
                 'chapter-01-': [('1.1', '2026-10-12'), ('1.0', '2026-10-12')],
                 'chapter-02-': [('1.3', '2026-10-12'), ('1.2', '2026-10-12'), ('1.1', '2026-10-12'), ('1.0', '2026-10-12')],
                 'chapter-03-': [('1.5', '2026-10-26'), ('1.4', '2026-10-24'), ('1.2', '2026-10-17'), ('1.1', '2026-10-17'), ('1.0', '2026-10-17')],
