@@ -7,10 +7,10 @@
     "indexTagline": "Understand connected systems",
     "description": "Study IoT definitions, reference architectures, information flows, interoperability, reliability, security and device lifecycle through standards-grounded explanations.",
     "intro": "A standards-grounded handbook for software engineers studying connected systems. Begin with definitions and reference models, then reason about sensing, communication, control, deployment and lifecycle. Conceptual diagrams and worked examples support the reading.",
-    "version": "1.9.0",
+    "version": "1.10.0",
     "baseUrl": "https://ghassan-alhamoud.com/iot-handbook/",
     "educationalLevel": "Beginner",
-    "courseWorkload": "PT174M",
+    "courseWorkload": "PT229M",
     "author": {
       "name": "Ghassan Alhamoud",
       "url": "https://ghassan-alhamoud.com/"
@@ -32,7 +32,8 @@
         "relatedPatterns": [
           "sensors-and-the-physical-world",
           "boards-from-prototype-to-industry",
-          "firmware-clocks-and-timing"
+          "firmware-clocks-and-timing",
+          "designing-firmware"
         ],
         "publishedAt": "2026-10-08",
         "lastModified": "2026-10-19",
@@ -57,7 +58,8 @@
         "relatedPatterns": [
           "what-is-an-iot-system",
           "boards-from-prototype-to-industry",
-          "firmware-clocks-and-timing"
+          "firmware-clocks-and-timing",
+          "designing-firmware"
         ],
         "publishedAt": "2026-10-19",
         "lastModified": "2026-10-19",
@@ -83,7 +85,8 @@
         "relatedPatterns": [
           "what-is-an-iot-system",
           "sensors-and-the-physical-world",
-          "firmware-clocks-and-timing"
+          "firmware-clocks-and-timing",
+          "designing-firmware"
         ],
         "publishedAt": "2026-10-26",
         "lastModified": "2026-10-26",
@@ -109,11 +112,41 @@
         "relatedPatterns": [
           "what-is-an-iot-system",
           "sensors-and-the-physical-world",
-          "boards-from-prototype-to-industry"
+          "boards-from-prototype-to-industry",
+          "designing-firmware"
         ],
         "publishedAt": "2026-10-26",
         "lastModified": "2026-10-26",
         "outcome": "you can define firmware execution and timestamp contracts through clock correction, sleep and reset."
+      },
+      {
+        "id": 5,
+        "slug": "designing-firmware",
+        "title": "Designing Firmware — Architecture, State, and Reliability",
+        "shortTitle": "Designing Firmware",
+        "subtitle": "Ownership, bounded memory and recovery across the device lifecycle",
+        "description": "Design firmware around service contracts, ownership and bounded resources. Reason about memory, concurrency, replay, persistence, updates and recovery.",
+        "status": "published",
+        "editorialStatus": "Standards-grounded theoretical study chapter",
+        "difficulty": "intermediate",
+        "readingTime": "55 min",
+        "file": "chapter-05-designing-firmware.md",
+        "ogImage": "/images/og-default.webp",
+        "prerequisites": [
+          "what-is-an-iot-system",
+          "sensors-and-the-physical-world",
+          "boards-from-prototype-to-industry",
+          "firmware-clocks-and-timing"
+        ],
+        "relatedPatterns": [
+          "what-is-an-iot-system",
+          "sensors-and-the-physical-world",
+          "boards-from-prototype-to-industry",
+          "firmware-clocks-and-timing"
+        ],
+        "publishedAt": "2026-10-26",
+        "lastModified": "2026-10-26",
+        "outcome": "you can design firmware ownership, resource budgets and recovery policies against explicit service contracts."
       }
     ],
     "requiredSections": [

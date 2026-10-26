@@ -10,7 +10,9 @@ Chapter 2 was imported from `IOT-002-sensors-and-the-physical-world`, source ver
 
 Chapter 3 is integrated from `IOT-003-boards-from-prototype-to-industry` source v1.5, revised 2026-10-26. It covers board roles, firmware execution, the CC2640R2F/BLE path and board selection under memory, timing, energy, interface and recovery requirements. Its twelve SVG variants use the same container-width/theme helper as Chapter 2. Detailed calculations remain optional; the source register is at `sources/chapter-03.md`. Catalogue availability does not imply hardware qualification or a new independent technical review. The original Chapter 3 package remains unchanged by integration. Optional chapter `shortTitle` metadata shortens the browser title while retaining the full reader title.
 
-Chapter 4 imports source v1.1, revised 2026-10-24. It covers execution ownership, scheduling, clock domains, synchronization, drift, sleep and reset. The two source figure families receive the handbook’s light/dark palettes and container-width selection. The source register retains dated case-study provenance without private filesystem paths or working-tree details. Chapter 5 references remain forthcoming. The source authoring package is unchanged.
+Chapter 4 imports source v1.1, revised 2026-10-24. It covers execution ownership, scheduling, clock domains, synchronization, drift, sleep and reset. The two source figure families receive the handbook’s light/dark palettes and container-width selection. The source register retains dated case-study provenance without private filesystem paths or working-tree details. The source authoring package is unchanged.
+
+Chapter 5 imports source v1.1, revised 2026-10-24. It covers firmware architecture, ownership, memory budgets, replay, persistence, updates and recovery without code. Its three figure families use twelve responsive light/dark variants, preserving the source geometry with website palettes and corrected spacing in figure labels. The source register is at `sources/chapter-05.md`. Chapter 4 now links to it. The source authoring package is unchanged.
 
 ## Build and validation
 
@@ -30,7 +32,7 @@ PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/Ma
 npm run test:iot-static-visuals
 ```
 
-The static suite covers Chapters 2–4 and navigation among all published IoT chapters. `test:iot-sensors-visuals` remains an alias for compatibility.
+The static suite covers Chapters 2–5 and navigation among all published IoT chapters. `test:iot-sensors-visuals` remains an alias for compatibility.
 
 `IOT_VISUAL_URL` changes the preview origin. `IOT_QA_DIR` optionally saves
 review screenshots. The test covers both conceptual models, twelve SVG variants,

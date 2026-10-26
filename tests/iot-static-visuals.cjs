@@ -1,4 +1,4 @@
-/* Static teaching figures and reading navigation for IoT Chapters 2–4. */
+/* Static teaching figures and reading navigation for IoT Chapters 2–5. */
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -6,7 +6,7 @@ const {chromium} = require('playwright');
 const base = process.env.IOT_VISUAL_URL || 'http://127.0.0.1:7110';
 const catalog = JSON.parse(fs.readFileSync(path.join(__dirname, '../iot-handbook/handbook.json'), 'utf8')).handbook.chapters.filter(c => c.status === 'published');
 const routeFor = c => `/iot-handbook/chapter-${String(c.id).padStart(2, '0')}-${c.slug}.html`;
-const staticChapters = [{id: 2, disclosures: 9, figures: 3}, {id: 3, disclosures: 7, figures: 3}, {id: 4, disclosures: 2, figures: 2}];
+const staticChapters = [{id: 2, disclosures: 9, figures: 3}, {id: 3, disclosures: 7, figures: 3}, {id: 4, disclosures: 2, figures: 2}, {id: 5, disclosures: 0, figures: 3}];
 (async () => {
   const browser = await chromium.launch({headless: true, executablePath:
     process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
@@ -18,16 +18,18 @@ const staticChapters = [{id: 2, disclosures: 9, figures: 3}, {id: 3, disclosures
     page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
     const qa = process.env.IOT_QA_DIR;
     if (qa) fs.mkdirSync(qa, {recursive: true});
-    for (const file of fs.readdirSync(path.join(__dirname, '../images/iot-handbook/IOT-004'))) {
-      await page.goto(base + '/images/iot-handbook/IOT-004/' + file);
-      const clipped = await page.evaluate(() => {
-        const svg = document.querySelector('svg'), v = svg.viewBox.baseVal;
-        return [...svg.querySelectorAll('text')].filter(t => {
-          const b = t.getBBox();
-          return b.x < 0 || b.y < 0 || b.x + b.width > v.width || b.y + b.height > v.height;
-        }).map(t => t.textContent);
-      });
-      assert.deepEqual(clipped, [], `${file} clipped text`);
+    for (const directory of ['IOT-004', 'IOT-005']) {
+      for (const file of fs.readdirSync(path.join(__dirname, `../images/iot-handbook/${directory}`))) {
+        await page.goto(base + `/images/iot-handbook/${directory}/` + file);
+        const clipped = await page.evaluate(() => {
+          const svg = document.querySelector('svg'), v = svg.viewBox.baseVal;
+          return [...svg.querySelectorAll('text')].filter(t => {
+            const b = t.getBBox();
+            return b.x < 0 || b.y < 0 || b.x + b.width > v.width || b.y + b.height > v.height;
+          }).map(t => t.textContent);
+        });
+        assert.deepEqual(clipped, [], `${file} clipped text`);
+      }
     }
     let layouts = 0;
     for (const config of staticChapters) {
@@ -85,12 +87,14 @@ const staticChapters = [{id: 2, disclosures: 9, figures: 3}, {id: 3, disclosures
         await page.waitForFunction(w => [...document.querySelectorAll('.iot-diagram img')].every(i => i.complete && i.currentSrc.includes('-compact') === (w < 760)), width);
       }
       await page.goto(base + route);
-      const detail = page.locator('.handbook-body details:not(.on-this-page)').first();
-      await detail.locator('summary').focus();
-      await page.keyboard.press('Enter');
-      assert.equal(await detail.getAttribute('open'), '');
-      await page.keyboard.press('Enter');
-      assert.equal(await detail.getAttribute('open'), null);
+      if (config.disclosures > 0) {
+        const detail = page.locator('.handbook-body details:not(.on-this-page)').first();
+        await detail.locator('summary').focus();
+        await page.keyboard.press('Enter');
+        assert.equal(await detail.getAttribute('open'), '');
+        await page.keyboard.press('Enter');
+        assert.equal(await detail.getAttribute('open'), null);
+      }
       const context = await browser.newContext({javaScriptEnabled: false, viewport: {width: 390, height: 900}});
       const staticPage = await context.newPage();
       await staticPage.goto(base + route);

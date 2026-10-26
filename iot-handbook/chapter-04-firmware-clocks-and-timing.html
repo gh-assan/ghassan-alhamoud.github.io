@@ -855,7 +855,7 @@ acquisition_owner_on_timeout:
 </tr>
 </tbody>
 </table>
-<p>A watchdog, introduced in Chapter 3, detects missing progress and triggers a defined recovery. Two points belong here: tie it to the progress the service needs rather than to an unrelated timer, and bound repeated recovery so a permanently broken sensor does not cause endless resets. Chapter 5 (forthcoming) treats liveness when several owners must each show progress. A watchdog reset establishes a recovery action; subsequent valid acquisition establishes recovery of the service.</p>
+<p>A watchdog, introduced in Chapter 3, detects missing progress and triggers a defined recovery. Two points belong here: tie it to the progress the service needs rather than to an unrelated timer, and bound repeated recovery so a permanently broken sensor does not cause endless resets. <a href="/iot-handbook/chapter-05-designing-firmware.html">Chapter 5</a> treats liveness when several owners must each show progress. A watchdog reset establishes a recovery action; subsequent valid acquisition establishes recovery of the service.</p>
 <p>Time input is also an authority boundary. An unauthorized clock-setting operation can alter freshness and command validity decisions. Validate who may supply time, reject stale/replayed updates under the chosen protocol, and expose degraded time quality. A connected peer is not automatically an adequate or authorized time source.</p>
 <h3 id="worked-reasoning-reconnection-after-a-two-hour-outage">Worked reasoning: reconnection after a two-hour outage</h3>
 <p>A monitor continues sampling locally once per second through a two-hour gateway outage. It last synchronized with a justified 10 ms error bound. Assume its clock remains within 20 ppm through every encountered power mode. On reconnection, the gateway marks every buffered observation “current” because it just arrived. Is the repair simply to synchronize again?</p>
@@ -934,12 +934,17 @@ acquisition_owner_on_timeout:
 <p>Firmware makes that contract executable through initialization, ownership, scheduling, driver behavior and recovery. Elapsed deadlines need an appropriate local clock; calendar records need an explicit mapping and time quality. Clock corrections, power transitions and resets must preserve those distinctions. The opening monitor becomes trustworthy when its valid reading, acquisition instant, execution path and delivery delay can each support the claim the application makes.</p>
 <p>The chapter asked which clock gives each operation its meaning, and what happens to that meaning when the clock steps, drifts, sleeps or resets. Each operation names its clock domain. Elapsed deadlines and releases use a local monotonic clock, compared with wrap-safe arithmetic. Calendar claims use a versioned UTC mapping whose age and error bound grow during holdover. A reset begins a new boot generation, so values from before and after it are never merged.</p>
 <h2 id="whats-next">What's Next?</h2>
-<p>Chapter 5: Designing Firmware — Architecture, State, and Reliability (forthcoming) widens the view from time to the whole device. It asks which responsibilities each part of the firmware owns, how memory and queues stay bounded, and how the monitor recovers from overload, reset and a failed update. Carry this chapter's bounded queues, fenced completions and time-quality states into that design.</p>
+<p><a href="/iot-handbook/chapter-05-designing-firmware.html">Chapter 5: Designing Firmware — Architecture, State, and Reliability</a> widens the view from time to the whole device. It asks which responsibilities each part of the firmware owns, how memory and queues stay bounded, and how the monitor recovers from overload, reset and a failed update. Carry this chapter's bounded queues, fenced completions and time-quality states into that design.</p>
 <h2 id="related-chapters">Related Chapters</h2>
 <ul>
 <li><a href="/iot-handbook/chapter-01-what-is-an-iot-system.html">Chapter 1: What Is an IoT System?</a> — Defines the system contracts and freshness boundary that the timestamps in this chapter must support.</li>
 <li><a href="/iot-handbook/chapter-02-sensors-and-the-physical-world.html">Chapter 2: Sensors and the Physical World</a> — Explains physical response, acquisition and uncertainty, which the acquisition-time convention here must preserve.</li>
-<li><a href="/iot-handbook/chapter-03-boards-from-prototype-to-industry.html">Chapter 3: Boards — From Prototypes to Industrial Systems</a> — Supplies the firmware image, the CC2640R2F execution path and the 16-byte record whose timing this chapter examines.</li>
+<li>
+<p><a href="/iot-handbook/chapter-03-boards-from-prototype-to-industry.html">Chapter 3: Boards — From Prototypes to Industrial Systems</a> — Supplies the firmware image, the CC2640R2F execution path and the 16-byte record whose timing this chapter examines.</p>
+</li>
+<li>
+<p><a href="/iot-handbook/chapter-05-designing-firmware.html">Chapter 5: Designing Firmware — Architecture, State, and Reliability</a> — Develops ownership, bounded resources and recovery across the device lifecycle.</p>
+</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Q: Does monotonic time solve synchronization between boards?</strong>
@@ -1070,7 +1075,7 @@ It helps only if computation is the limiting cause. Illegal callback operations,
 
         <nav class="chapter-nav" aria-label="Chapter navigation">
 <a href="/iot-handbook/chapter-03-boards-from-prototype-to-industry.html" class="chapter-nav__link chapter-nav__link--prev"><div class="chapter-nav__label">← Previous Chapter</div><div class="chapter-nav__title">Boards — From Prototypes to Industrial Systems</div></a>
-<div class="chapter-nav__link chapter-nav__link--next chapter-nav__link--disabled"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Coming Soon</div></div>
+<a href="/iot-handbook/chapter-05-designing-firmware.html" class="chapter-nav__link chapter-nav__link--next"><div class="chapter-nav__label">Next Chapter →</div><div class="chapter-nav__title">Designing Firmware — Architecture, State, and Reliability</div></a>
 </nav>
 
         <div class="article-cta">

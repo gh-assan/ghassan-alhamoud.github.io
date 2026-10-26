@@ -340,6 +340,8 @@ When studying an unfamiliar system, begin with five questions: What is its purpo
 
 - [Chapter 4: Firmware, Clocks, and Timing](/iot-handbook/chapter-04-firmware-clocks-and-timing.html) — Develops firmware execution, acquisition timestamps and clock behavior through drift, sleep and reset.
 
+- [Chapter 5: Designing Firmware — Architecture, State, and Reliability](/iot-handbook/chapter-05-designing-firmware.html) — Develops ownership, bounded resources and recovery across the device lifecycle.
+
 ## Frequently Asked Questions
 
 **Q: Does an IoT system need the public Internet or a cloud service?**
