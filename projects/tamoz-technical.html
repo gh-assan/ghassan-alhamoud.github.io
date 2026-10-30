@@ -719,7 +719,7 @@
           </div>
 
           <h2 id="trial">9. The pump-station trial</h2>
-          <p>The trial is a design for measuring whether a learned rule helps, against a model-only baseline, with a real model. The plain-language account is on the <a href="/projects/tamoz.html#results">overview</a>; this section has the engineering view. The trial used GLM through z.ai via Tamoz; the system itself works with any model.</p>
+          <p>The trial is a design for measuring whether a learned rule helps, against a model-only baseline, with a real model. The plain-language account is on the <a href="/projects/tamoz.html#evidence">overview</a>; this section has the engineering view. The trial used GLM through z.ai via Tamoz; the system itself works with any model.</p>
           <h3>9.1 Design</h3>
           <p>Eight pumps, one <code>pump_condition</code> Situation per pump (<code>examples/pump-station/pump-station.situation.yaml</code>), opened on per-pump relative features such as the 15-minute mean against the pump's own 24-hour mean. There are three fault families (bearing wear, misalignment, sensor drift) plus a <code>transient_none</code> cavitation look-alike. Each run is 30 simulated hours with up to 6 faults in the first 2 hours plus one look-alike; 30 hours leaves every case its 24-hour settle window inside its own run, which I checked on paper for every run before launch. The world is paced by the consumer: it waits at each 60-second slice until the consumer has ingested it and has no reasoning in flight (up to 240 s, an episode's budget). The approver is a scripted careful approver that approves a proposal only if its replay shows no disagreement; there has been no run with a human approver.</p>
           <figure class="diagram">
@@ -1086,10 +1086,6 @@
           <figure class="project-figure">
             <img src="/images/projects/tamoz/canvas-run-review.webp" alt="The review of a finished simulator run. A timeline shows a fault marker for condenser fouling on chiller CH-1 at 25 minutes. The report panel says Verified, that the files match and the replay reproduces, lists 3,000 observations, and has a disturbances table with the one injected fault." width="1200" height="897" loading="lazy" />
             <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: the review of a finished simulated run, with the fault marker, the recording-integrity check, 3,000 observations and the disturbances table. This run was not scored against an outside system.</figcaption>
-          </figure>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The simulator canvas during a live run of a chiller pilot plant. Live readings show on three chillers and an air handler. Chiller CH-2 carries a Fault tag after a compressor-wear fault was injected. The run panel on the right shows Pause, speed control and Act now controls to call an effector or inject a fault." width="1200" height="897" loading="lazy" />
-            <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: a live run of a simulated chiller plant, with a compressor-wear fault just injected on chiller CH-2. No real equipment.</figcaption>
           </figure>
           <h3>16.8 Limits</h3>
           <div class="table-scroll table-scroll--wide">
