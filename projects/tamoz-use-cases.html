@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nature">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where Tamoz fits: use cases for equipment operators — Ghassan Alhamoud</title>
+  <meta name="description" content="Four use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pump and motor fleets, thermal zones, aquaculture ponds, and chilled-water plants. With what a pilot would measure." />
+  <meta name="author" content="Ghassan Alhamoud" />
+  <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz-use-cases.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz-use-cases.html" />
+  <meta property="og:title" content="Where Tamoz fits: four use cases, and how far each one is proven" />
+  <meta property="og:description" content="Pump fleets, thermal zones, aquaculture ponds and utility plants: what has been shown in simulation or on a small bench, what is plausible next, and what a pilot would measure." />
+  <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Where Tamoz fits: use cases for equipment operators",
+    "description": "Four use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next.",
+    "about": {"@type": "SoftwareSourceCode", "name": "Tamoz", "codeRepository": "https://github.com/ghassan-ai-projects/tamoz"},
+    "author": {"@type": "Person", "name": "Ghassan Alhamoud"},
+    "url": "https://ghassan-alhamoud.com/projects/tamoz-use-cases.html"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="/" class="nav__logo" aria-label="Home"><svg class="nav__monogram" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/><text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text></svg><span class="nav__name">Ghassan Alhamoud</span></a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span></button>
+      <ul class="nav__menu" id="navMenu" aria-label="Main navigation">
+        <li><a href="/projects/" class="nav__link nav__link--active">Systems</a></li>
+        <li><a href="/articles/" class="nav__link">Field Notes</a></li>
+        <li><a href="/handbook/" class="nav__link">Handbook</a></li>
+        <li><a href="/research/" class="nav__link">Research</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+    <main class="article-single">
+    <div class="container article-layout article-layout--single">
+      <article>
+        <header class="article-single__header">
+          <div class="article-single__meta"><span><a href="/projects/tamoz.html">Tamoz</a></span><span class="article-card__dot"></span><span>Use cases</span><span class="article-card__dot"></span><span>evidence labelled</span></div>
+          <h1 class="article-single__title">Where Tamoz fits: four use cases, and how far each one is proven</h1>
+          <div class="article-single__tags"><span class="article-single__tag">Use Cases</span><span class="article-single__tag">Predictive Maintenance</span><span class="article-single__tag">Thermal Zones</span><span class="article-single__tag">Pilot</span></div>
+          <div class="project-single__actions">
+            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Email me about a pilot</span></a>
+            <a class="btn btn--secondary" href="/projects/tamoz.html">Back to the overview</a>
+            <a class="btn btn--secondary" href="/projects/tamoz-technical.html">Technical deep dive</a>
+          </div>
+        </header>
+
+        <div class="article-single__body project-single__body">
+          <p>Tamoz fits where equipment already streams sensor data, a fault has a deadline and a known repair, and a wrong action costs more than a late one. Below are four places I think that is true, and for each one exactly how far it has been shown. I would rather lose a pilot to an honest label than win one with a vague claim.</p>
+
+          <nav class="article-toc" aria-label="On this page">
+            <p><strong>On this page</strong></p>
+            <ul>
+              <li><a href="#labels">How to read the labels</a></li>
+              <li><a href="#design">Design: what makes a good fit</a></li>
+              <li><a href="#pumps">1. Pump and motor fleets</a></li>
+              <li><a href="#thermal">2. Thermal zones, cold rooms and small actuators</a></li>
+              <li><a href="#aquaculture">3. Aquaculture ponds</a></li>
+              <li><a href="#utilities">4. Chilled-water and utility plants</a></li>
+              <li><a href="#pilot">A pilot, step by step</a></li>
+              <li><a href="#boundary">Boundary: where it does not fit</a></li>
+            </ul>
+          </nav>
+
+          <h2 id="labels">How to read the labels</h2>
+          <p>Every use case carries one or two evidence labels. Each label is a word, not only a colour.</p>
+          <div class="cap-legend"><span><span class="cap-status cap-status--sim">Demonstrated in simulation</span> ran in the simulator, with sealed ground truth</span><span><span class="cap-status cap-status--bench">Demonstrated on a real bench</span> ran on real hardware, small scale, operator-observed</span><span><span class="cap-status cap-status--wip">Plausible next</span> world or spec material exists, but no run yet</span></div>
+
+          <h2 id="design">Design: what makes a good fit</h2>
+          <ul>
+            <li>The sensors already stream, or a gateway can be added.</li>
+            <li>A fault has a deadline and a known repair.</li>
+            <li>The repair can start as a low-risk, reversible action (a ticket, a work order, a bounded setpoint request), and a person approves anything riskier.</li>
+            <li>A false alarm has a cost worth measuring.</li>
+            <li>A named person can approve rules.</li>
+          </ul>
+          <p><strong>Poor fit:</strong> hard real-time control loops, and anything that is itself a safety function. Tamoz sits above the control layer, and the learned-rule compiler refuses to recommend actions at risk class R3 or higher.</p>
+
+          <section class="usecase" id="pumps">
+            <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
+            <h2>1. Pump and motor fleets: condition-based maintenance</h2>
+            <dl>
+              <dt>Operator's problem</dt>
+              <dd>A fleet of pumps and motors drifts away from its own normal in many ways: bearing wear, misalignment, a drifting probe. Thresholds alarm. A person works out which repair to book before the damage deadline, and the lesson is rarely written down.</dd>
+              <dt>What the system does</dt>
+              <dd>It opens a situation when a pump drifts from its own 24-hour baseline. One bounded AI diagnosis picks the fault and books the maintenance. Policy checks it. The repair is checked for a real recovery. After three verified repairs of the same kind it drafts a rule for a person to approve. See <a href="/projects/tamoz-technical.html#rule-promotion">rule promotion</a>.</dd>
+              <dt>What exists</dt>
+              <dd>The <a href="/projects/tamoz-technical.html#trial">pump-station trial</a>: eight simulated pumps, a real model, and a learned misalignment rule that made 5 of 5 right and on-time decisions with no false action. The simulated motor in the predictive-maintenance example, the first acceptance proof (deterministic replay, duplicate and out-of-order handling, hysteresis, episode cancellation, governed intents, idempotent effects, shadow mode, explainability). A rotating-machinery spec for bearing degradation. <strong>Limit:</strong> one fault family earned a rule; sensor drift is misdiagnosed as bearing wear.</dd>
+              <dt>A pilot would measure</dt>
+              <dd>Time from first drift to booked work order. The share of faults with the right repair booked before the deadline. False actions on healthy machines (target zero). Model calls per handled fault. Per fault family, whether a rule was earned and whether replay agreed. The share of repairs verified as recovered. Approver time per proposal.</dd>
+            </dl>
+          </section>
+
+          <section class="usecase" id="thermal">
+            <div class="usecase__head"><span class="cap-status cap-status--bench">Demonstrated on a real bench</span><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
+            <h2>2. Thermal zones, cold rooms and small actuators</h2>
+            <dl>
+              <dt>Operator's problem</dt>
+              <dd>A cold box or climate zone drifts warm at night. The cause may be the door, the room, or a failing sensor, and the actuator (a fan or cooler) must never run unbounded.</dd>
+              <dt>What the system does</dt>
+              <dd>It reads temperature and humidity (and ambient or heartbeat where present) and discounts a rise that tracks the ambient. It answers with a mode, <code>hold</code> or <code>bounded_cooling</code>, never a power value. Policy and firmware set duty, lease and safe stop (a 60% cap and a 10-second lease on the bench). Silent sensors make the situation uncertain, and risky actions fail closed.</dd>
+              <dt>What exists</dt>
+              <dd>The thermal-chamber example, with traces for a quiet night, an ambient-tracking rise, invalid quality and a reboot backlog. The real-world-sensor example, with simulated and bench specs. The bench is an ELEGOO Mega 2560, a DHT11 sensor, an L293D driver and a small DC motor with a fan. A real model chose <code>bounded_cooling</code> on the cold-box snapshot. <strong>Limit:</strong> rotation was operator-observed, not instrumented, and the full route from Tamoz's intent to the motor is still an open integration seam. See <a href="/projects/tamoz-technical.html#hardware">the hardware bench</a>.</dd>
+              <dt>A pilot would measure</dt>
+              <dd>Detection delay for a sustained excursion. Time to a bounded response after approval. False responses on ambient-tracking rises. Behaviour when a sensor goes silent (it must fail closed). Instrumented feedback, such as airflow or a tachometer, so that &ldquo;energized&rdquo; is not mistaken for &ldquo;spinning&rdquo;.</dd>
+            </dl>
+          </section>
+
+          <section class="usecase" id="aquaculture">
+            <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
+            <h2>3. Aquaculture ponds: oxygen with a hard deadline</h2>
+            <dl>
+              <dt>Operator's problem</dt>
+              <dd>Dissolved oxygen falls through the night. Below roughly 2 mg/L stock starts dying within about an hour, so the chain from reading to action must finish inside a physical window the world does not extend.</dd>
+              <dt>What the system does</dt>
+              <dd>It watches eight ponds, tells a post-feeding dip from a real fall, waits for a signed human approval before the emergency water exchange, fails closed when the probe goes silent, and walks back an intervention after a late correction.</dd>
+              <dt>What exists</dt>
+              <dd>An aquaculture simulator domain with eight shrimp ponds. Round 3 of the simulator rounds: a quiet baseline admitted nothing, a silent probe failed closed, the emergency exchange waited for a signed approval, and a second pond recalled the first. An aquaculture action catalog shared between the Go and Ruby sides, with its digest pinned by a test. <strong>Limit:</strong> these runs used a scripted reasoner, not a real model. Aquaculture has not been run with a real model.</dd>
+              <dt>A pilot would measure</dt>
+              <dd>Reading-to-action time against the physical window. Approvals that arrive in time. False interventions. Behaviour under sensor silence.</dd>
+            </dl>
+          </section>
+
+          <section class="usecase" id="utilities">
+            <div class="usecase__head"><span class="cap-status cap-status--wip">Plausible next</span></div>
+            <h2>4. Chilled-water and utility plants</h2>
+            <dl>
+              <dt>Operator's problem</dt>
+              <dd>Utilities (compressed air, chilled water, power) have faults that look alike across subsystems: an air leak against airend wear, a tower-fan failure against a heat wave, a stale main meter against its sub-meters.</dd>
+              <dt>What the system would do</dt>
+              <dd>The same loop. The value is in separating look-alikes and in not acting on the wrong one.</dd>
+              <dt>What exists</dt>
+              <dd>The plant can already be modelled in the simulator: a chiller pilot plant (chillers and an air-handling unit) and a factory-utilities plant (23 instances in five areas: site, production hall, compressor room, chiller plant and substation), shown below. <strong>Limit:</strong> there is no Tamoz run on either, so this stays &ldquo;plausible next&rdquo;.</dd>
+              <dt>A pilot would measure</dt>
+              <dd>The same measures as use case 1, plus a look-alike confusion count: how often one fault is called another.</dd>
+            </dl>
+          </section>
+          <figure class="project-figure">
+            <img src="/images/projects/tamoz/canvas-plant-factory-utilities.webp" alt="The simulator canvas showing a factory utilities plant of 23 instances in five areas: site, production hall, compressor room, chiller plant and substation. Coloured wires link the instances; an outline on the left lists them and an inspector on the right summarises the areas and kinds." width="1200" height="897" loading="lazy" />
+            <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: a simulated factory-utilities plant, 23 instances and 59 links. No run with Tamoz exists for it.</figcaption>
+          </figure>
+
+          <h2 id="pilot">A pilot, step by step</h2>
+          <p>This is a proposal; it has not been done with anyone yet. Terms are to be discussed.</p>
+          <ol>
+            <li><strong>Rehearse.</strong> Replay a sample of your sensor history through the system and, where useful, build a simulated copy of the device. Nothing touches equipment.</li>
+            <li><strong>Advise.</strong> It runs beside your people on a live, read-only feed and proposes repairs. Nobody acts on them unless they choose to. Every proposal and its evidence is logged.</li>
+            <li><strong>Act within bounds.</strong> Low-risk, reversible actions with a named approver, and learned rules only after your approval, in shadow first.</li>
+          </ol>
+          <p>Before any pilot touches equipment I can run your data and a simulated copy of your device in the simulator; the same session can later put your real board beside simulated ones. That path is built and tested against a stand-in gateway; I have not yet run it with a real board.</p>
+
+          <h2 id="boundary">Boundary: where it does not fit, and what it will not claim</h2>
+          <div class="callout">
+            <span class="callout__label">Read before you rely on it</span>
+            <p>No safety function, no hard real-time control, no certification. Nothing here is a savings claim. The results above come from simulation or a small bench, and the evidence is on the <a href="/projects/tamoz.html#evidence">overview</a> and in the <a href="/projects/tamoz-technical.html#trial">technical deep dive</a>.</p>
+          </div>
+
+          <div class="article-cta">
+            <p class="article-cta__text">Think one of these fits what you run? Tell me what you operate and what a missed fault costs you, and I will tell you honestly whether it is a fit.</p>
+            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Email me about a pilot</span></a>
+            <p class="article-cta__text"><a href="/connect/">Other ways to reach me</a> · <a href="/projects/tamoz-technical.html">Read the technical deep dive</a></p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="footer__brand-link" aria-label="Home">
+          <svg class="footer__monogram" width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#e4006f" fill-opacity="0.15"/>
+            <text x="18" y="24" text-anchor="middle" fill="#e4006f" font-family="Inter, sans-serif" font-weight="700" font-size="18">GA</text>
+          </svg>
+        </a>
+        <p class="footer__tagline">Senior Software Engineer — AI Agent Enabler, Software Architecture</p>
+        <div class="footer__socials">
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Explore</span>
+          <a href="/projects/" class="footer__nav-link">Systems</a>
+          <a href="/articles/" class="footer__nav-link">Field Notes</a>
+          <a href="/handbook/" class="footer__nav-link">Handbook</a>
+          <a href="/research/" class="footer__nav-link">Research</a>
+          <a href="/#about" class="footer__nav-link">About</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Connect</span>
+          <a href="mailto:galhamoud@gmx.de" class="footer__nav-link">Email</a>
+          <a href="https://github.com/gh-assan" target="_blank" rel="noopener noreferrer" class="footer__nav-link">GitHub</a>
+          <a href="https://linkedin.com/in/ghassanalhamoud" target="_blank" rel="noopener noreferrer" class="footer__nav-link">LinkedIn</a>
+        </div>
+        <div class="footer__nav-col">
+          <span class="footer__nav-heading">Legal</span>
+          <a href="/impressum.html" class="footer__nav-link">Impressum</a>
+          <a href="/privacy.html" class="footer__nav-link">Privacy</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <span class="footer__copy">&copy; 2026 Ghassan Alhamoud — All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.documentElement.classList.add('js'); var saved = localStorage.getItem('theme'); if (saved) document.documentElement.setAttribute('data-theme', saved);</script>
+  <script src="/assets/js/article-toc.js" defer></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/transitions.js" defer></script>
+</body>
+</html>
