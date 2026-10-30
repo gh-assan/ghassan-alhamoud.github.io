@@ -3337,6 +3337,18 @@ html.js .reveal--visible {
   }
 }
 
+@media (max-width: 640px) {
+  .table-scroll--wide::after {
+    content: "Scroll sideways to see the whole table.";
+    position: sticky;
+    left: 0;
+    display: block;
+    padding-top: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+}
+
 /* Project figure (photo) inside the body */
 .project-figure {
   margin: 28px 0;

@@ -51,272 +51,89 @@
     <div class="container article-layout article-layout--single">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>Public release · MIT</span><span class="article-card__dot"></span><span>Ruby + Go · pre-release (alpha) · looking for a first pilot</span></div>
-          <h1 class="article-single__title">An agent that watches your equipment and learns which repairs work</h1>
-          <div class="article-single__tags"><span class="article-single__tag">Physical-World AI</span><span class="article-single__tag">Learned Repair Rules</span><span class="article-single__tag">Governed Actions</span><span class="article-single__tag">Simulation</span><span class="article-single__tag">Pilot</span></div>
+          <div class="article-single__meta"><span>Public release · MIT</span><span class="article-card__dot"></span><span>Pre-release · looking for a first pilot</span></div>
+          <h1 class="article-single__title">Tamoz watches your pumps and motors, and learns which repairs actually work</h1>
           <div class="project-single__actions">
             <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Email me about a pilot</span></a>
-            <a class="btn btn--secondary" href="/projects/tamoz-use-cases.html">Where it fits: use cases</a>
-            <a class="btn btn--secondary" href="/projects/tamoz-technical.html">Technical deep dive</a>
-            <a class="btn btn--secondary project-single__repo" href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">View Repository</a>
+            <a class="btn btn--secondary" href="/connect/">Other ways to reach me</a>
           </div>
         </header>
 
-        <div class="article-single__body project-single__body"><p>Tamoz reads the sensor streams of your pumps, motors, fans or HVAC, works out what is going wrong, and proposes the repair. A separate, fixed layer decides whether that action is allowed. And when the same repair has worked three times, it can write the pattern down as a rule, which a person approves, so the next case needs no AI call. So far this is shown in simulation and on one small bench; a pilot is how we find out what it does on your equipment.</p></div>
-
-        <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into Situation v47; Tamoz turns it into an intent with no magnitude, mode bounded cooling; the policy plane converts it into a bounded command under the firmware ceiling of 60 percent duty with a 10 second lease; the fan spins while the lease runs, the readings cool, and the outcome returns to Tamoz as experience.">
-          <div class="scene__stage" style="--aspect: 2.45"></div>
-          <figcaption class="evidence-caption">Illustrative animation, time-compressed. The ceiling (60 % duty) and the 10 s lease are the firmware values of the small bench described in the <a href="/projects/tamoz-technical.html#hardware">technical deep dive</a>; the readings are not telemetry.</figcaption>
-        </figure>
+        <div class="article-single__body project-single__body"><p>An AI model reads your sensor data, diagnoses the fault and recommends a repair. Fixed limits decide what it may do, and a person approves anything risky. Once the same repair has been checked and has held three times, you can approve it as a rule, and that fault no longer needs the AI. Early software, tested in simulation and on one small bench. I am looking for a first pilot site.</p><p>Tell me what you run and what a missed fault costs you. I will tell you honestly whether it is a fit.</p></div>
 
         <div class="stat-grid">
-          <div class="stat"><span class="stat__value">5 of 5</span><span class="stat__label">decisions by a learned rule were right and on time, with no model call.</span></div>
-          <div class="stat"><span class="stat__value">0</span><span class="stat__label">actions on healthy look-alike pumps, with and without the learned rule.</span></div>
-          <div class="stat"><span class="stat__value">about 1 ms</span><span class="stat__label">per rule decision. A model diagnosis took tens of seconds.</span></div>
+          <div class="stat"><span class="stat__value">5 of 5</span><span class="stat__label">misalignment cases handled by a learned rule got the right repair, booked before the deadline, with no AI call.</span></div>
+          <div class="stat"><span class="stat__value">0 of 3</span><span class="stat__label">healthy look-alike pumps got any action, with or without the rule.</span></div>
+          <div class="stat"><span class="stat__value">3 → 1</span><span class="stat__label">Three checked repairs, then one person's approval, before a rule may start its watch-only trial.</span></div>
         </div>
-        <p class="evidence-caption">Modeled in a simulated pump station: one seed, three test days, a real language model. From the public repo evidence, not field data. Details and limits below.</p>
+        <p class="evidence-caption">From the public repo: one simulated pump station with eight pumps, three test days, a real AI model. Not field data. <a href="https://github.com/ghassan-ai-projects/streams-simulator/blob/rule-promotion/docs/rule-promotion/RESULT.md" target="_blank" rel="noopener noreferrer">Trial write-up</a> and <a href="https://github.com/ghassan-ai-projects/streams-simulator/tree/rule-promotion/docs/rule-promotion/evidence" target="_blank" rel="noopener noreferrer">recorded evidence</a>.</p>
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">For</span><span class="project-fact__value">Operators of pumps, motors, fans, HVAC and process plant, and the engineers they bring.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Open source, pre-release (<code>0.1.0.alpha.1</code>). Evidence so far: simulation and one small real bench. No field deployment.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Status</span><span class="project-fact__value">Open source, pre-release (<code>0.1.0.alpha.1</code>).</span></div>
           <div class="project-fact"><span class="project-fact__label">Ask</span><span class="project-fact__value">One pilot partner, advisory mode first: nothing is commanded to your equipment until we both agree. Terms are to be discussed.</span></div>
         </div>
 
         <div class="article-single__body project-single__body">
-          <nav class="article-toc" aria-label="On this page">
-            <p><strong>On this page</strong></p>
-            <ul>
-              <li><a href="#problem">The problem: which repair, and did it work</a></li>
-              <li><a href="#design">Design: how it works</a></li>
-              <li><a href="#evidence">Evidence: a pump station that learned its repairs</a></li>
-              <li><a href="#rehearsal">A rehearsal room for plants</a></li>
-              <li><a href="#shown">What has been shown, and what hasn't</a></li>
-              <li><a href="#boundary">Boundary: what this does not show</a></li>
-              <li><a href="#pilot">What a pilot would look like</a></li>
-              <li><a href="#origin">Where it came from</a></li>
-            </ul>
-          </nav>
-
           <h2 id="problem">The problem: alarms say something is wrong, not which repair to book</h2>
-          <p>The problem I keep seeing is this. Alarms tell you something is wrong. Nobody tells you which repair to book, or whether last time's repair worked.</p>
-          <ul>
-            <li>A drifting pump produces thousands of readings. Thresholds fire, people decide, and what they learned stays in their heads.</li>
-            <li>Putting an AI model on every reading costs money per reading and makes every flicker a decision someone has to trust.</li>
-            <li>Hand-written rules are exact but never keep up, and an AI that acts on equipment needs limits it cannot talk its way past.</li>
-          </ul>
-          <p>Tamoz is an attempt at the middle path: watch deterministically, think only when it is worth it, act only inside fixed limits, and learn from repairs that were checked. Cost follows change, not traffic.</p>
+          <p>A drifting pump produces thousands of readings. Thresholds fire, people decide, and what they learned stays in their heads. An AI model on every reading costs money per reading and turns every flicker into a decision someone has to trust. Hand-written rules never keep up. Tamoz is the middle path: watch with fixed rules, think only when it is worth it, act only inside fixed limits, and learn from repairs that were checked.</p>
 
-          <h2 id="design">Design: the model proposes, fixed policy disposes</h2>
-          <p>On this page the whole system is called Tamoz. It has three parts: a streaming runtime that watches and governs (Agentic Stream), an agent framework that does the reasoning (Tamoz), and a simulated world to test against (Streams Simulator). The path of one decision:</p>
+          <h2 id="how">How it works: the AI proposes, fixed policy decides</h2>
           <ol>
-            <li><strong>Read.</strong> Sensor readings arrive with their own timestamps and a quality flag.</li>
-            <li><strong>Summarise.</strong> The stream layer folds them into one sealed snapshot of what the sensors say right now (a &ldquo;Situation&rdquo;).</li>
-            <li><strong>Decide whether thinking is worth it.</strong> A scheduler, not a model, starts one bounded AI diagnosis only when something has materially changed.</li>
-            <li><strong>Propose and check.</strong> The model returns a typed proposal: what it saw, what it infers, how sure it is, what action it suggests. Policy checks risk class, rate limits, approvals, device authority and interlocks. The model never sets power or timing.</li>
-            <li><strong>Act and verify.</strong> The command goes out once, with an idempotency key. The outcome comes back as independent evidence.</li>
+            <li><strong>Watch.</strong> Readings arrive with their own timestamps and a quality flag. Tamoz tracks each machine against its own normal.</li>
+            <li><strong>Think only when worth it.</strong> A fixed scheduler, not an AI model, starts one bounded diagnosis when something has materially changed.</li>
+            <li><strong>Propose and check.</strong> The model returns what it saw, what it infers, how sure it is and what it suggests. Fixed policy checks risk, hourly caps, approvals and software safety checks. The model never sets power or timing.</li>
+            <li><strong>Act and verify.</strong> The command is sent once and cannot repeat by accident. The outcome comes back as independent evidence.</li>
+            <li><strong>Learn.</strong> If the same repair holds three times, the model drafts a rule. It is replayed over history, and a person approves it.</li>
           </ol>
-          <blockquote>The model decides what should happen. Policy decides how much. Firmware decides when to stop.</blockquote>
-          <p>That split is why I am comfortable pointing an agent at equipment at all. The first time I ran a real model on a cold-box snapshot it reasoned correctly and then tried to write a duty cycle of 50% on its own. The whole decision was rejected. That rejection is the design working, not failing. The system is not tied to one model: it works with any model, and the trial below used one.</p>
-          <div class="cap-legend"><span><span class="cap-status cap-status--shipped">Shipped</span> runs today</span><span><span class="cap-status cap-status--sim">In simulation</span> shown in the simulator, with a real model</span></div>
-          <div class="cap-grid">
-            <div class="cap-card"><span class="cap-status cap-status--shipped">Shipped</span><h3>Governed actions</h3><p>Typed proposals from a fixed catalog, risk classes, rate limits and interlocks. The stream re-checks every one before anything reaches a device.</p></div>
-            <div class="cap-card"><span class="cap-status cap-status--shipped">Shipped</span><h3>Human approval</h3><p>Risky actions wait for a person. In the simulator rounds, approvals were signed, single-use and bound to the exact situation.</p></div>
-            <div class="cap-card"><span class="cap-status cap-status--shipped">Shipped</span><h3>Crash-safe execution</h3><p>Every step is checkpointed. After a hard kill it resumes from the last committed step, and an action whose result cannot be proven stops for a person.</p></div>
-            <div class="cap-card"><span class="cap-status cap-status--shipped">Shipped</span><h3>Replay and shadow</h3><p>A recorded run can be replayed, and a new rule or prompt can run beside the live decision, without any way to touch equipment.</p></div>
-            <div class="cap-card"><span class="cap-status cap-status--sim">In simulation</span><h3>Learns repairs</h3><p>Verified repairs become a rule that a person approves, that proves itself in shadow, and that then decides without a model call.</p></div>
-          </div>
-          <p>All twelve capabilities are listed in the <a href="/projects/tamoz-technical.html#system-map">technical deep dive</a>.</p>
+          <blockquote>The AI proposes what should happen. Fixed policy decides how much, and whether. The device's own built-in limit decides when to stop.</blockquote>
+          <p>A learned rule stays on a short leash: it acts only inside the range of readings it learned from, only on low-risk actions, and only after a watch-only trial in which it shows what it would do while the AI still decides. It switches itself off if the device model changes, an audit disagrees or its action stops working.</p>
 
-          <h2 id="evidence">Evidence: a pump station that learned its repairs</h2>
-          <p>Evidence, in a simulated pump station. The simulator runs eight pumps. Every few seconds each pump reports radial and axial vibration, temperature, motor current and speed. The simulator injects faults on a schedule only it knows, and every fault has a deadline: book the right maintenance before it and the pump recovers, miss it and the pump is damaged. A test run is 30 simulated hours with up to six faults plus one look-alike.</p>
-          <div class="cap-grid">
-            <div class="cap-card"><h3>Bearing wear</h3><p>Radial vibration creeps up over hours. Needs bearing maintenance within about 13 hours.</p></div>
-            <div class="cap-card"><h3>Misalignment</h3><p>Axial vibration rises while the radial probe stays quiet. Needs alignment work within about 12 hours.</p></div>
-            <div class="cap-card"><h3>Sensor drift</h3><p>The pump is healthy but its probe reads high. Needs recalibration within 2 hours. A threshold cannot tell it from wear.</p></div>
-            <div class="cap-card"><h3>Cavitation look-alike</h3><p>A short rise that settles on its own. The right answer is to do nothing.</p></div>
-          </div>
-
-          <figure class="diagram">
-            <p class="diagram__title">From repair to rule</p>
-            <div class="diagram__scroll">
-            <svg viewBox="0 0 820 390" role="img" aria-labelledby="d1-title d1-desc">
-              <title id="d1-title">From a repair to a rule</title>
-              <desc id="d1-desc">Nine steps. The model books a repair; a 24 hour settle window follows; a repair counts as a verified case only if the reading actually recovered; after three verified cases of the same fault and repair the model drafts a rule; the rule is replayed over past data; a person approves it; it runs in shadow beside the model until it has agreed three times; then it is active and decides without a model call. Two dashed exits: a fault that returns, or a reading that does not recover, means the case is not verified; any disagreement keeps the rule in shadow.</desc>
-              <defs>
-                <marker id="d1-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
-                <marker id="d1-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
-              </defs>
-              <rect class="dg-box dg-box--warn" x="142" y="8" width="200" height="48" rx="8"/>
-              <text class="dg-t" x="242" y="29" text-anchor="middle">Not verified</text>
-              <text class="dg-s" x="242" y="45" text-anchor="middle">fault returns, or no recovery</text>
-              <path class="dg-line dg-line--warn dg-line--dash" d="M242 80 V58" marker-end="url(#d1-ah)"/>
-              <rect class="dg-box" x="10" y="80" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="80" y="100" text-anchor="middle">1 · REPAIR</text>
-              <text class="dg-t" x="80" y="122" text-anchor="middle">Repair booked</text>
-              <text class="dg-s" x="80" y="140" text-anchor="middle">model diagnoses,</text>
-              <text class="dg-s" x="80" y="154" text-anchor="middle">policy allows it</text>
-              <rect class="dg-box" x="172" y="80" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="242" y="100" text-anchor="middle">2 · WAIT</text>
-              <text class="dg-t" x="242" y="122" text-anchor="middle">24 h settle window</text>
-              <text class="dg-s" x="242" y="140" text-anchor="middle">does the fault</text>
-              <text class="dg-s" x="242" y="154" text-anchor="middle">stay away?</text>
-              <rect class="dg-box" x="334" y="80" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="404" y="100" text-anchor="middle">3 · VERIFY</text>
-              <text class="dg-t" x="404" y="122" text-anchor="middle">Verified case</text>
-              <text class="dg-s" x="404" y="140" text-anchor="middle">the reading really</text>
-              <text class="dg-s" x="404" y="154" text-anchor="middle">recovered</text>
-              <rect class="dg-box" x="496" y="80" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="566" y="100" text-anchor="middle">4 · REPEAT</text>
-              <text class="dg-t" x="566" y="122" text-anchor="middle">3 verified cases</text>
-              <text class="dg-s" x="566" y="140" text-anchor="middle">same fault, same</text>
-              <text class="dg-s" x="566" y="154" text-anchor="middle">repair</text>
-              <rect class="dg-box dg-box--accent" x="658" y="80" width="140" height="84" rx="8"/>
-              <text class="dg-k dg-accent" x="728" y="100" text-anchor="middle">5 · DRAFT</text>
-              <text class="dg-t" x="728" y="122" text-anchor="middle">Model drafts a rule</text>
-              <text class="dg-s" x="728" y="140" text-anchor="middle">a condition over</text>
-              <text class="dg-s" x="728" y="154" text-anchor="middle">stream readings</text>
-              <rect class="dg-box" x="10" y="214" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="80" y="234" text-anchor="middle">6 · REPLAY</text>
-              <text class="dg-t" x="80" y="256" text-anchor="middle">Replay on history</text>
-              <text class="dg-s" x="80" y="274" text-anchor="middle">would it have fired?</text>
-              <text class="dg-s" x="80" y="288" text-anchor="middle">did it agree?</text>
-              <rect class="dg-box dg-box--info" x="172" y="214" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="242" y="234" text-anchor="middle">7 · APPROVE</text>
-              <text class="dg-t" x="242" y="256" text-anchor="middle">A person approves</text>
-              <text class="dg-s" x="242" y="274" text-anchor="middle">nothing promotes</text>
-              <text class="dg-s" x="242" y="288" text-anchor="middle">itself</text>
-              <rect class="dg-box" x="334" y="214" width="140" height="84" rx="8"/>
-              <text class="dg-k" x="404" y="234" text-anchor="middle">8 · SHADOW</text>
-              <text class="dg-t" x="404" y="256" text-anchor="middle">Shadow mode</text>
-              <text class="dg-s" x="404" y="274" text-anchor="middle">needs 3 agreements,</text>
-              <text class="dg-s" x="404" y="288" text-anchor="middle">no disagreement</text>
-              <rect class="dg-box dg-box--accent" x="496" y="214" width="140" height="84" rx="8"/>
-              <text class="dg-k dg-accent" x="566" y="234" text-anchor="middle">9 · ACTIVE</text>
-              <text class="dg-t" x="566" y="256" text-anchor="middle">Rule decides</text>
-              <text class="dg-s" x="566" y="274" text-anchor="middle">no model call,</text>
-              <text class="dg-s" x="566" y="288" text-anchor="middle">about 1 ms</text>
-              <path class="dg-line" d="M152 122 H170" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M314 122 H332" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M476 122 H494" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M638 122 H656" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M728 164 V190 H80 V212" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M152 256 H170" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M314 256 H332" marker-end="url(#d1-ah)"/>
-              <path class="dg-line" d="M476 256 H494" marker-end="url(#d1-ah)"/>
-              <rect class="dg-box dg-box--warn" x="304" y="330" width="200" height="48" rx="8"/>
-              <text class="dg-t" x="404" y="351" text-anchor="middle">Stays in shadow</text>
-              <text class="dg-s" x="404" y="367" text-anchor="middle">any disagreement</text>
-              <path class="dg-line dg-line--warn dg-line--dash" d="M404 298 V328" marker-end="url(#d1-ah)"/>
-            </svg>
-            </div>
-            <p class="diagram__hint">Scroll sideways to see the whole path.</p>
-            <figcaption class="evidence-caption">Illustrative, drawn from the public repo design. The model drafts a rule only after three verified repairs of the same kind, and nothing becomes active without a person's approval.</figcaption>
-          </figure>
-
-          <h3>The rule it learned</h3>
+          <h2 id="results">What it did in the test</h2>
+          <p>A simulator ran eight pumps and injected faults on a schedule only it knew. Every fault had a deadline: book the right maintenance before it and the pump recovers, miss it and the pump is damaged. The faults were bearing wear, misalignment, sensor drift (a healthy pump whose probe reads high) and a cavitation look-alike that settles by itself and needs no action. Once the system had three checked misalignment repairs, it asked the model to write the pattern down as a rule:</p>
           <blockquote>If the pump's axial vibration over the last 15 minutes is at least 1.3 times its own 24-hour average, radial vibration and current have not risen, and the sensor heartbeat is present: book alignment maintenance.</blockquote>
-          <p>Replayed over history, this rule would have fired 3 times, agreed 3 times and disagreed 0 times. It was approved, ran in shadow beside the model until it had agreed three times, and became active during the second learning day.</p>
-          <h3>Its safety leash</h3>
-          <ul>
-            <li>It acts only inside the range of readings it learned from, widened by 10% of the values. Outside that range the case goes to the model.</li>
-            <li>It may recommend low-risk actions only. Stopping a pump stays with people.</li>
-            <li>A disagreement keeps it in shadow.</li>
-            <li>An automatic switch-off turns it off if the device model changes, an audit disagrees, or its action stops working.</li>
-          </ul>
-
-          <h3>The same three test days, with and without the rule</h3>
-          <p>Same starting database, once with the model deciding everything and once with the learned rule deciding what it recognises.</p>
+          <p>Replayed over history, this rule would have fired 3 times and agreed 3 times. A person approved it, it ran in the watch-only trial until it had agreed three times, and it became active during the second learning day. Then the same three test days were run twice from the same starting database:</p>
           <div class="table-scroll">
             <table>
-              <thead><tr><th>Measure</th><th>Model only</th><th>With learned rule</th></tr></thead>
+              <thead><tr><th>Measure</th><th>AI only</th><th>With learned rule</th></tr></thead>
               <tbody>
-                <tr><td>Model calls</td><td>15</td><td><strong>13</strong></td></tr>
-                <tr><td>Rule decisions</td><td>0</td><td><strong>5</strong>, all right and on time</td></tr>
-                <tr><td>Faults detected (of 18)</td><td>15</td><td><strong>17</strong></td></tr>
+                <tr><td>AI diagnoses</td><td>15</td><td><strong>13</strong></td></tr>
+                <tr><td>Decisions made by the rule</td><td>0</td><td><strong>5</strong>, all right and on time</td></tr>
                 <tr><td>Repaired before the deadline (of 18)</td><td>6</td><td><strong>7</strong></td></tr>
                 <tr><td>Actions on healthy look-alikes (of 3)</td><td>0</td><td>0</td></tr>
-                <tr><td>Right diagnosis (of 18)</td><td>11</td><td>11</td></tr>
-                <tr><td>Misalignments repaired right and on time (of 6)</td><td>5</td><td>5 (all five by the rule)</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="evidence-caption">Modeled: one simulated station, one seed, three test days per arm, a real language model. Source: the trial's RESULT.md, linked below.</p>
-          <p><strong>Read this carefully.</strong> Two fewer model calls and one more repair on time is small, and the bearing-wear difference comes from the model's own variation, because no bearing rule existed. What the rule changed is <em>who decided</em> the misalignment cases: a rule, in about a millisecond, with nothing to pay per decision. The sixth misalignment went unrepaired in both runs because a simulated lost acknowledgement left that pump waiting for an operator. That has been fixed since.</p>
-
-          <h3>The first time, the rule never acted</h3>
-          <p>The first full run learned the same rule and it never fired. Its safe range was 0.016 wide (2.747 to 2.763), so every new pump fell just outside it, and an hourly booking limit read from the wall clock refused bookings when 30 simulated hours ran in about eight minutes. After two design changes the range became 2.47 to 3.04 and the limit follows event time. Rule decisions went from 0 to 5. I include this because it shows how the system fails and what that cost to find.</p>
-          <p>Scorecard in one line: five of the planned pass conditions passed, two failed (model calls per handled fault: 76% against a target of 50% or less; rule decision latency: 147 s at the 95th percentile), and two were not exercised. The table is in the <a href="/projects/tamoz-technical.html#trial">technical deep dive</a>, which also has a walkthrough video (<a href="/projects/tamoz-technical.html#walkthrough">watch it there</a>). The full result is in <a href="https://github.com/ghassan-ai-projects/streams-simulator/blob/rule-promotion/docs/rule-promotion/RESULT.md" target="_blank" rel="noopener noreferrer">RESULT.md</a> on the <code>rule-promotion</code> branch of the Streams Simulator repository; that work is not yet merged to <code>main</code>.</p>
-
-          <h2 id="rehearsal">A rehearsal room for plants</h2>
-          <p>The simulator began as a scored test world with a sealed answer key. It now also speaks the device link, so it can stand in for a device. That makes it a place to rehearse before touching equipment:</p>
-          <ul>
-            <li>run a simulated copy of a device before the hardware exists;</li>
-            <li>put a real board beside simulated ones in front of the system as one plant;</li>
-            <li>let an operator hold, approve or stop commands at that point;</li>
-            <li>record a session and replay it byte for byte;</li>
-            <li>compare the simulated copy with what the real board reported.</li>
-          </ul>
-          <p>A visual workspace, the canvas, lets you see the plant, build one from a component library, run it, disturb it by injecting faults, and review what happened: readings, command stages, connection health. It needs a desktop browser at least 1280 px wide.</p>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The simulator canvas during a live run of a chiller pilot plant. Live readings show on three chillers and an air handler. Chiller CH-2 carries a Fault tag after a compressor-wear fault was injected. The run panel on the right shows Pause, speed control and Act now controls to call an effector or inject a fault." width="1200" height="897" loading="lazy" />
-            <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: a live run of a simulated chiller plant, with a compressor-wear fault just injected on chiller CH-2. No real equipment.</figcaption>
-          </figure>
-          <p><strong>Honest limit.</strong> The real-board path is built and tested against a stand-in gateway; I have not yet run it with a real board in this setup. The real hardware I have is the small fan bench described in the <a href="/projects/tamoz-technical.html#hardware">technical deep dive</a>.</p>
-
-          <h2 id="shown">What has been shown, and what hasn't</h2>
-          <p>The only real hardware so far is a small bench: an Arduino-compatible board, a temperature sensor and a fan motor, wired through a gateway that caps duty at 60% with a 10-second lease. A governed command made the motor spin, and I watched and heard it. That is operator-observed, not measured. The story of the first dead motor is in <a href="/articles/agent-spun-the-motor.html">When an AI Agent Met a Real Motor</a>.</p>
-          <p>This table keeps every kind of evidence separate. &ldquo;Operator-observed&rdquo; means I watched it happen.</p>
-          <div class="table-scroll table-scroll--wide">
-            <table>
-              <thead><tr><th>Claim</th><th>Evidence</th><th>Where it stands</th></tr></thead>
-              <tbody>
-                <tr><td>The agent loop runs, crash-safe and governed</td><td>Test suites, five simulator rounds</td><td>Proven in simulation. The five rounds used a scripted reasoner.</td></tr>
-                <tr><td><strong>A real model diagnoses faults and books repairs in a simulated plant</strong></td><td>Pump-station trial</td><td>Proven in one simulated station, one seed.</td></tr>
-                <tr><td><strong>Verified repairs become an approved rule that then decides with no model call</strong></td><td>Pump-station trial</td><td>Proven for one of three fault families: 5 of 5 right and on time.</td></tr>
-                <tr><td>A rule never acts on a healthy look-alike</td><td>0 of 3 actions in both runs</td><td>Proven in the trial. The &ldquo;masking rule&rdquo; trap was not exercised.</td></tr>
-                <tr><td>A motor runs under a bounded, governed command</td><td>Arduino fan bench</td><td>Operator-observed on a small bench; not instrumented.</td></tr>
-                <tr><td>Tamoz's intent drives that motor through the full live pipeline</td><td>None yet</td><td>Open. The final conversion step on the bench has not been joined.</td></tr>
-                <tr><td>A real board beside simulated ones in one session</td><td>Contract and end-to-end tests with a stand-in gateway</td><td>Built; not verified with a real board.</td></tr>
-                <tr><td>Production readiness or safety certification</td><td>None</td><td>No. Certified safety stays in external systems by design.</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <p>Misalignment came out the same in both runs, 5 of 6 repaired on time. What the rule changed is <em>who decided</em> those cases: a rule, with no AI call and nothing to pay per decision. The one extra on-time repair is a bearing-wear case, where no rule existed: it comes from the model's own variation, not from the rule. The full tables, the scorecard and the engineering findings are in the <a href="/projects/tamoz-technical.html#trial">technical deep dive</a>.</p>
 
           <h2 id="boundary">Boundary: what this does not show</h2>
           <div class="callout">
             <span class="callout__label">Read before you rely on it</span>
-            <p>One simulated station, one seed, three test days. It shows the learning loop works end to end. It does not show what it would save on your equipment.</p>
+            <p>One simulated station, one test scenario, three test days, one AI model, pre-release software. It shows the learning loop works end to end. It does not show what it would save on your equipment.</p>
           </div>
           <ul>
-            <li>Only one of three fault families earned a rule. Bearing wear got three draft rules and the approver rejected all three because each replay disagreed once. Sensor drift never became a rule because the model always called it bearing wear.</li>
-            <li>The rule itself takes about a millisecond, but from situation to recommendation a rule case took 147 s at the 95th percentile, because it waits out a one-minute debounce and queues behind model calls.</li>
-            <li>The model-call saving is small (13 against 15) because only one family has a rule.</li>
-            <li>The approver in the trial was a scripted, careful approver, not a person with a stake. There has been no run with a human approver yet.</li>
-            <li>Pre-release software; no field deployment; no safety certification. The physical side is a fan bench, not a plant. Other domains (aquaculture, cold chain) were run only in the earlier simulator rounds with a scripted reasoner, and chilled-water plants have not been run at all.</li>
+            <li>Only one of three fault types earned a rule. The approver rejected all three bearing-wear drafts because each replay disagreed once. Sensor drift never became a rule because the model always called it bearing wear.</li>
+            <li>The rule answers in about a millisecond, but from reading to recommendation a rule case took 147 seconds at the 95th percentile: the scheduler waits a minute to confirm a change is real, then queues behind AI diagnoses.</li>
+            <li>The approver was a scripted, careful approver, not a person with a stake. The physical side is a small fan bench, not a plant: a governed command made its motor spin and I watched it, but did not measure it.</li>
+            <li>No field deployment and no safety certification. Certified safety stays in external systems by design. Other settings are labelled one by one on the <a href="/projects/tamoz-use-cases.html">use-cases page</a>.</li>
           </ul>
-          <p><strong>Fixed since the trial.</strong> A repair now counts as verified only if the reading returns close to its pre-action baseline (checked against the trial data: it rejects all 9 sensor-drift cases and keeps all 16 genuine repairs). And a lost acknowledgement no longer blocks a pump. These two landed after the final run, so the numbers above do not include them.</p>
-          <p>One more correction, from the first five simulator rounds: the reasoning step was scripted. I rebuilt the evidence path so model calls go through a witness gateway that records the exact bytes. The full account is in the <a href="/projects/tamoz-technical.html#rounds">technical deep dive</a>.</p>
+          <p><strong>Fixed since the trial.</strong> A repair now counts as verified only if the reading returns close to its pre-repair baseline (checked on the trial's own records: it rejects all 9 sensor-drift cases that had been counted as repairs and keeps all 16 genuine ones). A lost acknowledgement no longer blocks a pump. The numbers above do not include either fix.</p>
 
           <h2 id="pilot">What a pilot would look like</h2>
-          <p>This is a proposal. It has not been done with anyone yet. A first pilot is advisory first, measured against criteria we agree up front.</p>
+          <p>This is a proposal. It has not been done with anyone yet, and terms are to be discussed. A first pilot is advisory first, measured against criteria we agree up front.</p>
           <ol>
-            <li><strong>Rehearse.</strong> Replay a sample of your sensor history through the system and, where useful, build a simulated copy of the device. Nothing touches equipment.</li>
-            <li><strong>Advise.</strong> It runs beside your people on a live, read-only feed and proposes repairs. Nobody acts on them unless they choose to. Every proposal and its evidence is logged.</li>
-            <li><strong>Act within bounds.</strong> Low-risk, reversible actions with a named approver, and learned rules only after your approval, in shadow first.</li>
+            <li><strong>Rehearse.</strong> You share past sensor data from a few machines. I replay it and show what Tamoz would have flagged and recommended. Nothing touches your equipment.</li>
+            <li><strong>Advise.</strong> Tamoz reads a live, read-only copy of the stream and recommends repairs beside your team. Nobody has to act on them. Every recommendation is logged with its evidence.</li>
+            <li><strong>Act, only if you choose.</strong> Low-risk, reversible actions with a named approver. Learned rules start only after you approve them, in a watch-only trial first.</li>
           </ol>
-          <p><strong>What I would ask of you:</strong> a read-only copy of the sensor stream for a few machines of one type; your list of known fault types, the repair for each and its deadline; and a named person who approves rules. <strong>What you get:</strong> the measured results per use case, and every decision with its evidence. Terms are to be discussed. See <a href="/projects/tamoz-use-cases.html">the use cases</a> for what a pilot would measure.</p>
+          <p><strong>What I would ask of you:</strong> a read-only copy of the sensor stream for a few machines of one type; your known fault types, with the usual repair and deadline for each; and a named person who approves rules.</p>
+          <p><strong>What you get:</strong> the measured results for each use case, and every decision with its evidence. Duration and cost are part of the terms to be discussed. Which model runs, and where your data goes, is decided with you before anything starts. See <a href="/projects/tamoz-use-cases.html">the use cases</a> for what a pilot would measure.</p>
 
           <h2 id="origin">Where it came from</h2>
-          <p>Most agent demos look great right up until they meet the edges. The same side effect fires twice, a crash leaves things half-done, a model acts on a sensor that died an hour ago, and afterwards nobody can say what happened or why. I got tired of treating that as cleanup for later. In Tamoz it is the starting requirement.</p>
-          <p>The code lives in three MIT-licensed, public repositories. The trial work is on their <code>rule-promotion</code> branches and is not yet merged to <code>main</code>.</p>
-          <ul>
-            <li><a href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer"><strong>Tamoz</strong></a> (Ruby): the agent framework: reasoning, memory, durable execution, evaluation.</li>
-            <li><a href="https://github.com/ghassan-ai-projects/agentic-stream" target="_blank" rel="noopener noreferrer"><strong>Agentic Stream</strong></a> (Go): the always-on side: event time, Situations, the scheduler, policy, actions and the learned-rule playbook.</li>
-            <li><a href="https://github.com/ghassan-ai-projects/streams-simulator" target="_blank" rel="noopener noreferrer"><strong>Streams Simulator</strong></a> (Go and a React canvas): the test world and rehearsal room.</li>
-          </ul>
+          <p>Most agent demos look great until they meet the edges: the same side effect fires twice, a crash leaves things half-done, a model acts on a sensor that died an hour ago. In Tamoz that is the starting requirement. The code is in three MIT-licensed public repositories: <a href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">Tamoz</a>, <a href="https://github.com/ghassan-ai-projects/agentic-stream" target="_blank" rel="noopener noreferrer">Agentic Stream</a> and <a href="https://github.com/ghassan-ai-projects/streams-simulator" target="_blank" rel="noopener noreferrer">Streams Simulator</a>. The trial work is on their <code>rule-promotion</code> branches, not yet merged to <code>main</code>.</p>
 
           <div class="article-cta">
-            <p class="article-cta__text">Operate pumps, motors, fans or HVAC and want to find out whether this holds on real equipment? Tell me what you run and what a missed fault costs you. I will tell you honestly whether it is a fit.</p>
+            <p class="article-cta__text">Operate pumps, motors, fans or HVAC and want to find out whether this holds on real equipment?</p>
             <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Email me about a pilot</span></a>
             <p class="article-cta__text"><a href="/connect/">Other ways to reach me</a> · <a href="/projects/tamoz-use-cases.html">Where it fits</a> · <a href="/projects/tamoz-technical.html">Technical deep dive</a></p>
           </div>
@@ -379,7 +196,5 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
-  <script src="/assets/js/motion/scene-tamoz.js?v=20260926" defer></script>
 </body>
 </html>

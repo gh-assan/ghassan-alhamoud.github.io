@@ -72,7 +72,7 @@
               <li><a href="#thermal">2. Thermal zones, cold rooms and small actuators</a></li>
               <li><a href="#aquaculture">3. Aquaculture ponds</a></li>
               <li><a href="#utilities">4. Chilled-water and utility plants</a></li>
-              <li><a href="#pilot">A pilot, step by step</a></li>
+              <li><a href="#pilot">A pilot: rehearsing first</a></li>
               <li><a href="#boundary">Boundary: where it does not fit</a></li>
             </ul>
           </nav>
@@ -117,12 +117,17 @@
               <dt>What exists</dt>
               <dd>The thermal-chamber example, with traces for a quiet night, an ambient-tracking rise, invalid quality and a reboot backlog. The real-world-sensor example, with simulated and bench specs. The bench is an ELEGOO Mega 2560, a DHT11 sensor, an L293D driver and a small DC motor with a fan. A real model chose <code>bounded_cooling</code> on the cold-box snapshot. <strong>Limit:</strong> rotation was operator-observed, not instrumented, and the full route from Tamoz's intent to the motor is still an open integration seam. See <a href="/projects/tamoz-technical.html#hardware">the hardware bench</a>.</dd>
               <dt>A pilot would measure</dt>
-              <dd>Detection delay for a sustained excursion. Time to a bounded response after approval. False responses on ambient-tracking rises. Behaviour when a sensor goes silent (it must fail closed). Instrumented feedback, such as airflow or a tachometer, so that &ldquo;energized&rdquo; is not mistaken for &ldquo;spinning&rdquo;.</dd>
+              <dd>Detection delay for a sustained excursion. Time to a bounded response after approval. False responses on ambient-tracking rises. Behaviour when a sensor goes silent (it must fail closed). Instrumented feedback, such as airflow or a tachometer, so that &ldquo;energised&rdquo; is not mistaken for &ldquo;spinning&rdquo;.</dd>
             </dl>
           </section>
 
+          <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into Situation v47; Tamoz turns it into an intent with no magnitude, mode bounded cooling; the policy plane converts it into a bounded command under the firmware ceiling of 60 percent duty with a 10 second lease; the fan spins while the lease runs, the readings cool, and the outcome returns to Tamoz as experience.">
+            <div class="scene__stage" style="--aspect: 2.45"></div>
+            <figcaption class="evidence-caption">Illustrative animation, time-compressed. The ceiling (60 % duty) and the 10 s lease are the firmware values of the small bench described in the <a href="/projects/tamoz-technical.html#hardware">hardware bench section of the technical deep dive</a>; the readings are not telemetry.</figcaption>
+          </figure>
+
           <section class="usecase" id="aquaculture">
-            <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
+            <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation (scripted reasoner)</span></div>
             <h2>3. Aquaculture ponds: oxygen with a hard deadline</h2>
             <dl>
               <dt>Operator's problem</dt>
@@ -155,19 +160,14 @@
             <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: a simulated factory-utilities plant, 23 instances and 59 links. No run with Tamoz exists for it.</figcaption>
           </figure>
 
-          <h2 id="pilot">A pilot, step by step</h2>
-          <p>This is a proposal; it has not been done with anyone yet. Terms are to be discussed.</p>
-          <ol>
-            <li><strong>Rehearse.</strong> Replay a sample of your sensor history through the system and, where useful, build a simulated copy of the device. Nothing touches equipment.</li>
-            <li><strong>Advise.</strong> It runs beside your people on a live, read-only feed and proposes repairs. Nobody acts on them unless they choose to. Every proposal and its evidence is logged.</li>
-            <li><strong>Act within bounds.</strong> Low-risk, reversible actions with a named approver, and learned rules only after your approval, in shadow first.</li>
-          </ol>
+          <h2 id="pilot">A pilot: rehearsing first</h2>
+          <p>This is a proposal; it has not been done with anyone yet. Terms are to be discussed. The three steps (rehearse, advise, act only if you choose) and what I would ask of you are on the <a href="/projects/tamoz.html#pilot">overview</a>.</p>
           <p>Before any pilot touches equipment I can run your data and a simulated copy of your device in the simulator; the same session can later put your real board beside simulated ones. That path is built and tested against a stand-in gateway; I have not yet run it with a real board.</p>
 
           <h2 id="boundary">Boundary: where it does not fit, and what it will not claim</h2>
           <div class="callout">
             <span class="callout__label">Read before you rely on it</span>
-            <p>No safety function, no hard real-time control, no certification. Nothing here is a savings claim. The results above come from simulation or a small bench, and the evidence is on the <a href="/projects/tamoz.html#evidence">overview</a> and in the <a href="/projects/tamoz-technical.html#trial">technical deep dive</a>.</p>
+            <p>No safety function, no hard real-time control, no certification. Nothing here is a savings claim. The results above come from simulation or a small bench, and the evidence is on the <a href="/projects/tamoz.html#results">overview</a> and in the <a href="/projects/tamoz-technical.html#trial">technical deep dive</a>.</p>
           </div>
 
           <div class="article-cta">
@@ -234,5 +234,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-tamoz.js?v=20260926" defer></script>
 </body>
 </html>

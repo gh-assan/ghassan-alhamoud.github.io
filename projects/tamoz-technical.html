@@ -67,7 +67,7 @@
 
         <div class="project-facts">
           <div class="project-fact"><span class="project-fact__label">Who this is for</span><span class="project-fact__value">Engineers who want to judge the design, reuse a piece of it, or contribute. The <a href="/projects/tamoz.html">overview</a> covers the why; this page covers the how.</span></div>
-          <div class="project-fact"><span class="project-fact__label">Organizing rule</span><span class="project-fact__value">The Situation is the seam. Agentic Stream owns time and authority, and Tamoz owns judgment. Neither reaches into the other's half.</span></div>
+          <div class="project-fact"><span class="project-fact__label">Organising rule</span><span class="project-fact__value">The Situation is the seam. Agentic Stream owns time and authority, and Tamoz owns judgment. Neither reaches into the other's half.</span></div>
           <div class="project-fact"><span class="project-fact__label">Evidence labels</span><span class="project-fact__value">Each claim says whether it's implemented, proven in simulation with a scripted reasoner, proven in simulation with a real model, operator-observed on a small bench, or still open.</span></div>
         </div>
 
@@ -114,7 +114,7 @@
           </nav>
 
           <h2 id="system-map">1. The system at a glance</h2>
-          <p>The problem this layout solves is putting judgment close to equipment without putting authority there. Three repositories, each with its own job and its own license file (all MIT). They talk only through typed, digest-bound contracts: JSONL events in, gRPC episodes over a Unix socket, server-sent events for outcomes, and a device wire for commands. The shared canonical form comes with test vectors that both the Ruby side and the Go side must reproduce byte for byte, so a digest means the same thing on both sides.</p>
+          <p>The problem this layout solves is putting judgment close to equipment without putting authority there. Three repositories, each with its own job and its own licence file (all MIT). They talk only through typed, digest-bound contracts: JSONL events in, gRPC episodes over a Unix socket, server-sent events for outcomes, and a device wire for commands. The shared canonical form comes with test vectors that both the Ruby side and the Go side must reproduce byte for byte, so a digest means the same thing on both sides.</p>
 
           <p>The system has three parts, and on this site the whole is called Tamoz. <strong>Agentic Stream</strong> (Go) is the streaming runtime. <strong>Tamoz</strong> (Ruby) is the agent framework that reasons inside each episode; it works with any model, and the pump-station trial used GLM through z.ai. <strong>Streams Simulator</strong> (Go and a React canvas) began as a test world with a sealed answer key and now also acts as a plant wire node (<a href="#simulator">section 16</a>). The newest piece is the <strong>playbook</strong>: a set of deterministic rules, each learned from verified repairs and approved by a person, that answer a recurring kind of case without a model call (<a href="#rule-promotion">section 8</a>).</p>
 
@@ -205,15 +205,15 @@
               <thead><tr><th>Concern</th><th>Owner</th><th>Why there</th></tr></thead>
               <tbody>
                 <tr><td>Event admission, dedup, quarantine, event time, watermarks, lateness</td><td>Agentic Stream</td><td>Deterministic and replayable. No model belongs on the hot path.</td></tr>
-                <tr><td>Windows, operators, Situation versions, lifecycle, provenance</td><td>Agentic Stream</td><td>State changes serialize per partition; published versions are immutable.</td></tr>
+                <tr><td>Windows, operators, Situation versions, lifecycle, provenance</td><td>Agentic Stream</td><td>State changes serialise per partition; published versions are immutable.</td></tr>
                 <tr><td>When to reason: admission, budgets, cancellation, supersession</td><td>Agentic Stream</td><td>Reasoning cost has to be a deterministic, explainable decision.</td></tr>
                 <tr><td>Decision validation, policy, risk, approval authority, interlocks</td><td>Agentic Stream</td><td>Authority can't sit with the party that proposes.</td></tr>
                 <tr><td>Commands, outbox, effectors, reconciliation, outcomes</td><td>Agentic Stream</td><td>Effects need one owner with durable, idempotent records.</td></tr>
                 <tr><td>Planning, reasoning, verification of its own conclusions</td><td>Tamoz</td><td>Judgment is the one thing the model is good for.</td></tr>
-                <tr><td>Memory: Experience, Knowledge, Wisdom</td><td>Tamoz</td><td>Learning needs a durable, authorized, scoped store.</td></tr>
+                <tr><td>Memory: Experience, Knowledge, Wisdom</td><td>Tamoz</td><td>Learning needs a durable, authorised, scoped store.</td></tr>
                 <tr><td>Skills and MCP tools inside an episode, human approval <em>delivery</em></td><td>Tamoz</td><td>Tamoz has the channels. The stream keeps the approval <em>authority</em>.</td></tr>
                 <tr><td>World truth, delivery faults, scoring</td><td>Streams Simulator</td><td>An instrument has to be independent of what it measures.</td></tr>
-                <tr><td>Serial port, output bounds, lease watchdog, safe stop</td><td>Gateway + firmware</td><td>The last line of defense runs without any network or model.</td></tr>
+                <tr><td>Serial port, output bounds, lease watchdog, safe stop</td><td>Gateway + firmware</td><td>The last line of defence runs without any network or model.</td></tr>
               </tbody>
             </table>
           </div>
@@ -386,7 +386,7 @@
           </ul>
 
           <h2 id="decision">5. Inside a decision</h2>
-          <p>A Decision is a proposal, not an authorization. It separates observed facts from inferences, cites its evidence by reference, states its uncertainty, carries a validity interval, and proposes zero or more typed <code>ActionIntent</code>s. What an intent may contain comes from a <strong>spec-bound intent catalog</strong>. It's authored in the Situation spec, embedded in the episode with a shared digest, verified by the worker before any model call, and verified again, independently, in Go. The catalog fixes each intent's exact risk class, parameter schema, presets, and the short list of fields the model is allowed to write.</p>
+          <p>A Decision is a proposal, not an authorisation. It separates observed facts from inferences, cites its evidence by reference, states its uncertainty, carries a validity interval, and proposes zero or more typed <code>ActionIntent</code>s. What an intent may contain comes from a <strong>spec-bound intent catalog</strong>. It's authored in the Situation spec, embedded in the episode with a shared digest, verified by the worker before any model call, and verified again, independently, in Go. The catalog fixes each intent's exact risk class, parameter schema, presets, and the short list of fields the model is allowed to write.</p>
           <figure class="artifact-frame">
             <pre><code>// thermal catalog entry (shape simplified)
 "request_bounded_cooling": {
@@ -401,7 +401,7 @@
 
 // after narrowing the surface → accepted
 { "type": "request_bounded_cooling", "mode": "bounded_cooling" }</code></pre>
-            <figcaption class="evidence-caption">Modeled on the thermal domain in the public repo; field names are real and the entry is shortened for reading. The rejected and accepted proposals are from the real-model thermal run described in the <a href="/articles/agent-spun-the-motor.html">motor field note</a>.</figcaption>
+            <figcaption class="evidence-caption">Modelled on the thermal domain in the public repo; field names are real and the entry is shortened for reading. The rejected and accepted proposals are from the real-model thermal run described in the <a href="/articles/agent-spun-the-motor.html">motor field note</a>.</figcaption>
           </figure>
           <p>Go-side validation checks risk <em>equality</em> with the catalog, not just "below the ceiling". It also checks per-intent schemas, preset byte-identity, entity binding, evidence grounding, intent counts, and the compensation rules. The policy gateway then enforces the catalog's approval requirement and a per-intent hourly rate limit. The model proposes. It never declares its own authority.</p>
 
@@ -533,7 +533,7 @@
                 <path class="dg-line dg-line--dash" d="M580 192 H522" marker-end="url(#t6-ah)"/>
                 <path class="dg-line dg-line--accent" d="M300 192 H242" marker-end="url(#t6-aha)"/>
                 <path class="dg-line dg-line--accent dg-line--dash" d="M130 160 V96" marker-end="url(#t6-aha)"/>
-                <text class="dg-s" x="410" y="250" text-anchor="middle">Retrieval is authorization first: records outside the tenant, entity type, or situation type never reach the ranker, the logs, or the model.</text>
+                <text class="dg-s" x="410" y="250" text-anchor="middle">Retrieval is authorisation first: records outside the tenant, entity type, or situation type never reach the ranker, the logs, or the model.</text>
               </svg>
             </div>
             <p class="diagram__hint">Scroll sideways to follow the loop.</p>
@@ -546,7 +546,7 @@
             <li>Knowledge<small>reviewed, reusable facts and procedures</small></li>
             <li class="flow__step--gate">Wisdom<small>evaluated strategies, promoted only</small></li>
           </ol>
-          <p>Every record is immutable and versioned, and it carries an <strong>epistemic kind</strong>: <code>observed</code>, <code>reported</code>, <code>inferred</code>, or <code>prescribed</code>. A model-written summary can never become <code>observed</code>. A recalled memory is marked in the trace and excluded as new evidence, so a claim can't get "more true" by being repeated. Experience is never injected automatically. Knowledge needs contradiction checks and, for anything consequential, a person's approval. Wisdom changes behavior only through an explicit, versioned behavior transition, and in-flight turns stay pinned to the behavior they started with.</p>
+          <p>Every record is immutable and versioned, and it carries an <strong>epistemic kind</strong>: <code>observed</code>, <code>reported</code>, <code>inferred</code>, or <code>prescribed</code>. A model-written summary can never become <code>observed</code>. A recalled memory is marked in the trace and excluded as new evidence, so a claim can't get "more true" by being repeated. Experience is never injected automatically. Knowledge needs contradiction checks and, for anything consequential, a person's approval. Wisdom changes behaviour only through an explicit, versioned behaviour transition, and in-flight turns stay pinned to the behaviour they started with.</p>
 
           <h2 id="rule-promotion">8. Rule promotion: from verified repairs to a governed rule</h2>
           <p>Every decision about what to do used to go to a Tamoz episode. Rule promotion adds a <strong>playbook</strong> of deterministic rules, each mapping a recurring, verified kind of case to a recommended intent and preset. The model handles whatever no rule covers. The playbook is customer data and lives in the customer's workspace, never in a repository. The design is in Agentic Stream's <code>documentation/design/rule-promotion.md</code> and <code>playbook.md</code>.</p>
@@ -702,7 +702,7 @@
               </svg>
             </div>
             <p class="diagram__hint">Scroll sideways to see the whole number line.</p>
-            <figcaption class="evidence-caption">Modeled: numbers from the trial evidence. The marker for a new pump's reading is illustrative; the ranges are the recorded ones.</figcaption>
+            <figcaption class="evidence-caption">Modelled: numbers from the trial evidence. The marker for a new pump's reading is illustrative; the ranges are the recorded ones.</figcaption>
           </figure>
           <h3>8.8 Circuits and pins</h3>
           <p>Each rule has a circuit that opens on <code>kind_changed</code> (the rule is pinned to the device's <code>kind_digest</code>, which plant wire reports at birth), <code>audit_disagreement</code>, <code>no_effect</code> (a rule-handled case that was not verified), <code>out_of_cap</code> and <code>rate_cap</code>. An open circuit means &ldquo;treat the rule as absent&rdquo;. The rate cap and the out-of-cap window count the event time of the Situation version, never the wall clock. An operator closes a circuit with <code>agentic-stream circuits close --rule --version --reason</code> while the runtime is stopped.</p>
@@ -719,7 +719,7 @@
           </div>
 
           <h2 id="trial">9. The pump-station trial</h2>
-          <p>The trial is a design for measuring whether a learned rule helps, against a model-only baseline, with a real model. The plain-language account is on the <a href="/projects/tamoz.html#evidence">overview</a>; this section has the engineering view. The trial used GLM through z.ai via Tamoz; the system itself works with any model.</p>
+          <p>The trial is a design for measuring whether a learned rule helps, against a model-only baseline, with a real model. The plain-language account is on the <a href="/projects/tamoz.html#results">overview</a>; this section has the engineering view. The trial used GLM through z.ai via Tamoz; the system itself works with any model.</p>
           <h3>9.1 Design</h3>
           <p>Eight pumps, one <code>pump_condition</code> Situation per pump (<code>examples/pump-station/pump-station.situation.yaml</code>), opened on per-pump relative features such as the 15-minute mean against the pump's own 24-hour mean. There are three fault families (bearing wear, misalignment, sensor drift) plus a <code>transient_none</code> cavitation look-alike. Each run is 30 simulated hours with up to 6 faults in the first 2 hours plus one look-alike; 30 hours leaves every case its 24-hour settle window inside its own run, which I checked on paper for every run before launch. The world is paced by the consumer: it waits at each 60-second slice until the consumer has ingested it and has no reasoning in flight (up to 240 s, an episode's budget). The approver is a scripted careful approver that approves a proposal only if its replay shows no disagreement; there has been no run with a human approver.</p>
           <figure class="diagram">
@@ -857,7 +857,7 @@
           <p>The same core runs the Tamoz Agent app (<code>tamoz</code> CLI, durable sessions, trusted profiles, scheduling, a Telegram channel) and the stream EpisodeWorker. It ships as 27 gems. Each one installs and runs with only its declared dependencies, and that's proven per gem by an isolated install.</p>
 
           <h2 id="self-healing">12. Self-healing</h2>
-          <p>Self-healing in Tamoz isn't <code>rescue</code> plus retry. It's a reviewed, authorized, bounded state machine. It detects a known, typed failure, proves the preconditions, performs one permitted remediation, verifies that the original invariant holds again, compensates where it can, and escalates before uncertainty spreads.</p>
+          <p>Self-healing in Tamoz isn't <code>rescue</code> plus retry. It's a reviewed, authorised, bounded state machine. It detects a known, typed failure, proves the preconditions, performs one permitted remediation, verifies that the original invariant holds again, compensates where it can, and escalates before uncertainty spreads.</p>
 
           <figure class="diagram">
             <p class="diagram__title">Figure 6 · The remediation state machine</p>
@@ -909,7 +909,7 @@
             <figcaption class="evidence-caption">From the public repo design (<code>documentation/design/self-healing.md</code>). Work in progress: detection and classification run on every live path in shadow mode; no self-healing rule has been promoted to active. (The stream's learned repair rules in section 8 are a different mechanism.)</figcaption>
           </figure>
 
-          <p>Failures are typed, never parsed from free text. The categories include <code>transient_pre_dispatch</code>, <code>stale_precondition</code>, <code>dependency_unavailable</code>, <code>effect_unknown</code>, <code>verification_failed</code>, <code>derived_state_corrupt</code>, and <code>policy_denied</code>. Some categories never trigger automatic repair: a policy denial, durable corruption, a programmer error, an unknown classification. A healer can't widen policy to heal a denial. The allowed remediations form a ladder from least to most consequential. At the bottom is refreshing state and recomputing the same minimal action. Above that come a bounded retry after a proven pre-dispatch transient, renewing a lease, rebuilding a derived index, restoring reversible local state from a preimage, running a pre-authorized equivalent fallback, and executing a separately authorized compensation. At the top is containing and escalating.</p>
+          <p>Failures are typed, never parsed from free text. The categories include <code>transient_pre_dispatch</code>, <code>stale_precondition</code>, <code>dependency_unavailable</code>, <code>effect_unknown</code>, <code>verification_failed</code>, <code>derived_state_corrupt</code>, and <code>policy_denied</code>. Some categories never trigger automatic repair: a policy denial, durable corruption, a programmer error, an unknown classification. A healer can't widen policy to heal a denial. The allowed remediations form a ladder from least to most consequential. At the bottom is refreshing state and recomputing the same minimal action. Above that come a bounded retry after a proven pre-dispatch transient, renewing a lease, rebuilding a derived index, restoring reversible local state from a preimage, running a pre-authorized equivalent fallback, and executing a separately authorised compensation. At the top is containing and escalating.</p>
           <p>Rules earn authority by climbing <code>draft → replay → shadow → fault_injection → canary → active</code>. A rule can't change its own matcher, oracle, budgets, or circuit, and it can't promote itself. <strong>Where it stands:</strong> the shadow stage classifies failed turns on both the ephemeral and the durable paths (worker, queue, schedule, Telegram). The remediation coordinator is built and tested. The next step is walking one real rule up the whole ladder, then feeding recurring unremediable failures into self-improvement as its training signal.</p>
           <p><strong>Not the same as rule promotion.</strong> Self-healing is Tamoz's own handling of failed turns in the Ruby framework. The stream's learned repair rules (<a href="#rule-promotion">section 8</a>) are a separate mechanism, in a different repository, over a different artefact: decisions about equipment, not recovery from software failures.</p>
 
@@ -920,7 +920,7 @@
             <li>Development eval<small>paired report</small></li>
             <li>Holdout eval<small>the candidate never sees it</small></li>
             <li class="flow__step--gate">Human gate<small>generated content can't approve itself</small></li>
-            <li class="flow__step--accent">Behavior version<small>activates at a thread's next intake</small></li>
+            <li class="flow__step--accent">Behaviour version<small>activates at a thread's next intake</small></li>
             <li>Monitor + rollback<small>resume stays pinned</small></li>
           </ol>
           <p>Capability, security, evaluator, prompt-hierarchy, and code changes always need a person. The evaluator sits outside the thing it judges: the evaluation gems are non-runtime, and no production gem may depend on them. <strong>Where it stands:</strong> <code>tamoz improve</code> generates candidates, the pipeline composes generation, holdout evaluation, decision, and provenance, and <code>tamoz improve promote</code> records a durable, human-gated promotion. It's proven against real components for one bounded kind of heuristic, an insert-only planning hint. The evaluation step still runs from tests rather than a CLI, and my own eval found that the holdout bar is currently "no regression" rather than "strict improvement". I've pinned that with a test so any tightening is a deliberate choice.</p>
@@ -934,7 +934,7 @@
               <tbody>
                 <tr><td>Requirements audit</td><td>Is each promised guarantee actually true?</td><td>A manifest generated from invariants, ADRs, phase criteria, public API, CLI, and migrations. The audit is regenerated by <em>running</em> each named test, so a row passes only because its test executed and passed. The limitations page must match the measured gaps, or the build fails.</td></tr>
                 <tr><td>Scorecards</td><td>Does the agent behave safely on a fixed corpus?</td><td>Deterministic cases reporting success, verified completion, repairs, and approvals, with hard-zero gates on unsafe actions, false completions, and incomplete evidence. A higher score never buys back a gate.</td></tr>
-                <tr><td>agenteval</td><td>How capable is it, really?</td><td>Tasks are generators, not fixtures: every seed produces fresh names, values, and layouts, so the corpus can't be memorized. Ten adversity modifiers cross every task: <code>inject</code>, <code>freeze</code>, <code>impossible</code>, <code>phantom</code>, <code>destructive</code>, <code>noise</code>, <code>interrupt</code>, <code>presolved</code>, <code>ambiguous</code>, and <code>clean</code>. It reports <code>pass^k</code> over scenarios with a 95% interval, and three hard gates: no false success, no injection capture, no destructive execution.</td></tr>
+                <tr><td>agenteval</td><td>How capable is it, really?</td><td>Tasks are generators, not fixtures: every seed produces fresh names, values, and layouts, so the corpus can't be memorised. Ten adversity modifiers cross every task: <code>inject</code>, <code>freeze</code>, <code>impossible</code>, <code>phantom</code>, <code>destructive</code>, <code>noise</code>, <code>interrupt</code>, <code>presolved</code>, <code>ambiguous</code>, and <code>clean</code>. It reports <code>pass^k</code> over scenarios with a 95% interval, and three hard gates: no false success, no injection capture, no destructive execution.</td></tr>
                 <tr><td>Benchmark protocol</td><td>Is the reasoning any good, and is the model call real?</td><td>A frozen, SHA-pinned protocol with preregistered baselines and stop rules. Holdout cases get opaque IDs and a truth-leak scan. Metrics include macro-F1, balanced accuracy, Brier score, calibration error, lead time, action utility, and fabricated-reference rate. Only calls signed by the witness gateway count as real.</td></tr>
               </tbody>
             </table>
@@ -1087,6 +1087,10 @@
             <img src="/images/projects/tamoz/canvas-run-review.webp" alt="The review of a finished simulator run. A timeline shows a fault marker for condenser fouling on chiller CH-1 at 25 minutes. The report panel says Verified, that the files match and the replay reproduces, lists 3,000 observations, and has a disturbances table with the one injected fault." width="1200" height="897" loading="lazy" />
             <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: the review of a finished simulated run, with the fault marker, the recording-integrity check, 3,000 observations and the disturbances table. This run was not scored against an outside system.</figcaption>
           </figure>
+          <figure class="project-figure">
+            <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The simulator canvas during a live run of a chiller pilot plant. Live readings show on three chillers and an air handler. Chiller CH-2 carries a Fault tag after a compressor-wear fault was injected. The run panel on the right shows Pause, speed control and Act now controls to call an effector or inject a fault." width="1200" height="897" loading="lazy" />
+            <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: a live run of a simulated chiller plant, with a compressor-wear fault just injected on chiller CH-2. No real equipment.</figcaption>
+          </figure>
           <h3>16.8 Limits</h3>
           <div class="table-scroll table-scroll--wide">
             <table>
@@ -1115,7 +1119,7 @@
             <table>
               <thead><tr><th>Step</th><th>Result</th><th>Evidence</th></tr></thead>
               <tbody>
-                <tr><td>Shared canonicalization vectors</td><td>Pass</td><td>Ruby and Go bound the same snapshot digest; 73 Ruby assertions</td></tr>
+                <tr><td>Shared canonicalisation vectors</td><td>Pass</td><td>Ruby and Go bound the same snapshot digest; 73 Ruby assertions</td></tr>
                 <tr><td>Worker handshake over UDS</td><td>Pass</td><td>Protocol and contract 1.0 negotiated</td></tr>
                 <tr><td>Live simulator trace, end to end</td><td>Pass</td><td>Rotating machinery with bearing wear, 31,683 events: attempt produced → decision accepted → command succeeded → outcome reconciled</td></tr>
                 <tr><td>Learning from the outcome</td><td>Pass</td><td>Exactly one Experience admitted, <code>epistemic_kind = observed</code>, with outcome, decision, and command provenance</td></tr>
@@ -1159,7 +1163,7 @@
           <p>Twenty-three commits across two repos. The greenhouse finding is the one that shaped the roadmap. At 8 bays by 9 channels, per-event processing slowed past the 5-minute heartbeat window, so intents went stale before approval. That's a single-node ceiling, and Round 4 exists to measure it.</p>
 
           <h3>Round 4 · prepared, not run</h3>
-          <p>A grid-scale battery storage scenario: one node, 256 to 1,024 racks, about 12 channels each. It's meant to find the knee and the degradation curve, plus one distinctive reasoning moment: when a rack runs away and its neighbors warm, the right move is isolating the <em>source</em> (R2, human) and watching the neighbors, not raising twelve alarms. The runbook and starter specs are written. Nothing has run.</p>
+          <p>A grid-scale battery storage scenario: one node, 256 to 1,024 racks, about 12 channels each. It's meant to find the knee and the degradation curve, plus one distinctive reasoning moment: when a rack runs away and its neighbours warm, the right move is isolating the <em>source</em> (R2, human) and watching the neighbours, not raising twelve alarms. The runbook and starter specs are written. Nothing has run.</p>
 
           <h3>Round 5 · 17 Aug 2026 · audit the assumptions</h3>
           <div class="table-scroll table-scroll--wide">
@@ -1174,7 +1178,7 @@
           <p>Round 5 also exposed drift. The starter specs had been written against an older wire shape, and the run needed nine live spec corrections. Those corrections now live in the starters. The remaining picks (security events, an agent-fleet supervisor) haven't run, and the round's assessment recommends fixing F-1 before they do.</p>
 
           <h3>After the rounds: a real reasoner</h3>
-          <p>A review after Round 3 found the flaw described in the correction above: the graph brains hard-coded the diagnosis and emitted model events themselves. The fix shipped as eight phases on 15 August. (Round 5 ran two days later and still used a labeled fixture brain on purpose, because it was testing the engine's assumptions, not reasoning quality.)</p>
+          <p>A review after Round 3 found the flaw described in the correction above: the graph brains hard-coded the diagnosis and emitted model events themselves. The fix shipped as eight phases on 15 August. (Round 5 ran two days later and still used a labelled fixture brain on purpose, because it was testing the engine's assumptions, not reasoning quality.)</p>
           <ul>
             <li>one real, journaled model call through the fixed episode graph;</li>
             <li>durable model calls as graph branches, with budgets computed from receipts;</li>
@@ -1194,7 +1198,7 @@
             <div class="diagram__scroll">
               <svg viewBox="0 0 820 420" role="img" aria-labelledby="t10-title t10-desc">
                 <title id="t10-title">Hardware bench topology</title>
-                <desc id="t10-desc">Five layers from top to bottom: Tamoz decides a mode and has no port or device names; Agentic Stream builds the Situation, applies policy, and materializes a bounded set_pwm_lease from catalog presets; the gateway is the only process that opens the USB serial port; the Mega 2560 firmware enforces a 60 percent cap, a 10-second lease watchdog, and safe stop; at the bottom, a DHT11 sensor on pin D2 and an L293D driver with a DC motor and fan. Telemetry flows up to Agentic Stream on the left, and commands flow down from it on the right; Tamoz sees only Situation snapshots and returns typed intents. The seam between Tamoz's intent and the stream's device route is still open. The first run failed because the driver inputs were wired to D4 and D3 instead of D6 and D7.</desc>
+                <desc id="t10-desc">Five layers from top to bottom: Tamoz decides a mode and has no port or device names; Agentic Stream builds the Situation, applies policy, and materialises a bounded set_pwm_lease from catalog presets; the gateway is the only process that opens the USB serial port; the Mega 2560 firmware enforces a 60 percent cap, a 10-second lease watchdog, and safe stop; at the bottom, a DHT11 sensor on pin D2 and an L293D driver with a DC motor and fan. Telemetry flows up to Agentic Stream on the left, and commands flow down from it on the right; Tamoz sees only Situation snapshots and returns typed intents. The seam between Tamoz's intent and the stream's device route is still open. The first run failed because the driver inputs were wired to D4 and D3 instead of D6 and D7.</desc>
                 <defs>
                   <marker id="t10-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--info" d="M0,0 L10,5 L0,10 z"/></marker>
                   <marker id="t10-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
@@ -1267,7 +1271,7 @@
               <thead><tr><th>Finding</th><th>Where</th><th>Why it matters</th></tr></thead>
               <tbody>
                 <tr><td>Intent conversion seam</td><td>Tamoz ↔ Agentic Stream</td><td><code>request_bounded_cooling</code> isn't yet converted to <code>select_thermal_mode</code> through a reviewed contract, so there's no joined physical run yet.</td></tr>
-                <tr><td>O1 · no evidence-fitness gate in the agent</td><td>Tamoz <code>decision_builder</code></td><td>0 of 8 unfit-evidence cells refused at Tamoz's layer. Downstream policy may still refuse, but the agent itself provides no defense in depth.</td></tr>
+                <tr><td>O1 · no evidence-fitness gate in the agent</td><td>Tamoz <code>decision_builder</code></td><td>0 of 8 unfit-evidence cells refused at Tamoz's layer. Downstream policy may still refuse, but the agent itself provides no defence in depth.</td></tr>
                 <tr><td>O2 · confidence is inert in the thermal loop</td><td>Tamoz thermal domain</td><td>The confidence floor is 0 and raw confidence is never set, so "unknown means stop" can't be enforced there yet.</td></tr>
                 <tr><td>O3 · neutral holdout still promotes</td><td>Tamoz improvement</td><td>The promotion bar is "no regression", not "strict improvement".</td></tr>
                 <tr><td>O6 · no active investigation</td><td>Tamoz stream episode</td><td>On insufficient data the outcome is abstain, never "ask for the missing reading, then decide".</td></tr>
