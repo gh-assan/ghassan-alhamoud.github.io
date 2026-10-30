@@ -115,6 +115,16 @@
             <li><strong>Propose and check.</strong> The model returns a typed proposal: what it saw, what it infers, how sure it is, what action it suggests. Policy checks risk class, rate limits, approvals, device authority and interlocks. The model never sets power or timing.</li>
             <li><strong>Act and verify.</strong> The command goes out once, with an idempotency key. The outcome comes back as independent evidence.</li>
           </ol>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="Animation: pump 5's axial vibration climbs, the system diagnoses misalignment and books maintenance, the command is received, and the vibration falls back to normal." aria-describedby="clip-fault-response-desc">
+                <source src="/images/projects/tamoz/clips/fault-response.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/fault-response.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-fault-response-desc">Pump 5's axial vibration, normally about 2.0 millimetres per second, begins to rise at 06:25 on a simulated day. The system's view of the pump moves from candidate to watch to warning at 09:55, when the 15-minute mean is 2.76 against a 24-hour mean of 2.06. The model, glm-5.3-flash, answers in 21 seconds that this is misalignment. Policy approves a low-risk maintenance booking automatically. The reading keeps rising to about 3.9 until the plant receives the booking at 15:17. The pump is repaired at 16:17, the reading returns to about 2.0, and the repair finishes under three hours before its deadline. The command's effect is shown as unknown: the board reported success, but nothing read the booking back.</p>
+            <figcaption class="evidence-caption">Animated from a recorded simulator run (pump 5 of 8, campaign 2b), sped up 7,200x (two plant hours per second); paused while the decision is read. Model, tokens and timings as recorded.</figcaption>
+          </figure>
           <blockquote>The model decides what should happen. Policy decides how much. Firmware decides when to stop.</blockquote>
           <p>That split is why I am comfortable pointing an agent at equipment at all. The first time I ran a real model on a cold-box snapshot it reasoned correctly and then tried to write a duty cycle of 50% on its own. The whole decision was rejected. That rejection is the design working, not failing. The system is not tied to one model: it works with any model, and the trial below used one.</p>
           <div class="cap-legend"><span><span class="cap-status cap-status--shipped">Shipped</span> runs today</span><span><span class="cap-status cap-status--sim">In simulation</span> shown in the simulator, with a real model</span></div>
@@ -214,8 +224,18 @@
           </figure>
 
           <h3>The rule it learned</h3>
-          <blockquote>If the pump's axial vibration over the last 15 minutes is at least 1.3 times its own 24-hour average, radial vibration and current have not risen, and the sensor heartbeat is present: book alignment maintenance.</blockquote>
+          <blockquote>If the pump's axial vibration over the last 15 minutes is at least 1.25 times its own 24-hour average, radial vibration and current have not risen, and the sensor heartbeat is present: book alignment maintenance.</blockquote>
           <p>Replayed over history, this rule would have fired 3 times, agreed 3 times and disagreed 0 times. It was approved, ran in shadow beside the model until it had agreed three times, and became active during the second learning day.</p>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/review-poster.webp" aria-label="Animation: a review timeline is scrubbed back through a pump fault to the moment a learned rule booked the repair with no model call, compared with the model's first answer to the same fault." aria-describedby="clip-review-desc">
+                <source src="/images/projects/tamoz/clips/review.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/review.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-review-desc">A review screen opens on pump 5 at the end of a 30-hour run, looking healthy. The timeline is dragged back past the fault clearing at 10 hours 21 minutes and the maintenance booking at 9 hours 21 minutes, to the moment at 4 hours 9 minutes when the system's situation turned to warning. A decision record shows that a learned rule decided, with no model call: the axial vibration 15-minute mean was 1.33 times the pump's 24-hour mean, above the rule's threshold of 1.25. The rule took about 1 millisecond. Two bars compare this case with the same fault five days earlier, when the model took 21 seconds: both waited the scheduler's 60-second delay, so the total time to a booking fell from 81 to 60 seconds.</p>
+            <figcaption class="evidence-caption">Animated from two recorded simulator runs of the pump-station trial (pump 5, 2 Jan and 7 Jan). The scrubber is illustrative; readings, times and the decision record are as recorded. Wall-clock timings.</figcaption>
+          </figure>
           <h3>Its safety leash</h3>
           <ul>
             <li>It acts only inside the range of readings it learned from, widened by 10% of the values. Outside that range the case goes to the model.</li>
@@ -257,9 +277,15 @@
             <li>compare the simulated copy with what the real board reported.</li>
           </ul>
           <p>A visual workspace, the canvas, lets you see the plant, build one from a component library, run it, disturb it by injecting faults, and review what happened: readings, command stages, connection health. It needs a desktop browser at least 1280 px wide.</p>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The simulator canvas during a live run of a chiller pilot plant. Live readings show on three chillers and an air handler. Chiller CH-2 carries a Fault tag after a compressor-wear fault was injected. The run panel on the right shows Pause, speed control and Act now controls to call an effector or inject a fault." width="1200" height="897" loading="lazy" />
-            <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: a live run of a simulated chiller plant, with a compressor-wear fault just injected on chiller CH-2. No real equipment.</figcaption>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/build-poster.webp" aria-label="Animation: a chilled-water plant is assembled from library parts, run, and shown beside a 23-instance factory built from the same library." aria-describedby="clip-build-desc">
+                <source src="/images/projects/tamoz/clips/build.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/build.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-build-desc">An empty canvas gains two areas, Chiller hall and Office block. Two large chillers and one small chiller are placed in the Chiller hall, each with named instruments. An air-handling unit is placed in the Office block and its load output is linked to the small chiller. Run plant is pressed and readings appear: for example chiller 1 at 440 cubic metres per hour and 185 kilowatts. The view then pulls back to a factory plant of 23 instances and 59 links built from the same library.</p>
+            <figcaption class="evidence-caption">Animated from the shipped Chiller pilot plant file and a recorded run (seed 1). The assembly follows the file's own order; the run segment is sped up 60x.</figcaption>
           </figure>
           <p><strong>Honest limit.</strong> The real-board path is built and tested against a stand-in gateway; I have not yet run it with a real board in this setup. The real hardware I have is the small fan bench described in the <a href="/projects/tamoz-technical.html#hardware">technical deep dive</a>.</p>
 
@@ -379,6 +405,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/clip-loop.js" defer></script>
   <script src="/assets/js/motion/core.js?v=20260926" defer></script>
   <script src="/assets/js/motion/scene-tamoz.js?v=20260926" defer></script>
 </body>

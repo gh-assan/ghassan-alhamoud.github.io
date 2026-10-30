@@ -3529,3 +3529,54 @@ html.js .reveal--visible {
   line-height: 1.55;
   color: var(--text-muted);
 }
+
+/* ----- Animated clips (recorded simulator runs, drawn; silent, looping) ----- */
+.clip__frame {
+  position: relative;
+}
+
+.clip video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.clip__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--glass-bg);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.clip__play::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -12px 0 0 -8px;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent currentColor;
+}
+
+.clip__play:hover {
+  color: var(--accent-hover);
+}
+
+.clip__play:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}

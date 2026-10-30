@@ -479,6 +479,16 @@
             <p class="diagram__hint">Scroll sideways to follow the pipeline.</p>
             <figcaption class="evidence-caption">From the public repo (Agentic Stream <code>internal/decisions</code>, <code>internal/policy</code>, <code>internal/actions</code>). Validation, denial, approval, and compensation ran live in the simulator rounds; the unknown-outcome path is covered by tests.</figcaption>
           </figure>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="Animation: pump 5's axial vibration climbs, the system diagnoses misalignment and books maintenance, the command is received, and the vibration falls back to normal." aria-describedby="clip-fault-response-desc">
+                <source src="/images/projects/tamoz/clips/fault-response.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/fault-response.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-fault-response-desc">Pump 5's axial vibration, normally about 2.0 millimetres per second, begins to rise at 06:25 on a simulated day. The system's view of the pump moves from candidate to watch to warning at 09:55, when the 15-minute mean is 2.76 against a 24-hour mean of 2.06. The model, glm-5.3-flash, answers in 21 seconds that this is misalignment. Policy approves a low-risk maintenance booking automatically. The reading keeps rising to about 3.9 until the plant receives the booking at 15:17. The pump is repaired at 16:17, the reading returns to about 2.0, and the repair finishes under three hours before its deadline. The command's effect is shown as unknown: the board reported success, but nothing read the booking back.</p>
+            <figcaption class="evidence-caption">Animated from a recorded simulator run (pump 5 of 8, campaign 2b), sped up 7,200x (two plant hours per second); paused while the decision is read. Model, tokens and timings as recorded.</figcaption>
+          </figure>
 
           <p>Risk classes run from <code>R0</code> to <code>R4</code>. What each class requires is versioned per spec and per policy, never hard-coded. In the experiment specs they worked out like this:</p>
           <div class="table-scroll table-scroll--wide">
@@ -669,6 +679,16 @@
             <figcaption class="evidence-caption">From the public repo: <code>internal/playbook</code> and <code>internal/executor/rule</code> in Agentic Stream.</figcaption>
           </figure>
           <p>In the same transaction as admission, <code>playbook.Route</code> answers <em>rule</em>, <em>audit</em> or <em>model</em>. For a rule answer the episode is rebound to the in-process <code>rule</code> executor, which builds the Decision from the rule's preset and sends it down the same validation, policy, approval, outbox, effect and verification path. A sampled rule episode is also re-asked of the model with dispatch policy <code>shadow</code>, and the sample is a pure function of the situation version id, so replay reproduces it. A stale rule episode is re-assembled for the live version and loses its binding.</p>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/review-poster.webp" aria-label="Animation: a review timeline is scrubbed back through a pump fault to the moment a learned rule booked the repair with no model call, compared with the model's first answer to the same fault." aria-describedby="clip-review-desc">
+                <source src="/images/projects/tamoz/clips/review.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/review.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-review-desc">A review screen opens on pump 5 at the end of a 30-hour run, looking healthy. The timeline is dragged back past the fault clearing at 10 hours 21 minutes and the maintenance booking at 9 hours 21 minutes, to the moment at 4 hours 9 minutes when the system's situation turned to warning. A decision record shows that a learned rule decided, with no model call: the axial vibration 15-minute mean was 1.33 times the pump's 24-hour mean, above the rule's threshold of 1.25. The rule took about 1 millisecond. Two bars compare this case with the same fault five days earlier, when the model took 21 seconds: both waited the scheduler's 60-second delay, so the total time to a booking fell from 81 to 60 seconds.</p>
+            <figcaption class="evidence-caption">Animated from two recorded simulator runs of the pump-station trial (pump 5, 2 Jan and 7 Jan). The scrubber is illustrative; readings, times and the decision record are as recorded. Wall-clock timings.</figcaption>
+          </figure>
           <h3>8.7 Cap and envelope</h3>
           <p>The <em>envelope</em> records the range of the source cases. The <em>cap</em> is the approved range, widened by <code>envelopeMargin</code> (0.1) of each feature's <em>value</em>, and an active rule acts anywhere inside its cap. The first campaign widened the range by 10% of its <em>spread</em>, and the simulator's faults are almost identical, so the spread was 0.016. Every new pump fell just outside it, and rule decisions in the test days were 0. Measuring the margin against the values gave 2.47 to 3.04, and rule decisions went to 5.</p>
           <figure class="diagram">
@@ -1087,6 +1107,16 @@
             <img src="/images/projects/tamoz/canvas-run-review.webp" alt="The review of a finished simulator run. A timeline shows a fault marker for condenser fouling on chiller CH-1 at 25 minutes. The report panel says Verified, that the files match and the replay reproduces, lists 3,000 observations, and has a disturbances table with the one injected fault." width="1200" height="897" loading="lazy" />
             <figcaption class="evidence-caption">From the public repo. Screenshot of the simulator canvas in Chrome: the review of a finished simulated run, with the fault marker, the recording-integrity check, 3,000 observations and the disturbances table. This run was not scored against an outside system.</figcaption>
           </figure>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/build-poster.webp" aria-label="Animation: a chilled-water plant is assembled from library parts, run, and shown beside a 23-instance factory built from the same library." aria-describedby="clip-build-desc">
+                <source src="/images/projects/tamoz/clips/build.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/build.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-build-desc">An empty canvas gains two areas, Chiller hall and Office block. Two large chillers and one small chiller are placed in the Chiller hall, each with named instruments. An air-handling unit is placed in the Office block and its load output is linked to the small chiller. Run plant is pressed and readings appear: for example chiller 1 at 440 cubic metres per hour and 185 kilowatts. The view then pulls back to a factory plant of 23 instances and 59 links built from the same library.</p>
+            <figcaption class="evidence-caption">Animated from the shipped Chiller pilot plant file and a recorded run (seed 1). The assembly follows the file's own order; the run segment is sped up 60x.</figcaption>
+          </figure>
           <h3>16.8 Limits</h3>
           <div class="table-scroll table-scroll--wide">
             <table>
@@ -1375,6 +1405,7 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/clip-loop.js" defer></script>
   <script src="/assets/js/video-embed.js" defer></script>
   <script src="/assets/js/motion/core.js?v=20260926" defer></script>
   <script src="/assets/js/motion/scene-funnel.js?v=20260926" defer></script>
