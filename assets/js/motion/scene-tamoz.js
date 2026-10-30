@@ -3,7 +3,7 @@
  * Readings stream in and warm past a threshold; Agentic Stream seals a
  * Situation; Tamoz (a turning wireframe) chooses an intent with no
  * magnitude in it; the policy plane turns it into a bounded command under
- * the firmware ceiling (60 % duty, 10 s lease, per /projects/tamoz.html);
+ * the firmware ceiling (60 % duty, 10 s lease, per /projects/tamoz-technical.html);
  * the fan spins while the lease runs, the readings cool, and the outcome
  * returns as experience. Illustrative.
  */
