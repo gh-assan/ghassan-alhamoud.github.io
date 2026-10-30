@@ -11,7 +11,7 @@
     var iframe = document.createElement('iframe');
     iframe.src = HOST + encodeURIComponent(id) + '?autoplay=1&rel=0';
     iframe.title = button.getAttribute('data-title') || 'Video';
-    iframe.setAttribute('allow', 'encrypted-media; picture-in-picture; fullscreen');
+    iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
     frame.replaceChild(iframe, button);
