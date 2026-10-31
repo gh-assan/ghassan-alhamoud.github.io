@@ -31,9 +31,9 @@
     "status": "Public release",
     "highlighted": true,
     "repo": "https://github.com/ghassan-ai-projects/tamoz",
-    "summary": "An open-source, stream-native agent that understands sensor-derived situations, decides what should happen, and acts through governed, bounded commands.",
-    "problem": "Agents that act on real equipment must notice change on their own, reason only when it matters, survive crashes, and never own the physical envelope; most frameworks leave all of that for later.",
-    "outcome": "Tamoz is the supervisory layer of a three-repository stream-to-action system: sealed Situation episodes, typed intents that policy bounds, durable execution, memory, self-healing, and evaluation, tested across five simulator rounds and a real Arduino motor bench.",
+    "summary": "An open-source AI agent that watches equipment sensor streams, proposes repairs under fixed policy limits, and learns repair rules from its own verified repairs, with human approval.",
+    "problem": "Alarms say something is wrong, not which repair to book or whether the last one worked; an agent that acts on real equipment must reason only when it matters, stay inside limits it cannot change, and learn only from repairs that were checked.",
+    "outcome": "A simulated pump station let the system learn a misalignment rule from verified repairs: 5 of 5 rule decisions right and on time with no model call, and no action on a healthy pump. Also tested across five simulator rounds and a small Arduino bench. One station, one seed; every limit is on the page.",
     "stack": [
       "Ruby",
       "Go",
