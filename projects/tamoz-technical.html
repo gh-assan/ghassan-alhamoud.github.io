@@ -191,13 +191,13 @@
                 <path class="dg-line" d="M518 358 H603" marker-end="url(#t1-ah)"/>
                 <text class="dg-s" x="557" y="350" text-anchor="middle">outcome</text>
 
-                <text class="dg-s" x="120" y="412" text-anchor="middle">or: gateway + Arduino, same device wire</text>
+                <text class="dg-s" x="120" y="412" text-anchor="middle">or: gateway + Arduino board</text>
                 <text class="dg-s" x="400" y="412" text-anchor="middle">one Go process · SQLite WAL</text>
-                <text class="dg-s" x="700" y="412" text-anchor="middle">27 gems + Tamoz Agent app</text>
+                <text class="dg-s" x="700" y="412" text-anchor="middle">32 gems + Tamoz Agent app</text>
               </svg>
             </div>
             <p class="diagram__hint">Scroll sideways to see all three repositories.</p>
-            <figcaption class="evidence-caption">From the public repos. The software composition ran end to end across five simulator rounds. The Arduino path swaps in for the simulator's device emulator and uses the same device wire; its Tamoz-to-stream intent conversion is still work in progress.</figcaption>
+            <figcaption class="evidence-caption">From the public repos. The software composition ran end to end across four simulator rounds; a fifth planned round, Round 4, was never run. In three real-board sessions on 25 October 2026 a gateway and an Arduino board took the place of the emulated device (<a href="#hardware">section 18</a>).</figcaption>
           </figure>
 
           <p>The split of responsibilities is written down as a contract, and every design question gets settled by asking which side of it a concern falls on:</p>
@@ -306,7 +306,7 @@
           <p>One caveat that matters for the playbook: the scheduler's debounce and cooldown count wall-clock time today (see <a href="#trial-findings">section 10</a>).</p>
 
           <h2 id="episode">4. The episode boundary</h2>
-          <p>This is where continuous evidence turns into one bounded, supervised piece of reasoning. Tamoz implements the <code>EpisodeWorker</code> gRPC service with two RPCs, <code>Handshake</code> and <code>Execute</code>. The stream dials it over a Unix socket (mTLS optional). The worker is authoritative for nothing. It proposes, and the runtime decides.</p>
+          <p>This is where continuous evidence turns into one bounded, supervised piece of reasoning. Tamoz implements the <code>EpisodeWorker</code> gRPC service with three RPCs. <code>Handshake</code> and <code>Execute</code> run episodes. <code>DraftPlaybookRule</code> is optional and separate: the worker announces it in the handshake only when started with a drafting model, and it only drafts rules (<a href="#rule-promotion">section 8.2</a>). The stream dials it over a Unix socket (mTLS optional). The worker is authoritative for nothing. It proposes, and the runtime decides.</p>
 
           <figure class="diagram">
             <p class="diagram__title">Figure 3 · One episode, as a sequence</p>
@@ -380,8 +380,8 @@
           <p>A few details make this boundary hard to abuse:</p>
           <ul>
             <li><strong>The snapshot is sealed.</strong> The request carries <code>snapshot_json</code> and its SHA-256, plus digests of the decision schema, tool catalog, prompt, and objective. A strict scanner refuses malformed JSON at the door: duplicate keys, unpaired surrogates, unsafe numbers.</li>
-            <li><strong>The tool surface is a fixed allowlist.</strong> The episode host exposes <code>features.query</code>, <code>evidence.get</code>, <code>situations.related</code>, <code>history.prior_incidents</code>, <code>knowledge.search</code>, and <code>forecast.run</code>, all read-only and bounded, and nothing else can be named. The host holds no reference to a toolbox, effect journal, MCP client, filesystem, or memory write path.</li>
-            <li><strong>The budget is finite and enforced from outside.</strong> Wall time, model and tool calls, input and output tokens, tool-result bytes, provider retries, and cost. The stream owns the budget, and a late provider response can't extend the deadline.</li>
+            <li><strong>The tool surface is a closed list.</strong> The episode host exposes at most six stream tools: <code>features.query</code>, <code>evidence.get</code>, <code>situations.related</code>, <code>history.prior_incidents</code>, <code>knowledge.search</code>, and <code>forecast.run</code>, all read-only and bounded. An operator can add read-only MCP probes by declaring them in a catalog and starting the worker with them enabled; with none declared there are none. Nothing else can be named. The host holds no reference to a toolbox, effect journal, filesystem, or memory write path. Probes are young, and their limits are in <a href="#open-findings">section 19</a>.</li>
+            <li><strong>The budget is finite and set from outside.</strong> The stream owns it and sends wall time, model and tool calls, input and output tokens, tool-result bytes, provider retries, and cost with each episode, and a late provider response can't extend the deadline. Not all of those limits bite yet. Wall time, model calls, and tool-result bytes are enforced in the worker, and the stream's cost ceiling gates admission. Tamoz's own limitations page lists token and cost limits as recorded and pinned only, so there is no spend cap in tokens or currency inside an episode.</li>
             <li><strong>Episodes are non-interactive.</strong> An interrupt inside a stream episode is a typed terminal failure, never a wait. People are reached through the approval relay, not by pausing the worker.</li>
             <li><strong>Every completed episode is attributable.</strong> The terminal event carries an artifact manifest with the prompt, skill-set, tool-catalog, and memory-record digests, plus the model policy and contract version.</li>
           </ul>
@@ -503,7 +503,7 @@
               </tbody>
             </table>
           </div>
-          <p>Human approval is split into transport and authority. Tamoz <em>delivers</em> the request to a person, and the stream <em>decides</em>. In the simulator rounds, approvals were ed25519-signed assertions of 13 fields, single-use, with the relay and the approver required to be different principals. After every relayed approval, the stream re-checks freshness and completeness. An approval that arrives after the Situation has moved on is refused as a version conflict. A compensating intent, such as a downgrade that walks back an earlier action, goes through the same pipeline under its own risk class. It's never automatically low-risk.</p>
+          <p>Human approval is split into transport and authority. Tamoz <em>delivers</em> the request to a person, and the stream <em>decides</em>. An approval is an ed25519-signed assertion of 14 fields, single-use, with the relay and the approver required to be different principals. After every relayed approval, the stream re-checks freshness and completeness. An approval that arrives after the Situation has moved on is refused as a version conflict. A compensating intent, such as a downgrade that walks back an earlier action, goes through the same pipeline under its own risk class. It's never automatically low-risk.</p>
 
           <p>A learned rule's decision takes this same path. The rule executor builds the Decision, and from validation on nothing distinguishes it from a model's (<a href="#rule-promotion">section 8.6</a>).</p>
 
@@ -835,7 +835,7 @@
                 <tr><td>P6</td><td>Every pair with 3 verified, uncontradicted cases got a proposal</td><td><span class="cap-status cap-status--shipped">Pass</span> Misalignment and bearing wear.</td></tr>
                 <tr><td>S2</td><td>Cavitation look-alike never triggers maintenance</td><td><span class="cap-status cap-status--shipped">Pass</span> 0 of 3 in both arms.</td></tr>
                 <tr><td>P7</td><td>A masking rule never passes silently</td><td><span class="cap-status cap-status--wip">Not exercised</span> No rule of that kind was proposed.</td></tr>
-                <tr><td>S7</td><td>New probes: rules learned on the old device model switch off when a pump gets a new probe</td><td><span class="cap-status cap-status--wip">Not covered</span> Exercised by a separate test, not in this trial.</td></tr>
+                <tr><td>S7</td><td>New probes: rules learned on the old device model switch off when a pump gets a new probe</td><td><span class="cap-status cap-status--wip">Not covered</span> The <code>kind_changed</code> circuit has its own tests in Agentic Stream, outside this trial.</td></tr>
               </tbody>
             </table>
           </div>
@@ -875,7 +875,7 @@
             <li><strong>One fenced writer per thread namespace.</strong> Leases and fences keep two workers from committing the same history.</li>
             <li><strong>Reviewed plans, exact diffs.</strong> For the coding-agent surface, nothing acts without a plan bound to its canonical digest, and no file changes without an approval for that exact diff. A failed check becomes evidence for at most two newly reviewed repairs.</li>
           </ul>
-          <p>The same core runs the Tamoz Agent app (<code>tamoz</code> CLI, durable sessions, trusted profiles, scheduling, a Telegram channel) and the stream EpisodeWorker. It ships as 27 gems. Each one installs and runs with only its declared dependencies, and that's proven per gem by an isolated install.</p>
+          <p>The same core runs the Tamoz Agent app (<code>tamoz</code> CLI, durable sessions, trusted profiles, scheduling, a Telegram channel) and the stream EpisodeWorker. It ships as 32 gems. Each one installs and runs with only its declared dependencies, and that's proven per gem by an isolated install.</p>
 
           <h2 id="self-healing">12. Self-healing</h2>
           <p>Self-healing in Tamoz isn't <code>rescue</code> plus retry. It's a reviewed, authorised, bounded state machine. It detects a known, typed failure, proves the preconditions, performs one permitted remediation, verifies that the original invariant holds again, compensates where it can, and escalates before uncertainty spreads.</p>
@@ -955,7 +955,7 @@
               <tbody>
                 <tr><td>Requirements audit</td><td>Is each promised guarantee actually true?</td><td>A manifest generated from invariants, ADRs, phase criteria, public API, CLI, and migrations. The audit is regenerated by <em>running</em> each named test, so a row passes only because its test executed and passed. The limitations page must match the measured gaps, or the build fails.</td></tr>
                 <tr><td>Scorecards</td><td>Does the agent behave safely on a fixed corpus?</td><td>Deterministic cases reporting success, verified completion, repairs, and approvals, with hard-zero gates on unsafe actions, false completions, and incomplete evidence. A higher score never buys back a gate.</td></tr>
-                <tr><td>agenteval</td><td>How capable is it, really?</td><td>Tasks are generators, not fixtures: every seed produces fresh names, values, and layouts, so the corpus can't be memorised. Ten adversity modifiers cross every task: <code>inject</code>, <code>freeze</code>, <code>impossible</code>, <code>phantom</code>, <code>destructive</code>, <code>noise</code>, <code>interrupt</code>, <code>presolved</code>, <code>ambiguous</code>, and <code>clean</code>. It reports <code>pass^k</code> over scenarios with a 95% interval, and three hard gates: no false success, no injection capture, no destructive execution.</td></tr>
+                <tr><td>agenteval</td><td>How capable is it, really?</td><td>Tasks are generators, not fixtures: every seed produces fresh names, values, and layouts, so the corpus can't be memorised. Nine adversity modifiers can cross a task: <code>inject</code>, <code>freeze</code>, <code>impossible</code>, <code>phantom</code>, <code>destructive</code>, <code>noise</code>, <code>presolved</code>, <code>ambiguous</code>, and <code>clean</code>. An <code>interrupt</code> modifier is designed but not built. It reports <code>pass^k</code> over scenarios with a 95% interval, and three hard gates: no false success, no injection capture, no destructive execution.</td></tr>
                 <tr><td>Benchmark protocol</td><td>Is the reasoning any good, and is the model call real?</td><td>A frozen, SHA-pinned protocol with preregistered baselines and stop rules. Holdout cases get opaque IDs and a truth-leak scan. Metrics include macro-F1, balanced accuracy, Brier score, calibration error, lead time, action utility, and fabricated-reference rate. Only calls signed by the witness gateway count as real.</td></tr>
               </tbody>
             </table>
@@ -964,7 +964,7 @@
           <div class="callout">
             <span class="callout__label">What the eval found about my own agent</span>
             <p>The 17 September baseline passed every hard gate: zero false successes, zero unsafe actions, zero harness errors. Reading the transcripts showed what that actually meant. In 36 of 46 trials, the plan-review gate rejected every plan before the agent touched a file. Only 2 trials wrote anything, and both were correct. So the "perfect judgment" cells were the same abort as everything else, and no coding capability was measured at all. I kept the first, wrong headline in the findings file with the corrections underneath, because the correction is the useful part.</p>
-            <p>The physical-side evals found more. Tamoz's recommendation layer doesn't check evidence fitness (0 of 8 unfit-evidence cells refused). Its confidence floor is inert in the thermal loop. And it has no "go and look" step when data is missing. Each finding is pinned by a test that flips when it's fixed.</p>
+            <p>The physical-side evals found more. Tamoz's recommendation layer doesn't check evidence fitness (0 of 8 unfit-evidence cells refused). Its confidence floor is inert in the thermal loop. And at that point it had no "go and look" step when data was missing; read-only probes have since been added, with the limits in <a href="#open-findings">section 19</a>. Each finding is pinned by a test that flips when it's fixed.</p>
           </div>
 
           <h2 id="replay">15. Replay and shadow modes</h2>
@@ -974,13 +974,12 @@
               <thead><tr><th>Mode</th><th>What it does</th><th>External effects</th></tr></thead>
               <tbody>
                 <tr><td>Deterministic</td><td>Replays a trace and hashes the Situation-version history</td><td>Never</td></tr>
-                <tr><td>Recorded</td><td>Reuses a durable recorded worker ledger; never calls Tamoz</td><td>Never</td></tr>
-                <tr><td>Shadow</td><td>Runs a new executor or prompt against frozen snapshots and reports differences, pinning memory and skill digests</td><td>Never</td></tr>
-                <tr><td>Counterfactual</td><td>Sends typed commands to an explicit simulator only</td><td>Simulator only</td></tr>
+                <tr><td>Recorded</td><td>Checks every replayed episode against the decision a live runtime recorded; never calls Tamoz</td><td>Never</td></tr>
+                <tr><td>Shadow</td><td>Pairs the deterministic baseline with a candidate worker on every replayed episode and seals the comparison</td><td>Never</td></tr>
               </tbody>
             </table>
           </div>
-          <p>Deterministic replay is exposed through the CLI today. Recorded, shadow, and counterfactual modes exist as runtime APIs with tests, and a CLI for choosing between them hasn't been built yet.</p>
+          <p>All three are selected from <code>agentic-stream run</code>: deterministic by default, <code>--source-db</code> for recorded, and <code>--worker-socket</code> for shadow. An earlier counterfactual mode was removed, and the runtime now refuses it.</p>
           <p>Shadow also applies to learned rules. A rule evaluation is recorded beside the model's decision, and the audit sample is a pure function of the situation version id, so replay reproduces it (<a href="#rule-promotion">section 8</a>).</p>
 
           <h2 id="simulator">16. Streams Simulator: answer key, plant wire node, twin and canvas</h2>
@@ -1079,10 +1078,10 @@
               </svg>
             </div>
             <p class="diagram__hint">Scroll sideways to see the whole topology.</p>
-            <figcaption class="evidence-caption">From the public repo (Streams Simulator <code>documentation/guides/physical-devices.md</code>). The real-board path is tested against a stand-in gateway, not a real board.</figcaption>
+            <figcaption class="evidence-caption">From the public repo (Streams Simulator <code>documentation/guides/physical-devices.md</code>). The automated tests use a stand-in gateway. The real-board path has also run on a physical bench, in recorded sessions rather than a test suite (<a href="#hardware">section 18</a>).</figcaption>
           </figure>
           <h3>16.2 Devices and twins</h3>
-          <p>A device is a <em>kind</em> file (its metrics with type, unit and range; its commands with argument bounds, risk class and safe stop; its identity is the <code>kind_digest</code>) plus an optional <em>twin</em>, a behaviour model that declares what it implements. The binary refuses a twin whose interface differs from the kind and names the first differing member. A kind can be captured from a board's birth message and drafted for a person to review. An example is <code>examples/devices/thermal-board/</code>: a sensor, an indicator and a fan with a 5-second lease. A twin here is an interface plus a simple behaviour model, not a high-fidelity digital twin.</p>
+          <p>A device is a <em>kind</em> file (its metrics with type, unit and range; its commands with argument bounds, risk class and safe stop; its identity is the <code>kind_digest</code>) plus an optional <em>twin</em>, a behaviour model that declares what it implements. The binary refuses a twin whose interface differs from the kind and names the first differing member. A kind can be captured from a board's birth message and drafted for a person to review. An example is <code>examples/devices/thermal-board/</code>: a sensor, an indicator and a fan with a lease of 5 to 10 seconds (the Arduino board mapping uses 5). A twin here is an interface plus a simple behaviour model, not a high-fidelity digital twin.</p>
           <h3>16.3 Mixed sessions</h3>
           <p>A session plan (<code>session-plan-v0.1</code>) names which instances are real boards, and everything else is simulated. The field trace is an input, so a mixed run is a function of the usual inputs plus the trace. The origin of a reading (<code>simulated</code> or <code>hardware</code>) is never inferred. <code>pace: "wall"</code> anchors the world to the wall clock.</p>
           <h3>16.4 Command stages and reading states</h3>
@@ -1123,8 +1122,8 @@
             <table>
               <thead><tr><th>Limit</th><th>Why it matters</th></tr></thead>
               <tbody>
-                <tr><td>No test exercises a real microcontroller or gateway.</td><td>A green suite says the simulator handles the contract, not that a given board does.</td></tr>
-                <tr><td>A board's <code>DRESULT</code> is its own report.</td><td>&ldquo;Succeeded&rdquo; is not a physical effect; an independent instrument is needed.</td></tr>
+                <tr><td>No automated test exercises a real microcontroller or gateway.</td><td>A green suite says the simulator handles the contract. What a real board did comes from the recorded sessions in <a href="#hardware">section 18</a>.</td></tr>
+                <tr><td>A board's <code>DRESULT</code> is its own report.</td><td>&ldquo;Succeeded&rdquo; is not a physical effect. A session with the motor disconnected proved it: the chain still verified the command. An independent instrument is needed.</td></tr>
                 <tr><td>A real device has no truth and no score.</td><td>Graded runs use simulated devices; hardware is integration evidence.</td></tr>
                 <tr><td>A mixed session without <code>pace</code> runs ahead of the hardware.</td><td>Simulated and real time series cannot be compared in real time.</td></tr>
                 <tr><td>A held plant may still act once.</td><td>A command the gateway accepted cannot be cancelled.</td></tr>
@@ -1134,11 +1133,11 @@
           </div>
 
           <h2 id="rounds">17. The experiment rounds in detail</h2>
-          <p>Each round had a runbook with a written bar ("A to F green with live evidence", "moments 1 to 7"), a scratch directory of databases, traces, and logs, and an issue file per defect. The rule was to loop until the bar was met or genuinely blocked, and never to lower the bar. The reasoner in these rounds was scripted, as the correction below explains. Read every row as evidence about the machinery. The pump-station trial (<a href="#trial">section 9</a>) is a later piece of work and is not one of the five rounds.</p>
+          <p>Each round had a runbook with a written bar ("A to F green with live evidence", "moments 1 to 7"), a scratch directory of databases, traces, and logs, and an issue file per defect. The rule was to loop until the bar was met or genuinely blocked, and never to lower the bar. The reasoner in these rounds was scripted, as the correction below explains. Read every row as evidence about the machinery. Five rounds were planned and four ran: 1, 2, 3, and 5. The pump-station trial (<a href="#trial">section 9</a>) is a later piece of work and is not one of them.</p>
 
           <div class="callout">
             <span class="callout__label">The correction I had to make</span>
-            <p>Reading the reports back, I found the flaw in my own proof. In all five rounds the reasoning step was a scripted brain: a deterministic graph that produced the right diagnosis and even emitted &ldquo;model started&rdquo; events without calling a model. So the rounds prove the machinery (timing, governance, approvals, memory, recovery). They do not prove intelligence. The pump-station trial in <a href="#trial">section 9</a> is the first run with a real model across a whole station.</p>
+            <p>Reading the reports back, I found the flaw in my own proof. In every round that ran, the reasoning step was a scripted brain: a deterministic graph that produced the right diagnosis and even emitted &ldquo;model started&rdquo; events without calling a model. So the rounds prove the machinery (timing, governance, approvals, memory, recovery). They do not prove intelligence. The pump-station trial in <a href="#trial">section 9</a> is the first run with a real model across a whole station.</p>
           </div>
 
           <h3>Round 1 · 13 Aug 2026 · connect</h3>
@@ -1181,13 +1180,13 @@
                 <tr><td>Watch over guess</td><td>Pass (R0 watch + R1 aerator)</td><td>Pass</td><td>Pass</td></tr>
                 <tr><td>Confounder discounted</td><td>Pass (post-feeding dip)</td><td>Pass (scheduled draw → watch only)</td><td>Pass</td></tr>
                 <tr><td>Signed approval → command → outcome</td><td>Pass</td><td>Pass (plus R3 interlock)</td><td>Partial (fail-closed under probe silence)</td></tr>
-                <tr><td>Late correction → downgrade</td><td>Pass</td><td>Partial (timer versions interleave)</td><td>—</td></tr>
-                <tr><td>Second-occurrence recall</td><td>Pass (2 recalled digests)</td><td>Pass</td><td>—</td></tr>
-                <tr><td>Storm at the cost ceiling</td><td>Pass (3,600 evals, 0 episodes)</td><td>Pass</td><td>—</td></tr>
+                <tr><td>Late correction → downgrade</td><td>Pass</td><td>Partial (timer versions interleave)</td><td>Partial in the rerun</td></tr>
+                <tr><td>Second-occurrence recall</td><td>Pass (2 recalled digests)</td><td>Pass</td><td>Not reached</td></tr>
+                <tr><td>Storm at the cost ceiling</td><td>Pass (3,600 evals, 0 episodes)</td><td>Pass</td><td>Not reached</td></tr>
               </tbody>
             </table>
           </div>
-          <p>Twenty-three commits across two repos. The greenhouse finding is the one that shaped the roadmap. At 8 bays by 9 channels, per-event processing slowed past the 5-minute heartbeat window, so intents went stale before approval. That's a single-node ceiling, and Round 4 exists to measure it.</p>
+          <p>The table is the 14 August run. A later greenhouse rerun passed the approval, recall, and storm moments, with the late correction still partial. Twenty-three commits across two repos. The greenhouse finding is the one that shaped the roadmap. At 8 bays by 9 channels, per-event processing slowed past the 5-minute heartbeat window, so intents went stale before approval. That's a single-node ceiling, and Round 4 exists to measure it.</p>
 
           <h3>Round 4 · prepared, not run</h3>
           <p>A grid-scale battery storage scenario: one node, 256 to 1,024 racks, about 12 channels each. It's meant to find the knee and the degradation curve, plus one distinctive reasoning moment: when a rack runs away and its neighbours warm, the right move is isolating the <em>source</em> (R2, human) and watching the neighbours, not raising twelve alarms. The runbook and starter specs are written. Nothing has run.</p>
@@ -1197,12 +1196,12 @@
             <table>
               <thead><tr><th>Phase</th><th>Result</th><th>What it showed</th></tr></thead>
               <tbody>
-                <tr><td>Cold chain</td><td>Pass, with one engine bug</td><td>A 14-hour ocean gap; 840 late readings admitted within allowed lateness, 606 reconsiderations, a real compensating episode. <strong>F-1:</strong> the reducer picks the winner by event time, so a corrected running total (true value about 8.65 h) never replaced the stale one (about 1.65 h).</td></tr>
+                <tr><td>Cold chain</td><td>Partial: all moments pass except the late-reading milestone, which found one engine bug</td><td>A 14-hour ocean gap; 840 late readings admitted within allowed lateness, 606 reconsiderations, a real compensating episode. <strong>F-1:</strong> the reducer picks the winner by event time, so a corrected running total (true value about 8.65 h) never replaced the stale one (about 1.65 h).</td></tr>
                 <tr><td>Logistics</td><td>Pass, all seven moments</td><td>Lost tracking failed closed; an absorbed leg delay got a watch, not an expedite; a customs-hold cascade named its cause at 0.9 and went through a signed approval; an optimistic carrier ETA was cross-checked and not trusted; shipment-09 recalled shipment-04; a hub-outage storm of 1,105 events started 0 episodes.</td></tr>
               </tbody>
             </table>
           </div>
-          <p>Round 5 also exposed drift. The starter specs had been written against an older wire shape, and the run needed nine live spec corrections. Those corrections now live in the starters. The remaining picks (security events, an agent-fleet supervisor) haven't run, and the round's assessment recommends fixing F-1 before they do.</p>
+          <p>Round 5 also exposed drift. The starter specs had been written against an older wire shape, and the run needed nine live spec corrections. Those corrections now live in the starters. The remaining picks (security events, an agent-fleet supervisor) were attempted on 31 August and recorded as blocked, because their domains and specs don't exist yet. A cold-chain rerun that day was still partial on the same milestone.</p>
 
           <h3>After the rounds: a real reasoner</h3>
           <p>A review after Round 3 found the flaw described in the correction above: the graph brains hard-coded the diagnosis and emitted model events themselves. The fix shipped as eight phases on 15 August. (Round 5 ran two days later and still used a labelled fixture brain on purpose, because it was testing the engine's assumptions, not reasoning quality.)</p>
@@ -1225,7 +1224,7 @@
             <div class="diagram__scroll">
               <svg viewBox="0 0 820 420" role="img" aria-labelledby="t10-title t10-desc">
                 <title id="t10-title">Hardware bench topology</title>
-                <desc id="t10-desc">Five layers from top to bottom: Tamoz decides a mode and has no port or device names; Agentic Stream builds the Situation, applies policy, and materialises a bounded set_pwm_lease from catalog presets; the gateway is the only process that opens the USB serial port; the Mega 2560 firmware enforces a 60 percent cap, a 10-second lease watchdog, and safe stop; at the bottom, a DHT11 sensor on pin D2 and an L293D driver with a DC motor and fan. Telemetry flows up to Agentic Stream on the left, and commands flow down from it on the right; Tamoz sees only Situation snapshots and returns typed intents. The seam between Tamoz's intent and the stream's device route is still open. The first run failed because the driver inputs were wired to D4 and D3 instead of D6 and D7.</desc>
+                <desc id="t10-desc">Five layers from top to bottom: Tamoz decides a mode and has no port or device names; Agentic Stream builds the Situation, applies policy, and sends a bounded command over plant wire; the gateway is the only process that opens the USB serial port and maps the command to a leased PWM setting; the Mega 2560 firmware enforces a 60 percent cap, a lease watchdog, and safe stop; at the bottom, a DHT11 sensor on pin D2 and an L293D driver with a DC motor and fan. Telemetry flows up to Agentic Stream on the left, and commands flow down from it on the right; Tamoz sees only Situation snapshots and returns typed intents. The whole route ran on this bench on 25 October 2026, with the owner approving each command. The first motor test failed because the driver inputs were wired to D4 and D3 instead of D6 and D7.</desc>
                 <defs>
                   <marker id="t10-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--info" d="M0,0 L10,5 L0,10 z"/></marker>
                   <marker id="t10-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
@@ -1235,13 +1234,13 @@
                 <text class="dg-s" x="410" y="60" text-anchor="middle">chooses a mode: hold or bounded_cooling · no port, no device names in its code</text>
                 <rect class="dg-box dg-box--info" x="160" y="90" width="500" height="52" rx="8"/>
                 <text class="dg-t" x="410" y="112" text-anchor="middle">Agentic Stream</text>
-                <text class="dg-s" x="410" y="130" text-anchor="middle">Situation, policy, and a bounded set_pwm_lease built from catalog presets</text>
+                <text class="dg-s" x="410" y="130" text-anchor="middle">Situation, policy, and a bounded command over plant wire, from catalog presets</text>
                 <rect class="dg-box" x="160" y="160" width="500" height="52" rx="8"/>
                 <text class="dg-t" x="410" y="182" text-anchor="middle">Gateway</text>
-                <text class="dg-s" x="410" y="200" text-anchor="middle">the only process that opens USB serial · quarantines bad frames · forwards commands</text>
+                <text class="dg-s" x="410" y="200" text-anchor="middle">the only process that opens USB serial · quarantines bad frames · maps to set_pwm_lease</text>
                 <rect class="dg-box" x="160" y="230" width="500" height="52" rx="8"/>
                 <text class="dg-t" x="410" y="252" text-anchor="middle">Mega 2560 firmware · device wire v1</text>
-                <text class="dg-s" x="410" y="270" text-anchor="middle">60% duty cap · 10 s lease watchdog · safe_stop · firmware and capability digests</text>
+                <text class="dg-s" x="410" y="270" text-anchor="middle">60% duty cap · lease watchdog · safe_stop · firmware and capability digests</text>
                 <rect class="dg-box" x="160" y="300" width="235" height="52" rx="8"/>
                 <text class="dg-t" x="277" y="322" text-anchor="middle">DHT11 on D2</text>
                 <text class="dg-s" x="277" y="340" text-anchor="middle">temperature + humidity, quality flag</text>
@@ -1256,17 +1255,22 @@
 
                 <path class="dg-line dg-line--warn dg-line--dash" d="M540 72 V88"/>
                 <text class="dg-s" x="300" y="84" text-anchor="middle">Situation snapshot ↑ · typed intent ↓</text>
-                <text class="dg-s dg-warn" x="718" y="70">seam open:</text>
-                <text class="dg-s dg-warn" x="718" y="84">Tamoz intent →</text>
-                <text class="dg-s dg-warn" x="718" y="98">device route,</text>
-                <text class="dg-s dg-warn" x="718" y="112">not yet joined</text>
+                <text class="dg-s dg-warn" x="718" y="70">joined 25 Oct 2026:</text>
+                <text class="dg-s dg-warn" x="718" y="84">owner approved</text>
+                <text class="dg-s dg-warn" x="718" y="98">each command,</text>
+                <text class="dg-s dg-warn" x="718" y="112">no fan instrument</text>
 
-                <text class="dg-s dg-warn" x="542" y="376" text-anchor="middle">first run: direction inputs on D4 and D3 → H-bridge held in brake</text>
+                <text class="dg-s dg-warn" x="542" y="376" text-anchor="middle">first motor test: direction inputs on D4 and D3 → H-bridge held in brake</text>
                 <text class="dg-s" x="410" y="404" text-anchor="middle">The firmware's limits hold even if every layer above it is wrong.</text>
               </svg>
             </div>
             <p class="diagram__hint">Scroll sideways to see both directions.</p>
-            <figcaption class="evidence-caption">From the bench records. Telemetry ingestion and the governed direct-serial command are real and were operator-observed; the Tamoz-to-stream conversion on this path is work in progress.</figcaption>
+            <figcaption class="evidence-caption">From the bench records. The direct-serial command was operator-observed. The full route ran on this board in three recorded sessions on 25 October 2026, through the simulator as plant wire node. The board reports the duty it was commanded, so nothing here measures the fan independently.</figcaption>
+          </figure>
+
+          <figure class="project-figure">
+            <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" loading="lazy" />
+            <figcaption class="evidence-caption">Photo of the bench: an ELEGOO Mega 2560, a DHT11 temperature and humidity sensor, an L293D motor-driver circuit, and a small DC motor with a fan blade.</figcaption>
           </figure>
 
           <p>What ran, in order:</p>
@@ -1277,16 +1281,20 @@
             <li><strong>Fan probe, first attempt.</strong> A perfect trace with a motionless motor. Full power in both directions, still nothing. The motor alone across the rails, it spun. Root cause: the direction inputs were on D4 and D3.</li>
             <li><strong>Fan probe, corrected.</strong> Two jumpers moved with no firmware change, so the digests still matched the checked-in build. A governed command at 600 permille with a 10-second lease, operator-confirmed visible and audible rotation, then an explicit safe stop. A combined sensor-and-actuation run followed.</li>
             <li><strong>Real model, separate run.</strong> A thermal snapshot went to a real model. The first valid-looking Decision wrote PWM fields and was rejected. With the catalog narrowed to <code>mode</code>, it returned <code>bounded_cooling</code>. It doesn't produce a schema-valid Decision every time, and a bounded retry lands one within a couple of attempts.</li>
+            <li><strong>Full route on the real board, 25 October 2026.</strong> Tamoz with <code>glm-5.3-flash</code>, Agentic Stream, plant wire, the simulator as node, the gateway, and the board ran as one system. I warmed the sensor by hand and approved each command at the node. Three commands ran, <code>show_state alert</code> twice and <code>set_cooling 45</code> once. Each was accepted, reported as succeeded, and verified from the board's reading. <code>verify-run</code> passed with zero quarantined readings.</li>
+            <li><strong>Same route, motor disconnected.</strong> <code>set_cooling 45</code> still completed, read back 45, and was verified as <code>succeeded</code>. The board reports the duty it was commanded, so the chain can't see a dead fan. The same session had a silent board, answered as <code>not_ready</code>, and a refusal at the node, recorded as <code>local_control</code>. Both ended as failed and neither was retried.</li>
+            <li><strong>Third session, with fixes.</strong> One <code>set_indicator</code> and one <code>select_thermal_mode</code> with <code>bounded_cooling</code>, each approved, with no silent-board event. <code>verify-run</code> passed. Compared with its twin, the fan level agreed. Temperature and humidity did not, mostly while my hand was warming the sensor, which the twin has no input for.</li>
           </ol>
+          <p>Read those sessions narrowly. The thresholds were bench-scale (open at 23 C, escalate at 26 C, close at 22 C, against 30, 38, and 28 in the committed spec). Both intents were R1 in that spec, so approval came from the node's approve-each control, not from the stream's signed R2 path. A fan command is a 5-second lease at most 6 times an hour, so the runs prove the loop, not sustained cooling. The records show no run of hold, expiry, unplug and replug, host loss, or emergency stop. A measurement of airflow or zone temperature that doesn't come from the board would be the evidence that changes this from a closed command loop to a verified physical effect.</p>
           <div class="table-scroll table-scroll--wide">
             <table>
               <thead><tr><th>Gate</th><th>State</th></tr></thead>
               <tbody>
-                <tr><td>Protocol emulation (happy path)</td><td>Pass. The joined fault artifacts (rejection, lost ack, reboot, stuck output) remain open.</td></tr>
-                <tr><td>Physical telemetry</td><td>DHT11 subset passes. Disconnect and reconnect lifecycle still open.</td></tr>
-                <tr><td>Bounded physical effect</td><td>Operator-observed, direct serial. No independent instrument yet.</td></tr>
-                <tr><td>Authority, reconciliation, e-stop on hardware</td><td>Not green</td></tr>
-                <tr><td>Eight-hour physical fault soak</td><td>Not started</td></tr>
+                <tr><td>Protocol emulation (happy path)</td><td>Pass. On the real board, a node refusal and a silent board have each been seen once. Lost ack, reboot, and stuck output have no real-board record I could find.</td></tr>
+                <tr><td>Physical telemetry</td><td>DHT11 subset passes: 271 readings in the third session, 2.01 s mean gap, zero quarantined. Disconnect and reconnect not exercised.</td></tr>
+                <tr><td>Bounded physical effect</td><td>Rotation operator-observed in the direct-serial run. The full route is verified only from the board's own report. No independent instrument yet.</td></tr>
+                <tr><td>Authority, reconciliation, e-stop on hardware</td><td>Partial. Approve-each and a node refusal ran. Emergency stop and host loss did not.</td></tr>
+                <tr><td>Eight-hour physical fault soak</td><td>No run recorded</td></tr>
               </tbody>
             </table>
           </div>
@@ -1297,22 +1305,22 @@
             <table>
               <thead><tr><th>Finding</th><th>Where</th><th>Why it matters</th></tr></thead>
               <tbody>
-                <tr><td>Intent conversion seam</td><td>Tamoz ↔ Agentic Stream</td><td><code>request_bounded_cooling</code> isn't yet converted to <code>select_thermal_mode</code> through a reviewed contract, so there's no joined physical run yet.</td></tr>
+                <tr><td>No independent physical measurement</td><td>Hardware bench</td><td>The joined runs verify a command from the board's own report. With the motor disconnected the chain still verified it, so a physical effect is not established.</td></tr>
                 <tr><td>O1 · no evidence-fitness gate in the agent</td><td>Tamoz <code>decision_builder</code></td><td>0 of 8 unfit-evidence cells refused at Tamoz's layer. Downstream policy may still refuse, but the agent itself provides no defence in depth.</td></tr>
                 <tr><td>O2 · confidence is inert in the thermal loop</td><td>Tamoz thermal domain</td><td>The confidence floor is 0 and raw confidence is never set, so "unknown means stop" can't be enforced there yet.</td></tr>
                 <tr><td>O3 · neutral holdout still promotes</td><td>Tamoz improvement</td><td>The promotion bar is "no regression", not "strict improvement".</td></tr>
-                <tr><td>O6 · no active investigation</td><td>Tamoz stream episode</td><td>On insufficient data the outcome is abstain, never "ask for the missing reading, then decide".</td></tr>
+                <tr><td>O6 · investigation is partial</td><td>Tamoz stream episode</td><td>Operator-declared, read-only probes and <code>tamoz investigate</code> exist. Results are development-only, with no held-out result, and the latest run was graded fabricated in 7 of 232 episodes. Agentic Stream doesn't send <code>evidence_time_range</code> yet, so a probe that uses a time window refuses inside an episode. An <code>unknown</code> answer can't act above R0. Not qualified for industrial use.</td></tr>
                 <tr><td>F-1 · corrected totals</td><td>Agentic Stream reducers</td><td>A late correction can't revise a windowed running total.</td></tr>
-                <tr><td>F-5 · heartbeat seam</td><td>Agentic Stream timers</td><td>Wall-clock heartbeat timers don't propagate <code>missing</code> in every configuration.</td></tr>
-                <tr><td>Single-node ceiling</td><td>Round 3 greenhouse</td><td>Wide specs slow processing past the heartbeat window. Unmeasured until Round 4.</td></tr>
-                <tr><td>Environment-bound evidence</td><td>Tamoz release audit</td><td>Kill-signal and takeover evidence only reproduces on an unrestricted machine, so the audit marks it unproven elsewhere.</td></tr>
+                <tr><td>F-5 · heartbeat seam</td><td>Agentic Stream timers</td><td>Round 5 found that wall-clock heartbeat timers don't propagate <code>missing</code> in every configuration. A 10 October fix changed this path and hasn't been rerun, so it stays listed.</td></tr>
+                <tr><td>Single-node ceiling</td><td>Round 3 greenhouse</td><td>Wide specs slowed processing past the heartbeat window. Later performance fixes haven't been re-measured at this scale, because Round 4 hasn't run.</td></tr>
+                <tr><td>Release-blocking gaps</td><td>Tamoz release audit</td><td>Tamoz is not released. The audit still reports gaps: kill and signal evidence that only reproduces on an unrestricted machine, versioned records (invariant 18), single-writer recovery (invariant 20), durable barrier timing, the verified artifact store, observability, evaluation hard gates, memory evaluation, and the coding scorecard.</td></tr>
                 <tr><td>Scheduling and skills</td><td>Tamoz</td><td>No cron or IANA timezones yet, and no skill install or update pipeline.</td></tr>
                 <tr><td>P1 · model calls per handled fault</td><td>Pump-station trial</td><td>76% against a target of 50% or less. It needs a second fault family to earn a rule.</td></tr>
                 <tr><td>P5 · rule decision latency</td><td>Agentic Stream scheduler</td><td>147 s at the 95th percentile, from the wall-clock debounce and queueing behind model episodes. Simulated-time scheduling is in progress and not merged.</td></tr>
                 <tr><td>Sensor drift always diagnosed as bearing wear</td><td>Pump-station trial</td><td>So it never became a rule. The recovery check stops it feeding the bearing key, but it has not been rerun.</td></tr>
                 <tr><td>Bearing-wear rule rejected by replay</td><td>Pump-station trial</td><td>Three drafts, each rejected for one replay disagreement. The margin of the recovery check for bearing wear is thin (worst genuine 0.13, nearest drift 0.255).</td></tr>
                 <tr><td>P7 masking trap, S7</td><td>Pump-station trial</td><td>Not exercised, not covered.</td></tr>
-                <tr><td>Real board in a mixed session</td><td>Streams Simulator limitations</td><td>Built and tested against a stand-in gateway; unverified with a real board.</td></tr>
+                <tr><td>Real board has recorded sessions, no suite</td><td>Streams Simulator limitations</td><td>Three sessions on one bench in one day, each with the owner present. Automated tests still use a stand-in gateway.</td></tr>
                 <tr><td>Single seed, single station, scripted approver</td><td>Pump-station trial</td><td>No repeated seeds and no human-approver run yet.</td></tr>
               </tbody>
             </table>
@@ -1330,9 +1338,9 @@
                 <tr><td>Memory, healing, improvement</td><td>Tamoz <code>gems/tamoz-agent-memory</code>, <code>tamoz-agent-healing</code>, <code>tamoz-agent-improvement</code></td></tr>
                 <tr><td>Evaluation</td><td>Tamoz <code>gems/tamoz-evals</code>, <code>gems/tamoz-evals-runner</code>, <code>agenteval/</code>, <code>docs/REQUIREMENTS_AUDIT.md</code></td></tr>
                 <tr><td>Stream plane and scheduler</td><td>Agentic Stream <code>internal/engine</code>, <code>internal/situations</code>, <code>internal/cognition</code></td></tr>
-                <tr><td>Governance and actions</td><td>Agentic Stream <code>internal/decisions/validator.go</code>, <code>internal/policy</code>, <code>internal/actions/dispatcher.go</code></td></tr>
+                <tr><td>Governance and actions</td><td>Agentic Stream <code>internal/decisions/internal/domain/validator.go</code>, <code>internal/policy</code>, <code>internal/actions/internal/app/dispatch.go</code></td></tr>
                 <tr><td>Simulator and device emulator</td><td>Streams Simulator <code>internal/world</code>, <code>internal/perturb</code>, <code>internal/device</code>, <code>domains/</code></td></tr>
-                <tr><td>Decisions behind the design</td><td>Tamoz <code>documentation/adr</code> (55 ADRs), especially ADR-036 (the Situation boundary), ADR-038 (typed intent, never model effect), and ADR-039 (Tamoz is supervisory)</td></tr>
+                <tr><td>Decisions behind the design</td><td>Tamoz <code>documentation/adr</code> (62 numbered decisions, 9 of them retired), especially ADR-036 (the Situation boundary), ADR-038 (typed intent, never model effect), and ADR-039 (Tamoz is supervisory)</td></tr>
                 <tr><td>Rule promotion</td><td>Agentic Stream <code>internal/playbook</code>, <code>internal/draftport</code>, <code>documentation/design/rule-promotion.md</code>, <code>documentation/design/playbook.md</code>, <code>examples/pump-station/</code> (on the <code>rule-promotion</code> branch)</td></tr>
                 <tr><td>Plant wire</td><td>Agentic Stream <code>internal/plantwire</code>, <code>documentation/design/plant-wire-adapter.md</code>; Streams Simulator <code>internal/plantwire</code>, <code>contracts/plant-wire/SPEC.md</code></td></tr>
                 <tr><td>Simulator canvas and physical devices</td><td>Streams Simulator <code>canvas/</code>, <code>documentation/guides/physical-devices.md</code></td></tr>
