@@ -1,4 +1,6 @@
 ff426647b0a8b2727e850d5ca961a63ee5b288c42985c5e7f419187a7abcbe00  campaign-2b-learned-playbook.yaml
+5b47b4eb74a42846261e993583f754f7fc2dad3a77a50084de552fb3e28fbb02  campaign-2b-ledgers-model-only.json
+dabc3a4501fe5b54de4e5995277a8897e22c43d40538ffe0d1df1f271480239f  campaign-2b-ledgers-with-rule.json
 c1dc3a3228778b1d8fa8a9eefd34d66f0370489348144bec53ef567542e46b96  campaign-2b-model-answers-model-only.jsonl
 40312622e827505571a3374bed463173f6f8341d3ecf19193078cc913d597453  campaign-2b-model-answers-with-rule.jsonl
 4cdfdcdb27db18a6cc312b123adffe6f78e5f67cedf48eca73d71d3cf50a11bf  campaign-2b-score-model-only.json

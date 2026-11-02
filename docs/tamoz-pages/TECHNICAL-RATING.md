@@ -50,3 +50,4 @@ These do not add points. A round cannot be committed unless all pass:
 | 0: baseline `51c5b60` | 6 | 8 | 7 | 6 | 6 | 6 | 6 | 6.4 | Fresh reviewer |
 | 1: factual drift | 8 | 9 | 7 | 7 | 6 | 6 | 6 | 7.0 | Author, provisional |
 | 2: structure, audience, frozen records | 7.5 | 8.5 | 8.5 | 7 | 7 | 8.5 | 8 | 7.8 | Fresh reviewer |
+| 3: reviewer corrections, more records | 7.5 | 9 | 8.5 | 7 | 8.5 | 8.5 | 8 | 8.1 | Fresh reviewer |
