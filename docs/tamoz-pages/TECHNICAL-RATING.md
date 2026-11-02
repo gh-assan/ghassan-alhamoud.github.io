@@ -31,7 +31,8 @@ These do not add points. A round cannot be committed unless all pass:
 - `npm run validate`, `python3 -m unittest discover tests`, and `npm run test:motion`
 - No duplicate IDs or missing same-page anchors. Inbound anchors stay: `#trial`,
   `#hardware`, `#rounds`, and `#rule-promotion`.
-- No console errors and no page overflow at 1024 and 375 px wide.
+- No console errors and no page overflow at 1024 px wide. Owner decision, 2026-11-02:
+  this page doesn't need to work on mobile.
 - No em dashes in authored copy.
 
 ## Method
@@ -48,3 +49,4 @@ These do not add points. A round cannot be committed unless all pass:
 |---|---|---|---|---|---|---|---|---|---|
 | 0: baseline `51c5b60` | 6 | 8 | 7 | 6 | 6 | 6 | 6 | 6.4 | Fresh reviewer |
 | 1: factual drift | 8 | 9 | 7 | 7 | 6 | 6 | 6 | 7.0 | Author, provisional |
+| 2: structure, audience, frozen records | 7.5 | 8.5 | 8.5 | 7 | 7 | 8.5 | 8 | 7.8 | Fresh reviewer |
