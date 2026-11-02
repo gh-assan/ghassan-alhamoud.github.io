@@ -92,7 +92,7 @@
           <ul>
             <li><strong>Agentic Stream</strong> runs continuously. It records sensor events with their timing and quality, publishes each situation as a fixed version, and calls the agent only when reasoning is useful. It also owns every action: policy checks a proposal again just before dispatch, commands and their outcomes are recorded durably, and approved rules learned from earlier repairs run here without a model call.</li>
             <li><strong>Tamoz</strong> does the reasoning, one bounded episode at a time. It works with any model, receives one fixed situation and a budget, can read further evidence through read-only tools an operator has granted, and returns a structured proposal with its uncertainty. It can also draft a rule from verified repairs for review. Its work is checkpointed so it recovers after a crash, and it has no direct path to equipment.</li>
-            <li><strong>Streams Simulator</strong> is the test instrument. It generates sensor streams from defined worlds, can delay or corrupt their delivery in declared ways, responds to commands, and keeps a sealed record of what really happened, so the system under test is scored against that record and not its own summary. Runs reproduce from a seed and can be replayed. It ships eight domains, such as rotating machinery and cold-chain transit, and its visual canvas builds plants from a component library, runs them, injects faults mid-run, and reviews the result. It can also put a real board beside simulated devices in one recorded session, with an operator able to hold, approve, or stop commands. It is not a physics engine or an industrial controller.</li>
+            <li><strong>Streams Simulator</strong> is the test instrument. It generates sensor streams, can delay or corrupt their delivery, responds to commands, and keeps a sealed record of what really happened, so results are scored against that record. Runs can be replayed from a seed. Its visual canvas builds plants from a component library, runs them, and injects faults mid-run. A real board can also join simulated devices in one recorded session. It is not a physics engine or an industrial controller.</li>
           </ul>
           <figure class="project-figure">
             <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The Streams Simulator canvas during a run of a simulated chiller plant at 12 of 30 simulated minutes. Chiller CH-2 is marked with a compressor wear fault and shows live readings beside chiller CH-1 and air-handling unit AHU-1. A panel on the right has pause, speed, effector call, and fault injection controls." width="1200" height="897" loading="lazy" />
@@ -175,11 +175,26 @@
           <h2 id="learning">Learning from verified outcomes</h2>
           <p>Tamoz keeps outcome evidence so later decisions can refer to earlier situations. The pump trial also tested a more specific learning loop: repeated verified repairs could lead to a proposed rule.</p>
           <p>A draft rule was replayed against earlier data, approved, and tested in shadow before becoming active. Once active, it could handle that pattern without another model call. In the trial, one of three fault families produced an approved rule. The trial used a scripted approver; human review in an operation remains to be tested.</p>
+          <p>In the trial, a repair counted as verified when the fault did not return within 24 simulated hours, so sensor drift misdiagnosed as bearing wear could also pass. A stricter recovery check has since been added. Replayed over the trial's records, it rejects those cases, but the trial has not been rerun with it.</p>
           <p><a href="/projects/tamoz-technical.html#rule-promotion">Read how rule promotion works</a>.</p>
 
           <h2 id="evidence">What has been tested</h2>
           <h3>A pump station with a real model</h3>
-          <p>In one simulated eight-pump station, Tamoz worked through 18 injected faults with a real model. It detected 17, diagnosed 11 correctly, and booked the right repair on time for 7. Without the learned rule, the same setup detected 15 and booked 6 on time. The rule handled five misalignment faults with no model call, all correct and on time. Neither version acted on the three healthy look-alikes.</p>
+          <p>In one simulated eight-pump station, Tamoz worked through 18 injected faults with a real model, once with a learned rule and once without. The rule handled five misalignment faults with no model call, all correct and on time.</p>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Result</th><th>With the rule</th><th>Without it</th></tr></thead>
+              <tbody>
+                <tr><td>Faults detected</td><td>17 of 18</td><td>15 of 18</td></tr>
+                <tr><td>Correct diagnosis</td><td>11 of 18</td><td>11 of 18</td></tr>
+                <tr><td>Right repair on time, all faults</td><td>7 of 18</td><td>6 of 18</td></tr>
+                <tr><td>Right repair on time, misalignment</td><td>5 of 6</td><td>5 of 6</td></tr>
+                <tr><td>Right repair on time, bearing wear</td><td>2 of 6</td><td>1 of 6</td></tr>
+                <tr><td>Right repair on time, sensor drift</td><td>0 of 6</td><td>0 of 6</td></tr>
+                <tr><td>Action on a healthy look-alike</td><td>0 of 3</td><td>0 of 3</td></tr>
+              </tbody>
+            </table>
+          </div>
           <figure class="project-figure clip">
             <div class="clip__frame">
               <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="A simulated pump develops a vibration fault, receives a maintenance recommendation, and recovers after repair." aria-describedby="clip-fault-response-desc">
@@ -190,12 +205,12 @@
             <p class="sr-only" id="clip-fault-response-desc">A simulated pump's axial vibration rises. The system recommends alignment maintenance, a booking is received, and the simulated pump is repaired. The booking's effect was not independently read back.</p>
             <figcaption class="evidence-caption">Modeled: a recorded simulator run, animated and sped up. This is a simulated maintenance booking, not a field deployment.</figcaption>
           </figure>
-          <p>This was one simulated station and three test runs of 30 simulated hours each. Only one of three fault families earned a rule, and the trial approver was scripted. The rule reduced model calls but missed its target: 13 of 17 detected faults still needed the model, against a goal of half the comparison. It did not improve misalignment repairs, which reached 5 of 6 with or without it. The model repeatedly misdiagnosed sensor drift, and none of those six faults got the right repair on time. These results are limited to simulation and do not establish industrial performance or savings. A pilot would measure these same numbers on your equipment. <a href="/projects/tamoz-technical.html#trial">Read the trial and its limits</a>.</p>
+          <p>This was one simulated station and three test runs of 30 simulated hours each. Only one of three fault families earned a rule, and the trial approver was scripted. The rule reduced model calls but missed its target: 13 of 17 detected faults still needed the model, against a goal of half the comparison. It did not improve misalignment repairs. The model repeatedly misdiagnosed sensor drift. These results are limited to simulation and do not establish industrial performance or savings. A pilot would measure these same numbers on your equipment. <a href="/projects/tamoz-technical.html#trial">Read the trial and its limits</a>.</p>
           <h3>Simulator rounds across several domains</h3>
           <p>Earlier rounds exercised timing, approvals, memory, and recovery in scenarios including aquaculture, water networks, and cold chain. Their reasoning was scripted. They tested the surrounding machinery, rather than a model's ability to diagnose those situations. <a href="/projects/tamoz-technical.html#rounds">Read the simulator evidence</a>.</p>
           <h3 id="real-motor">From Tamoz to a real board</h3>
           <figure class="project-figure">
-            <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" loading="lazy" />
+            <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" style="aspect-ratio: 1056 / 597; object-fit: cover" loading="lazy" />
             <figcaption class="evidence-caption">Photo of the hardware bench: an ELEGOO Mega 2560, a DHT11 temperature and humidity sensor, a motor-driver circuit, and a small DC motor with a fan blade.</figcaption>
           </figure>
           <p>We have run the whole route on real hardware: from Tamoz's proposal, through policy and a person's approval, to a command on a small board with a fan motor. Three recorded sessions on 25 October 2026 took this path.</p>
