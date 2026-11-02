@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tamoz for industrial operations | Ghassan Alhamoud</title>
-  <meta name="description" content="Tamoz helps industrial teams explore how sensor data can support monitoring, operational decisions, and efforts to reduce waste and costs." />
+  <title>Tamoz | An AI agent for the physical world</title>
+  <meta name="description" content="How Tamoz works with sensor streams, reasons about changes, proposes governed responses, and learns from verified outcomes. System design, demonstrations, and limits." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz.html" />
-  <meta property="og:title" content="Tamoz for industrial operations" />
-  <meta property="og:description" content="Monitor equipment and processes, investigate changes, and test opportunities to reduce waste and operating costs." />
+  <meta property="og:title" content="Tamoz | An AI agent for the physical world" />
+  <meta property="og:description" content="How Tamoz works with sensor streams, reasons about changes, proposes governed responses, and learns from verified outcomes. System design, demonstrations, and limits." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    "name": "Tamoz",
-    "description": "Pre-release, open-source, stream-native agent that watches equipment sensor streams, proposes governed actions, and learns repair rules from its own verified repairs with human approval. Evidence so far is from simulation and one small bench.",
-    "programmingLanguage": "Ruby",
-    "license": "https://opensource.org/licenses/MIT",
-    "codeRepository": "https://github.com/ghassan-ai-projects/tamoz",
-    "author": {"@type": "Person", "name": "Ghassan Alhamoud"}
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://ghassan-alhamoud.com/projects/tamoz.html#software",
+  "name": "Tamoz",
+  "description": "Pre-release software for reasoning about sensor-stream situations, proposing governed responses, and storing evidence about outcomes.",
+  "applicationCategory": "BusinessApplication",
+  "author": {
+    "@type": "Person",
+    "name": "Ghassan Alhamoud"
   }
+}
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/favicon.svg" />
@@ -51,87 +53,127 @@
     <div class="container article-layout article-layout--single">
       <article>
         <header class="article-single__header">
-          <div class="article-single__meta"><span>Tamoz</span><span class="article-card__dot"></span><span>Early-stage project · Seeking a first pilot partner</span></div>
-          <h1 class="article-single__title">Turn industrial data into useful decisions.</h1>
-          <div class="article-single__body project-single__body"><p>Tamoz helps industrial teams monitor equipment and processes, investigate changes, and explore opportunities to reduce waste and operating costs. We are looking for a first pilot partner to test the approach in a real operation.</p></div>
+          <div class="article-single__meta"><span>Tamoz</span><span class="article-card__dot"></span><span>Project overview · Early-stage software</span></div>
+          <h1 class="article-single__title">An AI agent that follows what is happening in the physical world.</h1>
+          <div class="article-single__body project-single__body"><p>Tamoz works with sensor streams from equipment and processes. It reasons about changes, proposes a response, and stores evidence about the outcome. A separate stream layer handles monitoring, timing, and the rules that govern actions.</p></div>
           <div class="project-single__actions">
-            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Discuss your operation</span></a>
-            <a class="btn btn--secondary" href="#evidence">See an example</a>
+            <a class="btn btn--primary" href="/tamoz/"><span>Discuss an industrial pilot</span></a>
+            <a class="btn btn--secondary" href="/projects/tamoz-technical.html">Technical deep dive</a>
+            <a class="btn btn--secondary" href="#evidence">See the evidence</a>
           </div>
         </header>
 
         <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into Situation v47; Tamoz turns it into an intent with no magnitude, mode bounded cooling; the policy plane converts it into a bounded command under the firmware ceiling of 60 percent duty with a 10 second lease; the fan spins while the lease runs, the readings cool, and the outcome returns to Tamoz as experience.">
           <div class="scene__stage" style="--aspect: 2.45"></div>
-          <figcaption class="evidence-caption">Illustrative animation, time-compressed. The 60 % ceiling and 10-second lease refer to the small fan bench. The readings are not telemetry. The full agent-to-motor path has not yet been verified on the bench. The proposed pilot starts read-only.</figcaption>
+          <figcaption class="evidence-caption">Illustrative fan-control design, not live telemetry. Policy sets the bounds; firmware enforces them. The full agent-to-motor path has not yet been verified on the bench. <a href="/projects/tamoz-technical.html#hardware">Hardware evidence</a>.</figcaption>
         </figure>
 
-
         <div class="article-single__body project-single__body">
+          <nav class="article-toc" aria-label="On this page">
+            <p><strong>On this page</strong></p>
+            <ul>
+              <li><a href="#problem">What Tamoz is built for</a></li>
+              <li><a href="#design">Three systems working together</a></li>
+              <li><a href="#decisions">How a decision works</a></li>
+              <li><a href="#learning">Learning from verified outcomes</a></li>
+              <li><a href="#evidence">What has been tested</a></li>
+              <li><a href="#boundary">What remains to be shown</a></li>
+              <li><a href="#pilot">Try it on an operational question</a></li>
+            </ul>
+          </nav>
 
+          <h2 id="problem">What Tamoz is built for</h2>
+          <p>A cold room warms up overnight. Equipment starts drawing more power. A sensor stops reporting. Each situation needs context before someone can decide whether to investigate, wait, or act.</p>
+          <p>Tamoz is designed to reason when the available data shows a meaningful change. The stream layer keeps watching between those changes. This avoids asking a model to interpret every reading and lets the agent work from a consistent view of the situation.</p>
+          <p>The intended applications include monitoring, alerts, investigation, and recommendations across equipment and processes. Benefits such as lower energy use or less material waste would need to be measured in an operational pilot.</p>
 
-          <h2 id="problem">Start with a problem that matters to your operation</h2>
-          <p>It could be energy use you cannot explain, recurring alerts that take too long to investigate, or a process where material is regularly wasted. We work with your team to choose one question and assess what data is needed.</p>
-          <div class="cap-grid">
-            <div class="cap-card"><h3>Energy and utilities</h3><p>Monitor consumption and investigate changes that could point to waste.</p></div>
-            <div class="cap-card"><h3>Equipment and processes</h3><p>Follow operating conditions and highlight deviations that need attention.</p></div>
-            <div class="cap-card"><h3>Alerts and response</h3><p>Bring relevant readings together and suggest what the team could check next.</p></div>
-            <div class="cap-card"><h3>Recurring situations</h3><p>Review outcomes and explore whether a successful response can be reused.</p></div>
+          <h2 id="design">Three systems working together</h2>
+          <ul>
+            <li><strong>Agentic Stream</strong> receives sensor events, tracks their timestamps and quality, builds the current situation, and decides when reasoning is needed. It also checks proposed actions against fixed policy.</li>
+            <li><strong>Tamoz</strong> reasons about the situation, gathers evidence through permitted tools, and proposes a response. Its execution is checkpointed so work can recover after a crash.</li>
+            <li><strong>Streams Simulator</strong> supplies a test world with sensor readings and scheduled faults. Recorded sessions can be replayed to investigate decisions and compare changes without touching equipment.</li>
+          </ul>
+        <figure class="diagram">
+          <p class="diagram__title">The system from readings to outcomes</p>
+          <div class="diagram__scroll" tabindex="0" role="region" aria-label="System diagram, scroll horizontally">
+            <svg viewBox="0 0 820 300" role="img" aria-labelledby="d1-title d1-desc">
+              <title id="d1-title">The stream-to-action loop</title>
+              <desc id="d1-desc">Five stages from left to right: the world produces readings; Agentic Stream turns them into a versioned Situation; Tamoz understands it and proposes what should happen; the policy plane decides how much and whether it may happen; the device edge acts within a lease and a ceiling. The world then changes and new readings arrive. The observed outcome returns to Tamoz and is remembered as Experience.</desc>
+              <defs>
+                <marker id="d1-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
+                <marker id="d1-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
+              </defs>
+              <path class="dg-line dg-line--dash" d="M740 90 V54 H80 V84" marker-end="url(#d1-ah)"/>
+              <text class="dg-s" x="410" y="44" text-anchor="middle">The world changes, and new readings arrive</text>
+
+              <rect class="dg-box" x="10" y="90" width="140" height="112" rx="8"/>
+              <text class="dg-k" x="80" y="112" text-anchor="middle">1 · SENSE</text>
+              <text class="dg-t" x="80" y="136" text-anchor="middle">The world</text>
+              <text class="dg-s" x="80" y="156" text-anchor="middle">Sensors, machines,</text>
+              <text class="dg-s" x="80" y="171" text-anchor="middle">a cold box at 8 °C</text>
+              <text class="dg-s dg-code" x="80" y="191" text-anchor="middle">→ readings</text>
+
+              <rect class="dg-box" x="175" y="90" width="140" height="112" rx="8"/>
+              <text class="dg-k" x="245" y="112" text-anchor="middle">2 · SITUATE</text>
+              <text class="dg-t" x="245" y="136" text-anchor="middle">Agentic Stream</text>
+              <text class="dg-s" x="245" y="156" text-anchor="middle">Event time, windows,</text>
+              <text class="dg-s" x="245" y="171" text-anchor="middle">silent sensors</text>
+              <text class="dg-s dg-code" x="245" y="191" text-anchor="middle">→ Situation v47</text>
+
+              <rect class="dg-box dg-box--accent" x="340" y="90" width="140" height="112" rx="8"/>
+              <text class="dg-k dg-accent" x="410" y="112" text-anchor="middle">3 · UNDERSTAND</text>
+              <text class="dg-t" x="410" y="136" text-anchor="middle">Tamoz</text>
+              <text class="dg-s" x="410" y="156" text-anchor="middle">Diagnoses, weighs</text>
+              <text class="dg-s" x="410" y="171" text-anchor="middle">confounders, decides</text>
+              <text class="dg-s dg-code dg-accent" x="410" y="191" text-anchor="middle">→ intent: what</text>
+
+              <rect class="dg-box dg-box--info" x="505" y="90" width="140" height="112" rx="8"/>
+              <text class="dg-k dg-info" x="575" y="112" text-anchor="middle">4 · GOVERN</text>
+              <text class="dg-t" x="575" y="136" text-anchor="middle">Policy plane</text>
+              <text class="dg-s" x="575" y="156" text-anchor="middle">Freshness, risk,</text>
+              <text class="dg-s" x="575" y="171" text-anchor="middle">approval, limits</text>
+              <text class="dg-s dg-code dg-info" x="575" y="191" text-anchor="middle">→ command: how much</text>
+
+              <rect class="dg-box" x="670" y="90" width="140" height="112" rx="8"/>
+              <text class="dg-k" x="740" y="112" text-anchor="middle">5 · ACT</text>
+              <text class="dg-t" x="740" y="136" text-anchor="middle">Device edge</text>
+              <text class="dg-s" x="740" y="156" text-anchor="middle">Gateway + firmware:</text>
+              <text class="dg-s" x="740" y="171" text-anchor="middle">lease, cap, safe-stop</text>
+              <text class="dg-s dg-code" x="740" y="191" text-anchor="middle">→ motion</text>
+
+              <path class="dg-line" d="M152 146 H172" marker-end="url(#d1-ah)"/>
+              <path class="dg-line" d="M317 146 H337" marker-end="url(#d1-ah)"/>
+              <path class="dg-line" d="M482 146 H502" marker-end="url(#d1-ah)"/>
+              <path class="dg-line" d="M647 146 H667" marker-end="url(#d1-ah)"/>
+
+              <path class="dg-line dg-line--accent dg-line--dash" d="M740 202 V260 H410 V208" marker-end="url(#d1-aha)"/>
+              <text class="dg-k dg-accent" x="575" y="252" text-anchor="middle">6 · LEARN</text>
+              <text class="dg-s" x="575" y="282" text-anchor="middle">The outcome is observed independently and remembered as Experience</text>
+            </svg>
           </div>
-          <p>These are potential applications. A pilot would test whether Tamoz can help with your specific problem and whether the results justify further work.</p>
+          <p class="diagram__hint">Scroll sideways to see the whole loop.</p>
+          <figcaption class="evidence-caption">Illustrative system design. The simulator rounds exercised this loop with a scripted reasoner. The real-model pump trial and the separate fan bench are described below.</figcaption>
+        </figure>
 
-          <h2>A possible pilot: energy use on a production line</h2>
-          <p>A team notices that energy use stays high when a production line is idle, but does not know which equipment is responsible. We could start by looking at production schedules and available energy readings. If the data is not detailed enough, we could discuss adding sensors with the team.</p>
-          <p>Tamoz could monitor consumption against operating hours, flag periods worth investigating, and bring the readings together for review. The team could then check the equipment and decide whether a change is needed. We would agree on measures such as idle consumption and the time spent investigating before the pilot starts.</p>
-          <p><strong>This is an example, not a customer result.</strong> The pilot would test whether the data and recommendations are useful and whether any change reduces energy use.</p>
+          <h2 id="decisions">How a decision works</h2>
+          <p>Consider a cold box that should hold 4 °C but reads 8 °C and is still warming. A reading alone does not explain whether the door was opened, the room became warmer, or a probe is unreliable.</p>
+          <ol>
+            <li><strong>Build the situation.</strong> Combine the readings, their timing, and quality into a fixed snapshot of the available evidence.</li>
+            <li><strong>Investigate.</strong> Give the agent that snapshot and a budget for reasoning and permitted evidence tools.</li>
+            <li><strong>Propose.</strong> Record what was observed, what the agent infers, its uncertainty, and the response it suggests.</li>
+            <li><strong>Check.</strong> Apply policy for freshness, approval, rate limits, and device authority before any equipment action.</li>
+            <li><strong>Verify.</strong> Record what happened, keeping command receipt, device reports, and independently observed effects separate.</li>
+          </ol>
+          <p>In the cold-box example, the model can propose a cooling mode. It cannot choose motor power or run time. Those limits belong to policy and device firmware. An operational pilot would start with a read-only feed and recommendations for the team.</p>
 
-          <h2 id="design">From monitoring to a response</h2>
-          <p>Tamoz is being built to monitor sensor data, alert teams to changes, bring relevant information together, and recommend a response. Your team reviews the recommendations and decides what to do.</p>
-          <figure class="diagram">
-            <p class="diagram__title">From operational data to a team decision</p>
-            <div class="diagram__scroll">
-              <svg viewBox="0 0 820 160" role="img" aria-labelledby="pilot-flow-title pilot-flow-desc">
-                <title id="pilot-flow-title">A read-only pilot</title>
-                <desc id="pilot-flow-desc">Sensor data from equipment and processes is monitored. Changes and relevant information are presented with a suggested response. The team reviews the information and decides what to do.</desc>
-                <defs><marker id="pilot-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker></defs>
-                <rect class="dg-box" x="10" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k" x="80" y="47" text-anchor="middle">1 · DATA</text>
-                <text class="dg-t" x="80" y="72" text-anchor="middle">Sensors</text>
-                <text class="dg-s" x="80" y="95" text-anchor="middle">Equipment and</text>
-                <text class="dg-s" x="80" y="111" text-anchor="middle">process readings</text>
-                <rect class="dg-box" x="175" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k" x="245" y="47" text-anchor="middle">2 · WATCH</text>
-                <text class="dg-t" x="245" y="72" text-anchor="middle">Monitor</text>
-                <text class="dg-s" x="245" y="95" text-anchor="middle">Follow readings</text>
-                <text class="dg-s" x="245" y="111" text-anchor="middle">and flag changes</text>
-                <rect class="dg-box dg-box--accent" x="340" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k dg-accent" x="410" y="47" text-anchor="middle">3 · REVIEW</text>
-                <text class="dg-t" x="410" y="72" text-anchor="middle">Context</text>
-                <text class="dg-s" x="410" y="95" text-anchor="middle">Bring relevant</text>
-                <text class="dg-s" x="410" y="111" text-anchor="middle">information together</text>
-                <rect class="dg-box dg-box--info" x="505" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k dg-info" x="575" y="47" text-anchor="middle">4 · SUGGEST</text>
-                <text class="dg-t" x="575" y="72" text-anchor="middle">Response</text>
-                <text class="dg-s" x="575" y="95" text-anchor="middle">Recommend what</text>
-                <text class="dg-s" x="575" y="111" text-anchor="middle">to check or do</text>
-                <rect class="dg-box" x="670" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k" x="740" y="47" text-anchor="middle">5 · DECIDE</text>
-                <text class="dg-t" x="740" y="72" text-anchor="middle">Your team</text>
-                <text class="dg-s" x="740" y="95" text-anchor="middle">Review and decide</text>
-                <text class="dg-s" x="740" y="111" text-anchor="middle">what happens next</text>
-                <path class="dg-line" d="M152 75 H172" marker-end="url(#pilot-flow-arrow)"/>
-                <path class="dg-line" d="M317 75 H337" marker-end="url(#pilot-flow-arrow)"/>
-                <path class="dg-line" d="M482 75 H502" marker-end="url(#pilot-flow-arrow)"/>
-                <path class="dg-line" d="M647 75 H667" marker-end="url(#pilot-flow-arrow)"/>
-              </svg>
-            </div>
-            <p class="diagram__hint">Scroll sideways to see the full flow.</p>
-            <figcaption class="evidence-caption">Illustrative flow for a proposed read-only pilot. Your team decides what happens next.</figcaption>
-          </figure>
+          <h2 id="learning">Learning from verified outcomes</h2>
+          <p>Tamoz keeps outcome evidence so later decisions can refer to earlier situations. The pump trial also tested a more specific learning loop: repeated verified repairs could lead to a proposed rule.</p>
+          <p>A draft rule was replayed against earlier data, approved, and tested in shadow before becoming active. Once active, it could handle that pattern without another model call. In the trial, one of three fault families produced an approved rule. The trial used a scripted approver; human review in an operation remains to be tested.</p>
+          <p><a href="/projects/tamoz-technical.html#rule-promotion">Read how rule promotion works</a>.</p>
 
-          <p>The system can also be tested against recorded or simulated situations. In a pump simulation, verified repairs became a rule after review and testing. The rule could then respond to that pattern without another model call. We would need to test whether this approach is useful for other situations.</p>
-
-          <h2 id="evidence">One example: a pump station trial</h2>
-          <p>In a simulated eight-pump station, Tamoz examined sensor readings and recommended maintenance for injected faults. In one fault family, verified repairs led to a rule that made five correct, on-time decisions without a model call. The rule did not act on three healthy look-alikes.</p>
+          <h2 id="evidence">What has been tested</h2>
+          <h3>A pump station with a real model</h3>
+          <p>In one simulated eight-pump station, Tamoz diagnosed injected faults and booked maintenance. A rule learned from verified repairs made five correct, on-time decisions without another model call. It made no intervention on three healthy look-alikes.</p>
           <figure class="project-figure clip">
             <div class="clip__frame">
               <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="A simulated pump develops a vibration fault, receives a maintenance recommendation, and recovers after repair." aria-describedby="clip-fault-response-desc">
@@ -142,25 +184,26 @@
             <p class="sr-only" id="clip-fault-response-desc">A simulated pump's axial vibration rises. The system recommends alignment maintenance, a booking is received, and the simulated pump is repaired. The booking's effect was not independently read back.</p>
             <figcaption class="evidence-caption">Modeled: a recorded simulator run, animated and sped up. This is a simulated maintenance booking, not a field deployment.</figcaption>
           </figure>
-          <p>The trial covered one simulated station, one seed and three test days. Only one of three fault families produced an approved rule; the trial approver was scripted. These results do not establish savings, reliability, or performance on real equipment. <a href="/projects/tamoz-technical.html#trial">Explore the trial and its limits</a>.</p>
+          <p>This was one simulated station, one seed, and three test days. Only one of three fault families earned a rule; the trial approver was scripted. The model repeatedly misdiagnosed sensor drift. These results establish a limited simulation result, not industrial performance or savings. <a href="/projects/tamoz-technical.html#trial">Read the trial and its limits</a>.</p>
+          <h3>Simulator rounds across several domains</h3>
+          <p>Earlier rounds exercised timing, approvals, memory, and recovery in scenarios including aquaculture, water networks, and cold chain. Their reasoning was scripted. They tested the surrounding machinery, rather than a model's ability to diagnose those situations. <a href="/projects/tamoz-technical.html#rounds">Read the simulator evidence</a>.</p>
+          <h3 id="real-motor">A separate hardware bench</h3>
+          <figure class="project-figure">
+            <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" loading="lazy" />
+            <figcaption class="evidence-caption">Photo of the hardware bench used for the motor test: an ELEGOO Mega 2560, a DHT11 temperature and humidity sensor, a motor-driver circuit, and a small DC motor with a fan blade.</figcaption>
+          </figure>
+          <p>A governed command spun a small fan motor through a gateway and firmware with fixed limits. Rotation was observed by the operator, not instrumented. This was a small hardware bench, and the full route from Tamoz's intent to that motor has not yet been verified. <a href="/projects/tamoz-technical.html#hardware">Read the bench evidence</a> or the <a href="/articles/agent-spun-the-motor.html">motor test and wiring fix</a>.</p>
 
-          <h2 id="pilot">A focused first pilot</h2>
-          <p>We are looking for an industrial team interested in testing Tamoz on a real operational question. We would agree on the scope, terms, and measures together.</p>
-          <ol>
-            <li><strong>Choose a problem.</strong> Select a process or asset and agree on the result we want to investigate.</li>
-            <li><strong>Assess the data.</strong> Use existing sensor data where suitable. If it is missing, we can discuss installing sensors with your team and following your site requirements.</li>
-            <li><strong>Monitor and review.</strong> Where useful history exists, replay it. Otherwise, collect a baseline and review live readings, alerts, and recommendations with your team.</li>
-            <li><strong>Evaluate the results.</strong> Compare what we learned with the measures agreed at the start and decide together what to do next.</li>
-          </ol>
-          <p>Depending on the problem, measures could include energy use, material waste, the time spent investigating alerts, or the usefulness of recommendations. The pilot starts read-only. Your team remains in control of decisions. Any later equipment action would require a separate agreement and safeguards.</p>
+          <h2 id="boundary">What remains to be shown</h2>
+          <p>Tamoz is pre-release software. There has been no field deployment, and we have not yet established savings in a real operation. The simulations do not establish safety certification, fault coverage, or reliability on industrial equipment.</p>
+          <p>The proposed pilot starts with monitoring and recommendations. The customer decides what to do. Any later equipment action would require its own agreed scope and safeguards; existing safety systems remain responsible for protection.</p>
 
-          <h2 id="boundary">Where the project stands</h2>
-          <p>Tamoz is an early-stage, open-source project seeking its first operational pilot. The approach has been tested in simulation and on a small hardware bench. We have not yet established savings in a real operation. Explore the <a href="/projects/tamoz-technical.html">evidence, technical details and limitations</a>, or view the <a href="https://github.com/ghassan-ai-projects/tamoz" target="_blank" rel="noopener noreferrer">public source code</a>.</p>
-
+          <h2 id="pilot">Try it on an operational question</h2>
+          <p>We are seeking a first operational pilot. The founding team can work with an industrial team to choose one problem, assess existing data or install suitable sensors, and measure the results.</p>
           <div class="article-cta">
-            <p class="article-cta__text">Have an operational problem you want to understand better? Tell us about your operation and what you would like to improve. We can discuss whether a pilot makes sense.</p>
-            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Discuss your operation</span></a>
-            <p class="article-cta__text"><a href="/connect/">Other ways to reach me</a> · <a href="/projects/tamoz-use-cases.html">Use cases</a> · <a href="/projects/tamoz-technical.html">Technical deep dive</a></p>
+            <p class="article-cta__text">The pilot page explains the proposed work, what your team would receive, and how to start a conversation.</p>
+            <a class="btn btn--primary" href="/tamoz/"><span>Explore the industrial pilot</span></a>
+            <p class="article-cta__text"><a href="/projects/tamoz-technical.html">Technical deep dive</a> · <a href="/projects/tamoz-use-cases.html">Detailed use cases</a></p>
           </div>
         </div>
       </article>
