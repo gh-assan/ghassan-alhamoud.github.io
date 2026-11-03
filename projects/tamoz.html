@@ -33,6 +33,7 @@
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
+  <link rel="stylesheet" href="/assets/css/rule-story.css" />
 </head>
 <body>
   <header class="header" id="header">
@@ -109,15 +110,86 @@
             </blockquote>
             <figcaption class="evidence-caption">From the simulated pump trial, where the approver was scripted.</figcaption>
           </figure>
-          <figure class="project-figure clip">
-            <div class="clip__frame">
-              <video controls muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/rule-learned-poster.webp" aria-label="Animation: pump 5's first misalignment goes to the model, three verified repairs produce a rule, and the rule answers the same fault five days later with no model call." aria-describedby="clip-rule-learned-desc">
-                <source src="/images/projects/tamoz/clips/rule-learned.webm" type="video/webm" />
-                <source src="/images/projects/tamoz/clips/rule-learned.mp4" type="video/mp4" />
-              </video>
+          <figure class="rule-story" id="rule-story" aria-label="How Tamoz learned a rule, in six steps">
+            <ol class="rule-story__steps">
+              <li class="rule-story__step">
+                <p class="rule-story__title">A pump starts to drift</p>
+                <p class="rule-story__sub">Vibration climbs above this pump's own normal. No rule covers it yet.</p>
+                <svg class="rule-story__chart" viewBox="0 0 800 260" role="img" aria-label="Pump 5's axial vibration climbing from its normal of about 2 millimetres per second up to the warning."><line class="rs-grid" x1="46" x2="786" y1="195.4" y2="195.4"/><text x="38" y="200.4" text-anchor="end">2</text><line class="rs-grid" x1="46" x2="786" y1="42.6" y2="42.6"/><text x="38" y="47.6" text-anchor="end">3</text><line class="rs-normal" x1="46" x2="786" y1="186.3" y2="186.3"/><text class="rs-normal-label" x="663.9" y="208.3" text-anchor="end">its own normal</text><text x="46" y="250">axial vibration, mm/s, over simulated hours</text><polyline class="rs-line" pathLength="1" points="55.3,195.1 76.7,194.4 98.1,197.3 119.5,190.2 140.9,186.0 162.5,180.6 183.7,180.9 205.3,170.4 226.8,171.9 248.4,163.5 269.9,163.2 291.3,155.7 312.7,150.9 334.0,151.1 355.5,141.8 377.1,140.2 398.5,135.2 420.2,131.8 441.7,121.1 463.3,124.4 484.7,114.0 506.4,109.5 527.8,108.3 549.2,101.4 570.6,95.5 592.0,99.0 613.4,88.4 634.9,83.8 656.3,72.7"/><g class="rs-late"><line class="rs-mark" x1="673.9" x2="673.9" y1="12" y2="226"/><text class="rs-mark-label" x="663.9" y="32" text-anchor="end">Warning: 2.76 against its usual 2.06</text></g></svg>
+              </li>
+              <li class="rule-story__step">
+                <p class="rule-story__title">So the model is asked</p>
+                <p class="rule-story__sub">It explains what it sees, and how sure it is.</p>
+                <div class="rule-story__split">
+                  <div class="rule-story__card">
+                    <p><span class="rule-story__label">Saw:</span> axial vibration about 34% above this pump's 24-hour baseline, while radial vibration and current stayed flat.</p>
+                    <p><span class="rule-story__label">Thinks:</span> shaft misalignment. Confidence 0.75.</p>
+                    <p><span class="rule-story__label">Proposes:</span> schedule maintenance for misalignment.</p>
+                  </div>
+                  <div class="rule-story__stat"><strong>21 s</strong><span>for the model to answer</span></div>
+                </div>
+              </li>
+              <li class="rule-story__step">
+                <p class="rule-story__title">The repair works. Then it works again.</p>
+                <p class="rule-story__sub">Each fault stayed away after the repair, so each one counts as verified.</p>
+                <ul class="rule-story__checks rs-seq">
+                  <li>Pump 5: misalignment repaired, verified</li>
+                  <li>Pump 7: misalignment repaired, verified</li>
+                  <li>Pump 3: misalignment repaired, verified</li>
+                  <li><strong>Three verified repairs. Enough to draft a rule.</strong></li>
+                </ul>
+              </li>
+              <li class="rule-story__step">
+                <p class="rule-story__title">The rule has to earn its place</p>
+                <div class="rule-story__card rule-story__card--accent">
+                  <p><span class="rule-story__label">When</span> a pump's 15-minute axial vibration is at least 1.25 times its own 24-hour average</p>
+                  <p><span class="rule-story__label">Do</span> schedule alignment maintenance</p>
+                </div>
+                <ul class="rule-story__checks rs-seq">
+                  <li>Replayed on past data: fired 3 times, agreed 3 times</li>
+                  <li>Approved (a scripted approver in this trial)</li>
+                  <li>Ran in shadow: agreed 3 times without acting</li>
+                  <li>Active</li>
+                </ul>
+              </li>
+              <li class="rule-story__step">
+                <p class="rule-story__title">Five days later, the same fault</p>
+                <p class="rule-story__sub">Same pump, same climb. This time the rule answers.</p>
+                <svg class="rule-story__chart" viewBox="0 0 800 200" role="img" aria-label="Pump 5's axial vibration climbing from its normal of about 2 millimetres per second up to the warning."><line class="rs-grid" x1="46" x2="786" y1="144.0" y2="144.0"/><text x="38" y="149.0" text-anchor="end">2</text><line class="rs-grid" x1="46" x2="786" y1="34.0" y2="34.0"/><text x="38" y="39.0" text-anchor="end">3</text><line class="rs-normal" x1="46" x2="786" y1="137.4" y2="137.4"/><text class="rs-normal-label" x="701.0" y="159.4" text-anchor="end">its own normal</text><text x="46" y="190">axial vibration, mm/s, over simulated hours</text><polyline class="rs-line" pathLength="1" points="55.5,142.0 77.0,141.9 98.6,148.5 120.0,142.0 141.4,145.0 162.8,145.5 183.9,142.8 205.3,134.0 226.5,133.8 247.9,130.4 269.4,126.8 291.0,123.5 312.6,121.6 333.8,120.4 355.4,115.1 376.6,111.1 398.1,108.5 419.4,102.2 440.6,101.3 461.8,100.7 483.4,94.1 505.1,95.3 526.5,90.0 548.1,80.8 569.6,81.1 591.0,79.0 612.6,75.0 634.0,72.3 655.7,67.1 677.3,62.2 698.8,62.8"/><g class="rs-late"><line class="rs-mark" x1="711.0" x2="711.0" y1="12" y2="166"/><text class="rs-mark-label" x="701.0" y="32" text-anchor="end">Warning</text></g></svg>
+                <div class="rule-story__split rs-late" style="margin-top:.75rem">
+                  <div class="rule-story__card">
+                    <p><span class="rule-story__label">Decided by the rule.</span> No model call.</p>
+                    <p>2.74 is 1.33 times this pump's normal 2.05, above the rule's 1.25.</p>
+                  </div>
+                  <div class="rule-story__stat"><strong>1.09 ms</strong><span>to decide</span></div>
+                </div>
+              </li>
+              <li class="rule-story__step">
+                <p class="rule-story__title">Same fault, before and after</p>
+                <div class="rule-story__compare">
+                  <div class="rule-story__card">
+                    <h4>First time: the model</h4>
+                    <div class="rule-story__kv"><span>Model calls</span><strong>1</strong></div>
+                    <div class="rule-story__kv"><span>Time to decide</span><strong>21 s</strong></div>
+                    <div class="rule-story__kv"><span>Warning to booking</span><strong>81 s</strong></div>
+                  </div>
+                  <div class="rule-story__card rule-story__card--accent">
+                    <h4>After learning: the rule</h4>
+                    <div class="rule-story__kv"><span>Model calls</span><strong>0</strong></div>
+                    <div class="rule-story__kv"><span>Time to decide</span><strong>about 1 ms</strong></div>
+                    <div class="rule-story__kv"><span>Warning to booking</span><strong>60 s</strong></div>
+                  </div>
+                </div>
+                <p class="rule-story__note">Both waited the system's 60-second delay, and both booked the same repair. In this trial one of three fault types earned a rule.</p>
+              </li>
+            </ol>
+            <div class="rule-story__controls">
+              <div class="rule-story__dots"></div>
+              <button type="button" class="rule-story__btn" data-rs="toggle">Pause</button>
+              <button type="button" class="rule-story__btn" data-rs="back">Back</button>
+              <button type="button" class="rule-story__btn rule-story__btn--next" data-rs="next">Next</button>
             </div>
-            <p class="sr-only" id="clip-rule-learned-desc">Pump 5's axial vibration climbs above its own normal, reaching 2.76 millimetres per second against a usual 2.06, and no rule covers it yet. The model is asked. In 21 seconds it reports that axial vibration is about 34 percent above the pump's 24-hour baseline while radial vibration and current stayed flat, says it thinks this is shaft misalignment with confidence 0.75, and proposes maintenance. Misalignment repairs on pumps 5, 7 and 3 are verified, which is enough to draft a rule: when a pump's 15-minute axial vibration is at least 1.25 times its own 24-hour average, schedule alignment maintenance. The rule is replayed on past data, where it fired 3 times and agreed 3 times, approved by a scripted approver in this trial, and agrees 3 times in shadow before becoming active. Five simulated days later the same fault appears on pump 5, at 2.74, which is 1.33 times its normal 2.05. The rule decides in 1.09 milliseconds with no model call. A final comparison shows the first case with 1 model call, 21 seconds to decide and 81 seconds from warning to booking, and the later case with no model call, about 1 millisecond to decide and 60 seconds to booking. Both waited a 60-second delay and booked the same repair. One of three fault types earned a rule in this trial.</p>
-            <figcaption class="evidence-caption">Animated from recorded simulator runs of the pump trial (pump 5, 2 and 7 January). Readings, the model's answer in short form, and wall-clock timings are as recorded.</figcaption>
+            <figcaption class="evidence-caption">From recorded simulator runs of the pump trial (pump 5, 2 and 7 January). Readings, the model's answer in short form, and wall-clock timings are as recorded. <a href="/images/projects/tamoz/clips/rule-learned.mp4">Watch it as a one-minute video</a>.</figcaption>
           </figure>
           <p>It's an ordinary rule. Your team can read it, question it, and switch it off. If the equipment changes or the repair stops holding, it switches itself off and the model takes over. The aim is for the model's job to shrink to what's still unknown, while what you've learned stays in rules you own.</p>
           <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself.</p>
@@ -321,6 +393,7 @@
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
   <script src="/assets/js/clip-loop.js" defer></script>
+  <script src="/assets/js/rule-story.js" defer></script>
   <script src="/assets/js/motion/core.js?v=20260926" defer></script>
   <script src="/assets/js/motion/scene-tamoz.js?v=20260926" defer></script>
 </body>

@@ -90,6 +90,16 @@ class TamozPagesTest(unittest.TestCase):
         validator = runpy.run_path(str(ROOT / 'scripts/validate-site.py'))
         self.assertIn(ROOT / 'tamoz/index.html', validator['published_files']())
 
+    def test_rule_story_keeps_its_steps_and_recorded_numbers(self):
+        steps = [attrs for tag, attrs in self.project.elements
+                 if attrs.get('class') == 'rule-story__step']
+        self.assertEqual(len(steps), 6)
+        text = ' '.join(self.project.text)
+        for recorded in ('21 s', '1.09 ms', '81 s', '60 s', 'scripted approver'):
+            self.assertIn(recorded, text)
+        self.assertIn('/assets/js/rule-story.js',
+                      [attrs.get('src') for tag, attrs in self.project.elements if tag == 'script'])
+
 
 if __name__ == '__main__':
     unittest.main()
