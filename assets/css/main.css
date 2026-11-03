@@ -2756,6 +2756,31 @@ html.js .reveal--visible {
   .system-card--flagship .system-card__action {
     margin-top: 0.5rem;
   }
+
+  /* With an image: text reads down the left, the image fills the right. */
+  .system-card--with-image {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .system-card--with-image .system-card__proof,
+  .system-card--with-image .article-card__tags {
+    grid-column: 1;
+  }
+
+  .system-card--with-image .system-card__image {
+    grid-column: 2;
+    grid-row: 1 / span 5;
+    align-self: center;
+    margin: 0;
+  }
+}
+
+.system-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0.25rem 0 1rem;
+  border-radius: var(--radius-md);
 }
 
 /* Single highlighted proof line inside a system card */
