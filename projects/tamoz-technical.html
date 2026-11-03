@@ -255,7 +255,7 @@
               </tbody>
             </table>
           </div>
-          <p>Twelve joint invariants are release-blocking for the pair. A few of them carry most of the design. Both sides compute byte-identical snapshot digests. Tamoz never computes event time, a watermark, lateness, or window membership. The stream never calls a model on its deterministic path. Every attempt is identified by <code>(episode_id, attempt_id, fence)</code>, and output from a stale attempt is refused even if its snapshot matches. And no intent executes without passing the stream's policy pipeline, whichever executor produced it.</p>
+          <p>Twelve joint invariants are release-blocking for the pair. They come from a private integration document that requires an executable test for each, and this page doesn't claim all twelve have one. A few of them carry most of the design. Both sides compute byte-identical snapshot digests. Tamoz never computes event time, a watermark, lateness, or window membership. The stream never calls a model on its deterministic path. Every attempt is identified by <code>(episode_id, attempt_id, fence)</code>, and output from a stale attempt is refused even if its snapshot matches. And no intent executes without passing the stream's policy pipeline, whichever executor produced it.</p>
 
           <h2 id="stream-plane">2. The stream plane: from events to Situations</h2>
           <p>Agentic Stream is a modular monolith in Go 1.26: one process, SQLite in WAL mode, restricted CEL for rules, and YAML SituationSpecs compiled and digested at load. Here's the path of one event:</p>
