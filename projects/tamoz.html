@@ -73,7 +73,8 @@
             <p><strong>On this page</strong></p>
             <ul>
               <li><a href="#problem">What Tamoz is built for</a></li>
-              <li><a href="#design">Three systems working together</a></li>
+              <li><a href="#capabilities">What you can do with Tamoz</a></li>
+              <li><a href="#design">How it's built</a></li>
               <li><a href="#decisions">How a decision works</a></li>
               <li><a href="#learning">Learning from verified outcomes</a></li>
               <li><a href="#evidence">What has been tested</a></li>
@@ -89,17 +90,26 @@
           <p>It also learns from what happens next. If a repair stops the rising power draw and the problem stays away, that outcome becomes evidence for later decisions. When the same repair keeps proving right, Tamoz can draft a rule for it. Once a person approves it, that rule handles the pattern without calling a model. Changes to the agent's own behaviour need a person's approval too.</p>
           <p>It's aimed at monitoring, alerts, investigation, and recommendations across equipment and processes. Savings such as lower energy use or less material waste haven't been measured in a real operation, and a pilot is how we'd find out.</p>
 
-          <h2 id="design">Three systems working together</h2>
-          <p>The system is three programs with separate jobs: one watches and governs, one reasons, and one tests the other two.</p>
+          <h2 id="capabilities">What you can do with Tamoz</h2>
           <ul>
-            <li><strong>Agentic Stream</strong> runs continuously. It records sensor events with their timing and quality, publishes each situation as a fixed version, and calls the agent only when reasoning is useful. It also owns every action: policy checks a proposal again just before dispatch, commands and their outcomes are recorded durably, and approved rules learned from earlier repairs run here without a model call.</li>
-            <li><strong>Tamoz</strong> does the reasoning, one bounded episode at a time. It works with any model, receives one fixed situation and a budget, can read further evidence through read-only tools an operator has granted, and returns a structured proposal with its uncertainty. It can also draft a rule from verified repairs for review. Its work is checkpointed so it recovers after a crash, and it has no direct path to equipment.</li>
-            <li><strong>Streams Simulator</strong> is the test instrument. It generates sensor streams, can delay or corrupt their delivery, responds to commands, and keeps a sealed record of what really happened, so results are scored against that record. Runs can be replayed from a seed. Its visual canvas builds plants from a component library, runs them, and injects faults mid-run. A real board can also join simulated devices in one recorded session. It is not a physics engine or an industrial controller.</li>
+            <li><strong>Watch it live.</strong> See sensor values and connection health as they arrive.</li>
+            <li><strong>Decide what happens.</strong> Approve, hold, or stop commands. Tamoz can propose an action, but it has no direct path to equipment.</li>
+            <li><strong>Go back and check.</strong> Step through a session's readings, commands, and outcomes on a timeline, and replay the session exactly.</li>
+            <li><strong>Try it before it touches anything.</strong> Build a simulated plant from a component library, inject faults, and score the system against a sealed record of what really happened. A device can run as a simple simulated twin before the hardware exists, and later be compared with what the real board reported.</li>
           </ul>
+          <p>It has already run end to end on real hardware: Tamoz proposed an action, a person approved it, and the command reached a real board driving a fan. <a href="#real-motor">See how that went</a>. In a simulated pump station with a real model, it also learned a new rule from verified repairs. Once approved, that rule handled five faults with no model call, all correct and on time. <a href="#evidence">See the results</a>.</p>
           <figure class="project-figure">
             <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The Streams Simulator canvas during a run of a simulated chiller plant at 12 of 30 simulated minutes. Chiller CH-2 is marked with a compressor wear fault and shows live readings beside chiller CH-1 and air-handling unit AHU-1. A panel on the right has pause, speed, effector call, and fault injection controls." width="1200" height="897" loading="lazy" />
             <figcaption class="evidence-caption">Screenshot of the simulator canvas: a simulated chiller plant while it runs, with a compressor wear fault injected on CH-2 at 12 simulated minutes. This exploratory run was not connected to Tamoz or to real equipment.</figcaption>
           </figure>
+
+          <h2 id="design">How it's built</h2>
+          <p>We call the whole system Tamoz, and it has three parts with separate jobs: one watches and acts, one reasons, and one gives people a plant to build and test, and a console to run it. The split is the point. The part that reasons can't touch equipment, and the part that touches equipment follows fixed rules.</p>
+          <ul>
+            <li><strong>Agentic Stream watches and acts.</strong> It runs all the time, recording each reading with its timing and quality, and decides when something has changed enough to need reasoning. It also carries out every action, checking the proposal against policy again just before acting and recording what happened. Approved rules learned from earlier repairs run here, without a model.</li>
+            <li><strong>The Tamoz agent reasons.</strong> It works with any model. It gets one snapshot of the situation and a limit on how much reasoning it can spend, can read further evidence through read-only tools an operator has granted, and returns a proposal with its uncertainty. It can also draft a rule from verified repairs for a person to review. Its work is saved as it goes, so it can recover after a crash, and it has no direct path to equipment.</li>
+            <li><strong>Streams Simulator is the plant and the console.</strong> It can stand in for a plant or connect to real hardware. People use it to watch sensor values, approve or stop actions, and review what happened.</li>
+          </ul>
           <p>Together they form one loop, from readings to outcomes.</p>
         <figure class="diagram">
           <p class="diagram__title">The system from readings to outcomes</p>
@@ -164,15 +174,19 @@
         </figure>
 
           <h2 id="decisions">How a decision works</h2>
-          <p>Consider a cold box that should hold 4 °C but reads 8 °C and is still warming. A reading alone does not explain whether the door was opened, the room became warmer, or a probe is unreliable.</p>
+          <p>It's 2 a.m. A cold room that should hold 4 °C reads 8 °C and is still warming. Here's how Tamoz would handle it, as an illustration.</p>
           <ol>
-            <li><strong>Build the situation.</strong> Combine the readings, their timing, and quality into a fixed snapshot of the available evidence.</li>
-            <li><strong>Investigate.</strong> Give the agent that snapshot and a budget for reasoning and permitted evidence tools.</li>
-            <li><strong>Propose.</strong> Record what was observed, what the agent infers, its uncertainty, and the response it suggests.</li>
-            <li><strong>Check.</strong> Apply policy for freshness, approval, rate limits, and device authority before any equipment action.</li>
-            <li><strong>Verify.</strong> Record what happened, keeping command receipt, device reports, and independently observed effects separate.</li>
+            <li><strong>It freezes the evidence.</strong> The readings, their timing, and their quality become one fixed snapshot, so every later step can be traced back to the same facts.</li>
+            <li><strong>It goes and looks.</strong> A temperature alone can't explain this, so the agent checks what you've allowed it to read, such as the door sensor's log. If it still can't tell, it says so and names what's missing.</li>
+            <li><strong>It makes its case.</strong>
+              <blockquote>
+                <p><em>Saw:</em> 8 °C and climbing for 40 minutes. Door open since 02:10.<br /><em>Thinks:</em> the door was left open. Fairly sure, but the compressor isn't ruled out.<br /><em>Proposes:</em> alert the night shift.</p>
+              </blockquote>
+            </li>
+            <li><strong>It gets checked again.</strong> Just before anything happens, policy confirms the situation hasn't moved on and whether a person has to approve. If the agent proposed cooling, it could choose a mode, but never the motor power or run time.</li>
+            <li><strong>It doesn't take "done" for an answer.</strong> The command being received, the device reporting success, and the room actually cooling are kept as three separate facts.</li>
+            <li><strong>It remembers.</strong> If the door closes and the room recovers, that outcome becomes evidence for next time.</li>
           </ol>
-          <p>In the cold-box example, the model can propose a cooling mode. It cannot choose motor power or run time. Those limits belong to policy and device firmware. An operational pilot would start with a read-only feed and recommendations for the team.</p>
 
           <h2 id="learning">Learning from verified outcomes</h2>
           <p>Tamoz keeps outcome evidence so later decisions can refer to earlier situations. The pump trial also tested a more specific learning loop: repeated verified repairs could lead to a proposed rule.</p>
@@ -219,7 +233,7 @@
           <p>This was a bench test, not plant equipment. The owner approved each command, the thresholds were set for the bench, and confirmation came from the board's own report. With the motor disconnected, the board still reported success, so these sessions do not measure a physical effect such as cooling. That is one reason a pilot starts with monitoring and recommendations, and why any later equipment action would need an independent check, such as a temperature or current reading. <a href="/projects/tamoz-technical.html#hardware">Read the bench evidence</a> or the <a href="/articles/agent-spun-the-motor.html">earlier motor test</a>.</p>
 
           <h2 id="boundary">What remains to be shown</h2>
-          <p>Tamoz is pre-release software. There has been no field deployment, and we have not yet established savings in a real operation. The simulations do not establish safety certification, fault coverage, or reliability on industrial equipment.</p>
+          <p>Tamoz is pre-release software. There has been no field deployment, and we have not yet established savings in a real operation. The simulations do not establish safety certification, fault coverage, or reliability on industrial equipment. Today the console is a local tool for a trusted operator, with no user accounts yet.</p>
           <p>The proposed pilot starts with monitoring and recommendations. The customer decides what to do. Any later equipment action would require its own agreed scope and safeguards; existing safety systems remain responsible for protection.</p>
 
           <h2 id="pilot">Try it on an operational question</h2>
