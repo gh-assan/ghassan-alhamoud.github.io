@@ -101,7 +101,7 @@
 
           <h2>An example: a machine drifting toward a stop</h2>
           <p>A motor on a packaging line starts vibrating more than usual. It's still under its alarm limit, so nobody is told. If it keeps going, it could stop the line at the worst moment.</p>
-          <p>With sensors on the motor, or the ones you already have, we could compare it with its own normal and look for what changed. Your team might see this: axial vibration is up by a third on its own baseline while radial vibration and current stay flat, so misalignment is likely, and an alignment check is worth booking. Your team reviews it, decides what to do, and records what they found.</p>
+          <p>With sensors on the motor, or the ones you already have, we could compare it with its own normal and look for what changed. Your team would get a likely cause and a suggested check, as in the diagram below. They review it, decide what to do, and record what they found.</p>
           <p>It would test whether this gives your maintenance team earlier warning without more false alarms, and whether recurring cases can become rules your team trusts. We've tested this kind of fault <a href="/projects/tamoz.html#evidence">in a simulated pump station</a>.</p>
           <p>This is a possible pilot, not a customer result.</p>
 
@@ -114,47 +114,57 @@
           </section>
 
           <h2 id="design">What Tamoz brings to the pilot</h2>
-          <p>Tamoz is the software we are building to connect monitoring with investigation and response. It follows sensor readings, flags changes, and uses AI to bring relevant information together and suggest what to check or do. Your team reviews the recommendations and decides what happens next.</p>
+          <p>An alarm tells you a reading crossed a line. A rule catches a pattern someone already knew about. Tamoz is the AI agent we're building for what's left: it investigates what's likely happening, says how sure it is, suggests what to check, and learns from what worked. The decision stays with your team, because it can be wrong.</p>
+          <p>Your alarms and rules stay as they are. When the same recommendation keeps proving right, we'd review with your team whether it should become a rule: something they can read, question, and approve. That way, what your team learns stays with your plant. During the pilot, no rule would act on your equipment.</p>
           <figure class="diagram">
-            <p class="diagram__title">From operational data to a team decision</p>
+            <p class="diagram__title">One motor, from a small change to your team's decision</p>
             <div class="diagram__scroll" tabindex="0" role="region" aria-label="Pilot flow, scroll horizontally">
-              <svg viewBox="0 0 820 160" role="img" aria-labelledby="pilot-flow-title pilot-flow-desc">
-                <title id="pilot-flow-title">A read-only pilot</title>
-                <desc id="pilot-flow-desc">Sensor data from equipment and processes is monitored. Changes and relevant information are presented with a suggested response. The team reviews the information and decides what to do.</desc>
+              <svg viewBox="0 0 820 262" role="img" aria-labelledby="pilot-flow-title pilot-flow-desc">
+                <title id="pilot-flow-title">One motor, from a small change to a team decision</title>
+                <desc id="pilot-flow-desc">An invented example. Tamoz, read-only, watches Motor 7, notices its vibration is up a third on its own normal while the alarm stays quiet, investigates and finds misalignment likely, and suggests an alignment check. Your team decides. If the fix holds, after a few cases this can become a rule your team reads and approves.</desc>
                 <defs><marker id="pilot-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker></defs>
-                <rect class="dg-box" x="10" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k" x="80" y="47" text-anchor="middle">1 · DATA</text>
-                <text class="dg-t" x="80" y="72" text-anchor="middle">Sensors</text>
-                <text class="dg-s" x="80" y="95" text-anchor="middle">Equipment and</text>
-                <text class="dg-s" x="80" y="111" text-anchor="middle">process readings</text>
-                <rect class="dg-box" x="175" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k" x="245" y="47" text-anchor="middle">2 · WATCH</text>
-                <text class="dg-t" x="245" y="72" text-anchor="middle">Monitor</text>
-                <text class="dg-s" x="245" y="95" text-anchor="middle">Follow readings</text>
-                <text class="dg-s" x="245" y="111" text-anchor="middle">and flag changes</text>
-                <rect class="dg-box dg-box--accent" x="340" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k dg-accent" x="410" y="47" text-anchor="middle">3 · REVIEW</text>
-                <text class="dg-t" x="410" y="72" text-anchor="middle">Context</text>
-                <text class="dg-s" x="410" y="95" text-anchor="middle">Bring relevant</text>
-                <text class="dg-s" x="410" y="111" text-anchor="middle">information together</text>
-                <rect class="dg-box dg-box--info" x="505" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k dg-info" x="575" y="47" text-anchor="middle">4 · SUGGEST</text>
-                <text class="dg-t" x="575" y="72" text-anchor="middle">Response</text>
-                <text class="dg-s" x="575" y="95" text-anchor="middle">Recommend what</text>
-                <text class="dg-s" x="575" y="111" text-anchor="middle">to check or do</text>
-                <rect class="dg-box" x="670" y="25" width="140" height="100" rx="8"/>
-                <text class="dg-k" x="740" y="47" text-anchor="middle">5 · DECIDE</text>
-                <text class="dg-t" x="740" y="72" text-anchor="middle">Your team</text>
-                <text class="dg-s" x="740" y="95" text-anchor="middle">Review and decide</text>
-                <text class="dg-s" x="740" y="111" text-anchor="middle">what happens next</text>
-                <path class="dg-line" d="M152 75 H172" marker-end="url(#pilot-flow-arrow)"/>
-                <path class="dg-line" d="M317 75 H337" marker-end="url(#pilot-flow-arrow)"/>
-                <path class="dg-line" d="M482 75 H502" marker-end="url(#pilot-flow-arrow)"/>
-                <path class="dg-line" d="M647 75 H667" marker-end="url(#pilot-flow-arrow)"/>
+                <text class="dg-k" x="10" y="16">TAMOZ, READ-ONLY</text>
+                <path class="dg-line" d="M10 24 H645"/>
+                <text class="dg-k dg-accent" x="670" y="16">YOUR TEAM</text>
+                <path class="dg-line dg-line--accent" d="M670 24 H810"/>
+                <rect class="dg-box" x="10" y="34" width="140" height="118" rx="8"/>
+                <text class="dg-k" x="80" y="56" text-anchor="middle">1 · WATCH</text>
+                <text class="dg-t" x="80" y="82" text-anchor="middle">Motor 7</text>
+                <text class="dg-s" x="80" y="106" text-anchor="middle">Vibration and</text>
+                <text class="dg-s" x="80" y="122" text-anchor="middle">current readings</text>
+                <rect class="dg-box" x="175" y="34" width="140" height="118" rx="8"/>
+                <text class="dg-k" x="245" y="56" text-anchor="middle">2 · NOTICE</text>
+                <text class="dg-t" x="245" y="82" text-anchor="middle">Up a third</text>
+                <text class="dg-s" x="245" y="106" text-anchor="middle">Vibration has climbed</text>
+                <text class="dg-s" x="245" y="122" text-anchor="middle">on its own normal</text>
+                <rect class="dg-box dg-box--accent" x="340" y="34" width="140" height="118" rx="8"/>
+                <text class="dg-k dg-accent" x="410" y="56" text-anchor="middle">3 · INVESTIGATE</text>
+                <text class="dg-t" x="410" y="82" text-anchor="middle">Misalignment likely</text>
+                <text class="dg-s" x="410" y="106" text-anchor="middle">Radial and current flat.</text>
+                <text class="dg-s" x="410" y="122" text-anchor="middle">Fairly sure.</text>
+                <rect class="dg-box dg-box--info" x="505" y="34" width="140" height="118" rx="8"/>
+                <text class="dg-k dg-info" x="575" y="56" text-anchor="middle">4 · SUGGEST</text>
+                <text class="dg-t" x="575" y="82" text-anchor="middle">Book a check</text>
+                <text class="dg-s" x="575" y="106" text-anchor="middle">An alignment check,</text>
+                <text class="dg-s" x="575" y="122" text-anchor="middle">with its evidence</text>
+                <rect class="dg-box dg-box--accent" x="670" y="34" width="140" height="118" rx="8"/>
+                <text class="dg-k dg-accent" x="740" y="56" text-anchor="middle">5 · DECIDE</text>
+                <text class="dg-t" x="740" y="82" text-anchor="middle">Book it, or don't</text>
+                <text class="dg-s" x="740" y="106" text-anchor="middle">The decision stays</text>
+                <text class="dg-s" x="740" y="122" text-anchor="middle">with your team</text>
+                <path class="dg-line" d="M152 92 H172" marker-end="url(#pilot-flow-arrow)"/>
+                <path class="dg-line" d="M317 92 H337" marker-end="url(#pilot-flow-arrow)"/>
+                <path class="dg-line" d="M482 92 H502" marker-end="url(#pilot-flow-arrow)"/>
+                <path class="dg-line" d="M647 92 H667" marker-end="url(#pilot-flow-arrow)"/>
+                <rect class="dg-box dg-box--warn" x="175" y="164" width="140" height="30" rx="6"/>
+                <text class="dg-s dg-warn" x="245" y="184" text-anchor="middle">Your alarm: still quiet</text>
+                <path class="dg-line dg-line--accent dg-line--dash" d="M740 152 V216 H80 V154" marker-end="url(#pilot-flow-arrow)"/>
+                <text class="dg-k dg-accent" x="410" y="208" text-anchor="middle">6 · LEARN</text>
+                <text class="dg-s" x="410" y="240" text-anchor="middle">Fixed, and it stayed fixed? After a few cases, this can become a rule your team reads and approves.</text>
               </svg>
             </div>
             <p class="diagram__hint">Scroll sideways to see the full flow.</p>
-            <figcaption class="evidence-caption">Illustrative flow for a proposed read-only pilot. Your team decides what happens next.</figcaption>
+            <figcaption class="evidence-caption">An illustration of a possible read-only pilot. Motor 7 and its readings are invented.</figcaption>
           </figure>
 
           <h2 id="pilot">What we would do together</h2>
