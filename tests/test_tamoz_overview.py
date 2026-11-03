@@ -97,8 +97,8 @@ class TamozPagesTest(unittest.TestCase):
         text = ' '.join(self.project.text)
         for recorded in ('21 s', '1.09 ms', '81 s', '60 s', 'scripted approver'):
             self.assertIn(recorded, text)
-        self.assertIn('/assets/js/rule-story.js',
-                      [attrs.get('src') for tag, attrs in self.project.elements if tag == 'script'])
+        self.assertTrue(any((attrs.get('src') or '').startswith('/assets/js/rule-story.js')
+                            for tag, attrs in self.project.elements if tag == 'script'))
 
 
 if __name__ == '__main__':

@@ -1,11 +1,9 @@
 /**
- * scene-tamoz.js — "The agent decides what; policy decides how much."
- * Readings stream in and warm past a threshold; Agentic Stream seals a
- * Situation; Tamoz (a turning wireframe) chooses an intent with no
- * magnitude in it; the policy plane turns it into a bounded command under
- * the firmware ceiling (60 % duty, 10 s lease, per /projects/tamoz-technical.html);
- * the fan spins while the lease runs, the readings cool, and the outcome
- * returns as experience. Illustrative.
+ * scene-tamoz.js: the agent proposes what; policy sets how much. Readings warm past a
+ * threshold; Agentic Stream seals a snapshot; Tamoz proposes an action with no power
+ * setting in it; policy and a person approve a command under the firmware ceiling
+ * (60 % duty, 10 s); the fan spins and the verified outcome can become a rule.
+ * Illustrative.
  */
 (function () {
   'use strict';
@@ -47,7 +45,7 @@
     var govern = hold(t, 6.4, 8.7, 0.4);
     var act = hold(t, 8.4, 11.7, 0.4);
     L.node(s, { x: left, y: top, w: 108, h: 46, title: 'readings', sub: warm > 0.4 ? 'threshold crossed' : 'sensor stream', tone: warm > 0.4 ? 'warn' : 'accent', emph: warm });
-    L.node(s, { x: right, y: top, w: 108, h: 46, title: 'Tamoz', sub: 'chooses intent', emph: decide });
+    L.node(s, { x: right, y: top, w: 108, h: 46, title: 'Tamoz', sub: 'proposes', emph: decide });
     L.node(s, { x: left, y: bottom, w: 108, h: 54, title: 'policy', sub: 'ceiling 60 %', tone: 'info', emph: govern });
     L.node(s, { x: right, y: bottom, w: 108, h: 46, title: 'fan-01', sub: '10 s lease', tone: 'info', emph: act });
 
@@ -63,8 +61,8 @@
     if (u > 0 && u < 1) { p = paths[1].at(u); L.token(s, p.x, p.y, { tone: 'info' }); }
     u = seg(t, 8.0, 8.8);
     if (u > 0 && u < 1) { p = paths[2].at(u); L.token(s, p.x, p.y, { tone: 'info' }); }
-    if (t < 6.4 && decide > 0.01) L.chip(s, 'mode: bounded_cooling', w / 2, 23, { code: true, emph: decide, alpha: decide });
-    else if (t < 8.6 && govern > 0.01) L.chip(s, 'set_pwm_lease · ≤ 60 %', w / 2, 23, { code: true, tone: 'info', emph: govern, alpha: govern });
+    if (t < 6.4 && decide > 0.01) L.chip(s, 'proposes: bounded cooling', w / 2, 23, { emph: decide, alpha: decide });
+    else if (t < 8.6 && govern > 0.01) L.chip(s, 'approved · up to 60 %', w / 2, 23, { tone: 'info', emph: govern, alpha: govern });
     else if (act > 0.01) L.chip(s, 'bounded command', w / 2, 23, { tone: 'info', emph: act, alpha: act });
   }
 
@@ -73,10 +71,11 @@
     poster: 8.1,
     beats: [
       [0, 'Readings stream in'],
-      [2.4, 'A Situation is sealed'],
-      [4.2, 'Tamoz decides what'],
-      [6.4, 'Policy decides how much'],
-      [8.4, 'Bounded action, then learn']
+      [2.4, 'A snapshot is sealed'],
+      [4.2, 'Tamoz proposes what'],
+      [6.4, 'Policy sets how much, a person approves'],
+      [8.4, 'Bounded action'],
+      [10.2, 'A verified outcome can become a rule']
     ],
 
     setup: function (s) {
@@ -151,7 +150,7 @@
         L.box3(s, cam, cx, cy - sz / 2, 0, sz, sz, sz, { tone: 'warn', emph: 1, alpha: cubeA, tint: 0.1, edgeTint: 1 });
         var cl = P(cx, Math.max(cy + sz / 2 + 14, 112), 0);
         var la = cubeA * (1 - seg(t, 4.3, 4.6));
-        if (la > 0.01) L.chip(s, 'situation v47', cl.x, cl.y, { tone: 'warn', emph: 1, alpha: la });
+        if (la > 0.01) L.chip(s, 'snapshot', cl.x, cl.y, { tone: 'warn', emph: 1, alpha: la });
       }
 
       // ---- 3. Tamoz: turning octahedron; faster + accent while deciding
@@ -199,7 +198,7 @@
       });
       var ic = hold(t, 5.95, 8.5, 0.35) * (1 - reset);
       var icp = P(CORE, cyC + R3 * 1.2 + 26, 0);
-      if (ic > 0.01) L.chip(s, 'intent · mode: bounded_cooling', icp.x, icp.y - (1 - ic) * 4, { emph: 1, alpha: ic, code: true });
+      if (ic > 0.01) L.chip(s, 'proposes: bounded cooling', icp.x, icp.y - (1 - ic) * 4, { emph: 1, alpha: ic });
 
       // intent travels core → policy plane; command continues to the fan
       var iu = seg(t, 6.45, 7.05);
@@ -240,7 +239,7 @@
       L.text(s, 'ceiling 60 %', c1.x + 8, c1.y, { key: true, align: 'left', color: 'bad', alpha: 0.9 });
       var cc = hold(t, 7.9, 10.2, 0.35) * (1 - reset);
       var ccp = P(GAUGE, H + 26, 0);
-      if (cc > 0.01) L.chip(s, 'set_pwm_lease · ≤ 60 % · 10 s', ccp.x, ccp.y - (1 - cc) * 4, { tone: 'info', emph: 1, alpha: cc, code: true });
+      if (cc > 0.01) L.chip(s, 'approved · up to 60 %, 10 s', ccp.x, ccp.y - (1 - cc) * 4, { tone: 'info', emph: 1, alpha: cc });
 
       var cu = seg(t, 8.05, 8.55);
       if (cu > 0 && cu < 1) {
@@ -302,7 +301,7 @@
       var xc = hold(t, 10.4, 11.9, 0.3);
       if (xc > 0.01) {
         var xp = P((FAN + CORE) / 2 + 40, FAN_Y + FAN_R + 50, 0);
-        L.chip(s, 'experience', xp.x, xp.y, { tone: 'info', emph: 1, alpha: xc });
+        L.chip(s, 'verified · can become a rule', xp.x, xp.y, { tone: 'info', emph: 1, alpha: xc });
       }
     }
   });

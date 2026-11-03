@@ -8,6 +8,7 @@
   var steps = root.querySelectorAll('.rule-story__step');
   var controls = root.querySelector('.rule-story__controls');
   var dots = root.querySelector('.rule-story__dots');
+  var count = root.querySelector('.rule-story__count');
   var back = root.querySelector('[data-rs="back"]');
   var next = root.querySelector('[data-rs="next"]');
   var toggle = root.querySelector('[data-rs="toggle"]');
@@ -26,6 +27,7 @@
       if (n === i) dots.children[n].setAttribute('aria-current', 'step');
       else dots.children[n].removeAttribute('aria-current');
     });
+    count.textContent = 'Step ' + (i + 1) + ' of ' + steps.length;
     back.disabled = i === 0;
     next.textContent = i === steps.length - 1 ? 'Start again' : 'Next';
     schedule();
@@ -42,8 +44,14 @@
 
   function schedule() {
     clearTimeout(timer);
+    var dot = dots.children[current];
+    Array.prototype.forEach.call(dots.children, function (d) { d.classList.remove('is-timed'); });
     if (!playing || !visible || document.hidden) return;
     if (current === steps.length - 1) { setPlaying(false); return; }
+    // Restart the marker's fill so it shows how long this step has left.
+    dot.style.setProperty('--rs-dwell', DWELL[current] + 's');
+    void dot.offsetWidth;
+    dot.classList.add('is-timed');
     timer = setTimeout(function () { show(current + 1); }, DWELL[current] * 1000);
   }
 
@@ -72,7 +80,7 @@
     new IntersectionObserver(function (entries) {
       visible = entries[0].isIntersecting;
       schedule();
-    }, { threshold: 0.4 }).observe(root);
+    }, { threshold: 0.15 }).observe(root);
   } else {
     visible = true;
   }

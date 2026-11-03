@@ -33,7 +33,7 @@
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
-  <link rel="stylesheet" href="/assets/css/rule-story.css" />
+  <link rel="stylesheet" href="/assets/css/rule-story.css?v=20261103" />
 </head>
 <body>
   <header class="header" id="header">
@@ -64,9 +64,9 @@
           </div>
         </header>
 
-        <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into Situation v47; Tamoz turns it into an intent with no magnitude, mode bounded cooling; the policy plane converts it into a bounded command under the firmware ceiling of 60 percent duty with a 10 second lease; the fan spins while the lease runs, the readings cool, and the outcome returns to Tamoz as experience.">
+        <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into a snapshot; Tamoz proposes bounded cooling, with no power setting in it; policy and a person approve a bounded command under the firmware ceiling of 60 percent duty for 10 seconds; the fan spins while the lease runs and the readings cool; the verified outcome returns to Tamoz and can become a rule.">
           <div class="scene__stage" style="--aspect: 2.45"></div>
-          <figcaption class="evidence-caption">Illustrative fan-control design, not live telemetry. Policy sets the bounds; firmware enforces them. The full route has run on a small bench, with the owner approving each command and results verified only from the board's own report. <a href="/projects/tamoz-technical.html#hardware">Hardware evidence</a>.</figcaption>
+          <figcaption class="evidence-caption">Illustrative design, not live data.</figcaption>
         </figure>
 
         <div class="article-single__body project-single__body">
@@ -111,6 +111,13 @@
             <figcaption class="evidence-caption">From the simulated pump trial, where the approver was scripted.</figcaption>
           </figure>
           <figure class="rule-story" id="rule-story" aria-label="How Tamoz learned a rule, in six steps">
+            <div class="rule-story__controls">
+              <div class="rule-story__dots"></div>
+              <span class="rule-story__count" aria-hidden="true"></span>
+              <button type="button" class="rule-story__btn" data-rs="toggle">Pause</button>
+              <button type="button" class="rule-story__btn" data-rs="back">Back</button>
+              <button type="button" class="rule-story__btn rule-story__btn--next" data-rs="next">Next</button>
+            </div>
             <ol class="rule-story__steps">
               <li class="rule-story__step">
                 <p class="rule-story__title">A pump starts to drift</p>
@@ -148,14 +155,14 @@
                 <ul class="rule-story__checks rs-seq">
                   <li>Replayed on past data: fired 3 times, agreed 3 times</li>
                   <li>Approved (a scripted approver in this trial)</li>
-                  <li>Ran in shadow: agreed 3 times without acting</li>
+                  <li>Watched beside the model without acting: agreed 3 times</li>
                   <li>Active</li>
                 </ul>
               </li>
               <li class="rule-story__step">
                 <p class="rule-story__title">Five days later, the same fault</p>
                 <p class="rule-story__sub">Same pump, same climb. This time the rule answers.</p>
-                <svg class="rule-story__chart" viewBox="0 0 800 200" role="img" aria-label="Pump 5's axial vibration climbing from its normal of about 2 millimetres per second up to the warning."><line class="rs-grid" x1="46" x2="786" y1="144.0" y2="144.0"/><text x="38" y="149.0" text-anchor="end">2</text><line class="rs-grid" x1="46" x2="786" y1="34.0" y2="34.0"/><text x="38" y="39.0" text-anchor="end">3</text><line class="rs-normal" x1="46" x2="786" y1="137.4" y2="137.4"/><text class="rs-normal-label" x="701.0" y="159.4" text-anchor="end">its own normal</text><text x="46" y="190">axial vibration, mm/s, over simulated hours</text><polyline class="rs-line" pathLength="1" points="55.5,142.0 77.0,141.9 98.6,148.5 120.0,142.0 141.4,145.0 162.8,145.5 183.9,142.8 205.3,134.0 226.5,133.8 247.9,130.4 269.4,126.8 291.0,123.5 312.6,121.6 333.8,120.4 355.4,115.1 376.6,111.1 398.1,108.5 419.4,102.2 440.6,101.3 461.8,100.7 483.4,94.1 505.1,95.3 526.5,90.0 548.1,80.8 569.6,81.1 591.0,79.0 612.6,75.0 634.0,72.3 655.7,67.1 677.3,62.2 698.8,62.8"/><g class="rs-late"><line class="rs-mark" x1="711.0" x2="711.0" y1="12" y2="166"/><text class="rs-mark-label" x="701.0" y="32" text-anchor="end">Warning</text></g></svg>
+                <svg class="rule-story__chart" viewBox="0 0 800 150" role="img" aria-label="Pump 5's axial vibration climbing from its normal of about 2 millimetres per second up to the warning."><line class="rs-grid" x1="46" x2="786" y1="101.1" y2="101.1"/><text x="38" y="106.1" text-anchor="end">2</text><line class="rs-grid" x1="46" x2="786" y1="26.9" y2="26.9"/><text x="38" y="31.9" text-anchor="end">3</text><line class="rs-normal" x1="46" x2="786" y1="96.7" y2="96.7"/><text class="rs-normal-label" x="701.0" y="116.7" text-anchor="end">its own normal</text><text x="46" y="140">axial vibration, mm/s, over simulated hours</text><polyline class="rs-line" pathLength="1" points="55.5,99.8 77.0,99.7 98.6,104.2 120.0,99.8 141.4,101.8 162.8,102.2 183.9,100.3 205.3,94.4 226.5,94.2 247.9,91.9 269.4,89.6 291.0,87.3 312.6,86.0 333.8,85.2 355.4,81.6 376.6,78.9 398.1,77.1 419.4,72.9 440.6,72.3 461.8,71.9 483.4,67.4 505.1,68.2 526.5,64.7 548.1,58.4 569.6,58.7 591.0,57.2 612.6,54.6 634.0,52.7 655.7,49.2 677.3,45.9 698.8,46.3"/><g class="rs-late"><line class="rs-mark" x1="711.0" x2="711.0" y1="12" y2="116"/><text class="rs-mark-label" x="701.0" y="32" text-anchor="end">Warning</text></g></svg>
                 <div class="rule-story__split rs-late" style="margin-top:.75rem">
                   <div class="rule-story__card">
                     <p><span class="rule-story__label">Decided by the rule.</span> No model call.</p>
@@ -183,13 +190,7 @@
                 <p class="rule-story__note">Both waited the system's 60-second delay, and both booked the same repair. In this trial one of three fault types earned a rule.</p>
               </li>
             </ol>
-            <div class="rule-story__controls">
-              <div class="rule-story__dots"></div>
-              <button type="button" class="rule-story__btn" data-rs="toggle">Pause</button>
-              <button type="button" class="rule-story__btn" data-rs="back">Back</button>
-              <button type="button" class="rule-story__btn rule-story__btn--next" data-rs="next">Next</button>
-            </div>
-            <figcaption class="evidence-caption">From recorded simulator runs of the pump trial (pump 5, 2 and 7 January). Readings, the model's answer in short form, and wall-clock timings are as recorded. <a href="/images/projects/tamoz/clips/rule-learned.mp4">Watch it as a one-minute video</a>.</figcaption>
+            <figcaption class="evidence-caption">Recorded numbers from the simulated pump trial (pump 5). <a href="/images/projects/tamoz/clips/rule-learned.mp4">Watch it as a video</a>.</figcaption>
           </figure>
           <p>It's an ordinary rule. Your team can read it, question it, and switch it off. If the equipment changes or the repair stops holding, it switches itself off and the model takes over. The aim is for the model's job to shrink to what's still unknown, while what you've learned stays in rules you own.</p>
           <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself.</p>
@@ -285,43 +286,42 @@
           </ol>
 
           <h2 id="evidence">What has been tested</h2>
-          <h3>A pump station with a real model</h3>
-          <p>In one simulated eight-pump station, Tamoz worked through 18 injected faults with a real model, once with a learned rule and once without. The rule handled five misalignment faults with no model call, all correct and on time.</p>
           <div class="table-scroll">
             <table>
-              <thead><tr><th>Result</th><th>With the rule</th><th>Without it</th></tr></thead>
+              <thead><tr><th>Test</th><th>Reasoning</th><th>Equipment</th><th>Main result</th></tr></thead>
               <tbody>
-                <tr><td>Faults detected</td><td>17 of 18</td><td>15 of 18</td></tr>
-                <tr><td>Correct diagnosis</td><td>11 of 18</td><td>11 of 18</td></tr>
-                <tr><td>Right repair on time, all faults</td><td>7 of 18</td><td>6 of 18</td></tr>
-                <tr><td>Right repair on time, misalignment</td><td>5 of 6</td><td>5 of 6</td></tr>
-                <tr><td>Right repair on time, bearing wear</td><td>2 of 6</td><td>1 of 6</td></tr>
-                <tr><td>Right repair on time, sensor drift</td><td>0 of 6</td><td>0 of 6</td></tr>
-                <tr><td>Action on a healthy look-alike</td><td>0 of 3</td><td>0 of 3</td></tr>
+                <tr><td>Pump station</td><td>Real model</td><td>Simulated</td><td>A learned rule did the model's job on one fault type</td></tr>
+                <tr><td>Bench</td><td>Real model</td><td>Real board and fan</td><td>The whole route ran, in three sessions</td></tr>
+                <tr><td>Earlier rounds</td><td>Scripted</td><td>Simulated</td><td>The machinery was exercised across five industries, with gaps listed</td></tr>
               </tbody>
             </table>
           </div>
-          <figure class="project-figure clip">
-            <div class="clip__frame">
-              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="A simulated pump develops a vibration fault, receives a maintenance recommendation, and recovers after repair." aria-describedby="clip-fault-response-desc">
-                <source src="/images/projects/tamoz/clips/fault-response.webm" type="video/webm" />
-                <source src="/images/projects/tamoz/clips/fault-response.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <p class="sr-only" id="clip-fault-response-desc">A simulated pump's axial vibration rises. The system recommends alignment maintenance, a booking is received, and the simulated pump is repaired. The booking's effect was not independently read back.</p>
-            <figcaption class="evidence-caption">Modeled: a recorded simulator run, animated and sped up. This is a simulated maintenance booking, not a field deployment.</figcaption>
-          </figure>
-          <p>This was one simulated station and three test runs of 30 simulated hours each. Only one of three fault families earned a rule, and the trial approver was scripted. The rule reduced model calls but missed its target: 13 of 17 detected faults still needed the model, against a goal of half the comparison. It did not improve misalignment repairs. The model repeatedly misdiagnosed sensor drift. These results are limited to simulation and do not establish industrial performance or savings. A pilot would measure these same numbers on your equipment. <a href="/projects/tamoz-technical.html#trial">Read the trial and its limits</a>.</p>
-          <p>In the trial, a repair counted as verified when the fault did not return within 24 simulated hours, so sensor drift misdiagnosed as bearing wear could also pass. A stricter recovery check has since been added. Replayed over the trial's records, it rejects those cases, but the trial has not been rerun with it.</p>
-          <h3>Simulator rounds across several domains</h3>
-          <p>Earlier rounds exercised timing, approvals, memory, and recovery in scenarios including aquaculture, water networks, and cold chain. Their reasoning was scripted. They tested the surrounding machinery, rather than a model's ability to diagnose those situations. <a href="/projects/tamoz-technical.html#rounds">Read the simulator evidence</a>.</p>
+          <p>It hasn't run in a real operation yet, so none of this establishes industrial performance or savings.</p>
+          <h3>A pump station with a real model</h3>
+          <p>One simulated station with eight pumps and 3 healthy look-alikes. Three fault types were each injected 6 times, 18 faults in all, and we ran the same test days twice, with the learned rule and without it. A fault counts below only if the right repair was booked before its deadline.</p>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Right repair booked on time</th><th>With the rule</th><th>Without it</th><th>Decided by, with the rule</th></tr></thead>
+              <tbody>
+                <tr><td>Misalignment (6 faults)</td><td>5</td><td>5</td><td><strong>The rule, no model call</strong></td></tr>
+                <tr><td>Bearing wear (6 faults)</td><td>2</td><td>1</td><td>The model</td></tr>
+                <tr><td>Sensor drift (6 faults)</td><td>0</td><td>0</td><td>The model</td></tr>
+                <tr><td><strong>All faults (18)</strong></td><td><strong>7</strong></td><td><strong>6</strong></td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Faults detected: 17 and 15 of 18. Correct diagnosis: 11 of 18 both ways. Action on a healthy look-alike: 0 of 3 both ways.</p>
+          <p><strong>What this shows.</strong> Where a rule existed, it did the model's job with no model call: five misalignments, all correct and on time. So the gain is fewer model calls, not more repairs. The small differences in the other rows are the model's own variation. So far, one of three fault types has earned a rule, and the model handled the rest. <a href="/projects/tamoz-technical.html#trial">Read the full trial</a>.</p>
+          <p>A pilot would measure these same numbers on your equipment.</p>
           <h3 id="real-motor">From Tamoz to a real board</h3>
           <figure class="project-figure">
             <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" style="aspect-ratio: 1056 / 597; object-fit: cover" loading="lazy" />
             <figcaption class="evidence-caption">Photo of the hardware bench: an ELEGOO Mega 2560, a DHT11 temperature and humidity sensor, a motor-driver circuit, and a small DC motor with a fan blade.</figcaption>
           </figure>
           <p>We have run the whole route on real hardware: from Tamoz's proposal, through policy and a person's approval, to a command on a small board with a fan motor. Three recorded sessions on 25 October 2026 took this path.</p>
-          <p>This was a bench test, not plant equipment. The owner approved each command, the thresholds were set for the bench, and confirmation came from the board's own report. With the motor disconnected, the board still reported success, so these sessions do not measure a physical effect such as cooling. That is one reason a pilot starts with monitoring and recommendations, and why any later equipment action would need an independent check, such as a temperature or current reading. <a href="/projects/tamoz-technical.html#hardware">Read the bench evidence</a> or the <a href="/articles/agent-spun-the-motor.html">earlier motor test</a>.</p>
+          <p>This was a bench test, not plant equipment. A team member approved each command, the thresholds were set for the bench, and confirmation came from the board's own report. With the motor disconnected, the board still reported success, so these sessions don't measure a physical effect such as cooling. That's one reason a pilot starts with monitoring and recommendations, and why any later equipment action would need an independent check, such as a temperature or current reading. <a href="/projects/tamoz-technical.html#hardware">Read the bench evidence</a> or the <a href="/articles/agent-spun-the-motor.html">earlier motor test</a>.</p>
+          <h3>Simulator rounds across several industries</h3>
+          <p>Earlier rounds exercised timing, approvals, memory, and recovery in aquaculture, water networks, greenhouses, cold chain, and logistics. Their reasoning was scripted, so they tested the machinery around the model, not its ability to diagnose. <a href="/projects/tamoz-technical.html#rounds">Read the simulator evidence</a>.</p>
 
           <h2 id="boundary">What remains to be shown</h2>
           <p>Tamoz is pre-release software. There has been no field deployment, and we have not yet established savings in a real operation. The simulations do not establish safety certification, fault coverage, or reliability on industrial equipment. Today the console is a local tool for a trusted operator, with no user accounts yet.</p>
@@ -393,8 +393,8 @@
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
   <script src="/assets/js/clip-loop.js" defer></script>
-  <script src="/assets/js/rule-story.js" defer></script>
+  <script src="/assets/js/rule-story.js?v=20261103" defer></script>
   <script src="/assets/js/motion/core.js?v=20260926" defer></script>
-  <script src="/assets/js/motion/scene-tamoz.js?v=20260926" defer></script>
+  <script src="/assets/js/motion/scene-tamoz.js?v=20261103" defer></script>
 </body>
 </html>
