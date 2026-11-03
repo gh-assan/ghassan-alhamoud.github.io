@@ -51,4 +51,6 @@ These do not add points. A round cannot be committed unless all pass:
 | 1: factual drift | 8 | 9 | 7 | 7 | 6 | 6 | 6 | 7.0 | Author, provisional |
 | 2: structure, audience, frozen records | 7.5 | 8.5 | 8.5 | 7 | 7 | 8.5 | 8 | 7.8 | Fresh reviewer |
 | 3: reviewer corrections, more records | 7.5 | 9 | 8.5 | 7 | 8.5 | 8.5 | 8 | 8.1 | Fresh reviewer |
-| 4: budgets, gates, labels, investigation runs | Pending | Pending | Pending | Pending | Pending | Pending | Pending | Pending | Fresh reviewer, running at commit |
+| 4: budgets, gates, labels, investigation runs | 7 | 8.5 | 8 | 6.5 | 8 | 8.5 | 8 | 7.8 | Fresh reviewer |
+
+The reviewer's round 4 findings were corrected afterwards, on 2026-11-03. Those corrections have not been rescored, because the round limit was reached.
