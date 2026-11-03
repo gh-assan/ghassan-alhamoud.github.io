@@ -1081,7 +1081,7 @@
           </div>
 
           <h2 id="rounds">17. The experiment rounds in detail</h2>
-          <p>Each round had a runbook with a written bar ("A to F green with live evidence", "moments 1 to 7"), a scratch directory of databases, traces, and logs, and an issue file per defect. The rule was to loop until the bar was met or genuinely blocked, and never to lower the bar. The reasoner in these rounds was scripted, as the correction below explains. Read every row as evidence about the machinery. Five rounds were planned and four ran: 1, 2, 3, and 5. The pump-station trial (<a href="#trial">section 18</a>) is a later piece of work and is not one of them.</p>
+          <p>Each round had a runbook with a written bar ("A to F green with live evidence", "moments 1 to 7"), a scratch directory of databases, traces, and logs, and an issue file per defect. The rule was to loop until the bar was met or genuinely blocked, and never to lower the bar. The reasoner in these rounds was scripted, as the correction below explains. Read every row as evidence about the machinery. Five rounds were planned and four ran: 1, 2, 3, and 5. Later benchmark and simulator runs aren't summarised here. The pump-station trial (<a href="#trial">section 18</a>) is a later piece of work and is not one of them.</p>
 
           <div class="callout">
             <span class="callout__label">The correction I had to make</span>
@@ -1144,7 +1144,7 @@
             <table>
               <thead><tr><th>Phase</th><th>Result</th><th>What it showed</th></tr></thead>
               <tbody>
-                <tr><td>Cold chain</td><td>Partial: all moments pass except the late-reading milestone, which found one engine bug</td><td>A 14-hour ocean gap; 840 late readings admitted within allowed lateness, 606 reconsiderations, a real compensating episode. <strong>F-1:</strong> the reducer picks the winner by event time, so a corrected running total (true value about 8.65 h) never replaced the stale one (about 1.65 h).</td></tr>
+                <tr><td>Cold chain</td><td>Partial: all moments pass except the late-reading milestone, which found one engine bug</td><td>A 14-hour ocean gap; 840 late readings admitted within allowed lateness, 606 reconsideration items, a real compensating episode. <strong>F-1:</strong> the reducer picks the winner by event time, so a corrected running total (true value about 8.65 h) never replaced the stale one (about 1.65 h).</td></tr>
                 <tr><td>Logistics</td><td>Pass, all seven moments</td><td>Lost tracking failed closed; an absorbed leg delay got a watch, not an expedite; a customs-hold cascade named its cause at 0.9 and went through a signed approval; an optimistic carrier ETA was cross-checked and not trusted; shipment-09 recalled shipment-04; a hub-outage storm of 1,105 events started 0 episodes.</td></tr>
               </tbody>
             </table>
