@@ -74,9 +74,9 @@
             <ul>
               <li><a href="#problem">What Tamoz is built for</a></li>
               <li><a href="#capabilities">What you can do with Tamoz</a></li>
+              <li><a href="#learning">Rules work. Who writes the next one?</a></li>
               <li><a href="#design">How it's built</a></li>
               <li><a href="#decisions">How a decision works</a></li>
-              <li><a href="#learning">Rules work. Who writes the next one?</a></li>
               <li><a href="#evidence">What has been tested</a></li>
               <li><a href="#boundary">What remains to be shown</a></li>
               <li><a href="#pilot">Try it on an operational question</a></li>
@@ -98,10 +98,30 @@
             <li><strong>Try it before it touches anything.</strong> Build a simulated plant from a component library, inject faults, and score the system against a sealed record of what really happened. A device can run as a simple simulated twin before the hardware exists, and later be compared with what the real board reported.</li>
           </ul>
           <p>It has already run end to end on real hardware: Tamoz proposed an action, a person approved it, and the command reached a real board driving a fan. <a href="#real-motor">See how that went</a>. In a simulated pump station with a real model, it also learned a new rule from verified repairs. Once approved, that rule handled five faults with no model call, all correct and on time. <a href="#evidence">See the results</a>.</p>
+
+          <h2 id="learning">Rules work. Who writes the next one?</h2>
+          <p>Rules have run plants for decades, for good reason: they're fast, predictable, and easy to check. Tamoz keeps them. The hard part was never running a rule. It's knowing which rule to write, and keeping up as things change.</p>
+          <p>A rule only catches what someone understood when they wrote it. A new failure, a machine that has drifted from its neighbours, or a fault that looks like a different one falls through to whoever is on shift. Those are the cases Tamoz is for.</p>
+          <p>It works through the case no rule covers. When the same repair keeps working, it drafts a new rule with the evidence behind it. Once a person approves it, that rule handles the problem without calling a model. Here's one it learned, in plain words:</p>
           <figure class="project-figure">
-            <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The Streams Simulator canvas during a run of a simulated chiller plant at 12 of 30 simulated minutes. Chiller CH-2 is marked with a compressor wear fault and shows live readings beside chiller CH-1 and air-handling unit AHU-1. A panel on the right has pause, speed, effector call, and fault injection controls." width="1200" height="897" loading="lazy" />
-            <figcaption class="evidence-caption">Screenshot of the simulator canvas: a simulated chiller plant while it runs, with a compressor wear fault injected on CH-2 at 12 simulated minutes. This exploratory run was not connected to Tamoz or to real equipment.</figcaption>
+            <blockquote>
+              <p><em>When:</em> a pump's 15-minute axial vibration average is at least 1.25 times its own 24-hour average, and its heartbeat is present.<br /><em>Do:</em> schedule alignment maintenance.<br /><em>Learned from:</em> three verified repairs.</p>
+            </blockquote>
+            <figcaption class="evidence-caption">From the simulated pump trial, where the approver was scripted.</figcaption>
           </figure>
+          <figure class="project-figure clip">
+            <div class="clip__frame">
+              <video controls muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/rule-learned-poster.webp" aria-label="Animation: pump 5's first misalignment goes to the model, three verified repairs produce a rule, and the rule answers the same fault five days later with no model call." aria-describedby="clip-rule-learned-desc">
+                <source src="/images/projects/tamoz/clips/rule-learned.webm" type="video/webm" />
+                <source src="/images/projects/tamoz/clips/rule-learned.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <p class="sr-only" id="clip-rule-learned-desc">Pump 5's axial vibration climbs above its own normal, reaching 2.76 millimetres per second against a usual 2.06, and no rule covers it yet. The model is asked. In 21 seconds it reports that axial vibration is about 34 percent above the pump's 24-hour baseline while radial vibration and current stayed flat, says it thinks this is shaft misalignment with confidence 0.75, and proposes maintenance. Misalignment repairs on pumps 5, 7 and 3 are verified, which is enough to draft a rule: when a pump's 15-minute axial vibration is at least 1.25 times its own 24-hour average, schedule alignment maintenance. The rule is replayed on past data, where it fired 3 times and agreed 3 times, approved by a scripted approver in this trial, and agrees 3 times in shadow before becoming active. Five simulated days later the same fault appears on pump 5, at 2.74, which is 1.33 times its normal 2.05. The rule decides in 1.09 milliseconds with no model call. A final comparison shows the first case with 1 model call, 21 seconds to decide and 81 seconds from warning to booking, and the later case with no model call, about 1 millisecond to decide and 60 seconds to booking. Both waited a 60-second delay and booked the same repair. One of three fault types earned a rule in this trial.</p>
+            <figcaption class="evidence-caption">Animated from recorded simulator runs of the pump trial (pump 5, 2 and 7 January). Readings, the model's answer in short form, and wall-clock timings are as recorded.</figcaption>
+          </figure>
+          <p>It's an ordinary rule. Your team can read it, question it, and switch it off. If the equipment changes or the repair stops holding, it switches itself off and the model takes over. The aim is for the model's job to shrink to what's still unknown, while what you've learned stays in rules you own.</p>
+          <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself.</p>
+          <p>In that trial, with a real model, this rule handled five faults without a model call, all correct and on time. The other two fault types didn't earn a rule, and the model still handled most faults. <a href="/projects/tamoz-technical.html#rule-promotion">Read how rules are learned</a>.</p>
 
           <h2 id="design">How it's built</h2>
           <p>We call the whole system Tamoz, and it has three parts with separate jobs: one watches and acts, one reasons, and one gives people a plant to build and test, and a console to run it. The split is the point. The part that reasons can't touch equipment, and the part that touches equipment follows fixed rules.</p>
@@ -110,6 +130,10 @@
             <li><strong>The Tamoz agent reasons.</strong> It works with any model. It gets one snapshot of the situation and a limit on how much reasoning it can spend, can read further evidence through read-only tools an operator has granted, and returns a proposal with its uncertainty. It can also draft a rule from verified repairs for a person to review. Its work is saved as it goes, so it can recover after a crash, and it has no direct path to equipment.</li>
             <li><strong>Streams Simulator is the plant and the console.</strong> It can stand in for a plant or connect to real hardware. People use it to watch sensor values, approve or stop actions, and review what happened.</li>
           </ul>
+          <figure class="project-figure">
+            <img src="/images/projects/tamoz/canvas-live-run-fault.webp" alt="The Streams Simulator canvas during a run of a simulated chiller plant at 12 of 30 simulated minutes. Chiller CH-2 is marked with a compressor wear fault and shows live readings beside chiller CH-1 and air-handling unit AHU-1. A panel on the right has pause, speed, effector call, and fault injection controls." width="1200" height="897" loading="lazy" />
+            <figcaption class="evidence-caption">Screenshot of the simulator canvas: a simulated chiller plant while it runs, with a compressor wear fault injected on CH-2 at 12 simulated minutes. This exploratory run was not connected to Tamoz or to real equipment.</figcaption>
+          </figure>
           <p>Together they form one loop, from readings to outcomes.</p>
         <figure class="diagram">
           <p class="diagram__title">The system from readings to outcomes</p>
@@ -187,20 +211,6 @@
             <li><strong>It doesn't take "done" for an answer.</strong> The command being received, the device reporting success, and the room actually cooling are kept as three separate facts.</li>
             <li><strong>It remembers.</strong> If the door closes and the room recovers, that outcome becomes evidence for next time.</li>
           </ol>
-
-          <h2 id="learning">Rules work. Who writes the next one?</h2>
-          <p>Rules have run plants for decades, for good reason: they're fast, predictable, and easy to check. Tamoz keeps them. The hard part was never running a rule. It's knowing which rule to write, and keeping up as things change.</p>
-          <p>A rule only catches what someone understood when they wrote it. A new failure, a machine that has drifted from its neighbours, or a fault that looks like a different one falls through to whoever is on shift. Those are the cases Tamoz is for.</p>
-          <p>It works through the case no rule covers. When the same repair keeps working, it drafts a new rule with the evidence behind it. Once a person approves it, that rule handles the problem without calling a model. Here's one it learned, in plain words:</p>
-          <figure class="project-figure">
-            <blockquote>
-              <p><em>When:</em> a pump's 15-minute axial vibration average is at least 1.25 times its own 24-hour average, and its heartbeat is present.<br /><em>Do:</em> schedule alignment maintenance.<br /><em>Learned from:</em> three verified repairs.</p>
-            </blockquote>
-            <figcaption class="evidence-caption">From the simulated pump trial, where the approver was scripted.</figcaption>
-          </figure>
-          <p>It's an ordinary rule. Your team can read it, question it, and switch it off. If the equipment changes or the repair stops holding, it switches itself off and the model takes over. The aim is for the model's job to shrink to what's still unknown, while what you've learned stays in rules you own.</p>
-          <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself.</p>
-          <p>In that trial, with a real model, this rule handled five faults without a model call, all correct and on time. The other two fault types didn't earn a rule, and the model still handled most faults. <a href="/projects/tamoz-technical.html#rule-promotion">Read how rules are learned</a>.</p>
 
           <h2 id="evidence">What has been tested</h2>
           <h3>A pump station with a real model</h3>
