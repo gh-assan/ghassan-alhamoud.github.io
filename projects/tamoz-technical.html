@@ -345,6 +345,7 @@
 
           <h2 id="episode">4. The episode boundary</h2>
           <p>This is where continuous evidence turns into one bounded, supervised piece of reasoning. Tamoz implements the <code>EpisodeWorker</code> gRPC service with three RPCs. <code>Handshake</code> and <code>Execute</code> run episodes. <code>DraftPlaybookRule</code> is optional and separate: the worker announces it in the handshake only when started with a drafting model, and it only drafts rules (<a href="#rule-promotion">section 12.2</a>). The stream dials it over a Unix socket (mTLS optional). The worker is authoritative for nothing. It proposes, and the runtime decides.</p>
+          <p>Tamoz isn't the only executor. Agentic Stream also ships a fixture executor and an in-process native one, which it uses when no <code>--worker-socket</code> is given, running a deterministic provider unless a model endpoint is configured. Rule decisions have their own executor (<a href="#rule-promotion">section 12.6</a>). All of them return to the same validation and policy path, so the boundary below is about what any executor may do. The results on this page used the Tamoz worker, except where a round says it used a scripted one.</p>
 
           <figure class="diagram">
             <p class="diagram__title">Figure 3 · One episode, as a sequence</p>
