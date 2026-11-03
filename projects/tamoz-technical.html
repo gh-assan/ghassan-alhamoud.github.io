@@ -521,13 +521,13 @@
           </figure>
           <figure class="project-figure clip">
             <div class="clip__frame">
-              <video muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="Animation: pump 5's axial vibration climbs, the system diagnoses misalignment and books maintenance, the command is received, and the vibration falls back to normal." aria-describedby="clip-fault-response-desc">
+              <video controls muted loop playsinline preload="none" width="1280" height="720" poster="/images/projects/tamoz/clips/fault-response-poster.webp" aria-label="Animation: pump 5's axial vibration climbs, the system diagnoses misalignment and books maintenance, the command is received, and the vibration falls back to normal." aria-describedby="clip-fault-response-desc">
                 <source src="/images/projects/tamoz/clips/fault-response.webm" type="video/webm" />
                 <source src="/images/projects/tamoz/clips/fault-response.mp4" type="video/mp4" />
               </video>
             </div>
             <p class="sr-only" id="clip-fault-response-desc">Pump 5's axial vibration, normally about 2.0 millimetres per second, begins to rise at 06:25 on a simulated day. The system's view of the pump moves from candidate to watch to warning at 09:55, when the 15-minute mean is 2.76 against a 24-hour mean of 2.06. The model, glm-5.3-flash, answers in 21 seconds that this is misalignment. Policy approves a low-risk maintenance booking automatically. The reading keeps rising to about 3.9 until the plant receives the booking at 15:17. The pump is repaired at 16:17, the reading returns to about 2.0, and the repair finishes under three hours before its deadline. The command's effect is shown as unknown: the board reported success, but nothing read the booking back.</p>
-            <figcaption class="evidence-caption">Animated from a recorded simulator run (pump 5 of 8, campaign 2b), sped up 7,200x (two plant hours per second); paused while the decision is read. Model, tokens and timings as recorded.</figcaption>
+            <figcaption class="evidence-caption">Animated from a recorded simulator run (pump 5 of 8, campaign 2b), sped up 7,200x (two plant hours per second); paused while the decision is read. Model, tokens and timings as recorded. The simulated world ran about 200 times faster than real time, so the 81 wall-clock seconds from warning to booking span about five simulated hours.</figcaption>
           </figure>
 
           <p>Risk classes run from <code>R0</code> to <code>R4</code>. The route for each class is fixed in the policy contract and bound into each policy digest: <code>R0</code> and <code>R1</code> run automatically, <code>R2</code> needs approval, and <code>R3</code> and <code>R4</code> are denied. A spec can add an approval requirement to an automatic class, but it can't relax a class. In the experiment specs they worked out like this:</p>
