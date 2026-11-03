@@ -30,7 +30,7 @@
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/assets/css/main.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20260926" />
+  <link rel="stylesheet" href="/assets/css/freezer-story.css?v=20261103" />
 </head>
 <body>
   <header class="header" id="header">
@@ -52,17 +52,43 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta"><span>Tamoz</span><span class="article-card__dot"></span><span>Industrial pilot · Seeking a first partner</span></div>
-          <h1 class="article-single__title">Find out where your operation can improve.</h1>
-          <div class="article-single__body project-single__body"><p>We work with your team to investigate one operational problem, establish the data needed, and test whether monitoring, alerts, and recommendations can help. The goal could be less energy waste, lower operating costs, or less time spent investigating problems.</p></div>
+          <h1 class="article-single__title">Find out what your alarms miss.</h1>
+          <div class="article-single__body project-single__body"><p>A freezer that starts warming at 2 a.m. Energy that stays high when a line is idle. Alerts that take too long to investigate. We work with your team on one problem like these, using your existing data or sensors we install, and test whether AI can show what's happening and what to do about it.</p><p>It's read-only, and your team stays in control.</p></div>
           <div class="project-single__actions">
             <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Discuss your operation</span></a>
             <a class="btn btn--secondary" href="#pilot">How a pilot works</a>
           </div>
         </header>
 
-        <figure class="scene" data-scene="tamoz" data-requires-js data-label="Animated illustration: sensor readings stream in and rise past a threshold; Agentic Stream seals them into a snapshot; Tamoz proposes bounded cooling, with no power setting in it; policy and a person approve a bounded command under the firmware ceiling of 60 percent duty for 10 seconds; the fan spins while the lease runs and the readings cool; the verified outcome returns to Tamoz and can become a rule.">
-          <div class="scene__stage" style="--aspect: 2.45"></div>
-          <figcaption class="evidence-caption">Illustrative fan-control design, not live readings. The first pilot starts with monitoring and recommendations. <a href="/projects/tamoz-technical.html#hardware">Read about the hardware example</a>.</figcaption>
+        <figure class="freezer-story" id="freezer-story" aria-label="An illustration of what a read-only pilot could show when a freezer warms overnight">
+          <div class="fs-head"><span class="fs-clock">02:40</span><span class="fs-where">Night shift, cold room</span></div>
+          <div class="fs-grid">
+            <div>
+              <svg class="fs-chart" viewBox="0 0 560 400" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustration: Freezer 4 holds at minus 18 degrees until 2 a.m., then climbs to minus 9 by 2:40, just under the alarm limit of minus 8. Two other cases start warming shortly after.">
+                <line class="fs-grid-line" x1="70" x2="546" y1="344.1" y2="344.1"/><text x="62" y="349.1" text-anchor="end">−20 °C</text><line class="fs-grid-line" x1="70" x2="546" y1="234.8" y2="234.8"/><text x="62" y="239.8" text-anchor="end">−15 °C</text><line class="fs-grid-line" x1="70" x2="546" y1="125.4" y2="125.4"/><text x="62" y="130.4" text-anchor="end">−10 °C</text><text x="70.0" y="389" text-anchor="middle">01:30</text><text x="260.4" y="389" text-anchor="middle">02:00</text><text x="450.8" y="389" text-anchor="middle">02:30</text>
+                <line class="fs-alarm" x1="70" x2="546" y1="81.6" y2="81.6"/>
+                <text class="fs-alarm-label" x="76" y="73.6">Alarm limit, not reached</text>
+                <polyline class="fs-other" points="323.9,307.0 336.6,303.5 349.3,296.6 361.9,291.5 374.6,288.1 387.3,283.3 400.0,277.1 412.7,272.7 425.4,268.9 438.1,262.9 450.8,255.0 463.5,253.8 476.2,248.5 488.9,240.2 501.6,236.8 514.3,230.2"/>
+                <polyline class="fs-other" points="323.9,291.8 336.6,287.9 349.3,280.0 361.9,279.7 374.6,274.0 387.3,270.6 400.0,263.8 412.7,261.2 425.4,256.2 438.1,249.6 450.8,247.4 463.5,241.6 476.2,235.3 488.9,234.9 501.6,230.6 514.3,225.2"/>
+                <polyline class="fs-main" points="70.0,301.8 82.7,302.5 95.4,300.9 108.1,302.2 120.8,302.7 133.5,300.9 146.2,298.2 158.9,298.8 171.5,299.0 184.2,301.8 196.9,300.2 209.6,301.5 222.3,302.1 235.0,302.4 247.7,301.9 260.4,298.1 273.1,294.0 285.8,287.7 298.5,280.4 311.2,275.7 323.9,266.6 336.6,256.0 349.3,246.2 361.9,235.9 374.6,225.8 387.3,219.8 400.0,206.6 412.7,195.5 425.4,185.4 438.1,176.0 450.8,163.1 463.5,153.6 476.2,137.4 488.9,125.9 501.6,115.5 514.3,104.5"/>
+                <circle class="fs-dot" r="6" cx="514.3" cy="103.5"/>
+                <text class="fs-main-label fs-late" data-at="9" x="498.3" y="104.5" text-anchor="end">Freezer 4: up 9 °C</text>
+                <text class="fs-late" data-at="11" x="514.3" y="306.9" text-anchor="end">Other cases warming</text>
+              </svg>
+            </div>
+            <div class="fs-panel">
+              <div class="fs-card" data-card="saw"><b>Saw</b><span>Freezer 4 is up 9 °C in 40 minutes on its own sensor, outside its defrost schedule.</span></div>
+              <div class="fs-card" data-card="thinks"><b>Thinks</b><span>Not a normal defrost. A door is unlikely, since several cases are warming together. The cause isn't known yet.</span></div>
+              <div class="fs-card" data-card="proposes"><b>Proposes</b><span>Call the night contact and check the refrigeration controller.</span></div>
+              <div class="fs-card fs-card--team" data-card="team"><b>Your team decides</b><span>Nothing changes on the equipment unless your team acts.</span></div>
+            </div>
+          </div>
+          <p class="fs-status" aria-live="off">Your team decides. Nothing changes on the equipment.</p>
+          <div class="fs-controls">
+            <button type="button" class="fs-btn">Play</button>
+            <input class="fs-range" type="range" min="0" max="42" step="0.1" value="42" aria-label="Position in the illustration" />
+          </div>
+          <figcaption class="evidence-caption">An illustration of a possible pilot. The readings are invented to show the idea.</figcaption>
         </figure>
 
         <div class="article-single__body project-single__body">
@@ -71,16 +97,16 @@
           <section aria-labelledby="problem">
           <h2 id="problem">What would you like to understand better?</h2>
           <p>You may already have readings and alarms, but still spend time working out what they mean and what to do next. Or you may need sensors before you can see what is happening.</p>
-          <ul>
-            <li>Energy consumption that stays high when equipment is idle.</li>
-            <li>Changes in a process that may be contributing to material waste.</li>
-            <li>Recurring alerts that take too long to investigate.</li>
-          </ul>
           <p>We start with one problem your team wants to investigate and a result we can measure.</p>
 
           <h2>An example: energy use while a line is idle</h2>
           <p>If energy use stays high while a production line is idle, we could compare consumption with operating schedules and investigate which equipment contributes. The team could review the findings, decide whether to change anything, and measure consumption afterwards.</p>
           <p>This is a possible pilot, not a customer result. It would test whether the information helps the team find and reduce avoidable consumption.</p>
+
+          <h2>An example: a freezer warming overnight</h2>
+          <p>Since October 2026, attackers have remotely hit refrigeration in <a href="https://www.forbes.com/sites/conormurray/2026/11/02/new-wave-of-refrigerator-cyberattacks-roils-european-supermarkets-everything-is-destroyed/" target="_blank" rel="noopener noreferrer">supermarkets across Europe</a>. In France, units in hundreds of stores were <a href="https://thehackernews.com/2026/10/attackers-heat-french-supermarket.html" target="_blank" rel="noopener noreferrer">pushed into defrost and heated to as much as 50 °C</a> overnight, and <a href="https://www.cbsnews.com/news/cyberattack-supermarkets-refrigerators-france-fires-food-losses/" target="_blank" rel="noopener noreferrer">stores had to throw food away</a>. Tamoz wouldn't stop an attack like this, because it isn't a security product.</p>
+          <p>A pilot would test a narrower question: with separate sensors in the cases, how soon could your team learn that something is wrong, and what would help them act? It could look like the illustration at the top of this page:</p>
+          <p>This is a possible pilot, not a customer result.</p>
 
           </section>
 
@@ -223,7 +249,6 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
-  <script src="/assets/js/motion/core.js?v=20260926" defer></script>
-  <script src="/assets/js/motion/scene-tamoz.js?v=20261103" defer></script>
+  <script src="/assets/js/freezer-story.js?v=20261103" defer></script>
 </body>
 </html>

@@ -16,7 +16,8 @@ the work the founding team proposes to do with them.
   installation when needed, and the founding team's involvement. Keep the
   audience and hypothetical example together so future experiments are easy to
   edit. Use a short evidence summary linking to the project; do not duplicate
-  the pump report. Keep the original animation near the top, labeled illustrative.
+  the pump report. Keep an animation near the top, labeled illustrative. Since
+  2026-11-03 this is the read-only freezer story, not the original fan animation.
 - `/projects/tamoz.html`: durable project overview. Explain stream monitoring,
   bounded reasoning, recommendations and governed actions, outcome verification,
   learned rules, and the roles of Tamoz, Agentic Stream, and Streams Simulator.

@@ -100,6 +100,14 @@ class TamozPagesTest(unittest.TestCase):
         self.assertTrue(any((attrs.get('src') or '').startswith('/assets/js/rule-story.js')
                             for tag, attrs in self.project.elements if tag == 'script'))
 
+    def test_pilot_animation_is_labelled_and_read_only(self):
+        self.assertIn('freezer-story', self.pilot.ids)
+        text = ' '.join(self.pilot.text).lower()
+        self.assertIn('readings are invented', text)
+        self.assertIn('nothing changes on the equipment', text)
+        self.assertTrue(any((attrs.get('src') or '').startswith('/assets/js/freezer-story.js')
+                            for tag, attrs in self.pilot.elements if tag == 'script'))
+
 
 if __name__ == '__main__':
     unittest.main()
