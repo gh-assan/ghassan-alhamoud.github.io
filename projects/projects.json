@@ -1,5 +1,30 @@
 [
   {
+    "slug": "tamoz",
+    "image": "/images/projects/tamoz-card-black.png",
+    "title": "Tamoz",
+    "name": "Physical AI Agent",
+    "status": "In active development",
+    "highlighted": true,
+    "repo": "https://github.com/ghassan-ai-projects/tamoz",
+    "summary": "A physical AI agent for the equipment you already run. We give AI agents sensors, hands, and the rules for using them.",
+    "problem": "Sensor changes need context before an operator can decide whether to investigate, wait, or act. Reasoning and equipment authority need separate limits.",
+    "outcome": "In a simulated pump station it learned a misalignment rule from verified repairs: 5 of 5 rule decisions right and on time with no model call. The whole route has also run on a small bench board. One station, one seed; every limit is on the page.",
+    "stack": [
+      "Ruby",
+      "Go",
+      "SQLite",
+      "Stream-Native",
+      "Evals"
+    ],
+    "tags": [
+      "Physical AI",
+      "Learning",
+      "Agent Framework",
+      "Evaluation"
+    ]
+  },
+  {
     "slug": "scalability-lab",
     "title": "ScaleShop Scalability Lab",
     "name": "Interactive Scalability Workshop",
@@ -22,30 +47,6 @@
       "Distributed Systems",
       "Interactive Lab",
       "Open Source"
-    ]
-  },
-  {
-    "slug": "tamoz",
-    "title": "Tamoz",
-    "name": "Stream-Native Agent for the Physical World",
-    "status": "In active development",
-    "highlighted": true,
-    "repo": "https://github.com/ghassan-ai-projects/tamoz",
-    "summary": "An AI agent that reasons about sensor-stream situations, proposes responses under fixed policy limits, and stores evidence about outcomes. Includes a learning loop tested on verified simulated repairs.",
-    "problem": "Sensor changes need context before an operator can decide whether to investigate, wait, or act. Reasoning and equipment authority need separate limits.",
-    "outcome": "A simulated pump station let the system learn a misalignment rule from verified repairs: 5 of 5 rule decisions right and on time with no model call, and no action on a healthy pump. Also tested across five simulator rounds and a small Arduino bench. One station, one seed; every limit is on the page.",
-    "stack": [
-      "Ruby",
-      "Go",
-      "SQLite",
-      "Stream-Native",
-      "Evals"
-    ],
-    "tags": [
-      "Physical-World AI",
-      "Stream-Native",
-      "Agent Framework",
-      "Evaluation"
     ]
   },
   {
