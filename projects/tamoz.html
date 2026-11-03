@@ -58,9 +58,9 @@
           <h1 class="article-single__title">We give AI agents sensors, hands, and the rules for using them.</h1>
           <div class="article-single__body project-single__body"><p>Tamoz is a physical AI agent for the equipment you already run. It watches your sensors, and when a machine does something unexpected, it works out what's likely happening, says how sure it is, and proposes a response from the actions your team has defined. When a fix keeps working, it drafts a new rule for your team to approve, and that problem no longer needs a model.</p></div>
           <div class="project-single__actions">
-            <a class="btn btn--primary" href="/tamoz/"><span>Discuss an industrial pilot</span></a>
+            <a class="btn btn--primary" href="/tamoz/"><span>Explore the industrial pilot</span></a>
             <a class="btn btn--secondary" href="#evidence">See what's been tested</a>
-            <a class="btn btn--secondary" href="/projects/tamoz-technical.html">Technical deep dive</a>
+            <a class="project-single__text-link" href="/projects/tamoz-technical.html">Technical deep dive</a>
           </div>
         </header>
 
@@ -70,7 +70,7 @@
         </figure>
 
         <div class="article-single__body project-single__body">
-          <nav class="article-toc" aria-label="On this page">
+          <nav class="article-toc article-toc--columns" aria-label="On this page">
             <p><strong>On this page</strong></p>
             <ul>
               <li><a href="#problem">What Tamoz is built for</a></li>
@@ -86,9 +86,8 @@
 
           <h2 id="problem">What Tamoz is built for</h2>
           <p>A cold room warms up overnight. Equipment starts drawing more power. A sensor stops reporting. An alarm can tell you a reading crossed a line, but not whether a door was left open, a machine is failing, or the sensor is wrong. Someone still has to work that out before deciding whether to wait, investigate, or act.</p>
-          <p>Tamoz is built to do that first pass. When a cold room keeps warming, it weighs the readings and their quality, says what it thinks is happening and how sure it is, and proposes a response from the actions people have defined for that equipment. People also decide which actions need their approval, and every outcome is recorded.</p>
+          <p>Tamoz is built to do that first pass. People decide which actions it can propose and which need their approval, and every outcome is recorded.</p>
           <p>While the cold room stays steady, no model runs. When a sensor stops reporting, Tamoz treats that as missing evidence, not as normal, so it becomes less certain instead of guessing.</p>
-          <p>It also learns from what happens next. If a repair stops the rising power draw and the problem stays away, that outcome becomes evidence for later decisions. When the same repair keeps proving right, Tamoz can draft a rule for it. Once a person approves it, that rule handles the pattern without calling a model. Changes to the agent's own behaviour need a person's approval too.</p>
           <p>It's aimed at monitoring, alerts, investigation, and recommendations across equipment and processes. Savings such as lower energy use or less material waste haven't been measured in a real operation, and a pilot is how we'd find out.</p>
 
           <h2 id="capabilities">What you can do with Tamoz</h2>
@@ -99,17 +98,15 @@
             <li><strong>Try it before it touches anything.</strong> Build a simulated plant from a component library, inject faults, and score the system against a sealed record of what really happened. A device can run as a simple simulated twin before the hardware exists, and later be compared with what the real board reported.</li>
           </ul>
           <p>It has already run end to end on real hardware: Tamoz proposed an action, a person approved it, and the command reached a real board driving a fan. <a href="#real-motor">See how that went</a>. In a simulated pump station with a real model, it also learned a new rule from verified repairs. Once approved, that rule handled five faults with no model call, all correct and on time. <a href="#evidence">See the results</a>.</p>
+          <figure class="project-figure">
+            <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" style="aspect-ratio: 1056 / 597; object-fit: cover" loading="lazy" />
+            <figcaption class="evidence-caption">Photo of the hardware bench: an ELEGOO Mega 2560, a DHT11 temperature and humidity sensor, a motor-driver circuit, and a small DC motor with a fan blade.</figcaption>
+          </figure>
 
           <h2 id="learning">Rules work. Who writes the next one?</h2>
           <p>Rules have run plants for decades, for good reason: they're fast, predictable, and easy to check. Tamoz keeps them. The hard part was never running a rule. It's knowing which rule to write, and keeping up as things change.</p>
           <p>A rule only catches what someone understood when they wrote it. A new failure, a machine that has drifted from its neighbours, or a fault that looks like a different one falls through to whoever is on shift. Those are the cases Tamoz is for.</p>
-          <p>It works through the case no rule covers. When the same repair keeps working, it drafts a new rule with the evidence behind it. Once a person approves it, that rule handles the problem without calling a model. Here's one it learned, in plain words:</p>
-          <figure class="project-figure">
-            <blockquote>
-              <p><em>When:</em> a pump's 15-minute axial vibration average is at least 1.25 times its own 24-hour average, and its heartbeat is present.<br /><em>Do:</em> schedule alignment maintenance.<br /><em>Learned from:</em> three verified repairs.</p>
-            </blockquote>
-            <figcaption class="evidence-caption">From the simulated pump trial, where the approver was scripted.</figcaption>
-          </figure>
+          <p>It works through the case no rule covers. When the same repair keeps working, it drafts a new rule with the evidence behind it. Once a person approves it, that rule handles the problem without calling a model. Here's how that went for one fault in our pump trial:</p>
           <figure class="rule-story" id="rule-story" aria-label="How Tamoz learned a rule, in six steps">
             <div class="rule-story__controls">
               <div class="rule-story__dots"></div>
@@ -193,8 +190,7 @@
             <figcaption class="evidence-caption">Recorded numbers from the simulated pump trial (pump 5). <a href="/images/projects/tamoz/clips/rule-learned.mp4">Watch it as a video</a>.</figcaption>
           </figure>
           <p>It's an ordinary rule. Your team can read it, question it, and switch it off. If the equipment changes or the repair stops holding, it switches itself off and the model takes over. The aim is for the model's job to shrink to what's still unknown, while what you've learned stays in rules you own.</p>
-          <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself.</p>
-          <p>In that trial, with a real model, this rule handled five faults without a model call, all correct and on time. The other two fault types didn't earn a rule, and the model still handled most faults. <a href="/projects/tamoz-technical.html#rule-promotion">Read how rules are learned</a>.</p>
+          <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself. <a href="/projects/tamoz-technical.html#rule-promotion">Read how rules are learned</a>.</p>
 
           <h2 id="design">How it's built</h2>
           <p>We call the whole system Tamoz, and it has three parts with separate jobs: one watches and acts, one reasons, and one gives people a plant to build and test, and a console to run it. The split is the point. The part that reasons can't touch equipment, and the part that touches equipment follows fixed rules.</p>
@@ -213,7 +209,7 @@
           <div class="diagram__scroll" tabindex="0" role="region" aria-label="System diagram, scroll horizontally">
             <svg viewBox="0 0 820 300" role="img" aria-labelledby="d1-title d1-desc">
               <title id="d1-title">The stream-to-action loop</title>
-              <desc id="d1-desc">Five stages from left to right: the world produces readings; Agentic Stream turns them into a versioned Situation; Tamoz understands it and proposes what should happen; the policy plane decides how much and whether it may happen; the device edge acts within a lease and a ceiling. The world then changes and new readings arrive. The observed outcome returns to Tamoz and is remembered as Experience.</desc>
+              <desc id="d1-desc">Five stages from left to right: the world produces readings; Agentic Stream turns them into a fixed snapshot; Tamoz understands it and proposes what should happen; policy decides how much and whether it may happen; the device edge acts within its limits. The world then changes and new readings arrive. The outcome is recorded, and repeated fixes can become rules.</desc>
               <defs>
                 <marker id="d1-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head" d="M0,0 L10,5 L0,10 z"/></marker>
                 <marker id="d1-aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-head--accent" d="M0,0 L10,5 L0,10 z"/></marker>
@@ -231,29 +227,29 @@
               <rect class="dg-box" x="175" y="90" width="140" height="112" rx="8"/>
               <text class="dg-k" x="245" y="112" text-anchor="middle">2 · SITUATE</text>
               <text class="dg-t" x="245" y="136" text-anchor="middle">Agentic Stream</text>
-              <text class="dg-s" x="245" y="156" text-anchor="middle">Event time, windows,</text>
+              <text class="dg-s" x="245" y="156" text-anchor="middle">Timing, quality,</text>
               <text class="dg-s" x="245" y="171" text-anchor="middle">silent sensors</text>
-              <text class="dg-s dg-code" x="245" y="191" text-anchor="middle">→ Situation v47</text>
+              <text class="dg-s dg-code" x="245" y="191" text-anchor="middle">→ snapshot</text>
 
               <rect class="dg-box dg-box--accent" x="340" y="90" width="140" height="112" rx="8"/>
               <text class="dg-k dg-accent" x="410" y="112" text-anchor="middle">3 · UNDERSTAND</text>
               <text class="dg-t" x="410" y="136" text-anchor="middle">Tamoz</text>
-              <text class="dg-s" x="410" y="156" text-anchor="middle">Diagnoses, weighs</text>
-              <text class="dg-s" x="410" y="171" text-anchor="middle">confounders, decides</text>
-              <text class="dg-s dg-code dg-accent" x="410" y="191" text-anchor="middle">→ intent: what</text>
+              <text class="dg-s" x="410" y="156" text-anchor="middle">Works out what is likely,</text>
+              <text class="dg-s" x="410" y="171" text-anchor="middle">proposes a response</text>
+              <text class="dg-s dg-code dg-accent" x="410" y="191" text-anchor="middle">→ proposal: what</text>
 
               <rect class="dg-box dg-box--info" x="505" y="90" width="140" height="112" rx="8"/>
               <text class="dg-k dg-info" x="575" y="112" text-anchor="middle">4 · GOVERN</text>
-              <text class="dg-t" x="575" y="136" text-anchor="middle">Policy plane</text>
-              <text class="dg-s" x="575" y="156" text-anchor="middle">Freshness, risk,</text>
-              <text class="dg-s" x="575" y="171" text-anchor="middle">approval, limits</text>
+              <text class="dg-t" x="575" y="136" text-anchor="middle">Policy</text>
+              <text class="dg-s" x="575" y="156" text-anchor="middle">Freshness, approval,</text>
+              <text class="dg-s" x="575" y="171" text-anchor="middle">limits</text>
               <text class="dg-s dg-code dg-info" x="575" y="191" text-anchor="middle">→ command: how much</text>
 
               <rect class="dg-box" x="670" y="90" width="140" height="112" rx="8"/>
               <text class="dg-k" x="740" y="112" text-anchor="middle">5 · ACT</text>
               <text class="dg-t" x="740" y="136" text-anchor="middle">Device edge</text>
-              <text class="dg-s" x="740" y="156" text-anchor="middle">Gateway + firmware:</text>
-              <text class="dg-s" x="740" y="171" text-anchor="middle">lease, cap, safe-stop</text>
+              <text class="dg-s" x="740" y="156" text-anchor="middle">Gateway and firmware:</text>
+              <text class="dg-s" x="740" y="171" text-anchor="middle">limits, safe stop</text>
               <text class="dg-s dg-code" x="740" y="191" text-anchor="middle">→ motion</text>
 
               <path class="dg-line" d="M152 146 H172" marker-end="url(#d1-ah)"/>
@@ -263,11 +259,11 @@
 
               <path class="dg-line dg-line--accent dg-line--dash" d="M740 202 V260 H410 V208" marker-end="url(#d1-aha)"/>
               <text class="dg-k dg-accent" x="575" y="252" text-anchor="middle">6 · LEARN</text>
-              <text class="dg-s" x="575" y="282" text-anchor="middle">The outcome is observed independently and remembered as Experience</text>
+              <text class="dg-s" x="575" y="282" text-anchor="middle">The outcome is recorded, and repeated fixes can become rules</text>
             </svg>
           </div>
           <p class="diagram__hint">Scroll sideways to see the whole loop.</p>
-          <figcaption class="evidence-caption">Illustrative system design. The simulator rounds exercised this loop with a scripted reasoner. The real-model pump trial and the separate fan bench are described below.</figcaption>
+          <figcaption class="evidence-caption">Illustrative system design. What has been tested is described below.</figcaption>
         </figure>
 
           <h2 id="decisions">How a decision works</h2>
@@ -311,13 +307,9 @@
             </table>
           </div>
           <p>Faults detected: 17 and 15 of 18. Correct diagnosis: 11 of 18 both ways. Action on a healthy look-alike: 0 of 3 both ways.</p>
-          <p><strong>What this shows.</strong> Where a rule existed, it did the model's job with no model call: five misalignments, all correct and on time. So the gain is fewer model calls, not more repairs. The small differences in the other rows are the model's own variation. So far, one of three fault types has earned a rule, and the model handled the rest. <a href="/projects/tamoz-technical.html#trial">Read the full trial</a>.</p>
+          <p><strong>What this shows.</strong> Where a rule existed, it did the model's job with no model call: five misalignments, all correct and on time. So the gain is fewer model calls, not more repairs. The small differences in the other rows are the model's own variation. So far, one of three fault types has earned a rule, and the model handled the rest. In this trial the approver was scripted. <a href="/projects/tamoz-technical.html#trial">Read the full trial</a>.</p>
           <p>A pilot would measure these same numbers on your equipment.</p>
           <h3 id="real-motor">From Tamoz to a real board</h3>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/hardware-bench.jpg" alt="The Tamoz hardware bench: an ELEGOO microcontroller board wired to a breadboard circuit, a blue temperature and humidity sensor, and a small fan motor" width="1280" height="597" style="aspect-ratio: 1056 / 597; object-fit: cover" loading="lazy" />
-            <figcaption class="evidence-caption">Photo of the hardware bench: an ELEGOO Mega 2560, a DHT11 temperature and humidity sensor, a motor-driver circuit, and a small DC motor with a fan blade.</figcaption>
-          </figure>
           <p>We have run the whole route on real hardware: from Tamoz's proposal, through policy and a person's approval, to a command on a small board with a fan motor. Three recorded sessions on 25 October 2026 took this path.</p>
           <p>This was a bench test, not plant equipment. A team member approved each command, the thresholds were set for the bench, and confirmation came from the board's own report. With the motor disconnected, the board still reported success, so these sessions don't measure a physical effect such as cooling. That's one reason a pilot starts with monitoring and recommendations, and why any later equipment action would need an independent check, such as a temperature or current reading. <a href="/projects/tamoz-technical.html#hardware">Read the bench evidence</a> or the <a href="/articles/agent-spun-the-motor.html">earlier motor test</a>.</p>
           <h3>Simulator rounds across several industries</h3>
@@ -337,7 +329,7 @@
           <p>You'd work directly with our founding team of three, who can use your existing data or install suitable sensors. You'd come away with recorded findings, recommendations with their evidence, and a review of what worked and what needs more investigation.</p>
           <div class="article-cta">
             <a class="btn btn--primary" href="/tamoz/"><span>Explore the industrial pilot</span></a>
-            <p class="article-cta__text"><a href="/projects/tamoz-technical.html">Technical deep dive</a> · <a href="/projects/tamoz-use-cases.html">Detailed use cases</a></p>
+            <p class="article-cta__text article-cta__text--after"><a href="/projects/tamoz-technical.html">Technical deep dive</a> · <a href="/projects/tamoz-use-cases.html">Detailed use cases</a></p>
           </div>
         </div>
       </article>

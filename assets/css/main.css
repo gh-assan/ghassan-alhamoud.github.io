@@ -1171,6 +1171,11 @@ html.js .reveal--visible {
   margin-top: 12px;
 }
 
+.project-single__text-link {
+  align-self: center;
+  margin-left: 0.5rem;
+}
+
 .project-single__actions .project-single__repo {
   margin-top: 0;
 }
@@ -1614,6 +1619,10 @@ html.js .reveal--visible {
   font-size: 16px;
   color: var(--text-primary);
   margin-bottom: 20px;
+}
+
+.article-cta__text--after {
+  margin: 20px 0 0;
 }
 
 /* ================================================================
@@ -2879,6 +2888,17 @@ html.js .reveal--visible {
 
 .article-toc li {
   margin: 0;
+}
+
+@media (min-width: 900px) {
+  .article-toc--columns ul {
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+
+  .article-toc--columns li {
+    break-inside: avoid;
+  }
 }
 
 .article-toc a {
