@@ -333,13 +333,13 @@
             <p class="diagram__hint">Scroll sideways to see the exit paths.</p>
             <figcaption class="evidence-caption">Source: Agentic Stream <code>internal/cognition</code>. The Round 3 number was measured live in the simulator.</figcaption>
           </figure>
-          <p>Supersession is the quiet hero here. If a newer version materially changes the Situation while an episode is still thinking, the attempt is cancelled, and its fence guarantees a late answer can't be accepted. If a correction arrives after a command already executed, the stream admits one deduplicated reconsideration bound to the corrected version.</p>
+          <p>Supersession does most of the work here. If a newer version materially changes the Situation while an episode is still thinking, the attempt is cancelled, and its fence guarantees a late answer can't be accepted. If a correction arrives after a command already executed, the stream admits one deduplicated reconsideration bound to the corrected version.</p>
 
-          <p>Numbers from the early simulator rounds, which show what the scheduler buys:</p>
+          <p>Numbers from the early simulator rounds. Only the first measures the scheduler's selectivity:</p>
           <div class="stat-grid">
             <div class="stat"><span class="stat__value">7,200 → 0</span><span class="stat__label">quiet readings in, model calls out. Round 3, aquaculture baseline (simulator).</span></div>
-            <div class="stat"><span class="stat__value">3,600 → 0</span><span class="stat__label">trigger evaluations during a 12-pond storm, episodes started. Cost ceiling held and ingestion stayed up.</span></div>
-            <div class="stat"><span class="stat__value">840 late</span><span class="stat__label">readings after a 14-hour ocean gap, admitted and reconciled into 606 reconsiderations. Round 5, cold chain.</span></div>
+            <div class="stat"><span class="stat__value">3,600 → 0</span><span class="stat__label">trigger evaluations during a 12-pond storm, episodes started, with the cost ceiling set to almost nothing. This tests the fail-safe: admission stopped and ingestion stayed up.</span></div>
+            <div class="stat"><span class="stat__value">840 late</span><span class="stat__label">readings after a 14-hour ocean gap, admitted as corrected versions, with 606 reconsideration items and a compensating episode. Round 5, cold chain.</span></div>
           </div>
           <p>One caveat that matters for the playbook: the scheduler's debounce and cooldown count wall-clock time today (see <a href="#trial-findings">section 19</a>).</p>
 
