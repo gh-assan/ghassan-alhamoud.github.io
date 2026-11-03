@@ -126,7 +126,8 @@
     new IntersectionObserver(function (entries) {
       visible = entries[0].isIntersecting;
       if (visible && !started) { started = true; setPlaying(true); }
-    }, { threshold: 0.5 }).observe(root);
+    // Half in view, or as much as fits when the scene is taller than the window.
+    }, { threshold: Math.min(0.5, 0.6 * window.innerHeight / root.offsetHeight) }).observe(root);
   } else {
     visible = true;
     started = true;
