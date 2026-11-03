@@ -1,0 +1,70 @@
+/* Step-through account of how Tamoz learned a rule. Without JavaScript every step is
+   shown in order; rule-story.js turns the list into a stepper. */
+.rule-story { margin: var(--space-8, 2rem) 0; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; }
+.article-single__body .rule-story__steps, .rule-story__steps { list-style: none; margin: 0; padding: 0; }
+.rule-story__step { margin: 0 0 1.5rem; padding: 0; }
+.rule-story__step:last-child { margin-bottom: 0; }
+.rule-story__title { margin: 0 0 .25rem; font-size: 1.3rem; line-height: 1.25; font-weight: 700; letter-spacing: -.01em; color: var(--text-primary); }
+.rule-story__sub { margin: 0 0 .85rem; color: var(--text-secondary); line-height: 1.45; }
+.rule-story__card { padding: .85rem 1rem; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; }
+.rule-story__card--accent { border-color: var(--accent); }
+.rule-story__card p { margin: 0 0 .5rem; line-height: 1.45; }
+.rule-story__card p:last-child { margin-bottom: 0; }
+.rule-story__label { font-weight: 700; color: var(--accent); }
+.rule-story__split { display: grid; grid-template-columns: 1fr auto; gap: .75rem; align-items: stretch; }
+.rule-story__stat { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 7.5rem; padding: .5rem .75rem; text-align: center; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; }
+.rule-story__stat strong { font-size: 1.9rem; line-height: 1.1; color: var(--accent); }
+.rule-story__stat span { font-size: .85rem; color: var(--text-secondary); }
+.rule-story__checks { list-style: none; margin: .75rem 0 0; padding: 0; }
+.rule-story__checks li { position: relative; margin: 0 0 .4rem; padding-left: 1.5rem; line-height: 1.4; }
+.rule-story__checks li::before { content: "\2713"; position: absolute; left: 0; font-weight: 800; color: var(--accent); }
+.rule-story__chart { display: block; width: 100%; height: auto; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; }
+.rule-story__chart text { font-family: inherit; font-size: 15px; fill: var(--text-secondary); }
+.rule-story__chart .rs-grid { stroke: var(--border); }
+.rule-story__chart .rs-normal { stroke: var(--accent); stroke-dasharray: 6 6; }
+.rule-story__chart .rs-normal-label { fill: var(--accent); }
+.rule-story__chart .rs-line { fill: none; stroke: var(--error); stroke-width: 3; stroke-linejoin: round; }
+.rule-story__chart .rs-mark { stroke: var(--text-primary); stroke-width: 1.5; }
+.rule-story__chart .rs-mark-label { fill: var(--text-primary); font-weight: 700; font-size: 17px; }
+.rule-story__compare { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.rule-story__compare h4 { margin: 0 0 .5rem; font-size: 1.02rem; color: var(--text-primary); }
+.rule-story__kv { display: flex; justify-content: space-between; gap: .75rem; padding: .35rem 0; border-top: 1px solid var(--border); font-size: .95rem; }
+.rule-story__note { margin: .75rem 0 0; font-size: .9rem; line-height: 1.4; color: var(--text-secondary); }
+.rule-story__controls { display: none; }
+
+/* Stepper. Steps share one grid cell, so the box keeps the height of the tallest. */
+.js .rule-story__steps { display: grid; }
+.js .rule-story__step { grid-area: 1 / 1; margin: 0; visibility: hidden; opacity: 0; }
+.js .rule-story__step.is-active { visibility: visible; opacity: 1; animation: rs-in .35s ease-out; }
+.js .rule-story__controls { display: flex; align-items: center; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.rule-story__btn { padding: .4rem .85rem; font: inherit; font-size: .9rem; font-weight: 600; color: var(--text-primary); background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+.rule-story__btn:hover { border-color: var(--accent); }
+.rule-story__btn--next { color: var(--bg-primary); background: var(--accent); border-color: var(--accent); }
+.rule-story__btn:focus-visible, .rule-story__dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rule-story__dots { display: flex; gap: .3rem; }
+.rule-story__count { margin-right: auto; font-size: .85rem; color: var(--text-secondary); }
+.rule-story__dot { position: relative; width: 1.9rem; height: .5rem; padding: 0; overflow: hidden; background: var(--border); border: 0; border-radius: 4px; cursor: pointer; }
+.rule-story__dot.is-active::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform-origin: left; }
+.rule-story__dot.is-timed::after { animation: rs-fill var(--rs-dwell, 8s) linear both; }
+.is-active .rs-line { stroke-dasharray: 1; animation: rs-draw 4.5s ease-in-out both; }
+.is-active .rs-late { animation: rs-appear .4s ease-out 4.3s both; }
+.is-active .rs-seq > * { animation: rs-appear .4s ease-out both; }
+.is-active .rs-seq > :nth-child(1) { animation-delay: .6s; }
+.is-active .rs-seq > :nth-child(2) { animation-delay: 1.8s; }
+.is-active .rs-seq > :nth-child(3) { animation-delay: 3s; }
+.is-active .rs-seq > :nth-child(4) { animation-delay: 4.2s; }
+@keyframes rs-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes rs-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes rs-appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rs-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .js .rule-story__step.is-active, .is-active .rs-line, .is-active .rs-late, .is-active .rs-seq > *, .rule-story__dot.is-timed::after { animation: none; }
+}
+@media (max-width: 560px) {
+  .rule-story { padding: .9rem; }
+  .rule-story__split, .rule-story__compare { grid-template-columns: 1fr; }
+  .rule-story__chart text, .rule-story__chart .rs-mark-label { font-size: 30px; }
+  .rule-story__stat { flex-direction: row; gap: .5rem; }
+  .rule-story__dots { width: 100%; }
+  .rule-story__dot { flex: 1; }
+}

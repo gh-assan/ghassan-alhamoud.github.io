@@ -16,16 +16,18 @@ Core themes:
 ## Profile
 
 - [Homepage](https://ghassan-alhamoud.com/): Overview of engineering background, services, selected work, open-source projects, articles, and contact links.
-- [Open Source Projects](https://ghassan-alhamoud.com/projects/): Curated project index with durable agent, memory, evaluation, workflow, and knowledge systems that can be inspected through public repositories.
+- [Projects](https://ghassan-alhamoud.com/projects/): Curated project index with durable agent, memory, evaluation, workflow, and knowledge systems that can be inspected through public repositories.
 - [Articles](https://ghassan-alhamoud.com/articles/): Long-form writing on AI architecture, agent systems, automation, reliability, and engineering practice.
 - [AI Agent Architecture Handbook](https://ghassan-alhamoud.com/handbook/): Structured handbook on agentic systems and common AI agent design patterns.
 - [Research](https://ghassan-alhamoud.com/research/): Long-form, evidence-labelled research programmes on AI coding agents, each with a one-page summary, learning path, FAQ and glossary.
 
-## Open Source Projects
+## Projects
 
 - [ScaleShop Scalability Lab](https://ghassan-alhamoud.com/projects/scalability-lab.html): Interactive workshop for diagnosing bottlenecks from telemetry and choosing proportionate architecture changes. Live lab: https://lab.ghassan-alhamoud.com Repository: https://github.com/ghassan-ai-projects/scaleshop-scalability-lab
-- [Tamoz](https://ghassan-alhamoud.com/projects/tamoz.html): Open-source, stream-native supervisory agent for the physical world. It reasons over sealed, sensor-derived Situations and proposes typed intents; deterministic policy decides how much and firmware enforces the final limits. Tested across five simulator rounds and an Arduino motor bench; the full live physical route remains an explicitly open integration seam. Repository: https://github.com/ghassan-ai-projects/tamoz
-- [Tamoz technical deep dive](https://ghassan-alhamoud.com/projects/tamoz-technical.html): Architecture, data flows, governance pipeline, memory, self-healing, self-improvement, evaluation framework, simulator rounds, and hardware bench evidence for the Tamoz, Agentic Stream, and Streams Simulator system.
+- [Tamoz project](https://ghassan-alhamoud.com/projects/tamoz.html): Pre-release AI agent for sensor-stream situations, governed responses, and outcome evidence. Explains Tamoz, Agentic Stream, and Streams Simulator, with real-model pump simulation results, scripted simulator rounds, and separate small-bench limits. No field deployment or established industrial savings.
+- [Tamoz industrial pilot](https://ghassan-alhamoud.com/tamoz/): Business proposal for industrial teams. Investigate one operational problem, use existing data or install suitable sensors, and evaluate monitoring, alerts, and recommendations in a read-only pilot. Seeking a first partner.
+- [Tamoz technical deep dive](https://ghassan-alhamoud.com/projects/tamoz-technical.html): Architecture, data flows, governance pipeline, rule promotion (verify, draft, replay, approve, shadow, cap, circuits), the pump-station trial and its engineering findings, the simulator as a plant wire node with twin and canvas, memory, self-healing, evaluation, simulator rounds, hardware bench evidence, and a walkthrough video.
+- [Tamoz use cases](https://ghassan-alhamoud.com/projects/tamoz-use-cases.html): Four use cases (pump and motor fleets, thermal zones, aquaculture ponds, chilled-water plants), each labelled as demonstrated in simulation, on a small real bench, or plausible next, with what a pilot would measure.
 - [ALMS](https://ghassan-alhamoud.com/projects/alms.html): Agent Learning Management System. A self-hosted MCP server for shared agent learning, agent registry, knowledge sync, and protocol distribution. Repository: https://github.com/ghassan-ai-projects/alms
 - [SkillLedger](https://ghassan-alhamoud.com/projects/skill-ledger.html): Agent-to-agent skill publishing, discovery, purchase, settlement, and failure incentives with a local ledger. Repository: https://github.com/ghassan-ai-projects/skill-ledger
 - [Film Pipeline](https://ghassan-alhamoud.com/projects/film-pipeline-langgraph.html): LangGraph-based film creation pipeline with typed state, human gates, versioned artifacts, validation evidence, and handoff state. Repository: https://github.com/ghassan-ai-projects/film-pipeline-langgraph

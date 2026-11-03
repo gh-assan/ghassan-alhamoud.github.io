@@ -59,7 +59,7 @@ FORBIDDEN = [
 ]
 
 PUBLISHED_GLOBS = ["*.html", "rss.xml", "sitemap.xml", "llms.txt"]
-PUBLISHED_DIRS = ["", "articles", "projects", "handbook", "iot-handbook", "research", "connect", "assets"]
+PUBLISHED_DIRS = ["", "articles", "projects", "handbook", "iot-handbook", "research", "connect", "tamoz", "assets"]
 EXTRA_CODE_GLOBS = ["assets/js/*.js", "assets/css/*.css", "scripts/*.py"]
 
 CV_TIMELINE = [

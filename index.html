@@ -72,7 +72,7 @@
       "Reliability",
       "Evaluation"
     ],
-    "description": "Senior Software Engineer with 15+ years of experience building backend platforms, distributed systems, and reliable AI-agent infrastructure. Formerly at Vinted and Wayfair, working on service extraction, Kafka, database decoupling, event-driven integrations, and platform reliability. Builds public systems such as ScaleShop and Tamoz and writes about the engineering decisions behind them."
+    "description": "Senior Software Engineer with 15+ years of experience building backend platforms, distributed systems, and reliable AI-agent infrastructure. Formerly at Vinted and Wayfair, working on service extraction, Kafka, database decoupling, event-driven integrations, and platform reliability. Builds systems such as Tamoz and ScaleShop and writes about the engineering decisions behind them."
   }
   </script>
 </head>
@@ -138,12 +138,12 @@
             </svg>
           </figure>
           <div class="hero__cta">
-            <a href="/projects/" class="btn btn--primary">Explore Public Systems</a>
+            <a href="/projects/" class="btn btn--primary">Explore the Systems</a>
             <a href="/handbook/">Read the Handbook</a>
           </div>
         </div>
 
-        <figure class="hero__artifact" data-loop aria-label="Checkpoint loop of the agent runtime behind the public systems on this site: events enter a checkpointed runtime that cycles plan, act, observe; every step is written to SQLite checkpoints and artifacts, which the eval harness replays; a human gate approves or denies consequential actions; and an eval harness records an evidence log that feeds the next run.">
+        <figure class="hero__artifact" data-loop aria-label="Checkpoint loop of the agent runtime behind the systems on this site: events enter a checkpointed runtime that cycles plan, act, observe; every step is written to SQLite checkpoints and artifacts, which the eval harness replays; a human gate approves or denies consequential actions; and an eval harness records an evidence log that feeds the next run.">
           <svg viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
             <defs>
               <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -189,7 +189,7 @@
             <path data-hl="return" d="M 404 322 C 280 352 100 352 66 334 C 50 320 56 240 58 196" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" marker-end="url(#arrow)"/>
             <text data-hl="return-label" x="180" y="346" fill="var(--text-muted)" font-size="10" font-family="Inter, sans-serif">evidence feeds the next run</text>
           </svg>
-          <figcaption class="evidence-caption loop-caption"><span>Illustrative. The checkpoint loop behind Tamoz and ALMS. Inspect the public repos.</span></figcaption>
+          <figcaption class="evidence-caption loop-caption"><span>Illustrative. The checkpoint loop behind Tamoz and ALMS.</span></figcaption>
         </figure>
       </div>
     </section>
@@ -197,15 +197,38 @@
     <!-- ==================== PUBLIC SYSTEMS ==================== -->
     <section class="systems section" id="systems">
       <div class="container">
-        <h2 class="section__title reveal">Public Systems</h2>
+        <h2 class="section__title reveal">Systems</h2>
         <p class="section__subtitle reveal reveal--delay-1">
-          The argument starts with shipped work: three public systems you can
-          run, inspect, and trace back to their reasoning.
+          The argument starts with built work: systems you can run or inspect,
+          each traced back to its reasoning.
         </p>
 
         <div class="systems__grid">
 
-          <article class="system-card system-card--flagship reveal reveal--delay-1">
+          <article class="system-card system-card--flagship system-card--with-image reveal reveal--delay-1">
+            <header class="system-card__header">
+              <h3 class="system-card__title"><a href="/projects/tamoz.html">Tamoz</a></h3>
+              <span class="system-card__status">In active development</span>
+            </header>
+            <img class="system-card__image" src="/images/projects/tamoz-card.webp" alt="" width="1200" height="675" loading="lazy" />
+            <p class="system-card__summary">
+              A physical AI agent for the equipment you already run. We give AI agents
+              sensors, hands, and the rules for using them.
+            </p>
+            <p class="system-card__proof">
+              In a simulated pump station it learned a repair rule from verified repairs:
+              5 of 5 rule decisions right, with no model call. The whole route has also run on a
+              small bench board. One station, one seed; evidence and limits on the project page.
+            </p>
+            <div class="article-card__tags">
+              <span class="article-card__tag system-card__tag">Physical AI</span>
+              <span class="article-card__tag system-card__tag">Learning</span>
+              <span class="article-card__tag system-card__tag">Evaluation</span>
+            </div>
+            <a class="system-card__action" href="/projects/tamoz.html">Inspect the system</a>
+          </article>
+
+          <article class="system-card reveal reveal--delay-2">
             <header class="system-card__header">
               <h3 class="system-card__title"><a href="/projects/scalability-lab.html">ScaleShop Scalability Lab</a></h3>
               <span class="system-card__status">Live workshop</span>
@@ -225,27 +248,6 @@
               <span class="article-card__tag system-card__tag">Interactive Lab</span>
             </div>
             <a class="system-card__action" href="/projects/scalability-lab.html">Inspect the system</a>
-          </article>
-
-          <article class="system-card reveal reveal--delay-2">
-            <header class="system-card__header">
-              <h3 class="system-card__title"><a href="/projects/tamoz.html">Tamoz</a></h3>
-              <span class="system-card__status">Public release</span>
-            </header>
-            <p class="system-card__summary">
-              An open-source, stream-native agent that understands sensor-derived situations,
-              decides what should happen, and acts through governed, bounded commands.
-            </p>
-            <p class="system-card__proof">
-              Five simulator rounds and a real Arduino motor bench, with durable execution,
-              memory, and an evaluation harness inspectable in three public repositories.
-            </p>
-            <div class="article-card__tags">
-              <span class="article-card__tag system-card__tag">Physical-World AI</span>
-              <span class="article-card__tag system-card__tag">Stream-Native</span>
-              <span class="article-card__tag system-card__tag">Durability</span>
-            </div>
-            <a class="system-card__action" href="/projects/tamoz.html">Inspect the system</a>
           </article>
 
           <article class="system-card reveal reveal--delay-3">
@@ -444,8 +446,8 @@
             </p>
             <p>
               Outside my professional roles, I build systems to explore these ideas in
-              practice: ScaleShop, an interactive scalability lab; Tamoz, a
-              stream-oriented agent project; and an AI-assisted film-production pipeline
+              practice: Tamoz, a physical AI agent; ScaleShop, an interactive scalability
+              lab; and an AI-assisted film-production pipeline
               that produced two short films. I write about distributed systems,
               event-driven architecture, reliability, and practical AI-agent infrastructure.
             </p>
@@ -539,8 +541,8 @@
           </div>
           <div class="counter reveal reveal--delay-1">
             <span class="counter__number" data-target="6" data-metric="systems" data-suffix="" aria-hidden="true">6</span>
-            <span class="sr-only">6 public systems</span>
-            <span class="counter__label">Public Systems</span>
+            <span class="sr-only">6 systems</span>
+            <span class="counter__label">Systems</span>
             <span class="counter__scope">Open source, listed in projects.json</span>
           </div>
           <div class="counter reveal reveal--delay-2">
@@ -564,7 +566,7 @@
       <div class="container contact__content">
         <h2 class="section__title reveal">Contact</h2>
         <p class="contact__text reveal reveal--delay-1">
-          Questions about the public systems, the handbook, or a field note?
+          Questions about the systems, the handbook, or a field note?
           Email is the direct route.
         </p>
         <div class="contact__actions reveal reveal--delay-2">
