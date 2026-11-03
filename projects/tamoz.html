@@ -76,7 +76,7 @@
               <li><a href="#capabilities">What you can do with Tamoz</a></li>
               <li><a href="#design">How it's built</a></li>
               <li><a href="#decisions">How a decision works</a></li>
-              <li><a href="#learning">Learning from verified outcomes</a></li>
+              <li><a href="#learning">Rules work. Who writes the next one?</a></li>
               <li><a href="#evidence">What has been tested</a></li>
               <li><a href="#boundary">What remains to be shown</a></li>
               <li><a href="#pilot">Try it on an operational question</a></li>
@@ -128,7 +128,7 @@
               <text class="dg-k" x="80" y="112" text-anchor="middle">1 · SENSE</text>
               <text class="dg-t" x="80" y="136" text-anchor="middle">The world</text>
               <text class="dg-s" x="80" y="156" text-anchor="middle">Sensors, machines,</text>
-              <text class="dg-s" x="80" y="171" text-anchor="middle">a cold box at 8 °C</text>
+              <text class="dg-s" x="80" y="171" text-anchor="middle">a cold room at 8 °C</text>
               <text class="dg-s dg-code" x="80" y="191" text-anchor="middle">→ readings</text>
 
               <rect class="dg-box" x="175" y="90" width="140" height="112" rx="8"/>
@@ -188,11 +188,19 @@
             <li><strong>It remembers.</strong> If the door closes and the room recovers, that outcome becomes evidence for next time.</li>
           </ol>
 
-          <h2 id="learning">Learning from verified outcomes</h2>
-          <p>Tamoz keeps outcome evidence so later decisions can refer to earlier situations. The pump trial also tested a more specific learning loop: repeated verified repairs could lead to a proposed rule.</p>
-          <p>A draft rule was replayed against earlier data, approved, and tested in shadow before becoming active. Once active, it could handle that pattern without another model call. In the trial, one of three fault families produced an approved rule. The trial used a scripted approver; human review in an operation remains to be tested.</p>
-          <p>In the trial, a repair counted as verified when the fault did not return within 24 simulated hours, so sensor drift misdiagnosed as bearing wear could also pass. A stricter recovery check has since been added. Replayed over the trial's records, it rejects those cases, but the trial has not been rerun with it.</p>
-          <p><a href="/projects/tamoz-technical.html#rule-promotion">Read how rule promotion works</a>.</p>
+          <h2 id="learning">Rules work. Who writes the next one?</h2>
+          <p>Rules have run plants for decades, for good reason: they're fast, predictable, and easy to check. Tamoz keeps them. The hard part was never running a rule. It's knowing which rule to write, and keeping up as things change.</p>
+          <p>A rule only catches what someone understood when they wrote it. A new failure, a machine that has drifted from its neighbours, or a fault that looks like a different one falls through to whoever is on shift. Those are the cases Tamoz is for.</p>
+          <p>It works through the case no rule covers. When the same repair keeps working, it drafts a new rule with the evidence behind it. Once a person approves it, that rule handles the problem without calling a model. Here's one it learned, in plain words:</p>
+          <figure class="project-figure">
+            <blockquote>
+              <p><em>When:</em> a pump's 15-minute axial vibration average is at least 1.25 times its own 24-hour average, and its heartbeat is present.<br /><em>Do:</em> schedule alignment maintenance.<br /><em>Learned from:</em> three verified repairs.</p>
+            </blockquote>
+            <figcaption class="evidence-caption">From the simulated pump trial, where the approver was scripted.</figcaption>
+          </figure>
+          <p>It's an ordinary rule. Your team can read it, question it, and switch it off. If the equipment changes or the repair stops holding, it switches itself off and the model takes over. The aim is for the model's job to shrink to what's still unknown, while what you've learned stays in rules you own.</p>
+          <p>An agent that grades its own work learns to flatter itself, so Tamoz learns from outcomes, not from its own account of them. It can also suggest changes to how it works, but it can't approve them itself.</p>
+          <p>In that trial, with a real model, this rule handled five faults without a model call, all correct and on time. The other two fault types didn't earn a rule, and the model still handled most faults. <a href="/projects/tamoz-technical.html#rule-promotion">Read how rules are learned</a>.</p>
 
           <h2 id="evidence">What has been tested</h2>
           <h3>A pump station with a real model</h3>
@@ -222,6 +230,7 @@
             <figcaption class="evidence-caption">Modeled: a recorded simulator run, animated and sped up. This is a simulated maintenance booking, not a field deployment.</figcaption>
           </figure>
           <p>This was one simulated station and three test runs of 30 simulated hours each. Only one of three fault families earned a rule, and the trial approver was scripted. The rule reduced model calls but missed its target: 13 of 17 detected faults still needed the model, against a goal of half the comparison. It did not improve misalignment repairs. The model repeatedly misdiagnosed sensor drift. These results are limited to simulation and do not establish industrial performance or savings. A pilot would measure these same numbers on your equipment. <a href="/projects/tamoz-technical.html#trial">Read the trial and its limits</a>.</p>
+          <p>In the trial, a repair counted as verified when the fault did not return within 24 simulated hours, so sensor drift misdiagnosed as bearing wear could also pass. A stricter recovery check has since been added. Replayed over the trial's records, it rejects those cases, but the trial has not been rerun with it.</p>
           <h3>Simulator rounds across several domains</h3>
           <p>Earlier rounds exercised timing, approvals, memory, and recovery in scenarios including aquaculture, water networks, and cold chain. Their reasoning was scripted. They tested the surrounding machinery, rather than a model's ability to diagnose those situations. <a href="/projects/tamoz-technical.html#rounds">Read the simulator evidence</a>.</p>
           <h3 id="real-motor">From Tamoz to a real board</h3>
