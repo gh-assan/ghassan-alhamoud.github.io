@@ -83,9 +83,11 @@
           </nav>
 
           <h2 id="problem">What Tamoz is built for</h2>
-          <p>A cold room warms up overnight. Equipment starts drawing more power. A sensor stops reporting. Each situation needs context before someone can decide whether to investigate, wait, or act.</p>
-          <p>Tamoz is designed to reason when the available data shows a meaningful change. The stream layer keeps watching between those changes. This avoids asking a model to interpret every reading and lets the agent work from a consistent view of the situation.</p>
-          <p>The intended applications include monitoring, alerts, investigation, and recommendations across equipment and processes. Benefits such as lower energy use or less material waste would need to be measured in an operational pilot.</p>
+          <p>A cold room warms up overnight. Equipment starts drawing more power. A sensor stops reporting. An alarm can tell you a reading crossed a line, but not whether a door was left open, a machine is failing, or the sensor is wrong. Someone still has to work that out before deciding whether to wait, investigate, or act.</p>
+          <p>Tamoz is built to do that first pass. When a cold room keeps warming, it weighs the readings and their quality, says what it thinks is happening and how sure it is, and proposes a response from the actions people have defined for that equipment. People also decide which actions need their approval, and every outcome is recorded.</p>
+          <p>While the cold room stays steady, no model runs. When a sensor stops reporting, Tamoz treats that as missing evidence, not as normal, so it becomes less certain instead of guessing.</p>
+          <p>It also learns from what happens next. If a repair stops the rising power draw and the problem stays away, that outcome becomes evidence for later decisions. When the same repair keeps proving right, Tamoz can draft a rule for it. Once a person approves it, that rule handles the pattern without calling a model. Changes to the agent's own behaviour need a person's approval too.</p>
+          <p>It's aimed at monitoring, alerts, investigation, and recommendations across equipment and processes. Savings such as lower energy use or less material waste haven't been measured in a real operation, and a pilot is how we'd find out.</p>
 
           <h2 id="design">Three systems working together</h2>
           <p>The system is three programs with separate jobs: one watches and governs, one reasons, and one tests the other two.</p>
