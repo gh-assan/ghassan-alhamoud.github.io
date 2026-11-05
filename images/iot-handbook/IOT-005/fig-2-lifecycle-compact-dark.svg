@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 1030" role="img" aria-labelledby="title desc">
+<title id="title">Recovery requires evidence</title><desc id="desc">Initialization enters serving after prerequisites hold. Subsystem faults can cause degraded service without restart. Restored service evidence returns to serving. Failed update trials use an eligible recovery path. Communication and time quality remain separate dimensions.</desc>
+<style>svg{--bg:#0d0d0d;--card:#171717;--fg:#ededed;--muted:#b3b3b3;--line:#5a5a5a;--accent:#ededed}text{font-family:system-ui,sans-serif;fill:var(--fg)}</style>
+<rect width="440" height="1030" rx="18" fill="var(--bg)"/>
+<text x="24" y="35" font-size="21">Recovery requires evidence</text>
+<text x="24" y="94" font-size="17" style="fill:var(--muted)">Constructed architecture model</text>
+<rect x="20" y="118" width="400" height="146" rx="10" fill="var(--card)" stroke="var(--line)"/>
+<text x="34" y="148" font-size="19" style="fill:var(--accent)">Initialize → serving</text>
+<text x="34" y="178" font-size="18">Validate configuration and readiness.</text>
+<text x="34" y="203" font-size="18">New boot generation; no observation</text>
+<text x="34" y="228" font-size="18">is current before acquisition.</text>
+<text x="212" y="287" font-size="20" style="fill:var(--line)">↓</text>
+<rect x="20" y="294" width="400" height="146" rx="10" fill="var(--card)" stroke="var(--line)"/>
+<text x="34" y="324" font-size="19" style="fill:var(--accent)">Serving → degraded</text>
+<text x="34" y="354" font-size="18">A required capability is unavailable.</text>
+<text x="34" y="379" font-size="18">Preserve independent work and expose</text>
+<text x="34" y="404" font-size="18">the lost guarantee.</text>
+<text x="212" y="463" font-size="20" style="fill:var(--line)">↓</text>
+<rect x="20" y="470" width="400" height="146" rx="10" fill="var(--card)" stroke="var(--line)"/>
+<text x="34" y="500" font-size="19" style="fill:var(--accent)">Degraded → serving</text>
+<text x="34" y="530" font-size="18">Bounded recovery restores the</text>
+<text x="34" y="555" font-size="18">affected service. Confirm a valid</text>
+<text x="34" y="580" font-size="18">acquisition and required reporting.</text>
+<text x="212" y="639" font-size="20" style="fill:var(--line)">↓</text>
+<rect x="20" y="646" width="400" height="146" rx="10" fill="var(--card)" stroke="var(--line)"/>
+<text x="34" y="676" font-size="19" style="fill:var(--accent)">Update → trial or recovery</text>
+<text x="34" y="706" font-size="18">Validate candidate and compatible</text>
+<text x="34" y="731" font-size="18">data. Confirm local health or select</text>
+<text x="34" y="756" font-size="18">eligible recovery.</text>
+<text x="212" y="815" font-size="20" style="fill:var(--line)">↓</text>
+<rect x="20" y="822" width="400" height="146" rx="10" fill="var(--card)" stroke="var(--line)"/>
+<text x="34" y="852" font-size="19" style="fill:var(--accent)">Separate state dimensions</text>
+<text x="34" y="882" font-size="18">Link absent need not mean reboot.</text>
+<text x="34" y="907" font-size="18">Calendar time can be unknown while</text>
+<text x="34" y="932" font-size="18">acquisition continues.</text>
+<text x="24" y="1012" font-size="17" style="fill:var(--muted)">Assumptions and limits in the caption.</text>
+</svg>
