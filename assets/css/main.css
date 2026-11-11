@@ -3057,6 +3057,17 @@ html.js .reveal--visible {
   min-width: 600px;
 }
 
+.diagram img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 760px;
+}
+
+.diagram--plant img {
+  min-width: 600px;
+}
+
 .diagram--compact svg {
   min-width: 440px;
 }
@@ -3426,6 +3437,10 @@ html.js .reveal--visible {
 .article-layout--single .diagram {
   width: min(1000px, calc(100vw - 48px));
   max-width: none;
+}
+
+.article-layout--single .diagram--plant {
+  width: auto;
 }
 
 .article-layout--single .project-facts {

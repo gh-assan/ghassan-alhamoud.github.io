@@ -130,8 +130,11 @@
           </ul>
           <p>Then comes the worst part. A loaded belt needs more force to start than to keep running. With one drive gone, the drives you have left may not be able to restart it. A fault that could have cost you a planned stop now costs hours of digging material off the belt by hand, and a line that produces no tonnes in the meantime.</p>
           <p>The failing drive usually warns you first. Its vibration rises. Its motor runs hotter than the others at the same current. The question is whether someone turns those early signs into the right action in time: without overreacting to a normal surge of material, without trusting a dead sensor, and without stopping a healthy line.</p>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/belt-conveyor-plant.webp" alt="Screenshot of the simulator showing a feeder, a transfer belt and three conveyor drives, each with its sensor and control connections." width="1200" height="706" loading="lazy" />
+          <figure class="diagram diagram--plant">
+            <div class="diagram__scroll" tabindex="0" role="region" aria-label="The simulated plant, scroll horizontally">
+              <img src="/images/projects/tamoz/belt-conveyor-plant.webp" alt="Screenshot of the simulator showing a feeder, a transfer belt and three conveyor drives, each with its sensor and control connections." width="1200" height="1182" loading="lazy" />
+            </div>
+            <p class="diagram__hint">Scroll sideways to see the whole image.</p>
             <figcaption class="evidence-caption">The simulated plant with little drive margin: a feeder, a belt and three drives that share the load. Every drive reports its current, motor temperature and vibration.</figcaption>
           </figure>
 
@@ -144,8 +147,11 @@
             <li>The belt stopped loaded, and the two remaining drives could not restart it.</li>
           </ul>
           <p>Nothing went wrong with the protection. It did its job. It just did it at the worst moment, with the belt full.</p>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/belt-conveyor-nobody-acts.webp" alt="Trend charts from the simulator. Drive 3's motor temperature and vibration climb for hours, then drop to zero when it trips; the currents of drives 1 and 2 drop to zero at the same moment." width="1200" height="676" loading="lazy" />
+          <figure class="diagram">
+            <div class="diagram__scroll" tabindex="0" role="region" aria-label="Trend charts, scroll horizontally">
+              <img src="/images/projects/tamoz/belt-conveyor-nobody-acts.webp" alt="Trend charts from the simulator. Drive 3's motor temperature and vibration climb for hours, then drop to zero when it trips; the currents of drives 1 and 2 drop to zero at the same moment." width="1200" height="702" loading="lazy" />
+            </div>
+            <p class="diagram__hint">Scroll sideways to see the whole image.</p>
             <figcaption class="evidence-caption">Nobody acts. Drive 3 heats up and vibrates more for hours until its protection trips it. The other two drives trip soon after, and the belt stops full of material.</figcaption>
           </figure>
 
@@ -159,8 +165,11 @@
             <li><strong>Brought the line back on two drives.</strong> Drive 3 was cooling and the two healthy drives were sharing the load evenly. The AI restored the feed at a safe, reduced rate that two drives can carry and still restart.</li>
           </ol>
           <p>Later that day, a routine stop further down the line halted the belt. The belt carried only a light load, so the two healthy drives started it again. No drive tripped. The belt never stranded.</p>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/belt-conveyor-planned-stop.webp" alt="Simulator timeline of a 16-hour run with three actions marked: feed stopped, drive 3 stopped, feed restored at a reduced rate." width="1200" height="676" loading="lazy" />
+          <figure class="diagram">
+            <div class="diagram__scroll" tabindex="0" role="region" aria-label="Timeline, scroll horizontally">
+              <img src="/images/projects/tamoz/belt-conveyor-planned-stop.webp" alt="Simulator timeline of a 16-hour run with three actions marked: feed stopped, drive 3 stopped, feed restored at a reduced rate." width="1200" height="424" loading="lazy" />
+            </div>
+            <p class="diagram__hint">Scroll sideways to see the whole image.</p>
             <figcaption class="evidence-caption">The planned stop on the same simulated day: stop the feed, stop drive 3 on an empty belt, then restore a reduced feed on two drives. This screen shows the simulator's own reference plan; the AI's run took the same three steps a few minutes later.</figcaption>
           </figure>
 
@@ -183,8 +192,11 @@
             <li><strong>Every story passed with the live AI.</strong> Bearing failure on both plants, sudden trip, gearbox seizure, frozen sensor, silent sensor and loss of the lead drive.</li>
           </ul>
           <p>One honest trade-off: after the planned stop, the line ran on two drives at reduced feed. Over the test day it moved a little less material than the run where nobody acted, until that run's belt stranded. We think a restartable belt is worth those tonnes. Your numbers decide that, not ours.</p>
-          <figure class="project-figure">
-            <img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Trend charts from the simulator. Drive 3's temperature and vibration fall after a planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="676" loading="lazy" />
+          <figure class="diagram">
+            <div class="diagram__scroll" tabindex="0" role="region" aria-label="Trend charts, scroll horizontally">
+              <img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Trend charts from the simulator. Drive 3's temperature and vibration fall after a planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="738" loading="lazy" />
+            </div>
+            <p class="diagram__hint">Scroll sideways to see the whole image.</p>
             <figcaption class="evidence-caption">Drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run.</figcaption>
           </figure>
 
