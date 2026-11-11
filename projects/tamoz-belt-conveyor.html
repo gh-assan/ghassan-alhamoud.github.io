@@ -100,9 +100,9 @@
           <h1 class="article-single__title">Catch a failing drive before it strands a loaded belt.</h1>
           <div class="article-single__body project-single__body"><p>On a simulated three-drive belt conveyor, our AI operator saw one drive weakening hours before it would have tripped. It emptied the belt and stopped that drive by plan, so a breakdown became a planned stop. A person approves every step that stops equipment.</p></div>
           <div class="project-single__actions">
-            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Discuss your conveyor</span></a>
+            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20conveyor%20pilot"><span>Discuss your conveyor</span></a>
           </div>
-          <p class="evidence-caption">This is a simulation with realistic but synthetic plant data, not a customer site.</p>
+          <p class="evidence-caption">This is a simulation with realistic but synthetic plant data, not a customer site. In the tests, approvals were automated.</p>
         </header>
 
         <div class="article-single__body project-single__body">
@@ -131,7 +131,7 @@
           <p>The failing drive usually warns you first. Its vibration rises. Its motor runs hotter than the others at the same current. The question is whether someone turns those early signs into the right action in time: without overreacting to a normal surge of material, without trusting a dead sensor, and without stopping a healthy line.</p>
           <figure class="project-figure">
             <img src="/images/projects/tamoz/belt-conveyor-plant.webp" alt="Screenshot of the simulator showing a feeder, a transfer belt and three conveyor drives, each with its sensor and control connections." width="1200" height="706" loading="lazy" />
-            <figcaption class="evidence-caption">The simulated plant: a feeder, a belt and three drives that share the load. Every drive reports its current, motor temperature and vibration.</figcaption>
+            <figcaption class="evidence-caption">The simulated plant with little drive margin: a feeder, a belt and three drives that share the load. Every drive reports its current, motor temperature and vibration.</figcaption>
           </figure>
 
           <h2 id="nobody-acts">What happens when nobody acts</h2>
@@ -149,7 +149,7 @@
           </figure>
 
           <h2 id="operator">What the AI operator did</h2>
-          <p>This is the run we kept for our film: the bearing failure on the plant with little margin, with a live AI model doing the reasoning. The AI never touches the equipment. It proposes a step; the system checks it against the plant's safety policy; a person approves anything that stops equipment. In the tests, approvals were automated.</p>
+          <p>This is the run we followed step by step: the bearing failure on the plant with little margin, with a live AI model doing the reasoning. The AI never touches the equipment. It proposes a step; the system checks it against the plant's safety policy; a person approves anything that stops equipment. In the tests, approvals were automated.</p>
           <ol>
             <li><strong>Named the symptom, not a guess.</strong> Drive 3 was running hotter than its two neighbours at the same current, and its temperature was climbing. The cause was not clear yet. The AI said so, called it &ldquo;a drive degrading against its peers&rdquo;, and set a watch on drive 3's vibration.</li>
             <li><strong>Named the cause, and kept producing.</strong> When the watch fired, drive 3's vibration was now clearly above the others. The AI named a dry bearing. The system's trend showed the trip was still hours away, so the AI kept full feed. There was no reason to give up tonnes yet.</li>
@@ -184,7 +184,7 @@
           <p>One honest trade-off: after the planned stop, the line ran on two drives at reduced feed. Over the test day it moved a little less material than the run where nobody acted, until that run's belt stranded. We think a restartable belt is worth those tonnes. Your numbers decide that, not ours.</p>
           <figure class="project-figure">
             <img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Trend charts from the simulator. Drive 3's temperature and vibration fall after a planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="676" loading="lazy" />
-            <figcaption class="evidence-caption">Drive 3 is stopped before it overheats and cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run.</figcaption>
+            <figcaption class="evidence-caption">Drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run.</figcaption>
           </figure>
 
           <h2 id="design">What we learned</h2>
@@ -208,6 +208,9 @@
           <p><strong>The first question we will ask:</strong> if one drive drops out at full feed, can the others carry the belt? The answer decides whether a weak drive is a slow cost or a fast stop, and it shapes everything else.</p>
           <p><strong>What we need from you:</strong> one person who knows the conveyor, access to its readings or a place to install sensors, and a regular review with your team.</p>
           <p>Any later action on your equipment would need a separate agreement. If the pilot does not help, you will know that too, with nothing changed in how your conveyor runs.</p>
+          <div class="project-single__actions">
+            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20conveyor%20pilot"><span>Discuss your conveyor</span></a>
+          </div>
 
           <h2 id="faq">Questions plant managers and investors ask</h2>
           <h3>Is this a real conveyor?</h3>
@@ -228,7 +231,7 @@
           <div class="article-cta" id="contact">
             <p class="article-cta__text"><strong>Have a conveyor where one drive failure strands the belt?</strong></p>
             <p class="article-cta__text">Tell us what you run, how your drives share the load, and what an unplanned stop costs you. We will tell you honestly whether a pilot makes sense.</p>
-            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20pilot"><span>Discuss your conveyor</span></a>
+            <a class="btn btn--primary" href="mailto:galhamoud@gmx.de?subject=Tamoz%20conveyor%20pilot"><span>Discuss your conveyor</span></a>
             <p class="article-cta__text article-cta__text--after"><a href="/tamoz/#pilot">How a pilot works</a> · <a href="/projects/tamoz-use-cases.html">Other use cases</a> · <a href="/projects/tamoz-technical.html">Technical deep dive</a></p>
           </div>
         </div>
