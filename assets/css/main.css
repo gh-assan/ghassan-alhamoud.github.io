@@ -3061,11 +3061,6 @@ html.js .reveal--visible {
   display: block;
   width: 100%;
   height: auto;
-  min-width: 760px;
-}
-
-.diagram--plant img {
-  min-width: 600px;
 }
 
 .diagram--compact svg {
