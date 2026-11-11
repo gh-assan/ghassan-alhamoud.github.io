@@ -3013,6 +3013,43 @@ html.js .reveal--visible {
   }
 }
 
+/* Page summary: the "In short" box above "On this page", in the TOC's style */
+.page-summary {
+  margin: 0 0 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+}
+
+.article-single__body .page-summary p {
+  margin: 0 0 0.75rem;
+  font-size: 16px;
+}
+
+.article-single__body .page-summary .page-summary__title {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.article-single__body .page-summary ul {
+  margin: 0;
+  font-size: 16px;
+}
+
+.article-single__body .page-summary li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .page-summary {
+    padding: 1rem 1.25rem;
+  }
+}
+
 /* ================================================================
    BUTTON ICON — inline SVG alignment inside buttons
    ================================================================ */
