@@ -39,7 +39,7 @@
       {
         "@type": "Question",
         "name": "Is this a real conveyor?",
-        "acceptedAnswer": {"@type": "Answer", "text": "No. It is a simulation. The plant's sizes, ratings and failure behaviour are realistic engineering estimates, not data from a customer site. We built two versions, one with plenty of drive margin and one with little, because that single fact changes the right response most."}
+        "acceptedAnswer": {"@type": "Answer", "text": "No. It is a simulation of a short, flat conveyor, about 60 m long, with three small drives. Its sizes, ratings and failure behaviour are engineering estimates, not data from a customer site. Large bulk-handling conveyors have much bigger drives; the way load shifts between drives, and the restart problem, are the same. We built two versions, one with plenty of drive margin and one with little, because that single fact changes the right response most."}
       },
       {
         "@type": "Question",
@@ -155,7 +155,7 @@
               <img src="/images/projects/tamoz/belt-conveyor-nobody-acts.webp" alt="Trend charts from the simulator. Drive 3's motor temperature and vibration climb for hours, then drop to zero when it trips; the currents of drives 1 and 2 drop to zero at the same moment." width="1200" height="702" loading="lazy" />
             </div>
             <p class="diagram__hint">Scroll sideways to see the whole image.</p>
-            <figcaption class="evidence-caption">Nobody acts. Drive 3 heats up and vibrates more for hours until its protection trips it. The other two drives trip soon after, and the belt stops full of material.</figcaption>
+            <figcaption class="evidence-caption">Nobody acts. Drive 3 heats up and vibrates more for hours until its protection trips it. The other two drives trip soon after, and the belt stops full of material. The model is a short, flat conveyor with small drives; on a larger line the currents are higher, but the pattern is the same.</figcaption>
           </figure>
 
           <h2 id="operator">What the AI operator did</h2>
@@ -200,7 +200,7 @@
               <img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Trend charts from the simulator. Drive 3's temperature and vibration fall after a planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="738" loading="lazy" />
             </div>
             <p class="diagram__hint">Scroll sideways to see the whole image.</p>
-            <figcaption class="evidence-caption">Drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run.</figcaption>
+            <figcaption class="evidence-caption">Drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run. The model is a short, flat conveyor with small drives; on a larger line the currents are higher, but the pattern is the same.</figcaption>
           </figure>
 
           <h2 id="design">What we learned</h2>
@@ -230,7 +230,7 @@
 
           <h2 id="faq">Questions plant managers and investors ask</h2>
           <h3>Is this a real conveyor?</h3>
-          <p>No. It is a simulation. The plant's sizes, ratings and failure behaviour are realistic engineering estimates, not data from a customer site. We built two versions, one with plenty of drive margin and one with little, because that single fact changes the right response most.</p>
+          <p>No. It is a simulation of a short, flat conveyor, about 60 m long, with three small drives. Its sizes, ratings and failure behaviour are engineering estimates, not data from a customer site. Large bulk-handling conveyors have much bigger drives; the way load shifts between drives, and the restart problem, are the same. We built two versions, one with plenty of drive margin and one with little, because that single fact changes the right response most.</p>
           <h3>Will the AI stop my equipment on its own?</h3>
           <p>No. A person approves every step that stops equipment. In these tests, approvals were automated so we could run many tests. A pilot starts read-only: Tamoz recommends, your team acts. Your drive protection and safety systems stay exactly as they are. Tamoz is not a safety function or a real-time controller, and it is not certified as either.</p>
           <h3>What sensors does this need?</h3>
