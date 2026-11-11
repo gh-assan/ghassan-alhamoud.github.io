@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Where Tamoz fits: use cases for equipment operators — Ghassan Alhamoud</title>
-  <meta name="description" content="Four use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pumps and motors, compressed air and utilities, cold rooms, and aquaculture ponds. With what a pilot would measure." />
+  <meta name="description" content="Five use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pumps and motors, compressed air and utilities, cold rooms, aquaculture ponds, and belt conveyors. With what a pilot would measure." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz-use-cases.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz-use-cases.html" />
-  <meta property="og:title" content="Where Tamoz fits: four use cases, and how far each one is proven" />
-  <meta property="og:description" content="Pumps and motors, compressed air and utilities, cold rooms and aquaculture ponds: what has been shown for each, and what a pilot would measure." />
+  <meta property="og:title" content="Where Tamoz fits: five use cases, and how far each one is proven" />
+  <meta property="og:description" content="Pumps and motors, compressed air and utilities, cold rooms, aquaculture ponds and belt conveyors: what has been shown for each, and what a pilot would measure." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
@@ -19,7 +19,7 @@
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Where Tamoz fits: use cases for equipment operators",
-    "description": "Four use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pumps and motors, compressed air and utilities, cold rooms, and aquaculture ponds. With what a pilot would measure.",
+    "description": "Five use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pumps and motors, compressed air and utilities, cold rooms, aquaculture ponds, and belt conveyors. With what a pilot would measure.",
     "about": {"@type": "SoftwareApplication", "name": "Tamoz"},
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"},
     "url": "https://ghassan-alhamoud.com/projects/tamoz-use-cases.html"
@@ -51,7 +51,7 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta"><span><a href="/projects/tamoz.html">Tamoz</a></span><span class="article-card__dot"></span><span>Use cases</span><span class="article-card__dot"></span><span>evidence labelled</span></div>
-          <h1 class="article-single__title">Where Tamoz fits: four use cases, and how far each one is proven</h1>
+          <h1 class="article-single__title">Where Tamoz fits: five use cases, and how far each one is proven</h1>
           <div class="article-single__tags"><span class="article-single__tag">Use Cases</span><span class="article-single__tag">Predictive Maintenance</span><span class="article-single__tag">Thermal Zones</span><span class="article-single__tag">Pilot</span></div>
           <div class="project-single__actions">
             <a class="btn btn--primary" href="/tamoz/"><span>Explore the industrial pilot</span></a>
@@ -61,7 +61,7 @@
         </header>
 
         <div class="article-single__body project-single__body">
-          <p>Tamoz fits where equipment streams sensor data, or can with added sensors; a fault has a deadline and a known repair; and a wrong action costs more than a late one. Manufacturing is full of these. Here are four, and exactly how far each one has been shown. We would rather lose a pilot to an honest label than win one with a vague claim.</p>
+          <p>Tamoz fits where equipment streams sensor data, or can with added sensors; a fault has a deadline and a known repair; and a wrong action costs more than a late one. Manufacturing is full of these. Here are five, and exactly how far each one has been shown. We would rather lose a pilot to an honest label than win one with a vague claim.</p>
 
           <nav class="article-toc" aria-label="On this page">
             <p><strong>On this page</strong></p>
@@ -72,6 +72,7 @@
               <li><a href="#utilities">2. Compressed air and utilities</a></li>
               <li><a href="#thermal">3. Cold rooms and thermal zones</a></li>
               <li><a href="#aquaculture">4. Aquaculture ponds</a></li>
+              <li><a href="#conveyors">5. Belt conveyors and bulk handling</a></li>
               <li><a href="#pilot">Trying it on your equipment</a></li>
               <li><a href="#boundary">Where it doesn't fit</a></li>
             </ul>
@@ -152,6 +153,19 @@
               <dd>A simulated site with eight shrimp ponds, used in one of the simulator rounds. A quiet baseline started no reasoning, a silent probe failed closed, the emergency exchange waited for approval, and a second pond recalled what happened to the first. <strong>Limit:</strong> the reasoning in these runs was scripted, so this shows the machinery, not a model's judgment. Aquaculture hasn't run with a real model.</dd>
               <dt>A pilot would measure</dt>
               <dd>Reading-to-action time against the physical window. Whether approvals arrive in time. False interventions. What happens when a sensor goes silent.</dd>
+            </dl>
+          </section>
+
+          <section class="usecase" id="conveyors">
+            <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
+            <h2>5. Belt conveyors and bulk handling</h2>
+            <dl>
+              <dt>The problem</dt>
+              <dd>Many long or heavy conveyors are pulled by more than one drive. The drives share the load. When one of them weakens or stops, its share moves at once onto the others. A loaded belt needs more force to start than to keep running. With one drive gone, the drives you have left may not be able to restart it.</dd>
+              <dt>What Tamoz does</dt>
+              <dd>On a simulated three-drive belt conveyor, our AI operator saw one drive weakening hours before it would have tripped. It emptied the belt and stopped that drive by plan, so a breakdown became a planned stop. A person approves every step that stops equipment.</dd>
+              <dt>What exists</dt>
+              <dd>A simulated three-drive belt conveyor, with a live AI model doing the reasoning. <a href="/projects/tamoz-belt-conveyor.html">See it on a simulated belt conveyor</a>. <strong>Limit:</strong> No real conveyor has run this. The live AI ran a small number of test days per story; more runs on fresh simulated days are next.</dd>
             </dl>
           </section>
 
