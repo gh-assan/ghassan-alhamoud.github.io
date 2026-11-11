@@ -163,9 +163,11 @@
               <dt>The problem</dt>
               <dd>Many long or heavy conveyors are pulled by more than one drive. The drives share the load. When one of them weakens or stops, its share moves at once onto the others. A loaded belt needs more force to start than to keep running. With one drive gone, the drives you have left may not be able to restart it.</dd>
               <dt>What Tamoz does</dt>
-              <dd>On a simulated three-drive belt conveyor, our AI operator saw one drive weakening hours before it would have tripped. It emptied the belt and stopped that drive by plan, so a breakdown became a planned stop. A person approves every step that stops equipment.</dd>
+              <dd>It compares each drive with the others, so one drive weakening stands out from a surge that loads them all. It estimates how long the weak drive has left, and proposes emptying the belt, stopping that drive by plan, and a feed the remaining drives can carry and restart. A person approves every step that stops equipment; in the tests, approvals were automated.</dd>
               <dt>What exists</dt>
-              <dd>A simulated three-drive belt conveyor, with a live AI model doing the reasoning. <a href="/projects/tamoz-belt-conveyor.html">See it on a simulated belt conveyor</a>. <strong>Limit:</strong> No real conveyor has run this. The live AI ran a small number of test days per story; more runs on fresh simulated days are next.</dd>
+              <dd>A simulated three-drive belt conveyor with a real model doing the reasoning. On a slow bearing failure, it saw the drive weakening hours before its trip, emptied the belt and stopped the drive by plan, so a breakdown became a planned stop. <a href="/projects/tamoz-belt-conveyor.html">See it on a simulated belt conveyor</a>. <strong>Limit:</strong> no real conveyor has run this. The live AI ran a small number of test days per story; more runs on fresh simulated days are next.</dd>
+              <dt>A pilot would measure</dt>
+              <dd>How long before a trip your team is warned. Whether a failing drive is stopped by plan with the belt empty. Stranded belts and protective trips, with a target of zero. False alarms when the feed surges. Tonnes given up to planned stops against tonnes lost to trips.</dd>
             </dl>
           </section>
 
