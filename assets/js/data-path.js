@@ -11,7 +11,7 @@
     [13, 'D\u20113 runs warmer than the others. An alert.'],
     [17.5, 'Agentic Stream builds a snapshot and asks Tamoz.'],
     [22, 'Tamoz decides: empty the belt, then stop D\u20113.'],
-    [26.5, 'The policy passes it, and a person approves.'],
+    [26.5, 'The policy passes it. A person approves on screen.'],
     [30.5, 'The command goes back down. D\u20113 stops, and the screen confirms.']
   ];
   var DUR = 42, END = 40, STOP = 36, EMPTY = 33.8, BELT_V = 105;
