@@ -25,8 +25,8 @@
     "description": "In a simulated three-drive conveyor, Tamoz caught a failing drive hours early and stopped it by plan, before it could strand a loaded belt.",
     "about": {"@id": "https://ghassan-alhamoud.com/projects/tamoz.html#software"},
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"},
-    "primaryImageOfPage": "https://ghassan-alhamoud.com/images/projects/tamoz/belt-conveyor-plant.webp",
-    "dateModified": "2026-11-12",
+    "primaryImageOfPage": "https://ghassan-alhamoud.com/images/projects/tamoz/belt-conveyor-nobody-acts.webp",
+    "dateModified": "2026-11-13",
     "url": "https://ghassan-alhamoud.com/projects/tamoz-belt-conveyor.html"
   }
   </script>
@@ -48,18 +48,8 @@
       },
       {
         "@type": "Question",
-        "name": "What sensors does this need?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Per drive: current, motor winding temperature and vibration. For the belt: speed and a belt scale. Many conveyors already have some of these, and drive current usually comes from the drive's inverter. Where readings are missing, a pilot can add sensors."}
-      },
-      {
-        "@type": "Question",
         "name": "How is this different from condition monitoring or a vibration alarm?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Condition monitoring tells you a drive is unhealthy. An alarm tells you a reading crossed a line. Neither decides when to stop, how to empty the belt first, or how to keep the belt restartable on the drives you have left. In our tests, a plain vibration alarm also stopped the failing drive, but later and at a higher cost. Tamoz keeps your alarms and adds the next step: what is likely happening, how long you have, and what to do."}
-      },
-      {
-        "@type": "Question",
-        "name": "What if a sensor fails or lies?",
-        "acceptedAnswer": {"@type": "Answer", "text": "A silent sensor is treated as missing evidence, never as \"all clear\", so the system becomes less sure instead of guessing. In the tests, a frozen vibration sensor was reported as a sensor fault before anything else, and the bearing was still caught from the motor temperature."}
+        "acceptedAnswer": {"@type": "Answer", "text": "Condition monitoring tells you a drive is unhealthy. An alarm tells you a reading crossed a line. Neither decides when to stop, how to empty the belt first, or how to keep the belt restartable on the drives you have left. Tamoz keeps your alarms and adds that next step: what is likely happening, how long you have, and what to do."}
       },
       {
         "@type": "Question",
@@ -151,7 +141,6 @@
             <p><strong>On this page</strong></p>
             <ul>
               <li><a href="#problem">When one drive weakens, the others pay for it</a></li>
-              <li><a href="#nobody-acts">What happens when nobody acts</a></li>
               <li><a href="#operator">What the AI operator did</a></li>
               <li><a href="#not-fooled">What it was not fooled by</a></li>
               <li><a href="#evidence">The results</a></li>
@@ -163,29 +152,14 @@
           </nav>
 
           <h2 id="problem">When one drive weakens, the others pay for it</h2>
-          <p>Many long or heavy conveyors are pulled by more than one drive. The drives share the load. When one of them weakens or stops, its share moves at once onto the others.</p>
-          <p>What happens next depends on how much spare capacity your drives have.</p>
+          <p>Many long or heavy conveyors are pulled by more than one drive, and the drives share the load. When one weakens or stops, its share moves at once onto the others. What happens next depends on how much spare capacity your drives have.</p>
           <ul>
-            <li><strong>Plenty of margin:</strong> the other drives carry the belt. But they run near their limit and wear out several times faster while you wait for the repair.</li>
-            <li><strong>Little margin:</strong> the other drives overload. Their protection trips them within about two minutes. The belt stops full of material.</li>
+            <li><strong>Plenty of margin:</strong> the other drives carry the belt, but they run near their limit and wear out several times faster while you wait for the repair.</li>
+            <li><strong>Little margin:</strong> the other drives overload, and their protection trips them within about two minutes. The belt stops full of material.</li>
           </ul>
-          <p>Then comes the worst part. A loaded belt needs more force to start than to keep running. With one drive gone, the drives you have left may not be able to restart it. A fault that could have cost you a planned stop now costs hours of digging material off the belt by hand, and a line that produces no tonnes in the meantime.</p>
-          <p>The failing drive usually warns you first. Its vibration rises. Its motor runs hotter than the others at the same current. The question is whether someone turns those early signs into the right action in time: without overreacting to a normal surge of material, without trusting a dead sensor, and without stopping a healthy line.</p>
-          <figure class="diagram diagram--plant">
-            <a href="/images/projects/tamoz/belt-conveyor-plant.webp"><img src="/images/projects/tamoz/belt-conveyor-plant.webp" alt="Screenshot of the simulator showing a feeder, a transfer belt and three conveyor drives, each with its sensor and control connections." width="1200" height="1182" loading="lazy" /></a>
-            <p class="diagram__hint">Tap the image to see it full size.</p>
-            <figcaption class="evidence-caption">The simulated plant with little drive margin: a feeder, a belt and three drives that share the load. Every drive reports its current, motor temperature and vibration.</figcaption>
-          </figure>
-
-          <h2 id="nobody-acts">What happens when nobody acts</h2>
-          <p>We started a slow bearing failure on one drive. Its lubrication ran out over several hours. Then we let the plant run with nobody acting.</p>
-          <ul>
-            <li>The bearing wore faster as it worked. Vibration rose. The motor winding ran hotter and hotter.</li>
-            <li>Hours later, the drive's own protection tripped it.</li>
-            <li>On the plant with little margin, the two healthy drives tripped less than two minutes later.</li>
-            <li>The belt stopped loaded, and the two remaining drives could not restart it.</li>
-          </ul>
-          <p>Nothing went wrong with the protection. It did its job. It just did it at the worst moment, with the belt full.</p>
+          <p>A loaded belt needs more force to start than to keep running, so the drives you have left may not be able to restart it. A fault that could have cost you a planned stop now costs hours of digging material off the belt by hand, and a line that produces no tonnes in the meantime.</p>
+          <p>The film shows this first. On the plant with little margin, we started a slow bearing failure on one drive as its lubrication ran out, and let the plant run with nobody acting. The bearing wore faster as it worked; vibration rose and the motor winding ran hotter for hours, until the drive's own protection tripped it. The two healthy drives tripped less than two minutes later, and they could not restart the loaded belt. The protection did its job, at the worst moment.</p>
+          <p>The failing drive warned first: its vibration rose, and its motor ran hotter than the others at the same current. The question is whether someone turns those early signs into the right action in time: without overreacting to a normal surge of material, without trusting a dead sensor, and without stopping a healthy line.</p>
           <figure class="diagram">
             <a href="/images/projects/tamoz/belt-conveyor-nobody-acts.webp"><img src="/images/projects/tamoz/belt-conveyor-nobody-acts.webp" alt="Trend charts from the simulator. Drive 3's motor temperature and vibration climb for hours, then drop to zero when it trips; the currents of drives 1 and 2 drop to zero at the same moment." width="1200" height="702" loading="lazy" /></a>
             <p class="diagram__hint">Tap the image to see it full size.</p>
@@ -193,7 +167,7 @@
           </figure>
 
           <h2 id="operator">What the AI operator did</h2>
-          <p>This is the run we followed step by step: the bearing failure on the plant with little margin, with a live AI model doing the reasoning. The AI never touches the equipment. It proposes a step; the system checks it against the plant's safety policy; a person approves anything that stops equipment. In the tests, approvals were automated.</p>
+          <p>The second half of the film is this run: the same bearing failure on the same plant, with a live AI model doing the reasoning. The AI never touches the equipment. It proposes a step; the system checks it against the plant's safety policy; a person approves anything that stops equipment. In the tests, approvals were automated.</p>
           <ol>
             <li><strong>Named the symptom, not a guess.</strong> Drive 3 was running hotter than its two neighbours at the same current, and its temperature was climbing. The cause was not clear yet. The AI said so, called it &ldquo;a drive degrading against its peers&rdquo;, and set a watch on drive 3's vibration.</li>
             <li><strong>Named the cause, and kept producing.</strong> When the watch fired, drive 3's vibration was now clearly above the others. The AI named a dry bearing. The system's trend showed the trip was still hours away, so the AI kept full feed. There was no reason to give up tonnes yet.</li>
@@ -202,18 +176,13 @@
             <li><strong>Brought the line back on two drives.</strong> Drive 3 was cooling and the two healthy drives were sharing the load evenly. The AI restored the feed at a safe, reduced rate that two drives can carry and still restart.</li>
           </ol>
           <p>Later that day, a routine stop further down the line halted the belt. The belt carried only a light load, so the two healthy drives started it again. No drive tripped. The belt never stranded.</p>
-          <figure class="diagram">
-            <a href="/images/projects/tamoz/belt-conveyor-planned-stop.webp"><img src="/images/projects/tamoz/belt-conveyor-planned-stop.webp" alt="Simulator timeline of a 16-hour run with three actions marked: feed stopped, drive 3 stopped, feed restored at a reduced rate." width="1200" height="424" loading="lazy" /></a>
-            <p class="diagram__hint">Tap the image to see it full size.</p>
-            <figcaption class="evidence-caption">The planned stop on the same simulated day: stop the feed, stop drive 3 on an empty belt, then restore a reduced feed on two drives. The times shown are from the simulator's own reference plan; the AI's run took the same three steps a few minutes later.</figcaption>
-          </figure>
 
           <h2 id="not-fooled">What it was not fooled by</h2>
           <p>A good operator acts on a real fault and leaves a healthy line alone. We tested both.</p>
           <ul>
             <li><strong>A normal day and a surge of material.</strong> When the feed swings through the day, or a surge loads all drives at once, every drive rises together. That is not one drive failing. In these tests the system raised no alarm and took no action. These control tests ran with the system's rules and a scripted stand-in for the AI; they test the part that decides when the AI is called at all.</li>
             <li><strong>A frozen vibration sensor.</strong> We froze drive 3's vibration sensor at a healthy reading just before its bearing began to fail. The sensor looked fine but stopped moving with the load. The system reported the sensor problem first, then caught the bearing from the motor temperature, which kept telling the truth.</li>
-            <li><strong>A silent sensor.</strong> Same story, but the sensor stopped reporting. The system treated the gap as missing evidence, not as &ldquo;all clear&rdquo;, and still caught the failing drive.</li>
+            <li><strong>A silent sensor.</strong> Same story, but the sensor stopped reporting. The system treated the gap as missing evidence, not as &ldquo;all clear&rdquo;, so it became less sure instead of guessing, and it still caught the failing drive.</li>
           </ul>
 
           <h2 id="evidence">The results</h2>
@@ -227,20 +196,14 @@
             <li><strong>Every story passed with the live AI.</strong> Bearing failure on both plants, sudden trip, gearbox seizure, frozen sensor, silent sensor and loss of the lead drive.</li>
           </ul>
           <p>One honest trade-off: after the planned stop, the line ran on two drives at reduced feed. Over the test day it moved a little less material than the run where nobody acted, until that run's belt stranded. We think a restartable belt is worth those tonnes. Your numbers decide that, not ours.</p>
-          <figure class="diagram">
-            <a href="/images/projects/tamoz/belt-conveyor-after-stop.webp"><img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Trend charts from the simulator. Drive 3's temperature and vibration fall after a planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="738" loading="lazy" /></a>
-            <p class="diagram__hint">Tap the image to see it full size.</p>
-            <figcaption class="evidence-caption">Drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run. The model is a short, flat conveyor with small drives; on a larger line the currents are higher, but the pattern is the same.</figcaption>
-          </figure>
 
           <h2 id="design">What we learned</h2>
-          <p>The first time we let the AI handle the bearing failure on its own, it held back. The cause was not certain, so it said &ldquo;unknown&rdquo; and only watched. That is a safe answer. On a weakening drive, it is also a costly one, because waiting has a price.</p>
-          <p>It worked once the system around the AI did two things:</p>
+          <p>The first time we let the AI handle the bearing failure on its own, it held back. The cause was not certain, so it said &ldquo;unknown&rdquo; and only watched. That is a safe answer, but on a weakening drive a costly one, because waiting has a price. It worked once the system around the AI did two things:</p>
           <ul>
             <li><strong>It gave the AI a name for what it could already see:</strong> one drive degrading against the others. With that name, the AI could take the steps that are right whatever the cause turns out to be, such as watching closely and planning the stop, without pretending to know more than it did.</li>
-            <li><strong>It asked again whenever the evidence changed.</strong> The watch the AI set woke it when the vibration moved. Each new question came with fresh readings.</li>
+            <li><strong>It asked again whenever the evidence changed.</strong> The watch the AI set woke it when the vibration moved, and each new question came with fresh readings.</li>
           </ul>
-          <p>This is why we build Tamoz the way we do. The AI reasons. The system around it decides when to ask, checks every proposal against the plant's policy, and sends nothing to equipment without the right approval. A good model in a loose system gives confident wrong answers or no answers. The same model in a tight system made the right calls here.</p>
+          <p>That is why we build Tamoz this way. The AI reasons. The system around it decides when to ask, checks every proposal against the plant's policy, and sends nothing to equipment without the right approval. A good model in a loose system gives confident wrong answers or no answers; the same model in a tight system made the right calls here.</p>
 
           <h2 id="real-conveyor">How it will work on a real conveyor</h2>
           <p>Sensors on each drive send their readings to an edge device beside the conveyor. Streams Simulator shows the whole line live; Agentic Stream decides when to ask Tamoz; a person approves any step that stops equipment; and the command goes back to the drive through the plant's own PLC.</p>
@@ -254,12 +217,13 @@
             </div>
             <figcaption class="evidence-caption">How the data will travel: from the sensors to Tamoz, and back to the drive.</figcaption>
           </figure>
+          <p>This is the design for a real line; none of it has run on a conveyor yet. A first pilot stops short of the last step: it is read-only, Tamoz recommends, and your team acts through your own controls.</p>
 
           <h2 id="pilot">A pilot on your conveyor</h2>
           <p>We are looking for a first partner. A pilot is one problem, read-only, with a result we agree on before we start. Your team stays in control.</p>
           <ol>
             <li><strong>Pick one problem.</strong> For example, a multi-drive conveyor where a drive failure would strand the belt, or drive trips you cannot explain. We agree what would count as success.</li>
-            <li><strong>Get the data.</strong> Drive currents, motor temperatures, vibration, belt speed and the belt scale, from your existing systems where possible. Where something is missing, we install sensors, following your site's rules.</li>
+            <li><strong>Get the data.</strong> Drive currents, motor temperatures, vibration, belt speed and the belt scale, from your existing systems where possible; drive current usually comes from the drive's inverter. Where something is missing, we install sensors, following your site's rules.</li>
             <li><strong>Build a simulated copy first.</strong> Before anything connects to your conveyor, we can replay a sample of your history and build a simulated copy with your drive ratings and restart limits. You see how it behaves first.</li>
             <li><strong>Watch and investigate, read-only.</strong> Tamoz tells your team what it sees, how sure it is, how long a drive may have left, and what step it suggests. Your team decides and acts through your own controls.</li>
             <li><strong>Review it together.</strong> We compare the results with what we agreed, and decide together whether there is a useful next step.</li>
@@ -276,12 +240,8 @@
           <p>No. It is a simulation of a short, flat conveyor, about 60 m long, with three small drives. Its sizes, ratings and failure behaviour are engineering estimates, not data from a customer site. Large bulk-handling conveyors have much bigger drives; the way load shifts between drives, and the restart problem, are the same. We built two versions, one with plenty of drive margin and one with little, because that single fact changes the right response most.</p>
           <h3>Will the AI stop my equipment on its own?</h3>
           <p>No. A person approves every step that stops equipment. In these tests, approvals were automated so we could run many tests. A pilot starts read-only: Tamoz recommends, your team acts. Your drive protection and safety systems stay exactly as they are. Tamoz is not a safety function or a real-time controller, and it is not certified as either.</p>
-          <h3>What sensors does this need?</h3>
-          <p>Per drive: current, motor winding temperature and vibration. For the belt: speed and a belt scale. Many conveyors already have some of these, and drive current usually comes from the drive's inverter. Where readings are missing, a pilot can add sensors.</p>
           <h3>How is this different from condition monitoring or a vibration alarm?</h3>
-          <p>Condition monitoring tells you a drive is unhealthy. An alarm tells you a reading crossed a line. Neither decides when to stop, how to empty the belt first, or how to keep the belt restartable on the drives you have left. In our tests, a plain vibration alarm also stopped the failing drive, but later and at a higher cost. Tamoz keeps your alarms and adds the next step: what is likely happening, how long you have, and what to do.</p>
-          <h3>What if a sensor fails or lies?</h3>
-          <p>A silent sensor is treated as missing evidence, never as &ldquo;all clear&rdquo;, so the system becomes less sure instead of guessing. In the tests, a frozen vibration sensor was reported as a sensor fault before anything else, and the bearing was still caught from the motor temperature.</p>
+          <p>Condition monitoring tells you a drive is unhealthy. An alarm tells you a reading crossed a line. Neither decides when to stop, how to empty the belt first, or how to keep the belt restartable on the drives you have left. Tamoz keeps your alarms and adds that next step: what is likely happening, how long you have, and what to do.</p>
           <h3 id="boundary">What has not been proven yet?</h3>
           <p>Quite a lot, and we would rather say so. No real conveyor has run this. The live AI ran a small number of test days per story; more runs on fresh simulated days are next. The trip prediction was tuned on the same simulated days it was judged on. Savings in a real operation have not been measured. A first pilot is how we find out.</p>
           <h3>Why should an investor care?</h3>
@@ -353,6 +313,6 @@
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
   <script src="/assets/js/video-embed.js" defer></script>
-  <script src="/assets/js/data-path.js?v=20261113" defer></script>
+  <script src="/assets/js/data-path.js?v=20261113b" defer></script>
 </body>
 </html>
