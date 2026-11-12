@@ -53,8 +53,8 @@
 .dp-div, .dp-tring { fill: none; stroke: var(--border); stroke-width: 1.25; }
 .dp-person circle, .dp-person path { fill: none; stroke: var(--text-muted); stroke-width: 1.5; }
 .dp-person-on circle, .dp-person-on path { stroke: var(--success); }
-.dp-ok rect { fill: var(--bg-primary); stroke: var(--success); stroke-width: 1.25; }
-.dp-ok text { font-size: 13.2px; font-weight: 600; fill: var(--success); }
+.dp-ok-t { font-size: 13.2px; font-weight: 600; fill: var(--success); }
+.dp-ask { opacity: 0; }
 .dp-card rect { fill: var(--bg-primary); stroke-width: 1.5; }
 .dp-card text { font-size: 13.2px; font-weight: 600; }
 .dp-card-w rect { stroke: var(--warning); }

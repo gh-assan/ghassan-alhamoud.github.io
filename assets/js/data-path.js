@@ -23,7 +23,7 @@
     ['eth', 'pkt', 5.4, 1.2, 3, 140, 9, 38.4],
     ['pw1', 'pkt', 9, 1.2, 3, 140, 13, 38.4],
     ['pw2', 'pkt', 17.5, 1.2, 3, 140, 22, 38.4],
-    ['c1', 'cmd', 30.5, 0, 3, 140, DUR, 30.5],
+    ['c1', 'pkt', 28, 0, 3, 140, DUR, 28],
     ['c2', 'cmd', 31.6, 0, 3, 140, DUR, 31.6],
     ['c3', 'cmd', 32.3, 0, 3, 140, DUR, 32.3],
     ['c4', 'cmd', 32.8, 0, 3, 160, DUR, 32.8],
@@ -168,7 +168,7 @@
   }
 
   function screen(v) {
-    var wake = seg(9.4, 10), dim = hold(17.8, 30.9, 0.4);
+    var wake = seg(9.4, 10), dim = hold(17.8, 28.6, 0.4);
     op(v.q('.dp-wait'), 1 - wake);
     op(v.q('.dp-screen'), (0.35 + 0.65 * wake) * (1 - 0.55 * dim));
     all(v.svg, '.dp-tr', function (l) {
@@ -187,6 +187,10 @@
     op(v.q('.dp-w3'), seg(14.2, 14.5));
     op(v.q('.dp-alert'), seg(14.5, 15));
     op(v.q('.dp-live'), t < 10 ? 0.6 : 0.55 + 0.45 * Math.abs(Math.cos(Math.PI * (Math.min(t, END) - 10))));
+    op(v.q('.dp-apprrow'), seg(28.5, 28.8));
+    op(v.q('.dp-person-on'), seg(29.6, 29.9));
+    op(v.q('.dp-ask'), 1 - seg(29.9, 30.2));
+    op(v.q('.dp-yes'), seg(29.9, 30.2));
     op(v.q('.dp-cmdrow'), seg(31, 31.3));
     op(v.q('.dp-sent'), 1 - seg(38.1, 38.4));
     op(v.q('.dp-chk'), seg(38.1, 38.4));
@@ -240,15 +244,13 @@
 
     var dec = v.q('.dp-dec'), p, sc = 1;
     if (t < 26.5) { p = v.routes.dec.at(outCubic(seg(23.6, 24.9))); }
-    else if (t < 29.9) { p = v.routes.gate.at(0.5 * cubic(seg(26.5, 27)) + 0.5 * cubic(seg(27.7, 28.2))); sc = 1 - 0.45 * seg(26.5, 27); }
-    else { p = v.routes.exit.at(cubic(seg(29.9, 30.4))); sc = 0.55 - 0.25 * seg(29.9, 30.4); }
+    else if (t < 27.6) { p = v.routes.gate.at(cubic(seg(26.5, 27))); sc = 1 - 0.45 * seg(26.5, 27); }
+    else { p = v.routes.exit.at(cubic(seg(27.6, 28))); sc = 0.55 - 0.25 * seg(27.6, 28); }
     place(dec, p, sc);
-    op(dec, seg(23.6, 23.8) * (1 - seg(30.2, 30.5)));
+    op(dec, seg(23.6, 23.8) * (1 - seg(27.8, 28)));
     var tick = v.q('.dp-tick'), ts = seg(27, 27.5);
     tick.style.strokeDasharray = '1 1';
     tick.style.strokeDashoffset = (1 - ts).toFixed(3);
-    op(v.q('.dp-person-on'), seg(28.2, 28.5));
-    op(v.q('.dp-ok'), seg(28.5, 28.8));
     if (v.svg.classList.contains('dp-narrow')) all(v.svg, '.dp-zl', function (l) { op(l, 1 - seg(23.7, 24) * (1 - seg(26.5, 26.9))); });
   }
 
