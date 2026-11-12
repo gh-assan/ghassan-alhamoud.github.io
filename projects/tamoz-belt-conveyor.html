@@ -26,7 +26,7 @@
     "about": {"@id": "https://ghassan-alhamoud.com/projects/tamoz.html#software"},
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"},
     "primaryImageOfPage": "https://ghassan-alhamoud.com/images/projects/tamoz/belt-conveyor-plant.webp",
-    "dateModified": "2026-11-11",
+    "dateModified": "2026-11-12",
     "url": "https://ghassan-alhamoud.com/projects/tamoz-belt-conveyor.html"
   }
   </script>
@@ -72,6 +72,17 @@
         "acceptedAnswer": {"@type": "Answer", "text": "A stranded belt in mining, cement or a port terminal can stop an operation for hours. The hard part is not the alarm, it is the decision in the hours before the trip. This experiment shows that decision made correctly, end to end, in a closed loop that grades itself against what would have happened. It is early evidence, in simulation. It is not a savings claim."}
       }
     ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Watch the test (3 min, no sound)",
+    "description": "Tamoz, an industrial agent, on a simulated three-drive conveyor: first nobody acts, then the same failure with Tamoz watching. A simulation with synthetic data; read the screen.",
+    "thumbnailUrl": "https://ghassan-alhamoud.com/images/projects/tamoz/belt-conveyor-film-poster.webp",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/8tqPs7fO1RY",
+    "contentUrl": "https://www.youtube.com/watch?v=8tqPs7fO1RY"
   }
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -120,6 +131,19 @@
               <li><strong>Simulation only.</strong> No real conveyor has run this, and we make no savings claim. A person approves every step that stops equipment; in these tests, approvals were automated.</li>
             </ul>
           </aside>
+
+          <h2 id="film">Watch the test (3 min, no sound)</h2>
+          <div class="video-embed video-embed--poster" id="film-player" data-video-id="8tqPs7fO1RY">
+            <div class="video-embed__frame">
+              <button type="button" class="video-embed__play" data-title="Watch the test (3 min, no sound)" aria-label="Play the film on YouTube">
+                <img class="video-embed__poster" src="/images/projects/tamoz/belt-conveyor-film-poster.webp" alt="" width="1200" height="675" />
+                <span class="video-embed__icon" aria-hidden="true">&#9654;</span>
+              </button>
+            </div>
+            <p class="evidence-caption">Tamoz, an industrial agent, on a simulated three-drive conveyor: first nobody acts, then the same failure with Tamoz watching. A simulation with synthetic data; read the screen.</p>
+            <p class="video-embed__note">Pressing play loads the video from YouTube in privacy-enhanced mode. YouTube may then set cookies and see your IP address. <a href="https://www.youtube.com/watch?v=8tqPs7fO1RY" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>
+            <noscript><p class="video-embed__note"><a href="https://www.youtube.com/watch?v=8tqPs7fO1RY" target="_blank" rel="noopener noreferrer">Watch on YouTube</a> (JavaScript is off, so the player cannot load here).</p></noscript>
+          </div>
 
           <nav class="article-toc" aria-label="On this page">
             <p><strong>On this page</strong></p>
@@ -312,5 +336,6 @@
   <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/transitions.js" defer></script>
+  <script src="/assets/js/video-embed.js" defer></script>
 </body>
 </html>
