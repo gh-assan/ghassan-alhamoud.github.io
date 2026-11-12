@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Where Tamoz fits: use cases for equipment operators — Ghassan Alhamoud</title>
-  <meta name="description" content="Four use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pumps and motors, compressed air and utilities, cold rooms, and aquaculture ponds. With what a pilot would measure." />
+  <meta name="description" content="Five use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: belt conveyors, pumps and motors, compressed air and utilities, cold rooms, and aquaculture ponds. With what a pilot would measure." />
   <meta name="author" content="Ghassan Alhamoud" />
   <link rel="canonical" href="https://ghassan-alhamoud.com/projects/tamoz-use-cases.html" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://ghassan-alhamoud.com/projects/tamoz-use-cases.html" />
-  <meta property="og:title" content="Where Tamoz fits: four use cases, and how far each one is proven" />
-  <meta property="og:description" content="Pumps and motors, compressed air and utilities, cold rooms and aquaculture ponds: what has been shown for each, and what a pilot would measure." />
+  <meta property="og:title" content="Where Tamoz fits: five use cases, and how far each one is proven" />
+  <meta property="og:description" content="Belt conveyors, pumps and motors, compressed air and utilities, cold rooms and aquaculture ponds: what has been shown for each, and what a pilot would measure." />
   <meta property="og:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:image" content="https://ghassan-alhamoud.com/images/og-default.jpg" />
@@ -19,7 +19,7 @@
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Where Tamoz fits: use cases for equipment operators",
-    "description": "Four use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: pumps and motors, compressed air and utilities, cold rooms, and aquaculture ponds. With what a pilot would measure.",
+    "description": "Five use cases for Tamoz, each marked as demonstrated in simulation, on a small real bench, or plausible next: belt conveyors, pumps and motors, compressed air and utilities, cold rooms, and aquaculture ponds. With what a pilot would measure.",
     "about": {"@type": "SoftwareApplication", "name": "Tamoz"},
     "author": {"@type": "Person", "name": "Ghassan Alhamoud"},
     "url": "https://ghassan-alhamoud.com/projects/tamoz-use-cases.html"
@@ -51,7 +51,7 @@
       <article>
         <header class="article-single__header">
           <div class="article-single__meta"><span><a href="/projects/tamoz.html">Tamoz</a></span><span class="article-card__dot"></span><span>Use cases</span><span class="article-card__dot"></span><span>evidence labelled</span></div>
-          <h1 class="article-single__title">Where Tamoz fits: four use cases, and how far each one is proven</h1>
+          <h1 class="article-single__title">Where Tamoz fits: five use cases, and how far each one is proven</h1>
           <div class="article-single__tags"><span class="article-single__tag">Use Cases</span><span class="article-single__tag">Predictive Maintenance</span><span class="article-single__tag">Thermal Zones</span><span class="article-single__tag">Pilot</span></div>
           <div class="project-single__actions">
             <a class="btn btn--primary" href="/tamoz/"><span>Explore the industrial pilot</span></a>
@@ -61,17 +61,18 @@
         </header>
 
         <div class="article-single__body project-single__body">
-          <p>Tamoz fits where equipment streams sensor data, or can with added sensors; a fault has a deadline and a known repair; and a wrong action costs more than a late one. Manufacturing is full of these. Here are four, and exactly how far each one has been shown. We would rather lose a pilot to an honest label than win one with a vague claim.</p>
+          <p>Tamoz fits where equipment streams sensor data, or can with added sensors; a fault has a deadline and a known repair; and a wrong action costs more than a late one. Manufacturing is full of these. Here are five, and exactly how far each one has been shown. We would rather lose a pilot to an honest label than win one with a vague claim.</p>
 
           <nav class="article-toc" aria-label="On this page">
             <p><strong>On this page</strong></p>
             <ul>
               <li><a href="#labels">How to read the labels</a></li>
               <li><a href="#design">What makes a good fit</a></li>
-              <li><a href="#pumps">1. Pumps and motors</a></li>
-              <li><a href="#utilities">2. Compressed air and utilities</a></li>
-              <li><a href="#thermal">3. Cold rooms and thermal zones</a></li>
-              <li><a href="#aquaculture">4. Aquaculture ponds</a></li>
+              <li><a href="#conveyors">1. Belt conveyors and bulk handling</a></li>
+              <li><a href="#pumps">2. Pumps and motors</a></li>
+              <li><a href="#utilities">3. Compressed air and utilities</a></li>
+              <li><a href="#thermal">4. Cold rooms and thermal zones</a></li>
+              <li><a href="#aquaculture">5. Aquaculture ponds</a></li>
               <li><a href="#pilot">Trying it on your equipment</a></li>
               <li><a href="#boundary">Where it doesn't fit</a></li>
             </ul>
@@ -91,9 +92,27 @@
           </ul>
           <p><strong>Poor fit:</strong> hard real-time control loops, and anything that is itself a safety function. Tamoz sits above the control layer, and the learned-rule compiler refuses to recommend actions at risk class R3 or higher.</p>
 
+          <section class="usecase" id="conveyors">
+            <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
+            <h2>1. Belt conveyors and bulk handling</h2>
+            <dl>
+              <dt>The problem</dt>
+              <dd>Many long or heavy conveyors are pulled by more than one drive. The drives share the load. When one of them weakens or stops, its share moves at once onto the others. A loaded belt needs more force to start than to keep running. With one drive gone, the drives you have left may not be able to restart it.</dd>
+              <dt>What Tamoz does</dt>
+              <dd>It compares each drive with the others, so one drive weakening stands out from a surge that loads them all. It estimates how long the weak drive has left, and proposes emptying the belt, stopping that drive by plan, and a feed the remaining drives can carry and restart. A person approves every step that stops equipment; in the tests, approvals were automated.</dd>
+              <dt>What exists</dt>
+              <dd>A simulated three-drive belt conveyor with a real model doing the reasoning. On a slow bearing failure, it saw the drive weakening hours before its trip, emptied the belt and stopped the drive by plan, so a breakdown became a planned stop. <a href="/projects/tamoz-belt-conveyor.html">See it on a simulated belt conveyor</a>. <strong>Limit:</strong> no real conveyor has run this. The live AI ran a small number of test days per story; more runs on fresh simulated days are next.</dd>
+              <dt>A pilot would measure</dt>
+              <dd>How long before a trip your team is warned. Whether a failing drive is stopped by plan with the belt empty. Stranded belts and protective trips, with a target of zero. False alarms when the feed surges. Tonnes given up to planned stops against tonnes lost to trips.</dd>
+            </dl>
+            <div class="project-single__actions">
+              <a class="btn btn--secondary" href="/projects/tamoz-belt-conveyor.html">See the belt conveyor experiment &rarr;</a>
+            </div>
+          </section>
+
           <section class="usecase" id="pumps">
             <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
-            <h2>1. Pumps and motors: catching a fault before it stops the line</h2>
+            <h2>2. Pumps and motors: catching a fault before it stops the line</h2>
             <dl>
               <dt>The problem</dt>
               <dd>Pumps and motors drift from their own normal in many ways: bearing wear, misalignment, a drifting sensor. Alarms fire late or not at all. Someone has to work out which repair to book before the deadline, and the lesson is rarely written down.</dd>
@@ -108,7 +127,7 @@
 
           <section class="usecase" id="utilities">
             <div class="usecase__head"><span class="cap-status cap-status--wip">Plausible next</span></div>
-            <h2>2. Compressed air and utilities: telling look-alike faults apart</h2>
+            <h2>3. Compressed air and utilities: telling look-alike faults apart</h2>
             <dl>
               <dt>The problem</dt>
               <dd>Compressed air, chilled water and power have faults that look alike. Pressure falls: is it a leak, or a worn compressor? Chilled water runs warm: is it a failing fan, or just a hot day? A wrong guess sends your team to the wrong place.</dd>
@@ -127,7 +146,7 @@
 
           <section class="usecase" id="thermal">
             <div class="usecase__head"><span class="cap-status cap-status--bench">Demonstrated on a real bench</span><span class="cap-status cap-status--sim">Demonstrated in simulation</span></div>
-            <h2>3. Cold rooms and thermal zones: the use case that has run on real hardware</h2>
+            <h2>4. Cold rooms and thermal zones: the use case that has run on real hardware</h2>
             <dl>
               <dt>The problem</dt>
               <dd>A cold room drifts warm at night. It could be the door, the weather, or a failing sensor, and a fan or cooler must never run without limits.</dd>
@@ -142,7 +161,7 @@
 
           <section class="usecase" id="aquaculture">
             <div class="usecase__head"><span class="cap-status cap-status--sim">Demonstrated in simulation (scripted reasoner)</span></div>
-            <h2>4. Aquaculture ponds: a fault with a hard physical deadline</h2>
+            <h2>5. Aquaculture ponds: a fault with a hard physical deadline</h2>
             <dl>
               <dt>The problem</dt>
               <dd>Dissolved oxygen falls through the night, and low oxygen can kill stock quickly. The chain from reading to action has to finish inside a physical window, and the world won't wait for it.</dd>
