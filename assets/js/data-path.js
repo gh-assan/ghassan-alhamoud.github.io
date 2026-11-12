@@ -180,6 +180,10 @@
     bar.setAttribute('width', (Number(bar.getAttribute('data-w0')) + (Number(bar.getAttribute('data-w1')) - Number(bar.getAttribute('data-w0'))) * grow).toFixed(1));
     op(bar, seg(13, 13.4) * (1 - seg(38.1, 38.8)));
     op(v.q('.dp-bar-g'), seg(38.1, 38.8));
+    var grey = Math.round(100 * seg(STOP + 1, STOP + 1.4));
+    all(v.svg, '.dp-tr3', function (l) {
+      l.style.stroke = 'color-mix(in srgb, var(--text-muted) ' + grey + '%, var(' + (l.classList.contains('dp-tr-w') ? '--warning' : '--text-secondary') + '))';
+    });
     op(v.q('.dp-w3'), seg(14.2, 14.5));
     op(v.q('.dp-alert'), seg(14.5, 15));
     op(v.q('.dp-live'), t < 10 ? 0.6 : 0.55 + 0.45 * Math.abs(Math.cos(Math.PI * (Math.min(t, END) - 10))));
@@ -202,7 +206,7 @@
     op(mini, seg(19.7, 19.9) * (1 - seg(20.8, 21)));
 
     var think = hold(20.9, 24.5, 0.35), oct = v.q('.dp-oct');
-    var cx = Number(oct.getAttribute('data-cx')), cy = Number(oct.getAttribute('data-cy')), R = Number(oct.getAttribute('data-r'));
+    var cx = Number(oct.getAttribute('data-cx')), cy = Number(oct.getAttribute('data-cy')), R = Number(oct.getAttribute('data-r')), RAY = Number(oct.getAttribute('data-ray'));
     var rot = 0.5 * Math.max(0, Math.min(t, END) - 9) + 0.9 * think + 2.2 * cubic(seg(20.9, 24.5));
     var V = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].map(function (q) {
       var x = q[0] * Math.cos(rot) - q[2] * Math.sin(rot), z = q[0] * Math.sin(rot) + q[2] * Math.cos(rot);
@@ -224,7 +228,7 @@
     op(core, t < 9 ? 0.4 : 1);
     var fan = outCubic(seg(22, 22.6)), keep = seg(22.6, 23), drop = seg(24, 24.4);
     all(v.svg, '.dp-ray', function (g, k) {
-      var ang = Math.PI + (k - 1) * 0.55, len = 40 * fan, a0 = R + 8;
+      var ang = Math.PI + (k - 1) * 0.55, len = RAY * fan, a0 = R + 8;
       var a = fan <= 0 ? 0 : (k === 1 ? 1 : 1 - seg(23, 23.4)) * (1 - drop) * (k === 1 ? 1 : 1 - keep * 0.5);
       var ln = g.firstChild, dot = g.lastChild;
       ln.setAttribute('x1', (cx + Math.cos(ang) * a0).toFixed(1)); ln.setAttribute('y1', (cy + Math.sin(ang) * a0).toFixed(1));
@@ -245,6 +249,7 @@
     tick.style.strokeDashoffset = (1 - ts).toFixed(3);
     op(v.q('.dp-person-on'), seg(28.2, 28.5));
     op(v.q('.dp-ok'), seg(28.5, 28.8));
+    if (v.svg.classList.contains('dp-narrow')) all(v.svg, '.dp-zl', function (l) { op(l, 1 - seg(23.7, 24) * (1 - seg(26.5, 26.9))); });
   }
 
   function seek(time) {
