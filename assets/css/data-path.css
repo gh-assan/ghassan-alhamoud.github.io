@@ -1,0 +1,91 @@
+/* How the data will travel on a real conveyor. Without JavaScript, and with reduced motion,
+   the finished frame is shown; data-path.js plays it from the start. */
+.data-path { margin: 1.5rem 0 2.5rem; padding: 1.25rem 1rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 14px; }
+.article-layout--single .data-path { width: min(1000px, calc(100vw - 48px)); max-width: none; }
+.dp-svg { display: block; width: 100%; height: auto; }
+.dp-wide { aspect-ratio: 1180 / 480; }
+.dp-narrow { display: none; aspect-ratio: 400 / 920; }
+.dp-svg text { font-family: inherit; }
+.dp-route { display: none; }
+.dp-off { opacity: 0; }
+.dp-box { fill: var(--bg-primary); stroke: var(--border); stroke-width: 1.5; }
+.dp-lane { fill: none; stroke: var(--text-muted); stroke-width: 1.75; }
+.dp-field, .dp-ant { fill: none; stroke: var(--text-muted); stroke-width: 1.25; }
+.dp-head, .dp-ant-tip, .dp-cam { fill: var(--text-muted); }
+.dp-belt { fill: var(--bg-tertiary); stroke: var(--border); stroke-width: 1.25; }
+.dp-bed { stroke: var(--text-secondary); stroke-dasharray: 16 5; }
+.dp-chev { fill: none; stroke: var(--text-muted); stroke-width: 1.25; }
+.dp-motor { fill: var(--bg-primary); stroke: var(--text-muted); stroke-width: 1.25; }
+.dp-rotor circle, .dp-rotor line { fill: none; stroke: var(--text-secondary); stroke-width: 1.25; }
+.dp-dn { font-size: 12.5px; font-weight: 600; fill: var(--text-primary); }
+.dp-ol { fill: none; stroke-width: 2; }
+.dp-ol-w { stroke: var(--warning); }
+.dp-ol-ok { stroke: var(--success); }
+.dp-puck { fill: var(--accent); }
+.dp-puck-off { fill: var(--text-muted); }
+.dp-bt path { fill: none; stroke: var(--accent); stroke-width: 1.25; stroke-linecap: round; }
+.dp-t { font-size: 13.5px; font-weight: 600; fill: var(--text-primary); }
+.dp-s { font-size: 12.5px; fill: var(--text-secondary); }
+.dp-k { font-size: 12.5px; font-weight: 700; letter-spacing: .08em; fill: var(--text-muted); }
+.dp-pill { opacity: .75; }
+.dp-pill rect { fill: var(--bg-primary); stroke: var(--border); stroke-width: 1; }
+.dp-pill text { font-size: 13px; font-weight: 600; fill: var(--text-secondary); }
+.dp-blink { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+.dp-vent { stroke: var(--border); stroke-width: 1.25; }
+.dp-led { fill: var(--text-muted); }
+.dp-led-on { fill: var(--accent); }
+.dp-tab { fill: var(--bg-tertiary); stroke: var(--border); stroke-width: 1.5; }
+.dp-scr { fill: var(--bg-primary); stroke: var(--border); stroke-width: 1; }
+.dp-wait { font-size: 13px; fill: var(--text-muted); }
+.dp-live { fill: var(--accent); }
+.dp-tr { fill: none; stroke: var(--text-secondary); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.dp-tr-w { stroke: var(--warning); }
+.dp-tr-off { stroke: var(--text-muted); }
+.dp-bar { fill: var(--text-muted); }
+.dp-bar-w { fill: var(--warning); }
+.dp-wico path { fill: var(--warning); }
+.dp-wico rect { fill: var(--bg-primary); }
+.dp-al { font-size: 13px; font-weight: 600; fill: var(--warning); }
+.dp-tri { fill: var(--text-primary); }
+.dp-chip rect { fill: var(--bg-secondary); stroke: var(--success); stroke-width: 1; }
+.dp-chip text { font-size: 12.5px; font-weight: 600; fill: var(--success); }
+.dp-chk, .dp-tick { fill: none; stroke: var(--success); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dp-div, .dp-tring { fill: none; stroke: var(--border); stroke-width: 1.25; }
+.dp-person circle, .dp-person path { fill: none; stroke: var(--text-muted); stroke-width: 1.5; }
+.dp-person-on circle, .dp-person-on path { stroke: var(--success); }
+.dp-ok rect { fill: var(--bg-primary); stroke: var(--success); stroke-width: 1.25; }
+.dp-ok text { font-size: 12.5px; font-weight: 600; fill: var(--success); }
+.dp-card rect { fill: var(--bg-primary); stroke-width: 1.5; }
+.dp-card text { font-size: 12.5px; font-weight: 600; }
+.dp-card-w rect { stroke: var(--warning); }
+.dp-card-w text { fill: var(--warning); }
+.dp-snap text { fill: var(--text-primary); font-weight: 400; }
+.dp-snap .dp-sk { fill: var(--warning); font-size: 12.5px; font-weight: 700; letter-spacing: .08em; }
+.dp-card-a rect { stroke: var(--accent); }
+.dp-card-a text { fill: var(--accent); }
+.dp-oct { stroke: color-mix(in srgb, var(--accent) 55%, var(--text-muted)); stroke-width: 1.25; }
+.dp-core { fill: var(--accent); }
+.dp-ray line { stroke: var(--accent); stroke-width: 1.5; }
+.dp-ray circle { fill: var(--accent); }
+.dp-tz { font-size: 14px; font-weight: 700; fill: var(--accent); }
+.dp-dot, .dp-pkt { fill: var(--accent); }
+.dp-pkt-c, .dp-tk circle { fill: var(--success); }
+.dp-tk path { fill: none; stroke: var(--bg-primary); stroke-width: 1.5; stroke-linecap: round; }
+.dp-status { min-height: 1.6em; margin: .85rem 0 .5rem; font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+.dp-controls { display: none; align-items: center; gap: .75rem; }
+.js .dp-controls { display: flex; }
+.dp-btn { min-width: 5.5rem; min-height: 44px; padding: .35rem .9rem; font: inherit; font-size: .9rem; font-weight: 600; color: var(--text-primary); background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+.dp-btn:hover { border-color: var(--accent); }
+.dp-btn:focus-visible, .dp-range:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.dp-range { flex: 1; min-width: 0; min-height: 44px; accent-color: var(--accent); }
+.data-path figcaption { margin-top: .75rem; }
+@media (max-width: 759px) {
+  .article-layout--single .data-path { width: auto; }
+  .data-path { padding: .75rem 0; }
+  .dp-status, .dp-controls, .data-path figcaption { margin-left: .75rem; margin-right: .75rem; }
+  .dp-wide { display: none; }
+  .dp-narrow { display: block; }
+  .dp-narrow text, .dp-narrow .dp-pill text, .dp-narrow .dp-card text, .dp-narrow .dp-snap .dp-sk { font-size: 14.8px; }
+  .dp-narrow .dp-k, .dp-narrow .dp-snap .dp-sk { letter-spacing: .03em; }
+  .dp-narrow .dp-tz { font-size: 16px; }
+}
