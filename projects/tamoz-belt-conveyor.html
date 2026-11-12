@@ -182,14 +182,14 @@
           </ol>
           <p>Later that day, a routine stop further down the line halted the belt. The belt carried only a light load, so the two healthy drives started it again. No drive tripped. The belt never stranded.</p>
           <figure class="diagram">
-            <a href="/images/projects/tamoz/belt-conveyor-planned-stop.webp"><img src="/images/projects/tamoz/belt-conveyor-planned-stop.webp" alt="Simulator timeline of a 16-hour run with three actions marked: feed stopped, drive 3 stopped, feed restored at a reduced rate." width="1200" height="424" loading="lazy" /></a>
+            <a href="/images/projects/tamoz/belt-conveyor-planned-stop.webp"><img src="/images/projects/tamoz/belt-conveyor-planned-stop.webp" alt="Simulator timeline of Tamoz's 16-hour run with three actions marked, and listed again in a table below: feed stopped, drive 3 stopped, feed restored at a reduced rate." width="1200" height="402" loading="lazy" /></a>
             <p class="diagram__hint">Tap the image to see it full size.</p>
-            <figcaption class="evidence-caption">The planned stop on the same simulated day: stop the feed, stop drive 3 on an empty belt, then restore a reduced feed on two drives. The times shown are from the simulator's own reference plan; the AI's run took the same three steps a few minutes later.</figcaption>
+            <figcaption class="evidence-caption">Tamoz's own run on the same simulated day: stop the feed, stop drive 3 on an empty belt, then restore a reduced feed on two drives. Each marker is a step the AI proposed and the policy passed; in the tests, approvals were automated.</figcaption>
           </figure>
           <figure class="diagram">
-            <a href="/images/projects/tamoz/belt-conveyor-after-stop.webp"><img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Trend charts from the simulator. Drive 3's temperature and vibration fall after a planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="738" loading="lazy" /></a>
+            <a href="/images/projects/tamoz/belt-conveyor-after-stop.webp"><img src="/images/projects/tamoz/belt-conveyor-after-stop.webp" alt="Timeline and trend charts from Tamoz's run in the simulator. Drive 3's temperature and vibration fall after the planned stop, while drives 1 and 2 keep running and briefly stop and restart during a routine downstream stop." width="1200" height="718" loading="lazy" /></a>
             <p class="diagram__hint">Tap the image to see it full size.</p>
-            <figcaption class="evidence-caption">Drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. Same plan as above, from the simulator's reference run. The model is a short, flat conveyor with small drives; on a larger line the currents are higher, but the pattern is the same.</figcaption>
+            <figcaption class="evidence-caption">Tamoz's own run: drive 3 is stopped before it overheats, then cools down. The other two drives carry the belt, and restart it after a routine stop further down the line. The model is a short, flat conveyor with small drives; on a larger line the currents are higher, but the pattern is the same.</figcaption>
           </figure>
 
           <h2 id="not-fooled">What it was not fooled by</h2>
